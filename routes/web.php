@@ -21,18 +21,18 @@ Route::prefix('{locale}')
     ->whereIn('locale', ['en', 'ar'])
     ->middleware('setlocale')
     ->group(function () {
-    //     // Landing page (we will create the controller later)
-    //     Route::get('/', [LandingPageController::class, 'index'])
-    //         ->name('public.landing');
+        // Landing page (we will create the controller later)
+        Route::get('/', [LandingPageController::class, 'index'])
+            ->name('public.landing');
 
-    //     Route::post('/register/visitor', [VisitorRegistrationController::class, 'store'])
-    //         ->name('public.register.visitor');
+        Route::post('/register/visitor', [VisitorRegistrationController::class, 'store'])
+            ->name('public.register.visitor');
 
-    //     Route::post('/register/sponsor', [SponsorRegistrationController::class, 'store'])
-    //         ->name('public.register.sponsor');
+        Route::post('/register/sponsor', [SponsorRegistrationController::class, 'store'])
+            ->name('public.register.sponsor');
 
-    //     Route::post('/contact', [ContactController::class, 'submit'])
-    //         ->name('public.contact');
+        Route::post('/contact', [ContactController::class, 'submit'])
+            ->name('public.contact');
     });
 
 // Admin Routes
@@ -43,8 +43,8 @@ Route::prefix('admin')
         // hook Breeze Livewire auth views into here
 
         Route::middleware('auth:admin')->group(function () {
-            // Route::get('/', [DashboardController::class, 'index'])
-            //     ->name('dashboard');
+            Route::get('/', [DashboardController::class, 'index'])
+                ->name('dashboard');
 
             // later: admin resource routes for registrations & content
         });
