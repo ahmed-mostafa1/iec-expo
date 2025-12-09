@@ -1,31 +1,32 @@
 <?php
 
-use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
-use Livewire\Volt\Volt;
+use App\Livewire\Auth\Login;
+use App\Livewire\Auth\ForgotPassword;
+use App\Livewire\Auth\ResetPassword;
+use App\Livewire\Auth\VerifyEmail;
+use App\Livewire\Auth\ConfirmPassword;
+use App\Livewire\Auth\Logout;
 
-Route::middleware('guest')->group(function () {
-    Volt::route('register', 'pages.auth.register')
-        ->name('register');
+Route::prefix('admin')->name('admin.')->group(function () {
 
-    Volt::route('login', 'pages.auth.login')
-        ->name('login');
+    // // Guest admins: login/forgot/reset
+    // Route::middleware('guest:admin')->group(function () {
+    //     Route::get('/login', Login::class)->name('login');
 
-    Volt::route('forgot-password', 'pages.auth.forgot-password')
-        ->name('password.request');
+    //     Route::get('/forgot-password', ForgotPassword::class)
+    //         ->name('password.request');
 
-    Volt::route('reset-password/{token}', 'pages.auth.reset-password')
-        ->name('password.reset');
-});
+    //     Route::get('/reset-password/{token}', ResetPassword::class)
+    //         ->name('password.reset');
+    // });
 
-Route::middleware('auth')->group(function () {
-    Volt::route('verify-email', 'pages.auth.verify-email')
-        ->name('verification.notice');
+    // // Authenticated admins
+    // Route::middleware('auth:admin')->group(function () {
+    //     Route::post('/logout', Logout::class)->name('logout');
 
-    Route::get('verify-email/{id}/{hash}', VerifyEmailController::class)
-        ->middleware(['signed', 'throttle:6,1'])
-        ->name('verification.verify');
-
-    Volt::route('confirm-password', 'pages.auth.confirm-password')
-        ->name('password.confirm');
+    //     // You can also protect email verification/confirm-password if you use them
+    //     Route::get('/verify-email', VerifyEmail::class)->name('verification.notice');
+    //     Route::get('/confirm-password', ConfirmPassword::class)->name('password.confirm');
+    // });
 });
