@@ -1,10 +1,11 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\Public\ContactController;
+use App\Http\Controllers\Public\LandingPageController;
+use App\Http\Controllers\Public\SponsorRegistrationController;
+use App\Http\Controllers\Public\VisitorRegistrationController;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\LandingPageController;
-use App\Http\Controllers\VisitorRegistrationController;
-use App\Http\Controllers\SponsorRegistrationController;
-use App\Http\Controllers\ContactController;
 
 
 
