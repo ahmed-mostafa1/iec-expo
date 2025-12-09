@@ -1,23 +1,19 @@
 <?php
 
+use App\Livewire\Actions\Logout;
 use Illuminate\Support\Facades\Route;
-use App\Livewire\Auth\Login;
-use App\Livewire\Auth\ForgotPassword;
-use App\Livewire\Auth\ResetPassword;
-use App\Livewire\Auth\VerifyEmail;
-use App\Livewire\Auth\ConfirmPassword;
-use App\Livewire\Auth\Logout;
+use Livewire\Volt\Volt;
 
 Route::prefix('admin')->name('admin.')->group(function () {
 
     // Guest admins: login/forgot/reset
     Route::middleware('guest:admin')->group(function () {
-        Route::get('/login', Login::class)->name('login');
+        Volt::route('/login', 'pages.auth.login')->name('login');
 
-        Route::get('/forgot-password', ForgotPassword::class)
+        Volt::route('/forgot-password', 'pages.auth.forgot-password')
             ->name('password.request');
 
-        Route::get('/reset-password/{token}', ResetPassword::class)
+        Volt::route('/reset-password/{token}', 'pages.auth.reset-password')
             ->name('password.reset');
     });
 
@@ -26,7 +22,7 @@ Route::prefix('admin')->name('admin.')->group(function () {
         Route::post('/logout', Logout::class)->name('logout');
 
         // You can also protect email verification/confirm-password if you use them
-        Route::get('/verify-email', VerifyEmail::class)->name('verification.notice');
-        Route::get('/confirm-password', ConfirmPassword::class)->name('password.confirm');
+        Volt::route('/verify-email', 'pages.auth.verify-email')->name('verification.notice');
+        Volt::route('/confirm-password', 'pages.auth.confirm-password')->name('password.confirm');
     });
 });
