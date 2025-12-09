@@ -8,13 +8,13 @@ use App\Http\Controllers\ContactController;
 
 
 
-// Route::get('/', function () {
-//     return redirect('/en');
-// });
-
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/en');
 });
+
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 // localized routes
 Route::prefix('{locale}')
