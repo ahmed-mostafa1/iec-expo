@@ -15,6 +15,8 @@ Route::get('/', function () {
     return redirect('/en');
 });
 
+Route::redirect('/login', '/admin/login')->name('login');
+
 // Route::get('/', function () {
 //     return view('welcome');
 // });
