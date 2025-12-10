@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
+
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -8,6 +9,7 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
+
 <body class="min-h-screen antialiased bg-gray-100 font-sans">
     <div class="flex min-h-screen">
         {{-- Sidebar --}}
@@ -23,36 +25,36 @@
 
             <nav class="flex-1 space-y-1 text-sm">
                 <a href="{{ route('admin.dashboard') }}"
-                   class="block rounded-lg px-2 py-1.5 hover:bg-emerald-50 text-gray-700">
+                    class="block rounded-lg px-2 py-1.5 hover:bg-emerald-50 text-gray-700">
                     {{ __('Dashboard') }}
                 </a>
 
                 <div class="mt-4 text-[10px] uppercase tracking-wide text-gray-400 ps-2">
                     {{ __('Registrations') }}
                 </div>
-                <a href="#" class="block rounded-lg px-2 py-1.5 hover:bg-emerald-50 text-gray-700">
+                <a href="{{ route('admin.sponsors.index') }}" class="block rounded-lg px-2 py-1.5 hover:bg-emerald-50 text-gray-700">
                     {{ __('Sponsor registrations') }}
                 </a>
-                <a href="#" class="block rounded-lg px-2 py-1.5 hover:bg-emerald-50 text-gray-700">
+                <a href="{{ route('admin.visitors.index') }}" class="block rounded-lg px-2 py-1.5 hover:bg-emerald-50 text-gray-700">
                     {{ __('Visitor registrations') }}
                 </a>
 
                 <div class="mt-4 text-[10px] uppercase tracking-wide text-gray-400 ps-2">
                     {{ __('Website content') }}
                 </div>
-                <a href="#" class="block rounded-lg px-2 py-1.5 hover:bg-emerald-50 text-gray-700">
+                <a href="{{ route('admin.public-sponsors.index') }}" class="block rounded-lg px-2 py-1.5 hover:bg-emerald-50 text-gray-700">
                     {{ __('Sponsors (public)') }}
                 </a>
-                <a href="#" class="block rounded-lg px-2 py-1.5 hover:bg-emerald-50 text-gray-700">
+                <a href="{{ route('admin.participants.index') }}" class="block rounded-lg px-2 py-1.5 hover:bg-emerald-50 text-gray-700">
                     {{ __('Participants') }}
                 </a>
-                <a href="#" class="block rounded-lg px-2 py-1.5 hover:bg-emerald-50 text-gray-700">
+                <a href="{{ route('admin.about.edit') }}" class="block rounded-lg px-2 py-1.5 hover:bg-emerald-50 text-gray-700">
                     {{ __('About content') }}
                 </a>
-                <a href="#" class="block rounded-lg px-2 py-1.5 hover:bg-emerald-50 text-gray-700">
+                <a href="{{ route('admin.contact-infos.index') }}" class="block rounded-lg px-2 py-1.5 hover:bg-emerald-50 text-gray-700">
                     {{ __('Contact info') }}
                 </a>
-                <a href="#" class="block rounded-lg px-2 py-1.5 hover:bg-emerald-50 text-gray-700">
+                <a href="{{ route('admin.hero-media.index') }}" class="block rounded-lg px-2 py-1.5 hover:bg-emerald-50 text-gray-700">
                     {{ __('Hero media') }}
                 </a>
             </nav>
@@ -61,8 +63,7 @@
                 @csrf
                 <button
                     type="submit"
-                    class="w-full rounded-lg bg-gray-900 px-3 py-1.5 text-xs font-semibold text-white hover:bg-black"
-                >
+                    class="w-full rounded-lg bg-gray-900 px-3 py-1.5 text-xs font-semibold text-white hover:bg-black">
                     {{ __('Log out') }}
                 </button>
             </form>
@@ -82,4 +83,5 @@
         </div>
     </div>
 </body>
+
 </html>
