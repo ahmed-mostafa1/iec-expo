@@ -3,7 +3,9 @@
 use App\Http\Controllers\Public\ContactController;
 use App\Http\Controllers\Public\LandingPageController;
 use App\Http\Controllers\Public\SponsorRegistrationController;
+use App\Http\Controllers\Public\SponsorShowController as PublicSponsorShowController;
 use App\Http\Controllers\Public\VisitorRegistrationController;
+use App\Http\Controllers\Public\ParticipantShowController as PublicParticipantShowController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\PublicSponsorController;
 use App\Http\Controllers\Admin\ParticipantController;
@@ -43,6 +45,12 @@ Route::prefix('{locale}')
 
         Route::post('/contact', [ContactController::class, 'submit'])
             ->name('public.contact');
+
+        Route::get('/sponsors/{sponsor}', PublicSponsorShowController::class)
+            ->name('public.sponsors.show');
+
+        Route::get('/participants/{participant}', PublicParticipantShowController::class)
+            ->name('public.participants.show');
     });
 
 // Admin Routes
@@ -89,8 +97,8 @@ Route::prefix('admin')
         Route::post('/visitor-registrations/{registration}/pdf/regenerate', [AdminVisitorController::class, 'regeneratePdf'])
             ->name('visitors.regenerate-pdf');
 
-        Route::resource('public-sponsors', PublicSponsorController::class)->except(['show']);
-        Route::resource('participants', ParticipantController::class)->except(['show']);
+        Route::resource('public-sponsors', PublicSponsorController::class);
+        Route::resource('participants', ParticipantController::class);
 
         // About content – treat as single resource
         Route::get('about-content', [AboutContentController::class, 'edit'])->name('about.edit');

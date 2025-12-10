@@ -37,6 +37,27 @@
       box-sizing: border-box;
     }
 
+    [data-animate] {
+      opacity: 0;
+      transform: translateY(20px) scale(0.98);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    [data-animate].visible {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+
+    @keyframes heroFloat {
+      0%, 100% { transform: translateY(0) scale(1); }
+      50% { transform: translateY(-12px) scale(1.01); }
+    }
+
+    @keyframes softPulse {
+      0%, 100% { box-shadow: 0 20px 40px rgba(0,0,0,0.08); }
+      50% { box-shadow: 0 30px 60px rgba(0,0,0,0.12); }
+    }
+
     body {
       font-family: 'Work Sans', sans-serif;
       background-color: hsl(var(--background));
@@ -236,95 +257,14 @@
       position: relative;
       z-index: 10;
       display: grid;
-      gap: 3rem;
-      align-items: center;
-    }
-
-    @media (min-width: 1024px) {
-      .hero-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-
-    .hero-content {
-      text-align: center;
-      order: 2;
-    }
-
-    @media (min-width: 1024px) {
-      .hero-content {
-        text-align: left;
-        order: 1;
-      }
-    }
-
-    .hero-badge {
-      display: inline-block;
-      padding: 0.375rem 1rem;
-      background: hsl(var(--primary) / 0.1);
-      color: hsl(var(--primary));
-      border-radius: 9999px;
-      font-size: 0.875rem;
-      font-weight: 500;
-      margin-bottom: 1.5rem;
-    }
-
-    .hero-title {
-      font-size: 2.5rem;
-      font-weight: 700;
-      line-height: 1.1;
-      margin-bottom: 1.5rem;
-    }
-
-    @media (min-width: 768px) {
-      .hero-title { font-size: 3rem; }
-    }
-
-    @media (min-width: 1024px) {
-      .hero-title { font-size: 3.75rem; }
-    }
-
-    .hero-desc {
-      font-size: 1.125rem;
-      color: hsl(var(--muted-foreground));
-      margin-bottom: 2rem;
-      max-width: 36rem;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    @media (min-width: 1024px) {
-      .hero-desc {
-        margin-left: 0;
-        margin-right: 0;
-      }
-    }
-
-    .hero-buttons {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      justify-content: center;
-    }
-
-    @media (min-width: 640px) {
-      .hero-buttons {
-        flex-direction: row;
-      }
-    }
-
-    @media (min-width: 1024px) {
-      .hero-buttons {
-        justify-content: flex-start;
-      }
+      place-items: center;
+      gap: 2rem;
+      min-height: calc(100vh - 8rem);
     }
 
     .hero-media {
-      order: 1;
-    }
-
-    @media (min-width: 1024px) {
-      .hero-media { order: 2; }
+      width: 100%;
+      max-width: 960px;
     }
 
     .hero-video-frame {
@@ -334,6 +274,7 @@
       box-shadow: 0 25px 50px -12px rgba(0,0,0,0.35);
       aspect-ratio: 16 / 9;
       background: #000;
+      animation: heroFloat 12s ease-in-out infinite;
     }
 
     @media (min-width: 640px) {
@@ -386,6 +327,23 @@
       left: 50%;
       transform: translateX(-50%);
       animation: bounce 1s infinite;
+      z-index: 30;
+      text-decoration: none;
+      color: hsl(var(--muted-foreground));
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
+      border: 1px solid hsl(var(--border));
+      background: hsla(var(--card) / 0.6);
+      backdrop-filter: blur(6px);
+    }
+
+    .scroll-indicator:hover {
+      color: hsl(var(--primary));
+      border-color: hsl(var(--primary) / 0.4);
     }
 
     @keyframes bounce {
@@ -420,6 +378,7 @@
       transition: all 0.5s;
       opacity: 0;
       transform: translateY(2rem);
+      will-change: transform;
     }
 
     .highlight-card.visible {
@@ -534,11 +493,13 @@
       text-align: center;
       cursor: pointer;
       transition: all 0.5s;
+      overflow: hidden;
     }
 
     .role-card:hover {
       border-color: hsl(var(--primary));
       box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
+      animation: softPulse 1.8s ease-in-out infinite;
     }
 
     .role-card.selected {
@@ -889,11 +850,15 @@
       background: hsl(var(--card));
       border: 1px solid hsl(var(--border));
       border-radius: var(--radius);
-      padding: 1.5rem;
-      text-align: center;
+      overflow: hidden;
       transition: all 0.5s;
       opacity: 0;
       transform: translateY(2rem);
+      display: flex;
+      flex-direction: column;
+      min-height: 240px;
+      position: relative;
+      will-change: transform;
     }
 
     .sponsor-card.visible {
@@ -903,7 +868,30 @@
 
     .sponsor-card:hover {
       box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
-      transform: translateY(0) scale(1.05);
+      transform: translateY(0) scale(1.02);
+      animation: softPulse 2.2s ease-in-out infinite;
+    }
+
+    .sponsor-card .sponsor-logo {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      /* padding: 2rem; */
+      background: hsl(var(--muted));
+    }
+
+    .sponsor-card .sponsor-logo img {
+      /* max-height: 90px; */
+      max-width: 100%;
+      object-fit: contain;
+    }
+
+    .sponsor-card-footer {
+      padding: 1rem 1.25rem;
+      border-top: 1px solid hsl(var(--border));
+      text-align: center;
+      font-weight: 600;
     }
 
     .sponsor-card.main:hover { border-color: hsl(35 90% 50% / 0.5); }
@@ -911,6 +899,9 @@
     .sponsor-card.silver:hover { border-color: hsl(220 10% 60% / 0.5); }
 
     .sponsor-badge {
+      position: absolute;
+      top: 0.75rem;
+      left: 0.75rem;
       display: inline-flex;
       align-items: center;
       gap: 0.375rem;
@@ -918,7 +909,8 @@
       border-radius: 9999px;
       font-size: 0.75rem;
       font-weight: 500;
-      margin-bottom: 1rem;
+      z-index: 2;
+      backdrop-filter: blur(8px);
     }
 
     .sponsor-badge.main {
@@ -934,22 +926,6 @@
     .sponsor-badge.silver {
       background: hsl(220 10% 60% / 0.1);
       color: hsl(220 10% 45%);
-    }
-
-    .sponsor-logo {
-      width: 80px;
-      height: 80px;
-      margin: 0 auto 1rem;
-      border-radius: var(--radius);
-      background: hsl(var(--muted));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2.5rem;
-    }
-
-    .sponsor-name {
-      font-weight: 600;
     }
 
     /* Participants Section */
@@ -982,7 +958,12 @@
       transform: translateY(2rem);
       text-decoration: none;
       color: inherit;
-      display: block;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      min-height: 200px;
+      will-change: transform;
     }
 
     .participant-card.visible {
@@ -1008,6 +989,12 @@
       transition: background 0.3s;
     }
 
+    .participant-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
     .participant-card:hover .participant-logo {
       background: hsl(var(--primary) / 0.2);
     }
@@ -1015,7 +1002,7 @@
     .participant-name {
       font-weight: 600;
       margin-bottom: 0.5rem;
-      display: flex;
+      display: inline-flex;
       align-items: center;
       gap: 0.5rem;
     }
@@ -1164,11 +1151,12 @@
     }
 
     .location-card {
-      margin-top: 1.5rem;
+      margin-top: 2rem;
       background: hsl(var(--card));
       border: 1px solid hsl(var(--border));
       border-radius: var(--radius);
       padding: 1.5rem;
+      width: 100%;
     }
 
     .location-header {
@@ -1185,6 +1173,54 @@
     .location-address {
       font-size: 0.875rem;
       color: hsl(var(--muted-foreground));
+    }
+
+    .map-embed {
+      margin-top: 1rem;
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid hsl(var(--border));
+    }
+
+    .map-embed iframe {
+      width: 100%;
+      height: 320px;
+      border: 0;
+    }
+    .to-top-button {
+      position: fixed;
+      right: 1.25rem;
+      bottom: 1.25rem;
+      width: 44px;
+      height: 44px;
+      border-radius: 999px;
+      background: hsl(var(--primary));
+      color: hsl(var(--primary-foreground));
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 15px 35px rgba(16, 185, 129, 0.3);
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(20px);
+      transition: opacity 0.3s ease, transform 0.3s ease;
+      z-index: 60;
+    }
+
+    .to-top-button svg {
+      animation: float-up 1.5s ease-in-out infinite;
+    }
+
+    .to-top-button.show {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
+    }
+
+    @keyframes float-up {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-3px); }
     }
 
     /* Footer */
@@ -1216,16 +1252,6 @@
     /* RTL Support */
     [dir="rtl"] {
       font-family: 'Noto Sans Arabic', 'Work Sans', sans-serif;
-    }
-
-    [dir="rtl"] .hero-content {
-      text-align: center;
-    }
-
-    @media (min-width: 1024px) {
-      [dir="rtl"] .hero-content {
-        text-align: right;
-      }
     }
 
     /* Icons (using SVG) */
@@ -1290,6 +1316,28 @@
   </style>
 </head>
 <body>
+@php
+    $publicSponsors = \App\Models\PublicSponsor::query()
+        ->where('is_active', true)
+        ->orderBy('tier')
+        ->orderBy('display_order')
+        ->get();
+
+    $sponsorTiers = [
+        'main'   => __('Main Sponsors'),
+        'gold'   => __('Gold Sponsors'),
+        'silver' => __('Silver Sponsors'),
+    ];
+
+    $groupedSponsors = $publicSponsors->groupBy(function ($sponsor) {
+        return strtolower($sponsor->tier ?? 'other');
+    });
+
+    $participants = \App\Models\Participant::query()
+        ->where('is_active', true)
+        ->orderBy('display_order')
+        ->get();
+@endphp
   <!-- Header -->
   <header class="header">
     <div class="container">
@@ -1333,22 +1381,6 @@
     <section class="hero" id="hero">
       <div class="container">
         <div class="hero-grid">
-          <div class="hero-content">
-            <div class="hero-badge" data-en="March 15-17, 2025 • Riyadh" data-ar="15-17 مارس 2025 • الرياض">March 15-17, 2025 • Riyadh</div>
-            <h1 class="hero-title" data-en="The Premier Business Conference" data-ar="المؤتمر التجاري الأول">The Premier Business Conference</h1>
-            <p class="hero-desc" data-en="Join industry leaders, innovators, and visionaries for three days of inspiration, networking, and groundbreaking insights." data-ar="انضم إلى قادة الصناعة والمبتكرين وأصحاب الرؤى في ثلاثة أيام من الإلهام والتواصل والرؤى الرائدة.">Join industry leaders, innovators, and visionaries for three days of inspiration, networking, and groundbreaking insights.</p>
-            <div class="hero-buttons">
-              <a href="#register" class="btn btn-primary btn-lg">
-                <span data-en="Register Now" data-ar="سجل الآن">Register Now</span>
-                <svg class="icon icon-sm" style="margin-left: 0.5rem;" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-              </a>
-              <a href="#about" class="btn btn-outline btn-lg">
-                <span data-en="Learn More" data-ar="اعرف المزيد">Learn More</span>
-                <svg class="icon icon-sm" style="margin-left: 0.5rem;" viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
-              </a>
-            </div>
-          </div>
-
           <div class="hero-media">
             <div class="hero-video-frame">
               <video class="hero-video" autoplay muted loop playsinline poster="https://images.pexels.com/photos/1181406/pexels-photo-1181406.jpeg?auto=compress&cs=tinysrgb&w=1600">
@@ -1363,9 +1395,9 @@
           </div>
         </div>
       </div>
-      <div class="scroll-indicator">
-        <svg class="icon" viewBox="0 0 24 24" style="color: hsl(var(--muted-foreground))"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
-      </div>
+      <a href="#highlights" class="scroll-indicator" aria-label="{{ __('Scroll to highlights') }}">
+        <svg class="icon" viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+      </a>
     </section>
 
     <!-- Highlights Section -->
@@ -1585,92 +1617,70 @@
     <section class="sponsors" id="sponsors">
       <div class="container">
         <div class="section-header" data-animate>
-          <h2 class="section-title" data-en="Our Sponsors" data-ar="رعاتنا">Our Sponsors</h2>
-          <p class="section-desc" data-en="We are grateful to our sponsors who make this event possible." data-ar="نحن ممتنون لرعاتنا الذين يجعلون هذا الحدث ممكناً.">We are grateful to our sponsors who make this event possible.</p>
+          <h2 class="section-title">{{ __('Our Sponsors') }}</h2>
+          <p class="section-desc">{{ __('We are grateful to our sponsors who make this event possible.') }}</p>
         </div>
 
         <div class="sponsor-tiers">
-          <div class="sponsor-tier">
-            <h3 class="sponsor-tier-title" data-en="Main Sponsors" data-ar="الرعاة الرئيسيون">Main Sponsors</h3>
-            <div class="sponsor-tier-grid tier-main">
-              <div class="sponsor-card main" data-animate>
-                <div class="sponsor-badge main">
-                  <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="m2 4 3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"/></svg>
-                  <span data-en="Main Sponsor" data-ar="الراعي الرئيسي">Main Sponsor</span>
+          @php $renderedSponsors = false; @endphp
+          @foreach($sponsorTiers as $tierKey => $label)
+            @php $tierSponsors = $groupedSponsors->get($tierKey); @endphp
+            @if($tierSponsors && $tierSponsors->count())
+              @php $renderedSponsors = true; @endphp
+              <div class="sponsor-tier">
+                <h3 class="sponsor-tier-title">{{ $label }}</h3>
+                <div class="sponsor-tier-grid tier-{{ $tierKey }}">
+                  @foreach($tierSponsors as $sponsor)
+                    <a href="{{ route('public.sponsors.show', ['locale' => app()->getLocale(), 'sponsor' => $sponsor]) }}"
+                       class="sponsor-card {{ $tierKey }}"
+                       data-animate>
+                      <div class="sponsor-badge {{ $tierKey }}">
+                        <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                        <span>{{ $label }}</span>
+                      </div>
+                      <div class="sponsor-logo">
+                        <img src="{{ asset('storage/'.$sponsor->logo_path) }}" alt="{{ $sponsor->name }}">
+                      </div>
+                     
+                    </a>
+                  @endforeach
                 </div>
-                <div class="sponsor-logo">🏢</div>
-                <div class="sponsor-name">Tech Corp</div>
               </div>
-              <div class="sponsor-card main" data-animate>
-                <div class="sponsor-badge main">
-                  <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="m2 4 3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"/></svg>
-                  <span data-en="Main Sponsor" data-ar="الراعي الرئيسي">Main Sponsor</span>
-                </div>
-                <div class="sponsor-logo">🔬</div>
-                <div class="sponsor-name">Innovation Labs</div>
-              </div>
-            </div>
-          </div>
+            @endif
+          @endforeach
 
-          <div class="sponsor-tier">
-            <h3 class="sponsor-tier-title" data-en="Gold Sponsors" data-ar="الرعاة الذهبيون">Gold Sponsors</h3>
-            <div class="sponsor-tier-grid tier-gold">
-              <div class="sponsor-card gold" data-animate>
-                <div class="sponsor-badge gold">
-                  <svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
-                  <span data-en="Gold Sponsor" data-ar="الراعي الذهبي">Gold Sponsor</span>
-                </div>
-                <div class="sponsor-logo">💰</div>
-                <div class="sponsor-name">Global Finance</div>
-              </div>
-              <div class="sponsor-card gold" data-animate>
-                <div class="sponsor-badge gold">
-                  <svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
-                  <span data-en="Gold Sponsor" data-ar="الراعي الذهبي">Gold Sponsor</span>
-                </div>
-                <div class="sponsor-logo">☁️</div>
-                <div class="sponsor-name">Cloud Systems</div>
-              </div>
-              <div class="sponsor-card gold" data-animate>
-                <div class="sponsor-badge gold">
-                  <svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
-                  <span data-en="Gold Sponsor" data-ar="الراعي الذهبي">Gold Sponsor</span>
-                </div>
-                <div class="sponsor-logo">📊</div>
-                <div class="sponsor-name">Data Dynamics</div>
-              </div>
-            </div>
-          </div>
+          @php
+            $otherSponsors = $groupedSponsors->filter(function ($_, $key) use ($sponsorTiers) {
+              return ! array_key_exists($key, $sponsorTiers);
+            })->flatten();
+          @endphp
 
-          <div class="sponsor-tier">
-            <h3 class="sponsor-tier-title" data-en="Silver Sponsors" data-ar="الرعاة الفضيّون">Silver Sponsors</h3>
-            <div class="sponsor-tier-grid tier-silver">
-              <div class="sponsor-card silver" data-animate>
-                <div class="sponsor-badge silver">
-                  <svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
-                  <span data-en="Silver Sponsor" data-ar="الراعي الفضي">Silver Sponsor</span>
-                </div>
-                <div class="sponsor-logo">🌱</div>
-                <div class="sponsor-name">Green Energy</div>
-              </div>
-              <div class="sponsor-card silver" data-animate>
-                <div class="sponsor-badge silver">
-                  <svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
-                  <span data-en="Silver Sponsor" data-ar="الراعي الفضي">Silver Sponsor</span>
-                </div>
-                <div class="sponsor-logo">💡</div>
-                <div class="sponsor-name">Smart Solutions</div>
-              </div>
-              <div class="sponsor-card silver" data-animate>
-                <div class="sponsor-badge silver">
-                  <svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
-                  <span data-en="Silver Sponsor" data-ar="الراعي الفضي">Silver Sponsor</span>
-                </div>
-                <div class="sponsor-logo">🚀</div>
-                <div class="sponsor-name">Future Tech</div>
+          @if($otherSponsors->count())
+            @php $renderedSponsors = true; @endphp
+            <div class="sponsor-tier">
+              <h3 class="sponsor-tier-title">{{ __('Sponsors') }}</h3>
+              <div class="sponsor-tier-grid tier-main">
+                @foreach($otherSponsors as $sponsor)
+                  <a href="{{ route('public.sponsors.show', ['locale' => app()->getLocale(), 'sponsor' => $sponsor]) }}"
+                     class="sponsor-card"
+                     data-animate>
+                    <div class="sponsor-badge">
+                      <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M12 5v14"/></svg>
+                      <span>{{ __('Sponsor') }}</span>
+                    </div>
+                    <div class="sponsor-logo">
+                      <img src="{{ asset('storage/'.$sponsor->logo_path) }}" alt="{{ $sponsor->name }}">
+                    </div>
+                    
+                  </a>
+                @endforeach
               </div>
             </div>
-          </div>
+          @endif
+
+          @unless($renderedSponsors)
+            <p class="text-center text-gray-500 text-sm">{{ __('Sponsors will be announced soon.') }}</p>
+          @endunless
         </div>
       </div>
     </section>
@@ -1679,53 +1689,37 @@
     <section class="participants" id="participants">
       <div class="container">
         <div class="section-header" data-animate>
-          <h2 class="section-title" data-en="Participating Companies" data-ar="الشركات المشاركة">Participating Companies</h2>
-          <p class="section-desc" data-en="Meet the industry leaders who will be showcasing at the event." data-ar="تعرف على قادة الصناعة الذين سيشاركون في الحدث.">Meet the industry leaders who will be showcasing at the event.</p>
+          <h2 class="section-title">{{ __('Participating Companies') }}</h2>
+          <p class="section-desc">{{ __('Meet the industry leaders who will be showcasing at the event.') }}</p>
         </div>
 
         <div class="participants-grid">
-          <a href="#" class="participant-card" data-animate>
-            <div class="participant-logo">⚡</div>
-            <div class="participant-name">
-              Saudi Aramco
-              <svg class="icon icon-sm external-icon" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14 21 3"/></svg>
+          @forelse($participants as $participant)
+            <a href="{{ route('public.participants.show', ['locale' => app()->getLocale(), 'participant' => $participant]) }}"
+               class="participant-card"
+               data-animate>
+              <div class="participant-logo">
+                @if($participant->logo_path)
+                  <img src="{{ asset('storage/'.$participant->logo_path) }}" alt="{{ $participant->name }}">
+                @else
+                  <span>{{ mb_strtoupper(mb_substr($participant->name, 0, 1)) }}</span>
+                @endif
+              </div>
+              <div class="participant-name">
+                {{ $participant->name }}
+                @if($participant->url)
+                  <svg class="icon icon-sm external-icon" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14 21 3"/></svg>
+                @endif
+              </div>
+              <p class="participant-desc">{{ $participant->description_en ?: __('Details coming soon.') }}</p>
+            </a>
+          @empty
+            <div class="participant-card" data-animate>
+              <div class="participant-logo">ℹ️</div>
+              <div class="participant-name">{{ __('Coming soon') }}</div>
+              <p class="participant-desc">{{ __('Participants will be announced soon.') }}</p>
             </div>
-            <p class="participant-desc" data-en="Global leader in energy solutions" data-ar="رائد عالمي في حلول الطاقة">Global leader in energy solutions</p>
-          </a>
-          <a href="#" class="participant-card" data-animate>
-            <div class="participant-logo">🏭</div>
-            <div class="participant-name">
-              SABIC
-              <svg class="icon icon-sm external-icon" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14 21 3"/></svg>
-            </div>
-            <p class="participant-desc" data-en="Petrochemicals and manufacturing excellence" data-ar="تميز في البتروكيماويات والتصنيع">Petrochemicals and manufacturing excellence</p>
-          </a>
-          <div class="participant-card" data-animate>
-            <div class="participant-logo">📡</div>
-            <div class="participant-name">STC</div>
-            <p class="participant-desc" data-en="Leading telecommunications provider" data-ar="مزود اتصالات رائد">Leading telecommunications provider</p>
-          </div>
-          <a href="#" class="participant-card" data-animate>
-            <div class="participant-logo">🏦</div>
-            <div class="participant-name">
-              Al Rajhi Bank
-              <svg class="icon icon-sm external-icon" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14 21 3"/></svg>
-            </div>
-            <p class="participant-desc" data-en="Islamic banking pioneer" data-ar="رائد في الخدمات المصرفية الإسلامية">Islamic banking pioneer</p>
-          </a>
-          <a href="#" class="participant-card" data-animate>
-            <div class="participant-logo">🌆</div>
-            <div class="participant-name">
-              NEOM
-              <svg class="icon icon-sm external-icon" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14 21 3"/></svg>
-            </div>
-            <p class="participant-desc" data-en="Building the future of living" data-ar="بناء مستقبل الحياة">Building the future of living</p>
-          </a>
-          <div class="participant-card" data-animate>
-            <div class="participant-logo">🏝️</div>
-            <div class="participant-name">Red Sea Global</div>
-            <p class="participant-desc" data-en="Sustainable tourism development" data-ar="تطوير السياحة المستدامة">Sustainable tourism development</p>
-          </div>
+          @endforelse
         </div>
       </div>
     </section>
@@ -1885,18 +1879,25 @@
                 </div>
               </div>
             </div>
-
-            <div class="location-card">
-              <div class="location-header">
-                <div class="contact-info-icon">
-                  <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
-                </div>
-                <div>
-                  <div class="location-title" data-en="Event Location" data-ar="موقع الحدث">Event Location</div>
-                  <p class="location-address" data-en="Riyadh International Convention & Exhibition Center, King Abdullah Road, Riyadh, Saudi Arabia" data-ar="مركز الرياض الدولي للمؤتمرات والمعارض، طريق الملك عبدالله، الرياض، المملكة العربية السعودية">Riyadh International Convention & Exhibition Center, King Abdullah Road, Riyadh, Saudi Arabia</p>
-                </div>
-              </div>
+          </div>
+        </div>
+        <div class="location-card">
+          <div class="location-header">
+            <div class="contact-info-icon">
+              <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
             </div>
+            <div>
+              <div class="location-title">{{ __('Event Location') }}</div>
+              <p class="location-address">{{ __('Riyadh International Convention & Exhibition Center, King Abdullah Road, Riyadh, Saudi Arabia') }}</p>
+            </div>
+          </div>
+          <div class="map-embed">
+            <iframe
+              src="https://www.google.com/maps?q=Riyadh+International+Convention+%26+Exhibition+Center&output=embed"
+              allowfullscreen
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+            ></iframe>
           </div>
         </div>
       </div>
@@ -1907,14 +1908,17 @@
   <footer class="footer">
     <div class="container">
       <div class="footer-inner">
-        <div class="footer-text">© 2025 <span data-en="Conference 2025" data-ar="مؤتمر 2025">Conference 2025</span></div>
-        <div class="footer-text" data-en="All rights reserved." data-ar="جميع الحقوق محفوظة.">All rights reserved.</div>
+        <div class="footer-text">© 2025 <span data-en="INTERNATIONAL E-COMMERCE EXPO | Terms & Conditions" data-ar="المؤتمر الدولي للتجارة اﻹلكترونية"> INTERNATIONAL E-COMMERCE EXPO | Terms & Conditions</span></div>
+        <div class="footer-text" data-en="All rights reserved." data-ar="جميع الحقوق محفوظة.">2025© All rights reserved.</div>
       </div>
     </div>
   </footer>
 
   <!-- Toast Container -->
   <div class="toast-container" id="toast-container"></div>
+  <button id="to-top-btn" class="to-top-button" type="button" aria-label="{{ __('Back to top') }}" onclick="scrollToTop()">
+    <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+  </button>
 
   <script>
     // Locale Management
@@ -2037,11 +2041,29 @@
       }
     }
 
+    function toggleRoleVisibility(role) {
+      const visitorElements = [document.getElementById('visitor-card'), document.getElementById('visitor-form')];
+      const exhibitorElements = [document.getElementById('exhibitor-card'), document.getElementById('exhibitor-form')];
+
+      if (role === 'visitor') {
+        visitorElements.forEach(el => el.style.display = '');
+        exhibitorElements.forEach(el => el.style.display = 'none');
+      } else if (role === 'exhibitor') {
+        exhibitorElements.forEach(el => el.style.display = '');
+        visitorElements.forEach(el => el.style.display = 'none');
+      } else {
+        [...visitorElements, ...exhibitorElements].forEach(el => el.style.display = '');
+      }
+    }
+
+    toggleRoleVisibility(null);
+
     function selectRole(role) {
       if (selectedRole === role) return;
       
       selectedRole = role;
       applyRoleOrder(role);
+      toggleRoleVisibility(role);
       const roleCards = document.getElementById('role-cards');
       roleCards.classList.add('has-selection');
 
@@ -2080,6 +2102,7 @@
       document.getElementById('exhibitor-card').classList.remove('selected', 'dimmed');
       document.getElementById('exhibitor-cta').style.display = 'flex';
       document.getElementById('exhibitor-form').classList.remove('active');
+      toggleRoleVisibility(null);
       applyRoleOrder(null);
       updateExhibitorStep();
     }
@@ -2144,6 +2167,21 @@
         toast.style.transform = 'translateY(1rem)';
         setTimeout(() => toast.remove(), 300);
       }, 3000);
+    }
+
+    const toTopBtn = document.getElementById('to-top-btn');
+    if (toTopBtn) {
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 200) {
+          toTopBtn.classList.add('show');
+        } else {
+          toTopBtn.classList.remove('show');
+        }
+      });
+    }
+
+    function scrollToTop() {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
     // Show register button on desktop

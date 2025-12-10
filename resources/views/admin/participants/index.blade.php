@@ -51,22 +51,28 @@
                         <td class="px-3 py-2 align-top">
                             {{ $participant->is_active ? __('Yes') : __('No') }}
                         </td>
-                        <td class="px-3 py-2 align-top text-end space-x-2">
-                            <a href="{{ route('admin.participants.edit', $participant) }}"
-                               class="text-[11px] text-emerald-700 hover:text-emerald-900">
-                                {{ __('Edit') }}
-                            </a>
-                            <form action="{{ route('admin.participants.destroy', $participant) }}"
-                                  method="POST"
-                                  class="inline">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit"
-                                        class="text-[11px] text-red-600 hover:text-red-800"
-                                        onclick="return confirm('{{ __('Delete participant?') }}')">
-                                    {{ __('Delete') }}
-                                </button>
-                            </form>
+                        <td class="px-3 py-2 align-top text-end">
+                            <div class="inline-flex items-center gap-2">
+                                <a href="{{ route('admin.participants.show', $participant) }}"
+                                   class="text-[11px] text-gray-600 hover:text-gray-800">
+                                    {{ __('View') }}
+                                </a>
+                                <a href="{{ route('admin.participants.edit', $participant) }}"
+                                   class="text-[11px] text-emerald-700 hover:text-emerald-900">
+                                    {{ __('Edit') }}
+                                </a>
+                                <form action="{{ route('admin.participants.destroy', $participant) }}"
+                                      method="POST"
+                                      class="inline"
+                                      onsubmit="return confirm('{{ __('Delete participant?') }}')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit"
+                                            class="text-[11px] text-red-600 hover:text-red-800">
+                                        {{ __('Delete') }}
+                                    </button>
+                                </form>
+                            </div>
                         </td>
                     </tr>
                 @empty
