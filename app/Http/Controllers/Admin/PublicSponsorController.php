@@ -47,6 +47,11 @@ class PublicSponsorController extends Controller
             ->with('success', __('Sponsor created.'));
     }
 
+    public function show(PublicSponsor $publicSponsor)
+    {
+        return view('admin.public-sponsors.show', ['sponsor' => $publicSponsor]);
+    }
+
     public function edit(PublicSponsor $publicSponsor)
     {
         return view('admin.public-sponsors.edit', ['sponsor' => $publicSponsor]);

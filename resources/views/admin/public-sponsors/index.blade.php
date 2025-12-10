@@ -42,22 +42,28 @@
                         <td class="px-3 py-2 align-top">
                             {{ $sponsor->is_active ? __('Yes') : __('No') }}
                         </td>
-                        <td class="px-3 py-2 align-top text-end space-x-2">
-                            <a href="{{ route('admin.public-sponsors.edit', $sponsor) }}"
-                               class="text-[11px] text-emerald-700 hover:text-emerald-900">
-                                {{ __('Edit') }}
-                            </a>
-                            <form action="{{ route('admin.public-sponsors.destroy', $sponsor) }}"
-                                  method="POST"
-                                  class="inline">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit"
-                                        class="text-[11px] text-red-600 hover:text-red-800"
-                                        onclick="return confirm('{{ __('Delete sponsor?') }}')">
-                                    {{ __('Delete') }}
-                                </button>
-                            </form>
+                        <td class="px-3 py-2 align-top text-end">
+                            <div class="inline-flex items-center gap-2">
+                                <a href="{{ route('admin.public-sponsors.show', $sponsor) }}"
+                                   class="text-[11px] text-gray-600 hover:text-gray-800">
+                                    {{ __('View') }}
+                                </a>
+                                <a href="{{ route('admin.public-sponsors.edit', $sponsor) }}"
+                                   class="text-[11px] text-emerald-700 hover:text-emerald-900">
+                                    {{ __('Edit') }}
+                                </a>
+                                <form action="{{ route('admin.public-sponsors.destroy', $sponsor) }}"
+                                      method="POST"
+                                      class="inline"
+                                      onsubmit="return confirm('{{ __('Delete sponsor?') }}')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit"
+                                            class="text-[11px] text-red-600 hover:text-red-800">
+                                        {{ __('Delete') }}
+                                    </button>
+                                </form>
+                            </div>
                         </td>
                     </tr>
                 @empty

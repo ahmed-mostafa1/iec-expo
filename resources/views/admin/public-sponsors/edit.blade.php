@@ -1,7 +1,7 @@
 @extends('layouts.admin')
 
 @section('content')
-<h1 class="text-lg font-semib$sponsor mb-4">{{ __('Add sponsor') }}</h1>
+<h1 class="text-lg font-semibold mb-4">{{ __('Edit sponsor') }}</h1>
 
 <form method="POST"
     action="{{ route('admin.public-sponsors.update', $sponsor)}}"
@@ -12,21 +12,21 @@
     <div>
         <label class="block text-[10px] font-medium text-gray-700 mb-1">{{ __('Name') }}</label>
         <input type="text" name="name" class="w-full rounded-lg border-gray-300 text-xs"
-            value="{{ $sponsor('name') }}" required>
+            value="{{ old('name', $sponsor->name) }}" required>
         @error('name') <p class="mt-1 text-[11px] text-red-600">{{ $message }}</p> @enderror
     </div>
 
     <div>
         <label class="block text-[10px] font-medium text-gray-700 mb-1">{{ __('Tier') }}</label>
         <input type="text" name="tier" class="w-full rounded-lg border-gray-300 text-xs"
-            value="{{ $sponsor('tier') }}">
+            value="{{ old('tier', $sponsor->tier) }}">
         @error('tier') <p class="mt-1 text-[11px] text-red-600">{{ $message }}</p> @enderror
     </div>
 
     <div>
         <label class="block text-[10px] font-medium text-gray-700 mb-1">{{ __('Website URL') }}</label>
         <input type="url" name="url" class="w-full rounded-lg border-gray-300 text-xs"
-            value="{{ $sponsor('url') }}">
+            value="{{ old('url', $sponsor->url) }}">
         @error('url') <p class="mt-1 text-[11px] text-red-600">{{ $message }}</p> @enderror
     </div>
 
@@ -34,13 +34,13 @@
         <div>
             <label class="block text-[10px] font-medium text-gray-700 mb-1">{{ __('Display order') }}</label>
             <input type="number" name="display_order" class="w-full rounded-lg border-gray-300 text-xs"
-                value="{{ $sponsor('display_order', 0) }}">
+                value="{{ old('display_order', $sponsor->display_order) }}">
             @error('display_order') <p class="mt-1 text-[11px] text-red-600">{{ $message }}</p> @enderror
         </div>
         <div class="flex items-center gap-2 mt-5">
             <input type="checkbox" name="is_active" value="1"
                 class="rounded border-gray-300"
-                @checked($sponsor('is_active', true))>
+                @checked(old('is_active', $sponsor->is_active))>
             <span class="text-[11px] text-gray-700">{{ __('Active') }}</span>
         </div>
     </div>
@@ -53,7 +53,7 @@
 
     <div class="pt-2">
         <button type="submit"
-            class="inline-flex items-center rounded-lg bg-gray-900 px-3 py-1.5 text-xs font-semib$sponsor text-white hover:bg-black">
+            class="inline-flex items-center rounded-lg bg-gray-900 px-3 py-1.5 text-xs font-semibold text-white hover:bg-black">
             {{ __('Save') }}
         </button>
     </div>

@@ -52,6 +52,11 @@ class ParticipantController extends Controller
             ->with('success', __('Participant created.'));
     }
 
+    public function show(Participant $participant)
+    {
+        return view('admin.participants.show', compact('participant'));
+    }
+
     public function edit(Participant $participant)
     {
         return view('admin.participants.edit', compact('participant'));
