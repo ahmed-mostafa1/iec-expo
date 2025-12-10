@@ -5,6 +5,11 @@ use App\Http\Controllers\Public\LandingPageController;
 use App\Http\Controllers\Public\SponsorRegistrationController;
 use App\Http\Controllers\Public\VisitorRegistrationController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\PublicSponsorController;
+use App\Http\Controllers\Admin\ParticipantController;
+use App\Http\Controllers\Admin\AboutContentController;
+use App\Http\Controllers\Admin\ContactInfoController;
+use App\Http\Controllers\Admin\HeroMediaController;
 use App\Http\Controllers\Admin\SponsorRegistrationController as AdminSponsorController;
 use App\Http\Controllers\Admin\VisitorRegistrationController as AdminVisitorController;
 use Illuminate\Support\Facades\Route;
@@ -83,8 +88,24 @@ Route::prefix('admin')
 
         Route::post('/visitor-registrations/{registration}/pdf/regenerate', [AdminVisitorController::class, 'regeneratePdf'])
             ->name('visitors.regenerate-pdf');
+
+        Route::resource('public-sponsors', PublicSponsorController::class)->except(['show']);
+        Route::resource('participants', ParticipantController::class)->except(['show']);
+
+        // About content – treat as single resource
+        Route::get('about-content', [AboutContentController::class, 'edit'])->name('about.edit');
+        Route::put('about-content', [AboutContentController::class, 'update'])->name('about.update');
+
+        // Contact infos
+        Route::resource('contact-infos', ContactInfoController::class)->except(['show']);
+
+        // Hero media
+        Route::resource('hero-media', HeroMediaController::class)->except(['show']);
     });
 
+
+
+// ...
 
 
 // Route::view('dashboard', 'dashboard')
