@@ -67,10 +67,11 @@
     }
 
     .header-inner {
-      display: flex;
+      display: grid;
+      grid-template-columns: auto 1fr auto;
       align-items: center;
-      justify-content: space-between;
       height: 64px;
+      gap: 1rem;
     }
 
     .logo {
@@ -84,6 +85,7 @@
       display: none;
       align-items: center;
       gap: 2rem;
+      justify-self: center;
     }
 
     @media (min-width: 768px) {
@@ -99,6 +101,19 @@
 
     .nav-link:hover {
       color: hsl(var(--primary));
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      justify-content: flex-end;
+    }
+
+    .logo-secondary {
+      font-size: 1rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
     }
 
     .header-actions {
@@ -304,139 +319,64 @@
       }
     }
 
-    .hero-slider-wrap {
+    .hero-media {
       order: 1;
     }
 
     @media (min-width: 1024px) {
-      .hero-slider-wrap { order: 2; }
+      .hero-media { order: 2; }
     }
 
-    /* Hero Slider */
-    .slider {
+    .hero-video-frame {
       position: relative;
-      max-width: 32rem;
-      margin: 0 auto;
-    }
-
-    .slider-card {
-      position: relative;
-      background: hsl(var(--card));
-      border-radius: 1rem;
-      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.15);
+      border-radius: 1.5rem;
       overflow: hidden;
-      aspect-ratio: 4/3;
+      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.35);
+      aspect-ratio: 16 / 9;
+      background: #000;
     }
 
-    .slide {
+    @media (min-width: 640px) {
+      .hero-video-frame { aspect-ratio: 16 / 8.5; }
+    }
+
+    .hero-video-frame::after {
+      content: '';
       position: absolute;
       inset: 0;
+      background: linear-gradient(135deg, rgba(0,0,0,0.4), rgba(0,0,0,0.05));
+      pointer-events: none;
+    }
+
+    .hero-video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .hero-video-caption {
+      position: absolute;
+      bottom: 1.25rem;
+      left: 1.25rem;
+      right: 1.25rem;
+      z-index: 2;
+      color: #fff;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 2rem;
-      text-align: center;
-      opacity: 0;
-      transform: translateX(100%);
-      transition: all 0.5s ease-out;
+      gap: 0.25rem;
+      text-shadow: 0 4px 12px rgba(0,0,0,0.45);
     }
 
-    .slide.active {
-      opacity: 1;
-      transform: translateX(0);
+    .hero-video-caption span {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.2em;
     }
 
-    .slide.prev {
-      transform: translateX(-100%);
-    }
-
-    .slide-bg {
-      position: absolute;
-      inset: 0;
-    }
-
-    .slide:nth-child(1) .slide-bg {
-      background: linear-gradient(135deg, hsl(var(--primary) / 0.8), hsl(var(--accent-foreground) / 0.6));
-    }
-
-    .slide:nth-child(2) .slide-bg {
-      background: linear-gradient(135deg, hsl(var(--chart-1) / 0.8), hsl(var(--chart-2) / 0.6));
-    }
-
-    .slide:nth-child(3) .slide-bg {
-      background: linear-gradient(135deg, hsl(var(--chart-3) / 0.8), hsl(var(--primary) / 0.6));
-    }
-
-    .slide-content {
-      position: relative;
-      z-index: 10;
-    }
-
-    .slide-title {
+    .hero-video-caption strong {
       font-size: 1.5rem;
       font-weight: 700;
-      color: hsl(var(--primary-foreground));
-      margin-bottom: 0.5rem;
-    }
-
-    @media (min-width: 768px) {
-      .slide-title { font-size: 1.875rem; }
-    }
-
-    .slide-subtitle {
-      color: hsl(var(--primary-foreground) / 0.8);
-    }
-
-    .slider-arrow {
-      position: absolute;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 40px;
-      height: 40px;
-      border-radius: 50%;
-      background: hsl(var(--card) / 0.8);
-      backdrop-filter: blur(4px);
-      border: none;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.1);
-      transition: background 0.2s;
-      z-index: 20;
-    }
-
-    .slider-arrow:hover {
-      background: hsl(var(--card));
-    }
-
-    .slider-arrow.prev { left: 0.75rem; }
-    .slider-arrow.next { right: 0.75rem; }
-
-    .slider-dots {
-      position: absolute;
-      bottom: 1rem;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      gap: 0.5rem;
-      z-index: 20;
-    }
-
-    .slider-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 9999px;
-      background: hsl(var(--primary-foreground) / 0.5);
-      border: none;
-      cursor: pointer;
-      transition: all 0.3s;
-    }
-
-    .slider-dot.active {
-      width: 24px;
-      background: hsl(var(--primary-foreground));
     }
 
     /* Scroll indicator */
@@ -911,22 +851,38 @@
       background: hsl(var(--accent) / 0.2);
     }
 
-    .sponsors-grid {
+    .sponsor-tiers {
+      display: flex;
+      flex-direction: column;
+      gap: 2.5rem;
+    }
+
+    .sponsor-tier-title {
+      text-align: center;
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .sponsor-tier-grid {
       display: grid;
       gap: 1.5rem;
-      grid-template-columns: 1fr;
+      justify-content: center;
+      justify-items: center;
+      max-width: 1000px;
+      margin: 0 auto;
     }
 
-    @media (min-width: 640px) {
-      .sponsors-grid { grid-template-columns: repeat(2, 1fr); }
+    .sponsor-tier-grid.tier-main {
+      grid-template-columns: repeat(auto-fit, minmax(220px, 260px));
     }
 
-    @media (min-width: 1024px) {
-      .sponsors-grid { grid-template-columns: repeat(3, 1fr); }
+    .sponsor-tier-grid.tier-gold {
+      grid-template-columns: repeat(auto-fit, minmax(200px, 220px));
     }
 
-    @media (min-width: 1280px) {
-      .sponsors-grid { grid-template-columns: repeat(4, 1fr); }
+    .sponsor-tier-grid.tier-silver {
+      grid-template-columns: repeat(auto-fit, minmax(180px, 200px));
     }
 
     .sponsor-card {
@@ -1347,15 +1303,18 @@
           <a href="#contact" class="nav-link" data-en="Contact" data-ar="تواصل معنا">Contact</a>
         </nav>
 
-        <div class="header-actions">
-          <button class="lang-switch" onclick="toggleLocale()">
-            <svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-            <span id="lang-text">العربية</span>
-          </button>
-          <a href="#register" class="btn btn-primary" style="display: none;" data-en="Register" data-ar="سجل الآن">Register</a>
-          <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
-            <svg class="icon" viewBox="0 0 24 24" id="menu-icon"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
-          </button>
+        <div class="header-right">
+          <a href="#hero" class="logo logo-secondary" data-en="IEC Expo" data-ar="معرض IEC">IEC Expo</a>
+          <div class="header-actions">
+            <button class="lang-switch" onclick="toggleLocale()">
+              <svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+              <span id="lang-text">العربية</span>
+            </button>
+            <a href="#register" class="btn btn-primary" style="display: none;" data-en="Register" data-ar="سجل الآن">Register</a>
+            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+              <svg class="icon" viewBox="0 0 24 24" id="menu-icon"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+            </button>
+          </div>
         </div>
       </div>
       
@@ -1390,43 +1349,15 @@
             </div>
           </div>
 
-          <div class="hero-slider-wrap">
-            <div class="slider">
-              <div class="slider-card">
-                <div class="slide active" data-index="0">
-                  <div class="slide-bg"></div>
-                  <div class="slide-content">
-                    <h3 class="slide-title" data-en="Innovation Summit" data-ar="قمة الابتكار">Innovation Summit</h3>
-                    <p class="slide-subtitle" data-en="Discover the future of technology" data-ar="اكتشف مستقبل التكنولوجيا">Discover the future of technology</p>
-                  </div>
-                </div>
-                <div class="slide" data-index="1">
-                  <div class="slide-bg"></div>
-                  <div class="slide-content">
-                    <h3 class="slide-title" data-en="Global Networking" data-ar="شبكات عالمية">Global Networking</h3>
-                    <p class="slide-subtitle" data-en="Connect with industry leaders" data-ar="تواصل مع قادة الصناعة">Connect with industry leaders</p>
-                  </div>
-                </div>
-                <div class="slide" data-index="2">
-                  <div class="slide-bg"></div>
-                  <div class="slide-content">
-                    <h3 class="slide-title" data-en="Expert Speakers" data-ar="متحدثون خبراء">Expert Speakers</h3>
-                    <p class="slide-subtitle" data-en="Learn from the best minds" data-ar="تعلم من أفضل العقول">Learn from the best minds</p>
-                  </div>
-                </div>
-
-                <button class="slider-arrow prev" onclick="prevSlide()">
-                  <svg class="icon" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></svg>
-                </button>
-                <button class="slider-arrow next" onclick="nextSlide()">
-                  <svg class="icon" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
-                </button>
-
-                <div class="slider-dots">
-                  <button class="slider-dot active" onclick="goToSlide(0)"></button>
-                  <button class="slider-dot" onclick="goToSlide(1)"></button>
-                  <button class="slider-dot" onclick="goToSlide(2)"></button>
-                </div>
+          <div class="hero-media">
+            <div class="hero-video-frame">
+              <video class="hero-video" autoplay muted loop playsinline poster="https://images.pexels.com/photos/1181406/pexels-photo-1181406.jpeg?auto=compress&cs=tinysrgb&w=1600">
+                <source src="https://cdn.coverr.co/videos/coverr-business-people-shaking-hands-8725/1080p.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+              <div class="hero-video-caption">
+                <span data-en="Experience" data-ar="تجربة غامرة">Experience</span>
+                <strong data-en="Innovation In Motion" data-ar="الابتكار في حركة">Innovation In Motion</strong>
               </div>
             </div>
           </div>
@@ -1650,59 +1581,6 @@
       </div>
     </section>
 
-    <!-- About Section -->
-    <section class="about" id="about">
-      <div class="container">
-        <div class="about-grid">
-          <div class="about-col" data-animate>
-            <div class="about-header">
-              <div class="about-icon">
-                <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
-              </div>
-              <h2 class="about-title" data-en="Our Mission" data-ar="مهمتنا">Our Mission</h2>
-            </div>
-            <div class="about-card">
-              <p class="about-text" data-en="Our mission is to create a world-class platform that brings together visionaries, innovators, and industry leaders from across the globe. We aim to foster collaboration, inspire innovation, and drive meaningful connections that shape the future of business." data-ar="مهمتنا هي إنشاء منصة عالمية المستوى تجمع أصحاب الرؤى والمبتكرين وقادة الصناعة من جميع أنحاء العالم. نهدف إلى تعزيز التعاون وإلهام الابتكار وإنشاء علاقات هادفة تشكل مستقبل الأعمال.">Our mission is to create a world-class platform that brings together visionaries, innovators, and industry leaders from across the globe. We aim to foster collaboration, inspire innovation, and drive meaningful connections that shape the future of business.</p>
-              <p class="about-text" data-en="Through carefully curated sessions, exhibitions, and networking opportunities, we provide an unparalleled experience for all attendees." data-ar="من خلال الجلسات والمعارض وفرص التواصل المنتقاة بعناية، نقدم تجربة لا مثيل لها لجميع الحضور.">Through carefully curated sessions, exhibitions, and networking opportunities, we provide an unparalleled experience for all attendees.</p>
-            </div>
-          </div>
-
-          <div class="about-col" data-animate>
-            <h2 class="about-title" data-en="Our Goals" data-ar="أهدافنا" style="margin-bottom: 1.5rem;">Our Goals</h2>
-            <div class="goals-list">
-              <div class="goal-card" data-animate>
-                <div class="goal-icon">
-                  <svg class="icon" viewBox="0 0 24 24"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 1 1 7.072 0l-.548.547A3.374 3.374 0 0 0 14 18.469V19a2 2 0 1 1-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547Z"/></svg>
-                </div>
-                <div>
-                  <h3 class="goal-title" data-en="Innovation" data-ar="الابتكار">Innovation</h3>
-                  <p class="goal-desc" data-en="Showcase cutting-edge technologies and solutions" data-ar="عرض أحدث التقنيات والحلول">Showcase cutting-edge technologies and solutions</p>
-                </div>
-              </div>
-              <div class="goal-card" data-animate>
-                <div class="goal-icon">
-                  <svg class="icon" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                </div>
-                <div>
-                  <h3 class="goal-title" data-en="Networking" data-ar="التواصل">Networking</h3>
-                  <p class="goal-desc" data-en="Connect industry leaders and professionals" data-ar="ربط قادة الصناعة والمهنيين">Connect industry leaders and professionals</p>
-                </div>
-              </div>
-              <div class="goal-card" data-animate>
-                <div class="goal-icon">
-                  <svg class="icon" viewBox="0 0 24 24"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09zM12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>
-                </div>
-                <div>
-                  <h3 class="goal-title" data-en="Growth" data-ar="النمو">Growth</h3>
-                  <p class="goal-desc" data-en="Drive business opportunities and partnerships" data-ar="تعزيز فرص الأعمال والشراكات">Drive business opportunities and partnerships</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
     <!-- Sponsors Section -->
     <section class="sponsors" id="sponsors">
       <div class="container">
@@ -1711,70 +1589,87 @@
           <p class="section-desc" data-en="We are grateful to our sponsors who make this event possible." data-ar="نحن ممتنون لرعاتنا الذين يجعلون هذا الحدث ممكناً.">We are grateful to our sponsors who make this event possible.</p>
         </div>
 
-        <div class="sponsors-grid">
-          <div class="sponsor-card main" data-animate>
-            <div class="sponsor-badge main">
-              <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="m2 4 3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"/></svg>
-              <span data-en="Main Sponsor" data-ar="الراعي الرئيسي">Main Sponsor</span>
+        <div class="sponsor-tiers">
+          <div class="sponsor-tier">
+            <h3 class="sponsor-tier-title" data-en="Main Sponsors" data-ar="الرعاة الرئيسيون">Main Sponsors</h3>
+            <div class="sponsor-tier-grid tier-main">
+              <div class="sponsor-card main" data-animate>
+                <div class="sponsor-badge main">
+                  <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="m2 4 3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"/></svg>
+                  <span data-en="Main Sponsor" data-ar="الراعي الرئيسي">Main Sponsor</span>
+                </div>
+                <div class="sponsor-logo">🏢</div>
+                <div class="sponsor-name">Tech Corp</div>
+              </div>
+              <div class="sponsor-card main" data-animate>
+                <div class="sponsor-badge main">
+                  <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="m2 4 3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"/></svg>
+                  <span data-en="Main Sponsor" data-ar="الراعي الرئيسي">Main Sponsor</span>
+                </div>
+                <div class="sponsor-logo">🔬</div>
+                <div class="sponsor-name">Innovation Labs</div>
+              </div>
             </div>
-            <div class="sponsor-logo">🏢</div>
-            <div class="sponsor-name">Tech Corp</div>
           </div>
-          <div class="sponsor-card main" data-animate>
-            <div class="sponsor-badge main">
-              <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="m2 4 3 12h14l3-12-6 7-4-7-4 7-6-7zm3 16h14"/></svg>
-              <span data-en="Main Sponsor" data-ar="الراعي الرئيسي">Main Sponsor</span>
+
+          <div class="sponsor-tier">
+            <h3 class="sponsor-tier-title" data-en="Gold Sponsors" data-ar="الرعاة الذهبيون">Gold Sponsors</h3>
+            <div class="sponsor-tier-grid tier-gold">
+              <div class="sponsor-card gold" data-animate>
+                <div class="sponsor-badge gold">
+                  <svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
+                  <span data-en="Gold Sponsor" data-ar="الراعي الذهبي">Gold Sponsor</span>
+                </div>
+                <div class="sponsor-logo">💰</div>
+                <div class="sponsor-name">Global Finance</div>
+              </div>
+              <div class="sponsor-card gold" data-animate>
+                <div class="sponsor-badge gold">
+                  <svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
+                  <span data-en="Gold Sponsor" data-ar="الراعي الذهبي">Gold Sponsor</span>
+                </div>
+                <div class="sponsor-logo">☁️</div>
+                <div class="sponsor-name">Cloud Systems</div>
+              </div>
+              <div class="sponsor-card gold" data-animate>
+                <div class="sponsor-badge gold">
+                  <svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
+                  <span data-en="Gold Sponsor" data-ar="الراعي الذهبي">Gold Sponsor</span>
+                </div>
+                <div class="sponsor-logo">📊</div>
+                <div class="sponsor-name">Data Dynamics</div>
+              </div>
             </div>
-            <div class="sponsor-logo">🔬</div>
-            <div class="sponsor-name">Innovation Labs</div>
           </div>
-          <div class="sponsor-card gold" data-animate>
-            <div class="sponsor-badge gold">
-              <svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
-              <span data-en="Gold Sponsor" data-ar="الراعي الذهبي">Gold Sponsor</span>
+
+          <div class="sponsor-tier">
+            <h3 class="sponsor-tier-title" data-en="Silver Sponsors" data-ar="الرعاة الفضيّون">Silver Sponsors</h3>
+            <div class="sponsor-tier-grid tier-silver">
+              <div class="sponsor-card silver" data-animate>
+                <div class="sponsor-badge silver">
+                  <svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+                  <span data-en="Silver Sponsor" data-ar="الراعي الفضي">Silver Sponsor</span>
+                </div>
+                <div class="sponsor-logo">🌱</div>
+                <div class="sponsor-name">Green Energy</div>
+              </div>
+              <div class="sponsor-card silver" data-animate>
+                <div class="sponsor-badge silver">
+                  <svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+                  <span data-en="Silver Sponsor" data-ar="الراعي الفضي">Silver Sponsor</span>
+                </div>
+                <div class="sponsor-logo">💡</div>
+                <div class="sponsor-name">Smart Solutions</div>
+              </div>
+              <div class="sponsor-card silver" data-animate>
+                <div class="sponsor-badge silver">
+                  <svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+                  <span data-en="Silver Sponsor" data-ar="الراعي الفضي">Silver Sponsor</span>
+                </div>
+                <div class="sponsor-logo">🚀</div>
+                <div class="sponsor-name">Future Tech</div>
+              </div>
             </div>
-            <div class="sponsor-logo">💰</div>
-            <div class="sponsor-name">Global Finance</div>
-          </div>
-          <div class="sponsor-card gold" data-animate>
-            <div class="sponsor-badge gold">
-              <svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
-              <span data-en="Gold Sponsor" data-ar="الراعي الذهبي">Gold Sponsor</span>
-            </div>
-            <div class="sponsor-logo">☁️</div>
-            <div class="sponsor-name">Cloud Systems</div>
-          </div>
-          <div class="sponsor-card gold" data-animate>
-            <div class="sponsor-badge gold">
-              <svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
-              <span data-en="Gold Sponsor" data-ar="الراعي الذهبي">Gold Sponsor</span>
-            </div>
-            <div class="sponsor-logo">📊</div>
-            <div class="sponsor-name">Data Dynamics</div>
-          </div>
-          <div class="sponsor-card silver" data-animate>
-            <div class="sponsor-badge silver">
-              <svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
-              <span data-en="Silver Sponsor" data-ar="الراعي الفضي">Silver Sponsor</span>
-            </div>
-            <div class="sponsor-logo">🌱</div>
-            <div class="sponsor-name">Green Energy</div>
-          </div>
-          <div class="sponsor-card silver" data-animate>
-            <div class="sponsor-badge silver">
-              <svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
-              <span data-en="Silver Sponsor" data-ar="الراعي الفضي">Silver Sponsor</span>
-            </div>
-            <div class="sponsor-logo">💡</div>
-            <div class="sponsor-name">Smart Solutions</div>
-          </div>
-          <div class="sponsor-card silver" data-animate>
-            <div class="sponsor-badge silver">
-              <svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
-              <span data-en="Silver Sponsor" data-ar="الراعي الفضي">Silver Sponsor</span>
-            </div>
-            <div class="sponsor-logo">🚀</div>
-            <div class="sponsor-name">Future Tech</div>
           </div>
         </div>
       </div>
@@ -1830,6 +1725,59 @@
             <div class="participant-logo">🏝️</div>
             <div class="participant-name">Red Sea Global</div>
             <p class="participant-desc" data-en="Sustainable tourism development" data-ar="تطوير السياحة المستدامة">Sustainable tourism development</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+      <div class="container">
+        <div class="about-grid">
+          <div class="about-col" data-animate>
+            <div class="about-header">
+              <div class="about-icon">
+                <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
+              </div>
+              <h2 class="about-title" data-en="Our Mission" data-ar="مهمتنا">Our Mission</h2>
+            </div>
+            <div class="about-card">
+              <p class="about-text" data-en="Our mission is to create a world-class platform that brings together visionaries, innovators, and industry leaders from across the globe. We aim to foster collaboration, inspire innovation, and drive meaningful connections that shape the future of business." data-ar="مهمتنا هي إنشاء منصة عالمية المستوى تجمع أصحاب الرؤى والمبتكرين وقادة الصناعة من جميع أنحاء العالم. نهدف إلى تعزيز التعاون وإلهام الابتكار وإنشاء علاقات هادفة تشكل مستقبل الأعمال.">Our mission is to create a world-class platform that brings together visionaries, innovators, and industry leaders from across the globe. We aim to foster collaboration, inspire innovation, and drive meaningful connections that shape the future of business.</p>
+              <p class="about-text" data-en="Through carefully curated sessions, exhibitions, and networking opportunities, we provide an unparalleled experience for all attendees." data-ar="من خلال الجلسات والمعارض وفرص التواصل المنتقاة بعناية، نقدم تجربة لا مثيل لها لجميع الحضور.">Through carefully curated sessions, exhibitions, and networking opportunities, we provide an unparalleled experience for all attendees.</p>
+            </div>
+          </div>
+
+          <div class="about-col" data-animate>
+            <h2 class="about-title" data-en="Our Goals" data-ar="أهدافنا" style="margin-bottom: 1.5rem;">Our Goals</h2>
+            <div class="goals-list">
+              <div class="goal-card" data-animate>
+                <div class="goal-icon">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 1 1 7.072 0l-.548.547A3.374 3.374 0 0 0 14 18.469V19a2 2 0 1 1-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547Z"/></svg>
+                </div>
+                <div>
+                  <h3 class="goal-title" data-en="Innovation" data-ar="الابتكار">Innovation</h3>
+                  <p class="goal-desc" data-en="Showcase cutting-edge technologies and solutions" data-ar="عرض أحدث التقنيات والحلول">Showcase cutting-edge technologies and solutions</p>
+                </div>
+              </div>
+              <div class="goal-card" data-animate>
+                <div class="goal-icon">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+                </div>
+                <div>
+                  <h3 class="goal-title" data-en="Networking" data-ar="التواصل">Networking</h3>
+                  <p class="goal-desc" data-en="Connect industry leaders and professionals" data-ar="ربط قادة الصناعة والمهنيين">Connect industry leaders and professionals</p>
+                </div>
+              </div>
+              <div class="goal-card" data-animate>
+                <div class="goal-icon">
+                  <svg class="icon" viewBox="0 0 24 24"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09zM12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>
+                </div>
+                <div>
+                  <h3 class="goal-title" data-en="Growth" data-ar="النمو">Growth</h3>
+                  <p class="goal-desc" data-en="Drive business opportunities and partnerships" data-ar="تعزيز فرص الأعمال والشراكات">Drive business opportunities and partnerships</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -1997,40 +1945,6 @@
       });
     });
 
-    // Hero Slider
-    let currentSlide = 0;
-    const slides = document.querySelectorAll('.slide');
-    const dots = document.querySelectorAll('.slider-dot');
-    let slideInterval;
-
-    function goToSlide(index) {
-      slides.forEach((slide, i) => {
-        slide.classList.remove('active', 'prev');
-        if (i < index) slide.classList.add('prev');
-        if (i === index) slide.classList.add('active');
-      });
-      dots.forEach((dot, i) => {
-        dot.classList.toggle('active', i === index);
-      });
-      currentSlide = index;
-      resetInterval();
-    }
-
-    function nextSlide() {
-      goToSlide((currentSlide + 1) % slides.length);
-    }
-
-    function prevSlide() {
-      goToSlide((currentSlide - 1 + slides.length) % slides.length);
-    }
-
-    function resetInterval() {
-      clearInterval(slideInterval);
-      slideInterval = setInterval(nextSlide, 5000);
-    }
-
-    // Start auto-play
-    slideInterval = setInterval(nextSlide, 5000);
 
     // Count Up Animation
     function animateCountUp(element, target, suffix) {
@@ -2058,7 +1972,7 @@
     // Intersection Observer for Animations
     const observerOptions = {
       threshold: 0.1,
-      rootMargin: '0px'
+      rootMargin: '0px 0px 15% 0px'
     };
 
     const animationObserver = new IntersectionObserver((entries) => {
@@ -2084,7 +1998,8 @@
 
     // Observe all animated elements
     document.querySelectorAll('[data-animate]').forEach((el, index) => {
-      el.dataset.delay = index * 100;
+      const stagger = (index % 4) * 80;
+      el.dataset.delay = stagger;
       animationObserver.observe(el);
     });
 
@@ -2092,10 +2007,41 @@
     let selectedRole = null;
     let exhibitorStep = 1;
 
+    function applyRoleOrder(role) {
+      const visitorCard = document.getElementById('visitor-card');
+      const visitorForm = document.getElementById('visitor-form');
+      const exhibitorCard = document.getElementById('exhibitor-card');
+      const exhibitorForm = document.getElementById('exhibitor-form');
+
+      const resetOrder = () => {
+        [visitorCard, visitorForm, exhibitorCard, exhibitorForm].forEach(el => {
+          el.style.order = '';
+        });
+      };
+
+      if (!role) {
+        resetOrder();
+        return;
+      }
+
+      if (role === 'visitor') {
+        visitorCard.style.order = '1';
+        visitorForm.style.order = '2';
+        exhibitorCard.style.order = '3';
+        exhibitorForm.style.order = '4';
+      } else {
+        exhibitorCard.style.order = '1';
+        exhibitorForm.style.order = '2';
+        visitorCard.style.order = '3';
+        visitorForm.style.order = '4';
+      }
+    }
+
     function selectRole(role) {
       if (selectedRole === role) return;
       
       selectedRole = role;
+      applyRoleOrder(role);
       const roleCards = document.getElementById('role-cards');
       roleCards.classList.add('has-selection');
 
@@ -2134,7 +2080,7 @@
       document.getElementById('exhibitor-card').classList.remove('selected', 'dimmed');
       document.getElementById('exhibitor-cta').style.display = 'flex';
       document.getElementById('exhibitor-form').classList.remove('active');
-      
+      applyRoleOrder(null);
       updateExhibitorStep();
     }
 
