@@ -1678,8 +1678,8 @@
       <div class="header-inner">
         <img src="{{ asset('./img/IEC-logo.png') }}" alt="IEC Logo" class="nav-logo" />
         <nav class="nav">
-          <a href="#register" class="btn-primary nav-link" data-en="Register" data-ar="سجل الآن">Register</a>
           <a href="#" class="btn-primary nav-link" data-en="Home" data-ar="الرئيسية">Home</a>
+          <a href="#register" class="btn-primary nav-link" data-en="Register" data-ar="سجل الآن">Register</a>
           <a href="#sponsors" class="nav-link" data-en="Sponsors" data-ar="الرعاة">Sponsors</a>
           <a href="#participants" class="nav-link" data-en="Exhibitors" data-ar="المشاركون">Exhibitors</a>
           <a href="#organizers" class="nav-link" data-en="Organizers" data-ar="المنظمون">Organizers</a>
@@ -1708,11 +1708,13 @@
       </div>
 
       <nav class="mobile-nav" id="mobile-nav">
-        <a href="#about" class="mobile-nav-link" data-en="About" data-ar="عن المعرض">About</a>
+        <a href="#" class="mobile-nav-link" data-en="Home" data-ar="الرئيسية">Home</a>
+        <a href="#register" class="mobile-nav-link" data-en="Register" data-ar="سجل الآن">Register</a>
         <a href="#sponsors" class="mobile-nav-link" data-en="Sponsors" data-ar="الرعاة">Sponsors</a>
         <a href="#participants" class="mobile-nav-link" data-en="Exhibitors" data-ar="المشاركون">Exhibitors</a>
+        <a href="#organizers" class="mobile-nav-link" data-en="Organizers" data-ar="المنظمون">Organizers</a>
+        <a href="#about" class="mobile-nav-link" data-en="About" data-ar="عن المعرض">About</a>
         <a href="#contact" class="mobile-nav-link" data-en="Contact" data-ar="تواصل معنا">Contact</a>
-        <a href="#register" class="btn btn-primary mobile-nav-link" style="width: 100%; margin-top: 1rem;" data-en="Register" data-ar="سجل الآن">Register</a>
       </nav>
     </div>
   </header>
@@ -1848,6 +1850,7 @@
                     <span data-en="Back" data-ar="رجوع">Back</span>
                   </button>
                   <button type="submit" class="btn btn-primary" data-en="Submit Registration" data-ar="إرسال التسجيل">Submit Registration</button>
+                  <button type="button" class="btn btn-outline" onclick="scrollToContact()" data-en="Contact Us" data-ar="تواصل معنا" style="background:#057a02; color:#fff;">Contact Us</button>
                 </div>
               </form>
             </div>
@@ -1906,13 +1909,20 @@
                       <input type="text" class="form-input" required placeholder="Marketing Manager">
                     </div>
                   </div>
+                  <div class="form-grid" style="margin-top: 1rem;">
+                    <div class="form-group">
+                      <label class="form-label" data-en="Corporate Profile *" data-ar="الملف التعريفي للشركة *">Corporate Profile *</label>
+                      <input type="file" class="form-input" required accept="application/pdf,image/png,image/jpeg">
+                      <span class="form-hint" data-en="PDF, PNG, JPG files only accepted" data-ar="يمكن إرفاق ملفات PDF أو JPG أو PNG">PDF, PNG, JPG files only accepted</span>
+                    </div>
+                  </div>
                 </div>
 
                 <div id="exhibitor-step2" style="display: none;">
                   <div class="form-grid form-grid-2">
                     <div class="form-group">
-                      <label class="form-label" data-en="VAT Certificate *" data-ar="شهادة ضريبة القيمة المضافة *">VAT Certificate *</label>
-                      <input type="file" class="form-input" required accept="application/pdf,image/png,image/jpeg">
+                      <label class="form-label" data-en="VAT (Value Added Tax) *" data-ar="ضريبة القيمة المضافة *">VAT (Value Added Tax) *</label>
+                      <input type="text" class="form-input" required placeholder="300000000000003">
                     </div>
                     <div class="form-group">
                       <label class="form-label" data-en="CR Copy (Commercial Registration) *" data-ar="نسخة السجل التجاري *">CR Copy (Commercial Registration) *</label>
@@ -1922,10 +1932,6 @@
                   <div class="form-grid form-grid-2" style="margin-top: 1rem;">
                     <div class="form-group">
                       <label class="form-label" data-en="National Address *" data-ar="العنوان الوطني *">National Address *</label>
-                      <input type="file" class="form-input" required accept="application/pdf,image/png,image/jpeg">
-                    </div>
-                    <div class="form-group">
-                      <label class="form-label" data-en="Corporate Profile *" data-ar="الملف التعريفي للشركة *">Corporate Profile *</label>
                       <input type="file" class="form-input" required accept="application/pdf,image/png,image/jpeg">
                     </div>
                   </div>
@@ -1952,6 +1958,7 @@
                     </svg>
                   </button>
                   <button type="submit" class="btn btn-primary" id="exhibitor-submit-btn" style="display: none;" data-en="Submit Application" data-ar="إرسال الطلب">Submit Application</button>
+                  <button type="button" class="btn btn-outline" onclick="scrollToContact()" data-en="Contact Us" data-ar="تواصل معنا" style="background:#057a02; color:#fff;">Contact Us</button>
                 </div>
               </form>
             </div>
@@ -1971,7 +1978,7 @@
         <div class="contact-grid">
           <div class="contact-col" data-animate>
             <div class="contact-form-card">
-              <h3 class="form-title" data-en="Send us a message" data-ar="أرسل لنا رسالة"  style="color:#057a02;">Send us a message</h3>
+              <h3 class="form-title" data-en="Send us a message" data-ar="أرسل لنا رسالة" style="color:#057a02;">Send us a message</h3>
               <form onsubmit="handleContactSubmit(event)">
                 <div class="form-grid">
                   <div class="form-group">
@@ -2010,7 +2017,7 @@
                 <div class="contact-info-header">
                   <div style="flex: 1; ">
                     <div class="contact-info-name" data-en="Arabic Support" data-ar="التواصل باللغة العربية"
-                     style="color:#057a02;">
+                      style="color:#057a02;">
                       Arabic Support
                     </div>
                     <div class="contact-info-links two-columns">
@@ -2063,7 +2070,7 @@
                     <div class="contact-info-name"
                       data-en="English Support"
                       data-ar="التواصل باللغة الإنجليزية"
-                       style="color:#057a02;">
+                      style="color:#057a02;">
                       English Support
                     </div>
 
@@ -2081,7 +2088,7 @@
 
                       <!-- Column 2 -->
                       <div class="contact-info-column">
-                      
+
 
                         <a href="tel:+966541164491" class="contact-info-link">
                           <svg class="icon icon-sm" viewBox="0 0 24 24">
@@ -2147,7 +2154,7 @@
               </svg>
             </div>
             <div>
-              <div class="location-title"  style="color:#057a02;">{{ __('Event Location') }}</div>
+              <div class="location-title" style="color:#057a02;">{{ __('Event Location') }}</div>
               <p class="location-address">{{ __('Riyadh International Convention & Exhibition Center, King Abdullah Road, Riyadh, Saudi Arabia') }}</p>
             </div>
           </div>
@@ -2388,6 +2395,15 @@
         document.getElementById('mobile-nav').classList.remove('active');
       });
     });
+
+    function scrollToContact() {
+      const contactSection = document.getElementById('contact');
+      if (contactSection) {
+        contactSection.scrollIntoView({
+          behavior: 'smooth'
+        });
+      }
+    }
 
 
     // Count Up Animation
