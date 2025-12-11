@@ -13,7 +13,8 @@
     :root {
       --background: 60 30% 96%;
       --foreground: 120 10% 20%;
-      --card: 60 30% 98%;
+      /* --card: 60 30% 98%; */
+      --card: transparent;
       --card-foreground: 120 10% 20%;
       --primary: 142 50% 40%;
       --primary-foreground: 60 30% 98%;
@@ -30,6 +31,7 @@
       --chart-2: 160 45% 50%;
       --chart-3: 180 40% 45%;
     }
+    
 
     * {
       margin: 0;
@@ -847,17 +849,17 @@
     }
 
     .sponsor-card {
-      background: hsl(var(--card));
-      border: 1px solid hsl(var(--border));
+      background: transparent;
+      border: 1px solid hsla(var(--border) / 0.6);
       border-radius: var(--radius);
-      overflow: hidden;
+      padding: 1.25rem;
       transition: all 0.5s;
       opacity: 0;
       transform: translateY(2rem);
       display: flex;
       flex-direction: column;
-      min-height: 240px;
-      position: relative;
+      gap: 1rem;
+      min-height: 260px;
       will-change: transform;
     }
 
@@ -867,65 +869,83 @@
     }
 
     .sponsor-card:hover {
-      box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
+      box-shadow: 0 15px 35px -10px rgba(0,0,0,0.25);
       transform: translateY(0) scale(1.02);
       animation: softPulse 2.2s ease-in-out infinite;
+      background: hsla(var(--card) / 0.4);
     }
 
     .sponsor-card .sponsor-logo {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      /* padding: 2rem; */
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      border-radius: 1rem;
+      overflow: hidden;
       background: hsl(var(--muted));
+      box-shadow: inset 0 0 0 1px hsla(var(--border) / 1);
     }
 
     .sponsor-card .sponsor-logo img {
-      /* max-height: 90px; */
-      max-width: 100%;
-      object-fit: contain;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
 
     .sponsor-card-footer {
-      padding: 1rem 1.25rem;
-      border-top: 1px solid hsl(var(--border));
       text-align: center;
       font-weight: 600;
+      font-size: 1.05rem;
     }
 
-    .sponsor-card.main:hover { border-color: hsl(35 90% 50% / 0.5); }
-    .sponsor-card.gold:hover { border-color: hsl(45 95% 50% / 0.5); }
-    .sponsor-card.silver:hover { border-color: hsl(220 10% 60% / 0.5); }
+    .sponsor-card.main:hover { border-color: hsl(35 90% 50% / 0.6); }
+    .sponsor-card.gold:hover { border-color: hsl(45 95% 50% / 0.6); }
+    .sponsor-card.silver:hover { border-color: hsl(220 10% 60% / 0.6); }
 
     .sponsor-badge {
-      position: absolute;
-      top: 0.75rem;
-      left: 0.75rem;
       display: inline-flex;
       align-items: center;
-      gap: 0.375rem;
-      padding: 0.25rem 0.75rem;
+      gap: 0.4rem;
+      padding: 0.4rem 1rem;
       border-radius: 9999px;
-      font-size: 0.75rem;
+      font-size: 0.8rem;
       font-weight: 500;
-      z-index: 2;
-      backdrop-filter: blur(8px);
+      color:hsl(142 50% 35%);
+      text-decoration: none;
+      border: 1px solid hsla(var(--border) / 0.6);
+      box-shadow: inset 0 0 0 1px hsla(0,0%,100%,0.15);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .sponsor-badge::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+      z-index: -1;
     }
 
     .sponsor-badge.main {
-      background: hsl(35 90% 50% / 0.1);
-      color: hsl(35 90% 40%);
+      background: linear-gradient(120deg, rgba(255, 186, 90, 0.35), rgba(255, 153, 0, 0.2));
+      color: hsl(35 90% 35%);
     }
 
     .sponsor-badge.gold {
-      background: hsl(45 95% 50% / 0.1);
-      color: hsl(45 90% 35%);
+      background: linear-gradient(120deg, rgba(252, 211, 77, 0.35), rgba(234, 179, 8, 0.2));
+      color: hsl(45 85% 32%);
     }
 
     .sponsor-badge.silver {
-      background: hsl(220 10% 60% / 0.1);
-      color: hsl(220 10% 45%);
+      background: linear-gradient(120deg, rgba(226, 232, 240, 0.4), rgba(148, 163, 184, 0.25));
+      color: hsl(220 10% 40%);
+    }
+    .sponsor-badge span{
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      text-decoration: none;
     }
 
     /* Participants Section */
@@ -952,7 +972,7 @@
       background: hsl(var(--card));
       border: 1px solid hsl(var(--border));
       border-radius: var(--radius);
-      padding: 1.5rem;
+      padding: 0.5rem;
       transition: all 0.5s;
       opacity: 0;
       transform: translateY(2rem);
@@ -962,7 +982,7 @@
       flex-direction: column;
       align-items: center;
       text-align: center;
-      min-height: 200px;
+      /* min-height: 200px; */
       will-change: transform;
     }
 
@@ -1323,6 +1343,17 @@
         ->orderBy('display_order')
         ->get();
 
+    if ($publicSponsors->isEmpty()) {
+        $publicSponsors = collect(config('demo.sponsors'))
+            ->map(function ($data, $id) {
+                $model = new \App\Models\PublicSponsor($data);
+                $model->id = $id;
+                $model->exists = false;
+
+                return $model;
+            });
+    }
+
     $sponsorTiers = [
         'main'   => __('Main Sponsors'),
         'gold'   => __('Gold Sponsors'),
@@ -1337,6 +1368,17 @@
         ->where('is_active', true)
         ->orderBy('display_order')
         ->get();
+
+    if ($participants->isEmpty()) {
+        $participants = collect(config('demo.participants'))
+            ->map(function ($data, $id) {
+                $model = new \App\Models\Participant($data);
+                $model->id = $id;
+                $model->exists = false;
+
+                return $model;
+            });
+    }
 @endphp
   <!-- Header -->
   <header class="header">
@@ -1666,7 +1708,7 @@
                      data-animate>
                     <div class="sponsor-badge">
                       <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M12 5v14"/></svg>
-                      <span>{{ __('Sponsor') }}</span>
+                      <span>{{ $sponsor->tier }}</span>
                     </div>
                     <div class="sponsor-logo">
                       <img src="{{ asset('storage/'.$sponsor->logo_path) }}" alt="{{ $sponsor->name }}">
