@@ -1,6 +1,6 @@
-
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
+
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,30 +8,42 @@
   <meta name="description" content="Join industry leaders for the premier business conference. March 15-17, 2025 in Riyadh. Register now for networking, innovation, and growth." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <style>
     :root {
-      --background: 60 30% 96%;
-      --foreground: 120 10% 20%;
-      /* --card: 60 30% 98%; */
-      --card: transparent;
-      --card-foreground: 120 10% 20%;
-      --primary: 142 50% 40%;
-      --primary-foreground: 60 30% 98%;
-      --secondary: 120 15% 90%;
-      --secondary-foreground: 120 10% 30%;
-      --muted: 60 15% 90%;
-      --muted-foreground: 120 10% 45%;
-      --accent: 142 30% 92%;
-      --accent-foreground: 142 50% 30%;
-      --border: 120 15% 85%;
-      --ring: 142 50% 40%;
+
+      --primary-color: #057a02;
+      --secondary-color: #00ff44;
+      --accent-color: #00ff88;
+      --dark-color: #1a1a1a;
+      --light-color: #f8f9fa;
+      --text-color: #333;
+      --text-light: #666;
+      --border-radius: 12px;
+      --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      --background: 248 248 242;
+      --foreground: 46 56 46;
+      /* --card: 251 251 248; */
+      --card: 251 251 248;
+      --card-foreground: 46 56 46;
+      --primary: 51 153 88;
+      --primary-foreground: 251 251 248;
+      --secondary: 226 233 226;
+      --secondary-foreground: 69 84 69;
+      --muted: 233 233 226;
+      --muted-foreground: #000;
+      --accent: 228 241 233;
+      --accent-foreground: 38 115 66;
+      --border: 211 222 211;
+      --ring: 51 153 88;
       --radius: 0.75rem;
-      --chart-1: 142 50% 45%;
-      --chart-2: 160 45% 50%;
-      --chart-3: 180 40% 45%;
+      --chart-1: 57 172 99;
+      --chart-2: 70 185 147;
+      --chart-3: 69 161 161;
     }
-    
+
 
     * {
       margin: 0;
@@ -51,19 +63,33 @@
     }
 
     @keyframes heroFloat {
-      0%, 100% { transform: translateY(0) scale(1); }
-      50% { transform: translateY(-12px) scale(1.01); }
+
+      0%,
+      100% {
+        transform: translateY(0) scale(1);
+      }
+
+      50% {
+        transform: translateY(-12px) scale(1.01);
+      }
     }
 
     @keyframes softPulse {
-      0%, 100% { box-shadow: 0 20px 40px rgba(0,0,0,0.08); }
-      50% { box-shadow: 0 30px 60px rgba(0,0,0,0.12); }
+
+      0%,
+      100% {
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.08);
+      }
+
+      50% {
+        box-shadow: 0 30px 60px rgba(0, 0, 0, 0.12);
+      }
     }
 
     body {
       font-family: 'Work Sans', sans-serif;
-      background-color: hsl(var(--background));
-      color: hsl(var(--foreground));
+      background-color: rgb(var(--background));
+      color: rgb(var(--foreground));
       line-height: 1.6;
     }
 
@@ -74,7 +100,13 @@
     .container {
       max-width: 1280px;
       margin: 0 auto;
-      padding: 0 1rem;
+      padding: 1rem;
+    }
+
+    .hero .container {
+      width: 100%;
+      max-width: none;
+      padding: 0;
     }
 
     /* Header */
@@ -84,9 +116,8 @@
       left: 0;
       right: 0;
       z-index: 50;
-      background: hsla(var(--card) / 0.8);
+      background: #000;
       backdrop-filter: blur(12px);
-      border-bottom: 1px solid hsl(var(--border));
     }
 
     .header-inner {
@@ -100,7 +131,7 @@
     .logo {
       font-size: 1.25rem;
       font-weight: 700;
-      color: hsl(var(--primary));
+      color: rgb(var(--primary));
       text-decoration: none;
     }
 
@@ -112,18 +143,103 @@
     }
 
     @media (min-width: 768px) {
-      .nav { display: flex; }
+      .nav {
+        display: flex;
+      }
     }
 
-    .nav-link {
-      color: hsl(var(--foreground) / 0.8);
-      text-decoration: none;
-      font-weight: 500;
-      transition: color 0.2s;
+.nav-link {
+  text-decoration: none;
+  position: relative;
+  transition: 0.4s;
+  color: #fff;
+  font-weight: 600;
+  text-transform: uppercase;
+
+}
+
+.nav-link:hover{
+  color: #057a02;
+}
+
+.nav-link::before {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 4px;
+  bottom: 0;
+  left: 50%;
+  background-color: #057a02;
+  transition: all 0.4s;
+}
+
+.nav-link:hover::before {
+  width: 100%;
+  left: 0;
+}
+
+    .nav .nav-link:nth-child(1) {
+      animation-delay: 0.1s;
     }
 
-    .nav-link:hover {
-      color: hsl(var(--primary));
+    .nav .nav-link:nth-child(2) {
+      animation-delay: 0.2s;
+    }
+
+    .nav .nav-link:nth-child(3) {
+      animation-delay: 0.3s;
+    }
+
+    .nav .nav-link:nth-child(4) {
+      animation-delay: 0.4s;
+    }
+
+    .nav .nav-link:nth-child(5) {
+      animation-delay: 0.5s;
+    }
+
+    .nav .nav-link:nth-child(6) {
+      animation-delay: 0.6s;
+    }
+
+    .nav .nav-link:nth-child(7) {
+      animation-delay: 0.7s;
+    }
+
+    @keyframes navLinkFade {
+      from {
+        opacity: 0;
+        transform: translateY(-12px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes shimmer111 {
+      0% {
+        background-position: 200% 0;
+      }
+
+      100% {
+        background-position: -200% 0;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .nav-link {
+        animation: none;
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+
+
+    .nav-logo {
+      height: 60px;
     }
 
     .header-right {
@@ -151,15 +267,16 @@
       gap: 0.5rem;
       font-size: 0.875rem;
       font-weight: 500;
-      color: hsl(var(--foreground) / 0.8);
+      color: rgb(var(--foreground) / 0.8);
       background: none;
       border: none;
       cursor: pointer;
       transition: color 0.2s;
+      color: #fff;
     }
 
     .lang-switch:hover {
-      color: hsl(var(--primary));
+      color: #057a02;
     }
 
     .btn {
@@ -176,24 +293,17 @@
       border: none;
     }
 
-    .btn-primary {
-      background: hsl(var(--primary));
-      color: hsl(var(--primary-foreground));
-    }
 
-    .btn-primary:hover {
-      background: hsl(142 50% 35%);
-    }
 
     .btn-outline {
       background: transparent;
-      color: hsl(var(--foreground));
-      border: 1px solid hsl(var(--border));
+      color: rgb(var(--foreground));
+      border: 1px solid rgb(var(--border));
     }
 
     .btn-outline:hover {
-      background: hsl(var(--accent));
-      border-color: hsl(var(--primary) / 0.3);
+      background: rgb(var(--accent));
+      border-color: rgb(var(--primary) / 0.3);
     }
 
     .btn-lg {
@@ -210,13 +320,15 @@
     }
 
     @media (min-width: 768px) {
-      .mobile-menu-btn { display: none; }
+      .mobile-menu-btn {
+        display: none;
+      }
     }
 
     .mobile-nav {
       display: none;
       padding: 1rem 0;
-      border-top: 1px solid hsl(var(--border));
+      border-top: 1px solid rgb(var(--border));
     }
 
     .mobile-nav.active {
@@ -226,7 +338,7 @@
     .mobile-nav-link {
       display: block;
       padding: 0.75rem 0;
-      color: hsl(var(--foreground) / 0.8);
+      color: rgb(var(--foreground) / 0.8);
       text-decoration: none;
       font-weight: 500;
     }
@@ -245,14 +357,14 @@
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(135deg, hsl(var(--accent)), hsl(var(--background)), hsl(var(--background)));
+      background: linear-gradient(135deg, rgb(var(--accent)), rgb(var(--background)), rgb(var(--background)));
     }
 
     .hero::after {
       content: '';
       position: absolute;
       inset: 0;
-      background: radial-gradient(ellipse at top right, hsl(var(--primary) / 0.1), transparent 50%);
+      background: radial-gradient(ellipse at top right, rgb(var(--primary) / 0.1), transparent 50%);
     }
 
     .hero-grid {
@@ -262,37 +374,40 @@
       place-items: center;
       gap: 2rem;
       min-height: calc(100vh - 8rem);
+      width: 100vw;
     }
 
     .hero-media {
-      width: 100%;
-      max-width: 960px;
+      width: 100vw;
+      max-width: none;
     }
 
     .hero-video-frame {
       position: relative;
-      border-radius: 1.5rem;
+      /* border-radius: 1.5rem; */
       overflow: hidden;
-      box-shadow: 0 25px 50px -12px rgba(0,0,0,0.35);
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.35);
       aspect-ratio: 16 / 9;
       background: #000;
       animation: heroFloat 12s ease-in-out infinite;
     }
 
     @media (min-width: 640px) {
-      .hero-video-frame { aspect-ratio: 16 / 8.5; }
+      .hero-video-frame {
+        aspect-ratio: 16 / 8.5;
+      }
     }
 
     .hero-video-frame::after {
       content: '';
       position: absolute;
       inset: 0;
-      background: linear-gradient(135deg, rgba(0,0,0,0.4), rgba(0,0,0,0.05));
+      background: linear-gradient(135deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.05));
       pointer-events: none;
     }
 
     .hero-video {
-      width: 100%;
+      width: 100vw;
       height: 100%;
       object-fit: cover;
       display: block;
@@ -308,7 +423,7 @@
       display: flex;
       flex-direction: column;
       gap: 0.25rem;
-      text-shadow: 0 4px 12px rgba(0,0,0,0.45);
+      text-shadow: 0 4px 12px rgba(0, 0, 0, 0.45);
     }
 
     .hero-video-caption span {
@@ -323,40 +438,47 @@
     }
 
     /* Scroll indicator */
-    .scroll-indicator {
+    /* .scroll-indicator {
       position: absolute;
-      bottom: 2rem;
+      bottom: 0.5rem;
       left: 50%;
       transform: translateX(-50%);
       animation: bounce 1s infinite;
       z-index: 30;
       text-decoration: none;
-      color: hsl(var(--muted-foreground));
+      color: rgb(var(--muted-foreground));
       display: inline-flex;
       align-items: center;
       justify-content: center;
       width: 44px;
       height: 44px;
       border-radius: 999px;
-      border: 1px solid hsl(var(--border));
-      background: hsla(var(--card) / 0.6);
+      border: 1px solid rgb(var(--border));
+      background: rgb(var(--card) / 0.6);
       backdrop-filter: blur(6px);
     }
 
     .scroll-indicator:hover {
-      color: hsl(var(--primary));
-      border-color: hsl(var(--primary) / 0.4);
-    }
+      color: rgb(var(--primary));
+      border-color: rgb(var(--primary) / 0.4);
+    } */
 
     @keyframes bounce {
-      0%, 100% { transform: translateX(-50%) translateY(0); }
-      50% { transform: translateX(-50%) translateY(-10px); }
+
+      0%,
+      100% {
+        transform: translateX(-50%) translateY(0);
+      }
+
+      50% {
+        transform: translateX(-50%) translateY(-10px);
+      }
     }
 
     /* Highlights Section */
     .highlights {
       padding: 4rem 0;
-      background: hsl(var(--background));
+      background: rgb(var(--background));
     }
 
     .highlights-grid {
@@ -372,8 +494,8 @@
     }
 
     .highlight-card {
-      background: hsl(var(--card));
-      border: 1px solid hsl(var(--border));
+      background: rgb(var(--card));
+      border: 1px solid rgb(var(--border));
       border-radius: var(--radius);
       padding: 1.5rem;
       text-align: center;
@@ -389,9 +511,9 @@
     }
 
     .highlight-card:hover {
-      box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
       transform: translateY(0) scale(1.05);
-      border-color: hsl(var(--primary) / 0.3);
+      border-color: rgb(var(--primary) / 0.3);
     }
 
     .highlight-icon {
@@ -399,8 +521,8 @@
       height: 64px;
       margin: 0 auto 1rem;
       border-radius: 50%;
-      background: hsl(var(--primary) / 0.1);
-      color: hsl(var(--primary));
+      background: rgb(var(--primary) / 0.1);
+      color: rgb(var(--primary));
       display: flex;
       align-items: center;
       justify-content: center;
@@ -408,8 +530,8 @@
     }
 
     .highlight-card:hover .highlight-icon {
-      background: hsl(var(--primary));
-      color: hsl(var(--primary-foreground));
+      background: rgb(var(--primary));
+      color: rgb(var(--primary-foreground));
     }
 
     .highlight-number {
@@ -419,14 +541,18 @@
     }
 
     .highlight-label {
-      color: hsl(var(--muted-foreground));
+      color: rgb(var(--muted-foreground));
       font-weight: 500;
     }
 
     /* Registration Section */
     .registration {
       padding: 5rem 0;
-      background: hsl(var(--accent) / 0.3);
+      background: rgb(var(--accent) / 0.2);
+    }
+
+    .registration {
+      opacity: rgba(255, 255, 255, 0.6)
     }
 
     .section-header {
@@ -449,12 +575,14 @@
     }
 
     @media (min-width: 768px) {
-      .section-title { font-size: 2.25rem; }
+      .section-title {
+        font-size: 2.25rem;
+      }
     }
 
     .section-desc {
       font-size: 1.125rem;
-      color: hsl(var(--muted-foreground));
+      color: rgb(var(--muted-foreground));
       max-width: 42rem;
       margin: 0 auto;
     }
@@ -488,8 +616,8 @@
 
     .role-card {
       position: relative;
-      background: hsl(var(--card));
-      border: 2px solid hsl(var(--border));
+      background-color: rgb(var(--card));
+      border: 2px solid rgb(var(--border));
       border-radius: 1rem;
       padding: 2rem;
       text-align: center;
@@ -499,14 +627,14 @@
     }
 
     .role-card:hover {
-      border-color: hsl(var(--primary));
-      box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
+      border-color: rgb(var(--primary));
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
       animation: softPulse 1.8s ease-in-out infinite;
     }
 
     .role-card.selected {
-      border-color: hsl(var(--primary));
-      box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
+      border-color: rgb(var(--primary));
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
     }
 
     .role-card.dimmed {
@@ -518,8 +646,8 @@
       height: 80px;
       margin: 0 auto 1.5rem;
       border-radius: 1rem;
-      background: hsl(var(--primary) / 0.1);
-      color: hsl(var(--primary));
+      background: rgb(var(--primary) / 0.1);
+      color: rgb(var(--primary));
       display: flex;
       align-items: center;
       justify-content: center;
@@ -527,8 +655,8 @@
     }
 
     .role-card:hover .role-icon {
-      background: hsl(var(--primary));
-      color: hsl(var(--primary-foreground));
+      background: rgb(var(--primary));
+      color: rgb(var(--primary-foreground));
     }
 
     .role-title {
@@ -538,7 +666,7 @@
     }
 
     .role-desc {
-      color: hsl(var(--muted-foreground));
+      color: rgb(var(--muted-foreground));
     }
 
     .role-cta {
@@ -547,21 +675,23 @@
       align-items: center;
       justify-content: center;
       gap: 0.5rem;
-      color: hsl(var(--primary));
+      color: rgb(var(--primary));
       font-weight: 500;
     }
 
     .form-card {
       display: none;
-      background: hsl(var(--card));
-      border: 1px solid hsl(var(--border));
+      background: rgb(var(--card));
+      border: 1px solid rgb(var(--border));
       border-radius: 1rem;
       padding: 1.5rem;
       animation: fadeSlideIn 0.5s ease-out;
     }
 
     @media (min-width: 768px) {
-      .form-card { padding: 2rem; }
+      .form-card {
+        padding: 2rem;
+      }
     }
 
     .form-card.active {
@@ -573,6 +703,7 @@
         opacity: 0;
         transform: translateX(1rem);
       }
+
       to {
         opacity: 1;
         transform: translateX(0);
@@ -611,11 +742,11 @@
     .form-select,
     .form-textarea {
       padding: 0.625rem 0.875rem;
-      border: 1px solid hsl(var(--border));
+      border: 1px solid rgb(var(--border));
       border-radius: var(--radius);
       font-size: 0.875rem;
-      background: hsl(var(--background));
-      color: hsl(var(--foreground));
+      background: rgb(var(--background));
+      color: rgb(var(--foreground));
       transition: border-color 0.2s, box-shadow 0.2s;
     }
 
@@ -623,13 +754,19 @@
     .form-select:focus,
     .form-textarea:focus {
       outline: none;
-      border-color: hsl(var(--primary));
-      box-shadow: 0 0 0 3px hsl(var(--primary) / 0.1);
+      border-color: rgb(var(--primary));
+      box-shadow: 0 0 0 3px rgb(var(--primary) / 0.1);
     }
 
     .form-textarea {
       resize: vertical;
       min-height: 80px;
+    }
+
+    .form-hint {
+      font-size: 0.75rem;
+      color: rgb(var(--muted-foreground));
+      line-height: 1.2;
     }
 
     .form-buttons {
@@ -658,19 +795,19 @@
       border-radius: 9999px;
       font-size: 0.875rem;
       font-weight: 500;
-      background: hsl(var(--muted));
-      color: hsl(var(--muted-foreground));
+      background: rgb(var(--muted));
+      color: rgb(var(--muted-foreground));
     }
 
     .step.active {
-      background: hsl(var(--primary));
-      color: hsl(var(--primary-foreground));
+      background: rgb(var(--primary));
+      color: rgb(var(--primary-foreground));
     }
 
     .step-divider {
       width: 2rem;
       height: 1px;
-      background: hsl(var(--border));
+      background: rgb(var(--border));
     }
 
     .other-role {
@@ -680,7 +817,7 @@
     /* About Section */
     .about {
       padding: 5rem 0;
-      background: hsl(var(--background));
+      background: rgb(var(--background));
     }
 
     .about-grid {
@@ -730,8 +867,8 @@
     .about-icon {
       padding: 0.75rem;
       border-radius: var(--radius);
-      background: hsl(var(--primary) / 0.1);
-      color: hsl(var(--primary));
+      background: rgb(var(--primary) / 0.1);
+      color: rgb(var(--primary));
     }
 
     .about-title {
@@ -740,19 +877,19 @@
     }
 
     .about-card {
-      background: hsl(var(--card));
-      border: 1px solid hsl(var(--border));
+      background: rgb(var(--card));
+      border: 1px solid rgb(var(--border));
       border-radius: 1rem;
       padding: 2rem;
     }
 
     .about-text {
       font-size: 1.125rem;
-      color: hsl(var(--muted-foreground));
+      color: rgb(var(--muted-foreground));
       line-height: 1.7;
     }
 
-    .about-text + .about-text {
+    .about-text+.about-text {
       margin-top: 1rem;
     }
 
@@ -763,8 +900,8 @@
     }
 
     .goal-card {
-      background: hsl(var(--card));
-      border: 1px solid hsl(var(--border));
+      background: rgb(var(--card));
+      border: 1px solid rgb(var(--border));
       border-radius: var(--radius);
       padding: 1.5rem;
       display: flex;
@@ -780,22 +917,22 @@
     }
 
     .goal-card:hover {
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
-      border-color: hsl(var(--primary) / 0.3);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+      border-color: rgb(var(--primary) / 0.3);
     }
 
     .goal-icon {
       flex-shrink: 0;
       padding: 0.75rem;
       border-radius: 0.5rem;
-      background: hsl(var(--primary) / 0.1);
-      color: hsl(var(--primary));
+      background: rgb(var(--primary) / 0.1);
+      color: rgb(var(--primary));
       transition: all 0.3s;
     }
 
     .goal-card:hover .goal-icon {
-      background: hsl(var(--primary));
-      color: hsl(var(--primary-foreground));
+      background: rgb(var(--primary));
+      color: rgb(var(--primary-foreground));
     }
 
     .goal-title {
@@ -805,13 +942,13 @@
     }
 
     .goal-desc {
-      color: hsl(var(--muted-foreground));
+      color: rgb(var(--muted-foreground));
     }
 
     /* Sponsors Section */
     .sponsors {
       padding: 5rem 0;
-      background: hsl(var(--accent) / 0.2);
+      background: rgb(var(--accent) / 0.2);
     }
 
     .sponsor-tiers {
@@ -850,15 +987,16 @@
 
     .sponsor-card {
       background: transparent;
-      border: 1px solid hsla(var(--border) / 0.6);
+      border: 1px solid rgb(var(--border) / 0.6);
       border-radius: var(--radius);
-      padding: 1.25rem;
+      padding: 0.5rem;
       transition: all 0.5s;
       opacity: 0;
       transform: translateY(2rem);
       display: flex;
       flex-direction: column;
       gap: 1rem;
+      text-decoration: none;
       min-height: 260px;
       will-change: transform;
     }
@@ -869,10 +1007,10 @@
     }
 
     .sponsor-card:hover {
-      box-shadow: 0 15px 35px -10px rgba(0,0,0,0.25);
+      box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.25);
       transform: translateY(0) scale(1.02);
       animation: softPulse 2.2s ease-in-out infinite;
-      background: hsla(var(--card) / 0.4);
+      background: rgb(var(--card) / 0.4);
     }
 
     .sponsor-card .sponsor-logo {
@@ -880,8 +1018,8 @@
       aspect-ratio: 1 / 1;
       border-radius: 1rem;
       overflow: hidden;
-      background: hsl(var(--muted));
-      box-shadow: inset 0 0 0 1px hsla(var(--border) / 1);
+      background: rgb(var(--muted));
+      box-shadow: inset 0 0 0 1px rgb(var(--border) / 1);
     }
 
     .sponsor-card .sponsor-logo img {
@@ -897,9 +1035,17 @@
       font-size: 1.05rem;
     }
 
-    .sponsor-card.main:hover { border-color: hsl(35 90% 50% / 0.6); }
-    .sponsor-card.gold:hover { border-color: hsl(45 95% 50% / 0.6); }
-    .sponsor-card.silver:hover { border-color: hsl(220 10% 60% / 0.6); }
+    .sponsor-card.main:hover {
+      border-color: rgb(242 147 13 / 0.6);
+    }
+
+    .sponsor-card.gold:hover {
+      border-color: rgb(249 188 6 / 0.6);
+    }
+
+    .sponsor-card.silver:hover {
+      border-color: rgb(143 150 163 / 0.6);
+    }
 
     .sponsor-badge {
       display: inline-flex;
@@ -909,10 +1055,10 @@
       border-radius: 9999px;
       font-size: 0.8rem;
       font-weight: 500;
-      color:hsl(142 50% 35%);
+      color: rgb(45 134 77);
       text-decoration: none;
-      border: 1px solid hsla(var(--border) / 0.6);
-      box-shadow: inset 0 0 0 1px hsla(0,0%,100%,0.15);
+      border: 1px solid rgb(var(--border) / 0.6);
+      box-shadow: inset 0 0 0 1px rgb(255 255 255 / 0.15);
       position: relative;
       overflow: hidden;
     }
@@ -922,27 +1068,28 @@
       position: absolute;
       inset: 0;
       border-radius: inherit;
-      box-shadow: 0 6px 12px rgba(0,0,0,0.08);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.08);
       z-index: -1;
     }
 
     .sponsor-badge.main {
       background: linear-gradient(120deg, rgba(255, 186, 90, 0.35), rgba(255, 153, 0, 0.2));
-      color: hsl(35 90% 35%);
+      color: rgb(170 103 9);
     }
 
     .sponsor-badge.gold {
       background: linear-gradient(120deg, rgba(252, 211, 77, 0.35), rgba(234, 179, 8, 0.2));
-      color: hsl(45 85% 32%);
+      color: rgb(151 116 12);
     }
 
     .sponsor-badge.silver {
       background: linear-gradient(120deg, rgba(226, 232, 240, 0.4), rgba(148, 163, 184, 0.25));
-      color: hsl(220 10% 40%);
+      color: rgb(92 99 112);
     }
-    .sponsor-badge span{
-      font-size: 0.75rem;
-      font-weight: 600;
+
+    .sponsor-badge span {
+      font-size: 1rem;
+      font-weight: 900;
       text-transform: uppercase;
       letter-spacing: 0.1em;
       text-decoration: none;
@@ -951,7 +1098,7 @@
     /* Participants Section */
     .participants {
       padding: 5rem 0;
-      background: hsl(var(--background));
+      background: rgb(var(--background));
     }
 
     .participants-grid {
@@ -961,16 +1108,20 @@
     }
 
     @media (min-width: 640px) {
-      .participants-grid { grid-template-columns: repeat(2, 1fr); }
+      .participants-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
     }
 
     @media (min-width: 1024px) {
-      .participants-grid { grid-template-columns: repeat(3, 1fr); }
+      .participants-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
     }
 
     .participant-card {
-      background: hsl(var(--card));
-      border: 1px solid hsl(var(--border));
+      background: rgb(var(--card));
+      border: 1px solid rgb(var(--border));
       border-radius: var(--radius);
       padding: 0.5rem;
       transition: all 0.5s;
@@ -992,15 +1143,15 @@
     }
 
     .participant-card:hover {
-      box-shadow: 0 10px 25px -5px rgba(0,0,0,0.1);
-      border-color: hsl(var(--primary) / 0.3);
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+      border-color: rgb(var(--primary) / 0.3);
     }
 
     .participant-logo {
       width: 64px;
       height: 64px;
       border-radius: var(--radius);
-      background: hsl(var(--primary) / 0.1);
+      background: rgb(var(--primary) / 0.1);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -1016,7 +1167,7 @@
     }
 
     .participant-card:hover .participant-logo {
-      background: hsl(var(--primary) / 0.2);
+      background: rgb(var(--primary) / 0.2);
     }
 
     .participant-name {
@@ -1038,13 +1189,13 @@
 
     .participant-desc {
       font-size: 0.875rem;
-      color: hsl(var(--muted-foreground));
+      color: rgb(var(--muted-foreground));
     }
 
     /* Contact Section */
     .contact {
       padding: 5rem 0;
-      background: hsl(var(--accent) / 0.2);
+      background: rgb(var(--accent) / 0.2);
     }
 
     .contact-grid {
@@ -1086,8 +1237,8 @@
     }
 
     .contact-form-card {
-      background: hsl(var(--card));
-      border: 1px solid hsl(var(--border));
+      background: rgb(var(--card));
+      border: 1px solid rgb(var(--border));
       border-radius: 1rem;
       padding: 2rem;
     }
@@ -1105,20 +1256,20 @@
     }
 
     .contact-info-card {
-      background: hsl(var(--card));
-      border: 1px solid hsl(var(--border));
+      background: rgb(var(--card));
+      border: 1px solid rgb(var(--border));
       border-radius: var(--radius);
       padding: 1.5rem;
       transition: box-shadow 0.3s;
     }
 
     .contact-info-card:hover {
-      box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
     }
 
     .contact-info-card.primary {
-      border-color: hsl(var(--primary) / 0.3);
-      background: hsl(var(--primary) / 0.05);
+      border-color: rgb(var(--primary) / 0.3);
+      background: rgb(var(--primary) / 0.05);
     }
 
     .contact-info-header {
@@ -1130,8 +1281,8 @@
     .contact-info-icon {
       padding: 0.5rem;
       border-radius: 0.5rem;
-      background: hsl(var(--primary) / 0.1);
-      color: hsl(var(--primary));
+      background: rgb(var(--primary) / 0.1);
+      color: rgb(var(--primary));
     }
 
     .contact-info-name {
@@ -1144,8 +1295,8 @@
 
     .primary-badge {
       font-size: 0.75rem;
-      background: hsl(var(--primary));
-      color: hsl(var(--primary-foreground));
+      background: rgb(var(--primary));
+      color: rgb(var(--primary-foreground));
       padding: 0.125rem 0.5rem;
       border-radius: 9999px;
     }
@@ -1161,22 +1312,24 @@
       align-items: center;
       gap: 0.5rem;
       font-size: 0.875rem;
-      color: hsl(var(--muted-foreground));
+      color: rgb(var(--muted-foreground));
       text-decoration: none;
       transition: color 0.2s;
     }
 
     .contact-info-link:hover {
-      color: hsl(var(--primary));
+      color: rgb(var(--primary));
     }
 
     .location-card {
+      margin: auto;
       margin-top: 2rem;
-      background: hsl(var(--card));
-      border: 1px solid hsl(var(--border));
+      background: rgb(var(--card));
+      border: 1px solid rgb(var(--border));
       border-radius: var(--radius);
       padding: 1.5rem;
       width: 100%;
+      max-width: 72rem;
     }
 
     .location-header {
@@ -1192,14 +1345,14 @@
 
     .location-address {
       font-size: 0.875rem;
-      color: hsl(var(--muted-foreground));
+      color: rgb(var(--muted-foreground));
     }
 
     .map-embed {
       margin-top: 1rem;
       border-radius: var(--radius);
       overflow: hidden;
-      border: 1px solid hsl(var(--border));
+      border: 1px solid rgb(var(--border));
     }
 
     .map-embed iframe {
@@ -1207,6 +1360,7 @@
       height: 320px;
       border: 0;
     }
+
     .to-top-button {
       position: fixed;
       right: 1.25rem;
@@ -1214,8 +1368,8 @@
       width: 44px;
       height: 44px;
       border-radius: 999px;
-      background: hsl(var(--primary));
-      color: hsl(var(--primary-foreground));
+      background: rgb(var(--primary));
+      color: rgb(var(--primary-foreground));
       border: none;
       display: flex;
       align-items: center;
@@ -1239,15 +1393,22 @@
     }
 
     @keyframes float-up {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-3px); }
+
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-3px);
+      }
     }
 
     /* Footer */
     .footer {
       padding: 2rem 0;
-      border-top: 1px solid hsl(var(--border));
-      background: hsl(var(--card));
+      border-top: 1px solid rgb(var(--border));
+      background: rgb(var(--card));
     }
 
     .footer-inner {
@@ -1266,7 +1427,7 @@
 
     .footer-text {
       font-size: 0.875rem;
-      color: hsl(var(--muted-foreground));
+      color: rgb(var(--muted-foreground));
     }
 
     /* RTL Support */
@@ -1304,11 +1465,11 @@
     }
 
     .toast {
-      background: hsl(var(--card));
-      border: 1px solid hsl(var(--border));
+      background: rgb(var(--card));
+      border: 1px solid rgb(var(--border));
       border-radius: var(--radius);
       padding: 1rem 1.5rem;
-      box-shadow: 0 10px 25px -5px rgba(0,0,0,0.15);
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.15);
       animation: slideIn 0.3s ease-out;
       min-width: 280px;
     }
@@ -1318,6 +1479,7 @@
         opacity: 0;
         transform: translateY(1rem);
       }
+
       to {
         opacity: 1;
         transform: translateY(0);
@@ -1331,89 +1493,190 @@
 
     .toast-desc {
       font-size: 0.875rem;
-      color: hsl(var(--muted-foreground));
+      color: rgb(var(--muted-foreground));
+    }
+
+    /* Statistics Section */
+    .stats-section {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      padding: 20px;
+      margin-bottom: 5px;
+    }
+
+    .stat-item {
+      background: white;
+      padding: 40px 30px;
+      border-radius: 20px;
+      text-align: center;
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
+      transition: var(--transition);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-item::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      background: linear-gradient(90deg, var(--secondary-color), var(--accent-color));
+      transform: scaleX(0);
+      transition: transform 0.3s ease;
+    }
+
+    .stat-item:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.15);
+    }
+
+    .stat-item:hover::before {
+      transform: scaleX(1);
+    }
+
+    .stat-icon-wrapper {
+      width: 70px;
+      height: 70px;
+      background: linear-gradient(135deg, rgba(0, 255, 68, 0.1), rgba(0, 255, 136, 0.05));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      font-size: 1.8rem;
+      color: var(--secondary-color);
+      transition: var(--transition);
+    }
+
+    .stat-item:hover .stat-icon-wrapper {
+      background: linear-gradient(135deg, var(--secondary-color), var(--accent-color));
+      color: white;
+      transform: rotateY(180deg);
+    }
+
+    .stat-number {
+      font-size: 2.8rem;
+      font-weight: 800;
+      color: var(--dark-color);
+      margin-bottom: 10px;
+    }
+
+    .stat-label {
+      font-size: 1rem;
+      color: var(--text-light);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 20px;
+      font-weight: 600;
+    }
+
+    .stat-progress {
+      width: 100%;
+      height: 6px;
+      background: #f0f0f0;
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      width: 0;
+      height: 100%;
+      background: linear-gradient(90deg, var(--secondary-color), var(--accent-color));
+      border-radius: 3px;
+      transition: width 2s ease;
     }
   </style>
 </head>
+
 <body>
-@php
-    $publicSponsors = \App\Models\PublicSponsor::query()
-        ->where('is_active', true)
-        ->orderBy('tier')
-        ->orderBy('display_order')
-        ->get();
+  @php
+  $publicSponsors = \App\Models\PublicSponsor::query()
+  ->where('is_active', true)
+  ->orderBy('tier')
+  ->orderBy('display_order')
+  ->get();
 
-    if ($publicSponsors->isEmpty()) {
-        $publicSponsors = collect(config('demo.sponsors'))
-            ->map(function ($data, $id) {
-                $model = new \App\Models\PublicSponsor($data);
-                $model->id = $id;
-                $model->exists = false;
+  if ($publicSponsors->isEmpty()) {
+  $publicSponsors = collect(config('demo.sponsors'))
+  ->map(function ($data, $id) {
+  $model = new \App\Models\PublicSponsor($data);
+  $model->id = $id;
+  $model->exists = false;
 
-                return $model;
-            });
-    }
+  return $model;
+  });
+  }
 
-    $sponsorTiers = [
-        'main'   => __('Main Sponsors'),
-        'gold'   => __('Gold Sponsors'),
-        'silver' => __('Silver Sponsors'),
-    ];
+  $sponsorTiers = [
+  'main' => __('Main Sponsors'),
+  'gold' => __('Gold Sponsors'),
+  'silver' => __('Silver Sponsors'),
+  ];
 
-    $groupedSponsors = $publicSponsors->groupBy(function ($sponsor) {
-        return strtolower($sponsor->tier ?? 'other');
-    });
+  $groupedSponsors = $publicSponsors->groupBy(function ($sponsor) {
+  return strtolower($sponsor->tier ?? 'other');
+  });
 
-    $participants = \App\Models\Participant::query()
-        ->where('is_active', true)
-        ->orderBy('display_order')
-        ->get();
+  $participants = \App\Models\Participant::query()
+  ->where('is_active', true)
+  ->orderBy('display_order')
+  ->get();
 
-    if ($participants->isEmpty()) {
-        $participants = collect(config('demo.participants'))
-            ->map(function ($data, $id) {
-                $model = new \App\Models\Participant($data);
-                $model->id = $id;
-                $model->exists = false;
+  if ($participants->isEmpty()) {
+  $participants = collect(config('demo.participants'))
+  ->map(function ($data, $id) {
+  $model = new \App\Models\Participant($data);
+  $model->id = $id;
+  $model->exists = false;
 
-                return $model;
-            });
-    }
-@endphp
+  return $model;
+  });
+  }
+  @endphp
   <!-- Header -->
   <header class="header">
     <div class="container">
       <div class="header-inner">
-        <a href="#hero" class="logo" data-en="Conference 2025" data-ar="مؤتمر 2025">Conference 2025</a>
-        
+        <img src="{{ asset('./img/IEC-logo.png') }}" alt="IEC Logo" class="nav-logo" />
         <nav class="nav">
-          <a href="#about" class="nav-link" data-en="About" data-ar="عن المعرض">About</a>
+          <a href="#register" class="btn-primary nav-link" data-en="Register" data-ar="سجل الآن">Register</a>
+          <a href="#" class="btn-primary nav-link" data-en="Home" data-ar="الرئيسية">Home</a>
           <a href="#sponsors" class="nav-link" data-en="Sponsors" data-ar="الرعاة">Sponsors</a>
-          <a href="#participants" class="nav-link" data-en="Participants" data-ar="المشاركون">Participants</a>
+          <a href="#participants" class="nav-link" data-en="Exhibitors" data-ar="المشاركون">Exhibitors</a>
+          <a href="#organizers" class="nav-link" data-en="Organizers" data-ar="المنظمون">Organizers</a>
+          <a href="#about" class="nav-link" data-en="About" data-ar="عن المعرض">About</a>
           <a href="#contact" class="nav-link" data-en="Contact" data-ar="تواصل معنا">Contact</a>
         </nav>
 
         <div class="header-right">
-          <a href="#hero" class="logo logo-secondary" data-en="IEC Expo" data-ar="معرض IEC">IEC Expo</a>
           <div class="header-actions">
             <button class="lang-switch" onclick="toggleLocale()">
-              <svg class="icon icon-sm" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+              <svg class="icon icon-sm" viewBox="0 0 24 24">
+                <circle cx="12" cy="12" r="10" />
+                <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+              </svg>
               <span id="lang-text">العربية</span>
             </button>
-            <a href="#register" class="btn btn-primary" style="display: none;" data-en="Register" data-ar="سجل الآن">Register</a>
             <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
-              <svg class="icon" viewBox="0 0 24 24" id="menu-icon"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+              <svg class="icon" viewBox="0 0 24 24" id="menu-icon">
+                <path d="M3 12h18M3 6h18M3 18h18" />
+              </svg>
             </button>
           </div>
+          <img class="nav-logo" src="{{ asset('./img/bu_logo.png') }}" alt="IEC Logo" />
+
         </div>
       </div>
-      
+
       <nav class="mobile-nav" id="mobile-nav">
         <a href="#about" class="mobile-nav-link" data-en="About" data-ar="عن المعرض">About</a>
         <a href="#sponsors" class="mobile-nav-link" data-en="Sponsors" data-ar="الرعاة">Sponsors</a>
-        <a href="#participants" class="mobile-nav-link" data-en="Participants" data-ar="المشاركون">Participants</a>
+        <a href="#participants" class="mobile-nav-link" data-en="Exhibitors" data-ar="المشاركون">Exhibitors</a>
         <a href="#contact" class="mobile-nav-link" data-en="Contact" data-ar="تواصل معنا">Contact</a>
-        <a href="#register" class="btn btn-primary" style="width: 100%; margin-top: 1rem;" data-en="Register" data-ar="سجل الآن">Register</a>
+        <a href="#register" class="btn btn-primary mobile-nav-link" style="width: 100%; margin-top: 1rem;" data-en="Register" data-ar="سجل الآن">Register</a>
       </nav>
     </div>
   </header>
@@ -1425,58 +1688,60 @@
         <div class="hero-grid">
           <div class="hero-media">
             <div class="hero-video-frame">
-              <video class="hero-video" autoplay muted loop playsinline poster="https://images.pexels.com/photos/1181406/pexels-photo-1181406.jpeg?auto=compress&cs=tinysrgb&w=1600">
-                <source src="https://cdn.coverr.co/videos/coverr-business-people-shaking-hands-8725/1080p.mp4" type="video/mp4">
+              <video class="hero-video" autoplay muted loop playsinline>
+                <source src="{{ asset('./video/hero.mp4') }}" type="video/mp4">
                 Your browser does not support the video tag.
               </video>
-              <div class="hero-video-caption">
-                <span data-en="Experience" data-ar="تجربة غامرة">Experience</span>
-                <strong data-en="Innovation In Motion" data-ar="الابتكار في حركة">Innovation In Motion</strong>
-              </div>
             </div>
           </div>
         </div>
       </div>
-      <a href="#highlights" class="scroll-indicator" aria-label="{{ __('Scroll to highlights') }}">
-        <svg class="icon" viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
-      </a>
     </section>
+
+    <!-- Statistics Section -->
+    <div class="stats-section">
+      <div class="stat-item" data-aos="zoom-in" data-aos-delay="100">
+        <div class="stat-icon-wrapper">
+          <i class="fas fa-users"></i>
+        </div>
+        <div class="stat-number" data-count="5000">0</div>
+        <div class="stat-label">Global Attendees</div>
+        <div class="stat-progress">
+          <div class="progress-fill"></div>
+        </div>
+      </div>
+      <div class="stat-item" data-aos="zoom-in" data-aos-delay="200">
+        <div class="stat-icon-wrapper">
+          <i class="fas fa-microphone-alt"></i>
+        </div>
+        <div class="stat-number" data-count="120">0</div>
+        <div class="stat-label">Expert Speakers</div>
+        <div class="stat-progress">
+          <div class="progress-fill"></div>
+        </div>
+      </div>
+      <div class="stat-item" data-aos="zoom-in" data-aos-delay="300">
+        <div class="stat-icon-wrapper">
+          <i class="fas fa-calendar-check"></i>
+        </div>
+        <div class="stat-number" data-count="60">0</div>
+        <div class="stat-label">Sessions</div>
+        <div class="stat-progress">
+          <div class="progress-fill"></div>
+        </div>
+      </div>
+      <div class="stat-item" data-aos="zoom-in" data-aos-delay="400">
+        <div class="stat-icon-wrapper">
+          <i class="fas fa-globe-americas"></i>
+        </div>
+        <div class="stat-number" data-count="50">0</div>
+        <div class="stat-label">Countries</div>
+        <div class="stat-progress">
+          <div class="progress-fill"></div>
+        </div>
+      </div>
+    </div>
 
-    <!-- Highlights Section -->
-    <section class="highlights" id="highlights">
-      <div class="container">
-        <div class="highlights-grid">
-          <div class="highlight-card" data-animate>
-            <div class="highlight-icon">
-              <svg class="icon icon-lg" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-            </div>
-            <div class="highlight-number" data-target="5000" data-suffix="+">0</div>
-            <div class="highlight-label" data-en="Expected Visitors" data-ar="زائر متوقع">Expected Visitors</div>
-          </div>
-          <div class="highlight-card" data-animate>
-            <div class="highlight-icon">
-              <svg class="icon icon-lg" viewBox="0 0 24 24"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/><path d="M10 6h4"/><path d="M10 10h4"/><path d="M10 14h4"/><path d="M10 18h4"/></svg>
-            </div>
-            <div class="highlight-number" data-target="150" data-suffix="+">0</div>
-            <div class="highlight-label" data-en="Exhibitors" data-ar="عارض">Exhibitors</div>
-          </div>
-          <div class="highlight-card" data-animate>
-            <div class="highlight-icon">
-              <svg class="icon icon-lg" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
-            </div>
-            <div class="highlight-number" data-target="30" data-suffix="">0</div>
-            <div class="highlight-label" data-en="Countries" data-ar="دولة">Countries</div>
-          </div>
-          <div class="highlight-card" data-animate>
-            <div class="highlight-icon">
-              <svg class="icon icon-lg" viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-            </div>
-            <div class="highlight-number" data-target="3" data-suffix="">0</div>
-            <div class="highlight-label" data-en="Days of Innovation" data-ar="أيام من الابتكار">Days of Innovation</div>
-          </div>
-        </div>
-      </div>
-    </section>
 
     <!-- Registration Section -->
     <section class="registration" id="register">
@@ -1490,16 +1755,20 @@
           <div class="role-cards" id="role-cards">
             <div class="role-card" id="visitor-card" onclick="selectRole('visitor')">
               <div class="role-icon">
-                <svg class="icon icon-lg" viewBox="0 0 24 24"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+                <svg class="icon icon-lg" viewBox="0 0 24 24">
+                  <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+                  <circle cx="12" cy="7" r="4" />
+                </svg>
               </div>
               <h3 class="role-title" data-en="Visitor / Client" data-ar="زائر / عميل">Visitor / Client</h3>
               <p class="role-desc" data-en="Attend the conference and explore opportunities" data-ar="احضر المؤتمر واستكشف الفرص">Attend the conference and explore opportunities</p>
               <div class="role-cta" id="visitor-cta">
                 <span data-en="Select" data-ar="اختر">Select</span>
-                <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                <svg class="icon icon-sm" viewBox="0 0 24 24">
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
               </div>
             </div>
-
             <div class="form-card" id="visitor-form">
               <h3 class="form-title" data-en="Visitor Registration" data-ar="تسجيل الزائر">Visitor Registration</h3>
               <form onsubmit="handleSubmit(event, 'visitor')">
@@ -1519,13 +1788,8 @@
                     <input type="tel" class="form-input" required placeholder="+966 50 000 0000">
                   </div>
                   <div class="form-group">
-                    <label class="form-label" data-en="Company" data-ar="الشركة">Company</label>
-                    <select class="form-select">
-                      <option value="">Select company</option>
-                      <option value="company1">Company A</option>
-                      <option value="company2">Company B</option>
-                      <option value="other">Other</option>
-                    </select>
+                    <label class="form-label" data-en="Job Title" data-ar="المسمى الوظيفي">Job Title</label>
+                    <input type="text" class="form-input" placeholder="Marketing Manager">
                   </div>
                 </div>
                 <div class="form-grid" style="margin-top: 1rem;">
@@ -1540,15 +1804,11 @@
                     </select>
                   </div>
                 </div>
-                <div class="form-grid" style="margin-top: 1rem;">
-                  <div class="form-group">
-                    <label class="form-label" data-en="Areas of Interest" data-ar="مجالات الاهتمام">Areas of Interest</label>
-                    <textarea class="form-textarea" placeholder="Tell us what interests you..."></textarea>
-                  </div>
-                </div>
                 <div class="form-buttons">
                   <button type="button" class="btn btn-outline" onclick="clearRole()">
-                    <svg class="icon icon-sm" style="margin-right: 0.5rem;" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    <svg class="icon icon-sm" style="margin-right: 0.5rem;" viewBox="0 0 24 24">
+                      <path d="M19 12H5M12 19l-7-7 7-7" />
+                    </svg>
                     <span data-en="Back" data-ar="رجوع">Back</span>
                   </button>
                   <button type="submit" class="btn btn-primary" data-en="Submit Registration" data-ar="إرسال التسجيل">Submit Registration</button>
@@ -1558,13 +1818,19 @@
 
             <div class="role-card" id="exhibitor-card" onclick="selectRole('exhibitor')">
               <div class="role-icon">
-                <svg class="icon icon-lg" viewBox="0 0 24 24"><path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"/><path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"/><path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"/></svg>
+                <svg class="icon icon-lg" viewBox="0 0 24 24">
+                  <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z" />
+                  <path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2" />
+                  <path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2" />
+                </svg>
               </div>
               <h3 class="role-title" data-en="Exhibitor / Sponsor" data-ar="عارض / راعي">Exhibitor / Sponsor</h3>
               <p class="role-desc" data-en="Showcase your products and connect with attendees" data-ar="اعرض منتجاتك وتواصل مع الحضور">Showcase your products and connect with attendees</p>
               <div class="role-cta" id="exhibitor-cta">
                 <span data-en="Select" data-ar="اختر">Select</span>
-                <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                <svg class="icon icon-sm" viewBox="0 0 24 24">
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
               </div>
             </div>
 
@@ -1606,8 +1872,8 @@
                   </div>
                   <div class="form-grid" style="margin-top: 1rem;">
                     <div class="form-group">
-                      <label class="form-label" data-en="Organization *" data-ar="المؤسسة *">Organization *</label>
-                      <input type="text" class="form-input" required placeholder="Company Name">
+                      <label class="form-label" data-en="Corporate Profile *" data-ar="الملف التعريفي للشركة *">Corporate Profile *</label>
+                      <input type="file" class="form-input" required>
                     </div>
                   </div>
                 </div>
@@ -1615,204 +1881,45 @@
                 <div id="exhibitor-step2" style="display: none;">
                   <div class="form-grid form-grid-2">
                     <div class="form-group">
-                      <label class="form-label" data-en="VAT Number *" data-ar="الرقم الضريبي *">VAT Number *</label>
-                      <input type="text" class="form-input" placeholder="300000000000003">
+                      <label class="form-label" data-en="VAT Certificate *" data-ar="شهادة ضريبة القيمة المضافة *">VAT Certificate *</label>
+                      <input type="file" class="form-input" required>
                     </div>
                     <div class="form-group">
-                      <label class="form-label" data-en="CR Number *" data-ar="السجل التجاري *">CR Number *</label>
-                      <input type="text" class="form-input" placeholder="1010000000">
+                      <label class="form-label" data-en="CR Copy (Commercial Registration) *" data-ar="نسخة السجل التجاري *">CR Copy (Commercial Registration) *</label>
+                      <input type="file" class="form-input" required>
                     </div>
                   </div>
                   <div class="form-grid" style="margin-top: 1rem;">
                     <div class="form-group">
                       <label class="form-label" data-en="National Address *" data-ar="العنوان الوطني *">National Address *</label>
-                      <input type="text" class="form-input" placeholder="Building, Street, City">
+                      <input type="file" class="form-input" required>
                     </div>
                   </div>
                   <div class="form-grid" style="margin-top: 1rem;">
                     <div class="form-group">
-                      <label class="form-label" data-en="Supporting Documents (Optional)" data-ar="المستندات الداعمة (اختياري)">Supporting Documents (Optional)</label>
-                      <input type="file" class="form-input">
+                      <label class="form-label" data-en="Company Logo" data-ar="شعار الشركة">Company Logo</label>
+                      <input type="file" class="form-input" accept="image/png,image/jpeg,image/svg+xml">
+                      <span class="form-hint" data-en="PNG, JPG or SVG up to 2MB" data-ar="PNG أو JPG أو SVG حتى 2 ميجابايت">PNG, JPG or SVG up to 2MB</span>
                     </div>
                   </div>
                 </div>
 
                 <div class="form-buttons">
                   <button type="button" class="btn btn-outline" onclick="exhibitorBack()">
-                    <svg class="icon icon-sm" style="margin-right: 0.5rem;" viewBox="0 0 24 24"><path d="M19 12H5M12 19l-7-7 7-7"/></svg>
+                    <svg class="icon icon-sm" style="margin-right: 0.5rem;" viewBox="0 0 24 24">
+                      <path d="M19 12H5M12 19l-7-7 7-7" />
+                    </svg>
                     <span data-en="Back" data-ar="رجوع">Back</span>
                   </button>
                   <button type="button" class="btn btn-primary" id="exhibitor-next-btn" onclick="exhibitorNext()">
                     <span data-en="Next Step" data-ar="الخطوة التالية">Next Step</span>
-                    <svg class="icon icon-sm" style="margin-left: 0.5rem;" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+                    <svg class="icon icon-sm" style="margin-left: 0.5rem;" viewBox="0 0 24 24">
+                      <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
                   </button>
                   <button type="submit" class="btn btn-primary" id="exhibitor-submit-btn" style="display: none;" data-en="Submit Application" data-ar="إرسال الطلب">Submit Application</button>
                 </div>
               </form>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Sponsors Section -->
-    <section class="sponsors" id="sponsors">
-      <div class="container">
-        <div class="section-header" data-animate>
-          <h2 class="section-title">{{ __('Our Sponsors') }}</h2>
-          <p class="section-desc">{{ __('We are grateful to our sponsors who make this event possible.') }}</p>
-        </div>
-
-        <div class="sponsor-tiers">
-          @php $renderedSponsors = false; @endphp
-          @foreach($sponsorTiers as $tierKey => $label)
-            @php $tierSponsors = $groupedSponsors->get($tierKey); @endphp
-            @if($tierSponsors && $tierSponsors->count())
-              @php $renderedSponsors = true; @endphp
-              <div class="sponsor-tier">
-                <h3 class="sponsor-tier-title">{{ $label }}</h3>
-                <div class="sponsor-tier-grid tier-{{ $tierKey }}">
-                  @foreach($tierSponsors as $sponsor)
-                    <a href="{{ route('public.sponsors.show', ['locale' => app()->getLocale(), 'sponsor' => $sponsor]) }}"
-                       class="sponsor-card {{ $tierKey }}"
-                       data-animate>
-                      <div class="sponsor-badge {{ $tierKey }}">
-                        <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-                        <span>{{ $label }}</span>
-                      </div>
-                      <div class="sponsor-logo">
-                        <img src="{{ asset('storage/'.$sponsor->logo_path) }}" alt="{{ $sponsor->name }}">
-                      </div>
-                     
-                    </a>
-                  @endforeach
-                </div>
-              </div>
-            @endif
-          @endforeach
-
-          @php
-            $otherSponsors = $groupedSponsors->filter(function ($_, $key) use ($sponsorTiers) {
-              return ! array_key_exists($key, $sponsorTiers);
-            })->flatten();
-          @endphp
-
-          @if($otherSponsors->count())
-            @php $renderedSponsors = true; @endphp
-            <div class="sponsor-tier">
-              <h3 class="sponsor-tier-title">{{ __('Sponsors') }}</h3>
-              <div class="sponsor-tier-grid tier-main">
-                @foreach($otherSponsors as $sponsor)
-                  <a href="{{ route('public.sponsors.show', ['locale' => app()->getLocale(), 'sponsor' => $sponsor]) }}"
-                     class="sponsor-card"
-                     data-animate>
-                    <div class="sponsor-badge">
-                      <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M12 5v14"/></svg>
-                      <span>{{ $sponsor->tier }}</span>
-                    </div>
-                    <div class="sponsor-logo">
-                      <img src="{{ asset('storage/'.$sponsor->logo_path) }}" alt="{{ $sponsor->name }}">
-                    </div>
-                    
-                  </a>
-                @endforeach
-              </div>
-            </div>
-          @endif
-
-          @unless($renderedSponsors)
-            <p class="text-center text-gray-500 text-sm">{{ __('Sponsors will be announced soon.') }}</p>
-          @endunless
-        </div>
-      </div>
-    </section>
-
-    <!-- Participants Section -->
-    <section class="participants" id="participants">
-      <div class="container">
-        <div class="section-header" data-animate>
-          <h2 class="section-title">{{ __('Participating Companies') }}</h2>
-          <p class="section-desc">{{ __('Meet the industry leaders who will be showcasing at the event.') }}</p>
-        </div>
-
-        <div class="participants-grid">
-          @forelse($participants as $participant)
-            <a href="{{ route('public.participants.show', ['locale' => app()->getLocale(), 'participant' => $participant]) }}"
-               class="participant-card"
-               data-animate>
-              <div class="participant-logo">
-                @if($participant->logo_path)
-                  <img src="{{ asset('storage/'.$participant->logo_path) }}" alt="{{ $participant->name }}">
-                @else
-                  <span>{{ mb_strtoupper(mb_substr($participant->name, 0, 1)) }}</span>
-                @endif
-              </div>
-              <div class="participant-name">
-                {{ $participant->name }}
-                @if($participant->url)
-                  <svg class="icon icon-sm external-icon" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14 21 3"/></svg>
-                @endif
-              </div>
-              <p class="participant-desc">{{ $participant->description_en ?: __('Details coming soon.') }}</p>
-            </a>
-          @empty
-            <div class="participant-card" data-animate>
-              <div class="participant-logo">ℹ️</div>
-              <div class="participant-name">{{ __('Coming soon') }}</div>
-              <p class="participant-desc">{{ __('Participants will be announced soon.') }}</p>
-            </div>
-          @endforelse
-        </div>
-      </div>
-    </section>
-
-    <!-- About Section -->
-    <section class="about" id="about">
-      <div class="container">
-        <div class="about-grid">
-          <div class="about-col" data-animate>
-            <div class="about-header">
-              <div class="about-icon">
-                <svg class="icon" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg>
-              </div>
-              <h2 class="about-title" data-en="Our Mission" data-ar="مهمتنا">Our Mission</h2>
-            </div>
-            <div class="about-card">
-              <p class="about-text" data-en="Our mission is to create a world-class platform that brings together visionaries, innovators, and industry leaders from across the globe. We aim to foster collaboration, inspire innovation, and drive meaningful connections that shape the future of business." data-ar="مهمتنا هي إنشاء منصة عالمية المستوى تجمع أصحاب الرؤى والمبتكرين وقادة الصناعة من جميع أنحاء العالم. نهدف إلى تعزيز التعاون وإلهام الابتكار وإنشاء علاقات هادفة تشكل مستقبل الأعمال.">Our mission is to create a world-class platform that brings together visionaries, innovators, and industry leaders from across the globe. We aim to foster collaboration, inspire innovation, and drive meaningful connections that shape the future of business.</p>
-              <p class="about-text" data-en="Through carefully curated sessions, exhibitions, and networking opportunities, we provide an unparalleled experience for all attendees." data-ar="من خلال الجلسات والمعارض وفرص التواصل المنتقاة بعناية، نقدم تجربة لا مثيل لها لجميع الحضور.">Through carefully curated sessions, exhibitions, and networking opportunities, we provide an unparalleled experience for all attendees.</p>
-            </div>
-          </div>
-
-          <div class="about-col" data-animate>
-            <h2 class="about-title" data-en="Our Goals" data-ar="أهدافنا" style="margin-bottom: 1.5rem;">Our Goals</h2>
-            <div class="goals-list">
-              <div class="goal-card" data-animate>
-                <div class="goal-icon">
-                  <svg class="icon" viewBox="0 0 24 24"><path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 1 1 7.072 0l-.548.547A3.374 3.374 0 0 0 14 18.469V19a2 2 0 1 1-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547Z"/></svg>
-                </div>
-                <div>
-                  <h3 class="goal-title" data-en="Innovation" data-ar="الابتكار">Innovation</h3>
-                  <p class="goal-desc" data-en="Showcase cutting-edge technologies and solutions" data-ar="عرض أحدث التقنيات والحلول">Showcase cutting-edge technologies and solutions</p>
-                </div>
-              </div>
-              <div class="goal-card" data-animate>
-                <div class="goal-icon">
-                  <svg class="icon" viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/></svg>
-                </div>
-                <div>
-                  <h3 class="goal-title" data-en="Networking" data-ar="التواصل">Networking</h3>
-                  <p class="goal-desc" data-en="Connect industry leaders and professionals" data-ar="ربط قادة الصناعة والمهنيين">Connect industry leaders and professionals</p>
-                </div>
-              </div>
-              <div class="goal-card" data-animate>
-                <div class="goal-icon">
-                  <svg class="icon" viewBox="0 0 24 24"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09zM12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>
-                </div>
-                <div>
-                  <h3 class="goal-title" data-en="Growth" data-ar="النمو">Growth</h3>
-                  <p class="goal-desc" data-en="Drive business opportunities and partnerships" data-ar="تعزيز فرص الأعمال والشراكات">Drive business opportunities and partnerships</p>
-                </div>
-              </div>
             </div>
           </div>
         </div>
@@ -1851,7 +1958,10 @@
                   </div>
                 </div>
                 <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">
-                  <svg class="icon icon-sm" style="margin-right: 0.5rem;" viewBox="0 0 24 24"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
+                  <svg class="icon icon-sm" style="margin-right: 0.5rem;" viewBox="0 0 24 24">
+                    <path d="m22 2-7 20-4-9-9-4Z" />
+                    <path d="M22 2 11 13" />
+                  </svg>
                   <span data-en="Send Message" data-ar="إرسال الرسالة">Send Message</span>
                 </button>
               </form>
@@ -1861,89 +1971,306 @@
           <div class="contact-col" data-animate>
             <h3 class="contact-info-title" data-en="Contact Information" data-ar="معلومات التواصل">Contact Information</h3>
             <div class="contact-info-list">
-              <div class="contact-info-card primary">
-                <div class="contact-info-header">
-                  <div class="contact-info-icon">
-                    <svg class="icon icon-sm" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-                  </div>
-                  <div style="flex: 1;">
-                    <div class="contact-info-name">
-                      <span data-en="General Inquiries" data-ar="الاستفسارات العامة">General Inquiries</span>
-                      <span class="primary-badge" data-en="Primary" data-ar="الرئيسي">Primary</span>
-                    </div>
-                    <div class="contact-info-links">
-                      <a href="mailto:info@conference2025.com" class="contact-info-link">
-                        <svg class="icon icon-sm" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-                        info@conference2025.com
-                      </a>
-                      <a href="tel:+966110000000" class="contact-info-link">
-                        <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                        +966 11 000 0000
-                      </a>
-                    </div>
-                  </div>
-                </div>
-              </div>
 
+              <!-- Arabic Support -->
               <div class="contact-info-card">
                 <div class="contact-info-header">
                   <div style="flex: 1;">
-                    <div class="contact-info-name" data-en="Exhibitor Support" data-ar="دعم العارضين">Exhibitor Support</div>
+                    <div class="contact-info-name" data-en="Arabic Support" data-ar="التواصل باللغة العربية">Arabic Support</div>
                     <div class="contact-info-links">
-                      <a href="mailto:exhibitors@conference2025.com" class="contact-info-link">
-                        <svg class="icon icon-sm" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-                        exhibitors@conference2025.com
-                      </a>
-                      <a href="tel:+966110000001" class="contact-info-link">
-                        <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                        +966 11 000 0001
-                      </a>
+                        <a href="tel:+966594650976" class="contact-info-link">
+                          <svg class="icon icon-sm" viewBox="0 0 24 24">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                          </svg>
+                          +966 59 465 0976
+                        </a>
+                        <a href="tel:+966541164491" class="contact-info-link">
+                          <svg class="icon icon-sm" viewBox="0 0 24 24">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                          </svg>
+                          +966 54 116 4491
+                        </a>
+                        <a href="tel:+966566668892" class="contact-info-link">
+                          <svg class="icon icon-sm" viewBox="0 0 24 24">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                          </svg>
+                          +966 56 666 8892
+                        </a>
+                        <a href="tel:+966110000001" class="contact-info-link">
+                          <svg class="icon icon-sm" viewBox="0 0 24 24">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                          </svg>
+                          +966 11 000 0001
+                        </a>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
 
-              <div class="contact-info-card">
-                <div class="contact-info-header">
-                  <div style="flex: 1;">
-                    <div class="contact-info-name" data-en="Sponsorship" data-ar="الرعاية">Sponsorship</div>
-                    <div class="contact-info-links">
-                      <a href="mailto:sponsors@conference2025.com" class="contact-info-link">
-                        <svg class="icon icon-sm" viewBox="0 0 24 24"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
-                        sponsors@conference2025.com
-                      </a>
-                      <a href="tel:+966110000002" class="contact-info-link">
-                        <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
-                        +966 11 000 0002
-                      </a>
+                <!-- English -->
+                <div class="contact-info-card">
+                  <div class="contact-info-header">
+                    <div style="flex: 1;">
+                      <div class="contact-info-name" data-en="English Support" data-ar="التواصل باللغة الإنجليزية">English Support</div>
+                      <div class="contact-info-links">
+                        <a href="tel:+966566668892" class="contact-info-link">
+                          <svg class="icon icon-sm" viewBox="0 0 24 24">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                          </svg>
+                          +966 56 666 8892
+                        </a>
+                        <a href="tel:+966541164491" class="contact-info-link">
+                          <svg class="icon icon-sm" viewBox="0 0 24 24">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                          </svg>
+                          +966 54 116 4491
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Email Contact -->
+                <div class="contact-info-card">
+                  <div class="contact-info-header">
+                    <div style="flex: 1;">
+                      <div class="contact-info-name">
+                        <span data-en="Email Support" data-ar="التواصل بالبريد">Email Support</span>
+                      </div>
+                      <div class="contact-info-links">
+                        <a href="mailto:tamim@umbrella.sa" class="contact-info-link">
+                          <svg class="icon icon-sm" viewBox="0 0 24 24">
+                            <rect width="20" height="16" x="2" y="4" rx="2" />
+                            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                          </svg>
+                          tamim@umbrella.sa
+                        </a>
+
+                        <a href="mailto:aomar@umbrella.sa" class="contact-info-link">
+                          <svg class="icon icon-sm" viewBox="0 0 24 24">
+                            <rect width="20" height="16" x="2" y="4" rx="2" />
+                            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                          </svg>
+                          aomar@umbrella.sa
+                        </a>
+
+                        <a href="mailto:hello@umbrella.sa" class="contact-info-link">
+                          <svg class="icon icon-sm" viewBox="0 0 24 24">
+                            <rect width="20" height="16" x="2" y="4" rx="2" />
+                            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                          </svg>
+                          hello@umbrella.sa
+                        </a>
+
+                      </div>
                     </div>
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+          <div class="location-card">
+            <div class="location-header">
+              <div class="contact-info-icon">
+                <svg class="icon icon-sm" viewBox="0 0 24 24">
+                  <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+                  <circle cx="12" cy="10" r="3" />
+                </svg>
+              </div>
+              <div>
+                <div class="location-title">{{ __('Event Location') }}</div>
+                <p class="location-address">{{ __('Riyadh International Convention & Exhibition Center, King Abdullah Road, Riyadh, Saudi Arabia') }}</p>
+              </div>
+            </div>
+            <div class="map-embed">
+              <iframe
+                src="https://www.google.com/maps?q=Riyadh+International+Convention+%26+Exhibition+Center&output=embed"
+                allowfullscreen
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
           </div>
         </div>
-        <div class="location-card">
-          <div class="location-header">
-            <div class="contact-info-icon">
-              <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z"/><circle cx="12" cy="10" r="3"/></svg>
-            </div>
-            <div>
-              <div class="location-title">{{ __('Event Location') }}</div>
-              <p class="location-address">{{ __('Riyadh International Convention & Exhibition Center, King Abdullah Road, Riyadh, Saudi Arabia') }}</p>
+    </section>
+
+    <!-- Sponsors Section -->
+    <section class="sponsors" id="sponsors">
+      <div class="container">
+        <div class="section-header" data-animate>
+          <h2 class="section-title">{{ __('Our Sponsors') }}</h2>
+          <p class="section-desc">{{ __('We are grateful to our sponsors who make this event possible.') }}</p>
+        </div>
+
+        <div class="sponsor-tiers">
+          @php $renderedSponsors = false; @endphp
+          @foreach($sponsorTiers as $tierKey => $label)
+          @php $tierSponsors = $groupedSponsors->get($tierKey); @endphp
+          @if($tierSponsors && $tierSponsors->count())
+          @php $renderedSponsors = true; @endphp
+          <div class="sponsor-tier">
+            <h3 class="sponsor-tier-title">{{ $label }}</h3>
+            <div class="sponsor-tier-grid tier-{{ $tierKey }}">
+              @foreach($tierSponsors as $sponsor)
+              <a href="{{ route('public.sponsors.show', ['locale' => app()->getLocale(), 'sponsor' => $sponsor]) }}"
+                class="sponsor-card {{ $tierKey }}"
+                data-animate>
+                <div class="sponsor-badge {{ $tierKey }}">
+                  <span>{{ $label }}</span>
+                </div>
+                <div class="sponsor-logo">
+                  <img src="{{ asset('storage/'.$sponsor->logo_path) }}" alt="{{ $sponsor->name }}">
+                </div>
+
+              </a>
+              @endforeach
             </div>
           </div>
-          <div class="map-embed">
-            <iframe
-              src="https://www.google.com/maps?q=Riyadh+International+Convention+%26+Exhibition+Center&output=embed"
-              allowfullscreen
-              loading="lazy"
-              referrerpolicy="no-referrer-when-downgrade"
-            ></iframe>
+          @endif
+          @endforeach
+
+          @php
+          $otherSponsors = $groupedSponsors->filter(function ($_, $key) use ($sponsorTiers) {
+          return ! array_key_exists($key, $sponsorTiers);
+          })->flatten();
+          @endphp
+
+          @if($otherSponsors->count())
+          @php $renderedSponsors = true; @endphp
+          <div class="sponsor-tier">
+            <h3 class="sponsor-tier-title">{{ __('Sponsors') }}</h3>
+            <div class="sponsor-tier-grid tier-main">
+              @foreach($otherSponsors as $sponsor)
+              <a href="{{ route('public.sponsors.show', ['locale' => app()->getLocale(), 'sponsor' => $sponsor]) }}"
+                class="sponsor-card"
+                data-animate>
+                <div class="sponsor-badge">
+
+                  <span>{{ $sponsor->tier }}</span>
+                </div>
+                <div class="sponsor-logo">
+                  <img src="{{ asset('storage/'.$sponsor->logo_path) }}" alt="{{ $sponsor->name }}">
+                </div>
+
+              </a>
+              @endforeach
+            </div>
+          </div>
+          @endif
+
+          @unless($renderedSponsors)
+          <p class="text-center text-gray-500 text-sm">{{ __('Sponsors will be announced soon.') }}</p>
+          @endunless
+        </div>
+      </div>
+    </section>
+
+    <!-- Participants Section -->
+    <section class="participants" id="participants">
+      <div class="container">
+        <div class="section-header" data-animate>
+          <h2 class="section-title">{{ __('Participating Companies') }}</h2>
+          <p class="section-desc">{{ __('Meet the industry leaders who will be showcasing at the event.') }}</p>
+        </div>
+
+        <div class="participants-grid">
+          @forelse($participants as $participant)
+          <a href="{{ route('public.participants.show', ['locale' => app()->getLocale(), 'participant' => $participant]) }}"
+            class="participant-card"
+            data-animate>
+            <div class="participant-logo">
+              @if($participant->logo_path)
+              <img src="{{ asset('storage/'.$participant->logo_path) }}" alt="{{ $participant->name }}">
+              @else
+              <span>{{ mb_strtoupper(mb_substr($participant->name, 0, 1)) }}</span>
+              @endif
+            </div>
+            <div class="participant-name">
+              {{ $participant->name }}
+              @if($participant->url)
+              <svg class="icon icon-sm external-icon" viewBox="0 0 24 24">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14 21 3" />
+              </svg>
+              @endif
+            </div>
+            <p class="participant-desc">{{ $participant->description_en ?: __('Details coming soon.') }}</p>
+          </a>
+          @empty
+          <div class="participant-card" data-animate>
+            <div class="participant-logo">ℹ️</div>
+            <div class="participant-name">{{ __('Coming soon') }}</div>
+            <p class="participant-desc">{{ __('Participants will be announced soon.') }}</p>
+          </div>
+          @endforelse
+        </div>
+      </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+      <div class="container">
+        <div class="about-grid">
+          <div class="about-col" data-animate>
+            <div class="about-header">
+              <div class="about-icon">
+                <svg class="icon" viewBox="0 0 24 24">
+                  <circle cx="12" cy="12" r="10" />
+                  <path d="M12 8v4l3 3" />
+                </svg>
+              </div>
+              <h2 class="about-title" data-en="Our Mission" data-ar="مهمتنا">Our Mission</h2>
+            </div>
+            <div class="about-card">
+              <p class="about-text" data-en="Our mission is to create a world-class platform that brings together visionaries, innovators, and industry leaders from across the globe. We aim to foster collaboration, inspire innovation, and drive meaningful connections that shape the future of business." data-ar="مهمتنا هي إنشاء منصة عالمية المستوى تجمع أصحاب الرؤى والمبتكرين وقادة الصناعة من جميع أنحاء العالم. نهدف إلى تعزيز التعاون وإلهام الابتكار وإنشاء علاقات هادفة تشكل مستقبل الأعمال.">Our mission is to create a world-class platform that brings together visionaries, innovators, and industry leaders from across the globe. We aim to foster collaboration, inspire innovation, and drive meaningful connections that shape the future of business.</p>
+              <p class="about-text" data-en="Through carefully curated sessions, exhibitions, and networking opportunities, we provide an unparalleled experience for all attendees." data-ar="من خلال الجلسات والمعارض وفرص التواصل المنتقاة بعناية، نقدم تجربة لا مثيل لها لجميع الحضور.">Through carefully curated sessions, exhibitions, and networking opportunities, we provide an unparalleled experience for all attendees.</p>
+            </div>
+          </div>
+
+          <div class="about-col" data-animate>
+            <h2 class="about-title" data-en="Our Goals" data-ar="أهدافنا" style="margin-bottom: 1.5rem;">Our Goals</h2>
+            <div class="goals-list">
+              <div class="goal-card" data-animate>
+                <div class="goal-icon">
+                  <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 1 1 7.072 0l-.548.547A3.374 3.374 0 0 0 14 18.469V19a2 2 0 1 1-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547Z" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="goal-title" data-en="Innovation" data-ar="الابتكار">Innovation</h3>
+                  <p class="goal-desc" data-en="Showcase cutting-edge technologies and solutions" data-ar="عرض أحدث التقنيات والحلول">Showcase cutting-edge technologies and solutions</p>
+                </div>
+              </div>
+              <div class="goal-card" data-animate>
+                <div class="goal-icon">
+                  <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+                    <circle cx="9" cy="7" r="4" />
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="goal-title" data-en="Networking" data-ar="التواصل">Networking</h3>
+                  <p class="goal-desc" data-en="Connect industry leaders and professionals" data-ar="ربط قادة الصناعة والمهنيين">Connect industry leaders and professionals</p>
+                </div>
+              </div>
+              <div class="goal-card" data-animate>
+                <div class="goal-icon">
+                  <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09zM12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z" />
+                    <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" />
+                  </svg>
+                </div>
+                <div>
+                  <h3 class="goal-title" data-en="Growth" data-ar="النمو">Growth</h3>
+                  <p class="goal-desc" data-en="Drive business opportunities and partnerships" data-ar="تعزيز فرص الأعمال والشراكات">Drive business opportunities and partnerships</p>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </section>
+
+
   </main>
 
   <!-- Footer -->
@@ -1959,7 +2286,9 @@
   <!-- Toast Container -->
   <div class="toast-container" id="toast-container"></div>
   <button id="to-top-btn" class="to-top-button" type="button" aria-label="{{ __('Back to top') }}" onclick="scrollToTop()">
-    <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></svg>
+    <svg class="icon icon-sm" viewBox="0 0 24 24">
+      <path d="M12 19V5M5 12l7-7 7 7" />
+    </svg>
   </button>
 
   <script>
@@ -1971,7 +2300,7 @@
       document.documentElement.lang = currentLocale;
       document.documentElement.dir = currentLocale === 'ar' ? 'rtl' : 'ltr';
       document.getElementById('lang-text').textContent = currentLocale === 'en' ? 'العربية' : 'English';
-      
+
       // Update all translatable elements
       document.querySelectorAll('[data-en][data-ar]').forEach(el => {
         el.textContent = el.getAttribute(`data-${currentLocale}`);
@@ -1996,22 +2325,22 @@
     function animateCountUp(element, target, suffix) {
       const duration = 2000;
       const startTime = Date.now();
-      
+
       function update() {
         const elapsed = Date.now() - startTime;
         const progress = Math.min(elapsed / duration, 1);
         const easeOut = 1 - Math.pow(1 - progress, 4);
         const current = Math.floor(easeOut * target);
-        
+
         element.textContent = current.toLocaleString() + suffix;
-        
+
         if (progress < 1) {
           requestAnimationFrame(update);
         } else {
           element.textContent = target.toLocaleString() + suffix;
         }
       }
-      
+
       requestAnimationFrame(update);
     }
 
@@ -2027,7 +2356,7 @@
           const delay = entry.target.dataset.delay || 0;
           setTimeout(() => {
             entry.target.classList.add('visible');
-            
+
             // Handle count-up for highlight numbers
             const numberEl = entry.target.querySelector('.highlight-number');
             if (numberEl && !numberEl.dataset.animated) {
@@ -2102,7 +2431,7 @@
 
     function selectRole(role) {
       if (selectedRole === role) return;
-      
+
       selectedRole = role;
       applyRoleOrder(role);
       toggleRoleVisibility(role);
@@ -2114,7 +2443,7 @@
         document.getElementById('visitor-card').classList.remove('dimmed');
         document.getElementById('visitor-cta').style.display = 'none';
         document.getElementById('visitor-form').classList.add('active');
-        
+
         document.getElementById('exhibitor-card').classList.add('dimmed');
         document.getElementById('exhibitor-card').classList.remove('selected');
         document.getElementById('exhibitor-form').classList.remove('active');
@@ -2123,7 +2452,7 @@
         document.getElementById('exhibitor-card').classList.remove('dimmed');
         document.getElementById('exhibitor-cta').style.display = 'none';
         document.getElementById('exhibitor-form').classList.add('active');
-        
+
         document.getElementById('visitor-card').classList.add('dimmed');
         document.getElementById('visitor-card').classList.remove('selected');
         document.getElementById('visitor-form').classList.remove('active');
@@ -2133,14 +2462,14 @@
     function clearRole() {
       selectedRole = null;
       exhibitorStep = 1;
-      
+
       const roleCards = document.getElementById('role-cards');
       roleCards.classList.remove('has-selection');
-      
+
       document.getElementById('visitor-card').classList.remove('selected', 'dimmed');
       document.getElementById('visitor-cta').style.display = 'flex';
       document.getElementById('visitor-form').classList.remove('active');
-      
+
       document.getElementById('exhibitor-card').classList.remove('selected', 'dimmed');
       document.getElementById('exhibitor-cta').style.display = 'flex';
       document.getElementById('exhibitor-form').classList.remove('active');
@@ -2168,7 +2497,7 @@
       document.getElementById('exhibitor-step2').style.display = exhibitorStep === 2 ? 'block' : 'none';
       document.getElementById('exhibitor-next-btn').style.display = exhibitorStep === 1 ? 'inline-flex' : 'none';
       document.getElementById('exhibitor-submit-btn').style.display = exhibitorStep === 2 ? 'inline-flex' : 'none';
-      
+
       document.getElementById('step1-indicator').classList.toggle('active', exhibitorStep >= 1);
       document.getElementById('step2-indicator').classList.toggle('active', exhibitorStep >= 2);
     }
@@ -2203,7 +2532,7 @@
         <div class="toast-desc">${description}</div>
       `;
       container.appendChild(toast);
-      
+
       setTimeout(() => {
         toast.style.opacity = '0';
         toast.style.transform = 'translateY(1rem)';
@@ -2223,17 +2552,73 @@
     }
 
     function scrollToTop() {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
     }
 
     // Show register button on desktop
-    if (window.innerWidth >= 640) {
-      document.querySelector('.header-actions .btn-primary').style.display = 'inline-flex';
+    // if (window.innerWidth >= 640) {
+    //   document.querySelector('.header-actions .btn-primary').style.display = 'inline-flex';
+    // }
+    // window.addEventListener('resize', () => {
+    //   document.querySelector('.header-actions .btn-primary').style.display =
+    //     window.innerWidth >= 640 ? 'inline-flex' : 'none';
+    // });
+
+    // Initialize AOS
+    if (typeof AOS !== 'undefined') {
+      AOS.init({
+        duration: 1000,
+        once: true,
+        offset: 100
+      });
     }
-    window.addEventListener('resize', () => {
-      document.querySelector('.header-actions .btn-primary').style.display = 
-        window.innerWidth >= 640 ? 'inline-flex' : 'none';
+
+    // Animated Counter
+    function animateCounters() {
+      const counters = document.querySelectorAll('.stat-number');
+      const speed = 800;
+
+      counters.forEach(counter => {
+        const animate = () => {
+          const value = +counter.getAttribute('data-count');
+          const data = +counter.innerText;
+          const time = value / speed;
+
+          if (data < value) {
+            counter.innerText = Math.ceil(data + time);
+            setTimeout(animate, 1);
+          } else {
+            counter.innerText = value;
+          }
+        };
+        animate();
+      });
+    }
+
+    // Intersection Observer for animations
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          animateCounters();
+          // Animate progress bars
+          document.querySelectorAll('.progress-fill').forEach(bar => {
+            bar.style.width = bar.getAttribute('data-width') || '85%';
+          });
+          observer.unobserve(entry.target);
+        }
+      });
+    }, {
+      threshold: 0.5
     });
+
+    const statsSection = document.querySelector('.stats-section');
+    if (statsSection) {
+      observer.observe(statsSection);
+    }
   </script>
 </body>
+
 </html>
