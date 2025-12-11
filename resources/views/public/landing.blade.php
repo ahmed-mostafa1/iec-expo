@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&family=Work+Sans:wght@400;500;600;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <style>
     :root {
@@ -87,7 +87,7 @@
     }
 
     body {
-      font-family: 'Work Sans', sans-serif;
+      font-family: 'Cairo', 'Work Sans', sans-serif;
       background-color: rgb(var(--background));
       color: rgb(var(--foreground));
       line-height: 1.6;
@@ -148,35 +148,39 @@
       }
     }
 
-.nav-link {
-  text-decoration: none;
-  position: relative;
-  transition: 0.4s;
-  color: #fff;
-  font-weight: 600;
-  text-transform: uppercase;
+    .nav-link {
+      text-decoration: none;
+      position: relative;
+      transition: color 0.4s ease;
+      color: #fff;
+      font-weight: 600;
+      text-transform: uppercase;
+      display: inline-flex;
+      align-items: center;
+      opacity: 0;
+      transform: translateY(-12px);
+      animation: navLinkFade 0.6s ease forwards;
+    }
 
-}
+    .nav-link:hover {
+      color: #057a02;
+    }
 
-.nav-link:hover{
-  color: #057a02;
-}
+    .nav-link::before {
+      content: "";
+      position: absolute;
+      width: 0;
+      height: 4px;
+      bottom: 0;
+      left: 50%;
+      background-color: #057a02;
+      transition: all 0.4s;
+    }
 
-.nav-link::before {
-  content: "";
-  position: absolute;
-  width: 0;
-  height: 4px;
-  bottom: 0;
-  left: 50%;
-  background-color: #057a02;
-  transition: all 0.4s;
-}
-
-.nav-link:hover::before {
-  width: 100%;
-  left: 0;
-}
+    .nav-link:hover::before {
+      width: 100%;
+      left: 0;
+    }
 
     .nav .nav-link:nth-child(1) {
       animation-delay: 0.1s;
@@ -273,10 +277,15 @@
       cursor: pointer;
       transition: color 0.2s;
       color: #fff;
+      font-family: 'Cairo', 'Work Sans', sans-serif;
     }
 
     .lang-switch:hover {
       color: #057a02;
+    }
+
+    #lang-text {
+      font-family: 'Cairo', 'Work Sans', sans-serif;
     }
 
     .btn {
@@ -1432,7 +1441,7 @@
 
     /* RTL Support */
     [dir="rtl"] {
-      font-family: 'Noto Sans Arabic', 'Work Sans', sans-serif;
+      font-family: 'Cairo', sans-serif;
     }
 
     /* Icons (using SVG) */
@@ -1587,6 +1596,33 @@
       background: linear-gradient(90deg, var(--secondary-color), var(--accent-color));
       border-radius: 3px;
       transition: width 2s ease;
+    }
+
+    /* Force the links block into 2 columns */
+    .contact-info-card .contact-info-links.two-columns {
+      display: grid !important;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      column-gap: 1.5rem;
+    }
+
+    /* Stack on mobile if you want */
+    @media (max-width: 600px) {
+      .contact-info-card .contact-info-links.two-columns {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .contact-info-column {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .contact-info-column-header {
+      font-weight: 600;
+      font-size: 0.9rem;
+      margin-bottom: 0.25rem;
+      opacity: 0.8;
     }
   </style>
 </head>
@@ -1870,36 +1906,34 @@
                       <input type="text" class="form-input" required placeholder="Marketing Manager">
                     </div>
                   </div>
-                  <div class="form-grid" style="margin-top: 1rem;">
-                    <div class="form-group">
-                      <label class="form-label" data-en="Corporate Profile *" data-ar="الملف التعريفي للشركة *">Corporate Profile *</label>
-                      <input type="file" class="form-input" required>
-                    </div>
-                  </div>
                 </div>
 
                 <div id="exhibitor-step2" style="display: none;">
                   <div class="form-grid form-grid-2">
                     <div class="form-group">
                       <label class="form-label" data-en="VAT Certificate *" data-ar="شهادة ضريبة القيمة المضافة *">VAT Certificate *</label>
-                      <input type="file" class="form-input" required>
+                      <input type="file" class="form-input" required accept="application/pdf,image/png,image/jpeg">
                     </div>
                     <div class="form-group">
                       <label class="form-label" data-en="CR Copy (Commercial Registration) *" data-ar="نسخة السجل التجاري *">CR Copy (Commercial Registration) *</label>
-                      <input type="file" class="form-input" required>
+                      <input type="file" class="form-input" required accept="application/pdf,image/png,image/jpeg">
                     </div>
                   </div>
-                  <div class="form-grid" style="margin-top: 1rem;">
+                  <div class="form-grid form-grid-2" style="margin-top: 1rem;">
                     <div class="form-group">
                       <label class="form-label" data-en="National Address *" data-ar="العنوان الوطني *">National Address *</label>
-                      <input type="file" class="form-input" required>
+                      <input type="file" class="form-input" required accept="application/pdf,image/png,image/jpeg">
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label" data-en="Corporate Profile *" data-ar="الملف التعريفي للشركة *">Corporate Profile *</label>
+                      <input type="file" class="form-input" required accept="application/pdf,image/png,image/jpeg">
                     </div>
                   </div>
                   <div class="form-grid" style="margin-top: 1rem;">
                     <div class="form-group">
                       <label class="form-label" data-en="Company Logo" data-ar="شعار الشركة">Company Logo</label>
-                      <input type="file" class="form-input" accept="image/png,image/jpeg,image/svg+xml">
-                      <span class="form-hint" data-en="PNG, JPG or SVG up to 2MB" data-ar="PNG أو JPG أو SVG حتى 2 ميجابايت">PNG, JPG or SVG up to 2MB</span>
+                      <input type="file" class="form-input" accept="application/pdf,image/png,image/jpeg">
+                      <span class="form-hint" data-en="PDF, PNG, JPG files only accepted" data-ar="يمكن إرفاق ملفات PDF , JPG, PNG">PDF, PNG, JPG files only accepted</span>
                     </div>
                   </div>
                 </div>
@@ -1930,14 +1964,14 @@
     <section class="contact" id="contact">
       <div class="container">
         <div class="section-header" data-animate>
-          <h2 class="section-title" data-en="Contact Us" data-ar="تواصل معنا">Contact Us</h2>
+          <h2 class="section-title" data-en="Contact Us" data-ar="تواصل معنا" style="color:#057a02;">Contact Us</h2>
           <p class="section-desc" data-en="Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible." data-ar="لديك أسئلة؟ نود أن نسمع منك. أرسل لنا رسالة وسنرد في أقرب وقت ممكن.">Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
         </div>
 
         <div class="contact-grid">
           <div class="contact-col" data-animate>
             <div class="contact-form-card">
-              <h3 class="form-title" data-en="Send us a message" data-ar="أرسل لنا رسالة">Send us a message</h3>
+              <h3 class="form-title" data-en="Send us a message" data-ar="أرسل لنا رسالة"  style="color:#057a02;">Send us a message</h3>
               <form onsubmit="handleContactSubmit(event)">
                 <div class="form-grid">
                   <div class="form-group">
@@ -1957,7 +1991,7 @@
                     <textarea class="form-textarea" required rows="4" placeholder="How can we help you?"></textarea>
                   </div>
                 </div>
-                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem; background: #057a02; color:#fff;">
                   <svg class="icon icon-sm" style="margin-right: 0.5rem;" viewBox="0 0 24 24">
                     <path d="m22 2-7 20-4-9-9-4Z" />
                     <path d="M22 2 11 13" />
@@ -1969,56 +2003,86 @@
           </div>
 
           <div class="contact-col" data-animate>
-            <h3 class="contact-info-title" data-en="Contact Information" data-ar="معلومات التواصل">Contact Information</h3>
             <div class="contact-info-list">
-
               <!-- Arabic Support -->
+
               <div class="contact-info-card">
                 <div class="contact-info-header">
-                  <div style="flex: 1;">
-                    <div class="contact-info-name" data-en="Arabic Support" data-ar="التواصل باللغة العربية">Arabic Support</div>
-                    <div class="contact-info-links">
+                  <div style="flex: 1; ">
+                    <div class="contact-info-name" data-en="Arabic Support" data-ar="التواصل باللغة العربية"
+                     style="color:#057a02;">
+                      Arabic Support
+                    </div>
+                    <div class="contact-info-links two-columns">
+                      <!-- Column 1 -->
+                      <div class="contact-info-column">
+                        <div class="contact-info-column-header"
+                          data-en="Ahmed"
+                          data-ar="أحمد">
+                          Ahmed
+                        </div>
+                        <a href="tel:+966566668892" class="contact-info-link">
+                          <svg class="icon icon-sm" viewBox="0 0 24 24">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                          </svg>
+                          +966 56 666 8892
+                        </a>
+                        <a href="tel:+966541164491" class="contact-info-link">
+                          <svg class="icon icon-sm" viewBox="0 0 24 24">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                          </svg>
+                          +966 54 116 4491
+                        </a>
+                      </div>
+                      <!-- Column 2 -->
+                      <div class="contact-info-column">
+                        <div class="contact-info-column-header"
+                          data-en="Tamim"
+                          data-ar="تميم">
+                          Tamim
+                        </div>
+
                         <a href="tel:+966594650976" class="contact-info-link">
                           <svg class="icon icon-sm" viewBox="0 0 24 24">
                             <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
                           </svg>
                           +966 59 465 0976
                         </a>
-                        <a href="tel:+966541164491" class="contact-info-link">
-                          <svg class="icon icon-sm" viewBox="0 0 24 24">
-                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-                          </svg>
-                          +966 54 116 4491
-                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+
+              <!-- English -->
+              <div class="contact-info-card">
+
+                <div class="contact-info-header">
+                  <div style="flex: 1;">
+                    <div class="contact-info-name"
+                      data-en="English Support"
+                      data-ar="التواصل باللغة الإنجليزية"
+                       style="color:#057a02;">
+                      English Support
+                    </div>
+
+                    <div class="contact-info-links two-columns">
+                      <!-- Column 1 -->
+                      <div class="contact-info-column">
+
                         <a href="tel:+966566668892" class="contact-info-link">
                           <svg class="icon icon-sm" viewBox="0 0 24 24">
                             <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
                           </svg>
                           +966 56 666 8892
                         </a>
-                        <a href="tel:+966110000001" class="contact-info-link">
-                          <svg class="icon icon-sm" viewBox="0 0 24 24">
-                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-                          </svg>
-                          +966 11 000 0001
-                        </a>
                       </div>
-                    </div>
-                  </div>
-                </div>
 
-                <!-- English -->
-                <div class="contact-info-card">
-                  <div class="contact-info-header">
-                    <div style="flex: 1;">
-                      <div class="contact-info-name" data-en="English Support" data-ar="التواصل باللغة الإنجليزية">English Support</div>
-                      <div class="contact-info-links">
-                        <a href="tel:+966566668892" class="contact-info-link">
-                          <svg class="icon icon-sm" viewBox="0 0 24 24">
-                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-                          </svg>
-                          +966 56 666 8892
-                        </a>
+                      <!-- Column 2 -->
+                      <div class="contact-info-column">
+                      
+
                         <a href="tel:+966541164491" class="contact-info-link">
                           <svg class="icon icon-sm" viewBox="0 0 24 24">
                             <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
@@ -2030,67 +2094,72 @@
                   </div>
                 </div>
 
-                <!-- Email Contact -->
-                <div class="contact-info-card">
-                  <div class="contact-info-header">
-                    <div style="flex: 1;">
-                      <div class="contact-info-name">
-                        <span data-en="Email Support" data-ar="التواصل بالبريد">Email Support</span>
-                      </div>
-                      <div class="contact-info-links">
-                        <a href="mailto:tamim@umbrella.sa" class="contact-info-link">
-                          <svg class="icon icon-sm" viewBox="0 0 24 24">
-                            <rect width="20" height="16" x="2" y="4" rx="2" />
-                            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-                          </svg>
-                          tamim@umbrella.sa
-                        </a>
 
-                        <a href="mailto:aomar@umbrella.sa" class="contact-info-link">
-                          <svg class="icon icon-sm" viewBox="0 0 24 24">
-                            <rect width="20" height="16" x="2" y="4" rx="2" />
-                            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-                          </svg>
-                          aomar@umbrella.sa
-                        </a>
 
-                        <a href="mailto:hello@umbrella.sa" class="contact-info-link">
-                          <svg class="icon icon-sm" viewBox="0 0 24 24">
-                            <rect width="20" height="16" x="2" y="4" rx="2" />
-                            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-                          </svg>
-                          hello@umbrella.sa
-                        </a>
 
-                      </div>
+              </div>
+
+              <!-- Email Contact -->
+              <div class="contact-info-card">
+                <div class="contact-info-header">
+                  <div style="flex: 1;">
+                    <div class="contact-info-name">
+                      <span data-en="Email Support" data-ar="التواصل بالبريد" style="color:#057a02;">Email Support</span>
+                    </div>
+                    <div class="contact-info-links">
+                      <a href="mailto:tamim@umbrella.sa" class="contact-info-link">
+                        <svg class="icon icon-sm" viewBox="0 0 24 24">
+                          <rect width="20" height="16" x="2" y="4" rx="2" />
+                          <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                        </svg>
+                        tamim@umbrella.sa
+                      </a>
+
+                      <a href="mailto:aomar@umbrella.sa" class="contact-info-link">
+                        <svg class="icon icon-sm" viewBox="0 0 24 24">
+                          <rect width="20" height="16" x="2" y="4" rx="2" />
+                          <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                        </svg>
+                        aomar@umbrella.sa
+                      </a>
+
+                      <a href="mailto:hello@umbrella.sa" class="contact-info-link">
+                        <svg class="icon icon-sm" viewBox="0 0 24 24">
+                          <rect width="20" height="16" x="2" y="4" rx="2" />
+                          <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                        </svg>
+                        hello@umbrella.sa
+                      </a>
+
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-          <div class="location-card">
-            <div class="location-header">
-              <div class="contact-info-icon">
-                <svg class="icon icon-sm" viewBox="0 0 24 24">
-                  <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
-                  <circle cx="12" cy="10" r="3" />
-                </svg>
-              </div>
-              <div>
-                <div class="location-title">{{ __('Event Location') }}</div>
-                <p class="location-address">{{ __('Riyadh International Convention & Exhibition Center, King Abdullah Road, Riyadh, Saudi Arabia') }}</p>
-              </div>
-            </div>
-            <div class="map-embed">
-              <iframe
-                src="https://www.google.com/maps?q=Riyadh+International+Convention+%26+Exhibition+Center&output=embed"
-                allowfullscreen
-                loading="lazy"
-                referrerpolicy="no-referrer-when-downgrade"></iframe>
             </div>
           </div>
         </div>
+        <div class="location-card">
+          <div class="location-header">
+            <div class="contact-info-icon">
+              <svg class="icon icon-sm" viewBox="0 0 24 24">
+                <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
+                <circle cx="12" cy="10" r="3" />
+              </svg>
+            </div>
+            <div>
+              <div class="location-title"  style="color:#057a02;">{{ __('Event Location') }}</div>
+              <p class="location-address">{{ __('Riyadh International Convention & Exhibition Center, King Abdullah Road, Riyadh, Saudi Arabia') }}</p>
+            </div>
+          </div>
+          <div class="map-embed">
+            <iframe
+              src="https://www.google.com/maps?q=Riyadh+International+Convention+%26+Exhibition+Center&output=embed"
+              allowfullscreen
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"></iframe>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- Sponsors Section -->
