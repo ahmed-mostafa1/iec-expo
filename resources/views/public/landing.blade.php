@@ -1952,9 +1952,18 @@
   }
 
   $sponsorTierLabels = [
-  'strategic' => __('Strategic Sponsors'),
-  'business' => __('Business Sponsors'),
-  'marketing' => __('Marketing Sponsors'),
+  'strategic' => [
+  'en' => 'Strategic Sponsors',
+  'ar' => 'الراعي اﻹستراتيجي',
+  ],
+  'business' => [
+  'en' => 'Business Sponsors',
+  'ar' => 'راعي الأعمال',
+  ],
+  'marketing' => [
+  'en' => 'Marketing Sponsors',
+  'ar' => 'الراعي التسويقي',
+  ],
   ];
 
   $tierAliases = [
@@ -2085,7 +2094,7 @@
           <i class="fas fa-microphone-alt"></i>
         </div>
         <div class="stat-number" data-count="120">0</div>
-        <div class="stat-label" data-en="Expert Speakers" data-ar="المتحدثون الخبراء">Expert Speakers</div>
+        <div class="stat-label" data-en="Expert Speakers" data-ar="خبير متحدث">Expert Speakers</div>
         <div class="stat-progress">
           <div class="progress-fill"></div>
         </div>
@@ -2095,7 +2104,7 @@
           <i class="fas fa-calendar-check"></i>
         </div>
         <div class="stat-number" data-count="60">0</div>
-        <div class="stat-label" data-en="Sessions" data-ar="الجلسات">Sessions</div>
+        <div class="stat-label" data-en="Sessions" data-ar="ورشة عمل">Sessions</div>
         <div class="stat-progress">
           <div class="progress-fill"></div>
         </div>
@@ -2105,7 +2114,7 @@
           <i class="fas fa-globe-americas"></i>
         </div>
         <div class="stat-number" data-count="50">0</div>
-        <div class="stat-label" data-en="Countries" data-ar="الدول">Countries</div>
+        <div class="stat-label" data-en="Countries" data-ar="دولة مشاركة">Countries</div>
         <div class="stat-progress">
           <div class="progress-fill"></div>
         </div>
@@ -2393,12 +2402,17 @@
         @endphp
         <div class="sponsor-tiers">
           @php $renderedSponsors = false; @endphp
-          @foreach($sponsorTierLabels as $tierKey => $label)
-          @php $tierSponsors = $groupedSponsors->get($tierKey); @endphp
+          @foreach($sponsorTierLabels as $tierKey => $labelSet)
+          @php
+          $tierSponsors = $groupedSponsors->get($tierKey);
+          $labelEn = $labelSet['en'] ?? '';
+          $labelAr = $labelSet['ar'] ?? $labelEn;
+          $label = $currentLocale === 'ar' ? $labelAr : $labelEn;
+          @endphp
           @if($tierSponsors && $tierSponsors->count())
           @php $renderedSponsors = true; @endphp
           <div class="sponsor-tier">
-            <h2 class="sponsor-tier-title">{{ $label }}</h2>
+            <h2 class="sponsor-tier-title" data-en="{{ e($labelEn) }}" data-ar="{{ e($labelAr) }}">{{ $label }}</h2>
             <div class="sponsor-featured-list">
               @foreach($tierSponsors as $sponsor)
               @php
@@ -2578,7 +2592,7 @@
       <div class="container">
         <div class="section-header" data-animate>
           <h2 class="section-title" data-en="Organizers" data-ar="المنظمون">Organizers</h2>
-          <p class="section-desc" data-en="Meet the teams orchestrating the IEC Expo experience." data-ar="تعرّف على الفرق التي تنظم تجربة معرض IEC.">
+          <p class="section-desc" data-en="Meet the teams orchestrating the IEC Expo experience." data-ar="تعرّف على الفرق التي تنظم تجربة المعرض الدولي للتجارة اﻹلكترونية.">
             Meet the teams orchestrating the IEC Expo experience.
           </p>
         </div>
