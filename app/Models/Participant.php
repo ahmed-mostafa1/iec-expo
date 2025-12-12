@@ -8,6 +8,7 @@ class Participant extends Model
 {
     protected $fillable = [
         'name',
+        'name_ar',
         'logo_path',
         'description_en',
         'description_ar',
@@ -19,4 +20,15 @@ class Participant extends Model
     protected $casts = [
         'is_active' => 'boolean',
     ];
+
+    public function getLocalizedName(?string $locale = null): string
+    {
+        $locale = $locale ?? app()->getLocale();
+
+        if ($locale === 'ar' && $this->name_ar) {
+            return $this->name_ar;
+        }
+
+        return $this->name;
+    }
 }

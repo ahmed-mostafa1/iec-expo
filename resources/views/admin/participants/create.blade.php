@@ -9,11 +9,19 @@
           class="max-w-xl space-y-4 bg-white border border-gray-200 rounded-xl p-4 text-xs">
         @csrf
 
-        <div>
-            <label class="block text-[10px] font-medium text-gray-700 mb-1">{{ __('Name') }}</label>
-            <input type="text" name="name" class="w-full rounded-lg border-gray-300 text-xs"
-                   value="{{ old('name') }}" required>
-            @error('name') <p class="mt-1 text-[11px] text-red-600">{{ $message }}</p> @enderror
+        <div class="grid grid-cols-1 gap-3">
+            <div>
+                <label class="block text-[10px] font-medium text-gray-700 mb-1">{{ __('Name (English)') }}</label>
+                <input type="text" name="name" class="w-full rounded-lg border-gray-300 text-xs"
+                       value="{{ old('name') }}" required>
+                @error('name') <p class="mt-1 text-[11px] text-red-600">{{ $message }}</p> @enderror
+            </div>
+            <div>
+                <label class="block text-[10px] font-medium text-gray-700 mb-1">{{ __('Name (Arabic)') }}</label>
+                <input type="text" name="name_ar" class="w-full rounded-lg border-gray-300 text-xs"
+                       value="{{ old('name_ar') }}">
+                @error('name_ar') <p class="mt-1 text-[11px] text-red-600">{{ $message }}</p> @enderror
+            </div>
         </div>
 
         <div class="grid grid-cols-2 gap-3">

@@ -33,7 +33,9 @@ class PublicSponsorController extends Controller
     public function store(Request $request)
     {
         $data = $request->validate([
-            'name'          => ['required', 'string', 'max:255'],
+            'name'          => ['nullable', 'string', 'max:255'],
+            'name_en'       => ['required', 'string', 'max:255'],
+            'name_ar'       => ['nullable', 'string', 'max:255'],
             'tier'          => ['nullable', 'string', 'max:50', 'in:'.implode(',', array_keys($this->availableTiers))],
             'url'           => ['nullable', 'url', 'max:255'],
             'description_en'=> ['required', 'string'],
@@ -46,7 +48,9 @@ class PublicSponsorController extends Controller
         $path = $request->file('logo')->store('logos/sponsors', 'public');
 
         PublicSponsor::create([
-            'name'          => $data['name'],
+            'name'          => $data['name'] ?? $data['name_en'],
+            'name_en'       => $data['name_en'],
+            'name_ar'       => $data['name_ar'] ?? null,
             'tier'          => $data['tier'] ?? null,
             'url'           => $data['url'] ?? null,
             'description_en'=> $data['description_en'],
@@ -76,7 +80,9 @@ class PublicSponsorController extends Controller
     public function update(Request $request, PublicSponsor $publicSponsor)
     {
         $data = $request->validate([
-            'name'          => ['required', 'string', 'max:255'],
+            'name'          => ['nullable', 'string', 'max:255'],
+            'name_en'       => ['required', 'string', 'max:255'],
+            'name_ar'       => ['nullable', 'string', 'max:255'],
             'tier'          => ['nullable', 'string', 'max:50', 'in:'.implode(',', array_keys($this->availableTiers))],
             'url'           => ['nullable', 'url', 'max:255'],
             'description_en'=> ['required', 'string'],
@@ -87,7 +93,9 @@ class PublicSponsorController extends Controller
         ]);
 
         $update = [
-            'name'          => $data['name'],
+            'name'          => $data['name'] ?? $data['name_en'],
+            'name_en'       => $data['name_en'],
+            'name_ar'       => $data['name_ar'] ?? null,
             'tier'          => $data['tier'] ?? null,
             'url'           => $data['url'] ?? null,
             'description_en'=> $data['description_en'],

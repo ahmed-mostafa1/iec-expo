@@ -25,6 +25,7 @@ class ParticipantController extends Controller
     {
         $data = $request->validate([
             'name'           => ['required', 'string', 'max:255'],
+            'name_ar'        => ['nullable', 'string', 'max:255'],
             'description_en' => ['nullable', 'string'],
             'description_ar' => ['nullable', 'string'],
             'url'            => ['nullable', 'url', 'max:255'],
@@ -40,6 +41,7 @@ class ParticipantController extends Controller
 
         Participant::create([
             'name'           => $data['name'],
+            'name_ar'        => $data['name_ar'] ?? null,
             'description_en' => $data['description_en'] ?? null,
             'description_ar' => $data['description_ar'] ?? null,
             'url'            => $data['url'] ?? null,
@@ -66,6 +68,7 @@ class ParticipantController extends Controller
     {
         $data = $request->validate([
             'name'           => ['required', 'string', 'max:255'],
+            'name_ar'        => ['nullable', 'string', 'max:255'],
             'description_en' => ['nullable', 'string'],
             'description_ar' => ['nullable', 'string'],
             'url'            => ['nullable', 'url', 'max:255'],
@@ -76,6 +79,7 @@ class ParticipantController extends Controller
 
         $update = [
             'name'           => $data['name'],
+            'name_ar'        => $data['name_ar'] ?? null,
             'description_en' => $data['description_en'] ?? null,
             'description_ar' => $data['description_ar'] ?? null,
             'url'            => $data['url'] ?? null,
