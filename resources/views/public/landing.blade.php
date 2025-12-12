@@ -1019,9 +1019,10 @@
 
     .sponsor-tier-title {
       text-align: center;
-      font-size: 1.5rem;
+      font-size: 2rem !important;
       font-weight: 600;
       margin-bottom: 1rem;
+      color: #057a02;
     }
 
     .sponsor-tier-grid {
@@ -1117,7 +1118,7 @@
       align-items: center;
       justify-content: center;
       /* padding: 1rem; */
-      border:solid 1px rgb(var(--border));
+      border: solid 1px rgb(var(--border));
     }
 
     .sponsor-featured-logo img {
@@ -1209,10 +1210,6 @@
       .sponsor-featured-logo {
         width: 100%;
         /* margin: 0 auto; */
-      }
-
-      .sponsor-visit-btn {
-        width: 80%;
       }
     }
 
@@ -1388,9 +1385,6 @@
     }
 
     .participant-logo {
-      width: 64px;
-      height: 64px;
-      border-radius: var(--radius);
       background: rgb(var(--primary) / 0.1);
       display: flex;
       align-items: center;
@@ -1404,6 +1398,8 @@
       width: 100%;
       height: 100%;
       object-fit: contain;
+      border-radius: 10px;
+
     }
 
     .participant-card:hover .participant-logo {
@@ -1476,7 +1472,6 @@
     .participant-modal-logo {
       width: 96px;
       height: 96px;
-      border-radius: 50%;
       background: rgb(var(--primary) / 0.1);
       display: flex;
       align-items: center;
@@ -2360,9 +2355,9 @@
     </section>
 
 
- 
+
     <!-- Sponsors Section -->
-      <section class="sponsors" id="sponsors">
+    <section class="sponsors" id="sponsors">
       <div class="container">
         <div class="section-header" data-animate>
           <h2 class="section-title">{{ __('Our Sponsors') }}</h2>
@@ -2387,7 +2382,7 @@
           @if($tierSponsors && $tierSponsors->count())
           @php $renderedSponsors = true; @endphp
           <div class="sponsor-tier">
-            <h3 class="sponsor-tier-title">{{ $label }}</h3>
+            <h2 class="sponsor-tier-title">{{ $label }}</h2>
             <div class="sponsor-featured-list">
               @foreach($tierSponsors as $sponsor)
               @php
@@ -2397,12 +2392,12 @@
               $arabicName = $sponsor->name_ar ?? $englishName;
               $displayName = $currentLocale === 'ar' ? $arabicName : $englishName;
               $localizedDescription = method_exists($sponsor, 'getDescriptionForLocale')
-                  ? $sponsor->getDescriptionForLocale(app()->getLocale())
-                  : null;
+              ? $sponsor->getDescriptionForLocale(app()->getLocale())
+              : null;
               $description = $localizedDescription
-                  ?? $sponsor->description
-                  ?? ($sponsor->description_en ?? null)
-                  ?? $defaultSponsorCopy[$currentLocale];
+              ?? $sponsor->description
+              ?? ($sponsor->description_en ?? null)
+              ?? $defaultSponsorCopy[$currentLocale];
               $descriptionEn = $sponsor->description_en ?? $defaultSponsorCopy['en'];
               $descriptionAr = $sponsor->description_ar ?? $descriptionEn ?? $defaultSponsorCopy['ar'];
               @endphp
@@ -2422,7 +2417,6 @@
                     @endif
                   </div>
                   <div class="sponsor-featured-body">
-                    <span class="sponsor-featured-label">{{ $label }}</span>
                     <a href="{{ $profileRoute }}" class="sponsor-featured-name-link">
                       <h3 class="sponsor-featured-name" data-en="{{ e($englishName) }}" data-ar="{{ e($arabicName) }}">{{ $displayName }}</h3>
                     </a>
@@ -2445,7 +2439,7 @@
           @if($otherSponsors->count())
           @php $renderedSponsors = true; @endphp
           <div class="sponsor-tier">
-            <h3 class="sponsor-tier-title">{{ __('Other Sponsors') }}</h3>
+            <h2 class="sponsor-tier-title">{{ __('Sponsors') }}</h2>
             <div class="sponsor-tier-grid tier-main other-sponsors-grid">
               @foreach($otherSponsors as $sponsor)
               @php
@@ -2457,17 +2451,13 @@
               <article class="sponsor-card" data-animate>
                 <a href="{{ route('public.sponsors.show', ['locale' => app()->getLocale(), 'sponsor' => $sponsor]) }}"
                   class="sponsor-card-link">
-                  <div class="sponsor-badge">
-                    <span>{{ $sponsor->tier ? ucfirst($sponsor->tier) : __('Sponsor') }}</span>
-                  </div>
                   <div class="sponsor-logo">
                     <img src="{{ $logoPath }}" alt="{{ $displayName }}">
                   </div>
-                  <div class="sponsor-card-footer" data-en="{{ e($englishName) }}" data-ar="{{ e($arabicName) }}">{{ $displayName }}</div>
                 </a>
                 @if($sponsor->url)
                 <div class="sponsor-card-action">
-                  <a href="{{ $sponsor->url }}" target="_blank" rel="noopener">
+                  <a href="{{ $sponsor->url }}" target="_blank" rel="noopener" class="sponsor-visit-btn">
                     <span data-en="{{ e($visitWebsiteCopy['en']) }}" data-ar="{{ e($visitWebsiteCopy['ar']) }}">{{ $visitWebsiteCopy[$currentLocale] }}</span>
                     <svg class="icon icon-sm" viewBox="0 0 24 24" style="width:16px;height:16px;">
                       <path d="M5 12h14M12 5l7 7-7 7" />
@@ -2492,26 +2482,26 @@
     <section class="participants" id="participants">
       <div class="container">
         <div class="section-header" data-animate>
-          <h2 class="section-title">{{ __('Participating Companies') }}</h2>
+          <h2 class="section-title">{{ __('Exhibitors') }}</h2>
           <p class="section-desc">{{ __('Meet the industry leaders who will be showcasing at the event.') }}</p>
         </div>
 
         <div class="participants-grid">
           @forelse($participants as $participant)
           @php
-            $englishName = $participant->name ?? '';
-            $arabicName = $participant->name_ar ?? $englishName;
-            $participantDescriptionEn = $participant->description_en ?: __('Details coming soon.');
-            $participantDescriptionAr = $participant->description_ar ?: __('سيتم مشاركة التفاصيل قريباً.');
-            $participantName = app()->getLocale() === 'ar' ? $arabicName : $englishName;
-            $participantDescription = app()->getLocale() === 'ar' ? $participantDescriptionAr : $participantDescriptionEn;
-            $logoSrc = $participant->logo_path
-                ? asset('storage/'.$participant->logo_path)
-                : null;
-            $participantHref = $participant->url
-                ? $participant->url
-                : route('public.participants.show', ['locale' => app()->getLocale(), 'participant' => $participant]);
-            $isExternalParticipant = (bool) $participant->url;
+          $englishName = $participant->name ?? '';
+          $arabicName = $participant->name_ar ?? $englishName;
+          $participantDescriptionEn = $participant->description_en ?: __('Details coming soon.');
+          $participantDescriptionAr = $participant->description_ar ?: __('سيتم مشاركة التفاصيل قريباً.');
+          $participantName = app()->getLocale() === 'ar' ? $arabicName : $englishName;
+          $participantDescription = app()->getLocale() === 'ar' ? $participantDescriptionAr : $participantDescriptionEn;
+          $logoSrc = $participant->logo_path
+          ? asset('storage/'.$participant->logo_path)
+          : null;
+          $participantHref = $participant->url
+          ? $participant->url
+          : route('public.participants.show', ['locale' => app()->getLocale(), 'participant' => $participant]);
+          $isExternalParticipant = (bool) $participant->url;
           @endphp
           <a href="{{ $participantHref }}"
             class="participant-card participant-modal-trigger"
@@ -2546,28 +2536,28 @@
             <div class="participant-name">{{ __('Coming soon') }}</div>
             <p class="participant-desc">{{ __('Participants will be announced soon.') }}</p>
           </div>
-      @endforelse
-    </div>
-  </div>
-</section>
+          @endforelse
+        </div>
+      </div>
+    </section>
 
-<!-- Participant Modal -->
-<div class="participant-modal" id="participant-modal" aria-hidden="true">
-  <div class="participant-modal-backdrop" data-modal-close></div>
-  <div class="participant-modal-content" role="dialog" aria-modal="true" aria-labelledby="participant-modal-title">
-    <button class="participant-modal-close" type="button" data-modal-close>&times;</button>
-    <div class="participant-modal-logo" id="participant-modal-logo"></div>
-    <h3 class="participant-modal-title" id="participant-modal-title"></h3>
-    <p class="participant-modal-desc" id="participant-modal-desc"></p>
-    <div class="participant-modal-actions">
-      <a href="#" id="participant-modal-link" class="btn btn-primary" target="_blank" rel="noopener">
-        <span data-en="Visit Website" data-ar="زيارة الموقع">Visit Website</span>
-      </a>
+    <!-- Participant Modal -->
+    <div class="participant-modal" id="participant-modal" aria-hidden="true">
+      <div class="participant-modal-backdrop" data-modal-close></div>
+      <div class="participant-modal-content" role="dialog" aria-modal="true" aria-labelledby="participant-modal-title">
+        <button class="participant-modal-close" type="button" data-modal-close>&times;</button>
+        <div class="participant-modal-logo" id="participant-modal-logo"></div>
+        <h3 class="participant-modal-title" id="participant-modal-title"></h3>
+        <p class="participant-modal-desc" id="participant-modal-desc"></p>
+        <div class="participant-modal-actions">
+          <a href="#" id="participant-modal-link" class="btn btn-primary" target="_blank" rel="noopener">
+            <span data-en="Visit Website" data-ar="زيارة الموقع" class="sponsor-visit-btn">Visit Website</span>
+          </a>
+        </div>
+      </div>
     </div>
-  </div>
-</div>
 
-   <!-- Contact Section -->
+    <!-- Contact Section -->
     <section class="contact" id="contact">
       <div class="container">
         <div class="section-header" data-animate>
@@ -2917,7 +2907,7 @@
     })();
 
     // Participant Modal
-    (function () {
+    (function() {
       const modal = document.getElementById('participant-modal');
       if (!modal) return;
 
@@ -2948,10 +2938,10 @@
           const isInternal = card.dataset.participantInternal === 'true';
           const currentLocale = document.documentElement.lang || 'en';
 
-          const localizedName = currentLocale === 'ar'
-            ? card.dataset.participantNameAr : card.dataset.participantNameEn;
-          const localizedDesc = currentLocale === 'ar'
-            ? card.dataset.participantDescAr : card.dataset.participantDescEn;
+          const localizedName = currentLocale === 'ar' ?
+            card.dataset.participantNameAr : card.dataset.participantNameEn;
+          const localizedDesc = currentLocale === 'ar' ?
+            card.dataset.participantDescAr : card.dataset.participantDescEn;
           const logo = card.dataset.participantLogo;
           const externalUrl = card.dataset.participantUrl;
 
