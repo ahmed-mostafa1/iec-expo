@@ -1049,6 +1049,8 @@
       display: flex;
       flex-direction: column;
       gap: 2rem;
+      max-width: 70%;
+      margin: 0 auto;
     }
 
     .sponsor-featured-card {
@@ -1114,8 +1116,8 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 1rem;
-      box-shadow: inset 0 0 0 1px rgb(var(--border));
+      /* padding: 1rem; */
+      border:solid 1px rgb(var(--border));
     }
 
     .sponsor-featured-logo img {
@@ -1167,12 +1169,14 @@
     .sponsor-featured-name {
       font-size: clamp(1.5rem, 2.2vw, 2.25rem);
       font-weight: 700;
+      text-align: center;
       margin: 0;
       color: rgb(var(--foreground));
     }
 
     .sponsor-featured-desc {
-      font-size: 1.05rem;
+      font-size: 1.15rem;
+      text-align: center;
       color: rgb(var(--muted-foreground));
       line-height: 1.7;
     }
@@ -1203,8 +1207,8 @@
       }
 
       .sponsor-featured-logo {
-        width: 80%;
-        margin: 0 auto;
+        width: 100%;
+        /* margin: 0 auto; */
       }
 
       .sponsor-visit-btn {
