@@ -1475,7 +1475,7 @@
     }
 
     .participant-modal-logo {
-      width: 96px;
+      /* width: 96px; */
       height: 96px;
       background: rgb(var(--primary) / 0.1);
       display: flex;
@@ -2571,7 +2571,7 @@
         <h3 class="participant-modal-title" id="participant-modal-title"></h3>
         <p class="participant-modal-desc" id="participant-modal-desc"></p>
         <div class="participant-modal-actions">
-          <a href="#" id="participant-modal-link" class="btn btn-primary" target="_blank" rel="noopener">
+          <a href="#" id="participant-modal-link" class="sponsor-visit-btn" target="_blank" rel="noopener">
             <span data-en="Visit Website" data-ar="زيارة الموقع">Visit Website</span>
           </a>
         </div>
@@ -2615,7 +2615,7 @@
               <article class="sponsor-featured-card sponsor-strategic" data-animate>
                 <div class="sponsor-featured-content">
                   <div class="sponsor-featured-media">
-                    <div class="sponsor-featured-logo">
+                    <div class="sponsor-featured-logo" style="background: #000;">
                       <img src="{{ $logoPath }}" alt="{{ $displayName }}">
                     </div>
                     @if($organizer->url)
@@ -2628,7 +2628,6 @@
                     @endif
                   </div>
                   <div class="sponsor-featured-body">
-                    <span class="sponsor-featured-label">{{ __('Organizer') }}</span>
                     <h3 class="sponsor-featured-name" data-en="{{ e($englishName) }}" data-ar="{{ e($arabicName) }}">{{ $displayName }}</h3>
                     <p class="sponsor-featured-desc" data-en="{{ e($descriptionEn) }}" data-ar="{{ e($descriptionAr) }}">{{ $description }}</p>
                   </div>
