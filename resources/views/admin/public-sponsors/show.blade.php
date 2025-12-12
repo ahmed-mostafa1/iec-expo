@@ -58,6 +58,14 @@
                     <dd class="text-gray-900">{{ $sponsor->updated_at->format('Y-m-d H:i') }}</dd>
                 </div>
             </dl>
+            <div class="mt-4 border-t border-gray-100 pt-4">
+                <h3 class="text-[11px] font-semibold text-gray-700 mb-2">{{ __('Description (English)') }}</h3>
+                <p class="text-gray-800 leading-relaxed">{{ $sponsor->description_en ?: __('No English description provided.') }}</p>
+            </div>
+            <div class="mt-4">
+                <h3 class="text-[11px] font-semibold text-gray-700 mb-2">{{ __('Description (Arabic)') }}</h3>
+                <p class="text-gray-800 leading-relaxed">{{ $sponsor->description_ar ?: __('No Arabic description provided.') }}</p>
+            </div>
         </div>
 
         <div class="rounded-xl bg-white border border-gray-200 p-4 text-xs">
