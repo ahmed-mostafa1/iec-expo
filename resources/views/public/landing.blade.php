@@ -1017,14 +1017,13 @@
       gap: 2.5rem;
     }
 
-
-    .other-sponsor-name{
+    .sponsor-tier-title {
       text-align: center;
       font-size: 1.5rem;
       font-weight: 600;
       margin-bottom: 1rem;
-      text-decoration: none !important;
     }
+
     .sponsor-tier-grid {
       display: grid;
       gap: 1.5rem;
