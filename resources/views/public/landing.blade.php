@@ -825,8 +825,56 @@
 
     /* About Section */
     .about {
+      position: relative;
       padding: 5rem 0;
       background: rgb(var(--background));
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .about::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(120deg, rgba(0, 0, 0, 0.55), rgba(5, 122, 2, 0.35));
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .about .container {
+      position: relative;
+      z-index: 2;
+    }
+
+    .about-video-container {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden;
+      transform-origin: center;
+      transform: scaleX(0);
+      transition: transform 1.25s ease-in-out;
+      background: #000;
+    }
+
+    .about-video-container video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+
+    .about-video-active .about-video-container {
+      transform: scaleX(1);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .about-video-container {
+        transform: scaleX(1);
+        transition: none;
+      }
     }
 
     .about-grid {
@@ -883,6 +931,7 @@
     .about-title {
       font-size: 1.875rem;
       font-weight: 700;
+      color: #fff
     }
 
     .about-card {
@@ -918,6 +967,7 @@
       transition: all 0.5s;
       opacity: 0;
       transform: translateY(1rem);
+      /* text-align: center; */
     }
 
     .goal-card.visible {
@@ -945,9 +995,10 @@
     }
 
     .goal-title {
-      font-size: 1.125rem;
-      font-weight: 600;
+      font-size: 1.5rem;
+      font-weight: 700;
       margin-bottom: 0.25rem;
+      color: #057a02
     }
 
     .goal-desc {
@@ -1967,9 +2018,15 @@
       </div>
     </section>
 
-      <!-- About Section -->
+    <!-- About Section -->
     <section class="about" id="about">
+      <div class="about-video-container" aria-hidden="true">
+        <video class="about-video" autoplay muted loop playsinline preload="auto">
+          <source src="{{ asset('video/video.mp4') }}" type="video/mp4">
+        </video>
+      </div>
       <div class="container">
+        <h2 class="section-title" data-en="About Us" data-ar="من نحن" style="margin-bottom:20px; color:#fff; text-align: center;">About us</h2>
         <div class="about-grid">
           <div class="about-col" data-animate>
             <div class="about-header">
@@ -2464,6 +2521,36 @@
       el.dataset.delay = stagger;
       animationObserver.observe(el);
     });
+
+    // About Section Video Reveal
+    (function() {
+      const aboutSection = document.querySelector('.about');
+      if (!aboutSection) return;
+
+      const videoContainer = aboutSection.querySelector('.about-video-container');
+      if (!videoContainer) return;
+
+      const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+      const activateVideo = () => aboutSection.classList.add('about-video-active');
+
+      if (prefersReducedMotion.matches) {
+        activateVideo();
+        return;
+      }
+
+      const aboutVideoObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            activateVideo();
+            aboutVideoObserver.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.35
+      });
+
+      aboutVideoObserver.observe(aboutSection);
+    })();
 
     // Registration Role Selection
     let selectedRole = null;
