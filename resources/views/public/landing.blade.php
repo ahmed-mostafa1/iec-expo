@@ -1017,13 +1017,14 @@
       gap: 2.5rem;
     }
 
-    .sponsor-tier-title {
+
+    .other-sponsor-name{
       text-align: center;
       font-size: 1.5rem;
       font-weight: 600;
       margin-bottom: 1rem;
+      text-decoration: none !important;
     }
-
     .sponsor-tier-grid {
       display: grid;
       gap: 1.5rem;
@@ -1236,8 +1237,8 @@
     .sponsor-card:hover {
       box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.25);
       transform: translateY(0) scale(1.02);
-      animation: softPulse 2.2s ease-in-out infinite;
       background: rgb(var(--card) / 0.4);
+      box-shadow: #00ff4433 0px 0px 10px, #00ff44cc 0px 0px 20px, #00ff44aa 0px 0px 30px, #00ff4477 0px 0px 40px, #00ff4444 0px 0px 50px;
     }
 
     .sponsor-card .sponsor-logo {
@@ -2314,7 +2315,7 @@
                     @endif
                   </div>
                   <div class="sponsor-featured-body">
-                    <span class="sponsor-featured-label">{{ $label }}</span>
+                   
                     <a href="{{ $profileRoute }}" class="sponsor-featured-name-link">
                       <h3 class="sponsor-featured-name">{{ $sponsor->name }}</h3>
                     </a>
@@ -2337,22 +2338,28 @@
           @if($otherSponsors->count())
           @php $renderedSponsors = true; @endphp
           <div class="sponsor-tier">
-            <h3 class="sponsor-tier-title">{{ __('Other Sponsors') }}</h3>
-            <div class="sponsor-tier-grid tier-main">
+            <h3 class="sponsor-tier-title">{{ __('Sponsors') }}</h3>
+            <div class="sponsor-tier-grid tier-main other-sponsors-grid">
               @foreach($otherSponsors as $sponsor)
               @php $logoPath = $sponsor->logo_path ? asset('storage/'.$sponsor->logo_path) : asset('img/IEC-logo.png'); @endphp
-              <a href="{{ route('public.sponsors.show', ['locale' => app()->getLocale(), 'sponsor' => $sponsor]) }}"
-                class="sponsor-card"
-                data-animate>
-                <div class="sponsor-badge">
-
-                  <span>{{ $sponsor->tier ? ucfirst($sponsor->tier) : __('Sponsor') }}</span>
+              <article class="sponsor-card" data-animate>
+                <a href="{{ $sponsor->url ?? '#' }}" target="_blank" rel="noopener"
+                  class="sponsor-card-link">
+                  <div class="sponsor-logo">
+                    <img src="{{ $logoPath }}" alt="{{ $sponsor->name }}">
+                  </div>
+                </a>
+                @if($sponsor->url)
+                <div class="sponsor-card-action">
+                  <a href="{{ $sponsor->url }}" target="_blank" rel="noopener" class="sponsor-visit-btn">
+                    {{ __('Visit Website') }}
+                    <svg class="icon icon-sm" viewBox="0 0 24 24" style="width:16px;height:16px;">
+                      <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                  </a>
                 </div>
-                <div class="sponsor-logo">
-                  <img src="{{ $logoPath }}" alt="{{ $sponsor->name }}">
-                </div>
-
-              </a>
+                @endif
+              </article>
               @endforeach
             </div>
           </div>
