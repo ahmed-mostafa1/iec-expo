@@ -1734,14 +1734,9 @@
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 1rem;
-    }
-
-    @media (min-width: 768px) {
-      .footer-inner {
-        flex-direction: row;
-        justify-content: space-between;
-      }
+      justify-content: center;
+      gap: 0.5rem;
+      text-align: center;
     }
 
     .footer-text {
@@ -2080,7 +2075,7 @@
           <i class="fas fa-users"></i>
         </div>
         <div class="stat-number" data-count="5000">0</div>
-        <div class="stat-label">Global Attendees</div>
+        <div class="stat-label" data-en="Global Attendees" data-ar="الحضور العالمي">Global Attendees</div>
         <div class="stat-progress">
           <div class="progress-fill"></div>
         </div>
@@ -2090,7 +2085,7 @@
           <i class="fas fa-microphone-alt"></i>
         </div>
         <div class="stat-number" data-count="120">0</div>
-        <div class="stat-label">Expert Speakers</div>
+        <div class="stat-label" data-en="Expert Speakers" data-ar="المتحدثون الخبراء">Expert Speakers</div>
         <div class="stat-progress">
           <div class="progress-fill"></div>
         </div>
@@ -2100,7 +2095,7 @@
           <i class="fas fa-calendar-check"></i>
         </div>
         <div class="stat-number" data-count="60">0</div>
-        <div class="stat-label">Sessions</div>
+        <div class="stat-label" data-en="Sessions" data-ar="الجلسات">Sessions</div>
         <div class="stat-progress">
           <div class="progress-fill"></div>
         </div>
@@ -2110,7 +2105,7 @@
           <i class="fas fa-globe-americas"></i>
         </div>
         <div class="stat-number" data-count="50">0</div>
-        <div class="stat-label">Countries</div>
+        <div class="stat-label" data-en="Countries" data-ar="الدول">Countries</div>
         <div class="stat-progress">
           <div class="progress-fill"></div>
         </div>
@@ -2381,8 +2376,8 @@
     <section class="sponsors" id="sponsors">
       <div class="container">
         <div class="section-header" data-animate>
-          <h2 class="section-title">{{ __('Our Sponsors') }}</h2>
-          <p class="section-desc">{{ __('We are grateful to our sponsors who make this event possible.') }}</p>
+          <h2 class="section-title" data-en="Our Sponsors" data-ar="رعاتنا">Our Sponsors</h2>
+          <p class="section-desc" data-en="We are grateful to our sponsors who make this event possible." data-ar="نحن ممتنون لرعاتنا الذين يجعلون هذا الحدث ممكناً.">We are grateful to our sponsors who make this event possible.</p>
         </div>
 
         @php
@@ -2460,7 +2455,7 @@
           @if($otherSponsors->count())
           @php $renderedSponsors = true; @endphp
           <div class="sponsor-tier">
-            <h2 class="sponsor-tier-title">{{ __('Sponsors') }}</h2>
+            <h2 class="sponsor-tier-title" data-en="Sponsors" data-ar="الرعاة">Sponsors</h2>
             <div class="sponsor-tier-grid tier-main other-sponsors-grid">
               @foreach($otherSponsors as $sponsor)
               @php
@@ -2503,8 +2498,8 @@
     <section class="participants" id="participants">
       <div class="container">
         <div class="section-header" data-animate>
-          <h2 class="section-title">{{ __('Exhibitors') }}</h2>
-          <p class="section-desc">{{ __('Meet the industry leaders who will be showcasing at the event.') }}</p>
+          <h2 class="section-title" data-en="Exhibitors" data-ar="المشاركون">Exhibitors</h2>
+          <p class="section-desc" data-en="Meet the industry leaders who will be showcasing at the event." data-ar="تعرّف على قادة الصناعة الذين سيشاركون في الحدث.">Meet the industry leaders who will be showcasing at the event.</p>
         </div>
 
         <div class="participants-grid">
