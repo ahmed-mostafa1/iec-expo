@@ -1350,12 +1350,18 @@
       }
     }
 
+    @media (min-width: 1280px) {
+      .participants-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
     .participant-card {
       background: rgb(var(--card));
       border: 1px solid rgb(var(--border));
       border-radius: var(--radius);
       padding: 0.5rem;
-      transition: all 0.5s;
+      transition: all 0.45s cubic-bezier(0.4, 0, 0.2, 1);
       opacity: 0;
       transform: translateY(2rem);
       text-decoration: none;
@@ -1366,6 +1372,8 @@
       text-align: center;
       /* min-height: 200px; */
       will-change: transform;
+      position: relative;
+      overflow: hidden;
     }
 
     .participant-card.visible {
@@ -1374,8 +1382,9 @@
     }
 
     .participant-card:hover {
-      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
-      border-color: rgb(var(--primary) / 0.3);
+      box-shadow: 0 20px 35px -15px rgba(0, 0, 0, 0.25);
+      border-color: rgb(var(--primary) / 0.4);
+      transform: translateY(-6px);
     }
 
     .participant-logo {
@@ -1418,9 +1427,88 @@
       opacity: 1;
     }
 
-    .participant-desc {
-      font-size: 0.875rem;
+    .participant-modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+    }
+
+    .participant-modal.active {
+      display: flex;
+    }
+
+    .participant-modal-backdrop {
+      position: absolute;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(4px);
+    }
+
+    .participant-modal-content {
+      position: relative;
+      z-index: 1001;
+      width: min(480px, 90%);
+      background: rgb(var(--card));
+      border-radius: 1.5rem;
+      padding: 2rem;
+      border: 1px solid rgb(var(--border));
+      box-shadow: 0 25px 80px rgba(0, 0, 0, 0.2);
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      animation: fadeInUp 0.35s ease;
+    }
+
+    .participant-modal-close {
+      position: absolute;
+      top: 1rem;
+      inset-inline-end: 1rem;
+      border: none;
+      background: transparent;
+      font-size: 1.5rem;
+      cursor: pointer;
       color: rgb(var(--muted-foreground));
+    }
+
+    .participant-modal-logo {
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      background: rgb(var(--primary) / 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto;
+      overflow: hidden;
+    }
+
+    .participant-modal-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .participant-modal-title {
+      text-align: center;
+      font-size: 1.5rem;
+      font-weight: 700;
+      margin-bottom: 0.25rem;
+    }
+
+    .participant-modal-desc {
+      text-align: center;
+      color: rgb(var(--muted-foreground));
+      line-height: 1.6;
+    }
+
+    .participant-modal-actions {
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin-top: 0.5rem;
     }
 
     /* Contact Section */
@@ -2411,13 +2499,31 @@
         <div class="participants-grid">
           @forelse($participants as $participant)
           @php
-            $participantName = method_exists($participant, 'getLocalizedName')
-                ? $participant->getLocalizedName(app()->getLocale())
-                : $participant->name;
+            $englishName = $participant->name ?? '';
+            $arabicName = $participant->name_ar ?? $englishName;
+            $participantDescriptionEn = $participant->description_en ?: __('Details coming soon.');
+            $participantDescriptionAr = $participant->description_ar ?: __('سيتم مشاركة التفاصيل قريباً.');
+            $participantName = app()->getLocale() === 'ar' ? $arabicName : $englishName;
+            $participantDescription = app()->getLocale() === 'ar' ? $participantDescriptionAr : $participantDescriptionEn;
+            $logoSrc = $participant->logo_path
+                ? asset('storage/'.$participant->logo_path)
+                : null;
+            $participantHref = $participant->url
+                ? $participant->url
+                : route('public.participants.show', ['locale' => app()->getLocale(), 'participant' => $participant]);
+            $isExternalParticipant = (bool) $participant->url;
           @endphp
-          <a href="{{ route('public.participants.show', ['locale' => app()->getLocale(), 'participant' => $participant]) }}"
-            class="participant-card"
-            data-animate>
+          <a href="{{ $participantHref }}"
+            class="participant-card participant-modal-trigger"
+            data-animate
+            data-participant-name-en="{{ e($englishName) }}"
+            data-participant-name-ar="{{ e($arabicName) }}"
+            data-participant-desc-en="{{ e($participantDescriptionEn) }}"
+            data-participant-desc-ar="{{ e($participantDescriptionAr) }}"
+            data-participant-logo="{{ $logoSrc }}"
+            data-participant-url="{{ $participant->url }}"
+            data-participant-internal="{{ $participant->url ? 'false' : 'true' }}"
+            @if($isExternalParticipant) target="_blank" rel="noopener" @endif>
             <div class="participant-logo">
               @if($participant->logo_path)
               <img src="{{ asset('storage/'.$participant->logo_path) }}" alt="{{ $participantName }}">
@@ -2425,7 +2531,7 @@
               <span>{{ mb_strtoupper(mb_substr($participantName, 0, 1)) }}</span>
               @endif
             </div>
-            <div class="participant-name">
+            <div class="participant-name" data-en="{{ e($englishName) }}" data-ar="{{ e($arabicName) }}">
               {{ $participantName }}
               @if($participant->url)
               <svg class="icon icon-sm external-icon" viewBox="0 0 24 24">
@@ -2433,7 +2539,6 @@
               </svg>
               @endif
             </div>
-            <p class="participant-desc">{{ $participant->description_en ?: __('Details coming soon.') }}</p>
           </a>
           @empty
           <div class="participant-card" data-animate>
@@ -2441,10 +2546,26 @@
             <div class="participant-name">{{ __('Coming soon') }}</div>
             <p class="participant-desc">{{ __('Participants will be announced soon.') }}</p>
           </div>
-          @endforelse
-        </div>
-      </div>
-    </section>
+      @endforelse
+    </div>
+  </div>
+</section>
+
+<!-- Participant Modal -->
+<div class="participant-modal" id="participant-modal" aria-hidden="true">
+  <div class="participant-modal-backdrop" data-modal-close></div>
+  <div class="participant-modal-content" role="dialog" aria-modal="true" aria-labelledby="participant-modal-title">
+    <button class="participant-modal-close" type="button" data-modal-close>&times;</button>
+    <div class="participant-modal-logo" id="participant-modal-logo"></div>
+    <h3 class="participant-modal-title" id="participant-modal-title"></h3>
+    <p class="participant-modal-desc" id="participant-modal-desc"></p>
+    <div class="participant-modal-actions">
+      <a href="#" id="participant-modal-link" class="btn btn-primary" target="_blank" rel="noopener">
+        <span data-en="Visit Website" data-ar="زيارة الموقع">Visit Website</span>
+      </a>
+    </div>
+  </div>
+</div>
 
    <!-- Contact Section -->
     <section class="contact" id="contact">
@@ -2793,6 +2914,83 @@
       });
 
       aboutVideoObserver.observe(aboutSection);
+    })();
+
+    // Participant Modal
+    (function () {
+      const modal = document.getElementById('participant-modal');
+      if (!modal) return;
+
+      const modalLogo = document.getElementById('participant-modal-logo');
+      const modalTitle = document.getElementById('participant-modal-title');
+      const modalDesc = document.getElementById('participant-modal-desc');
+      const modalLink = document.getElementById('participant-modal-link');
+      const backdropCloseElements = modal.querySelectorAll('[data-modal-close]');
+
+      const setModalText = (element, text) => {
+        element.textContent = text;
+      };
+
+      const openModal = () => {
+        modal.classList.add('active');
+        document.body.style.overflow = 'hidden';
+      };
+
+      const closeModal = () => {
+        modal.classList.remove('active');
+        document.body.style.overflow = '';
+      };
+
+      document.querySelectorAll('.participant-modal-trigger').forEach(card => {
+        card.addEventListener('click', (event) => {
+          event.preventDefault();
+
+          const isInternal = card.dataset.participantInternal === 'true';
+          const currentLocale = document.documentElement.lang || 'en';
+
+          const localizedName = currentLocale === 'ar'
+            ? card.dataset.participantNameAr : card.dataset.participantNameEn;
+          const localizedDesc = currentLocale === 'ar'
+            ? card.dataset.participantDescAr : card.dataset.participantDescEn;
+          const logo = card.dataset.participantLogo;
+          const externalUrl = card.dataset.participantUrl;
+
+          modalLogo.innerHTML = '';
+          if (logo) {
+            const img = document.createElement('img');
+            img.src = logo;
+            img.alt = localizedName;
+            modalLogo.appendChild(img);
+          } else {
+            modalLogo.textContent = localizedName?.charAt(0)?.toUpperCase() || 'ℹ️';
+          }
+
+          setModalText(modalTitle, localizedName);
+          setModalText(modalDesc, localizedDesc);
+
+          if (externalUrl) {
+            modalLink.href = externalUrl;
+            modalLink.style.display = 'inline-flex';
+          } else if (isInternal) {
+            modalLink.href = card.getAttribute('href');
+            modalLink.style.display = 'inline-flex';
+          } else {
+            modalLink.style.display = 'none';
+          }
+
+          openModal();
+        });
+      });
+
+      backdropCloseElements.forEach(el => {
+        el.addEventListener('click', closeModal);
+      });
+
+      document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && modal.classList.contains('active')) {
+          closeModal();
+        }
+      });
     })();
 
     // Registration Role Selection
