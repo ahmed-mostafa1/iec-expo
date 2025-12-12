@@ -2268,7 +2268,145 @@
     </section>
 
 
-    <!-- Contact Section -->
+ 
+    <!-- Sponsors Section -->
+      <section class="sponsors" id="sponsors">
+      <div class="container">
+        <div class="section-header" data-animate>
+          <h2 class="section-title">{{ __('Our Sponsors') }}</h2>
+          <p class="section-desc">{{ __('We are grateful to our sponsors who make this event possible.') }}</p>
+        </div>
+
+        <div class="sponsor-tiers">
+          @php $renderedSponsors = false; @endphp
+          @foreach($sponsorTierLabels as $tierKey => $label)
+          @php $tierSponsors = $groupedSponsors->get($tierKey); @endphp
+          @if($tierSponsors && $tierSponsors->count())
+          @php $renderedSponsors = true; @endphp
+          <div class="sponsor-tier">
+            <h3 class="sponsor-tier-title">{{ $label }}</h3>
+            <div class="sponsor-featured-list">
+              @foreach($tierSponsors as $sponsor)
+              @php
+              $logoPath = $sponsor->logo_path ? asset('storage/'.$sponsor->logo_path) : asset('img/IEC-logo.png');
+              $profileRoute = route('public.sponsors.show', ['locale' => app()->getLocale(), 'sponsor' => $sponsor]);
+              $localizedDescription = method_exists($sponsor, 'getDescriptionForLocale')
+                  ? $sponsor->getDescriptionForLocale(app()->getLocale())
+                  : null;
+              $description = $localizedDescription
+                  ?? $sponsor->description
+                  ?? $sponsor->description_en
+                  ?? __('Proud partner of the IEC Expo, empowering innovation and growth.');
+              @endphp
+              <article class="sponsor-featured-card sponsor-{{ $tierKey }}" data-animate>
+                <div class="sponsor-featured-content">
+                  <div class="sponsor-featured-media">
+                    <div class="sponsor-featured-logo">
+                      <img src="{{ $logoPath }}" alt="{{ $sponsor->name }}">
+                    </div>
+                    @if($sponsor->url)
+                    <a href="{{ $sponsor->url }}" class="sponsor-visit-btn" target="_blank" rel="noopener">
+                      {{ __('Visit Website') }}
+                      <svg class="icon icon-sm" viewBox="0 0 24 24">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                      </svg>
+                    </a>
+                    @endif
+                  </div>
+                  <div class="sponsor-featured-body">
+                    <span class="sponsor-featured-label">{{ $label }}</span>
+                    <a href="{{ $profileRoute }}" class="sponsor-featured-name-link">
+                      <h3 class="sponsor-featured-name">{{ $sponsor->name }}</h3>
+                    </a>
+                    <p class="sponsor-featured-desc">{{ $description }}</p>
+                  </div>
+                </div>
+              </article>
+              @endforeach
+            </div>
+          </div>
+          @endif
+          @endforeach
+
+          @php
+          $otherSponsors = $groupedSponsors->filter(function ($_, $key) use ($sponsorTierLabels) {
+          return ! array_key_exists($key, $sponsorTierLabels);
+          })->flatten();
+          @endphp
+
+          @if($otherSponsors->count())
+          @php $renderedSponsors = true; @endphp
+          <div class="sponsor-tier">
+            <h3 class="sponsor-tier-title">{{ __('Other Sponsors') }}</h3>
+            <div class="sponsor-tier-grid tier-main">
+              @foreach($otherSponsors as $sponsor)
+              @php $logoPath = $sponsor->logo_path ? asset('storage/'.$sponsor->logo_path) : asset('img/IEC-logo.png'); @endphp
+              <a href="{{ route('public.sponsors.show', ['locale' => app()->getLocale(), 'sponsor' => $sponsor]) }}"
+                class="sponsor-card"
+                data-animate>
+                <div class="sponsor-badge">
+
+                  <span>{{ $sponsor->tier ? ucfirst($sponsor->tier) : __('Sponsor') }}</span>
+                </div>
+                <div class="sponsor-logo">
+                  <img src="{{ $logoPath }}" alt="{{ $sponsor->name }}">
+                </div>
+
+              </a>
+              @endforeach
+            </div>
+          </div>
+          @endif
+
+          @unless($renderedSponsors)
+          <p class="text-center text-gray-500 text-sm">{{ __('Sponsors will be announced soon.') }}</p>
+          @endunless
+        </div>
+      </div>
+    </section>
+
+    <!-- Participants Section -->
+    <section class="participants" id="participants">
+      <div class="container">
+        <div class="section-header" data-animate>
+          <h2 class="section-title">{{ __('Participating Companies') }}</h2>
+          <p class="section-desc">{{ __('Meet the industry leaders who will be showcasing at the event.') }}</p>
+        </div>
+
+        <div class="participants-grid">
+          @forelse($participants as $participant)
+          <a href="{{ route('public.participants.show', ['locale' => app()->getLocale(), 'participant' => $participant]) }}"
+            class="participant-card"
+            data-animate>
+            <div class="participant-logo">
+              @if($participant->logo_path)
+              <img src="{{ asset('storage/'.$participant->logo_path) }}" alt="{{ $participant->name }}">
+              @else
+              <span>{{ mb_strtoupper(mb_substr($participant->name, 0, 1)) }}</span>
+              @endif
+            </div>
+            <div class="participant-name">
+              {{ $participant->name }}
+              @if($participant->url)
+              <svg class="icon icon-sm external-icon" viewBox="0 0 24 24">
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14 21 3" />
+              </svg>
+              @endif
+            </div>
+            <p class="participant-desc">{{ $participant->description_en ?: __('Details coming soon.') }}</p>
+          </a>
+          @empty
+          <div class="participant-card" data-animate>
+            <div class="participant-logo">ℹ️</div>
+            <div class="participant-name">{{ __('Coming soon') }}</div>
+            <p class="participant-desc">{{ __('Participants will be announced soon.') }}</p>
+          </div>
+          @endforelse
+        </div>
+      </div>
+    </section>
+
+   <!-- Contact Section -->
     <section class="contact" id="contact">
       <div class="container">
         <div class="section-header" data-animate>
@@ -2469,144 +2607,6 @@
         </div>
       </div>
     </section>
-
-    <!-- Sponsors Section -->
-    <section class="sponsors" id="sponsors">
-      <div class="container">
-        <div class="section-header" data-animate>
-          <h2 class="section-title">{{ __('Our Sponsors') }}</h2>
-          <p class="section-desc">{{ __('We are grateful to our sponsors who make this event possible.') }}</p>
-        </div>
-
-        <div class="sponsor-tiers">
-          @php $renderedSponsors = false; @endphp
-          @foreach($sponsorTierLabels as $tierKey => $label)
-          @php $tierSponsors = $groupedSponsors->get($tierKey); @endphp
-          @if($tierSponsors && $tierSponsors->count())
-          @php $renderedSponsors = true; @endphp
-          <div class="sponsor-tier">
-            <h3 class="sponsor-tier-title">{{ $label }}</h3>
-            <div class="sponsor-featured-list">
-              @foreach($tierSponsors as $sponsor)
-              @php
-              $logoPath = $sponsor->logo_path ? asset('storage/'.$sponsor->logo_path) : asset('img/IEC-logo.png');
-              $profileRoute = route('public.sponsors.show', ['locale' => app()->getLocale(), 'sponsor' => $sponsor]);
-              $localizedDescription = method_exists($sponsor, 'getDescriptionForLocale')
-                  ? $sponsor->getDescriptionForLocale(app()->getLocale())
-                  : null;
-              $description = $localizedDescription
-                  ?? $sponsor->description
-                  ?? $sponsor->description_en
-                  ?? __('Proud partner of the IEC Expo, empowering innovation and growth.');
-              @endphp
-              <article class="sponsor-featured-card sponsor-{{ $tierKey }}" data-animate>
-                <div class="sponsor-featured-content">
-                  <div class="sponsor-featured-media">
-                    <div class="sponsor-featured-logo">
-                      <img src="{{ $logoPath }}" alt="{{ $sponsor->name }}">
-                    </div>
-                    @if($sponsor->url)
-                    <a href="{{ $sponsor->url }}" class="sponsor-visit-btn" target="_blank" rel="noopener">
-                      {{ __('Visit Website') }}
-                      <svg class="icon icon-sm" viewBox="0 0 24 24">
-                        <path d="M5 12h14M12 5l7 7-7 7" />
-                      </svg>
-                    </a>
-                    @endif
-                  </div>
-                  <div class="sponsor-featured-body">
-                    <span class="sponsor-featured-label">{{ $label }}</span>
-                    <a href="{{ $profileRoute }}" class="sponsor-featured-name-link">
-                      <h3 class="sponsor-featured-name">{{ $sponsor->name }}</h3>
-                    </a>
-                    <p class="sponsor-featured-desc">{{ $description }}</p>
-                  </div>
-                </div>
-              </article>
-              @endforeach
-            </div>
-          </div>
-          @endif
-          @endforeach
-
-          @php
-          $otherSponsors = $groupedSponsors->filter(function ($_, $key) use ($sponsorTierLabels) {
-          return ! array_key_exists($key, $sponsorTierLabels);
-          })->flatten();
-          @endphp
-
-          @if($otherSponsors->count())
-          @php $renderedSponsors = true; @endphp
-          <div class="sponsor-tier">
-            <h3 class="sponsor-tier-title">{{ __('Other Sponsors') }}</h3>
-            <div class="sponsor-tier-grid tier-main">
-              @foreach($otherSponsors as $sponsor)
-              @php $logoPath = $sponsor->logo_path ? asset('storage/'.$sponsor->logo_path) : asset('img/IEC-logo.png'); @endphp
-              <a href="{{ route('public.sponsors.show', ['locale' => app()->getLocale(), 'sponsor' => $sponsor]) }}"
-                class="sponsor-card"
-                data-animate>
-                <div class="sponsor-badge">
-
-                  <span>{{ $sponsor->tier ? ucfirst($sponsor->tier) : __('Sponsor') }}</span>
-                </div>
-                <div class="sponsor-logo">
-                  <img src="{{ $logoPath }}" alt="{{ $sponsor->name }}">
-                </div>
-
-              </a>
-              @endforeach
-            </div>
-          </div>
-          @endif
-
-          @unless($renderedSponsors)
-          <p class="text-center text-gray-500 text-sm">{{ __('Sponsors will be announced soon.') }}</p>
-          @endunless
-        </div>
-      </div>
-    </section>
-
-    <!-- Participants Section -->
-    <section class="participants" id="participants">
-      <div class="container">
-        <div class="section-header" data-animate>
-          <h2 class="section-title">{{ __('Participating Companies') }}</h2>
-          <p class="section-desc">{{ __('Meet the industry leaders who will be showcasing at the event.') }}</p>
-        </div>
-
-        <div class="participants-grid">
-          @forelse($participants as $participant)
-          <a href="{{ route('public.participants.show', ['locale' => app()->getLocale(), 'participant' => $participant]) }}"
-            class="participant-card"
-            data-animate>
-            <div class="participant-logo">
-              @if($participant->logo_path)
-              <img src="{{ asset('storage/'.$participant->logo_path) }}" alt="{{ $participant->name }}">
-              @else
-              <span>{{ mb_strtoupper(mb_substr($participant->name, 0, 1)) }}</span>
-              @endif
-            </div>
-            <div class="participant-name">
-              {{ $participant->name }}
-              @if($participant->url)
-              <svg class="icon icon-sm external-icon" viewBox="0 0 24 24">
-                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14 21 3" />
-              </svg>
-              @endif
-            </div>
-            <p class="participant-desc">{{ $participant->description_en ?: __('Details coming soon.') }}</p>
-          </a>
-          @empty
-          <div class="participant-card" data-animate>
-            <div class="participant-logo">ℹ️</div>
-            <div class="participant-name">{{ __('Coming soon') }}</div>
-            <p class="participant-desc">{{ __('Participants will be announced soon.') }}</p>
-          </div>
-          @endforelse
-        </div>
-      </div>
-    </section>
-
 
 
   </main>
