@@ -5,6 +5,8 @@ return [
         1 => [
             'name'          => 'Tech Corp',
             'tier'          => 'main',
+            'description_en'=> 'Driving the strategic vision for global ecommerce innovation.',
+            'description_ar'=> 'تقود الرؤية الاستراتيجية للابتكار في مجال التجارة الإلكترونية العالمية.',
             'url'           => 'https://example.com',
             'logo_path'     => null,
             'display_order' => 1,
@@ -13,6 +15,8 @@ return [
         2 => [
             'name'          => 'Innovation Labs',
             'tier'          => 'main',
+            'description_en'=> 'Building immersive expo experiences with future-ready technologies.',
+            'description_ar'=> 'تبني تجارب معارض غامرة باستخدام تقنيات جاهزة للمستقبل.',
             'url'           => 'https://example.com/innovation',
             'logo_path'     => null,
             'display_order' => 2,
@@ -21,6 +25,8 @@ return [
         3 => [
             'name'          => 'Global Finance',
             'tier'          => 'gold',
+            'description_en'=> 'Financial partner empowering exhibitors with tailored growth programs.',
+            'description_ar'=> 'شريك مالي يمكّن العارضين من خلال برامج نمو مخصصة.',
             'url'           => 'https://example.com/global',
             'logo_path'     => null,
             'display_order' => 3,
@@ -29,6 +35,8 @@ return [
         4 => [
             'name'          => 'Cloud Systems',
             'tier'          => 'gold',
+            'description_en'=> 'Cloud-native infrastructure powering reliable commerce operations.',
+            'description_ar'=> 'بنية سحابية أصلية تدعم عمليات التجارة الموثوقة.',
             'url'           => 'https://example.com/cloud',
             'logo_path'     => null,
             'display_order' => 4,
@@ -37,6 +45,8 @@ return [
         5 => [
             'name'          => 'Data Dynamics',
             'tier'          => 'gold',
+            'description_en'=> 'Analytics leader delivering insight-driven marketing decisions.',
+            'description_ar'=> 'رائدة في التحليلات تقدم قرارات تسويقية مدفوعة بالبيانات.',
             'url'           => 'https://example.com/data',
             'logo_path'     => null,
             'display_order' => 5,
@@ -45,6 +55,8 @@ return [
         6 => [
             'name'          => 'Green Energy',
             'tier'          => 'silver',
+            'description_en'=> 'Sustainable energy partner keeping the expo efficient and clean.',
+            'description_ar'=> 'شريك طاقة مستدامة يحافظ على كفاءة المعرض ونظافته.',
             'url'           => 'https://example.com/green',
             'logo_path'     => null,
             'display_order' => 6,
@@ -53,6 +65,8 @@ return [
         7 => [
             'name'          => 'Smart Solutions',
             'tier'          => 'silver',
+            'description_en'=> 'Automation experts connecting attendees with seamless journeys.',
+            'description_ar'=> 'خبراء الأتمتة الذين يربطون الزوار بتجارب سلسة.',
             'url'           => 'https://example.com/smart',
             'logo_path'     => null,
             'display_order' => 7,
@@ -61,6 +75,8 @@ return [
         8 => [
             'name'          => 'Future Tech',
             'tier'          => 'silver',
+            'description_en'=> 'Emerging tech studio showcasing bold prototypes and pilots.',
+            'description_ar'=> 'استوديو تقني ناشئ يعرض نماذج أولية جريئة ومشروعات تجريبية.',
             'url'           => 'https://example.com/future',
             'logo_path'     => null,
             'display_order' => 8,

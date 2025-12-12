@@ -9,6 +9,13 @@ use Illuminate\Support\Facades\Storage;
 
 class PublicSponsorController extends Controller
 {
+    protected array $availableTiers = [
+        'strategic' => 'Strategic Sponsor',
+        'business' => 'Business Sponsor',
+        'marketing' => 'Marketing Sponsor',
+        'other' => 'Other Sponsor',
+    ];
+
     public function index()
     {
         $sponsors = PublicSponsor::orderBy('display_order')->get();
@@ -18,15 +25,19 @@ class PublicSponsorController extends Controller
 
     public function create()
     {
-        return view('admin.public-sponsors.create');
+        return view('admin.public-sponsors.create', [
+            'tierOptions' => $this->availableTiers,
+        ]);
     }
 
     public function store(Request $request)
     {
         $data = $request->validate([
             'name'          => ['required', 'string', 'max:255'],
-            'tier'          => ['nullable', 'string', 'max:50'],
+            'tier'          => ['nullable', 'string', 'max:50', 'in:'.implode(',', array_keys($this->availableTiers))],
             'url'           => ['nullable', 'url', 'max:255'],
+            'description_en'=> ['required', 'string'],
+            'description_ar'=> ['nullable', 'string'],
             'display_order' => ['nullable', 'integer'],
             'is_active'     => ['nullable', 'boolean'],
             'logo'          => ['required', 'image', 'max:2048'],
@@ -38,6 +49,8 @@ class PublicSponsorController extends Controller
             'name'          => $data['name'],
             'tier'          => $data['tier'] ?? null,
             'url'           => $data['url'] ?? null,
+            'description_en'=> $data['description_en'],
+            'description_ar'=> $data['description_ar'] ?? null,
             'display_order' => $data['display_order'] ?? 0,
             'is_active'     => $request->boolean('is_active'),
             'logo_path'     => $path,
@@ -54,15 +67,20 @@ class PublicSponsorController extends Controller
 
     public function edit(PublicSponsor $publicSponsor)
     {
-        return view('admin.public-sponsors.edit', ['sponsor' => $publicSponsor]);
+        return view('admin.public-sponsors.edit', [
+            'sponsor' => $publicSponsor,
+            'tierOptions' => $this->availableTiers,
+        ]);
     }
 
     public function update(Request $request, PublicSponsor $publicSponsor)
     {
         $data = $request->validate([
             'name'          => ['required', 'string', 'max:255'],
-            'tier'          => ['nullable', 'string', 'max:50'],
+            'tier'          => ['nullable', 'string', 'max:50', 'in:'.implode(',', array_keys($this->availableTiers))],
             'url'           => ['nullable', 'url', 'max:255'],
+            'description_en'=> ['required', 'string'],
+            'description_ar'=> ['nullable', 'string'],
             'display_order' => ['nullable', 'integer'],
             'is_active'     => ['nullable', 'boolean'],
             'logo'          => ['nullable', 'image', 'max:2048'],
@@ -72,6 +90,8 @@ class PublicSponsorController extends Controller
             'name'          => $data['name'],
             'tier'          => $data['tier'] ?? null,
             'url'           => $data['url'] ?? null,
+            'description_en'=> $data['description_en'],
+            'description_ar'=> $data['description_ar'] ?? null,
             'display_order' => $data['display_order'] ?? 0,
             'is_active'     => $request->boolean('is_active'),
         ];

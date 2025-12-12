@@ -1045,6 +1045,173 @@
       grid-template-columns: repeat(auto-fit, minmax(180px, 200px));
     }
 
+    .sponsor-featured-list {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .sponsor-featured-card {
+      width: 100%;
+      position: relative;
+      border-radius: 1.5rem;
+      padding: 2px;
+      --sponsor-gradient: linear-gradient(120deg, #2dd4bf, #0f9f6e, #2dd4bf);
+      background: var(--sponsor-gradient);
+      background-size: 250% 250%;
+      animation: sponsorBorderFlow 8s linear infinite;
+      overflow: hidden;
+    }
+
+    .sponsor-featured-card.sponsor-strategic {
+      --sponsor-gradient: linear-gradient(120deg, #fde68a, #f59e0b, #fcd34d);
+    }
+
+    .sponsor-featured-card.sponsor-business {
+      --sponsor-gradient: linear-gradient(120deg, #a5b4fc, #6366f1, #a5b4fc);
+    }
+
+    .sponsor-featured-card.sponsor-marketing {
+      --sponsor-gradient: linear-gradient(120deg, #f9a8d4, #db2777, #f472b6);
+    }
+
+    @keyframes sponsorBorderFlow {
+      0% {
+        background-position: 0% 50%;
+      }
+
+      100% {
+        background-position: 200% 50%;
+      }
+    }
+
+    .sponsor-featured-content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      gap: 2rem;
+      align-items: stretch;
+      padding: 2rem;
+      border-radius: calc(1.5rem - 2px);
+      background: rgba(255, 255, 255, 0.95);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    }
+
+    .sponsor-featured-media {
+      flex: 0 0 25%;
+      max-width: 25%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .sponsor-featured-logo {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      border-radius: 1rem;
+      background: rgb(var(--muted));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      box-shadow: inset 0 0 0 1px rgb(var(--border));
+    }
+
+    .sponsor-featured-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .sponsor-visit-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      padding: 0.65rem 1.5rem;
+      border-radius: 9999px;
+      background: rgb(var(--primary));
+      color: rgb(var(--primary-foreground));
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.3s ease, transform 0.3s ease;
+      width: 100%;
+    }
+
+    .sponsor-visit-btn:hover {
+      background: #046302;
+      transform: translateY(-1px);
+    }
+
+    .sponsor-featured-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0.75rem;
+    }
+
+    .sponsor-featured-label {
+      font-size: 0.85rem;
+      letter-spacing: 0.2em;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: rgb(var(--primary));
+    }
+
+    .sponsor-featured-name-link {
+      text-decoration: none;
+    }
+
+    .sponsor-featured-name {
+      font-size: clamp(1.5rem, 2.2vw, 2.25rem);
+      font-weight: 700;
+      margin: 0;
+      color: rgb(var(--foreground));
+    }
+
+    .sponsor-featured-desc {
+      font-size: 1.05rem;
+      color: rgb(var(--muted-foreground));
+      line-height: 1.7;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .sponsor-featured-card {
+        animation: none;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .sponsor-featured-media {
+        flex-basis: 30%;
+        max-width: 30%;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .sponsor-featured-content {
+        flex-direction: column;
+        padding: 1.5rem;
+      }
+
+      .sponsor-featured-media {
+        flex-basis: auto;
+        max-width: none;
+        width: 100%;
+      }
+
+      .sponsor-featured-logo {
+        width: 80%;
+        margin: 0 auto;
+      }
+
+      .sponsor-visit-btn {
+        width: 80%;
+      }
+    }
+
     .sponsor-card {
       background: transparent;
       border: 1px solid rgb(var(--border) / 0.6);
@@ -1697,14 +1864,25 @@
   });
   }
 
-  $sponsorTiers = [
-  'main' => __('Main Sponsors'),
-  'gold' => __('Gold Sponsors'),
-  'silver' => __('Silver Sponsors'),
+  $sponsorTierLabels = [
+  'strategic' => __('Strategic Sponsors'),
+  'business' => __('Business Sponsors'),
+  'marketing' => __('Marketing Sponsors'),
   ];
 
-  $groupedSponsors = $publicSponsors->groupBy(function ($sponsor) {
-  return strtolower($sponsor->tier ?? 'other');
+  $tierAliases = [
+  'main' => 'strategic',
+  'gold' => 'business',
+  'silver' => 'marketing',
+  'strategic' => 'strategic',
+  'business' => 'business',
+  'marketing' => 'marketing',
+  ];
+
+  $groupedSponsors = $publicSponsors->groupBy(function ($sponsor) use ($tierAliases) {
+  $tier = strtolower($sponsor->tier ?? 'other');
+
+  return $tierAliases[$tier] ?? $tier;
   });
 
   $participants = \App\Models\Participant::query()
@@ -2302,25 +2480,49 @@
 
         <div class="sponsor-tiers">
           @php $renderedSponsors = false; @endphp
-          @foreach($sponsorTiers as $tierKey => $label)
+          @foreach($sponsorTierLabels as $tierKey => $label)
           @php $tierSponsors = $groupedSponsors->get($tierKey); @endphp
           @if($tierSponsors && $tierSponsors->count())
           @php $renderedSponsors = true; @endphp
           <div class="sponsor-tier">
             <h3 class="sponsor-tier-title">{{ $label }}</h3>
-            <div class="sponsor-tier-grid tier-{{ $tierKey }}">
+            <div class="sponsor-featured-list">
               @foreach($tierSponsors as $sponsor)
-              <a href="{{ route('public.sponsors.show', ['locale' => app()->getLocale(), 'sponsor' => $sponsor]) }}"
-                class="sponsor-card {{ $tierKey }}"
-                data-animate>
-                <div class="sponsor-badge {{ $tierKey }}">
-                  <span>{{ $label }}</span>
+              @php
+              $logoPath = $sponsor->logo_path ? asset('storage/'.$sponsor->logo_path) : asset('img/IEC-logo.png');
+              $profileRoute = route('public.sponsors.show', ['locale' => app()->getLocale(), 'sponsor' => $sponsor]);
+              $localizedDescription = method_exists($sponsor, 'getDescriptionForLocale')
+                  ? $sponsor->getDescriptionForLocale(app()->getLocale())
+                  : null;
+              $description = $localizedDescription
+                  ?? $sponsor->description
+                  ?? $sponsor->description_en
+                  ?? __('Proud partner of the IEC Expo, empowering innovation and growth.');
+              @endphp
+              <article class="sponsor-featured-card sponsor-{{ $tierKey }}" data-animate>
+                <div class="sponsor-featured-content">
+                  <div class="sponsor-featured-media">
+                    <div class="sponsor-featured-logo">
+                      <img src="{{ $logoPath }}" alt="{{ $sponsor->name }}">
+                    </div>
+                    @if($sponsor->url)
+                    <a href="{{ $sponsor->url }}" class="sponsor-visit-btn" target="_blank" rel="noopener">
+                      {{ __('Visit Website') }}
+                      <svg class="icon icon-sm" viewBox="0 0 24 24">
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                      </svg>
+                    </a>
+                    @endif
+                  </div>
+                  <div class="sponsor-featured-body">
+                    <span class="sponsor-featured-label">{{ $label }}</span>
+                    <a href="{{ $profileRoute }}" class="sponsor-featured-name-link">
+                      <h3 class="sponsor-featured-name">{{ $sponsor->name }}</h3>
+                    </a>
+                    <p class="sponsor-featured-desc">{{ $description }}</p>
+                  </div>
                 </div>
-                <div class="sponsor-logo">
-                  <img src="{{ asset('storage/'.$sponsor->logo_path) }}" alt="{{ $sponsor->name }}">
-                </div>
-
-              </a>
+              </article>
               @endforeach
             </div>
           </div>
@@ -2328,26 +2530,27 @@
           @endforeach
 
           @php
-          $otherSponsors = $groupedSponsors->filter(function ($_, $key) use ($sponsorTiers) {
-          return ! array_key_exists($key, $sponsorTiers);
+          $otherSponsors = $groupedSponsors->filter(function ($_, $key) use ($sponsorTierLabels) {
+          return ! array_key_exists($key, $sponsorTierLabels);
           })->flatten();
           @endphp
 
           @if($otherSponsors->count())
           @php $renderedSponsors = true; @endphp
           <div class="sponsor-tier">
-            <h3 class="sponsor-tier-title">{{ __('Sponsors') }}</h3>
+            <h3 class="sponsor-tier-title">{{ __('Other Sponsors') }}</h3>
             <div class="sponsor-tier-grid tier-main">
               @foreach($otherSponsors as $sponsor)
+              @php $logoPath = $sponsor->logo_path ? asset('storage/'.$sponsor->logo_path) : asset('img/IEC-logo.png'); @endphp
               <a href="{{ route('public.sponsors.show', ['locale' => app()->getLocale(), 'sponsor' => $sponsor]) }}"
                 class="sponsor-card"
                 data-animate>
                 <div class="sponsor-badge">
 
-                  <span>{{ $sponsor->tier }}</span>
+                  <span>{{ $sponsor->tier ? ucfirst($sponsor->tier) : __('Sponsor') }}</span>
                 </div>
                 <div class="sponsor-logo">
-                  <img src="{{ asset('storage/'.$sponsor->logo_path) }}" alt="{{ $sponsor->name }}">
+                  <img src="{{ $logoPath }}" alt="{{ $sponsor->name }}">
                 </div>
 
               </a>

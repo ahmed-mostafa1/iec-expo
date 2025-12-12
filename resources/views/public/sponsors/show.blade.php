@@ -81,6 +81,12 @@
             color: #64748b;
             font-size: 0.9rem;
         }
+        .description {
+            margin-top: 1.5rem;
+            line-height: 1.6;
+            color: #475569;
+            text-align: center;
+        }
         .meta {
             margin-top: 2rem;
             display: grid;
@@ -125,14 +131,25 @@
             </a>
         </header>
         <main>
+            @php
+                $logoPath = $sponsor->logo_path
+                    ? asset('storage/'.$sponsor->logo_path)
+                    : asset('img/IEC-logo.png');
+                $description = method_exists($sponsor, 'getDescriptionForLocale')
+                    ? $sponsor->getDescriptionForLocale(app()->getLocale())
+                    : ($sponsor->description_en ?? null);
+            @endphp
             <article class="card">
                 <div class="logo-box">
-                    <img src="{{ asset('storage/'.$sponsor->logo_path) }}" alt="{{ $sponsor->name }}">
+                    <img src="{{ $logoPath }}" alt="{{ $sponsor->name }}">
                 </div>
                 <h1>{{ $sponsor->name }}</h1>
                 <div class="tier">
                     {{ $sponsor->tier ? ucfirst($sponsor->tier) : __('Sponsor') }}
                 </div>
+                @if($description)
+                    <p class="description">{{ $description }}</p>
+                @endif
 
                 <div class="meta">
                     <div class="meta-item">
