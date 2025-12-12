@@ -4,6 +4,8 @@ return [
     'sponsors' => [
         1 => [
             'name'          => 'Tech Corp',
+            'name_en'       => 'Tech Corp',
+            'name_ar'       => 'تيك كورب',
             'tier'          => 'main',
             'description_en'=> 'Driving the strategic vision for global ecommerce innovation.',
             'description_ar'=> 'تقود الرؤية الاستراتيجية للابتكار في مجال التجارة الإلكترونية العالمية.',
@@ -14,6 +16,8 @@ return [
         ],
         2 => [
             'name'          => 'Innovation Labs',
+            'name_en'       => 'Innovation Labs',
+            'name_ar'       => 'مختبرات الابتكار',
             'tier'          => 'main',
             'description_en'=> 'Building immersive expo experiences with future-ready technologies.',
             'description_ar'=> 'تبني تجارب معارض غامرة باستخدام تقنيات جاهزة للمستقبل.',
@@ -24,6 +28,8 @@ return [
         ],
         3 => [
             'name'          => 'Global Finance',
+            'name_en'       => 'Global Finance',
+            'name_ar'       => 'جلوبال فاينانس',
             'tier'          => 'gold',
             'description_en'=> 'Financial partner empowering exhibitors with tailored growth programs.',
             'description_ar'=> 'شريك مالي يمكّن العارضين من خلال برامج نمو مخصصة.',
@@ -34,6 +40,8 @@ return [
         ],
         4 => [
             'name'          => 'Cloud Systems',
+            'name_en'       => 'Cloud Systems',
+            'name_ar'       => 'كلود سيستمز',
             'tier'          => 'gold',
             'description_en'=> 'Cloud-native infrastructure powering reliable commerce operations.',
             'description_ar'=> 'بنية سحابية أصلية تدعم عمليات التجارة الموثوقة.',
@@ -44,6 +52,8 @@ return [
         ],
         5 => [
             'name'          => 'Data Dynamics',
+            'name_en'       => 'Data Dynamics',
+            'name_ar'       => 'داتا دايناميكس',
             'tier'          => 'gold',
             'description_en'=> 'Analytics leader delivering insight-driven marketing decisions.',
             'description_ar'=> 'رائدة في التحليلات تقدم قرارات تسويقية مدفوعة بالبيانات.',
@@ -54,6 +64,8 @@ return [
         ],
         6 => [
             'name'          => 'Green Energy',
+            'name_en'       => 'Green Energy',
+            'name_ar'       => 'جرين إنيرجي',
             'tier'          => 'silver',
             'description_en'=> 'Sustainable energy partner keeping the expo efficient and clean.',
             'description_ar'=> 'شريك طاقة مستدامة يحافظ على كفاءة المعرض ونظافته.',
@@ -64,6 +76,8 @@ return [
         ],
         7 => [
             'name'          => 'Smart Solutions',
+            'name_en'       => 'Smart Solutions',
+            'name_ar'       => 'سمارت سلوشنز',
             'tier'          => 'silver',
             'description_en'=> 'Automation experts connecting attendees with seamless journeys.',
             'description_ar'=> 'خبراء الأتمتة الذين يربطون الزوار بتجارب سلسة.',
@@ -74,6 +88,8 @@ return [
         ],
         8 => [
             'name'          => 'Future Tech',
+            'name_en'       => 'Future Tech',
+            'name_ar'       => 'فيوتشر تك',
             'tier'          => 'silver',
             'description_en'=> 'Emerging tech studio showcasing bold prototypes and pilots.',
             'description_ar'=> 'استوديو تقني ناشئ يعرض نماذج أولية جريئة ومشروعات تجريبية.',
@@ -86,6 +102,7 @@ return [
     'participants' => [
         1 => [
             'name'           => 'Saudi Aramco',
+            'name_ar'        => 'أرامكو السعودية',
             'description_en' => 'Global leader in energy solutions.',
             'description_ar' => 'رائد عالمي في حلول الطاقة.',
             'url'            => 'https://www.aramco.com',
@@ -95,6 +112,7 @@ return [
         ],
         2 => [
             'name'           => 'SABIC',
+            'name_ar'        => 'سابك',
             'description_en' => 'Petrochemicals and manufacturing excellence.',
             'description_ar' => 'تميز في البتروكيماويات والتصنيع.',
             'url'            => 'https://www.sabic.com',
@@ -104,6 +122,7 @@ return [
         ],
         3 => [
             'name'           => 'STC',
+            'name_ar'        => 'اس تي سي',
             'description_en' => 'Leading telecommunications provider.',
             'description_ar' => 'مزود اتصالات رائد.',
             'url'            => 'https://www.stc.com.sa',
@@ -113,6 +132,7 @@ return [
         ],
         4 => [
             'name'           => 'Al Rajhi Bank',
+            'name_ar'        => 'مصرف الراجحي',
             'description_en' => 'Islamic banking pioneer.',
             'description_ar' => 'رائد في الخدمات المصرفية الإسلامية.',
             'url'            => 'https://www.alrajhibank.com.sa',
@@ -122,6 +142,7 @@ return [
         ],
         5 => [
             'name'           => 'NEOM',
+            'name_ar'        => 'نيوم',
             'description_en' => 'Building the future of living.',
             'description_ar' => 'بناء مستقبل الحياة.',
             'url'            => 'https://www.neom.com',
@@ -131,6 +152,7 @@ return [
         ],
         6 => [
             'name'           => 'Red Sea Global',
+            'name_ar'        => 'البحر الأحمر للتطوير',
             'description_en' => 'Sustainable tourism development.',
             'description_ar' => 'تطوير السياحة المستدامة.',
             'url'            => 'https://www.redseaglobal.com',

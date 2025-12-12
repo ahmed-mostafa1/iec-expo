@@ -2281,6 +2281,17 @@
           <p class="section-desc">{{ __('We are grateful to our sponsors who make this event possible.') }}</p>
         </div>
 
+        @php
+        $currentLocale = app()->getLocale();
+        $defaultSponsorCopy = [
+        'en' => __('Proud partner of the IEC Expo, empowering innovation and growth.'),
+        'ar' => __('شريك فخور بدعم معرض IEC، ويساهم في تمكين الابتكار والنمو.'),
+        ];
+        $visitWebsiteCopy = [
+        'en' => __('Visit Website'),
+        'ar' => __('زيارة الموقع'),
+        ];
+        @endphp
         <div class="sponsor-tiers">
           @php $renderedSponsors = false; @endphp
           @foreach($sponsorTierLabels as $tierKey => $label)
@@ -2294,23 +2305,28 @@
               @php
               $logoPath = $sponsor->logo_path ? asset('storage/'.$sponsor->logo_path) : asset('img/IEC-logo.png');
               $profileRoute = route('public.sponsors.show', ['locale' => app()->getLocale(), 'sponsor' => $sponsor]);
+              $englishName = $sponsor->name_en ?? $sponsor->name ?? '';
+              $arabicName = $sponsor->name_ar ?? $englishName;
+              $displayName = $currentLocale === 'ar' ? $arabicName : $englishName;
               $localizedDescription = method_exists($sponsor, 'getDescriptionForLocale')
                   ? $sponsor->getDescriptionForLocale(app()->getLocale())
                   : null;
               $description = $localizedDescription
                   ?? $sponsor->description
-                  ?? $sponsor->description_en
-                  ?? __('Proud partner of the IEC Expo, empowering innovation and growth.');
+                  ?? ($sponsor->description_en ?? null)
+                  ?? $defaultSponsorCopy[$currentLocale];
+              $descriptionEn = $sponsor->description_en ?? $defaultSponsorCopy['en'];
+              $descriptionAr = $sponsor->description_ar ?? $descriptionEn ?? $defaultSponsorCopy['ar'];
               @endphp
               <article class="sponsor-featured-card sponsor-{{ $tierKey }}" data-animate>
                 <div class="sponsor-featured-content">
                   <div class="sponsor-featured-media">
                     <div class="sponsor-featured-logo">
-                      <img src="{{ $logoPath }}" alt="{{ $sponsor->name }}">
+                      <img src="{{ $logoPath }}" alt="{{ $displayName }}">
                     </div>
                     @if($sponsor->url)
                     <a href="{{ $sponsor->url }}" class="sponsor-visit-btn" target="_blank" rel="noopener">
-                      {{ __('Visit Website') }}
+                      <span data-en="{{ e($visitWebsiteCopy['en']) }}" data-ar="{{ e($visitWebsiteCopy['ar']) }}">{{ $visitWebsiteCopy[$currentLocale] }}</span>
                       <svg class="icon icon-sm" viewBox="0 0 24 24">
                         <path d="M5 12h14M12 5l7 7-7 7" />
                       </svg>
@@ -2318,11 +2334,11 @@
                     @endif
                   </div>
                   <div class="sponsor-featured-body">
-                   
+                    <span class="sponsor-featured-label">{{ $label }}</span>
                     <a href="{{ $profileRoute }}" class="sponsor-featured-name-link">
-                      <h3 class="sponsor-featured-name">{{ $sponsor->name }}</h3>
+                      <h3 class="sponsor-featured-name" data-en="{{ e($englishName) }}" data-ar="{{ e($arabicName) }}">{{ $displayName }}</h3>
                     </a>
-                    <p class="sponsor-featured-desc">{{ $description }}</p>
+                    <p class="sponsor-featured-desc" data-en="{{ e($descriptionEn) }}" data-ar="{{ e($descriptionAr) }}">{{ $description }}</p>
                   </div>
                 </div>
               </article>
@@ -2341,21 +2357,30 @@
           @if($otherSponsors->count())
           @php $renderedSponsors = true; @endphp
           <div class="sponsor-tier">
-            <h3 class="sponsor-tier-title">{{ __('Sponsors') }}</h3>
+            <h3 class="sponsor-tier-title">{{ __('Other Sponsors') }}</h3>
             <div class="sponsor-tier-grid tier-main other-sponsors-grid">
               @foreach($otherSponsors as $sponsor)
-              @php $logoPath = $sponsor->logo_path ? asset('storage/'.$sponsor->logo_path) : asset('img/IEC-logo.png'); @endphp
+              @php
+              $logoPath = $sponsor->logo_path ? asset('storage/'.$sponsor->logo_path) : asset('img/IEC-logo.png');
+              $englishName = $sponsor->name_en ?? $sponsor->name ?? '';
+              $arabicName = $sponsor->name_ar ?? $englishName;
+              $displayName = $currentLocale === 'ar' ? $arabicName : $englishName;
+              @endphp
               <article class="sponsor-card" data-animate>
-                <a href="{{ $sponsor->url ?? '#' }}" target="_blank" rel="noopener"
+                <a href="{{ route('public.sponsors.show', ['locale' => app()->getLocale(), 'sponsor' => $sponsor]) }}"
                   class="sponsor-card-link">
-                  <div class="sponsor-logo">
-                    <img src="{{ $logoPath }}" alt="{{ $sponsor->name }}">
+                  <div class="sponsor-badge">
+                    <span>{{ $sponsor->tier ? ucfirst($sponsor->tier) : __('Sponsor') }}</span>
                   </div>
+                  <div class="sponsor-logo">
+                    <img src="{{ $logoPath }}" alt="{{ $displayName }}">
+                  </div>
+                  <div class="sponsor-card-footer" data-en="{{ e($englishName) }}" data-ar="{{ e($arabicName) }}">{{ $displayName }}</div>
                 </a>
                 @if($sponsor->url)
                 <div class="sponsor-card-action">
-                  <a href="{{ $sponsor->url }}" target="_blank" rel="noopener" class="sponsor-visit-btn">
-                    {{ __('Visit Website') }}
+                  <a href="{{ $sponsor->url }}" target="_blank" rel="noopener">
+                    <span data-en="{{ e($visitWebsiteCopy['en']) }}" data-ar="{{ e($visitWebsiteCopy['ar']) }}">{{ $visitWebsiteCopy[$currentLocale] }}</span>
                     <svg class="icon icon-sm" viewBox="0 0 24 24" style="width:16px;height:16px;">
                       <path d="M5 12h14M12 5l7 7-7 7" />
                     </svg>
@@ -2385,18 +2410,23 @@
 
         <div class="participants-grid">
           @forelse($participants as $participant)
+          @php
+            $participantName = method_exists($participant, 'getLocalizedName')
+                ? $participant->getLocalizedName(app()->getLocale())
+                : $participant->name;
+          @endphp
           <a href="{{ route('public.participants.show', ['locale' => app()->getLocale(), 'participant' => $participant]) }}"
             class="participant-card"
             data-animate>
             <div class="participant-logo">
               @if($participant->logo_path)
-              <img src="{{ asset('storage/'.$participant->logo_path) }}" alt="{{ $participant->name }}">
+              <img src="{{ asset('storage/'.$participant->logo_path) }}" alt="{{ $participantName }}">
               @else
-              <span>{{ mb_strtoupper(mb_substr($participant->name, 0, 1)) }}</span>
+              <span>{{ mb_strtoupper(mb_substr($participantName, 0, 1)) }}</span>
               @endif
             </div>
             <div class="participant-name">
-              {{ $participant->name }}
+              {{ $participantName }}
               @if($participant->url)
               <svg class="icon icon-sm external-icon" viewBox="0 0 24 24">
                 <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14 21 3" />
@@ -2625,8 +2655,8 @@
   <footer class="footer">
     <div class="container">
       <div class="footer-inner">
-        <div class="footer-text">© 2025 <span data-en="INTERNATIONAL E-COMMERCE EXPO | Terms & Conditions" data-ar="المؤتمر الدولي للتجارة اﻹلكترونية"> INTERNATIONAL E-COMMERCE EXPO | Terms & Conditions</span></div>
-        <div class="footer-text" data-en="All rights reserved." data-ar="جميع الحقوق محفوظة.">2025© All rights reserved.</div>
+        <div class="footer-text"> <span data-en="INTERNATIONAL E-COMMERCE EXPO | Terms & Conditions" data-ar="المعرض الدولي للتجارة اﻹلكترونية"> INTERNATIONAL E-COMMERCE EXPO | Terms & Conditions</span></div>
+        <div class="footer-text" data-en="All rights reserved." data-ar="جميع الحقوق محفوظة© 2025.">2025© All rights reserved.</div>
       </div>
     </div>
   </footer>
@@ -2944,15 +2974,6 @@
         behavior: 'smooth'
       });
     }
-
-    // Show register button on desktop
-    // if (window.innerWidth >= 640) {
-    //   document.querySelector('.header-actions .btn-primary').style.display = 'inline-flex';
-    // }
-    // window.addEventListener('resize', () => {
-    //   document.querySelector('.header-actions .btn-primary').style.display =
-    //     window.innerWidth >= 640 ? 'inline-flex' : 'none';
-    // });
 
     // Initialize AOS
     if (typeof AOS !== 'undefined') {

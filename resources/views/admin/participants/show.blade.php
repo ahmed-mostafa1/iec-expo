@@ -21,8 +21,12 @@
                 <h2 class="text-sm font-semibold mb-2">{{ __('Overview') }}</h2>
                 <dl class="space-y-3">
                     <div class="flex justify-between">
-                        <dt class="text-gray-500">{{ __('Name') }}</dt>
+                        <dt class="text-gray-500">{{ __('Name (English)') }}</dt>
                         <dd class="text-gray-900">{{ $participant->name }}</dd>
+                    </div>
+                    <div class="flex justify-between">
+                        <dt class="text-gray-500">{{ __('Name (Arabic)') }}</dt>
+                        <dd class="text-gray-900">{{ $participant->name_ar ?: '—' }}</dd>
                     </div>
                     <div class="flex justify-between">
                         <dt class="text-gray-500">{{ __('Website') }}</dt>

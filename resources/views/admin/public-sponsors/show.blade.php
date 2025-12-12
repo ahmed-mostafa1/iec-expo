@@ -24,6 +24,14 @@
                     <dd class="text-gray-900">{{ $sponsor->name }}</dd>
                 </div>
                 <div class="flex justify-between">
+                    <dt class="text-gray-500">{{ __('Name (English)') }}</dt>
+                    <dd class="text-gray-900">{{ $sponsor->name_en ?: '—' }}</dd>
+                </div>
+                <div class="flex justify-between">
+                    <dt class="text-gray-500">{{ __('Name (Arabic)') }}</dt>
+                    <dd class="text-gray-900">{{ $sponsor->name_ar ?: '—' }}</dd>
+                </div>
+                <div class="flex justify-between">
                     <dt class="text-gray-500">{{ __('Tier') }}</dt>
                     <dd class="text-gray-900">{{ $sponsor->tier ?: __('Not set') }}</dd>
                 </div>

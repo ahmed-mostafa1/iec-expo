@@ -40,7 +40,10 @@
                             @endif
                         </td>
                         <td class="px-3 py-2 align-top">
-                            <div class="text-gray-900">{{ $participant->name }}</div>
+                            <div class="text-gray-900 font-semibold">{{ $participant->name }}</div>
+                            @if($participant->name_ar)
+                                <div class="text-[11px] text-gray-500">{{ $participant->name_ar }}</div>
+                            @endif
                             @if($participant->url)
                                 <div class="text-[11px] text-emerald-700">
                                     {{ $participant->url }}
