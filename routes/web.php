@@ -9,6 +9,7 @@ use App\Http\Controllers\Public\ParticipantShowController as PublicParticipantSh
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\PublicSponsorController;
 use App\Http\Controllers\Admin\ParticipantController;
+use App\Http\Controllers\Admin\OrganizerController;
 use App\Http\Controllers\Admin\AboutContentController;
 use App\Http\Controllers\Admin\ContactInfoController;
 use App\Http\Controllers\Admin\HeroMediaController;
@@ -99,6 +100,7 @@ Route::prefix('admin')
 
         Route::resource('public-sponsors', PublicSponsorController::class);
         Route::resource('participants', ParticipantController::class);
+        Route::resource('organizers', OrganizerController::class);
 
         // About content – treat as single resource
         Route::get('about-content', [AboutContentController::class, 'edit'])->name('about.edit');

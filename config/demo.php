@@ -99,6 +99,38 @@ return [
             'is_active'     => true,
         ],
     ],
+    'organizers' => [
+        1 => [
+            'name'           => 'Umbrella Events',
+            'name_ar'        => 'أمبريلا إيفنتس',
+            'description_en' => 'Lead organizer overseeing the full conference experience.',
+            'description_ar' => 'المنظم الرئيسي الذي يشرف على تجربة المؤتمر الكاملة.',
+            'url'            => 'https://example.com/umbrella',
+            'logo_path'      => null,
+            'display_order'  => 1,
+            'is_active'      => true,
+        ],
+        2 => [
+            'name'           => 'Riyadh Expo Authority',
+            'name_ar'        => 'هيئة معارض الرياض',
+            'description_en' => 'Venue partner ensuring seamless operations.',
+            'description_ar' => 'شريك الموقع الذي يضمن سير العمليات بسلاسة.',
+            'url'            => 'https://example.com/riyadh-expo',
+            'logo_path'      => null,
+            'display_order'  => 2,
+            'is_active'      => true,
+        ],
+        3 => [
+            'name'           => 'Visionary Media',
+            'name_ar'        => 'رؤية ميديا',
+            'description_en' => 'Media partner amplifying event coverage.',
+            'description_ar' => 'شريك إعلامي يعزز تغطية الحدث.',
+            'url'            => 'https://example.com/visionary',
+            'logo_path'      => null,
+            'display_order'  => 3,
+            'is_active'      => true,
+        ],
+    ],
     'participants' => [
         1 => [
             'name'           => 'Saudi Aramco',

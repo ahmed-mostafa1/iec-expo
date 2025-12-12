@@ -48,6 +48,9 @@
                 <a href="{{ route('admin.participants.index') }}" class="block rounded-lg px-2 py-1.5 hover:bg-emerald-50 text-gray-700">
                     {{ __('Participants') }}
                 </a>
+                <a href="{{ route('admin.organizers.index') }}" class="block rounded-lg px-2 py-1.5 hover:bg-emerald-50 text-gray-700">
+                    {{ __('Organizers') }}
+                </a>
                 <a href="{{ route('admin.about.edit') }}" class="block rounded-lg px-2 py-1.5 hover:bg-emerald-50 text-gray-700">
                     {{ __('About content') }}
                 </a>
