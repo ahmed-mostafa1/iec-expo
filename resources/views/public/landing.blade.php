@@ -1323,6 +1323,11 @@
       text-decoration: none;
     }
 
+    .organizers {
+      padding: 5rem 0;
+      background: rgb(var(--background));
+    }
+
     /* Participants Section */
     .participants {
       padding: 5rem 0;
@@ -1987,6 +1992,22 @@
   return $model;
   });
   }
+
+  $organizers = \App\Models\Organizer::query()
+  ->where('is_active', true)
+  ->orderBy('display_order')
+  ->get();
+
+  if ($organizers->isEmpty()) {
+  $organizers = collect(config('demo.organizers'))
+  ->map(function ($data, $id) {
+  $model = new \App\Models\Organizer($data);
+  $model->id = $id;
+  $model->exists = false;
+
+  return $model;
+  });
+  }
   @endphp
   <!-- Header -->
   <header class="header">
@@ -2551,11 +2572,75 @@
         <p class="participant-modal-desc" id="participant-modal-desc"></p>
         <div class="participant-modal-actions">
           <a href="#" id="participant-modal-link" class="btn btn-primary" target="_blank" rel="noopener">
-            <span data-en="Visit Website" data-ar="زيارة الموقع" class="sponsor-visit-btn">Visit Website</span>
+            <span data-en="Visit Website" data-ar="زيارة الموقع">Visit Website</span>
           </a>
         </div>
       </div>
     </div>
+
+    <!-- Organizers Section -->
+    <section class="organizers" id="organizers">
+      <div class="container">
+        <div class="section-header" data-animate>
+          <h2 class="section-title" data-en="Organizers" data-ar="المنظمون">Organizers</h2>
+          <p class="section-desc" data-en="Meet the teams orchestrating the IEC Expo experience." data-ar="تعرّف على الفرق التي تنظم تجربة معرض IEC.">
+            Meet the teams orchestrating the IEC Expo experience.
+          </p>
+        </div>
+
+        @php
+          $organizerFallbackDesc = [
+            'en' => __('Driving the strategic vision for IEC Expo.'),
+            'ar' => __('يقودون الرؤية الاستراتيجية لمعرض IEC.'),
+          ];
+          $organizerVisitCopy = [
+            'en' => __('Visit Website'),
+            'ar' => __('زيارة الموقع'),
+          ];
+          $currentLocale = app()->getLocale();
+        @endphp
+
+        @if($organizers->count())
+          <div class="sponsor-featured-list">
+            @foreach($organizers as $organizer)
+              @php
+                $logoPath = $organizer->logo_path ? asset('storage/'.$organizer->logo_path) : asset('img/IEC-logo.png');
+                $englishName = $organizer->name ?? '';
+                $arabicName = $organizer->name_ar ?? $englishName;
+                $displayName = $currentLocale === 'ar' ? $arabicName : $englishName;
+                $descriptionEn = $organizer->description_en ?? $organizerFallbackDesc['en'];
+                $descriptionAr = $organizer->description_ar ?? $organizerFallbackDesc['ar'];
+                $description = $currentLocale === 'ar' ? $descriptionAr : $descriptionEn;
+              @endphp
+              <article class="sponsor-featured-card sponsor-strategic" data-animate>
+                <div class="sponsor-featured-content">
+                  <div class="sponsor-featured-media">
+                    <div class="sponsor-featured-logo">
+                      <img src="{{ $logoPath }}" alt="{{ $displayName }}">
+                    </div>
+                    @if($organizer->url)
+                      <a href="{{ $organizer->url }}" class="sponsor-visit-btn" target="_blank" rel="noopener">
+                        <span data-en="{{ e($organizerVisitCopy['en']) }}" data-ar="{{ e($organizerVisitCopy['ar']) }}">{{ $organizerVisitCopy[$currentLocale] }}</span>
+                        <svg class="icon icon-sm" viewBox="0 0 24 24">
+                          <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                      </a>
+                    @endif
+                  </div>
+                  <div class="sponsor-featured-body">
+                    <span class="sponsor-featured-label">{{ __('Organizer') }}</span>
+                    <h3 class="sponsor-featured-name" data-en="{{ e($englishName) }}" data-ar="{{ e($arabicName) }}">{{ $displayName }}</h3>
+                    <p class="sponsor-featured-desc" data-en="{{ e($descriptionEn) }}" data-ar="{{ e($descriptionAr) }}">{{ $description }}</p>
+                  </div>
+                </div>
+              </article>
+            @endforeach
+          </div>
+        @else
+          <p class="text-center text-gray-500 text-sm">{{ __('Organizers will be announced soon.') }}</p>
+        @endif
+      </div>
+    </section>
 
     <!-- Contact Section -->
     <section class="contact" id="contact">

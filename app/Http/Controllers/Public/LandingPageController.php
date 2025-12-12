@@ -7,6 +7,7 @@ use App\Models\AboutContent;
 use App\Models\ContactInfo;
 use App\Models\HeroMedia;
 use App\Models\Participant;
+use App\Models\Organizer;
 use App\Models\PublicSponsor;
 use Illuminate\Http\Request;
 
@@ -22,6 +23,9 @@ class LandingPageController extends Controller
         $participants = Participant::where('is_active', true)
             ->orderBy('display_order')
             ->get();
+        $organizers = Organizer::where('is_active', true)
+            ->orderBy('display_order')
+            ->get();
         $contactInfos = ContactInfo::orderByDesc('is_primary')
             ->orderBy('display_order')
             ->get();
@@ -33,6 +37,7 @@ class LandingPageController extends Controller
             'about',
             'sponsors',
             'participants',
+            'organizers',
             'contactInfos',
             'locale',
             'scrollToContact'
