@@ -2062,13 +2062,20 @@
 
   <main>
     <!-- Hero Section -->
+    @php
+      $heroVideoUrl = \App\Models\LandingSection::mediaUrl($heroSection['video_path'] ?? null) ?? asset('video/hero.mp4');
+      $heroPoster = \App\Models\LandingSection::mediaUrl($heroSection['poster_image_path'] ?? null);
+      $heroStats = $heroSection['stats'] ?? [];
+      $activeLocale = app()->getLocale();
+    @endphp
+
     <section class="hero" id="hero">
       <div class="container">
         <div class="hero-grid">
           <div class="hero-media">
             <div class="hero-video-frame">
-              <video class="hero-video" autoplay muted loop playsinline>
-                <source src="{{ asset('./video/hero.mp4') }}" type="video/mp4">
+              <video class="hero-video" autoplay muted loop playsinline @if($heroPoster) poster="{{ $heroPoster }}" @endif>
+                <source src="{{ $heroVideoUrl }}" type="video/mp4">
                 Your browser does not support the video tag.
               </video>
             </div>
@@ -2079,55 +2086,73 @@
 
     <!-- Statistics Section -->
     <div class="stats-section">
-      <div class="stat-item" data-aos="zoom-in" data-aos-delay="100">
-        <div class="stat-icon-wrapper">
-          <i class="fas fa-users"></i>
+      @forelse($heroStats as $index => $stat)
+        @php
+          $labelEn = data_get($stat, 'label.en', '');
+          $labelAr = data_get($stat, 'label.ar', $labelEn);
+          $label = $activeLocale === 'ar' ? $labelAr : $labelEn;
+          $value = $stat['value'] ?? 0;
+          $suffix = $stat['suffix'] ?? '';
+          $iconClass = $stat['icon'] ?? 'fas fa-circle';
+        @endphp
+        <div class="stat-item" data-aos="zoom-in" data-aos-delay="{{ 100 * ($index + 1) }}">
+          <div class="stat-icon-wrapper">
+            <i class="{{ $iconClass }}"></i>
+          </div>
+          <div class="stat-number" data-count="{{ $value }}" data-suffix="{{ $suffix }}">{{ $value }}</div>
+          <div class="stat-label" data-en="{{ e($labelEn) }}" data-ar="{{ e($labelAr) }}">{{ $label }}</div>
+          <div class="stat-progress">
+            <div class="progress-fill"></div>
+          </div>
         </div>
-        <div class="stat-number" data-count="5000">0</div>
-        <div class="stat-label" data-en="Global Attendees" data-ar="الحضور العالمي">Global Attendees</div>
-        <div class="stat-progress">
-          <div class="progress-fill"></div>
-        </div>
-      </div>
-      <div class="stat-item" data-aos="zoom-in" data-aos-delay="200">
-        <div class="stat-icon-wrapper">
-          <i class="fas fa-microphone-alt"></i>
-        </div>
-        <div class="stat-number" data-count="120">0</div>
-        <div class="stat-label" data-en="Expert Speakers" data-ar="خبير متحدث">Expert Speakers</div>
-        <div class="stat-progress">
-          <div class="progress-fill"></div>
-        </div>
-      </div>
-      <div class="stat-item" data-aos="zoom-in" data-aos-delay="300">
-        <div class="stat-icon-wrapper">
-          <i class="fas fa-calendar-check"></i>
-        </div>
-        <div class="stat-number" data-count="60">0</div>
-        <div class="stat-label" data-en="Sessions" data-ar="ورشة عمل">Sessions</div>
-        <div class="stat-progress">
-          <div class="progress-fill"></div>
-        </div>
-      </div>
-      <div class="stat-item" data-aos="zoom-in" data-aos-delay="400">
-        <div class="stat-icon-wrapper">
-          <i class="fas fa-globe-americas"></i>
-        </div>
-        <div class="stat-number" data-count="50">0</div>
-        <div class="stat-label" data-en="Countries" data-ar="دولة مشاركة">Countries</div>
-        <div class="stat-progress">
-          <div class="progress-fill"></div>
-        </div>
-      </div>
+      @empty
+        <p class="text-center text-sm text-gray-500">{{ __('Stats will be announced soon.') }}</p>
+      @endforelse
     </div>
 
 
     <!-- Registration Section -->
+    @php
+      $registrationLocale = app()->getLocale();
+      $translate = function ($node, $fallback = '') use ($registrationLocale) {
+        $en = data_get($node, 'en', $fallback);
+        $ar = data_get($node, 'ar', $en);
+        return [
+          'en' => $en,
+          'ar' => $ar,
+          'text' => $registrationLocale === 'ar' ? $ar : $en,
+        ];
+      };
+      $registrationTitle = $translate(data_get($registrationSection, 'title'), __('Registration'));
+      $registrationDescription = $translate(data_get($registrationSection, 'description'), '');
+      $visitorCard = data_get($registrationSection, 'visitor_card', []);
+      $visitorCardTitle = $translate(data_get($visitorCard, 'title'), '');
+      $visitorCardDescription = $translate(data_get($visitorCard, 'description'), '');
+      $visitorCta = $translate(data_get($visitorCard, 'cta_label'), __('Select'));
+      $visitorForm = data_get($registrationSection, 'visitor_form', []);
+      $visitorFormTitle = $translate(data_get($visitorForm, 'title'), '');
+      $visitorSubmit = $translate(data_get($visitorForm, 'cta_submit'), __('Submit Registration'));
+      $visitorContact = $translate(data_get($visitorForm, 'cta_contact'), __('Contact Us'));
+      $visitorFields = data_get($visitorForm, 'fields', []);
+      $exhibitorCard = data_get($registrationSection, 'exhibitor_card', []);
+      $exhibitorCardTitle = $translate(data_get($exhibitorCard, 'title'), '');
+      $exhibitorCardDescription = $translate(data_get($exhibitorCard, 'description'), '');
+      $exhibitorCta = $translate(data_get($exhibitorCard, 'cta_label'), __('Select'));
+      $exhibitorForm = data_get($registrationSection, 'exhibitor_form', []);
+      $exhibitorFormTitle = $translate(data_get($exhibitorForm, 'title'), '');
+      $exhibitorStepOne = $translate(data_get($exhibitorForm, 'step_one'), '');
+      $exhibitorStepTwo = $translate(data_get($exhibitorForm, 'step_two'), '');
+      $exhibitorNext = $translate(data_get($exhibitorForm, 'cta_next'), __('Next Step'));
+      $exhibitorSubmit = $translate(data_get($exhibitorForm, 'cta_submit'), __('Submit Application'));
+      $exhibitorFieldsStepOne = data_get($exhibitorForm, 'fields_step_one', []);
+      $exhibitorFieldsStepTwo = data_get($exhibitorForm, 'fields_step_two', []);
+    @endphp
+
     <section class="registration" id="register">
       <div class="container">
         <div class="section-header" data-animate>
-          <h2 class="section-title" data-en="Registration" data-ar="التسجيل">Registration</h2>
-          <p class="section-desc" data-en="Choose your role to begin the registration process. Visitors and exhibitors have different registration flows." data-ar="اختر دورك لبدء عملية التسجيل. الزوار والعارضون لديهم مسارات تسجيل مختلفة.">Choose your role to begin the registration process. Visitors and exhibitors have different registration flows.</p>
+          <h2 class="section-title" data-en="{{ e($registrationTitle['en']) }}" data-ar="{{ e($registrationTitle['ar']) }}">{{ $registrationTitle['text'] }}</h2>
+          <p class="section-desc" data-en="{{ e($registrationDescription['en']) }}" data-ar="{{ e($registrationDescription['ar']) }}">{{ $registrationDescription['text'] }}</p>
         </div>
 
         <div class="registration-content">
@@ -2139,59 +2164,61 @@
                   <circle cx="12" cy="7" r="4" />
                 </svg>
               </div>
-              <h3 class="role-title" data-en="Visitor / Client" data-ar="زائر / عميل">Visitor / Client</h3>
-              <p class="role-desc" data-en="Attend the conference and explore opportunities" data-ar="احضر المؤتمر واستكشف الفرص">Attend the conference and explore opportunities</p>
+              <h3 class="role-title" data-en="{{ e($visitorCardTitle['en']) }}" data-ar="{{ e($visitorCardTitle['ar']) }}">{{ $visitorCardTitle['text'] }}</h3>
+              <p class="role-desc" data-en="{{ e($visitorCardDescription['en']) }}" data-ar="{{ e($visitorCardDescription['ar']) }}">{{ $visitorCardDescription['text'] }}</p>
               <div class="role-cta" id="visitor-cta">
-                <span data-en="Select" data-ar="اختر">Select</span>
+                <span data-en="{{ e($visitorCta['en']) }}" data-ar="{{ e($visitorCta['ar']) }}">{{ $visitorCta['text'] }}</span>
                 <svg class="icon icon-sm" viewBox="0 0 24 24">
                   <path d="M5 12h14M12 5l7 7-7 7" />
                 </svg>
               </div>
             </div>
             <div class="form-card" id="visitor-form">
-              <h3 class="form-title" data-en="Visitor Registration" data-ar="تسجيل الزائر">Visitor Registration</h3>
+              <h3 class="form-title" data-en="{{ e($visitorFormTitle['en']) }}" data-ar="{{ e($visitorFormTitle['ar']) }}">{{ $visitorFormTitle['text'] }}</h3>
               <form onsubmit="handleSubmit(event, 'visitor')">
-                <div class="form-grid form-grid-2">
-                  <div class="form-group">
-                    <label class="form-label" data-en="Full Name *" data-ar="الاسم الكامل *">Full Name *</label>
-                    <input type="text" class="form-input" required placeholder="John Doe">
+                @php
+                  $visitorChunks = array_chunk($visitorFields, 2);
+                @endphp
+                @foreach ($visitorChunks as $chunkIndex => $chunk)
+                  <div class="form-grid {{ count($chunk) === 2 ? 'form-grid-2' : '' }}" @if($chunkIndex) style="margin-top: 1rem;" @endif>
+                    @foreach ($chunk as $field)
+                      @php
+                        $label = $translate(data_get($field, 'label'), '');
+                        $placeholder = $translate(data_get($field, 'placeholder'), '');
+                        $hint = $translate(data_get($field, 'hint'), '');
+                        $fieldType = $field['type'] ?? 'text';
+                        $options = $field['options'] ?? [];
+                      @endphp
+                      <div class="form-group">
+                        <label class="form-label" data-en="{{ e($label['en']) }}" data-ar="{{ e($label['ar']) }}">{{ $label['text'] }}</label>
+                        @if ($fieldType === 'select')
+                          <select class="form-select">
+                            <option value="">{{ __('Select option') }}</option>
+                            @foreach ($options as $option)
+                              @php $optionText = $translate($option, ''); @endphp
+                              <option>{{ $optionText['text'] }}</option>
+                            @endforeach
+                          </select>
+                        @else
+                          <input type="{{ $fieldType }}" class="form-input" placeholder="{{ $placeholder['text'] }}">
+                        @endif
+                        @if ($hint['text'])
+                          <span class="form-hint" data-en="{{ e($hint['en']) }}" data-ar="{{ e($hint['ar']) }}">{{ $hint['text'] }}</span>
+                        @endif
+                      </div>
+                    @endforeach
                   </div>
-                  <div class="form-group">
-                    <label class="form-label" data-en="Email *" data-ar="البريد الإلكتروني *">Email *</label>
-                    <input type="email" class="form-input" required placeholder="john@example.com">
-                  </div>
-                </div>
-                <div class="form-grid form-grid-2" style="margin-top: 1rem;">
-                  <div class="form-group">
-                    <label class="form-label" data-en="Phone *" data-ar="الهاتف *">Phone *</label>
-                    <input type="tel" class="form-input" required placeholder="+966 50 000 0000">
-                  </div>
-                  <div class="form-group">
-                    <label class="form-label" data-en="Job Title" data-ar="المسمى الوظيفي">Job Title</label>
-                    <input type="text" class="form-input" placeholder="Marketing Manager">
-                  </div>
-                </div>
-                <div class="form-grid" style="margin-top: 1rem;">
-                  <div class="form-group">
-                    <label class="form-label" data-en="How did you hear about us?" data-ar="كيف سمعت عنا؟">How did you hear about us?</label>
-                    <select class="form-select">
-                      <option value="">Select option</option>
-                      <option value="social">Social Media</option>
-                      <option value="ads">Advertising</option>
-                      <option value="friends">Friends/Colleagues</option>
-                      <option value="other">Other</option>
-                    </select>
-                  </div>
-                </div>
+                @endforeach
+
                 <div class="form-buttons">
                   <button type="button" class="btn btn-outline" onclick="clearRole()">
                     <svg class="icon icon-sm" style="margin-right: 0.5rem;" viewBox="0 0 24 24">
                       <path d="M19 12H5M12 19l-7-7 7-7" />
                     </svg>
-                    <span data-en="Back" data-ar="رجوع">Back</span>
+                    <span data-en="Back" data-ar="رجوع">{{ __('Back') }}</span>
                   </button>
-                  <button type="submit" class="btn btn-primary" data-en="Submit Registration" data-ar="إرسال التسجيل">Submit Registration</button>
-                  <button type="button" class="btn btn-outline" onclick="scrollToContact()" data-en="Contact Us" data-ar="تواصل معنا" style="background:#057a02; color:#fff;">Contact Us</button>
+                  <button type="submit" class="btn btn-primary" data-en="{{ e($visitorSubmit['en']) }}" data-ar="{{ e($visitorSubmit['ar']) }}">{{ $visitorSubmit['text'] }}</button>
+                  <button type="button" class="btn btn-outline" onclick="scrollToContact()" data-en="{{ e($visitorContact['en']) }}" data-ar="{{ e($visitorContact['ar']) }}" style="background:#057a02; color:#fff;">{{ $visitorContact['text'] }}</button>
                 </div>
               </form>
             </div>
@@ -2204,10 +2231,10 @@
                   <path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2" />
                 </svg>
               </div>
-              <h3 class="role-title" data-en="Exhibitor / Sponsor" data-ar="عارض / راعي">Exhibitor / Sponsor</h3>
-              <p class="role-desc" data-en="Showcase your products and connect with attendees" data-ar="اعرض منتجاتك وتواصل مع الحضور">Showcase your products and connect with attendees</p>
+              <h3 class="role-title" data-en="{{ e($exhibitorCardTitle['en']) }}" data-ar="{{ e($exhibitorCardTitle['ar']) }}">{{ $exhibitorCardTitle['text'] }}</h3>
+              <p class="role-desc" data-en="{{ e($exhibitorCardDescription['en']) }}" data-ar="{{ e($exhibitorCardDescription['ar']) }}">{{ $exhibitorCardDescription['text'] }}</p>
               <div class="role-cta" id="exhibitor-cta">
-                <span data-en="Select" data-ar="اختر">Select</span>
+                <span data-en="{{ e($exhibitorCta['en']) }}" data-ar="{{ e($exhibitorCta['ar']) }}">{{ $exhibitorCta['text'] }}</span>
                 <svg class="icon icon-sm" viewBox="0 0 24 24">
                   <path d="M5 12h14M12 5l7 7-7 7" />
                 </svg>
@@ -2215,74 +2242,70 @@
             </div>
 
             <div class="form-card" id="exhibitor-form">
-              <h3 class="form-title" data-en="Exhibitor Application" data-ar="طلب العرض">Exhibitor Application</h3>
+              <h3 class="form-title" data-en="{{ e($exhibitorFormTitle['en']) }}" data-ar="{{ e($exhibitorFormTitle['ar']) }}">{{ $exhibitorFormTitle['text'] }}</h3>
               <div class="step-indicator">
                 <div class="step active" id="step1-indicator">
                   <span>1</span>
-                  <span data-en="Contact" data-ar="التواصل">Contact</span>
+                  <span data-en="{{ e($exhibitorStepOne['en']) }}" data-ar="{{ e($exhibitorStepOne['ar']) }}">{{ $exhibitorStepOne['text'] }}</span>
                 </div>
                 <div class="step-divider"></div>
                 <div class="step" id="step2-indicator">
                   <span>2</span>
-                  <span data-en="Company" data-ar="الشركة">Company</span>
+                  <span data-en="{{ e($exhibitorStepTwo['en']) }}" data-ar="{{ e($exhibitorStepTwo['ar']) }}">{{ $exhibitorStepTwo['text'] }}</span>
                 </div>
               </div>
 
               <form onsubmit="handleSubmit(event, 'exhibitor')">
                 <div id="exhibitor-step1">
-                  <div class="form-grid form-grid-2">
-                    <div class="form-group">
-                      <label class="form-label" data-en="Full Name *" data-ar="الاسم الكامل *">Full Name *</label>
-                      <input type="text" class="form-input" required placeholder="John Doe">
+                  @php
+                    $stepOneChunks = array_chunk($exhibitorFieldsStepOne, 2);
+                  @endphp
+                  @foreach ($stepOneChunks as $chunkIndex => $chunk)
+                    <div class="form-grid {{ count($chunk) === 2 ? 'form-grid-2' : '' }}" @if($chunkIndex) style="margin-top: 1rem;" @endif>
+                      @foreach ($chunk as $field)
+                        @php
+                          $label = $translate(data_get($field, 'label'));
+                          $placeholder = $translate(data_get($field, 'placeholder'));
+                          $hint = $translate(data_get($field, 'hint'));
+                          $fieldType = $field['type'] ?? 'text';
+                        @endphp
+                        <div class="form-group">
+                          <label class="form-label" data-en="{{ e($label['en']) }}" data-ar="{{ e($label['ar']) }}">{{ $label['text'] }}</label>
+                          <input type="{{ $fieldType === 'file' ? 'file' : $fieldType }}" class="form-input"
+                            @if($fieldType !== 'file') placeholder="{{ $placeholder['text'] }}" @else accept="application/pdf,image/png,image/jpeg" @endif>
+                          @if ($hint['text'])
+                            <span class="form-hint" data-en="{{ e($hint['en']) }}" data-ar="{{ e($hint['ar']) }}">{{ $hint['text'] }}</span>
+                          @endif
+                        </div>
+                      @endforeach
                     </div>
-                    <div class="form-group">
-                      <label class="form-label" data-en="Email *" data-ar="البريد الإلكتروني *">Email *</label>
-                      <input type="email" class="form-input" required placeholder="john@company.com">
-                    </div>
-                  </div>
-                  <div class="form-grid form-grid-2" style="margin-top: 1rem;">
-                    <div class="form-group">
-                      <label class="form-label" data-en="Phone *" data-ar="الهاتف *">Phone *</label>
-                      <input type="tel" class="form-input" required placeholder="+966 50 000 0000">
-                    </div>
-                    <div class="form-group">
-                      <label class="form-label" data-en="Job Title *" data-ar="المسمى الوظيفي *">Job Title *</label>
-                      <input type="text" class="form-input" required placeholder="Marketing Manager">
-                    </div>
-                  </div>
-                  <div class="form-grid" style="margin-top: 1rem;">
-                    <div class="form-group">
-                      <label class="form-label" data-en="Corporate Profile *" data-ar="الملف التعريفي للشركة *">Corporate Profile *</label>
-                      <input type="file" class="form-input" required accept="application/pdf,image/png,image/jpeg">
-                      <span class="form-hint" data-en="PDF, PNG, JPG files only accepted" data-ar="يمكن إرفاق ملفات PDF أو JPG أو PNG">PDF, PNG, JPG files only accepted</span>
-                    </div>
-                  </div>
+                  @endforeach
                 </div>
 
                 <div id="exhibitor-step2" style="display: none;">
-                  <div class="form-grid form-grid-2">
-                    <div class="form-group">
-                      <label class="form-label" data-en="VAT (Value Added Tax) *" data-ar="ضريبة القيمة المضافة *">VAT (Value Added Tax) *</label>
-                      <input type="text" class="form-input" required placeholder="300000000000003">
+                  @php
+                    $stepTwoChunks = array_chunk($exhibitorFieldsStepTwo, 2);
+                  @endphp
+                  @foreach ($stepTwoChunks as $chunkIndex => $chunk)
+                    <div class="form-grid {{ count($chunk) === 2 ? 'form-grid-2' : '' }}" @if($chunkIndex) style="margin-top: 1rem;" @endif>
+                      @foreach ($chunk as $field)
+                        @php
+                          $label = $translate(data_get($field, 'label'));
+                          $placeholder = $translate(data_get($field, 'placeholder'));
+                          $hint = $translate(data_get($field, 'hint'));
+                          $fieldType = $field['type'] ?? 'text';
+                        @endphp
+                        <div class="form-group">
+                          <label class="form-label" data-en="{{ e($label['en']) }}" data-ar="{{ e($label['ar']) }}">{{ $label['text'] }}</label>
+                          <input type="{{ $fieldType === 'file' ? 'file' : $fieldType }}" class="form-input"
+                            @if($fieldType !== 'file') placeholder="{{ $placeholder['text'] }}" @else accept="application/pdf,image/png,image/jpeg" @endif>
+                          @if ($hint['text'])
+                            <span class="form-hint" data-en="{{ e($hint['en']) }}" data-ar="{{ e($hint['ar']) }}">{{ $hint['text'] }}</span>
+                          @endif
+                        </div>
+                      @endforeach
                     </div>
-                    <div class="form-group">
-                      <label class="form-label" data-en="CR Copy (Commercial Registration) *" data-ar="نسخة السجل التجاري *">CR Copy (Commercial Registration) *</label>
-                      <input type="file" class="form-input" required accept="application/pdf,image/png,image/jpeg">
-                    </div>
-                  </div>
-                  <div class="form-grid form-grid-2" style="margin-top: 1rem;">
-                    <div class="form-group">
-                      <label class="form-label" data-en="National Address *" data-ar="العنوان الوطني *">National Address *</label>
-                      <input type="file" class="form-input" required accept="application/pdf,image/png,image/jpeg">
-                    </div>
-                  </div>
-                  <div class="form-grid" style="margin-top: 1rem;">
-                    <div class="form-group">
-                      <label class="form-label" data-en="Company Logo" data-ar="شعار الشركة">Company Logo</label>
-                      <input type="file" class="form-input" accept="application/pdf,image/png,image/jpeg">
-                      <span class="form-hint" data-en="PDF, PNG, JPG files only accepted" data-ar="يمكن إرفاق ملفات PDF , JPG, PNG">PDF, PNG, JPG files only accepted</span>
-                    </div>
-                  </div>
+                  @endforeach
                 </div>
 
                 <div class="form-buttons">
@@ -2290,16 +2313,16 @@
                     <svg class="icon icon-sm" style="margin-right: 0.5rem;" viewBox="0 0 24 24">
                       <path d="M19 12H5M12 19l-7-7 7-7" />
                     </svg>
-                    <span data-en="Back" data-ar="رجوع">Back</span>
+                    <span data-en="Back" data-ar="رجوع">{{ __('Back') }}</span>
                   </button>
                   <button type="button" class="btn btn-primary" id="exhibitor-next-btn" onclick="exhibitorNext()">
-                    <span data-en="Next Step" data-ar="الخطوة التالية">Next Step</span>
+                    <span data-en="{{ e($exhibitorNext['en']) }}" data-ar="{{ e($exhibitorNext['ar']) }}">{{ $exhibitorNext['text'] }}</span>
                     <svg class="icon icon-sm" style="margin-left: 0.5rem;" viewBox="0 0 24 24">
                       <path d="M5 12h14M12 5l7 7-7 7" />
                     </svg>
                   </button>
-                  <button type="submit" class="btn btn-primary" id="exhibitor-submit-btn" style="display: none;" data-en="Submit Application" data-ar="إرسال الطلب">Submit Application</button>
-                  <button type="button" class="btn btn-outline" onclick="scrollToContact()" data-en="Contact Us" data-ar="تواصل معنا" style="background:#057a02; color:#fff;">Contact Us</button>
+                  <button type="submit" class="btn btn-primary" id="exhibitor-submit-btn" style="display: none;" data-en="{{ e($exhibitorSubmit['en']) }}" data-ar="{{ e($exhibitorSubmit['ar']) }}">{{ $exhibitorSubmit['text'] }}</button>
+                  <button type="button" class="btn btn-outline" onclick="scrollToContact()" data-en="{{ e($visitorContact['en']) }}" data-ar="{{ e($visitorContact['ar']) }}" style="background:#057a02; color:#fff;">{{ $visitorContact['text'] }}</button>
                 </div>
               </form>
             </div>
@@ -2309,14 +2332,33 @@
     </section>
 
     <!-- About Section -->
+    @php
+      $aboutLocale = app()->getLocale();
+      $aboutTranslate = function ($node, $fallback = '') use ($aboutLocale) {
+        $en = data_get($node, 'en', $fallback);
+        $ar = data_get($node, 'ar', $en);
+        return [
+          'en' => $en,
+          'ar' => $ar,
+          'text' => $aboutLocale === 'ar' ? $ar : $en,
+        ];
+      };
+      $aboutTitle = $aboutTranslate(data_get($aboutSection, 'title'), __('About us'));
+      $missionBlock = data_get($aboutSection, 'mission', []);
+      $missionTitle = $aboutTranslate(data_get($missionBlock, 'title'), __('Our Mission'));
+      $missionParagraphs = data_get($missionBlock, 'paragraphs', []);
+      $goals = data_get($aboutSection, 'goals', []);
+      $aboutVideo = \App\Models\LandingSection::mediaUrl($aboutSection['background_video'] ?? null) ?? asset('video/video.mp4');
+    @endphp
+
     <section class="about" id="about">
       <div class="about-video-container" aria-hidden="true">
         <video class="about-video" autoplay muted loop playsinline preload="auto">
-          <source src="{{ asset('video/video.mp4') }}" type="video/mp4">
+          <source src="{{ $aboutVideo }}" type="video/mp4">
         </video>
       </div>
       <div class="container">
-        <h2 class="section-title" data-en="About Us" data-ar="من نحن" style="margin-bottom:20px; color:#fff; text-align: center;">About us</h2>
+        <h2 class="section-title" data-en="{{ e($aboutTitle['en']) }}" data-ar="{{ e($aboutTitle['ar']) }}" style="margin-bottom:20px; color:#fff; text-align: center;">{{ $aboutTitle['text'] }}</h2>
         <div class="about-grid">
           <div class="about-col" data-animate>
             <div class="about-header">
@@ -2326,53 +2368,41 @@
                   <path d="M12 8v4l3 3" />
                 </svg>
               </div>
-              <h2 class="about-title" data-en="Our Mission" data-ar="مهمتنا">Our Mission</h2>
+              <h2 class="about-title" data-en="{{ e($missionTitle['en']) }}" data-ar="{{ e($missionTitle['ar']) }}">{{ $missionTitle['text'] }}</h2>
             </div>
             <div class="about-card">
-              <p class="about-text" data-en="Our mission is to create a world-class platform that brings together visionaries, innovators, and industry leaders from across the globe. We aim to foster collaboration, inspire innovation, and drive meaningful connections that shape the future of business." data-ar="مهمتنا هي إنشاء منصة عالمية المستوى تجمع أصحاب الرؤى والمبتكرين وقادة الصناعة من جميع أنحاء العالم. نهدف إلى تعزيز التعاون وإلهام الابتكار وإنشاء علاقات هادفة تشكل مستقبل الأعمال.">Our mission is to create a world-class platform that brings together visionaries, innovators, and industry leaders from across the globe. We aim to foster collaboration, inspire innovation, and drive meaningful connections that shape the future of business.</p>
-              <p class="about-text" data-en="Through carefully curated sessions, exhibitions, and networking opportunities, we provide an unparalleled experience for all attendees." data-ar="من خلال الجلسات والمعارض وفرص التواصل المنتقاة بعناية، نقدم تجربة لا مثيل لها لجميع الحضور.">Through carefully curated sessions, exhibitions, and networking opportunities, we provide an unparalleled experience for all attendees.</p>
+              @forelse($missionParagraphs as $paragraph)
+                @php $paragraphCopy = $aboutTranslate($paragraph); @endphp
+                <p class="about-text" data-en="{{ e($paragraphCopy['en']) }}" data-ar="{{ e($paragraphCopy['ar']) }}">{{ $paragraphCopy['text'] }}</p>
+              @empty
+                <p class="about-text">{{ __('Mission details will be shared soon.') }}</p>
+              @endforelse
             </div>
           </div>
 
           <div class="about-col" data-animate>
-            <h2 class="about-title" data-en="Our Goals" data-ar="أهدافنا" style="margin-bottom: 1.5rem;">Our Goals</h2>
+            @php $goalsTitle = $aboutTranslate(['en' => __('Our Goals'), 'ar' => __('أهدافنا')], __('Our Goals')); @endphp
+            <h2 class="about-title" data-en="{{ e($goalsTitle['en']) }}" data-ar="{{ e($goalsTitle['ar']) }}" style="margin-bottom: 1.5rem;">{{ $goalsTitle['text'] }}</h2>
             <div class="goals-list">
-              <div class="goal-card" data-animate>
-                <div class="goal-icon">
-                  <svg class="icon" viewBox="0 0 24 24">
-                    <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 1 1 7.072 0l-.548.547A3.374 3.374 0 0 0 14 18.469V19a2 2 0 1 1-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547Z" />
-                  </svg>
+              @forelse($goals as $goal)
+                @php
+                  $goalTitle = $aboutTranslate(data_get($goal, 'title'), '');
+                  $goalDesc = $aboutTranslate(data_get($goal, 'description'), '');
+                @endphp
+                <div class="goal-card" data-animate>
+                  <div class="goal-icon">
+                    <svg class="icon" viewBox="0 0 24 24">
+                      <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 1 1 7.072 0l-.548.547A3.374 3.374 0 0 0 14 18.469V19a2 2 0 1 1-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547Z" />
+                    </svg>
+                  </div>
+                  <div>
+                    <h3 class="goal-title" data-en="{{ e($goalTitle['en']) }}" data-ar="{{ e($goalTitle['ar']) }}">{{ $goalTitle['text'] }}</h3>
+                    <p class="goal-desc" data-en="{{ e($goalDesc['en']) }}" data-ar="{{ e($goalDesc['ar']) }}">{{ $goalDesc['text'] }}</p>
+                  </div>
                 </div>
-                <div>
-                  <h3 class="goal-title" data-en="Innovation" data-ar="الابتكار">Innovation</h3>
-                  <p class="goal-desc" data-en="Showcase cutting-edge technologies and solutions" data-ar="عرض أحدث التقنيات والحلول">Showcase cutting-edge technologies and solutions</p>
-                </div>
-              </div>
-              <div class="goal-card" data-animate>
-                <div class="goal-icon">
-                  <svg class="icon" viewBox="0 0 24 24">
-                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
-                    <circle cx="9" cy="7" r="4" />
-                    <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" />
-                  </svg>
-                </div>
-                <div>
-                  <h3 class="goal-title" data-en="Networking" data-ar="التواصل">Networking</h3>
-                  <p class="goal-desc" data-en="Connect industry leaders and professionals" data-ar="ربط قادة الصناعة والمهنيين">Connect industry leaders and professionals</p>
-                </div>
-              </div>
-              <div class="goal-card" data-animate>
-                <div class="goal-icon">
-                  <svg class="icon" viewBox="0 0 24 24">
-                    <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09zM12 15l-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z" />
-                    <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" />
-                  </svg>
-                </div>
-                <div>
-                  <h3 class="goal-title" data-en="Growth" data-ar="النمو">Growth</h3>
-                  <p class="goal-desc" data-en="Drive business opportunities and partnerships" data-ar="تعزيز فرص الأعمال والشراكات">Drive business opportunities and partnerships</p>
-                </div>
-              </div>
+              @empty
+                <p class="text-sm text-gray-200">{{ __('Goals will be announced soon.') }}</p>
+              @endforelse
             </div>
           </div>
         </div>
@@ -2651,34 +2681,56 @@
     </section>
 
     <!-- Contact Section -->
+    @php
+      $contactLocale = app()->getLocale();
+      $contactTranslate = function ($node, $fallback = '') use ($contactLocale) {
+        $en = data_get($node, 'en', $fallback);
+        $ar = data_get($node, 'ar', $en);
+        return [
+          'en' => $en,
+          'ar' => $ar,
+          'text' => $contactLocale === 'ar' ? $ar : $en,
+        ];
+      };
+      $contactTitleBlock = $contactTranslate(data_get($contactSection, 'title'), __('Contact Us'));
+      $contactDescriptionBlock = $contactTranslate(data_get($contactSection, 'description'), '');
+      $contactFormTitle = $contactTranslate(data_get($contactSection, 'form_title'), __('Send us a message'));
+      $contactFormButton = $contactTranslate(data_get($contactSection, 'form_button'), __('Send Message'));
+      $supportCards = data_get($contactSection, 'support_cards', []);
+      $locationTitleBlock = $contactTranslate(data_get($contactSection, 'location_title'), __('Event Location'));
+      $locationAddressBlock = $contactTranslate(data_get($contactSection, 'location_address'), '');
+      $mapEmbedUrl = data_get($contactSection, 'map_embed', 'https://www.google.com/maps?q=Riyadh+International+Convention+%26+Exhibition+Center&output=embed');
+      $locationImageUrl = \App\Models\LandingSection::mediaUrl(data_get($contactSection, 'location_image'));
+    @endphp
+
     <section class="contact" id="contact">
       <div class="container">
         <div class="section-header" data-animate>
-          <h2 class="section-title" data-en="Contact Us" data-ar="تواصل معنا" style="color:#057a02;">Contact Us</h2>
-          <p class="section-desc" data-en="Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible." data-ar="لديك أسئلة؟ نود أن نسمع منك. أرسل لنا رسالة وسنرد في أقرب وقت ممكن.">Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible.</p>
+          <h2 class="section-title" data-en="{{ e($contactTitleBlock['en']) }}" data-ar="{{ e($contactTitleBlock['ar']) }}" style="color:#057a02;">{{ $contactTitleBlock['text'] }}</h2>
+          <p class="section-desc" data-en="{{ e($contactDescriptionBlock['en']) }}" data-ar="{{ e($contactDescriptionBlock['ar']) }}">{{ $contactDescriptionBlock['text'] }}</p>
         </div>
 
         <div class="contact-grid">
           <div class="contact-col" data-animate>
             <div class="contact-form-card">
-              <h3 class="form-title" data-en="Send us a message" data-ar="أرسل لنا رسالة" style="color:#057a02;">Send us a message</h3>
+              <h3 class="form-title" data-en="{{ e($contactFormTitle['en']) }}" data-ar="{{ e($contactFormTitle['ar']) }}" style="color:#057a02;">{{ $contactFormTitle['text'] }}</h3>
               <form onsubmit="handleContactSubmit(event)">
                 <div class="form-grid">
                   <div class="form-group">
-                    <label class="form-label" data-en="Name *" data-ar="الاسم *">Name *</label>
-                    <input type="text" class="form-input" required placeholder="Your name">
+                    <label class="form-label" data-en="Name *" data-ar="الاسم *">{{ __('Name *') }}</label>
+                    <input type="text" class="form-input" required placeholder="{{ __('Your name') }}">
                   </div>
                   <div class="form-group">
-                    <label class="form-label" data-en="Email *" data-ar="البريد الإلكتروني *">Email *</label>
+                    <label class="form-label" data-en="Email *" data-ar="البريد الإلكتروني *">{{ __('Email *') }}</label>
                     <input type="email" class="form-input" required placeholder="you@example.com">
                   </div>
                   <div class="form-group">
-                    <label class="form-label" data-en="Phone (Optional)" data-ar="الهاتف (اختياري)">Phone (Optional)</label>
+                    <label class="form-label" data-en="Phone (Optional)" data-ar="الهاتف (اختياري)">{{ __('Phone (Optional)') }}</label>
                     <input type="tel" class="form-input" placeholder="+966 50 000 0000">
                   </div>
                   <div class="form-group">
-                    <label class="form-label" data-en="Message *" data-ar="الرسالة *">Message *</label>
-                    <textarea class="form-textarea" required rows="4" placeholder="How can we help you?"></textarea>
+                    <label class="form-label" data-en="Message *" data-ar="الرسالة *">{{ __('Message *') }}</label>
+                    <textarea class="form-textarea" required rows="4" placeholder="{{ __('How can we help you?') }}"></textarea>
                   </div>
                 </div>
                 <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem; background: #057a02; color:#fff;">
@@ -2686,7 +2738,7 @@
                     <path d="m22 2-7 20-4-9-9-4Z" />
                     <path d="M22 2 11 13" />
                   </svg>
-                  <span data-en="Send Message" data-ar="إرسال الرسالة">Send Message</span>
+                  <span data-en="{{ e($contactFormButton['en']) }}" data-ar="{{ e($contactFormButton['ar']) }}">{{ $contactFormButton['text'] }}</span>
                 </button>
               </form>
             </div>
@@ -2694,137 +2746,51 @@
 
           <div class="contact-col" data-animate>
             <div class="contact-info-list">
-              <!-- Arabic Support -->
-
-              <div class="contact-info-card">
-                <div class="contact-info-header">
-                  <div style="flex: 1; ">
-                    <div class="contact-info-name" data-en="Arabic Support" data-ar="التواصل باللغة العربية"
-                      style="color:#057a02;">
-                      Arabic Support
-                    </div>
-                    <div class="contact-info-links two-columns">
-                      <!-- Column 1 -->
-                      <div class="contact-info-column">
-                        <div class="contact-info-column-header"
-                          data-en="Ahmed"
-                          data-ar="أحمد">
-                          Ahmed
-                        </div>
-                        <a href="tel:+966566668892" class="contact-info-link">
-                          <svg class="icon icon-sm" viewBox="0 0 24 24">
-                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-                          </svg>
-                          +966 56 666 8892
-                        </a>
-                        <a href="tel:+966541164491" class="contact-info-link">
-                          <svg class="icon icon-sm" viewBox="0 0 24 24">
-                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-                          </svg>
-                          +966 54 116 4491
-                        </a>
+              @forelse($supportCards as $card)
+                @php $cardTitle = $contactTranslate(data_get($card, 'title'), ''); @endphp
+                <div class="contact-info-card">
+                  <div class="contact-info-header">
+                    <div style="flex: 1;">
+                      <div class="contact-info-name" data-en="{{ e($cardTitle['en']) }}" data-ar="{{ e($cardTitle['ar']) }}"
+                        style="color:#057a02;">
+                        {{ $cardTitle['text'] }}
                       </div>
-                      <!-- Column 2 -->
-                      <div class="contact-info-column">
-                        <div class="contact-info-column-header"
-                          data-en="Tamim"
-                          data-ar="تميم">
-                          Tamim
-                        </div>
-
-                        <a href="tel:+966594650976" class="contact-info-link">
-                          <svg class="icon icon-sm" viewBox="0 0 24 24">
-                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-                          </svg>
-                          +966 59 465 0976
-                        </a>
+                      <div class="contact-info-links two-columns">
+                        @foreach (data_get($card, 'columns', []) as $column)
+                          @php $columnHeading = $contactTranslate(data_get($column, 'heading'), ''); @endphp
+                          <div class="contact-info-column">
+                            <div class="contact-info-column-header" data-en="{{ e($columnHeading['en']) }}" data-ar="{{ e($columnHeading['ar']) }}">
+                              {{ $columnHeading['text'] }}
+                            </div>
+                            @foreach (data_get($column, 'contacts', []) as $contact)
+                              @php
+                                $contactType = $contact['type'] ?? 'phone';
+                                $contactValue = $contact['value'] ?? '';
+                                $contactHref = $contactType === 'email' ? 'mailto:' . $contactValue : 'tel:' . $contactValue;
+                              @endphp
+                              <a href="{{ $contactHref }}" class="contact-info-link">
+                                @if ($contactType === 'email')
+                                  <svg class="icon icon-sm" viewBox="0 0 24 24">
+                                    <rect width="20" height="16" x="2" y="4" rx="2" />
+                                    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                                  </svg>
+                                @else
+                                  <svg class="icon icon-sm" viewBox="0 0 24 24">
+                                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                                  </svg>
+                                @endif
+                                {{ $contactValue }}
+                              </a>
+                            @endforeach
+                          </div>
+                        @endforeach
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-
-
-              <!-- English -->
-              <div class="contact-info-card">
-
-                <div class="contact-info-header">
-                  <div style="flex: 1;">
-                    <div class="contact-info-name"
-                      data-en="English Support"
-                      data-ar="التواصل باللغة الإنجليزية"
-                      style="color:#057a02;">
-                      English Support
-                    </div>
-
-                    <div class="contact-info-links two-columns">
-                      <!-- Column 1 -->
-                      <div class="contact-info-column">
-
-                        <a href="tel:+966566668892" class="contact-info-link">
-                          <svg class="icon icon-sm" viewBox="0 0 24 24">
-                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-                          </svg>
-                          +966 56 666 8892
-                        </a>
-                      </div>
-
-                      <!-- Column 2 -->
-                      <div class="contact-info-column">
-
-
-                        <a href="tel:+966541164491" class="contact-info-link">
-                          <svg class="icon icon-sm" viewBox="0 0 24 24">
-                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-                          </svg>
-                          +966 54 116 4491
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-
-
-
-              </div>
-
-              <!-- Email Contact -->
-              <div class="contact-info-card">
-                <div class="contact-info-header">
-                  <div style="flex: 1;">
-                    <div class="contact-info-name">
-                      <span data-en="Email Support" data-ar="التواصل بالبريد" style="color:#057a02;">Email Support</span>
-                    </div>
-                    <div class="contact-info-links">
-                      <a href="mailto:tamim@umbrella.sa" class="contact-info-link">
-                        <svg class="icon icon-sm" viewBox="0 0 24 24">
-                          <rect width="20" height="16" x="2" y="4" rx="2" />
-                          <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-                        </svg>
-                        tamim@umbrella.sa
-                      </a>
-
-                      <a href="mailto:aomar@umbrella.sa" class="contact-info-link">
-                        <svg class="icon icon-sm" viewBox="0 0 24 24">
-                          <rect width="20" height="16" x="2" y="4" rx="2" />
-                          <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-                        </svg>
-                        aomar@umbrella.sa
-                      </a>
-
-                      <a href="mailto:hello@umbrella.sa" class="contact-info-link">
-                        <svg class="icon icon-sm" viewBox="0 0 24 24">
-                          <rect width="20" height="16" x="2" y="4" rx="2" />
-                          <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-                        </svg>
-                        hello@umbrella.sa
-                      </a>
-
-                    </div>
-                  </div>
-                </div>
-              </div>
+              @empty
+                <p class="text-sm text-gray-500">{{ __('Support contacts will be shared soon.') }}</p>
+              @endforelse
             </div>
           </div>
         </div>
@@ -2837,13 +2803,18 @@
               </svg>
             </div>
             <div>
-              <div class="location-title" style="color:#057a02;">{{ __('Event Location') }}</div>
-              <p class="location-address">{{ __('Riyadh International Convention & Exhibition Center, King Abdullah Road, Riyadh, Saudi Arabia') }}</p>
+              <div class="location-title" style="color:#057a02;" data-en="{{ e($locationTitleBlock['en']) }}" data-ar="{{ e($locationTitleBlock['ar']) }}">{{ $locationTitleBlock['text'] }}</div>
+              <p class="location-address" data-en="{{ e($locationAddressBlock['en']) }}" data-ar="{{ e($locationAddressBlock['ar']) }}">{{ $locationAddressBlock['text'] }}</p>
             </div>
           </div>
+          @if ($locationImageUrl)
+            <div class="location-image" style="margin-top:1rem;">
+              <img src="{{ $locationImageUrl }}" alt="{{ $locationTitleBlock['text'] }}" style="width:100%; border-radius:1rem;">
+            </div>
+          @endif
           <div class="map-embed">
             <iframe
-              src="https://www.google.com/maps?q=Riyadh+International+Convention+%26+Exhibition+Center&output=embed"
+              src="{{ $mapEmbedUrl }}"
               allowfullscreen
               loading="lazy"
               referrerpolicy="no-referrer-when-downgrade"></iframe>
@@ -3271,18 +3242,22 @@
       const speed = 800;
 
       counters.forEach(counter => {
-        const animate = () => {
-          const value = +counter.getAttribute('data-count');
-          const data = +counter.innerText;
-          const time = value / speed;
+        const target = parseInt(counter.getAttribute('data-count') || '0', 10);
+        const suffix = counter.getAttribute('data-suffix') || '';
+        let current = 0;
+        const increment = Math.max(Math.ceil(target / speed), 1);
 
-          if (data < value) {
-            counter.innerText = Math.ceil(data + time);
-            setTimeout(animate, 1);
-          } else {
-            counter.innerText = value;
+        const animate = () => {
+          current += increment;
+          if (current >= target) {
+            current = target;
+            counter.innerText = `${current}${suffix}`;
+            return;
           }
+          counter.innerText = `${current}${suffix}`;
+          requestAnimationFrame(animate);
         };
+
         animate();
       });
     }
