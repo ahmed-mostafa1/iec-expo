@@ -24,7 +24,10 @@ class SponsorRegistrationRequest extends FormRequest
             'vat_number'      => ['required', 'string', 'max:255', new UniqueSponsorVatCr],
             'cr_number'       => ['required', 'string', 'max:255'],
             'national_address'=> ['required', 'string'],
-            'document'        => ['nullable', 'file', 'mimes:pdf,jpeg,jpg,png', 'max:2048'],
+            'corporate_profile'      => ['required', 'file', 'mimes:pdf,jpeg,jpg,png', 'max:8192'],
+            'cr_copy'                => ['required', 'file', 'mimes:pdf,jpeg,jpg,png', 'max:8192'],
+            'national_address_document' => ['required', 'file', 'mimes:pdf,jpeg,jpg,png', 'max:8192'],
+            'company_logo'           => ['required', 'image', 'mimes:jpg,jpeg,png,webp', 'max:8192'],
         ];
     }
 

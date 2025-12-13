@@ -58,6 +58,9 @@
                             <div class="font-medium text-gray-900">{{ $registration->full_name }}</div>
                             <div class="text-[11px] text-gray-500">{{ $registration->email }}</div>
                             <div class="text-[11px] text-gray-500">{{ $registration->phone }}</div>
+                            @if($registration->job_title)
+                                <div class="text-[11px] text-gray-500">{{ $registration->job_title }}</div>
+                            @endif
                         </td>
                         <td class="px-3 py-2 align-top text-gray-700">
                             {{ $registration->company_name }}

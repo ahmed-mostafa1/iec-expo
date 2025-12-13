@@ -63,5 +63,25 @@
             <td>{{ ucfirst($registration->status) }}</td>
         </tr>
     </table>
+
+    <h2>Uploaded documents</h2>
+    <table>
+        <tr>
+            <td class="label">Corporate profile</td>
+            <td>{{ $registration->document_path ? 'Attached in admin portal' : '—' }}</td>
+        </tr>
+        <tr>
+            <td class="label">CR copy</td>
+            <td>{{ $registration->cr_copy_path ? 'Attached in admin portal' : '—' }}</td>
+        </tr>
+        <tr>
+            <td class="label">National address proof</td>
+            <td>{{ $registration->national_address_doc_path ? 'Attached in admin portal' : '—' }}</td>
+        </tr>
+        <tr>
+            <td class="label">Company logo</td>
+            <td>{{ $registration->company_logo_path ? 'Attached in admin portal' : '—' }}</td>
+        </tr>
+    </table>
 </body>
 </html>

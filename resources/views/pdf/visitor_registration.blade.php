@@ -34,6 +34,10 @@
             <td class="label">Phone</td>
             <td>{{ $registration->phone }}</td>
         </tr>
+        <tr>
+            <td class="label">Job title</td>
+            <td>{{ $registration->job_title }}</td>
+        </tr>
     </table>
 
     <h2>Registration details</h2>
@@ -46,14 +50,12 @@
             <td class="label">Heard about via</td>
             <td>{{ $registration->heard_about }}</td>
         </tr>
-        <tr>
-            <td class="label">Other (source)</td>
-            <td>{{ $registration->heard_about_other_text }}</td>
-        </tr>
-        <tr>
-            <td class="label">Interests</td>
-            <td>{{ $registration->interests }}</td>
-        </tr>
+        @if($registration->heard_about === 'other')
+            <tr>
+                <td class="label">Other (source)</td>
+                <td>{{ $registration->heard_about_other_text }}</td>
+            </tr>
+        @endif
     </table>
 </body>
 </html>

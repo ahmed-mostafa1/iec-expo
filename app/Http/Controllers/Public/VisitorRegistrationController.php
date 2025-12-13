@@ -19,22 +19,17 @@ class VisitorRegistrationController extends Controller
     {
         $data = $request->validated();
 
-        $companyPredefined = $data['company_predefined'] ?? null;
-        $companyOther = $data['company_other'] ?? null;
-
-        $companyName = $companyOther ?: $companyPredefined;
-        $companyIsOther = (bool) $companyOther;
-
         $registration = VisitorRegistration::create([
             'full_name'             => $data['full_name'],
             'email'                 => $data['email'],
             'phone'                 => $data['phone'],
-            'company_name'          => $companyName,
-            'company_predefined'    => $companyPredefined,
-            'company_is_other'      => $companyIsOther,
+            'job_title'             => $data['job_title'],
+            'company_name'          => $data['company_name'],
+            'company_predefined'    => null,
+            'company_is_other'      => false,
             'heard_about'           => $data['heard_about'],
             'heard_about_other_text'=> $data['heard_about_other_text'] ?? null,
-            'interests'             => $data['interests'] ?? null,
+            'interests'             => null,
         ]);
 
         $pdfPath = $this->pdfService->generateVisitorPdf($registration);
@@ -46,6 +41,6 @@ class VisitorRegistrationController extends Controller
             );
         }
 
-        return back()->with('success', __('registration.visitor.success'));
+        return back()->with('visitor_success', __('registration.visitor.success'));
     }
 }

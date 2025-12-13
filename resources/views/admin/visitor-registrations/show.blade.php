@@ -28,6 +28,10 @@
                         <div class="text-[10px] text-gray-500">{{ __('Phone') }}</div>
                         <div class="text-gray-900">{{ $registration->phone }}</div>
                     </div>
+                    <div>
+                        <div class="text-[10px] text-gray-500">{{ __('Job title') }}</div>
+                        <div class="text-gray-900">{{ $registration->job_title }}</div>
+                    </div>
                 </div>
             </div>
 
@@ -42,14 +46,12 @@
                         <div class="text-[10px] text-gray-500">{{ __('Heard about via') }}</div>
                         <div class="text-gray-900">{{ $registration->heard_about }}</div>
                     </div>
-                    <div class="col-span-2">
-                        <div class="text-[10px] text-gray-500">{{ __('Other source') }}</div>
-                        <div class="text-gray-900">{{ $registration->heard_about_other_text }}</div>
-                    </div>
-                    <div class="col-span-2">
-                        <div class="text-[10px] text-gray-500">{{ __('Interests') }}</div>
-                        <div class="text-gray-900 whitespace-pre-line">{{ $registration->interests }}</div>
-                    </div>
+                    @if($registration->heard_about === 'other')
+                        <div class="col-span-2">
+                            <div class="text-[10px] text-gray-500">{{ __('Other source') }}</div>
+                            <div class="text-gray-900">{{ $registration->heard_about_other_text }}</div>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
