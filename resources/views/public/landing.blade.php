@@ -2148,6 +2148,13 @@
       $exhibitorFieldsStepTwo = data_get($exhibitorForm, 'fields_step_two', []);
     @endphp
 
+    @php
+      $visitorFormActive = old('form_identifier') === 'visitor';
+      $sponsorFormActive = old('form_identifier') === 'sponsor';
+      $visitorShouldOpen = $visitorFormActive || session()->has('visitor_success');
+      $sponsorShouldOpen = $sponsorFormActive || session()->has('sponsor_success');
+    @endphp
+
     <section class="registration" id="register">
       <div class="container">
         <div class="section-header" data-animate>
@@ -2174,41 +2181,85 @@
               </div>
             </div>
             <div class="form-card" id="visitor-form">
+              @if(session('visitor_success'))
+                <div class="mb-4 rounded-lg border border-emerald-100 bg-emerald-50 px-3 py-2 text-sm text-emerald-900">
+                  {{ session('visitor_success') }}
+                </div>
+              @endif
               <h3 class="form-title" data-en="{{ e($visitorFormTitle['en']) }}" data-ar="{{ e($visitorFormTitle['ar']) }}">{{ $visitorFormTitle['text'] }}</h3>
-              <form onsubmit="handleSubmit(event, 'visitor')">
-                @php
-                  $visitorChunks = array_chunk($visitorFields, 2);
-                @endphp
-                @foreach ($visitorChunks as $chunkIndex => $chunk)
-                  <div class="form-grid {{ count($chunk) === 2 ? 'form-grid-2' : '' }}" @if($chunkIndex) style="margin-top: 1rem;" @endif>
-                    @foreach ($chunk as $field)
-                      @php
-                        $label = $translate(data_get($field, 'label'), '');
-                        $placeholder = $translate(data_get($field, 'placeholder'), '');
-                        $hint = $translate(data_get($field, 'hint'), '');
-                        $fieldType = $field['type'] ?? 'text';
-                        $options = $field['options'] ?? [];
-                      @endphp
-                      <div class="form-group">
-                        <label class="form-label" data-en="{{ e($label['en']) }}" data-ar="{{ e($label['ar']) }}">{{ $label['text'] }}</label>
-                        @if ($fieldType === 'select')
-                          <select class="form-select">
-                            <option value="">{{ __('Select option') }}</option>
-                            @foreach ($options as $option)
-                              @php $optionText = $translate($option, ''); @endphp
-                              <option>{{ $optionText['text'] }}</option>
-                            @endforeach
-                          </select>
-                        @else
-                          <input type="{{ $fieldType }}" class="form-input" placeholder="{{ $placeholder['text'] }}">
-                        @endif
-                        @if ($hint['text'])
-                          <span class="form-hint" data-en="{{ e($hint['en']) }}" data-ar="{{ e($hint['ar']) }}">{{ $hint['text'] }}</span>
-                        @endif
-                      </div>
-                    @endforeach
+              <form method="POST" action="{{ route('public.register.visitor', ['locale' => $locale]) }}" novalidate>
+                @csrf
+                <input type="hidden" name="form_identifier" value="visitor">
+                <div class="form-grid form-grid-2">
+                  <div class="form-group">
+                    <label class="form-label" data-en="Full Name *" data-ar="الاسم الكامل *">Full Name *</label>
+                    <input type="text" name="full_name" class="form-input" required placeholder="John Doe"
+                      value="{{ $visitorFormActive ? old('full_name') : '' }}">
+                    @if($visitorFormActive && $errors->has('full_name'))
+                      <p class="mt-1 text-xs text-red-600">{{ $errors->first('full_name') }}</p>
+                    @endif
                   </div>
-                @endforeach
+                  <div class="form-group">
+                    <label class="form-label" data-en="Email *" data-ar="البريد الإلكتروني *">Email *</label>
+                    <input type="email" name="email" class="form-input" required placeholder="john@example.com"
+                      value="{{ $visitorFormActive ? old('email') : '' }}">
+                    @if($visitorFormActive && $errors->has('email'))
+                      <p class="mt-1 text-xs text-red-600">{{ $errors->first('email') }}</p>
+                    @endif
+                  </div>
+                </div>
+
+                <div class="form-grid form-grid-2" style="margin-top:1rem;">
+                  <div class="form-group">
+                    <label class="form-label" data-en="Phone *" data-ar="الهاتف *">Phone *</label>
+                    <input type="tel" name="phone" class="form-input" required placeholder="+966 50 000 0000"
+                      value="{{ $visitorFormActive ? old('phone') : '' }}">
+                    @if($visitorFormActive && $errors->has('phone'))
+                      <p class="mt-1 text-xs text-red-600">{{ $errors->first('phone') }}</p>
+                    @endif
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" data-en="Job Title *" data-ar="المسمى الوظيفي *">Job Title *</label>
+                    <input type="text" name="job_title" class="form-input" required placeholder="Marketing Manager"
+                      value="{{ $visitorFormActive ? old('job_title') : '' }}">
+                    @if($visitorFormActive && $errors->has('job_title'))
+                      <p class="mt-1 text-xs text-red-600">{{ $errors->first('job_title') }}</p>
+                    @endif
+                  </div>
+                </div>
+
+                <div class="form-grid form-grid-2" style="margin-top:1rem;">
+                  <div class="form-group">
+                    <label class="form-label" data-en="Company / Organization *" data-ar="الشركة / الجهة *">Company / Organization *</label>
+                    <input type="text" name="company_name" class="form-input" required placeholder="Umbrella Inc."
+                      value="{{ $visitorFormActive ? old('company_name') : '' }}">
+                    @if($visitorFormActive && $errors->has('company_name'))
+                      <p class="mt-1 text-xs text-red-600">{{ $errors->first('company_name') }}</p>
+                    @endif
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" data-en="How did you hear about us?" data-ar="كيف سمعت عنا؟">How did you hear about us?</label>
+                    <select class="form-select" name="heard_about" required data-heard-select data-other-target="#visitor-heard-other">
+                      <option value="">{{ __('Select option') }}</option>
+                      <option value="social_media" @selected($visitorFormActive && old('heard_about') === 'social_media')>Social Media</option>
+                      <option value="ads" @selected($visitorFormActive && old('heard_about') === 'ads')>Advertising</option>
+                      <option value="friends" @selected($visitorFormActive && old('heard_about') === 'friends')>Friends / Colleagues</option>
+                      <option value="other" @selected($visitorFormActive && old('heard_about') === 'other')>Other</option>
+                    </select>
+                    @if($visitorFormActive && $errors->has('heard_about'))
+                      <p class="mt-1 text-xs text-red-600">{{ $errors->first('heard_about') }}</p>
+                    @endif
+                  </div>
+                </div>
+
+                <div class="form-group" id="visitor-heard-other" style="{{ $visitorFormActive && old('heard_about') === 'other' ? '' : 'display:none;' }}; margin-top:1rem;">
+                  <label class="form-label" data-en="Please specify *" data-ar="يرجى التحديد *">Please specify *</label>
+                  <input type="text" name="heard_about_other_text" class="form-input" placeholder="Conference website"
+                    value="{{ $visitorFormActive ? old('heard_about_other_text') : '' }}">
+                  @if($visitorFormActive && $errors->has('heard_about_other_text'))
+                    <p class="mt-1 text-xs text-red-600">{{ $errors->first('heard_about_other_text') }}</p>
+                  @endif
+                </div>
 
                 <div class="form-buttons">
                   <button type="button" class="btn btn-outline" onclick="clearRole()">
@@ -2242,6 +2293,11 @@
             </div>
 
             <div class="form-card" id="exhibitor-form">
+              @if(session('sponsor_success'))
+                <div class="mb-4 rounded-lg border border-emerald-100 bg-emerald-50 px-3 py-2 text-sm text-emerald-900">
+                  {{ session('sponsor_success') }}
+                </div>
+              @endif
               <h3 class="form-title" data-en="{{ e($exhibitorFormTitle['en']) }}" data-ar="{{ e($exhibitorFormTitle['ar']) }}">{{ $exhibitorFormTitle['text'] }}</h3>
               <div class="step-indicator">
                 <div class="step active" id="step1-indicator">
@@ -2255,57 +2311,119 @@
                 </div>
               </div>
 
-              <form onsubmit="handleSubmit(event, 'exhibitor')">
+              <form method="POST" action="{{ route('public.register.sponsor', ['locale' => $locale]) }}" enctype="multipart/form-data" novalidate>
+                @csrf
+                <input type="hidden" name="form_identifier" value="sponsor">
+                <input type="hidden" name="exhibitor_step" id="exhibitor_step_input" value="{{ $sponsorFormActive ? old('exhibitor_step', 1) : 1 }}">
                 <div id="exhibitor-step1">
-                  @php
-                    $stepOneChunks = array_chunk($exhibitorFieldsStepOne, 2);
-                  @endphp
-                  @foreach ($stepOneChunks as $chunkIndex => $chunk)
-                    <div class="form-grid {{ count($chunk) === 2 ? 'form-grid-2' : '' }}" @if($chunkIndex) style="margin-top: 1rem;" @endif>
-                      @foreach ($chunk as $field)
-                        @php
-                          $label = $translate(data_get($field, 'label'));
-                          $placeholder = $translate(data_get($field, 'placeholder'));
-                          $hint = $translate(data_get($field, 'hint'));
-                          $fieldType = $field['type'] ?? 'text';
-                        @endphp
-                        <div class="form-group">
-                          <label class="form-label" data-en="{{ e($label['en']) }}" data-ar="{{ e($label['ar']) }}">{{ $label['text'] }}</label>
-                          <input type="{{ $fieldType === 'file' ? 'file' : $fieldType }}" class="form-input"
-                            @if($fieldType !== 'file') placeholder="{{ $placeholder['text'] }}" @else accept="application/pdf,image/png,image/jpeg" @endif>
-                          @if ($hint['text'])
-                            <span class="form-hint" data-en="{{ e($hint['en']) }}" data-ar="{{ e($hint['ar']) }}">{{ $hint['text'] }}</span>
-                          @endif
-                        </div>
-                      @endforeach
+                  <div class="form-grid form-grid-2">
+                    <div class="form-group">
+                      <label class="form-label" data-en="Full Name *" data-ar="الاسم الكامل *">Full Name *</label>
+                      <input type="text" name="full_name" class="form-input" required placeholder="John Doe"
+                        value="{{ $sponsorFormActive ? old('full_name') : '' }}">
+                      @if($sponsorFormActive && $errors->has('full_name'))
+                        <p class="mt-1 text-xs text-red-600">{{ $errors->first('full_name') }}</p>
+                      @endif
                     </div>
-                  @endforeach
+                    <div class="form-group">
+                      <label class="form-label" data-en="Email *" data-ar="البريد الإلكتروني *">Email *</label>
+                      <input type="email" name="email" class="form-input" required placeholder="john@company.com"
+                        value="{{ $sponsorFormActive ? old('email') : '' }}">
+                      @if($sponsorFormActive && $errors->has('email'))
+                        <p class="mt-1 text-xs text-red-600">{{ $errors->first('email') }}</p>
+                      @endif
+                    </div>
+                  </div>
+                  <div class="form-grid form-grid-2" style="margin-top: 1rem;">
+                    <div class="form-group">
+                      <label class="form-label" data-en="Phone *" data-ar="الهاتف *">Phone *</label>
+                      <input type="tel" name="phone" class="form-input" required placeholder="+966 50 000 0000"
+                        value="{{ $sponsorFormActive ? old('phone') : '' }}">
+                      @if($sponsorFormActive && $errors->has('phone'))
+                        <p class="mt-1 text-xs text-red-600">{{ $errors->first('phone') }}</p>
+                      @endif
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label" data-en="Job Title *" data-ar="المسمى الوظيفي *">Job Title *</label>
+                      <input type="text" name="job_title" class="form-input" required placeholder="Marketing Manager"
+                        value="{{ $sponsorFormActive ? old('job_title') : '' }}">
+                      @if($sponsorFormActive && $errors->has('job_title'))
+                        <p class="mt-1 text-xs text-red-600">{{ $errors->first('job_title') }}</p>
+                      @endif
+                    </div>
+                  </div>
+                  <div class="form-grid form-grid-2" style="margin-top:1rem;">
+                    <div class="form-group" style="grid-column: span 2;">
+                      <label class="form-label" data-en="Company / Organization *" data-ar="الشركة / الجهة *">Company / Organization *</label>
+                      <input type="text" name="organization" class="form-input" required placeholder="Umbrella Inc."
+                        value="{{ $sponsorFormActive ? old('organization') : '' }}">
+                      @if($sponsorFormActive && $errors->has('organization'))
+                        <p class="mt-1 text-xs text-red-600">{{ $errors->first('organization') }}</p>
+                      @endif
+                    </div>
+                  </div>
+                  <div class="form-grid" style="margin-top: 1rem;">
+                    <div class="form-group">
+                      <label class="form-label" data-en="Corporate Profile *" data-ar="الملف التعريفي للشركة *">Corporate Profile *</label>
+                      <input type="file" name="corporate_profile" class="form-input" required accept="application/pdf,image/png,image/jpeg">
+                      <span class="form-hint" data-en="PDF, PNG, JPG files only accepted" data-ar="يمكن إرفاق ملفات PDF أو JPG أو PNG">PDF, PNG, JPG files only accepted</span>
+                      @if($sponsorFormActive && $errors->has('corporate_profile'))
+                        <p class="mt-1 text-xs text-red-600">{{ $errors->first('corporate_profile') }}</p>
+                      @endif
+                    </div>
+                  </div>
                 </div>
 
                 <div id="exhibitor-step2" style="display: none;">
-                  @php
-                    $stepTwoChunks = array_chunk($exhibitorFieldsStepTwo, 2);
-                  @endphp
-                  @foreach ($stepTwoChunks as $chunkIndex => $chunk)
-                    <div class="form-grid {{ count($chunk) === 2 ? 'form-grid-2' : '' }}" @if($chunkIndex) style="margin-top: 1rem;" @endif>
-                      @foreach ($chunk as $field)
-                        @php
-                          $label = $translate(data_get($field, 'label'));
-                          $placeholder = $translate(data_get($field, 'placeholder'));
-                          $hint = $translate(data_get($field, 'hint'));
-                          $fieldType = $field['type'] ?? 'text';
-                        @endphp
-                        <div class="form-group">
-                          <label class="form-label" data-en="{{ e($label['en']) }}" data-ar="{{ e($label['ar']) }}">{{ $label['text'] }}</label>
-                          <input type="{{ $fieldType === 'file' ? 'file' : $fieldType }}" class="form-input"
-                            @if($fieldType !== 'file') placeholder="{{ $placeholder['text'] }}" @else accept="application/pdf,image/png,image/jpeg" @endif>
-                          @if ($hint['text'])
-                            <span class="form-hint" data-en="{{ e($hint['en']) }}" data-ar="{{ e($hint['ar']) }}">{{ $hint['text'] }}</span>
-                          @endif
-                        </div>
-                      @endforeach
+                  <div class="form-grid form-grid-2">
+                    <div class="form-group">
+                      <label class="form-label" data-en="VAT (Value Added Tax) *" data-ar="ضريبة القيمة المضافة *">VAT (Value Added Tax) *</label>
+                      <input type="text" name="vat_number" class="form-input" required placeholder="300000000000003"
+                        value="{{ $sponsorFormActive ? old('vat_number') : '' }}">
+                      @if($sponsorFormActive && $errors->has('vat_number'))
+                        <p class="mt-1 text-xs text-red-600">{{ $errors->first('vat_number') }}</p>
+                      @endif
                     </div>
-                  @endforeach
+                    <div class="form-group">
+                      <label class="form-label" data-en="CR Number *" data-ar="رقم السجل التجاري *">CR Number *</label>
+                      <input type="text" name="cr_number" class="form-input" required placeholder="1010101010"
+                        value="{{ $sponsorFormActive ? old('cr_number') : '' }}">
+                      @if($sponsorFormActive && $errors->has('cr_number'))
+                        <p class="mt-1 text-xs text-red-600">{{ $errors->first('cr_number') }}</p>
+                      @endif
+                    </div>
+                  </div>
+                  <div class="form-grid form-grid-2" style="margin-top: 1rem;">
+                    <div class="form-group">
+                      <label class="form-label" data-en="CR Copy (Commercial Registration) *" data-ar="نسخة السجل التجاري *">CR Copy (Commercial Registration) *</label>
+                      <input type="file" name="cr_copy" class="form-input" required accept="application/pdf,image/png,image/jpeg">
+                      @if($sponsorFormActive && $errors->has('cr_copy'))
+                        <p class="mt-1 text-xs text-red-600">{{ $errors->first('cr_copy') }}</p>
+                      @endif
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label" data-en="Company Logo *" data-ar="شعار الشركة *">Company Logo *</label>
+                      <input type="file" name="company_logo" class="form-input" required accept="image/png,image/jpeg,image/webp">
+                      <span class="form-hint" data-en="PNG, JPG, WEBP files only accepted" data-ar="يمكن إرفاق ملفات PNG أو JPG أو WEBP">PNG, JPG, WEBP files only accepted</span>
+                      @if($sponsorFormActive && $errors->has('company_logo'))
+                        <p class="mt-1 text-xs text-red-600">{{ $errors->first('company_logo') }}</p>
+                      @endif
+                    </div>
+                  </div>
+                  <div class="form-group" style="margin-top: 1rem;">
+                    <label class="form-label" data-en="National Address *" data-ar="العنوان الوطني *">National Address *</label>
+                    <textarea name="national_address" class="form-textarea" rows="3" required placeholder="Complete company address">{{ $sponsorFormActive ? old('national_address') : '' }}</textarea>
+                    @if($sponsorFormActive && $errors->has('national_address'))
+                      <p class="mt-1 text-xs text-red-600">{{ $errors->first('national_address') }}</p>
+                    @endif
+                  </div>
+                  <div class="form-group" style="margin-top: 1rem;">
+                    <label class="form-label" data-en="National Address Document *" data-ar="مستند العنوان الوطني *">National Address Document *</label>
+                    <input type="file" name="national_address_document" class="form-input" required accept="application/pdf,image/png,image/jpeg">
+                    @if($sponsorFormActive && $errors->has('national_address_document'))
+                      <p class="mt-1 text-xs text-red-600">{{ $errors->first('national_address_document') }}</p>
+                    @endif
+                  </div>
                 </div>
 
                 <div class="form-buttons">
@@ -3142,23 +3260,34 @@
       document.getElementById('exhibitor-card').classList.remove('selected', 'dimmed');
       document.getElementById('exhibitor-cta').style.display = 'flex';
       document.getElementById('exhibitor-form').classList.remove('active');
+      const stepInput = document.getElementById('exhibitor_step_input');
+      if (stepInput) {
+        stepInput.value = '1';
+      }
       toggleRoleVisibility(null);
       applyRoleOrder(null);
       updateExhibitorStep();
     }
 
     function exhibitorNext() {
-      exhibitorStep = 2;
-      updateExhibitorStep();
+      setExhibitorStep(2);
     }
 
     function exhibitorBack() {
       if (exhibitorStep === 1) {
         clearRole();
       } else {
-        exhibitorStep = 1;
-        updateExhibitorStep();
+        setExhibitorStep(1);
       }
+    }
+
+    function setExhibitorStep(step) {
+      exhibitorStep = step;
+      const stepInput = document.getElementById('exhibitor_step_input');
+      if (stepInput) {
+        stepInput.value = String(step);
+      }
+      updateExhibitorStep();
     }
 
     function updateExhibitorStep() {
@@ -3172,16 +3301,6 @@
     }
 
     // Form Submissions
-    function handleSubmit(event, type) {
-      event.preventDefault();
-      showToast(
-        currentLocale === 'ar' ? 'تم إرسال التسجيل!' : 'Registration Submitted!',
-        currentLocale === 'ar' ? 'سنتواصل معك قريباً.' : 'We will contact you soon.'
-      );
-      clearRole();
-      event.target.reset();
-    }
-
     function handleContactSubmit(event) {
       event.preventDefault();
       showToast(
@@ -3190,6 +3309,33 @@
       );
       event.target.reset();
     }
+
+    const initialForm = @json($visitorShouldOpen ? 'visitor' : ($sponsorShouldOpen ? 'sponsor' : ''));
+    const initialExhibitorStep = Number(@json($sponsorFormActive ? old('exhibitor_step', 1) : 1));
+
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelectorAll('[data-heard-select]').forEach(select => {
+        const targetSelector = select.getAttribute('data-other-target');
+        const target = targetSelector ? document.querySelector(targetSelector) : null;
+        const toggle = () => {
+          if (!target) return;
+          if (select.value === 'other') {
+            target.style.display = '';
+          } else {
+            target.style.display = 'none';
+          }
+        };
+        select.addEventListener('change', toggle);
+        toggle();
+      });
+
+      if (initialForm === 'visitor') {
+        selectRole('visitor');
+      } else if (initialForm === 'sponsor') {
+        selectRole('exhibitor');
+        setExhibitorStep(initialExhibitorStep);
+      }
+    });
 
     // Toast Notification
     function showToast(title, description) {

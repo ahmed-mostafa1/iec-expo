@@ -97,15 +97,53 @@
             <div class="rounded-xl bg-white border border-gray-200 p-4 text-xs">
                 <h2 class="text-sm font-semibold mb-3">{{ __('Files') }}</h2>
 
-                <div class="space-y-2">
+                <div class="space-y-3">
                     @if($registration->document_path)
                         <div>
-                            <div class="text-[10px] text-gray-500 mb-1">{{ __('Uploaded document') }}</div>
+                            <div class="text-[10px] text-gray-500 mb-1">{{ __('Corporate profile') }}</div>
                             <a href="{{ asset('storage/'.$registration->document_path) }}"
                                target="_blank"
                                class="text-[11px] text-emerald-700 hover:text-emerald-900">
-                                {{ __('View document') }}
+                                {{ __('View file') }}
                             </a>
+                        </div>
+                    @endif
+
+                    @if($registration->cr_copy_path)
+                        <div>
+                            <div class="text-[10px] text-gray-500 mb-1">{{ __('CR copy') }}</div>
+                            <a href="{{ asset('storage/'.$registration->cr_copy_path) }}"
+                               target="_blank"
+                               class="text-[11px] text-emerald-700 hover:text-emerald-900">
+                                {{ __('View file') }}
+                            </a>
+                        </div>
+                    @endif
+
+                    @if($registration->national_address_doc_path)
+                        <div>
+                            <div class="text-[10px] text-gray-500 mb-1">{{ __('National address proof') }}</div>
+                            <a href="{{ asset('storage/'.$registration->national_address_doc_path) }}"
+                               target="_blank"
+                               class="text-[11px] text-emerald-700 hover:text-emerald-900">
+                                {{ __('View file') }}
+                            </a>
+                        </div>
+                    @endif
+
+                    @if($registration->company_logo_path)
+                        <div>
+                            <div class="text-[10px] text-gray-500 mb-1">{{ __('Company logo') }}</div>
+                            <a href="{{ asset('storage/'.$registration->company_logo_path) }}"
+                               target="_blank"
+                               class="inline-flex items-center gap-2 text-[11px] text-emerald-700 hover:text-emerald-900">
+                                {{ __('Preview logo') }}
+                            </a>
+                            <div class="mt-2 rounded border border-gray-200 bg-gray-50 p-2">
+                                <img src="{{ asset('storage/'.$registration->company_logo_path) }}"
+                                    alt="{{ $registration->organization }}"
+                                    class="max-h-32 object-contain mx-auto">
+                            </div>
                         </div>
                     @endif
 

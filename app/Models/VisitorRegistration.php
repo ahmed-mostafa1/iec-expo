@@ -10,6 +10,7 @@ class VisitorRegistration extends Model
         'full_name',
         'email',
         'phone',
+        'job_title',
         'company_name',
         'company_predefined',
         'company_is_other',

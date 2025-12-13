@@ -72,7 +72,7 @@ class VisitorRegistrationController extends Controller
             $handle = fopen('php://output', 'w');
 
             fputcsv($handle, [
-                'ID', 'Full Name', 'Email', 'Phone', 'Company',
+                'ID', 'Full Name', 'Email', 'Phone', 'Job Title', 'Company',
                 'Heard About', 'Created At',
             ]);
 
@@ -83,6 +83,7 @@ class VisitorRegistrationController extends Controller
                         $row->full_name,
                         $row->email,
                         $row->phone,
+                        $row->job_title,
                         $row->company_name,
                         $row->heard_about,
                         $row->created_at,

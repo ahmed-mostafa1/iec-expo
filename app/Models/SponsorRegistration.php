@@ -16,6 +16,9 @@ class SponsorRegistration extends Model
         'cr_number',
         'national_address',
         'document_path',
+        'cr_copy_path',
+        'national_address_doc_path',
+        'company_logo_path',
         'pdf_path',
         'status',
     ];

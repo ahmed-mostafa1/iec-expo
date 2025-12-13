@@ -8,7 +8,6 @@ use App\Mail\NewSponsorRegistrationMail;
 use App\Models\SponsorRegistration;
 use App\Services\RegistrationPdfService;
 use Illuminate\Support\Facades\Mail;
-use Illuminate\Support\Facades\Storage;
 
 class SponsorRegistrationController extends Controller
 {
@@ -20,14 +19,25 @@ class SponsorRegistrationController extends Controller
     {
         $data = $request->validated();
 
-        // Handle optional document upload
-        $documentPath = null;
-        if ($request->hasFile('document')) {
-            $documentPath = $request->file('document')->store(
-                'sponsors_docs/' . now()->year,
-                'public'
-            );
-        }
+        $corporateProfilePath = $request->file('corporate_profile')->store(
+            'registrations/sponsors/corporate-profile/' . now()->year,
+            'public'
+        );
+
+        $crCopyPath = $request->file('cr_copy')->store(
+            'registrations/sponsors/cr-copy/' . now()->year,
+            'public'
+        );
+
+        $nationalAddressDocPath = $request->file('national_address_document')->store(
+            'registrations/sponsors/national-address/' . now()->year,
+            'public'
+        );
+
+        $companyLogoPath = $request->file('company_logo')->store(
+            'registrations/sponsors/company-logo/' . now()->year,
+            'public'
+        );
 
         $registration = SponsorRegistration::create([
             'full_name'        => $data['full_name'],
@@ -38,7 +48,10 @@ class SponsorRegistrationController extends Controller
             'vat_number'       => $data['vat_number'],
             'cr_number'        => $data['cr_number'],
             'national_address' => $data['national_address'],
-            'document_path'    => $documentPath,
+            'document_path'    => $corporateProfilePath,
+            'cr_copy_path'     => $crCopyPath,
+            'national_address_doc_path' => $nationalAddressDocPath,
+            'company_logo_path'=> $companyLogoPath,
             'status'           => 'pending',
         ]);
 
@@ -53,6 +66,6 @@ class SponsorRegistrationController extends Controller
             );
         }
 
-        return back()->with('success', __('registration.sponsor.success'));
+        return back()->with('sponsor_success', __('registration.sponsor.success'));
     }
 }
