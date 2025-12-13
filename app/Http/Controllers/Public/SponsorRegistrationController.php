@@ -66,6 +66,17 @@ class SponsorRegistrationController extends Controller
             );
         }
 
-        return back()->with('sponsor_success', __('registration.sponsor.success'));
+        $message = __('registration.sponsor.success');
+        $toastTitle = __('registration.sponsor.toast_title');
+
+        if ($request->expectsJson()) {
+            return response()->json([
+                'message' => $message,
+                'toast_title' => $toastTitle,
+                'registration_id' => $registration->id,
+            ], 201);
+        }
+
+        return back()->with('sponsor_success', $message);
     }
 }

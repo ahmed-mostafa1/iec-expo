@@ -110,15 +110,21 @@ return [
                             'label' => ['en' => 'Phone *', 'ar' => 'الهاتف *'],
                             'placeholder' => ['en' => '+966 50 000 0000', 'ar' => '+966 50 000 0000'],
                         ],
-                        [
-                            'name' => 'visitor_job',
-                            'type' => 'text',
-                            'label' => ['en' => 'Job Title', 'ar' => 'المسمى الوظيفي'],
-                            'placeholder' => ['en' => 'Marketing Manager', 'ar' => 'مدير التسويق'],
-                        ],
-                        [
-                            'name' => 'visitor_hear_about',
-                            'type' => 'select',
+                    [
+                        'name' => 'visitor_job',
+                        'type' => 'text',
+                        'label' => ['en' => 'Job Title', 'ar' => 'المسمى الوظيفي'],
+                        'placeholder' => ['en' => 'Marketing Manager', 'ar' => 'مدير التسويق'],
+                    ],
+                    [
+                        'name' => 'visitor_company',
+                        'type' => 'text',
+                        'label' => ['en' => 'Company / Organization *', 'ar' => 'الشركة / الجهة *'],
+                        'placeholder' => ['en' => 'Umbrella Inc.', 'ar' => 'شركة أمبريلا'],
+                    ],
+                    [
+                        'name' => 'visitor_hear_about',
+                        'type' => 'select',
                             'label' => ['en' => 'How did you hear about us?', 'ar' => 'كيف سمعت عنا؟'],
                             'options' => [
                                 ['en' => 'Social Media', 'ar' => 'وسائل التواصل الاجتماعي'],

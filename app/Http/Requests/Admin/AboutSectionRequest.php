@@ -30,7 +30,7 @@ class AboutSectionRequest extends FormRequest
             'goals.*.title.ar' => ['required', 'string'],
             'goals.*.description.en' => ['required', 'string'],
             'goals.*.description.ar' => ['required', 'string'],
-            'background_video_file' => ['nullable', 'file', 'mimetypes:video/mp4,video/webm', 'max:8192'],
+            'background_video_file' => ['nullable', 'file', 'mimetypes:video/mp4,video/webm', 'max:51200'],
         ];
     }
 }

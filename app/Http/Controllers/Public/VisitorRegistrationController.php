@@ -41,6 +41,17 @@ class VisitorRegistrationController extends Controller
             );
         }
 
-        return back()->with('visitor_success', __('registration.visitor.success'));
+        $message = __('registration.visitor.success');
+        $toastTitle = __('registration.visitor.toast_title');
+
+        if ($request->expectsJson()) {
+            return response()->json([
+                'message' => $message,
+                'toast_title' => $toastTitle,
+                'registration_id' => $registration->id,
+            ], 201);
+        }
+
+        return back()->with('visitor_success', $message);
     }
 }

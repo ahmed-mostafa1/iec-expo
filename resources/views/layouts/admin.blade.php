@@ -8,6 +8,7 @@
     <title>Admin · {{ config('app.name') }}</title>
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    @livewireStyles
 </head>
 
 <body class="min-h-screen antialiased bg-gray-100 font-sans text-[1.2rem]">
@@ -92,6 +93,7 @@
             </main>
         </div>
     </div>
+    @livewireScripts
 </body>
 
 </html>
