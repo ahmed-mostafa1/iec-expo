@@ -7,6 +7,7 @@ use App\Http\Controllers\Public\SponsorShowController as PublicSponsorShowContro
 use App\Http\Controllers\Public\VisitorRegistrationController;
 use App\Http\Controllers\Public\ParticipantShowController as PublicParticipantShowController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\LandingSectionController;
 use App\Http\Controllers\Admin\PublicSponsorController;
 use App\Http\Controllers\Admin\ParticipantController;
 use App\Http\Controllers\Admin\OrganizerController;
@@ -101,6 +102,15 @@ Route::prefix('admin')
         Route::resource('public-sponsors', PublicSponsorController::class);
         Route::resource('participants', ParticipantController::class);
         Route::resource('organizers', OrganizerController::class);
+
+        Route::match(['get', 'post'], 'sections/hero', [LandingSectionController::class, 'hero'])
+            ->name('sections.hero');
+        Route::match(['get', 'post'], 'sections/registration', [LandingSectionController::class, 'registration'])
+            ->name('sections.registration');
+        Route::match(['get', 'post'], 'sections/about', [LandingSectionController::class, 'about'])
+            ->name('sections.about');
+        Route::match(['get', 'post'], 'sections/contact', [LandingSectionController::class, 'contact'])
+            ->name('sections.contact');
 
         // About content – treat as single resource
         Route::get('about-content', [AboutContentController::class, 'edit'])->name('about.edit');

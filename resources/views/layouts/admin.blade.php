@@ -10,7 +10,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 
-<body class="min-h-screen antialiased bg-gray-100 font-sans">
+<body class="min-h-screen antialiased bg-gray-100 font-sans text-[1.2rem]">
     <div class="flex min-h-screen">
         {{-- Sidebar --}}
         <aside class="w-60 bg-white border-e border-gray-200 py-4 px-3 hidden md:flex flex-col">
@@ -40,6 +40,22 @@
                 </a>
 
                 <div class="mt-4 text-[10px] uppercase tracking-wide text-gray-400 ps-2">
+                    {{ __('Landing sections') }}
+                </div>
+                <a href="{{ route('admin.sections.hero') }}" class="block rounded-lg px-2 py-1.5 hover:bg-emerald-50 text-gray-700">
+                    {{ __('Hero section') }}
+                </a>
+                <a href="{{ route('admin.sections.registration') }}" class="block rounded-lg px-2 py-1.5 hover:bg-emerald-50 text-gray-700">
+                    {{ __('Registration section') }}
+                </a>
+                <a href="{{ route('admin.sections.about') }}" class="block rounded-lg px-2 py-1.5 hover:bg-emerald-50 text-gray-700">
+                    {{ __('About section') }}
+                </a>
+                <a href="{{ route('admin.sections.contact') }}" class="block rounded-lg px-2 py-1.5 hover:bg-emerald-50 text-gray-700">
+                    {{ __('Contact section') }}
+                </a>
+
+                <div class="mt-4 text-[10px] uppercase tracking-wide text-gray-400 ps-2">
                     {{ __('Website content') }}
                 </div>
                 <a href="{{ route('admin.public-sponsors.index') }}" class="block rounded-lg px-2 py-1.5 hover:bg-emerald-50 text-gray-700">
@@ -50,15 +66,6 @@
                 </a>
                 <a href="{{ route('admin.organizers.index') }}" class="block rounded-lg px-2 py-1.5 hover:bg-emerald-50 text-gray-700">
                     {{ __('Organizers') }}
-                </a>
-                <a href="{{ route('admin.about.edit') }}" class="block rounded-lg px-2 py-1.5 hover:bg-emerald-50 text-gray-700">
-                    {{ __('About content') }}
-                </a>
-                <a href="{{ route('admin.contact-infos.index') }}" class="block rounded-lg px-2 py-1.5 hover:bg-emerald-50 text-gray-700">
-                    {{ __('Contact info') }}
-                </a>
-                <a href="{{ route('admin.hero-media.index') }}" class="block rounded-lg px-2 py-1.5 hover:bg-emerald-50 text-gray-700">
-                    {{ __('Hero media') }}
                 </a>
             </nav>
 

@@ -3,9 +3,7 @@
 namespace App\Http\Controllers\Public;
 
 use App\Http\Controllers\Controller;
-use App\Models\AboutContent;
-use App\Models\ContactInfo;
-use App\Models\HeroMedia;
+use App\Models\LandingSection;
 use App\Models\Participant;
 use App\Models\Organizer;
 use App\Models\PublicSponsor;
@@ -15,8 +13,10 @@ class LandingPageController extends Controller
 {
     public function index(Request $request, string $locale)
     {
-        $hero = HeroMedia::where('is_active', true)->first();
-        $about = AboutContent::query()->first();
+        $heroSection = LandingSection::resolve('hero');
+        $registrationSection = LandingSection::resolve('registration');
+        $aboutSection = LandingSection::resolve('about');
+        $contactSection = LandingSection::resolve('contact');
         $sponsors = PublicSponsor::where('is_active', true)
             ->orderBy('display_order')
             ->get();
@@ -26,19 +26,17 @@ class LandingPageController extends Controller
         $organizers = Organizer::where('is_active', true)
             ->orderBy('display_order')
             ->get();
-        $contactInfos = ContactInfo::orderByDesc('is_primary')
-            ->orderBy('display_order')
-            ->get();
 
         $scrollToContact = session('scroll_to_contact', false);
 
         return view('public.landing', compact(
-            'hero',
-            'about',
+            'heroSection',
+            'registrationSection',
+            'aboutSection',
+            'contactSection',
             'sponsors',
             'participants',
             'organizers',
-            'contactInfos',
             'locale',
             'scrollToContact'
         ));
