@@ -56,7 +56,7 @@
                         <label class="text-xs font-semibold uppercase text-gray-500">{{ __('Replace video file') }}</label>
                         <input type="file" name="background_video_file" accept="video/mp4,video/webm"
                             class="block w-full rounded-lg border-gray-200 text-sm file:me-4 file:rounded-md file:border-0 file:bg-emerald-600 file:px-4 file:py-2 file:text-white" />
-                        <p class="text-xs text-gray-500">{{ __('MP4/WEBM only, 8MB max. Leave empty to keep the current clip.') }}</p>
+                        <p class="text-xs text-gray-500">{{ __('MP4/WEBM only, up to 50MB. Leave empty to keep the current clip.') }}</p>
                     </div>
                 </div>
             </section>

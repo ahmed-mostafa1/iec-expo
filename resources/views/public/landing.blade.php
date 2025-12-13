@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" dir="ltr">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="{{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}">
 
 <head>
   <meta charset="UTF-8" />
@@ -717,6 +717,21 @@
         opacity: 1;
         transform: translateX(0);
       }
+    }
+
+    .form-group.has-error .form-label {
+      color: #b91c1c;
+    }
+
+    .form-error {
+      color: #dc2626;
+      font-size: 0.75rem;
+      margin-top: 0.35rem;
+    }
+
+    .form-control-error {
+      border-color: #f87171 !important;
+      box-shadow: 0 0 0 1px rgba(248, 113, 113, 0.35);
     }
 
     .form-title {
@@ -2187,7 +2202,12 @@
                 </div>
               @endif
               <h3 class="form-title" data-en="{{ e($visitorFormTitle['en']) }}" data-ar="{{ e($visitorFormTitle['ar']) }}">{{ $visitorFormTitle['text'] }}</h3>
-              <form method="POST" action="{{ route('public.register.visitor', ['locale' => $locale]) }}" novalidate>
+              <form id="visitor-registration-form"
+                method="POST"
+                action="{{ route('public.register.visitor', ['locale' => $locale]) }}"
+                novalidate
+                data-success-title="{{ e(__('registration.visitor.toast_title')) }}"
+                data-success-message="{{ e(__('registration.visitor.success')) }}">
                 @csrf
                 <input type="hidden" name="form_identifier" value="visitor">
                 <div class="form-grid form-grid-2">
@@ -2311,7 +2331,13 @@
                 </div>
               </div>
 
-              <form method="POST" action="{{ route('public.register.sponsor', ['locale' => $locale]) }}" enctype="multipart/form-data" novalidate>
+              <form id="sponsor-registration-form"
+                method="POST"
+                action="{{ route('public.register.sponsor', ['locale' => $locale]) }}"
+                enctype="multipart/form-data"
+                novalidate
+                data-success-title="{{ e(__('registration.sponsor.toast_title')) }}"
+                data-success-message="{{ e(__('registration.sponsor.success')) }}">
                 @csrf
                 <input type="hidden" name="form_identifier" value="sponsor">
                 <input type="hidden" name="exhibitor_step" id="exhibitor_step_input" value="{{ $sponsorFormActive ? old('exhibitor_step', 1) : 1 }}">
@@ -2964,7 +2990,7 @@
 
   <script>
     // Locale Management
-    let currentLocale = 'en';
+    let currentLocale = @json($locale);
 
     function toggleLocale() {
       currentLocale = currentLocale === 'en' ? 'ar' : 'en';
@@ -3300,6 +3326,233 @@
       document.getElementById('step2-indicator').classList.toggle('active', exhibitorStep >= 2);
     }
 
+    function initHeardAboutSelects() {
+      document.querySelectorAll('[data-heard-select]').forEach(select => {
+        const handler = () => syncHeardSelect(select);
+        select.addEventListener('change', handler);
+        syncHeardSelect(select);
+      });
+    }
+
+    function syncHeardSelect(select) {
+      const targetSelector = select.getAttribute('data-other-target');
+      if (!targetSelector) {
+        return;
+      }
+      const scope = select.form || document;
+      const target = scope.querySelector(targetSelector);
+      if (!target) {
+        return;
+      }
+      if (select.value === 'other') {
+        target.style.display = '';
+      } else {
+        target.style.display = 'none';
+        const input = target.querySelector('input, textarea');
+        if (input && input.value) {
+          input.value = '';
+        }
+      }
+    }
+
+    function resetHeardAboutSelectsWithin(form) {
+      form.querySelectorAll('[data-heard-select]').forEach(select => syncHeardSelect(select));
+    }
+
+    function initAjaxRegistrationForms() {
+      const visitorForm = document.getElementById('visitor-registration-form');
+      if (visitorForm) {
+        bindAjaxRegistrationForm(visitorForm, {
+          onSuccess: (payload) => {
+            visitorForm.reset();
+            resetHeardAboutSelectsWithin(visitorForm);
+            clearRole();
+            const title = (payload && payload.toast_title) || visitorForm.dataset.successTitle;
+            const message = (payload && payload.message) || visitorForm.dataset.successMessage;
+            showToast(title, message);
+          },
+        });
+      }
+
+      const sponsorForm = document.getElementById('sponsor-registration-form');
+      if (sponsorForm) {
+        bindAjaxRegistrationForm(sponsorForm, {
+          onSuccess: (payload) => {
+            sponsorForm.reset();
+            setExhibitorStep(1);
+            clearRole();
+            const title = (payload && payload.toast_title) || sponsorForm.dataset.successTitle;
+            const message = (payload && payload.message) || sponsorForm.dataset.successMessage;
+            showToast(title, message);
+          },
+        });
+      }
+    }
+
+    function bindAjaxRegistrationForm(form, { onSuccess } = {}) {
+      form.addEventListener('submit', async (event) => {
+        event.preventDefault();
+        const submitter = event.submitter || form.querySelector('button[type="submit"]');
+        toggleSubmitting(submitter, true);
+        clearFormErrors(form);
+
+        try {
+          const response = await fetch(form.action, {
+            method: 'POST',
+            headers: {
+              'X-Requested-With': 'XMLHttpRequest',
+              'Accept': 'application/json',
+            },
+            body: new FormData(form),
+          });
+
+          if (response.ok) {
+            const data = await response.json().catch(() => ({}));
+            if (typeof onSuccess === 'function') {
+              onSuccess(data);
+            }
+            return;
+          }
+
+          if (response.status === 422) {
+            const data = await response.json().catch(() => ({}));
+            showFormErrors(form, data.errors || {});
+            return;
+          }
+
+          const fallback = getRegistrationErrorMessages();
+          showToast(fallback.errorTitle, fallback.errorMessage);
+        } catch (error) {
+          const fallback = getRegistrationErrorMessages();
+          showToast(fallback.errorTitle, fallback.errorMessage);
+        } finally {
+          toggleSubmitting(submitter, false);
+        }
+      });
+    }
+
+    function toggleSubmitting(button, isSubmitting) {
+      if (!button) {
+        return;
+      }
+      if (isSubmitting) {
+        button.disabled = true;
+        button.setAttribute('aria-busy', 'true');
+      } else {
+        button.disabled = false;
+        button.removeAttribute('aria-busy');
+      }
+    }
+
+    function clearFormErrors(form) {
+      form.querySelectorAll('.form-error-inline').forEach(error => error.remove());
+      form.querySelectorAll('.form-control-error').forEach(field => field.classList.remove('form-control-error'));
+      form.querySelectorAll('.form-group.has-error').forEach(group => group.classList.remove('has-error'));
+    }
+
+    function markFieldError(field, message) {
+      if (!field) {
+        return;
+      }
+      const group = field.closest('.form-group');
+      field.classList.add('form-control-error');
+      if (group) {
+        group.classList.add('has-error');
+      }
+      const errorEl = document.createElement('p');
+      errorEl.className = 'form-error form-error-inline';
+      errorEl.textContent = message;
+      if (group) {
+        group.appendChild(errorEl);
+      } else {
+        field.insertAdjacentElement('afterend', errorEl);
+      }
+      const eventType = field.matches('select, textarea, input[type="file"]') ? 'change' : 'input';
+      field.addEventListener(eventType, () => clearFieldError(field), { once: true });
+    }
+
+    function clearFieldError(field) {
+      field.classList.remove('form-control-error');
+      const group = field.closest('.form-group');
+      if (group) {
+        group.classList.remove('has-error');
+        group.querySelectorAll('.form-error-inline').forEach(error => error.remove());
+      }
+    }
+
+    function showFormErrors(form, errors) {
+      const entries = Object.entries(errors || {});
+      if (!entries.length) {
+        const fallback = getRegistrationErrorMessages();
+        showToast(fallback.errorTitle, fallback.errorMessage);
+        return;
+      }
+
+      let hasFieldErrors = false;
+      const generalMessages = [];
+
+      entries.forEach(([fieldName, messages]) => {
+        const message = Array.isArray(messages) ? messages[0] : messages;
+        const selector = `[name="${escapeSelector(fieldName)}"]`;
+        let field = form.querySelector(selector);
+
+        if (!field) {
+          // Try to match array-like inputs e.g., field[0]
+          const normalized = fieldName.replace(/\./g, '\\.');
+          field = form.querySelector(`[name="${escapeSelector(normalized)}"]`);
+        }
+
+        if (!field) {
+          generalMessages.push(message);
+          return;
+        }
+
+        hasFieldErrors = true;
+        markFieldError(field, message);
+
+        if (form.id === 'sponsor-registration-form') {
+          ensureSponsorFieldVisible(field);
+        }
+      });
+
+      if (generalMessages.length && !hasFieldErrors) {
+        const fallback = getRegistrationErrorMessages();
+        showToast(fallback.errorTitle, generalMessages[0]);
+      }
+
+    }
+
+    function ensureSponsorFieldVisible(field) {
+      const step1 = document.getElementById('exhibitor-step1');
+      const step2 = document.getElementById('exhibitor-step2');
+      if (step1 && step1.contains(field)) {
+        setExhibitorStep(1);
+      } else if (step2 && step2.contains(field)) {
+        setExhibitorStep(2);
+      }
+    }
+
+    function escapeSelector(value) {
+      if (window.CSS && typeof window.CSS.escape === 'function') {
+        return window.CSS.escape(value);
+      }
+      return String(value).replace(/([ #.;?+*~':"!^$[\]()=>|/@])/g, '\\$1');
+    }
+
+    function getRegistrationErrorMessages() {
+      if (currentLocale === 'ar') {
+        return {
+          errorTitle: 'حدث خطأ',
+          errorMessage: 'تعذر إرسال النموذج. حاول مرة أخرى.',
+        };
+      }
+
+      return {
+        errorTitle: 'Something went wrong',
+        errorMessage: 'We could not submit the form. Please try again.',
+      };
+    }
+
     // Form Submissions
     function handleContactSubmit(event) {
       event.preventDefault();
@@ -3314,20 +3567,8 @@
     const initialExhibitorStep = Number(@json($sponsorFormActive ? old('exhibitor_step', 1) : 1));
 
     document.addEventListener('DOMContentLoaded', () => {
-      document.querySelectorAll('[data-heard-select]').forEach(select => {
-        const targetSelector = select.getAttribute('data-other-target');
-        const target = targetSelector ? document.querySelector(targetSelector) : null;
-        const toggle = () => {
-          if (!target) return;
-          if (select.value === 'other') {
-            target.style.display = '';
-          } else {
-            target.style.display = 'none';
-          }
-        };
-        select.addEventListener('change', toggle);
-        toggle();
-      });
+      initHeardAboutSelects();
+      initAjaxRegistrationForms();
 
       if (initialForm === 'visitor') {
         selectRole('visitor');

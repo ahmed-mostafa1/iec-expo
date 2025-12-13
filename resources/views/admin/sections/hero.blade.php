@@ -48,7 +48,7 @@
                         </div>
                         <input type="file" name="video_file" accept="video/mp4,video/webm"
                             class="block w-full rounded-lg border-gray-200 text-sm file:me-4 file:rounded-md file:border-0 file:bg-emerald-600 file:px-4 file:py-2 file:text-white" />
-                        <p class="text-xs text-gray-500">{{ __('MP4/WEBM only, max 8MB. Leave empty to keep current video.') }}</p>
+                        <p class="text-xs text-gray-500">{{ __('MP4/WEBM only, up to 50MB. Leave empty to keep current video.') }}</p>
                     </div>
                     <div class="space-y-3 border rounded-xl border-dashed border-gray-200 p-4">
                         <p class="text-xs font-semibold uppercase tracking-wide text-gray-500">{{ __('Poster image (optional)') }}</p>
@@ -57,7 +57,7 @@
                         </div>
                         <input type="file" name="poster_image" accept="image/png,image/jpeg,image/webp"
                             class="block w-full rounded-lg border-gray-200 text-sm file:me-4 file:rounded-md file:border-0 file:bg-emerald-600 file:px-4 file:py-2 file:text-white" />
-                        <p class="text-xs text-gray-500">{{ __('JPG/PNG/WEBP, max 8MB. Keeps the previous image if left blank.') }}</p>
+                        <p class="text-xs text-gray-500">{{ __('JPG/PNG/WEBP, up to 20MB. Keeps the previous image if left blank.') }}</p>
                     </div>
                 </div>
             </section>

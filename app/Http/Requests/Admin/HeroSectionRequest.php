@@ -18,8 +18,8 @@ class HeroSectionRequest extends FormRequest
         }
 
         return [
-            'video_file' => ['nullable', 'file', 'mimetypes:video/mp4,video/webm', 'max:8192'],
-            'poster_image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:8192'],
+            'video_file' => ['nullable', 'file', 'mimetypes:video/mp4,video/webm', 'max:51200'],
+            'poster_image' => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:20480'],
             'stats' => ['required', 'array', 'min:1'],
             'stats.*.id' => ['required', 'string'],
             'stats.*.value' => ['required', 'integer', 'min:0'],
