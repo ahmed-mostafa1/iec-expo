@@ -19,25 +19,33 @@ class SponsorRegistrationController extends Controller
     {
         $data = $request->validated();
 
-        $corporateProfilePath = $request->file('corporate_profile')->store(
-            'registrations/sponsors/corporate-profile/' . now()->year,
-            'public'
-        );
+        $corporateProfilePath = $request->hasFile('corporate_profile')
+            ? $request->file('corporate_profile')->store(
+                'registrations/sponsors/corporate-profile/' . now()->year,
+                'public'
+            )
+            : null;
 
-        $crCopyPath = $request->file('cr_copy')->store(
-            'registrations/sponsors/cr-copy/' . now()->year,
-            'public'
-        );
+        $crCopyPath = $request->hasFile('cr_copy')
+            ? $request->file('cr_copy')->store(
+                'registrations/sponsors/cr-copy/' . now()->year,
+                'public'
+            )
+            : null;
 
-        $nationalAddressDocPath = $request->file('national_address_document')->store(
-            'registrations/sponsors/national-address/' . now()->year,
-            'public'
-        );
+        $nationalAddressDocPath = $request->hasFile('national_address_document')
+            ? $request->file('national_address_document')->store(
+                'registrations/sponsors/national-address/' . now()->year,
+                'public'
+            )
+            : null;
 
-        $companyLogoPath = $request->file('company_logo')->store(
-            'registrations/sponsors/company-logo/' . now()->year,
-            'public'
-        );
+        $companyLogoPath = $request->hasFile('company_logo')
+            ? $request->file('company_logo')->store(
+                'registrations/sponsors/company-logo/' . now()->year,
+                'public'
+            )
+            : null;
 
         $registration = SponsorRegistration::create([
             'full_name'        => $data['full_name'],
@@ -45,9 +53,9 @@ class SponsorRegistrationController extends Controller
             'phone'            => $data['phone'],
             'job_title'        => $data['job_title'],
             'organization'     => $data['organization'],
-            'vat_number'       => $data['vat_number'],
-            'cr_number'        => $data['cr_number'],
-            'national_address' => $data['national_address'],
+            'vat_number'       => $data['vat_number'] ?? '',
+            'cr_number'        => $data['cr_number'] ?? '',
+            'national_address' => $data['national_address'] ?? '',
             'document_path'    => $corporateProfilePath,
             'cr_copy_path'     => $crCopyPath,
             'national_address_doc_path' => $nationalAddressDocPath,

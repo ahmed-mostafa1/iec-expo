@@ -13,15 +13,25 @@ class UniqueSponsorVatCr implements ValidationRule
         $vat = request()->input('vat_number');
         $cr  = request()->input('cr_number');
 
+        if (! $vat && ! $cr) {
+            return;
+        }
+
         $query = SponsorRegistration::query();
 
-        if ($vat) {
-            $query->where('vat_number', $vat);
-        }
+        $query->where(function ($innerQuery) use ($vat, $cr) {
+            if ($vat) {
+                $innerQuery->where('vat_number', $vat);
+            }
 
-        if ($cr) {
-            $query->orWhere('cr_number', $cr);
-        }
+            if ($cr) {
+                if ($vat) {
+                    $innerQuery->orWhere('cr_number', $cr);
+                } else {
+                    $innerQuery->where('cr_number', $cr);
+                }
+            }
+        });
 
         if ($query->exists()) {
             // single generic error key; we'll attach it to vat_number

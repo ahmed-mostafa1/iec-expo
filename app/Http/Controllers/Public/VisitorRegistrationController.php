@@ -22,12 +22,12 @@ class VisitorRegistrationController extends Controller
         $registration = VisitorRegistration::create([
             'full_name'             => $data['full_name'],
             'email'                 => $data['email'],
-            'phone'                 => $data['phone'],
-            'job_title'             => $data['job_title'],
-            'company_name'          => $data['company_name'],
+            'phone'                 => $data['phone'] ?? '',
+            'job_title'             => $data['job_title'] ?? null,
+            'company_name'          => $data['company_name'] ?? '',
             'company_predefined'    => null,
             'company_is_other'      => false,
-            'heard_about'           => $data['heard_about'],
+            'heard_about'           => $data['heard_about'] ?? '',
             'heard_about_other_text'=> $data['heard_about_other_text'] ?? null,
             'interests'             => null,
         ]);

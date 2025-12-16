@@ -21,13 +21,13 @@ class SponsorRegistrationRequest extends FormRequest
             'phone'           => ['required', 'string', 'max:50'],
             'job_title'       => ['required', 'string', 'max:255'],
             'organization'    => ['required', 'string', 'max:255'],
-            'vat_number'      => ['required', 'string', 'max:255', new UniqueSponsorVatCr],
-            'cr_number'       => ['required', 'string', 'max:255'],
-            'national_address'=> ['required', 'string'],
-            'corporate_profile'      => ['required', 'file', 'mimes:pdf,jpeg,jpg,png', 'max:8192'],
-            'cr_copy'                => ['required', 'file', 'mimes:pdf,jpeg,jpg,png', 'max:8192'],
-            'national_address_document' => ['required', 'file', 'mimes:pdf,jpeg,jpg,png', 'max:8192'],
-            'company_logo'           => ['required', 'image', 'mimes:jpg,jpeg,png,webp', 'max:8192'],
+            'vat_number'      => ['nullable', 'string', 'max:255', new UniqueSponsorVatCr],
+            'cr_number'       => ['nullable', 'string', 'max:255', new UniqueSponsorVatCr],
+            'national_address'=> ['nullable', 'string'],
+            'corporate_profile'         => ['nullable', 'file', 'mimes:pdf,jpeg,jpg,png', 'max:8192'],
+            'cr_copy'                   => ['nullable', 'file', 'mimes:pdf,jpeg,jpg,png', 'max:8192'],
+            'national_address_document' => ['nullable', 'file', 'mimes:pdf,jpeg,jpg,png', 'max:8192'],
+            'company_logo'              => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:8192'],
         ];
     }
 
@@ -44,7 +44,7 @@ class SponsorRegistrationRequest extends FormRequest
      */
     protected function failedValidation(Validator $validator)
     {
-        if ($validator->errors()->has('vat_number')) {
+        if ($validator->errors()->has('vat_number') || $validator->errors()->has('cr_number')) {
             session()->flash('scroll_to_contact', true);
         }
 
