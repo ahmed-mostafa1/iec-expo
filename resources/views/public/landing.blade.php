@@ -2231,16 +2231,16 @@
 
                 <div class="form-grid form-grid-2" style="margin-top:1rem;">
                   <div class="form-group">
-                    <label class="form-label" data-en="Phone *" data-ar="الهاتف *">Phone *</label>
-                    <input type="tel" name="phone" class="form-input" required placeholder="+966 50 000 0000"
+                    <label class="form-label" data-en="Phone" data-ar="الهاتف">Phone</label>
+                    <input type="tel" name="phone" class="form-input" placeholder="+966 50 000 0000"
                       value="{{ $visitorFormActive ? old('phone') : '' }}">
                     @if($visitorFormActive && $errors->has('phone'))
                       <p class="mt-1 text-xs text-red-600">{{ $errors->first('phone') }}</p>
                     @endif
                   </div>
                   <div class="form-group">
-                    <label class="form-label" data-en="Job Title *" data-ar="المسمى الوظيفي *">Job Title *</label>
-                    <input type="text" name="job_title" class="form-input" required placeholder="Marketing Manager"
+                    <label class="form-label" data-en="Job Title" data-ar="المسمى الوظيفي">Job Title</label>
+                    <input type="text" name="job_title" class="form-input" placeholder="Marketing Manager"
                       value="{{ $visitorFormActive ? old('job_title') : '' }}">
                     @if($visitorFormActive && $errors->has('job_title'))
                       <p class="mt-1 text-xs text-red-600">{{ $errors->first('job_title') }}</p>
@@ -2250,8 +2250,8 @@
 
                 <div class="form-grid form-grid-2" style="margin-top:1rem;">
                   <div class="form-group">
-                    <label class="form-label" data-en="Company / Organization *" data-ar="الشركة / الجهة *">Company / Organization *</label>
-                    <input type="text" name="company_name" class="form-input" required placeholder="Umbrella Inc."
+                    <label class="form-label" data-en="Company / Organization" data-ar="الشركة / الجهة">Company / Organization</label>
+                    <input type="text" name="company_name" class="form-input" placeholder="Umbrella Inc."
                       value="{{ $visitorFormActive ? old('company_name') : '' }}">
                     @if($visitorFormActive && $errors->has('company_name'))
                       <p class="mt-1 text-xs text-red-600">{{ $errors->first('company_name') }}</p>
@@ -2259,7 +2259,7 @@
                   </div>
                   <div class="form-group">
                     <label class="form-label" data-en="How did you hear about us?" data-ar="كيف سمعت عنا؟">How did you hear about us?</label>
-                    <select class="form-select" name="heard_about" required data-heard-select data-other-target="#visitor-heard-other">
+                    <select class="form-select" name="heard_about" data-heard-select data-other-target="#visitor-heard-other">
                       <option value="">{{ __('Select option') }}</option>
                       <option value="social_media" @selected($visitorFormActive && old('heard_about') === 'social_media')>Social Media</option>
                       <option value="ads" @selected($visitorFormActive && old('heard_about') === 'ads')>Advertising</option>
@@ -2273,7 +2273,7 @@
                 </div>
 
                 <div class="form-group" id="visitor-heard-other" style="{{ $visitorFormActive && old('heard_about') === 'other' ? '' : 'display:none;' }}; margin-top:1rem;">
-                  <label class="form-label" data-en="Please specify *" data-ar="يرجى التحديد *">Please specify *</label>
+                  <label class="form-label" data-en="Please specify" data-ar="يرجى التحديد">Please specify</label>
                   <input type="text" name="heard_about_other_text" class="form-input" placeholder="Conference website"
                     value="{{ $visitorFormActive ? old('heard_about_other_text') : '' }}">
                   @if($visitorFormActive && $errors->has('heard_about_other_text'))
@@ -2390,8 +2390,8 @@
                   </div>
                   <div class="form-grid" style="margin-top: 1rem;">
                     <div class="form-group">
-                      <label class="form-label" data-en="Corporate Profile *" data-ar="الملف التعريفي للشركة *">Corporate Profile *</label>
-                      <input type="file" name="corporate_profile" class="form-input" required accept="application/pdf,image/png,image/jpeg">
+                      <label class="form-label" data-en="Corporate Profile" data-ar="الملف التعريفي للشركة">Corporate Profile</label>
+                      <input type="file" name="corporate_profile" class="form-input" accept="application/pdf,image/png,image/jpeg">
                       <span class="form-hint" data-en="PDF, PNG, JPG files only accepted" data-ar="يمكن إرفاق ملفات PDF أو JPG أو PNG">PDF, PNG, JPG files only accepted</span>
                       @if($sponsorFormActive && $errors->has('corporate_profile'))
                         <p class="mt-1 text-xs text-red-600">{{ $errors->first('corporate_profile') }}</p>
@@ -2400,57 +2400,57 @@
                   </div>
                 </div>
 
-                <div id="exhibitor-step2" style="display: none;">
-                  <div class="form-grid form-grid-2">
-                    <div class="form-group">
-                      <label class="form-label" data-en="VAT (Value Added Tax) *" data-ar="ضريبة القيمة المضافة *">VAT (Value Added Tax) *</label>
-                      <input type="text" name="vat_number" class="form-input" required placeholder="300000000000003"
-                        value="{{ $sponsorFormActive ? old('vat_number') : '' }}">
-                      @if($sponsorFormActive && $errors->has('vat_number'))
-                        <p class="mt-1 text-xs text-red-600">{{ $errors->first('vat_number') }}</p>
-                      @endif
-                    </div>
-                    <div class="form-group">
-                      <label class="form-label" data-en="CR Number *" data-ar="رقم السجل التجاري *">CR Number *</label>
-                      <input type="text" name="cr_number" class="form-input" required placeholder="1010101010"
-                        value="{{ $sponsorFormActive ? old('cr_number') : '' }}">
-                      @if($sponsorFormActive && $errors->has('cr_number'))
-                        <p class="mt-1 text-xs text-red-600">{{ $errors->first('cr_number') }}</p>
-                      @endif
-                    </div>
-                  </div>
-                  <div class="form-grid form-grid-2" style="margin-top: 1rem;">
-                    <div class="form-group">
-                      <label class="form-label" data-en="CR Copy (Commercial Registration) *" data-ar="نسخة السجل التجاري *">CR Copy (Commercial Registration) *</label>
-                      <input type="file" name="cr_copy" class="form-input" required accept="application/pdf,image/png,image/jpeg">
-                      @if($sponsorFormActive && $errors->has('cr_copy'))
-                        <p class="mt-1 text-xs text-red-600">{{ $errors->first('cr_copy') }}</p>
-                      @endif
-                    </div>
-                    <div class="form-group">
-                      <label class="form-label" data-en="Company Logo *" data-ar="شعار الشركة *">Company Logo *</label>
-                      <input type="file" name="company_logo" class="form-input" required accept="image/png,image/jpeg,image/webp">
-                      <span class="form-hint" data-en="PNG, JPG, WEBP files only accepted" data-ar="يمكن إرفاق ملفات PNG أو JPG أو WEBP">PNG, JPG, WEBP files only accepted</span>
-                      @if($sponsorFormActive && $errors->has('company_logo'))
-                        <p class="mt-1 text-xs text-red-600">{{ $errors->first('company_logo') }}</p>
-                      @endif
-                    </div>
-                  </div>
-                  <div class="form-group" style="margin-top: 1rem;">
-                    <label class="form-label" data-en="National Address *" data-ar="العنوان الوطني *">National Address *</label>
-                    <textarea name="national_address" class="form-textarea" rows="3" required placeholder="Complete company address">{{ $sponsorFormActive ? old('national_address') : '' }}</textarea>
-                    @if($sponsorFormActive && $errors->has('national_address'))
-                      <p class="mt-1 text-xs text-red-600">{{ $errors->first('national_address') }}</p>
-                    @endif
-                  </div>
-                  <div class="form-group" style="margin-top: 1rem;">
-                    <label class="form-label" data-en="National Address Document *" data-ar="مستند العنوان الوطني *">National Address Document *</label>
-                    <input type="file" name="national_address_document" class="form-input" required accept="application/pdf,image/png,image/jpeg">
-                    @if($sponsorFormActive && $errors->has('national_address_document'))
-                      <p class="mt-1 text-xs text-red-600">{{ $errors->first('national_address_document') }}</p>
-                    @endif
-                  </div>
-                </div>
+	                <div id="exhibitor-step2" style="display: none;">
+	                  <div class="form-grid form-grid-2">
+	                    <div class="form-group">
+	                      <label class="form-label" data-en="VAT (Value Added Tax)" data-ar="ضريبة القيمة المضافة">VAT (Value Added Tax)</label>
+	                      <input type="text" name="vat_number" class="form-input" placeholder="300000000000003"
+	                        value="{{ $sponsorFormActive ? old('vat_number') : '' }}">
+	                      @if($sponsorFormActive && $errors->has('vat_number'))
+	                        <p class="mt-1 text-xs text-red-600">{{ $errors->first('vat_number') }}</p>
+	                      @endif
+	                    </div>
+	                    <div class="form-group">
+	                      <label class="form-label" data-en="CR Number" data-ar="رقم السجل التجاري">CR Number</label>
+	                      <input type="text" name="cr_number" class="form-input" placeholder="1010101010"
+	                        value="{{ $sponsorFormActive ? old('cr_number') : '' }}">
+	                      @if($sponsorFormActive && $errors->has('cr_number'))
+	                        <p class="mt-1 text-xs text-red-600">{{ $errors->first('cr_number') }}</p>
+	                      @endif
+	                    </div>
+	                  </div>
+	                  <div class="form-grid form-grid-2" style="margin-top: 1rem;">
+	                    <div class="form-group">
+	                      <label class="form-label" data-en="CR Copy (Commercial Registration)" data-ar="نسخة السجل التجاري">CR Copy (Commercial Registration)</label>
+	                      <input type="file" name="cr_copy" class="form-input" accept="application/pdf,image/png,image/jpeg">
+	                      @if($sponsorFormActive && $errors->has('cr_copy'))
+	                        <p class="mt-1 text-xs text-red-600">{{ $errors->first('cr_copy') }}</p>
+	                      @endif
+	                    </div>
+	                    <div class="form-group">
+	                      <label class="form-label" data-en="Company Logo" data-ar="شعار الشركة">Company Logo</label>
+	                      <input type="file" name="company_logo" class="form-input" accept="image/png,image/jpeg,image/webp">
+	                      <span class="form-hint" data-en="PNG, JPG, WEBP files only accepted" data-ar="يمكن إرفاق ملفات PNG أو JPG أو WEBP">PNG, JPG, WEBP files only accepted</span>
+	                      @if($sponsorFormActive && $errors->has('company_logo'))
+	                        <p class="mt-1 text-xs text-red-600">{{ $errors->first('company_logo') }}</p>
+	                      @endif
+	                    </div>
+	                  </div>
+	                  <div class="form-group" style="margin-top: 1rem;">
+	                    <label class="form-label" data-en="National Address" data-ar="العنوان الوطني">National Address</label>
+	                    <textarea name="national_address" class="form-textarea" rows="3" placeholder="Complete company address">{{ $sponsorFormActive ? old('national_address') : '' }}</textarea>
+	                    @if($sponsorFormActive && $errors->has('national_address'))
+	                      <p class="mt-1 text-xs text-red-600">{{ $errors->first('national_address') }}</p>
+	                    @endif
+	                  </div>
+	                  <div class="form-group" style="margin-top: 1rem;">
+	                    <label class="form-label" data-en="National Address Document" data-ar="مستند العنوان الوطني">National Address Document</label>
+	                    <input type="file" name="national_address_document" class="form-input" accept="application/pdf,image/png,image/jpeg">
+	                    @if($sponsorFormActive && $errors->has('national_address_document'))
+	                      <p class="mt-1 text-xs text-red-600">{{ $errors->first('national_address_document') }}</p>
+	                    @endif
+	                  </div>
+	                </div>
 
                 <div class="form-buttons">
                   <button type="button" class="btn btn-outline" onclick="exhibitorBack()">

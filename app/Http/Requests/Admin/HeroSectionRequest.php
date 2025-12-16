@@ -25,7 +25,7 @@ class HeroSectionRequest extends FormRequest
             'stats.*.value' => ['required', 'integer', 'min:0'],
             'stats.*.suffix' => ['nullable', 'string', 'max:8'],
             'stats.*.label.en' => ['required', 'string'],
-            'stats.*.label.ar' => ['required', 'string'],
+            'stats.*.label.ar' => ['nullable', 'string'],
         ];
     }
 }
