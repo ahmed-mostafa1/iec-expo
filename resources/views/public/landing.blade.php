@@ -1082,6 +1082,20 @@
       grid-template-columns: repeat(auto-fit, minmax(300px, 250px));
     }
 
+    .organizer-grid {
+      display: grid;
+      gap: 1.5rem;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 640px) {
+      .organizer-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
     .organizer-details {
       flex: 1;
       display: flex;
@@ -1092,22 +1106,23 @@
     }
 
     .organizer-name {
-      font-size: clamp(1.5rem, 2.2vw, 2.25rem);
+      font-size: 1.25rem;
       font-weight: 700;
       margin: 0;
       color: rgb(var(--foreground));
     }
 
     .organizer-desc {
-      font-size: 1.05rem;
+      font-size: 0.95rem;
       color: rgb(var(--muted-foreground));
-      line-height: 1.6;
+      line-height: 1.5;
     }
 
     .organizer-link {
       color: var(--hover-accent);
       text-decoration: none;
       font-weight: 600;
+      align-self: center;
     }
 
     .organizer-link:hover {
@@ -1188,20 +1203,39 @@
       border-color: rgba(249, 168, 212, 0.6);
     }
 
-    .organizer-grid .sponsor-card {
-      min-height: 340px;
+    .organizer-card {
+      background: rgb(var(--card));
+      border: 1px solid rgb(var(--border));
+      padding: 1.25rem;
+      min-height: 320px;
+      justify-content: flex-start;
+      align-items: center;
+      text-align: center;
+      gap: 1.25rem;
+      box-shadow: 0 20px 35px -20px rgba(0, 0, 0, 0.5);
     }
 
     .organizer-logo {
       background: #000;
       border-radius: 1rem;
-      padding: 1rem;
+      padding: 1.25rem;
+      width: 100%;
+      height: 180px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .organizer-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
     }
 
     .organizer-footer {
       display: flex;
       flex-direction: column;
-      gap: 0.5rem;
+      gap: 0.75rem;
     }
 
     .sponsor-badge {
@@ -2550,7 +2584,7 @@
         @endphp
 
         @if($organizers->count())
-          <div class="sponsor-tier-grid tier-main organizer-grid">
+          <div class="organizer-grid">
             @foreach($organizers as $organizer)
               @php
                 $logoPath = $organizer->logo_path ? asset('storage/'.$organizer->logo_path) : asset('img/IEC-logo.png');
