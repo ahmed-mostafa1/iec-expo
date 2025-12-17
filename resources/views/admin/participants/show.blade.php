@@ -61,19 +61,6 @@
                 </dl>
             </div>
 
-            <div>
-                <h2 class="text-sm font-semibold mb-2">{{ __('Description (EN)') }}</h2>
-                <p class="text-gray-700 whitespace-pre-line">
-                    {{ $participant->description_en ?: __('No English description provided.') }}
-                </p>
-            </div>
-
-            <div>
-                <h2 class="text-sm font-semibold mb-2">{{ __('Description (AR)') }}</h2>
-                <p class="text-gray-700 whitespace-pre-line">
-                    {{ $participant->description_ar ?: __('No Arabic description provided.') }}
-                </p>
-            </div>
         </div>
 
         <div class="rounded-xl bg-white border border-gray-200 p-4 text-xs">

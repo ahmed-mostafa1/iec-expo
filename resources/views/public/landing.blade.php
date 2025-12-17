@@ -13,7 +13,6 @@
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <style>
     :root {
-
       --primary-color: #057a02;
       --secondary-color: #00ff44;
       --accent-color: #00ff88;
@@ -26,25 +25,26 @@
       --background: 0 0 0;
       --foreground: 248 248 248;
       /* --card: 251 251 248; */
-      --card: 251 251 248;
-      --card-foreground: 46 56 46;
+      --card: 18 18 18;
+      --card-foreground: 248 248 248;
       --primary: 51 153 88;
       --primary-foreground: 251 251 248;
       --secondary: 226 233 226;
       --secondary-foreground: 69 84 69;
-      --muted: 233 233 226;
-      --muted-foreground: #000;
-      --accent: 228 241 233;
-      --accent-foreground: 38 115 66;
-      --border: 211 222 211;
+      --muted: 20 20 20;
+      --muted-foreground: 248 248 248;
+      --accent: 28 28 28;
+      --accent-foreground: 248 248 248;
+      --border: 68 68 68;
       --ring: 51 153 88;
       --radius: 0.75rem;
       --chart-1: 57 172 99;
       --chart-2: 70 185 147;
       --chart-3: 69 161 161;
-      --button-bg: #98ff98;
-      --button-hover-bg: #e6e6fa;
-      --button-text: #0f0f0f;
+      --button-bg: #9873AC;
+      --button-hover-bg: #b5ffb5;
+      --button-text: #ffffff;
+      --hover-accent: #000000;
     }
 
 
@@ -166,7 +166,7 @@
     }
 
     .nav-link:hover {
-      color: #057a02;
+      color: #9873AC;
     }
 
     .nav-link::before {
@@ -176,7 +176,7 @@
       height: 4px;
       bottom: 0;
       left: 50%;
-      background-color: #057a02;
+      background-color: #9873AC;
       transition: all 0.4s;
     }
 
@@ -284,7 +284,7 @@
     }
 
     .lang-switch:hover {
-      color: #057a02;
+      color: #9873AC;
     }
 
     #lang-text {
@@ -310,7 +310,8 @@
     .btn:hover,
     .btn:focus-visible {
       background-color: var(--button-hover-bg);
-      color: var(--button-text);
+      color: var(--hover-accent);
+      text-shadow: 0 0 6px rgba(0, 0, 0, 0.45);
     }
 
     .btn-outline {
@@ -321,7 +322,15 @@
 
     .btn-outline:hover {
       background: var(--button-hover-bg);
-      color: var(--button-text);
+      color: var(--hover-accent);
+      text-shadow: 0 0 6px rgba(0, 0, 0, 0.45);
+    }
+
+    button:hover,
+    button:focus-visible,
+    a:hover,
+    a:focus-visible {
+      color: #9873AC;
     }
 
     .btn-lg {
@@ -693,7 +702,7 @@
       align-items: center;
       justify-content: center;
       gap: 0.5rem;
-      color: rgb(var(--primary));
+      color: rgb(var(--card-foreground));
       font-weight: 500;
     }
 
@@ -1022,7 +1031,7 @@
       font-size: 1.5rem;
       font-weight: 700;
       margin-bottom: 0.25rem;
-      color: #057a02
+      color: rgb(var(--card-foreground));
     }
 
     .goal-desc {
@@ -1117,11 +1126,12 @@
       z-index: 1;
       display: flex;
       gap: 2rem;
-      align-items: stretch;
+      align-items: center;
+      justify-content: center;
       padding: 2rem;
       border-radius: calc(1.5rem - 2px);
-      background: rgba(255, 255, 255, 0.95);
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+      background: #000;
+      box-shadow: inset 0 1px 0 rgba(127, 243, 112, 0.6);
     }
 
     .sponsor-featured-media {
@@ -1133,16 +1143,22 @@
       gap: 1rem;
     }
 
+    .sponsor-featured-logo-link {
+      display: block;
+      width: 100%;
+      text-decoration: none;
+    }
+
     .sponsor-featured-logo {
       width: 100%;
       aspect-ratio: 1 / 1;
       border-radius: 1rem;
-      background: rgb(var(--muted));
+      background: #000;
       display: flex;
       align-items: center;
       justify-content: center;
       /* padding: 1rem; */
-      border: solid 1px rgb(var(--border));
+      /* border: solid 1px rgb(var(--border)); */
     }
 
     .sponsor-featured-logo img {
@@ -1150,60 +1166,36 @@
       height: 100%;
       object-fit: contain;
     }
-
-    .sponsor-visit-btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 0.4rem;
-      padding: 0.65rem 1.5rem;
-      border-radius: 9999px;
-      background: rgb(var(--primary));
-      color: rgb(var(--primary-foreground));
-      font-weight: 600;
-      text-decoration: none;
-      transition: background 0.3s ease, transform 0.3s ease;
-      width: 100%;
-    }
-
-    .sponsor-visit-btn:hover {
-      background: #046302;
-      transform: translateY(-1px);
-    }
-
-    .sponsor-featured-body {
+    .organizer-details {
       flex: 1;
       display: flex;
       flex-direction: column;
       justify-content: center;
       gap: 0.75rem;
+      text-align: center;
     }
 
-    .sponsor-featured-label {
-      font-size: 0.85rem;
-      letter-spacing: 0.2em;
-      font-weight: 600;
-      text-transform: uppercase;
-      color: rgb(var(--primary));
-    }
-
-    .sponsor-featured-name-link {
-      text-decoration: none;
-    }
-
-    .sponsor-featured-name {
+    .organizer-name {
       font-size: clamp(1.5rem, 2.2vw, 2.25rem);
       font-weight: 700;
-      text-align: center;
       margin: 0;
       color: rgb(var(--foreground));
     }
 
-    .sponsor-featured-desc {
-      font-size: 1.15rem;
-      text-align: center;
+    .organizer-desc {
+      font-size: 1.05rem;
       color: rgb(var(--muted-foreground));
-      line-height: 1.7;
+      line-height: 1.6;
+    }
+
+    .organizer-link {
+      color: var(--hover-accent);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .organizer-link:hover {
+      text-decoration: underline;
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -1452,89 +1444,6 @@
       opacity: 1;
     }
 
-    .participant-modal {
-      position: fixed;
-      inset: 0;
-      display: none;
-      align-items: center;
-      justify-content: center;
-      z-index: 1000;
-    }
-
-    .participant-modal.active {
-      display: flex;
-    }
-
-    .participant-modal-backdrop {
-      position: absolute;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.6);
-      backdrop-filter: blur(4px);
-    }
-
-    .participant-modal-content {
-      position: relative;
-      z-index: 1001;
-      width: min(480px, 90%);
-      background: rgb(var(--card));
-      border-radius: 1.5rem;
-      padding: 2rem;
-      border: 1px solid rgb(var(--border));
-      box-shadow: 0 25px 80px rgba(0, 0, 0, 0.2);
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-      animation: fadeInUp 0.35s ease;
-    }
-
-    .participant-modal-close {
-      position: absolute;
-      top: 1rem;
-      inset-inline-end: 1rem;
-      border: none;
-      background: transparent;
-      font-size: 1.5rem;
-      cursor: pointer;
-      color: rgb(var(--muted-foreground));
-    }
-
-    .participant-modal-logo {
-      /* width: 96px; */
-      height: 96px;
-      background: rgb(var(--primary) / 0.1);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto;
-      overflow: hidden;
-    }
-
-    .participant-modal-logo img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
-
-    .participant-modal-title {
-      text-align: center;
-      font-size: 1.5rem;
-      font-weight: 700;
-      margin-bottom: 0.25rem;
-    }
-
-    .participant-modal-desc {
-      text-align: center;
-      color: rgb(var(--muted-foreground));
-      line-height: 1.6;
-    }
-
-    .participant-modal-actions {
-      display: flex;
-      justify-content: center;
-      gap: 1rem;
-      margin-top: 0.5rem;
-    }
-
     /* Contact Section */
     .contact {
       padding: 5rem 0;
@@ -1612,7 +1521,7 @@
 
     .contact-info-card.primary {
       border-color: rgb(var(--primary) / 0.3);
-      background: rgb(var(--primary) / 0.05);
+      background: rgb(var(--card));
     }
 
     .contact-info-header {
@@ -1661,7 +1570,7 @@
     }
 
     .contact-info-link:hover {
-      color: rgb(var(--primary));
+      color: var(--hover-accent);
     }
 
     .location-card {
@@ -2574,14 +2483,6 @@
 
         @php
         $currentLocale = app()->getLocale();
-        $defaultSponsorCopy = [
-        'en' => __('Proud partner of the IEC Expo, empowering innovation and growth.'),
-        'ar' => __('شريك فخور بدعم معرض IEC، ويساهم في تمكين الابتكار والنمو.'),
-        ];
-        $visitWebsiteCopy = [
-        'en' => __('Visit Website'),
-        'ar' => __('زيارة الموقع'),
-        ];
         @endphp
         <div class="sponsor-tiers">
           @php $renderedSponsors = false; @endphp
@@ -2604,36 +2505,15 @@
               $englishName = $sponsor->name_en ?? $sponsor->name ?? '';
               $arabicName = $sponsor->name_ar ?? $englishName;
               $displayName = $currentLocale === 'ar' ? $arabicName : $englishName;
-              $localizedDescription = method_exists($sponsor, 'getDescriptionForLocale')
-              ? $sponsor->getDescriptionForLocale(app()->getLocale())
-              : null;
-              $description = $localizedDescription
-              ?? $sponsor->description
-              ?? ($sponsor->description_en ?? null)
-              ?? $defaultSponsorCopy[$currentLocale];
-              $descriptionEn = $sponsor->description_en ?? $defaultSponsorCopy['en'];
-              $descriptionAr = $sponsor->description_ar ?? $descriptionEn ?? $defaultSponsorCopy['ar'];
               @endphp
               <article class="sponsor-featured-card sponsor-{{ $tierKey }}" data-animate>
                 <div class="sponsor-featured-content">
                   <div class="sponsor-featured-media">
-                    <div class="sponsor-featured-logo">
-                      <img src="{{ $logoPath }}" alt="{{ $displayName }}">
-                    </div>
-                    @if($sponsor->url)
-                    <a href="{{ $sponsor->url }}" class="sponsor-visit-btn" target="_blank" rel="noopener">
-                      <span data-en="{{ e($visitWebsiteCopy['en']) }}" data-ar="{{ e($visitWebsiteCopy['ar']) }}">{{ $visitWebsiteCopy[$currentLocale] }}</span>
-                      <svg class="icon icon-sm" viewBox="0 0 24 24">
-                        <path d="M5 12h14M12 5l7 7-7 7" />
-                      </svg>
+                    <a href="" class="sponsor-featured-logo-link" aria-label="{{ $displayName }}">
+                      <div class="sponsor-featured-logo">
+                        <img src="{{ $logoPath }}" alt="{{ $displayName }}">
+                      </div>
                     </a>
-                    @endif
-                  </div>
-                  <div class="sponsor-featured-body">
-                    <a href="{{ $profileRoute }}" class="sponsor-featured-name-link">
-                      <h3 class="sponsor-featured-name" data-en="{{ e($englishName) }}" data-ar="{{ e($arabicName) }}">{{ $displayName }}</h3>
-                    </a>
-                    <p class="sponsor-featured-desc" data-en="{{ e($descriptionEn) }}" data-ar="{{ e($descriptionAr) }}">{{ $description }}</p>
                   </div>
                 </div>
               </article>
@@ -2662,22 +2542,12 @@
               $displayName = $currentLocale === 'ar' ? $arabicName : $englishName;
               @endphp
               <article class="sponsor-card" data-animate>
-                <a href="{{ route('public.sponsors.show', ['locale' => app()->getLocale(), 'sponsor' => $sponsor]) }}"
+                <a href=""
                   class="sponsor-card-link">
                   <div class="sponsor-logo">
                     <img src="{{ $logoPath }}" alt="{{ $displayName }}">
                   </div>
                 </a>
-                @if($sponsor->url)
-                <div class="sponsor-card-action">
-                  <a href="{{ $sponsor->url }}" target="_blank" rel="noopener" class="sponsor-visit-btn">
-                    <span data-en="{{ e($visitWebsiteCopy['en']) }}" data-ar="{{ e($visitWebsiteCopy['ar']) }}">{{ $visitWebsiteCopy[$currentLocale] }}</span>
-                    <svg class="icon icon-sm" viewBox="0 0 24 24" style="width:16px;height:16px;">
-                      <path d="M5 12h14M12 5l7 7-7 7" />
-                    </svg>
-                  </a>
-                </div>
-                @endif
               </article>
               @endforeach
             </div>
@@ -2704,28 +2574,15 @@
           @php
           $englishName = $participant->name ?? '';
           $arabicName = $participant->name_ar ?? $englishName;
-          $participantDescriptionEn = $participant->description_en ?: __('Details coming soon.');
-          $participantDescriptionAr = $participant->description_ar ?: __('سيتم مشاركة التفاصيل قريباً.');
           $participantName = app()->getLocale() === 'ar' ? $arabicName : $englishName;
-          $participantDescription = app()->getLocale() === 'ar' ? $participantDescriptionAr : $participantDescriptionEn;
-          $logoSrc = $participant->logo_path
-          ? asset('storage/'.$participant->logo_path)
-          : null;
-          $participantHref = $participant->url
-          ? $participant->url
-          : route('public.participants.show', ['locale' => app()->getLocale(), 'participant' => $participant]);
+          // $participantHref = $participant->url
+          // ? $participant->url
+          // : route('public.participants.show', ['locale' => app()->getLocale(), 'participant' => $participant]);
           $isExternalParticipant = (bool) $participant->url;
           @endphp
-          <a href="{{ $participantHref }}"
-            class="participant-card participant-modal-trigger"
+          <a href=""
+            class="participant-card"
             data-animate
-            data-participant-name-en="{{ e($englishName) }}"
-            data-participant-name-ar="{{ e($arabicName) }}"
-            data-participant-desc-en="{{ e($participantDescriptionEn) }}"
-            data-participant-desc-ar="{{ e($participantDescriptionAr) }}"
-            data-participant-logo="{{ $logoSrc }}"
-            data-participant-url="{{ $participant->url }}"
-            data-participant-internal="{{ $participant->url ? 'false' : 'true' }}"
             @if($isExternalParticipant) target="_blank" rel="noopener" @endif>
             <div class="participant-logo">
               @if($participant->logo_path)
@@ -2753,22 +2610,6 @@
         </div>
       </div>
     </section>
-
-    <!-- Participant Modal -->
-    <div class="participant-modal" id="participant-modal" aria-hidden="true">
-      <div class="participant-modal-backdrop" data-modal-close></div>
-      <div class="participant-modal-content" role="dialog" aria-modal="true" aria-labelledby="participant-modal-title">
-        <button class="participant-modal-close" type="button" data-modal-close>&times;</button>
-        <div class="participant-modal-logo" id="participant-modal-logo"></div>
-        <h3 class="participant-modal-title" id="participant-modal-title"></h3>
-        <p class="participant-modal-desc" id="participant-modal-desc"></p>
-        <div class="participant-modal-actions">
-          <a href="#" id="participant-modal-link" class="sponsor-visit-btn" target="_blank" rel="noopener">
-            <span data-en="Visit Website" data-ar="زيارة الموقع">Visit Website</span>
-          </a>
-        </div>
-      </div>
-    </div>
 
     <!-- Organizers Section -->
     <section class="organizers" id="organizers">
@@ -2810,8 +2651,8 @@
                     <div class="sponsor-featured-logo" style="background: #000;">
                       <img src="{{ $logoPath }}" alt="{{ $displayName }}">
                     </div>
-                    @if($organizer->url)
-                      <a href="{{ $organizer->url }}" class="sponsor-visit-btn" target="_blank" rel="noopener">
+                                        @if($organizer->url)
+                       <a href="{{ $organizer->url }}" class="btn btn-primary" target="_blank" rel="noopener">
                         <span data-en="{{ e($organizerVisitCopy['en']) }}" data-ar="{{ e($organizerVisitCopy['ar']) }}">{{ $organizerVisitCopy[$currentLocale] }}</span>
                         <svg class="icon icon-sm" viewBox="0 0 24 24">
                           <path d="M5 12h14M12 5l7 7-7 7" />
@@ -2819,9 +2660,9 @@
                       </a>
                     @endif
                   </div>
-                  <div class="sponsor-featured-body">
-                    <h3 class="sponsor-featured-name" data-en="{{ e($englishName) }}" data-ar="{{ e($arabicName) }}">{{ $displayName }}</h3>
-                    <p class="sponsor-featured-desc" data-en="{{ e($descriptionEn) }}" data-ar="{{ e($descriptionAr) }}">{{ $description }}</p>
+                  <div class="organizer-details">
+                    <h3 class="organizer-name" data-en="{{ e($englishName) }}" data-ar="{{ e($arabicName) }}">{{ $displayName }}</h3>
+                    <p class="organizer-desc" data-en="{{ e($descriptionEn) }}" data-ar="{{ e($descriptionAr) }}">{{ $description }}</p>
                   </div>
                 </div>
               </article>
@@ -2859,14 +2700,14 @@
     <section class="contact" id="contact">
       <div class="container">
         <div class="section-header" data-animate>
-          <h2 class="section-title" data-en="{{ e($contactTitleBlock['en']) }}" data-ar="{{ e($contactTitleBlock['ar']) }}" style="color:#057a02;">{{ $contactTitleBlock['text'] }}</h2>
+          <h2 class="section-title" data-en="{{ e($contactTitleBlock['en']) }}" data-ar="{{ e($contactTitleBlock['ar']) }}">{{ $contactTitleBlock['text'] }}</h2>
           <p class="section-desc" data-en="{{ e($contactDescriptionBlock['en']) }}" data-ar="{{ e($contactDescriptionBlock['ar']) }}">{{ $contactDescriptionBlock['text'] }}</p>
         </div>
 
         <div class="contact-grid">
           <div class="contact-col" data-animate>
             <div class="contact-form-card">
-              <h3 class="form-title" data-en="{{ e($contactFormTitle['en']) }}" data-ar="{{ e($contactFormTitle['ar']) }}" style="color:#057a02;">{{ $contactFormTitle['text'] }}</h3>
+              <h3 class="form-title" data-en="{{ e($contactFormTitle['en']) }}" data-ar="{{ e($contactFormTitle['ar']) }}">{{ $contactFormTitle['text'] }}</h3>
               <form onsubmit="handleContactSubmit(event)">
                 <div class="form-grid">
                   <div class="form-group">
@@ -2904,8 +2745,7 @@
                 <div class="contact-info-card">
                   <div class="contact-info-header">
                     <div style="flex: 1;">
-                      <div class="contact-info-name" data-en="{{ e($cardTitle['en']) }}" data-ar="{{ e($cardTitle['ar']) }}"
-                        style="color:#057a02;">
+                      <div class="contact-info-name" data-en="{{ e($cardTitle['en']) }}" data-ar="{{ e($cardTitle['ar']) }}">
                         {{ $cardTitle['text'] }}
                       </div>
                       <div class="contact-info-links two-columns">
@@ -2956,7 +2796,7 @@
               </svg>
             </div>
             <div>
-              <div class="location-title" style="color:#057a02;" data-en="{{ e($locationTitleBlock['en']) }}" data-ar="{{ e($locationTitleBlock['ar']) }}">{{ $locationTitleBlock['text'] }}</div>
+              <div class="location-title" data-en="{{ e($locationTitleBlock['en']) }}" data-ar="{{ e($locationTitleBlock['ar']) }}">{{ $locationTitleBlock['text'] }}</div>
               <p class="location-address" data-en="{{ e($locationAddressBlock['en']) }}" data-ar="{{ e($locationAddressBlock['ar']) }}">{{ $locationAddressBlock['text'] }}</p>
             </div>
           </div>
@@ -3121,83 +2961,6 @@
       });
 
       aboutVideoObserver.observe(aboutSection);
-    })();
-
-    // Participant Modal
-    (function() {
-      const modal = document.getElementById('participant-modal');
-      if (!modal) return;
-
-      const modalLogo = document.getElementById('participant-modal-logo');
-      const modalTitle = document.getElementById('participant-modal-title');
-      const modalDesc = document.getElementById('participant-modal-desc');
-      const modalLink = document.getElementById('participant-modal-link');
-      const backdropCloseElements = modal.querySelectorAll('[data-modal-close]');
-
-      const setModalText = (element, text) => {
-        element.textContent = text;
-      };
-
-      const openModal = () => {
-        modal.classList.add('active');
-        document.body.style.overflow = 'hidden';
-      };
-
-      const closeModal = () => {
-        modal.classList.remove('active');
-        document.body.style.overflow = '';
-      };
-
-      document.querySelectorAll('.participant-modal-trigger').forEach(card => {
-        card.addEventListener('click', (event) => {
-          event.preventDefault();
-
-          const isInternal = card.dataset.participantInternal === 'true';
-          const currentLocale = document.documentElement.lang || 'en';
-
-          const localizedName = currentLocale === 'ar' ?
-            card.dataset.participantNameAr : card.dataset.participantNameEn;
-          const localizedDesc = currentLocale === 'ar' ?
-            card.dataset.participantDescAr : card.dataset.participantDescEn;
-          const logo = card.dataset.participantLogo;
-          const externalUrl = card.dataset.participantUrl;
-
-          modalLogo.innerHTML = '';
-          if (logo) {
-            const img = document.createElement('img');
-            img.src = logo;
-            img.alt = localizedName;
-            modalLogo.appendChild(img);
-          } else {
-            modalLogo.textContent = localizedName?.charAt(0)?.toUpperCase() || 'ℹ️';
-          }
-
-          setModalText(modalTitle, localizedName);
-          setModalText(modalDesc, localizedDesc);
-
-          if (externalUrl) {
-            modalLink.href = externalUrl;
-            modalLink.style.display = 'inline-flex';
-          } else if (isInternal) {
-            modalLink.href = card.getAttribute('href');
-            modalLink.style.display = 'inline-flex';
-          } else {
-            modalLink.style.display = 'none';
-          }
-
-          openModal();
-        });
-      });
-
-      backdropCloseElements.forEach(el => {
-        el.addEventListener('click', closeModal);
-      });
-
-      document.addEventListener('keydown', (event) => {
-        if (event.key === 'Escape' && modal.classList.contains('active')) {
-          closeModal();
-        }
-      });
     })();
 
     // Registration Role Selection

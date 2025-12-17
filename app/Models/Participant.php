@@ -10,8 +10,6 @@ class Participant extends Model
         'name',
         'name_ar',
         'logo_path',
-        'description_en',
-        'description_ar',
         'url',
         'is_active',
         'display_order',
