@@ -1067,105 +1067,21 @@
       margin: 0 auto;
     }
 
-    .sponsor-tier-grid.tier-main {
-      grid-template-columns: repeat(auto-fit, minmax(220px, 260px));
+    .sponsor-tier-grid.tier-main,
+    .sponsor-tier-grid.tier-strategic {
+      grid-template-columns: repeat(auto-fit, minmax(300px, 250px));
     }
 
-    .sponsor-tier-grid.tier-gold {
-      grid-template-columns: repeat(auto-fit, minmax(200px, 220px));
+    .sponsor-tier-grid.tier-gold,
+    .sponsor-tier-grid.tier-business {
+      grid-template-columns: repeat(auto-fit, minmax(300px, 250px));
     }
 
-    .sponsor-tier-grid.tier-silver {
-      grid-template-columns: repeat(auto-fit, minmax(180px, 200px));
+    .sponsor-tier-grid.tier-silver,
+    .sponsor-tier-grid.tier-marketing {
+      grid-template-columns: repeat(auto-fit, minmax(300px, 250px));
     }
 
-    .sponsor-featured-list {
-      display: flex;
-      flex-direction: column;
-      gap: 2rem;
-      max-width: 70%;
-      margin: 0 auto;
-    }
-
-    .sponsor-featured-card {
-      width: 100%;
-      position: relative;
-      border-radius: 1.5rem;
-      padding: 2px;
-      --sponsor-gradient: linear-gradient(120deg, #2dd4bf, #0f9f6e, #2dd4bf);
-      background: var(--sponsor-gradient);
-      background-size: 250% 250%;
-      animation: sponsorBorderFlow 8s linear infinite;
-      overflow: hidden;
-    }
-
-    .sponsor-featured-card.sponsor-strategic {
-      --sponsor-gradient: linear-gradient(120deg, #fde68a, #f59e0b, #fcd34d);
-    }
-
-    .sponsor-featured-card.sponsor-business {
-      --sponsor-gradient: linear-gradient(120deg, #a5b4fc, #6366f1, #a5b4fc);
-    }
-
-    .sponsor-featured-card.sponsor-marketing {
-      --sponsor-gradient: linear-gradient(120deg, #f9a8d4, #db2777, #f472b6);
-    }
-
-    @keyframes sponsorBorderFlow {
-      0% {
-        background-position: 0% 50%;
-      }
-
-      100% {
-        background-position: 200% 50%;
-      }
-    }
-
-    .sponsor-featured-content {
-      position: relative;
-      z-index: 1;
-      display: flex;
-      gap: 2rem;
-      align-items: center;
-      justify-content: center;
-      padding: 2rem;
-      border-radius: calc(1.5rem - 2px);
-      background: #000;
-      box-shadow: inset 0 1px 0 rgba(127, 243, 112, 0.6);
-    }
-
-    .sponsor-featured-media {
-      flex: 0 0 25%;
-      max-width: 25%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 1rem;
-    }
-
-    .sponsor-featured-logo-link {
-      display: block;
-      width: 100%;
-      text-decoration: none;
-    }
-
-    .sponsor-featured-logo {
-      width: 100%;
-      aspect-ratio: 1 / 1;
-      border-radius: 1rem;
-      background: #000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      /* padding: 1rem; */
-      /* border: solid 1px rgb(var(--border)); */
-    }
-
-    .sponsor-featured-logo img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-    }
     .organizer-details {
       flex: 1;
       display: flex;
@@ -1196,37 +1112,6 @@
 
     .organizer-link:hover {
       text-decoration: underline;
-    }
-
-    @media (prefers-reduced-motion: reduce) {
-      .sponsor-featured-card {
-        animation: none;
-      }
-    }
-
-    @media (max-width: 900px) {
-      .sponsor-featured-media {
-        flex-basis: 30%;
-        max-width: 30%;
-      }
-    }
-
-    @media (max-width: 768px) {
-      .sponsor-featured-content {
-        flex-direction: column;
-        padding: 1.5rem;
-      }
-
-      .sponsor-featured-media {
-        flex-basis: auto;
-        max-width: none;
-        width: 100%;
-      }
-
-      .sponsor-featured-logo {
-        width: 100%;
-        /* margin: 0 auto; */
-      }
     }
 
     .sponsor-card {
@@ -1289,6 +1174,34 @@
 
     .sponsor-card.silver:hover {
       border-color: rgb(143 150 163 / 0.6);
+    }
+
+    .sponsor-card.sponsor-strategic {
+      border-color: rgba(253, 230, 138, 0.6);
+    }
+
+    .sponsor-card.sponsor-business {
+      border-color: rgba(165, 180, 252, 0.6);
+    }
+
+    .sponsor-card.sponsor-marketing {
+      border-color: rgba(249, 168, 212, 0.6);
+    }
+
+    .organizer-grid .sponsor-card {
+      min-height: 340px;
+    }
+
+    .organizer-logo {
+      background: #000;
+      border-radius: 1rem;
+      padding: 1rem;
+    }
+
+    .organizer-footer {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
     }
 
     .sponsor-badge {
@@ -1753,7 +1666,7 @@
     }
 
     .stat-item {
-      background: white;
+      background: #88808048;
       padding: 40px 30px;
       border-radius: 20px;
       text-align: center;
@@ -1807,13 +1720,13 @@
     .stat-number {
       font-size: 2.8rem;
       font-weight: 800;
-      color: var(--dark-color);
+      color: #9873AC;
       margin-bottom: 10px;
     }
 
     .stat-label {
       font-size: 1rem;
-      color: var(--text-light);
+      color: #9873AC;
       text-transform: uppercase;
       letter-spacing: 1px;
       margin-bottom: 20px;
@@ -2497,26 +2410,25 @@
           @php $renderedSponsors = true; @endphp
           <div class="sponsor-tier">
             <h2 class="sponsor-tier-title" data-en="{{ e($labelEn) }}" data-ar="{{ e($labelAr) }}">{{ $label }}</h2>
-            <div class="sponsor-featured-list">
+            <div class="sponsor-tier-grid tier-{{ $tierKey }}">
               @foreach($tierSponsors as $sponsor)
-              @php
-              $logoPath = $sponsor->logo_path ? asset('storage/'.$sponsor->logo_path) : asset('img/IEC-logo.png');
-              $profileRoute = route('public.sponsors.show', ['locale' => app()->getLocale(), 'sponsor' => $sponsor]);
-              $englishName = $sponsor->name_en ?? $sponsor->name ?? '';
-              $arabicName = $sponsor->name_ar ?? $englishName;
-              $displayName = $currentLocale === 'ar' ? $arabicName : $englishName;
-              @endphp
-              <article class="sponsor-featured-card sponsor-{{ $tierKey }}" data-animate>
-                <div class="sponsor-featured-content">
-                  <div class="sponsor-featured-media">
-                    <a href="" class="sponsor-featured-logo-link" aria-label="{{ $displayName }}">
-                      <div class="sponsor-featured-logo">
-                        <img src="{{ $logoPath }}" alt="{{ $displayName }}">
-                      </div>
-                    </a>
-                  </div>
-                </div>
-              </article>
+                @php
+                  $logoPath = $sponsor->logo_path ? asset('storage/'.$sponsor->logo_path) : asset('img/IEC-logo.png');
+                  $profileRoute = route('public.sponsors.show', ['locale' => app()->getLocale(), 'sponsor' => $sponsor]);
+                  $englishName = $sponsor->name_en ?? $sponsor->name ?? '';
+                  $arabicName = $sponsor->name_ar ?? $englishName;
+                  $displayName = $currentLocale === 'ar' ? $arabicName : $englishName;
+                @endphp
+                <article class="sponsor-card sponsor-{{ $tierKey }}" data-animate>
+                  <a href="{{ $profileRoute }}" class="sponsor-card-link">
+                    <div class="sponsor-logo">
+                      <img src="{{ $logoPath }}" alt="{{ $displayName }}">
+                    </div>
+                    <div class="sponsor-card-footer">
+                      <span data-en="{{ e($englishName) }}" data-ar="{{ e($arabicName) }}">{{ $displayName }}</span>
+                    </div>
+                  </a>
+                </article>
               @endforeach
             </div>
           </div>
@@ -2537,15 +2449,19 @@
               @foreach($otherSponsors as $sponsor)
               @php
               $logoPath = $sponsor->logo_path ? asset('storage/'.$sponsor->logo_path) : asset('img/IEC-logo.png');
+              $profileRoute = route('public.sponsors.show', ['locale' => app()->getLocale(), 'sponsor' => $sponsor]);
               $englishName = $sponsor->name_en ?? $sponsor->name ?? '';
               $arabicName = $sponsor->name_ar ?? $englishName;
               $displayName = $currentLocale === 'ar' ? $arabicName : $englishName;
               @endphp
               <article class="sponsor-card" data-animate>
-                <a href=""
+                <a href="{{ $profileRoute }}"
                   class="sponsor-card-link">
                   <div class="sponsor-logo">
                     <img src="{{ $logoPath }}" alt="{{ $displayName }}">
+                  </div>
+                  <div class="sponsor-card-footer">
+                    <span data-en="{{ e($englishName) }}" data-ar="{{ e($arabicName) }}">{{ $displayName }}</span>
                   </div>
                 </a>
               </article>
@@ -2575,12 +2491,12 @@
           $englishName = $participant->name ?? '';
           $arabicName = $participant->name_ar ?? $englishName;
           $participantName = app()->getLocale() === 'ar' ? $arabicName : $englishName;
-          // $participantHref = $participant->url
-          // ? $participant->url
-          // : route('public.participants.show', ['locale' => app()->getLocale(), 'participant' => $participant]);
+          $participantHref = $participant->url
+          ? $participant->url
+          : route('public.participants.show', ['locale' => app()->getLocale(), 'participant' => $participant]);
           $isExternalParticipant = (bool) $participant->url;
           @endphp
-          <a href=""
+          <a href="{{ $participantHref }}"
             class="participant-card"
             data-animate
             @if($isExternalParticipant) target="_blank" rel="noopener" @endif>
@@ -2634,7 +2550,7 @@
         @endphp
 
         @if($organizers->count())
-          <div class="sponsor-featured-list">
+          <div class="sponsor-tier-grid tier-main organizer-grid">
             @foreach($organizers as $organizer)
               @php
                 $logoPath = $organizer->logo_path ? asset('storage/'.$organizer->logo_path) : asset('img/IEC-logo.png');
@@ -2645,25 +2561,18 @@
                 $descriptionAr = $organizer->description_ar ?? $organizerFallbackDesc['ar'];
                 $description = $currentLocale === 'ar' ? $descriptionAr : $descriptionEn;
               @endphp
-              <article class="sponsor-featured-card sponsor-strategic" data-animate>
-                <div class="sponsor-featured-content">
-                  <div class="sponsor-featured-media">
-                    <div class="sponsor-featured-logo" style="background: #000;">
-                      <img src="{{ $logoPath }}" alt="{{ $displayName }}">
-                    </div>
-                                        @if($organizer->url)
-                       <a href="{{ $organizer->url }}" class="btn btn-primary" target="_blank" rel="noopener">
-                        <span data-en="{{ e($organizerVisitCopy['en']) }}" data-ar="{{ e($organizerVisitCopy['ar']) }}">{{ $organizerVisitCopy[$currentLocale] }}</span>
-                        <svg class="icon icon-sm" viewBox="0 0 24 24">
-                          <path d="M5 12h14M12 5l7 7-7 7" />
-                        </svg>
-                      </a>
-                    @endif
-                  </div>
-                  <div class="organizer-details">
-                    <h3 class="organizer-name" data-en="{{ e($englishName) }}" data-ar="{{ e($arabicName) }}">{{ $displayName }}</h3>
-                    <p class="organizer-desc" data-en="{{ e($descriptionEn) }}" data-ar="{{ e($descriptionAr) }}">{{ $description }}</p>
-                  </div>
+              <article class="sponsor-card organizer-card" data-animate>
+                <div class="sponsor-logo organizer-logo">
+                  <img src="{{ $logoPath }}" alt="{{ $displayName }}">
+                </div>
+                <div class="sponsor-card-footer organizer-footer">
+                  <span class="organizer-name" data-en="{{ e($englishName) }}" data-ar="{{ e($arabicName) }}">{{ $displayName }}</span>
+                  <p class="organizer-desc" data-en="{{ e($descriptionEn) }}" data-ar="{{ e($descriptionAr) }}">{{ $description }}</p>
+                  @if($organizer->url)
+                    <a href="{{ $organizer->url }}" class="organizer-link" target="_blank" rel="noopener">
+                      {{ $organizerVisitCopy[$currentLocale] }}
+                    </a>
+                  @endif
                 </div>
               </article>
             @endforeach
