@@ -2448,19 +2448,14 @@
               @foreach($tierSponsors as $sponsor)
                 @php
                   $logoPath = $sponsor->logo_path ? asset('storage/'.$sponsor->logo_path) : asset('img/IEC-logo.png');
-                  $profileRoute = route('public.sponsors.show', ['locale' => app()->getLocale(), 'sponsor' => $sponsor]);
-                  $englishName = $sponsor->name_en ?? $sponsor->name ?? '';
-                  $arabicName = $sponsor->name_ar ?? $englishName;
-                  $displayName = $currentLocale === 'ar' ? $arabicName : $englishName;
+                
                 @endphp
                 <article class="sponsor-card sponsor-{{ $tierKey }}" data-animate>
-                  <a href="{{ $profileRoute }}" class="sponsor-card-link">
+                  <a href="" class="sponsor-card-link">
                     <div class="sponsor-logo">
-                      <img src="{{ $logoPath }}" alt="{{ $displayName }}">
+                      <img src="{{ $logoPath }}" alt="">
                     </div>
-                    <div class="sponsor-card-footer">
-                      <span data-en="{{ e($englishName) }}" data-ar="{{ e($arabicName) }}">{{ $displayName }}</span>
-                    </div>
+                   
                   </a>
                 </article>
               @endforeach
@@ -2483,20 +2478,15 @@
               @foreach($otherSponsors as $sponsor)
               @php
               $logoPath = $sponsor->logo_path ? asset('storage/'.$sponsor->logo_path) : asset('img/IEC-logo.png');
-              $profileRoute = route('public.sponsors.show', ['locale' => app()->getLocale(), 'sponsor' => $sponsor]);
-              $englishName = $sponsor->name_en ?? $sponsor->name ?? '';
-              $arabicName = $sponsor->name_ar ?? $englishName;
-              $displayName = $currentLocale === 'ar' ? $arabicName : $englishName;
+              
               @endphp
               <article class="sponsor-card" data-animate>
-                <a href="{{ $profileRoute }}"
+                <a href=""
                   class="sponsor-card-link">
                   <div class="sponsor-logo">
-                    <img src="{{ $logoPath }}" alt="{{ $displayName }}">
+                    <img src="{{ $logoPath }}" alt="">
                   </div>
-                  <div class="sponsor-card-footer">
-                    <span data-en="{{ e($englishName) }}" data-ar="{{ e($arabicName) }}">{{ $displayName }}</span>
-                  </div>
+                 
                 </a>
               </article>
               @endforeach
