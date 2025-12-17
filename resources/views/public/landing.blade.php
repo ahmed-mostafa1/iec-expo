@@ -23,8 +23,8 @@
       --text-light: #666;
       --border-radius: 12px;
       --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-      --background: 248 248 242;
-      --foreground: 46 56 46;
+      --background: 0 0 0;
+      --foreground: 248 248 248;
       /* --card: 251 251 248; */
       --card: 251 251 248;
       --card-foreground: 46 56 46;
@@ -42,6 +42,9 @@
       --chart-1: 57 172 99;
       --chart-2: 70 185 147;
       --chart-3: 69 161 161;
+      --button-bg: #98ff98;
+      --button-hover-bg: #e6e6fa;
+      --button-text: #0f0f0f;
     }
 
 
@@ -300,19 +303,25 @@
       transition: all 0.2s;
       text-decoration: none;
       border: none;
+      background-color: var(--button-bg);
+      color: var(--button-text);
     }
 
-
+    .btn:hover,
+    .btn:focus-visible {
+      background-color: var(--button-hover-bg);
+      color: var(--button-text);
+    }
 
     .btn-outline {
-      background: transparent;
-      color: rgb(var(--foreground));
-      border: 1px solid rgb(var(--border));
+      background: var(--button-bg);
+      color: var(--button-text);
+      border: none;
     }
 
     .btn-outline:hover {
-      background: rgb(var(--accent));
-      border-color: rgb(var(--primary) / 0.3);
+      background: var(--button-hover-bg);
+      color: var(--button-text);
     }
 
     .btn-lg {
@@ -2289,7 +2298,7 @@
                     <span data-en="Back" data-ar="رجوع">{{ __('Back') }}</span>
                   </button>
                   <button type="submit" class="btn btn-primary" data-en="{{ e($visitorSubmit['en']) }}" data-ar="{{ e($visitorSubmit['ar']) }}">{{ $visitorSubmit['text'] }}</button>
-                  <button type="button" class="btn btn-outline" onclick="scrollToContact()" data-en="{{ e($visitorContact['en']) }}" data-ar="{{ e($visitorContact['ar']) }}" style="background:#057a02; color:#fff;">{{ $visitorContact['text'] }}</button>
+                  <button type="button" class="btn btn-outline" onclick="scrollToContact()" data-en="{{ e($visitorContact['en']) }}" data-ar="{{ e($visitorContact['ar']) }}">{{ $visitorContact['text'] }}</button>
                 </div>
               </form>
             </div>
@@ -2466,7 +2475,7 @@
                     </svg>
                   </button>
                   <button type="submit" class="btn btn-primary" id="exhibitor-submit-btn" style="display: none;" data-en="{{ e($exhibitorSubmit['en']) }}" data-ar="{{ e($exhibitorSubmit['ar']) }}">{{ $exhibitorSubmit['text'] }}</button>
-                  <button type="button" class="btn btn-outline" onclick="scrollToContact()" data-en="{{ e($visitorContact['en']) }}" data-ar="{{ e($visitorContact['ar']) }}" style="background:#057a02; color:#fff;">{{ $visitorContact['text'] }}</button>
+                  <button type="button" class="btn btn-outline" onclick="scrollToContact()" data-en="{{ e($visitorContact['en']) }}" data-ar="{{ e($visitorContact['ar']) }}">{{ $visitorContact['text'] }}</button>
                 </div>
               </form>
             </div>
@@ -2877,7 +2886,7 @@
                     <textarea class="form-textarea" required rows="4" placeholder="{{ __('How can we help you?') }}"></textarea>
                   </div>
                 </div>
-                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem; background: #057a02; color:#fff;">
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">
                   <svg class="icon icon-sm" style="margin-right: 0.5rem;" viewBox="0 0 24 24">
                     <path d="m22 2-7 20-4-9-9-4Z" />
                     <path d="M22 2 11 13" />
