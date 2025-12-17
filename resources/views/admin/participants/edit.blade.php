@@ -50,20 +50,6 @@
         </div>
 
         <div>
-            <label class="block text-[10px] font-medium text-gray-700 mb-1">{{ __('Description (EN)') }}</label>
-            <textarea name="description_en" rows="3"
-                      class="w-full rounded-lg border-gray-300 text-xs">{{ old('description_en', $participant->description_en) }}</textarea>
-            @error('description_en') <p class="mt-1 text-[11px] text-red-600">{{ $message }}</p> @enderror
-        </div>
-
-        <div>
-            <label class="block text-[10px] font-medium text-gray-700 mb-1">{{ __('Description (AR)') }}</label>
-            <textarea name="description_ar" rows="3"
-                      class="w-full rounded-lg border-gray-300 text-xs">{{ old('description_ar', $participant->description_ar) }}</textarea>
-            @error('description_ar') <p class="mt-1 text-[11px] text-red-600">{{ $message }}</p> @enderror
-        </div>
-
-        <div>
             <label class="block text-[10px] font-medium text-gray-700 mb-1">{{ __('Logo (optional)') }}</label>
             @if($participant->logo_path)
                 <div class="mb-2">

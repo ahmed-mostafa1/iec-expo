@@ -101,13 +101,6 @@
             font-size: 0.9rem;
         }
 
-        .description {
-            margin-top: 1.5rem;
-            line-height: 1.6;
-            color: #475569;
-            text-align: center;
-        }
-
         .meta {
             margin-top: 2rem;
             display: grid;
@@ -125,23 +118,6 @@
             font-weight: 600;
         }
 
-        .cta {
-            margin-top: 2rem;
-            text-align: center;
-        }
-
-        .cta a {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.4rem;
-            padding: 0.85rem 1.75rem;
-            border-radius: 999px;
-            background: var(--accent);
-            color: #fff;
-            text-decoration: none;
-            font-weight: 600;
-        }
-
         footer {
             text-align: center;
             font-size: 0.85rem;
@@ -154,9 +130,6 @@
         $logoPath = $sponsor->logo_path
             ? asset('storage/' . $sponsor->logo_path)
             : asset('img/IEC-logo.png');
-        $description = method_exists($sponsor, 'getDescriptionForLocale')
-            ? $sponsor->getDescriptionForLocale(app()->getLocale())
-            : ($sponsor->description_en ?? null);
     @endphp
     <div class="layout">
         <header>
@@ -173,23 +146,7 @@
                 <div class="tier">
                     {{ $sponsor->tier ? ucfirst($sponsor->tier) : __('Sponsor') }}
                 </div>
-                @if($description)
-                    <p class="description">{{ $description }}</p>
-                @endif
-
                 <div class="meta">
-                    <div class="meta-item">
-                        <span>{{ __('Website') }}</span>
-                        <span>
-                            @if($sponsor->url)
-                                <a href="{{ $sponsor->url }}" target="_blank" rel="noopener" style="color: var(--accent); text-decoration: none;">
-                                    {{ parse_url($sponsor->url, PHP_URL_HOST) ?? $sponsor->url }}
-                                </a>
-                            @else
-                                {{ __('Not available') }}
-                            @endif
-                        </span>
-                    </div>
                     <div class="meta-item">
                         <span>{{ __('Tier') }}</span>
                         <span>{{ $sponsor->tier ? ucfirst($sponsor->tier) : __('Not set') }}</span>
@@ -198,15 +155,11 @@
                         <span>{{ __('Display order') }}</span>
                         <span>{{ $sponsor->display_order }}</span>
                     </div>
-                </div>
-
-                @if($sponsor->url)
-                    <div class="cta">
-                        <a href="{{ $sponsor->url }}" target="_blank" rel="noopener">
-                            {{ __('Visit sponsor website') }}
-                        </a>
+                    <div class="meta-item">
+                        <span>{{ __('Status') }}</span>
+                        <span>{{ $sponsor->is_active ? __('Active') : __('Inactive') }}</span>
                     </div>
-                @endif
+                </div>
             </article>
         </main>
         <footer>

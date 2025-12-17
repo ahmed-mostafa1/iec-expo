@@ -36,18 +36,6 @@
                     <dd class="text-gray-900">{{ $sponsor->tier ?: __('Not set') }}</dd>
                 </div>
                 <div class="flex justify-between">
-                    <dt class="text-gray-500">{{ __('Website') }}</dt>
-                    <dd class="text-gray-900">
-                        @if($sponsor->url)
-                            <a href="{{ $sponsor->url }}" class="text-emerald-700 hover:text-emerald-900" target="_blank" rel="noopener">
-                                {{ $sponsor->url }}
-                            </a>
-                        @else
-                            {{ __('Not set') }}
-                        @endif
-                    </dd>
-                </div>
-                <div class="flex justify-between">
                     <dt class="text-gray-500">{{ __('Display order') }}</dt>
                     <dd class="text-gray-900">{{ $sponsor->display_order }}</dd>
                 </div>
@@ -66,14 +54,6 @@
                     <dd class="text-gray-900">{{ $sponsor->updated_at->format('Y-m-d H:i') }}</dd>
                 </div>
             </dl>
-            <div class="mt-4 border-t border-gray-100 pt-4">
-                <h3 class="text-[11px] font-semibold text-gray-700 mb-2">{{ __('Description (English)') }}</h3>
-                <p class="text-gray-800 leading-relaxed">{{ $sponsor->description_en ?: __('No English description provided.') }}</p>
-            </div>
-            <div class="mt-4">
-                <h3 class="text-[11px] font-semibold text-gray-700 mb-2">{{ __('Description (Arabic)') }}</h3>
-                <p class="text-gray-800 leading-relaxed">{{ $sponsor->description_ar ?: __('No Arabic description provided.') }}</p>
-            </div>
         </div>
 
         <div class="rounded-xl bg-white border border-gray-200 p-4 text-xs">
@@ -86,15 +66,6 @@
                 </div>
             @else
                 <div class="text-gray-500">{{ __('No logo uploaded.') }}</div>
-            @endif
-            @if($sponsor->url)
-                <div class="mt-4">
-                    <a href="{{ $sponsor->url }}" target="_blank" rel="noopener"
-                       class="inline-flex items-center text-emerald-700 hover:text-emerald-900 font-medium">
-                        {{ __('Visit website') }}
-                        <svg class="icon icon-sm" style="margin-inline-start: 0.25rem;" viewBox="0 0 24 24"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14 21 3"/></svg>
-                    </a>
-                </div>
             @endif
         </div>
     </div>

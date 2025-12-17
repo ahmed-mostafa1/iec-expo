@@ -35,27 +35,6 @@
             @error('tier') <p class="mt-1 text-[11px] text-red-600">{{ $message }}</p> @enderror
         </div>
 
-        <div>
-            <label class="block text-[10px] font-medium text-gray-700 mb-1">{{ __('Website URL') }}</label>
-            <input type="url" name="url" class="w-full rounded-lg border-gray-300 text-xs"
-                   value="{{ old('url') }}">
-            @error('url') <p class="mt-1 text-[11px] text-red-600">{{ $message }}</p> @enderror
-        </div>
-
-        <div>
-            <label class="block text-[10px] font-medium text-gray-700 mb-1">{{ __('Description (English)') }}</label>
-            <textarea name="description_en" rows="3"
-                      class="w-full rounded-lg border-gray-300 text-xs">{{ old('description_en') }}</textarea>
-            @error('description_en') <p class="mt-1 text-[11px] text-red-600">{{ $message }}</p> @enderror
-        </div>
-
-        <div>
-            <label class="block text-[10px] font-medium text-gray-700 mb-1">{{ __('Description (Arabic)') }}</label>
-            <textarea name="description_ar" rows="3"
-                      class="w-full rounded-lg border-gray-300 text-xs">{{ old('description_ar') }}</textarea>
-            @error('description_ar') <p class="mt-1 text-[11px] text-red-600">{{ $message }}</p> @enderror
-        </div>
-
         <div class="grid grid-cols-2 gap-3">
             <div>
                 <label class="block text-[10px] font-medium text-gray-700 mb-1">{{ __('Display order') }}</label>

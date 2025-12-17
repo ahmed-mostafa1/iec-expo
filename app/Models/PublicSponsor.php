@@ -12,9 +12,6 @@ class PublicSponsor extends Model
         'name_ar',
         'logo_path',
         'tier',
-        'url',
-        'description_en',
-        'description_ar',
         'is_active',
         'display_order',
     ];
@@ -40,14 +37,4 @@ class PublicSponsor extends Model
             : ($this->name_en ?: $this->name_ar ?: $this->name);
     }
 
-    public function getDescriptionForLocale(?string $locale = null): ?string
-    {
-        $locale = $locale ?? app()->getLocale();
-
-        if ($locale === 'ar' && $this->description_ar) {
-            return $this->description_ar;
-        }
-
-        return $this->description_en;
-    }
 }
