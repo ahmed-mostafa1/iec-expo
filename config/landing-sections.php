@@ -137,8 +137,8 @@ return [
                 ],
                 'exhibitor_card' => [
                     'title' => [
-                        'en' => 'Exhibitor / Sponsor',
-                        'ar' => 'عارض / راعي',
+                        'en' => 'Sponsor',
+                        'ar' => ' راعي',
                     ],
                     'description' => [
                         'en' => 'Showcase your products and connect with attendees',
