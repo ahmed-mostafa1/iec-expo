@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="{{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}">
 
 <head>
@@ -628,6 +628,12 @@
     @media (min-width: 768px) {
       .role-cards {
         grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .role-cards {
+        grid-template-columns: repeat(3, 1fr);
       }
     }
 
@@ -2076,7 +2082,7 @@
           <a href="#" class="btn-primary nav-link" data-en="Home" data-ar="الرئيسية">Home</a>
           <a href="#register" class="btn-primary nav-link" data-en="Register" data-ar="سجل الآن">Register</a>
           <a href="#sponsors" class="nav-link" data-en="Sponsors" data-ar="الرعاة">Sponsors</a>
-          <a href="#participants" class="nav-link" data-en="Exhibitors" data-ar="المشاركون">Exhibitors</a>
+          <a href="#participants" class="nav-link" data-en="Icons" data-ar="أيقونات المعرض">Icons</a>
           <a href="#organizers" class="nav-link" data-en="Organizers" data-ar="المنظمون">Organizers</a>
           <a href="#about" class="nav-link" data-en="About" data-ar="عن المعرض">About</a>
           <a href="#contact" class="nav-link" data-en="Contact" data-ar="تواصل معنا">Contact</a>
@@ -2106,7 +2112,7 @@
         <a href="#" class="mobile-nav-link" data-en="Home" data-ar="الرئيسية">Home</a>
         <a href="#register" class="mobile-nav-link" data-en="Register" data-ar="سجل الآن">Register</a>
         <a href="#sponsors" class="mobile-nav-link" data-en="Sponsors" data-ar="الرعاة">Sponsors</a>
-        <a href="#participants" class="mobile-nav-link" data-en="Exhibitors" data-ar="المشاركون">Exhibitors</a>
+        <a href="#participants" class="mobile-nav-link" data-en="Icons" data-ar="أيقونات المعرض">Icons</a>
         <a href="#organizers" class="mobile-nav-link" data-en="Organizers" data-ar="المنظمون">Organizers</a>
         <a href="#about" class="mobile-nav-link" data-en="About" data-ar="عن المعرض">About</a>
         <a href="#contact" class="mobile-nav-link" data-en="Contact" data-ar="تواصل معنا">Contact</a>
@@ -2200,16 +2206,45 @@
       $exhibitorSubmit = $translate(data_get($exhibitorForm, 'cta_submit'), __('Submit Application'));
       $exhibitorFieldsStepOne = data_get($exhibitorForm, 'fields_step_one', []);
       $exhibitorFieldsStepTwo = data_get($exhibitorForm, 'fields_step_two', []);
+
+      $transKey = function (string $key) use ($registrationLocale) {
+        $en = trans($key, [], 'en');
+        $ar = trans($key, [], 'ar');
+        return [
+          'en' => $en,
+          'ar' => $ar,
+          'text' => $registrationLocale === 'ar' ? $ar : $en,
+        ];
+      };
+
+      $guestCardTitle = $transKey('registration.guest.title');
+      $guestCardDescription = $transKey('registration.guest.description');
+      $guestCta = $transKey('registration.guest.cta_label');
+      $guestFormTitle = $transKey('registration.guest.form_title');
+      $guestSubmit = $transKey('registration.guest.cta_submit');
+      $guestContact = $transKey('registration.guest.cta_contact');
+
+      $iconCardTitle = $transKey('registration.icon.title');
+      $iconCardDescription = $transKey('registration.icon.description');
+      $iconCta = $transKey('registration.icon.cta_label');
+      $iconFormTitle = $transKey('registration.icon.form_title');
+      $iconStepOne = $transKey('registration.icon.step_one');
+      $iconStepTwo = $transKey('registration.icon.step_two');
+      $iconNext = $transKey('registration.icon.cta_next');
+      $iconBack = $transKey('registration.icon.cta_back');
+      $iconSubmit = $transKey('registration.icon.cta_submit');
     @endphp
 
     @php
       $visitorFormActive = old('form_identifier') === 'visitor';
       $sponsorFormActive = old('form_identifier') === 'sponsor';
+      $iconFormActive = old('form_identifier') === 'icon';
       $visitorShouldOpen = $visitorFormActive || session()->has('visitor_success');
       $sponsorShouldOpen = $sponsorFormActive || session()->has('sponsor_success');
+      $iconShouldOpen = $iconFormActive || session()->has('icon_success');
     @endphp
 
-    <section class="registration" id="register">
+<section class="registration" id="register">
       <div class="container">
         <div class="section-header" data-animate>
           <h2 class="section-title" data-en="{{ e($registrationTitle['en']) }}" data-ar="{{ e($registrationTitle['ar']) }}">{{ $registrationTitle['text'] }}</h2>
@@ -2225,10 +2260,10 @@
                   <circle cx="12" cy="7" r="4" />
                 </svg>
               </div>
-              <h3 class="role-title" data-en="{{ e($visitorCardTitle['en']) }}" data-ar="{{ e($visitorCardTitle['ar']) }}">{{ $visitorCardTitle['text'] }}</h3>
-              <p class="role-desc" data-en="{{ e($visitorCardDescription['en']) }}" data-ar="{{ e($visitorCardDescription['ar']) }}">{{ $visitorCardDescription['text'] }}</p>
+              <h3 class="role-title" data-en="{{ e($guestCardTitle['en']) }}" data-ar="{{ e($guestCardTitle['ar']) }}">{{ $guestCardTitle['text'] }}</h3>
+              <p class="role-desc" data-en="{{ e($guestCardDescription['en']) }}" data-ar="{{ e($guestCardDescription['ar']) }}">{{ $guestCardDescription['text'] }}</p>
               <div class="role-cta" id="visitor-cta">
-                <span data-en="{{ e($visitorCta['en']) }}" data-ar="{{ e($visitorCta['ar']) }}">{{ $visitorCta['text'] }}</span>
+                <span data-en="{{ e($guestCta['en']) }}" data-ar="{{ e($guestCta['ar']) }}">{{ $guestCta['text'] }}</span>
                 <svg class="icon icon-sm" viewBox="0 0 24 24">
                   <path d="M5 12h14M12 5l7 7-7 7" />
                 </svg>
@@ -2240,13 +2275,13 @@
                   {{ session('visitor_success') }}
                 </div>
               @endif
-              <h3 class="form-title" data-en="{{ e($visitorFormTitle['en']) }}" data-ar="{{ e($visitorFormTitle['ar']) }}">{{ $visitorFormTitle['text'] }}</h3>
+              <h3 class="form-title" data-en="{{ e($guestFormTitle['en']) }}" data-ar="{{ e($guestFormTitle['ar']) }}">{{ $guestFormTitle['text'] }}</h3>
               <form id="visitor-registration-form"
                 method="POST"
                 action="{{ route('public.register.visitor', ['locale' => $locale]) }}"
                 novalidate
-                data-success-title="{{ e(__('registration.visitor.toast_title')) }}"
-                data-success-message="{{ e(__('registration.visitor.success')) }}">
+                data-success-title="{{ e(__('registration.guest.toast_title')) }}"
+                data-success-message="{{ e(__('registration.guest.success')) }}">
                 @csrf
                 <input type="hidden" name="form_identifier" value="visitor">
                 <div class="form-grid form-grid-2">
@@ -2327,8 +2362,8 @@
                     </svg>
                     <span data-en="Back" data-ar="رجوع">{{ __('Back') }}</span>
                   </button>
-                  <button type="submit" class="btn btn-primary" data-en="{{ e($visitorSubmit['en']) }}" data-ar="{{ e($visitorSubmit['ar']) }}">{{ $visitorSubmit['text'] }}</button>
-                  <button type="button" class="btn btn-outline" onclick="scrollToContact()" data-en="{{ e($visitorContact['en']) }}" data-ar="{{ e($visitorContact['ar']) }}">{{ $visitorContact['text'] }}</button>
+                  <button type="submit" class="btn btn-primary" data-en="{{ e($guestSubmit['en']) }}" data-ar="{{ e($guestSubmit['ar']) }}">{{ $guestSubmit['text'] }}</button>
+                  <button type="button" class="btn btn-outline" onclick="scrollToContact()" data-en="{{ e($guestContact['en']) }}" data-ar="{{ e($guestContact['ar']) }}">{{ $guestContact['text'] }}</button>
                 </div>
               </form>
             </div>
@@ -2505,7 +2540,182 @@
                     </svg>
                   </button>
                   <button type="submit" class="btn btn-primary" id="exhibitor-submit-btn" style="display: none;" data-en="{{ e($exhibitorSubmit['en']) }}" data-ar="{{ e($exhibitorSubmit['ar']) }}">{{ $exhibitorSubmit['text'] }}</button>
-                  <button type="button" class="btn btn-outline" onclick="scrollToContact()" data-en="{{ e($visitorContact['en']) }}" data-ar="{{ e($visitorContact['ar']) }}">{{ $visitorContact['text'] }}</button>
+                  <button type="button" class="btn btn-outline" onclick="scrollToContact()" data-en="{{ e($guestContact['en']) }}" data-ar="{{ e($guestContact['ar']) }}">{{ $guestContact['text'] }}</button>
+                </div>
+              </form>
+            </div>
+
+            <div class="role-card" id="icon-card" onclick="selectRole('icon')">
+              <div class="role-icon">
+                <svg class="icon icon-lg" viewBox="0 0 24 24">
+                  <path d="M12 2l2.4 4.9 5.4.8-3.9 3.8.9 5.4L12 14.9 7.3 16.9l.9-5.4L4.3 7.7l5.4-.8L12 2Z" />
+                </svg>
+              </div>
+              <h3 class="role-title" data-en="{{ e($iconCardTitle['en']) }}" data-ar="{{ e($iconCardTitle['ar']) }}">{{ $iconCardTitle['text'] }}</h3>
+              <p class="role-desc" data-en="{{ e($iconCardDescription['en']) }}" data-ar="{{ e($iconCardDescription['ar']) }}">{{ $iconCardDescription['text'] }}</p>
+              <div class="role-cta" id="icon-cta">
+                <span data-en="{{ e($iconCta['en']) }}" data-ar="{{ e($iconCta['ar']) }}">{{ $iconCta['text'] }}</span>
+                <svg class="icon icon-sm" viewBox="0 0 24 24">
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </div>
+            </div>
+
+            <div class="form-card" id="icon-form">
+              @if(session('icon_success'))
+                <div class="mb-4 rounded-lg border border-emerald-100 bg-emerald-50 px-3 py-2 text-sm text-emerald-900">
+                  {{ session('icon_success') }}
+                </div>
+              @endif
+              <h3 class="form-title" data-en="{{ e($iconFormTitle['en']) }}" data-ar="{{ e($iconFormTitle['ar']) }}">{{ $iconFormTitle['text'] }}</h3>
+              <div class="step-indicator">
+                <div class="step active" id="icon-step1-indicator">
+                  <span>1</span>
+                  <span data-en="{{ e($iconStepOne['en']) }}" data-ar="{{ e($iconStepOne['ar']) }}">{{ $iconStepOne['text'] }}</span>
+                </div>
+                <div class="step-divider"></div>
+                <div class="step" id="icon-step2-indicator">
+                  <span>2</span>
+                  <span data-en="{{ e($iconStepTwo['en']) }}" data-ar="{{ e($iconStepTwo['ar']) }}">{{ $iconStepTwo['text'] }}</span>
+                </div>
+              </div>
+
+              <form id="icon-registration-form"
+                method="POST"
+                action="{{ \Illuminate\Support\Facades\Route::has('public.register.icon') ? route('public.register.icon', ['locale' => $locale]) : '#' }}"
+                enctype="multipart/form-data"
+                novalidate
+                data-success-title="{{ e(__('registration.icon.toast_title')) }}"
+                data-success-message="{{ e(__('registration.icon.success')) }}">
+                @csrf
+                <input type="hidden" name="form_identifier" value="icon">
+                <input type="hidden" name="icon_step" id="icon_step_input" value="{{ $iconFormActive ? old('icon_step', 1) : 1 }}">
+                <div id="icon-step1">
+                  <div class="form-grid form-grid-2">
+                    <div class="form-group">
+                      <label class="form-label" data-en="{{ e(trans('registration.icon.full_name', [], 'en')) }}" data-ar="{{ e(trans('registration.icon.full_name', [], 'ar')) }}">{{ __('registration.icon.full_name') }}</label>
+                      <input type="text" name="full_name" class="form-input" required placeholder="John Doe"
+                        value="{{ $iconFormActive ? old('full_name') : '' }}">
+                      @if($iconFormActive && $errors->has('full_name'))
+                        <p class="mt-1 text-xs text-red-600">{{ $errors->first('full_name') }}</p>
+                      @endif
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label" data-en="{{ e(trans('registration.icon.email', [], 'en')) }}" data-ar="{{ e(trans('registration.icon.email', [], 'ar')) }}">{{ __('registration.icon.email') }}</label>
+                      <input type="email" name="email" class="form-input" required placeholder="john@company.com"
+                        value="{{ $iconFormActive ? old('email') : '' }}">
+                      @if($iconFormActive && $errors->has('email'))
+                        <p class="mt-1 text-xs text-red-600">{{ $errors->first('email') }}</p>
+                      @endif
+                    </div>
+                  </div>
+                  <div class="form-grid form-grid-2" style="margin-top: 1rem;">
+                    <div class="form-group">
+                      <label class="form-label" data-en="{{ e(trans('registration.icon.phone', [], 'en')) }}" data-ar="{{ e(trans('registration.icon.phone', [], 'ar')) }}">{{ __('registration.icon.phone') }}</label>
+                      <input type="tel" name="phone" class="form-input" required placeholder="+966 50 000 0000"
+                        value="{{ $iconFormActive ? old('phone') : '' }}">
+                      @if($iconFormActive && $errors->has('phone'))
+                        <p class="mt-1 text-xs text-red-600">{{ $errors->first('phone') }}</p>
+                      @endif
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label" data-en="{{ e(trans('registration.icon.job_title', [], 'en')) }}" data-ar="{{ e(trans('registration.icon.job_title', [], 'ar')) }}">{{ __('registration.icon.job_title') }}</label>
+                      <input type="text" name="job_title" class="form-input" required placeholder="Marketing Manager"
+                        value="{{ $iconFormActive ? old('job_title') : '' }}">
+                      @if($iconFormActive && $errors->has('job_title'))
+                        <p class="mt-1 text-xs text-red-600">{{ $errors->first('job_title') }}</p>
+                      @endif
+                    </div>
+                  </div>
+                  <div class="form-grid form-grid-2" style="margin-top:1rem;">
+                    <div class="form-group" style="grid-column: span 2;">
+                      <label class="form-label" data-en="{{ e(trans('registration.icon.organization', [], 'en')) }}" data-ar="{{ e(trans('registration.icon.organization', [], 'ar')) }}">{{ __('registration.icon.organization') }}</label>
+                      <input type="text" name="organization" class="form-input" required placeholder="Umbrella Inc."
+                        value="{{ $iconFormActive ? old('organization') : '' }}">
+                      @if($iconFormActive && $errors->has('organization'))
+                        <p class="mt-1 text-xs text-red-600">{{ $errors->first('organization') }}</p>
+                      @endif
+                    </div>
+                  </div>
+                  <div class="form-grid" style="margin-top: 1rem;">
+                    <div class="form-group">
+                      <label class="form-label" data-en="{{ e(trans('registration.icon.corporate_profile', [], 'en')) }}" data-ar="{{ e(trans('registration.icon.corporate_profile', [], 'ar')) }}">{{ __('registration.icon.corporate_profile') }}</label>
+                      <input type="file" name="corporate_profile" class="form-input" accept="application/pdf,image/png,image/jpeg">
+                      <span class="form-hint" data-en="{{ e(trans('registration.icon.file_hint', [], 'en')) }}" data-ar="{{ e(trans('registration.icon.file_hint', [], 'ar')) }}">{{ __('registration.icon.file_hint') }}</span>
+                      @if($iconFormActive && $errors->has('corporate_profile'))
+                        <p class="mt-1 text-xs text-red-600">{{ $errors->first('corporate_profile') }}</p>
+                      @endif
+                    </div>
+                  </div>
+                </div>
+
+                <div id="icon-step2" style="display: none;">
+                  <div class="form-grid form-grid-2">
+                    <div class="form-group">
+                      <label class="form-label" data-en="{{ e(trans('registration.icon.vat_number', [], 'en')) }}" data-ar="{{ e(trans('registration.icon.vat_number', [], 'ar')) }}">{{ __('registration.icon.vat_number') }}</label>
+                      <input type="text" name="vat_number" class="form-input" placeholder="300000000000003"
+                        value="{{ $iconFormActive ? old('vat_number') : '' }}">
+                      @if($iconFormActive && $errors->has('vat_number'))
+                        <p class="mt-1 text-xs text-red-600">{{ $errors->first('vat_number') }}</p>
+                      @endif
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label" data-en="{{ e(trans('registration.icon.cr_number', [], 'en')) }}" data-ar="{{ e(trans('registration.icon.cr_number', [], 'ar')) }}">{{ __('registration.icon.cr_number') }}</label>
+                      <input type="text" name="cr_number" class="form-input" placeholder="1010101010"
+                        value="{{ $iconFormActive ? old('cr_number') : '' }}">
+                      @if($iconFormActive && $errors->has('cr_number'))
+                        <p class="mt-1 text-xs text-red-600">{{ $errors->first('cr_number') }}</p>
+                      @endif
+                    </div>
+                  </div>
+                  <div class="form-grid form-grid-2" style="margin-top: 1rem;">
+                    <div class="form-group">
+                      <label class="form-label" data-en="{{ e(trans('registration.icon.cr_copy', [], 'en')) }}" data-ar="{{ e(trans('registration.icon.cr_copy', [], 'ar')) }}">{{ __('registration.icon.cr_copy') }}</label>
+                      <input type="file" name="cr_copy" class="form-input" accept="application/pdf,image/png,image/jpeg">
+                      @if($iconFormActive && $errors->has('cr_copy'))
+                        <p class="mt-1 text-xs text-red-600">{{ $errors->first('cr_copy') }}</p>
+                      @endif
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label" data-en="{{ e(trans('registration.icon.company_logo', [], 'en')) }}" data-ar="{{ e(trans('registration.icon.company_logo', [], 'ar')) }}">{{ __('registration.icon.company_logo') }}</label>
+                      <input type="file" name="company_logo" class="form-input" accept="image/png,image/jpeg,image/webp">
+                      <span class="form-hint" data-en="{{ e(trans('registration.icon.logo_hint', [], 'en')) }}" data-ar="{{ e(trans('registration.icon.logo_hint', [], 'ar')) }}">{{ __('registration.icon.logo_hint') }}</span>
+                      @if($iconFormActive && $errors->has('company_logo'))
+                        <p class="mt-1 text-xs text-red-600">{{ $errors->first('company_logo') }}</p>
+                      @endif
+                    </div>
+                  </div>
+                  <div class="form-group" style="margin-top: 1rem;">
+                    <label class="form-label" data-en="{{ e(trans('registration.icon.national_address', [], 'en')) }}" data-ar="{{ e(trans('registration.icon.national_address', [], 'ar')) }}">{{ __('registration.icon.national_address') }}</label>
+                    <textarea name="national_address" class="form-textarea" rows="3" placeholder="Complete company address">{{ $iconFormActive ? old('national_address') : '' }}</textarea>
+                    @if($iconFormActive && $errors->has('national_address'))
+                      <p class="mt-1 text-xs text-red-600">{{ $errors->first('national_address') }}</p>
+                    @endif
+                  </div>
+                  <div class="form-group" style="margin-top: 1rem;">
+                    <label class="form-label" data-en="{{ e(trans('registration.icon.national_address_document', [], 'en')) }}" data-ar="{{ e(trans('registration.icon.national_address_document', [], 'ar')) }}">{{ __('registration.icon.national_address_document') }}</label>
+                    <input type="file" name="national_address_document" class="form-input" accept="application/pdf,image/png,image/jpeg">
+                    @if($iconFormActive && $errors->has('national_address_document'))
+                      <p class="mt-1 text-xs text-red-600">{{ $errors->first('national_address_document') }}</p>
+                    @endif
+                  </div>
+                </div>
+
+                <div class="form-buttons">
+                  <button type="button" class="btn btn-outline" onclick="iconBack()">
+                    <svg class="icon icon-sm" style="margin-right: 0.5rem;" viewBox="0 0 24 24">
+                      <path d="M19 12H5M12 19l-7-7 7-7" />
+                    </svg>
+                    <span data-en="{{ e($iconBack['en']) }}" data-ar="{{ e($iconBack['ar']) }}">{{ $iconBack['text'] }}</span>
+                  </button>
+                  <button type="button" class="btn btn-primary" id="icon-next-btn" onclick="iconNext()">
+                    <span data-en="{{ e($iconNext['en']) }}" data-ar="{{ e($iconNext['ar']) }}">{{ $iconNext['text'] }}</span>
+                    <svg class="icon icon-sm" style="margin-left: 0.5rem;" viewBox="0 0 24 24">
+                      <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                  </button>
+                  <button type="submit" class="btn btn-primary" id="icon-submit-btn" style="display: none;" data-en="{{ e($iconSubmit['en']) }}" data-ar="{{ e($iconSubmit['ar']) }}">{{ $iconSubmit['text'] }}</button>
+                  <button type="button" class="btn btn-outline" onclick="scrollToContact()" data-en="{{ e($guestContact['en']) }}" data-ar="{{ e($guestContact['ar']) }}">{{ $guestContact['text'] }}</button>
                 </div>
               </form>
             </div>
@@ -2679,7 +2889,7 @@
     <section class="participants" id="participants">
       <div class="container">
         <div class="section-header" data-animate>
-          <h2 class="section-title" data-en="Exhibitors" data-ar="المشاركون">Exhibitors</h2>
+          <h2 class="section-title" data-en="Icons" data-ar="أيقونات المعرض">Icons</h2>
           <p class="section-desc" data-en="Meet the industry leaders who will be showcasing at the event." data-ar="تعرّف على قادة الصناعة الذين سيشاركون في الحدث.">Meet the industry leaders who will be showcasing at the event.</p>
         </div>
 
@@ -3081,17 +3291,23 @@
     // Registration Role Selection
     let selectedRole = null;
     let exhibitorStep = 1;
+    let iconStep = 1;
 
     function applyRoleOrder(role) {
       const visitorCard = document.getElementById('visitor-card');
       const visitorForm = document.getElementById('visitor-form');
       const exhibitorCard = document.getElementById('exhibitor-card');
       const exhibitorForm = document.getElementById('exhibitor-form');
+      const iconCard = document.getElementById('icon-card');
+      const iconForm = document.getElementById('icon-form');
 
       const resetOrder = () => {
-        [visitorCard, visitorForm, exhibitorCard, exhibitorForm].forEach(el => {
-          el.style.order = '';
-        });
+        exhibitorCard.style.order = '1';
+        exhibitorForm.style.order = '2';
+        iconCard.style.order = '3';
+        iconForm.style.order = '4';
+        visitorCard.style.order = '5';
+        visitorForm.style.order = '6';
       };
 
       if (!role) {
@@ -3104,30 +3320,49 @@
         visitorForm.style.order = '2';
         exhibitorCard.style.order = '3';
         exhibitorForm.style.order = '4';
-      } else {
+        iconCard.style.order = '5';
+        iconForm.style.order = '6';
+      } else if (role === 'exhibitor') {
         exhibitorCard.style.order = '1';
         exhibitorForm.style.order = '2';
         visitorCard.style.order = '3';
         visitorForm.style.order = '4';
+        iconCard.style.order = '5';
+        iconForm.style.order = '6';
+      } else if (role === 'icon') {
+        iconCard.style.order = '1';
+        iconForm.style.order = '2';
+        exhibitorCard.style.order = '3';
+        exhibitorForm.style.order = '4';
+        visitorCard.style.order = '5';
+        visitorForm.style.order = '6';
       }
     }
 
     function toggleRoleVisibility(role) {
       const visitorElements = [document.getElementById('visitor-card'), document.getElementById('visitor-form')];
       const exhibitorElements = [document.getElementById('exhibitor-card'), document.getElementById('exhibitor-form')];
+      const iconElements = [document.getElementById('icon-card'), document.getElementById('icon-form')];
 
       if (role === 'visitor') {
         visitorElements.forEach(el => el.style.display = '');
         exhibitorElements.forEach(el => el.style.display = 'none');
+        iconElements.forEach(el => el.style.display = 'none');
       } else if (role === 'exhibitor') {
         exhibitorElements.forEach(el => el.style.display = '');
         visitorElements.forEach(el => el.style.display = 'none');
+        iconElements.forEach(el => el.style.display = 'none');
+      } else if (role === 'icon') {
+        iconElements.forEach(el => el.style.display = '');
+        visitorElements.forEach(el => el.style.display = 'none');
+        exhibitorElements.forEach(el => el.style.display = 'none');
       } else {
-        [...visitorElements, ...exhibitorElements].forEach(el => el.style.display = '');
+        [...visitorElements, ...exhibitorElements, ...iconElements].forEach(el => el.style.display = '');
       }
     }
 
     toggleRoleVisibility(null);
+    applyRoleOrder(null);
 
     function selectRole(role) {
       if (selectedRole === role) return;
@@ -3138,30 +3373,25 @@
       const roleCards = document.getElementById('role-cards');
       roleCards.classList.add('has-selection');
 
-      if (role === 'visitor') {
-        document.getElementById('visitor-card').classList.add('selected');
-        document.getElementById('visitor-card').classList.remove('dimmed');
-        document.getElementById('visitor-cta').style.display = 'none';
-        document.getElementById('visitor-form').classList.add('active');
+      const roles = [
+        { key: 'visitor', card: 'visitor-card', form: 'visitor-form', cta: 'visitor-cta' },
+        { key: 'exhibitor', card: 'exhibitor-card', form: 'exhibitor-form', cta: 'exhibitor-cta' },
+        { key: 'icon', card: 'icon-card', form: 'icon-form', cta: 'icon-cta' },
+      ];
 
-        document.getElementById('exhibitor-card').classList.add('dimmed');
-        document.getElementById('exhibitor-card').classList.remove('selected');
-        document.getElementById('exhibitor-form').classList.remove('active');
-      } else {
-        document.getElementById('exhibitor-card').classList.add('selected');
-        document.getElementById('exhibitor-card').classList.remove('dimmed');
-        document.getElementById('exhibitor-cta').style.display = 'none';
-        document.getElementById('exhibitor-form').classList.add('active');
-
-        document.getElementById('visitor-card').classList.add('dimmed');
-        document.getElementById('visitor-card').classList.remove('selected');
-        document.getElementById('visitor-form').classList.remove('active');
-      }
+      roles.forEach(({ key, card, form, cta }) => {
+        const isActive = role === key;
+        document.getElementById(card).classList.toggle('selected', isActive);
+        document.getElementById(card).classList.toggle('dimmed', !isActive);
+        document.getElementById(cta).style.display = isActive ? 'none' : 'flex';
+        document.getElementById(form).classList.toggle('active', isActive);
+      });
     }
 
     function clearRole() {
       selectedRole = null;
       exhibitorStep = 1;
+      iconStep = 1;
 
       const roleCards = document.getElementById('role-cards');
       roleCards.classList.remove('has-selection');
@@ -3173,13 +3403,22 @@
       document.getElementById('exhibitor-card').classList.remove('selected', 'dimmed');
       document.getElementById('exhibitor-cta').style.display = 'flex';
       document.getElementById('exhibitor-form').classList.remove('active');
+
+      document.getElementById('icon-card').classList.remove('selected', 'dimmed');
+      document.getElementById('icon-cta').style.display = 'flex';
+      document.getElementById('icon-form').classList.remove('active');
       const stepInput = document.getElementById('exhibitor_step_input');
       if (stepInput) {
         stepInput.value = '1';
       }
+      const iconStepInput = document.getElementById('icon_step_input');
+      if (iconStepInput) {
+        iconStepInput.value = '1';
+      }
       toggleRoleVisibility(null);
       applyRoleOrder(null);
       updateExhibitorStep();
+      updateIconStep();
     }
 
     function exhibitorNext() {
@@ -3194,6 +3433,18 @@
       }
     }
 
+    function iconNext() {
+      setIconStep(2);
+    }
+
+    function iconBack() {
+      if (iconStep === 1) {
+        clearRole();
+      } else {
+        setIconStep(1);
+      }
+    }
+
     function setExhibitorStep(step) {
       exhibitorStep = step;
       const stepInput = document.getElementById('exhibitor_step_input');
@@ -3201,6 +3452,15 @@
         stepInput.value = String(step);
       }
       updateExhibitorStep();
+    }
+
+    function setIconStep(step) {
+      iconStep = step;
+      const stepInput = document.getElementById('icon_step_input');
+      if (stepInput) {
+        stepInput.value = String(step);
+      }
+      updateIconStep();
     }
 
     function updateExhibitorStep() {
@@ -3211,6 +3471,16 @@
 
       document.getElementById('step1-indicator').classList.toggle('active', exhibitorStep >= 1);
       document.getElementById('step2-indicator').classList.toggle('active', exhibitorStep >= 2);
+    }
+
+    function updateIconStep() {
+      document.getElementById('icon-step1').style.display = iconStep === 1 ? 'block' : 'none';
+      document.getElementById('icon-step2').style.display = iconStep === 2 ? 'block' : 'none';
+      document.getElementById('icon-next-btn').style.display = iconStep === 1 ? 'inline-flex' : 'none';
+      document.getElementById('icon-submit-btn').style.display = iconStep === 2 ? 'inline-flex' : 'none';
+
+      document.getElementById('icon-step1-indicator').classList.toggle('active', iconStep >= 1);
+      document.getElementById('icon-step2-indicator').classList.toggle('active', iconStep >= 2);
     }
 
     function initHeardAboutSelects() {
@@ -3273,6 +3543,24 @@
             showToast(title, message);
           },
         });
+      }
+
+      const iconForm = document.getElementById('icon-registration-form');
+      if (iconForm) {
+        if (iconForm.getAttribute('action') === '#') {
+          iconForm.addEventListener('submit', (event) => event.preventDefault());
+        } else {
+          bindAjaxRegistrationForm(iconForm, {
+            onSuccess: (payload) => {
+              iconForm.reset();
+              setIconStep(1);
+              clearRole();
+              const title = (payload && payload.toast_title) || iconForm.dataset.successTitle;
+              const message = (payload && payload.message) || iconForm.dataset.successMessage;
+              showToast(title, message);
+            },
+          });
+        }
       }
     }
 
@@ -3400,6 +3688,9 @@
         if (form.id === 'sponsor-registration-form') {
           ensureSponsorFieldVisible(field);
         }
+        if (form.id === 'icon-registration-form') {
+          ensureIconFieldVisible(field);
+        }
       });
 
       if (generalMessages.length && !hasFieldErrors) {
@@ -3416,6 +3707,16 @@
         setExhibitorStep(1);
       } else if (step2 && step2.contains(field)) {
         setExhibitorStep(2);
+      }
+    }
+
+    function ensureIconFieldVisible(field) {
+      const step1 = document.getElementById('icon-step1');
+      const step2 = document.getElementById('icon-step2');
+      if (step1 && step1.contains(field)) {
+        setIconStep(1);
+      } else if (step2 && step2.contains(field)) {
+        setIconStep(2);
       }
     }
 
@@ -3450,8 +3751,9 @@
       event.target.reset();
     }
 
-    const initialForm = @json($visitorShouldOpen ? 'visitor' : ($sponsorShouldOpen ? 'sponsor' : ''));
+    const initialForm = @json($visitorShouldOpen ? 'visitor' : ($sponsorShouldOpen ? 'sponsor' : ($iconShouldOpen ? 'icon' : '')));
     const initialExhibitorStep = Number(@json($sponsorFormActive ? old('exhibitor_step', 1) : 1));
+    const initialIconStep = Number(@json($iconFormActive ? old('icon_step', 1) : 1));
 
     document.addEventListener('DOMContentLoaded', () => {
       initHeardAboutSelects();
@@ -3462,6 +3764,9 @@
       } else if (initialForm === 'sponsor') {
         selectRole('exhibitor');
         setExhibitorStep(initialExhibitorStep);
+      } else if (initialForm === 'icon') {
+        selectRole('icon');
+        setIconStep(initialIconStep);
       }
     });
 
