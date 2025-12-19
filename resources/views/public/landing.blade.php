@@ -166,7 +166,7 @@
     }
 
     .nav-link:hover {
-      color: #9873AC;
+      color: #9803bde1;
     }
 
     .nav-link::before {
@@ -176,7 +176,7 @@
       height: 4px;
       bottom: 0;
       left: 50%;
-      background-color: #9873AC;
+      background-color: #9803bde1;
       transition: all 0.4s;
     }
 
@@ -1055,7 +1055,7 @@
       font-size: 2rem !important;
       font-weight: 600;
       margin-bottom: 1rem;
-      color: #057a02;
+      color: #4bee49ff;
     }
 
     .sponsor-tier-grid {
@@ -1082,7 +1082,7 @@
       grid-template-columns: repeat(auto-fit, minmax(300px, 250px));
     }
 
-    .organizer-grid {
+    /* .organizer-grid {
       display: grid;
       gap: 1.5rem;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -1090,11 +1090,11 @@
       margin: 0 auto;
     }
 
-    @media (max-width: 640px) {
-      .organizer-grid {
+    /* @media (max-width: 640px) { */
+      /* .organizer-grid {
         grid-template-columns: 1fr;
       }
-    }
+    } 
 
     .organizer-details {
       flex: 1;
@@ -1127,7 +1127,181 @@
 
     .organizer-link:hover {
       text-decoration: underline;
+    } */
+
+.sponsor-featured-list {
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+      max-width: 70%;
+      margin: 0 auto;
     }
+
+    .sponsor-featured-card {
+      width: 100%;
+      position: relative;
+      border-radius: 1.5rem;
+      padding: 2px;
+      --sponsor-gradient: linear-gradient(120deg, #2dd4bf, #0f9f6e, #2dd4bf);
+      background: var(--sponsor-gradient);
+      background-size: 250% 250%;
+      animation: sponsorBorderFlow 8s linear infinite;
+      overflow: hidden;
+    }
+    
+
+    .sponsor-featured-card.sponsor-strategic {
+      --sponsor-gradient: linear-gradient(120deg, #fde68a, #f59e0b, #fcd34d);
+    }
+
+    .sponsor-featured-card.sponsor-business {
+      --sponsor-gradient: linear-gradient(120deg, #a5b4fc, #6366f1, #a5b4fc);
+    }
+
+    .sponsor-featured-card.sponsor-marketing {
+      --sponsor-gradient: linear-gradient(120deg, #f9a8d4, #db2777, #f472b6);
+    }
+
+    @keyframes sponsorBorderFlow {
+      0% {
+        background-position: 0% 50%;
+      }
+
+      100% {
+        background-position: 200% 50%;
+      }
+    }
+
+    .sponsor-featured-content {
+      position: relative;
+      z-index: 1;
+      display: flex;
+      gap: 2rem;
+      align-items: stretch;
+      padding: 2rem;
+      border-radius: calc(1.5rem - 2px);
+      background: #000000;
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    }
+
+    .sponsor-featured-media {
+      flex: 0 0 25%;
+      max-width: 25%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .sponsor-featured-logo {
+      width: 100%;
+      aspect-ratio: 1 / 1;
+      border-radius: 1rem;
+      /* background: #ffffff; */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      /* padding: 1rem; */
+      border: solid 1px rgb(var(--border));
+    }
+
+    .sponsor-featured-logo img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
+
+    .sponsor-visit-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+      padding: 0.65rem 0.5rem;
+      border-radius: 9999px;
+      background: rgb(var(--primary));
+      color: rgb(var(--primary-foreground));
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.3s ease, transform 0.3s ease;
+      width: 100%;
+    }
+
+    .sponsor-visit-btn:hover {
+      background: #046302;
+      transform: translateY(-1px);
+    }
+
+    .sponsor-featured-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 0.75rem;
+    }
+
+    .sponsor-featured-label {
+      font-size: 0.85rem;
+      letter-spacing: 0.2em;
+      font-weight: 600;
+      text-transform: uppercase;
+      color: rgb(var(--primary));
+    }
+
+    .sponsor-featured-name-link {
+      text-decoration: none;
+    }
+
+    .sponsor-featured-name {
+      font-size: clamp(1.5rem, 2.2vw, 2.25rem);
+      font-weight: 700;
+      text-align: center;
+      margin: 0;
+      color: rgb(var(--foreground));
+    }
+
+    .sponsor-featured-desc {
+      font-size: 1.15rem;
+      text-align: center;
+      color: rgb(var(--muted-foreground));
+      line-height: 1.7;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .sponsor-featured-card {
+        animation: none;
+      }
+    }
+
+    @media (max-width: 900px) {
+      .sponsor-featured-media {
+        flex-basis: 30%;
+        max-width: 30%;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .sponsor-featured-content {
+        flex-direction: column;
+        padding: 1.5rem;
+      }
+
+      .sponsor-featured-media {
+        flex-basis: auto;
+        max-width: none;
+        width: 100%;
+      }
+
+      .sponsor-featured-logo {
+        width: 100%;
+        /* margin: 0 auto; */
+      }
+    }
+
+
+
+
+
+      /*  */
 
     .sponsor-card {
       background: transparent;
@@ -1154,7 +1328,7 @@
       box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.25);
       transform: translateY(0) scale(1.02);
       background: rgb(var(--card) / 0.4);
-      box-shadow: #00ff4433 0px 0px 10px, #00ff44cc 0px 0px 20px, #00ff44aa 0px 0px 30px, #00ff4477 0px 0px 40px, #00ff4444 0px 0px 50px;
+      box-shadow: #9803bde1 0px 0px 10px, #9803bde1 0px 0px 20px, #9803bde1 0px 0px 30px, #9803bde1 0px 0px 40px, #9803bde1 0px 0px 50px;
     }
 
     .sponsor-card .sponsor-logo {
@@ -2552,7 +2726,7 @@
     </section>
 
     <!-- Organizers Section -->
-    <section class="organizers" id="organizers">
+        <section class="organizers" id="organizers">
       <div class="container">
         <div class="section-header" data-animate>
           <h2 class="section-title" data-en="Organizers" data-ar="المنظمون">Organizers</h2>
@@ -2574,7 +2748,7 @@
         @endphp
 
         @if($organizers->count())
-          <div class="organizer-grid">
+          <div class="sponsor-featured-list">
             @foreach($organizers as $organizer)
               @php
                 $logoPath = $organizer->logo_path ? asset('storage/'.$organizer->logo_path) : asset('img/IEC-logo.png');
@@ -2585,18 +2759,25 @@
                 $descriptionAr = $organizer->description_ar ?? $organizerFallbackDesc['ar'];
                 $description = $currentLocale === 'ar' ? $descriptionAr : $descriptionEn;
               @endphp
-              <article class="sponsor-card organizer-card" data-animate>
-                <div class="sponsor-logo organizer-logo">
-                  <img src="{{ $logoPath }}" alt="{{ $displayName }}">
-                </div>
-                <div class="sponsor-card-footer organizer-footer">
-                  <span class="organizer-name" data-en="{{ e($englishName) }}" data-ar="{{ e($arabicName) }}">{{ $displayName }}</span>
-                  <p class="organizer-desc" data-en="{{ e($descriptionEn) }}" data-ar="{{ e($descriptionAr) }}">{{ $description }}</p>
-                  @if($organizer->url)
-                    <a href="{{ $organizer->url }}" class="organizer-link" target="_blank" rel="noopener">
-                      {{ $organizerVisitCopy[$currentLocale] }}
-                    </a>
-                  @endif
+              <article class="sponsor-featured-card sponsor-strategic" data-animate>
+                <div class="sponsor-featured-content">
+                  <div class="sponsor-featured-media">
+                    <div class="sponsor-featured-logo">
+                      <img src="{{ $logoPath }}" alt="{{ $displayName }}">
+                    </div>
+                    @if($organizer->url)
+                      <a href="{{ $organizer->url }}" class="sponsor-visit-btn" target="_blank" rel="noopener">
+                        <span data-en="{{ e($organizerVisitCopy['en']) }}" data-ar="{{ e($organizerVisitCopy['ar']) }}">{{ $organizerVisitCopy[$currentLocale] }}</span>
+                        <svg class="icon icon-sm" viewBox="0 0 24 24">
+                          <path d="M5 12h14M12 5l7 7-7 7" />
+                        </svg>
+                      </a>
+                    @endif
+                  </div>
+                  <div class="sponsor-featured-body">
+                    <h3 class="sponsor-featured-name" data-en="{{ e($englishName) }}" data-ar="{{ e($arabicName) }}">{{ $displayName }}</h3>
+                    <p class="sponsor-featured-desc" data-en="{{ e($descriptionEn) }}" data-ar="{{ e($descriptionAr) }}">{{ $description }}</p>
+                  </div>
                 </div>
               </article>
             @endforeach
@@ -2606,6 +2787,7 @@
         @endif
       </div>
     </section>
+
 
     <!-- Contact Section -->
     @php
