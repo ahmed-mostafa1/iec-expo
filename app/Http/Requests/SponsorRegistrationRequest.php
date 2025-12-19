@@ -20,13 +20,13 @@ class SponsorRegistrationRequest extends FormRequest
             'email'           => ['required', 'email', 'max:255'],
             'phone'           => ['required', 'string', 'max:50'],
             'job_title'       => ['required', 'string', 'max:255'],
-            'organization'    => ['required', 'string', 'max:255'],
-            'vat_number'      => ['nullable', 'string', 'max:255', new UniqueSponsorVatCr],
+            // 'organization' removed: field removed from form
+            'vat_number'      => ['nullable', 'digits:15', new UniqueSponsorVatCr],
             'cr_number'       => ['nullable', 'string', 'max:255', new UniqueSponsorVatCr],
             'national_address'=> ['nullable', 'string'],
-            'corporate_profile'         => ['nullable', 'file', 'mimes:pdf,jpeg,jpg,png', 'max:8192'],
-            'cr_copy'                   => ['nullable', 'file', 'mimes:pdf,jpeg,jpg,png', 'max:8192'],
-            'national_address_document' => ['nullable', 'file', 'mimes:pdf,jpeg,jpg,png', 'max:8192'],
+            'corporate_profile'         => ['nullable', 'file', 'mimes:pdf', 'max:8192'],
+            'cr_copy'                   => ['nullable', 'file', 'mimes:pdf', 'max:8192'],
+            'national_address_document' => ['nullable', 'file', 'mimes:pdf', 'max:8192'],
             'company_logo'              => ['nullable', 'image', 'mimes:jpg,jpeg,png,webp', 'max:8192'],
         ];
     }
