@@ -631,9 +631,10 @@
       }
     }
 
-    @media (min-width: 1024px) {
-      .role-cards {
-        grid-template-columns: repeat(3, 1fr);
+    @media (min-width: 768px) {
+      .role-card.guest-card,
+      .form-card.guest-form {
+        grid-column: 1 / -1;
       }
     }
 
@@ -2253,7 +2254,7 @@
 
         <div class="registration-content">
           <div class="role-cards" id="role-cards">
-            <div class="role-card" id="visitor-card" onclick="selectRole('visitor')">
+            <div class="role-card guest-card" id="visitor-card" onclick="selectRole('visitor')">
               <div class="role-icon">
                 <svg class="icon icon-lg" viewBox="0 0 24 24">
                   <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
@@ -2269,7 +2270,7 @@
                 </svg>
               </div>
             </div>
-            <div class="form-card" id="visitor-form">
+            <div class="form-card guest-form" id="visitor-form">
               @if(session('visitor_success'))
                 <div class="mb-4 rounded-lg border border-emerald-100 bg-emerald-50 px-3 py-2 text-sm text-emerald-900">
                   {{ session('visitor_success') }}
