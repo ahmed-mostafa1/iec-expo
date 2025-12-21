@@ -6,7 +6,7 @@ return [
         'toast_title' => 'تم استلام التسجيل',
     ],
     'guest' => [
-        'title' => 'ضيف',
+        'title' => 'الضيف',
         'description' => 'سجل كضيف لتبقى على اطلاع بفعاليات المعرض.',
         'cta_label' => 'اختيار',
         'form_title' => 'تسجيل الضيوف',
@@ -45,5 +45,6 @@ return [
         'logo_hint' => 'يتم قبول ملفات PNG أو JPG أو WEBP فقط',
         'national_address' => 'العنوان الوطني',
         'national_address_document' => 'مستند العنوان الوطني',
+        'duplicate' => 'القيمة المضافة أو السجل التجاري مسجل مسبقاً في أيقونات المعرض.',
     ],
 ];

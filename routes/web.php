@@ -3,6 +3,7 @@
 use App\Http\Controllers\Public\ContactController;
 use App\Http\Controllers\Public\LandingPageController;
 use App\Http\Controllers\Public\SponsorRegistrationController;
+use App\Http\Controllers\Public\IconRegistrationController;
 use App\Http\Controllers\Public\SponsorShowController as PublicSponsorShowController;
 use App\Http\Controllers\Public\VisitorRegistrationController;
 use App\Http\Controllers\Public\ParticipantShowController as PublicParticipantShowController;
@@ -15,6 +16,7 @@ use App\Http\Controllers\Admin\AboutContentController;
 use App\Http\Controllers\Admin\ContactInfoController;
 use App\Http\Controllers\Admin\HeroMediaController;
 use App\Http\Controllers\Admin\SponsorRegistrationController as AdminSponsorController;
+use App\Http\Controllers\Admin\IconRegistrationController as AdminIconController;
 use App\Http\Controllers\Admin\VisitorRegistrationController as AdminVisitorController;
 use Illuminate\Support\Facades\Route;
 
@@ -44,6 +46,9 @@ Route::prefix('{locale}')
 
         Route::post('/register/sponsor', [SponsorRegistrationController::class, 'store'])
             ->name('public.register.sponsor');
+
+        Route::post('/register/icon', [IconRegistrationController::class, 'store'])
+            ->name('public.register.icon');
 
         Route::post('/contact', [ContactController::class, 'submit'])
             ->name('public.contact');
@@ -81,6 +86,25 @@ Route::prefix('admin')
 
         Route::post('/sponsor-registrations/{registration}/pdf/regenerate', [AdminSponsorController::class, 'regeneratePdf'])
             ->name('sponsors.regenerate-pdf');
+
+        // Icon registrations
+        Route::get('/icon-registrations', [AdminIconController::class, 'index'])
+            ->name('icons.index');
+
+        Route::get('/icon-registrations/export', [AdminIconController::class, 'export'])
+            ->name('icons.export');
+
+        Route::get('/icon-registrations/{registration}', [AdminIconController::class, 'show'])
+            ->name('icons.show');
+
+        Route::post('/icon-registrations/{registration}/status', [AdminIconController::class, 'updateStatus'])
+            ->name('icons.update-status');
+
+        Route::get('/icon-registrations/{registration}/pdf', [AdminIconController::class, 'downloadPdf'])
+            ->name('icons.download-pdf');
+
+        Route::post('/icon-registrations/{registration}/pdf/regenerate', [AdminIconController::class, 'regeneratePdf'])
+            ->name('icons.regenerate-pdf');
 
         // Visitor registrations
 
