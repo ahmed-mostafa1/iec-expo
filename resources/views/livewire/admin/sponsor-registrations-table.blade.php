@@ -6,7 +6,7 @@
                     {{ __('Search') }}
                 </label>
                 <input type="text" wire:model.debounce.300ms="search"
-                       class="w-48 rounded-lg border-gray-300 text-xs"
+                       class="w-48 rounded-lg border-gray-300 text-s"
                        placeholder="{{ __('Name, email, organization, VAT, CR') }}">
             </div>
 
@@ -14,7 +14,7 @@
                 <label class="block text-[10px] font-medium text-gray-500 mb-1">
                     {{ __('Status') }}
                 </label>
-                <select wire:model="status" class="w-32 rounded-lg border-gray-300 text-xs">
+                <select wire:model="status" class="w-32 rounded-lg border-gray-300 text-s">
                     <option value="">{{ __('All') }}</option>
                     <option value="pending">{{ __('Pending') }}</option>
                     <option value="approved">{{ __('Approved') }}</option>
@@ -27,7 +27,7 @@
                     {{ __('From date') }}
                 </label>
                 <input type="date" wire:model="dateFrom"
-                       class="w-36 rounded-lg border-gray-300 text-xs">
+                       class="w-36 rounded-lg border-gray-300 text-s">
             </div>
 
             <div>
@@ -35,7 +35,7 @@
                     {{ __('To date') }}
                 </label>
                 <input type="date" wire:model="dateTo"
-                       class="w-36 rounded-lg border-gray-300 text-xs">
+                       class="w-36 rounded-lg border-gray-300 text-s">
             </div>
         </div>
 
@@ -43,7 +43,7 @@
             <button
                 type="button"
                 wire:click="export"
-                class="inline-flex items-center rounded-lg border border-gray-300 px-3 py-1.5 text-xs font-medium text-gray-700 hover:bg-gray-50"
+                class="inline-flex items-center rounded-lg border border-gray-300 px-3 py-1.5 text-s font-medium text-gray-700 hover:bg-gray-50"
             >
                 {{ __('Export CSV') }}
             </button>
@@ -51,7 +51,7 @@
     </div>
 
     <div class="overflow-x-auto bg-white border border-gray-200 rounded-xl">
-        <table class="min-w-full text-xs">
+        <table class="min-w-full text-s">
             <thead class="bg-gray-50 text-[10px] uppercase tracking-wide text-gray-500 border-b border-gray-200">
                 <tr>
                     <th class="px-3 py-2 text-start">#</th>
@@ -104,7 +104,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="8" class="px-3 py-4 text-center text-xs text-gray-500">
+                        <td colspan="8" class="px-3 py-4 text-center text-s text-gray-500">
                             {{ __('No registrations found.') }}
                         </td>
                     </tr>

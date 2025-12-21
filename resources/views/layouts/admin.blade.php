@@ -16,10 +16,10 @@
         {{-- Sidebar --}}
         <aside class="w-60 bg-white border-e border-gray-200 py-4 px-3 hidden md:flex flex-col">
             <div class="flex items-center gap-2 mb-6 ps-2 pe-2">
-                <div class="h-8 w-8 rounded-full bg-emerald-600 flex items-center justify-center text-xs font-bold text-white">
+                <div class="h-8 w-8 rounded-full bg-emerald-600 flex items-center justify-center text-s font-bold text-white">
                     EP
                 </div>
-                <div class="text-xs font-semibold text-gray-900">
+                <div class="text-s font-semibold text-gray-900">
                     {{ __('Admin Panel') }}
                 </div>
             </div>
@@ -74,7 +74,7 @@
                 @csrf
                 <button
                     type="submit"
-                    class="w-full rounded-lg bg-gray-900 px-3 py-1.5 text-xs font-semibold text-white hover:bg-black">
+                    class="w-full rounded-lg bg-gray-900 px-3 py-1.5 text-s font-semibold text-white hover:bg-black">
                     {{ __('Log out') }}
                 </button>
             </form>
@@ -83,7 +83,7 @@
         {{-- Main --}}
         <div class="flex-1 flex flex-col">
             <header class="h-12 bg-white border-b border-gray-200 flex items-center justify-between px-4">
-                <div class="text-xs text-gray-500">
+                <div class="text-s text-gray-500">
                     {{ __('Welcome, Admin') }}
                 </div>
             </header>

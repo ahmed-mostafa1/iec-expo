@@ -6,19 +6,19 @@
     <form method="POST"
           action="{{ route('admin.public-sponsors.store') }}"
           enctype="multipart/form-data"
-          class="max-w-lg space-y-4 bg-white border border-gray-200 rounded-xl p-4 text-xs">
+          class="max-w-lg space-y-4 bg-white border border-gray-200 rounded-xl p-4 text-s">
         @csrf
 
         <div class="grid grid-cols-1 gap-3">
             <div>
                 <label class="block text-[10px] font-medium text-gray-700 mb-1">{{ __('Name (English)') }}</label>
-                <input type="text" name="name_en" class="w-full rounded-lg border-gray-300 text-xs"
+                <input type="text" name="name_en" class="w-full rounded-lg border-gray-300 text-s"
                        value="{{ old('name_en') }}" required>
                 @error('name_en') <p class="mt-1 text-[11px] text-red-600">{{ $message }}</p> @enderror
             </div>
             <div>
                 <label class="block text-[10px] font-medium text-gray-700 mb-1">{{ __('Name (Arabic)') }}</label>
-                <input type="text" name="name_ar" class="w-full rounded-lg border-gray-300 text-xs"
+                <input type="text" name="name_ar" class="w-full rounded-lg border-gray-300 text-s"
                        value="{{ old('name_ar') }}">
                 @error('name_ar') <p class="mt-1 text-[11px] text-red-600">{{ $message }}</p> @enderror
             </div>
@@ -26,7 +26,7 @@
 
         <div>
             <label class="block text-[10px] font-medium text-gray-700 mb-1">{{ __('Tier') }}</label>
-            <select name="tier" class="w-full rounded-lg border-gray-300 text-xs">
+            <select name="tier" class="w-full rounded-lg border-gray-300 text-s">
                 <option value="">{{ __('Select tier') }}</option>
                 @foreach($tierOptions as $value => $label)
                     <option value="{{ $value }}" @selected(old('tier') === $value)>{{ __($label) }}</option>
@@ -38,7 +38,7 @@
         <div class="grid grid-cols-2 gap-3">
             <div>
                 <label class="block text-[10px] font-medium text-gray-700 mb-1">{{ __('Display order') }}</label>
-                <input type="number" name="display_order" class="w-full rounded-lg border-gray-300 text-xs"
+                <input type="number" name="display_order" class="w-full rounded-lg border-gray-300 text-s"
                        value="{{ old('display_order', 0) }}">
                 @error('display_order') <p class="mt-1 text-[11px] text-red-600">{{ $message }}</p> @enderror
             </div>
@@ -58,7 +58,7 @@
 
         <div class="pt-2">
             <button type="submit"
-                    class="inline-flex items-center rounded-lg bg-gray-900 px-3 py-1.5 text-xs font-semibold text-white hover:bg-black">
+                    class="inline-flex items-center rounded-lg bg-gray-900 px-3 py-1.5 text-s font-semibold text-white hover:bg-black">
                 {{ __('Save') }}
             </button>
         </div>

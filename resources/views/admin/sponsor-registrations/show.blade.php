@@ -6,14 +6,14 @@
     </h1>
 
     @if(session('success'))
-        <div class="mb-3 rounded-lg bg-emerald-50 border border-emerald-200 px-3 py-2 text-xs text-emerald-800">
+        <div class="mb-3 rounded-lg bg-emerald-50 border border-emerald-200 px-3 py-2 text-s text-emerald-800">
             {{ session('success') }}
         </div>
     @endif
 
     <div class="grid gap-4 lg:grid-cols-[minmax(0,2fr)_minmax(0,1.2fr)]">
         <div class="space-y-4">
-            <div class="rounded-xl bg-white border border-gray-200 p-4 text-xs">
+            <div class="rounded-xl bg-white border border-gray-200 p-4 text-s">
                 <h2 class="text-sm font-semibold mb-2">{{ __('Contact info') }}</h2>
                 <div class="grid grid-cols-2 gap-2">
                     <div>
@@ -35,7 +35,7 @@
                 </div>
             </div>
 
-            <div class="rounded-xl bg-white border border-gray-200 p-4 text-xs">
+            <div class="rounded-xl bg-white border border-gray-200 p-4 text-s">
                 <h2 class="text-sm font-semibold mb-2">{{ __('Company details') }}</h2>
                 <div class="grid grid-cols-2 gap-2">
                     <div>
@@ -59,7 +59,7 @@
         </div>
 
         <div class="space-y-4">
-            <div class="rounded-xl bg-white border border-gray-200 p-4 text-xs">
+            <div class="rounded-xl bg-white border border-gray-200 p-4 text-s">
                 <h2 class="text-sm font-semibold mb-3">{{ __('Status & actions') }}</h2>
 
                 <div class="mb-3">
@@ -80,21 +80,21 @@
                     <label class="block text-[10px] text-gray-500">
                         {{ __('Change status') }}
                     </label>
-                    <select name="status" class="w-full rounded-lg border-gray-300 text-xs mb-2">
+                    <select name="status" class="w-full rounded-lg border-gray-300 text-s mb-2">
                         <option value="pending" @selected($registration->status === 'pending')>{{ __('Pending') }}</option>
                         <option value="approved" @selected($registration->status === 'approved')>{{ __('Approved') }}</option>
                         <option value="rejected" @selected($registration->status === 'rejected')>{{ __('Rejected') }}</option>
                     </select>
                     <button
                         type="submit"
-                        class="inline-flex items-center rounded-lg bg-gray-900 px-3 py-1.5 text-xs font-semibold text-white hover:bg-black"
+                        class="inline-flex items-center rounded-lg bg-gray-900 px-3 py-1.5 text-s font-semibold text-white hover:bg-black"
                     >
                         {{ __('Update status') }}
                     </button>
                 </form>
             </div>
 
-            <div class="rounded-xl bg-white border border-gray-200 p-4 text-xs">
+            <div class="rounded-xl bg-white border border-gray-200 p-4 text-s">
                 <h2 class="text-sm font-semibold mb-3">{{ __('Files') }}</h2>
 
                 <div class="space-y-3">

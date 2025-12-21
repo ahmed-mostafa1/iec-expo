@@ -3,7 +3,7 @@
 @section('content')
     <div class="flex items-center justify-between mb-4">
         <h1 class="text-lg font-semibold">{{ __('Sponsor details') }}</h1>
-        <div class="flex items-center gap-2 text-xs">
+        <div class="flex items-center gap-2 text-s">
             <a href="{{ route('admin.public-sponsors.index') }}"
                class="inline-flex items-center rounded-lg border border-gray-200 px-3 py-1.5 text-gray-700 hover:bg-gray-50">
                 {{ __('Back to list') }}
@@ -16,7 +16,7 @@
     </div>
 
     <div class="grid gap-4 lg:grid-cols-[minmax(0,1.3fr)_minmax(0,0.7fr)]">
-        <div class="rounded-xl bg-white border border-gray-200 p-4 text-xs">
+        <div class="rounded-xl bg-white border border-gray-200 p-4 text-s">
             <h2 class="text-sm font-semibold mb-3">{{ __('General information') }}</h2>
             <dl class="space-y-3">
                 <div class="flex justify-between">
@@ -56,7 +56,7 @@
             </dl>
         </div>
 
-        <div class="rounded-xl bg-white border border-gray-200 p-4 text-xs">
+        <div class="rounded-xl bg-white border border-gray-200 p-4 text-s">
             <h2 class="text-sm font-semibold mb-3">{{ __('Brand assets') }}</h2>
             @if($sponsor->logo_path)
                 <div class="rounded-lg border border-dashed border-gray-200 p-4 flex items-center justify-center">

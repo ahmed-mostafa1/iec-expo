@@ -40,7 +40,7 @@
                 <a href="#contact" class="hover:text-emerald-600 nav-link">{{ __('Contact') }}</a>
 
                 {{-- Language switcher --}}
-                <div class="flex items-center gap-1 text-xs border border-gray-200 rounded-full px-1 py-0.5">
+                <div class="flex items-center gap-1 text-s border border-gray-200 rounded-full px-1 py-0.5">
                     <button
                         type="button"
                         class="px-2 py-0.5 rounded-full lang-switch {{ ($currentLocale ?? 'en') === 'en' ? 'bg-emerald-600 text-white' : 'text-gray-600' }}"
@@ -87,7 +87,7 @@
         @yield('content')
     </main>
 
-    <footer class="border-t border-gray-200 py-4 text-xs text-gray-500">
+    <footer class="border-t border-gray-200 py-4 text-s text-gray-500">
         <div class="mx-auto max-w-6xl px-4 flex items-center justify-between">
             <div>© {{ date('Y') }} {{ config('app.name') }}</div>
             <div>{{ __('All rights reserved.') }}</div>
