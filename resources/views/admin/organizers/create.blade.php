@@ -6,19 +6,19 @@
     <form method="POST"
           action="{{ route('admin.organizers.store') }}"
           enctype="multipart/form-data"
-          class="max-w-xl space-y-4 bg-white border border-gray-200 rounded-xl p-4 text-xs">
+          class="max-w-xl space-y-4 bg-white border border-gray-200 rounded-xl p-4 text-s">
         @csrf
 
         <div class="grid grid-cols-1 gap-3">
             <div>
                 <label class="block text-[10px] font-medium text-gray-700 mb-1">{{ __('Name (English)') }}</label>
-                <input type="text" name="name" class="w-full rounded-lg border-gray-300 text-xs"
+                <input type="text" name="name" class="w-full rounded-lg border-gray-300 text-s"
                        value="{{ old('name') }}" required>
                 @error('name') <p class="mt-1 text-[11px] text-red-600">{{ $message }}</p> @enderror
             </div>
             <div>
                 <label class="block text-[10px] font-medium text-gray-700 mb-1">{{ __('Name (Arabic)') }}</label>
-                <input type="text" name="name_ar" class="w-full rounded-lg border-gray-300 text-xs"
+                <input type="text" name="name_ar" class="w-full rounded-lg border-gray-300 text-s"
                        value="{{ old('name_ar') }}">
                 @error('name_ar') <p class="mt-1 text-[11px] text-red-600">{{ $message }}</p> @enderror
             </div>
@@ -26,14 +26,14 @@
 
         <div>
             <label class="block text-[10px] font-medium text-gray-700 mb-1">{{ __('Website URL') }}</label>
-            <input type="url" name="url" class="w-full rounded-lg border-gray-300 text-xs"
+            <input type="url" name="url" class="w-full rounded-lg border-gray-300 text-s"
                    value="{{ old('url') }}">
             @error('url') <p class="mt-1 text-[11px] text-red-600">{{ $message }}</p> @enderror
         </div>
 
         <div>
             <label class="block text-[10px] font-medium text-gray-700 mb-1">{{ __('Display order') }}</label>
-            <input type="number" name="display_order" class="w-full rounded-lg border-gray-300 text-xs"
+            <input type="number" name="display_order" class="w-full rounded-lg border-gray-300 text-s"
                    value="{{ old('display_order', 0) }}">
             @error('display_order') <p class="mt-1 text-[11px] text-red-600">{{ $message }}</p> @enderror
         </div>
@@ -48,14 +48,14 @@
         <div>
             <label class="block text-[10px] font-medium text-gray-700 mb-1">{{ __('Description (EN)') }}</label>
             <textarea name="description_en" rows="3"
-                      class="w-full rounded-lg border-gray-300 text-xs">{{ old('description_en') }}</textarea>
+                      class="w-full rounded-lg border-gray-300 text-s">{{ old('description_en') }}</textarea>
             @error('description_en') <p class="mt-1 text-[11px] text-red-600">{{ $message }}</p> @enderror
         </div>
 
         <div>
             <label class="block text-[10px] font-medium text-gray-700 mb-1">{{ __('Description (AR)') }}</label>
             <textarea name="description_ar" rows="3"
-                      class="w-full rounded-lg border-gray-300 text-xs">{{ old('description_ar') }}</textarea>
+                      class="w-full rounded-lg border-gray-300 text-s">{{ old('description_ar') }}</textarea>
             @error('description_ar') <p class="mt-1 text-[11px] text-red-600">{{ $message }}</p> @enderror
         </div>
 
@@ -67,7 +67,7 @@
 
         <div class="pt-2">
             <button type="submit"
-                    class="inline-flex items-center rounded-lg bg-gray-900 px-3 py-1.5 text-xs font-semibold text-white hover:bg-black">
+                    class="inline-flex items-center rounded-lg bg-gray-900 px-3 py-1.5 text-s font-semibold text-white hover:bg-black">
                 {{ __('Save') }}
             </button>
         </div>

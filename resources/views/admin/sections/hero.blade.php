@@ -8,7 +8,7 @@
                 <p class="text-sm text-gray-500">{{ __('Update the hero media and stats that appear on the landing page.') }}</p>
             </div>
             <a href="{{ $previewUrl }}" target="_blank" rel="noopener"
-                class="text-xs inline-flex items-center gap-2 rounded-full border border-emerald-600 px-4 py-2 font-semibold text-emerald-700 hover:bg-emerald-50 transition">
+                class="text-s inline-flex items-center gap-2 rounded-full border border-emerald-600 px-4 py-2 font-semibold text-emerald-700 hover:bg-emerald-50 transition">
                 <span>{{ __('Preview on landing') }}</span>
                 <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                     <path d="M5 12h14M12 5l7 7-7 7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
@@ -41,23 +41,23 @@
 
                 <div class="grid gap-6 md:grid-cols-2">
                     <div class="space-y-3 border rounded-xl border-dashed border-gray-200 p-4">
-                        <p class="text-xs font-semibold uppercase tracking-wide text-gray-500">{{ __('Video file') }}</p>
-                        <div class="aspect-video w-full rounded-xl bg-gray-900/5 flex items-center justify-center text-gray-500 text-xs">
+                        <p class="text-s font-semibold uppercase tracking-wide text-gray-500">{{ __('Video file') }}</p>
+                        <div class="aspect-video w-full rounded-xl bg-gray-900/5 flex items-center justify-center text-gray-500 text-s">
                             <span>{{ __('Current video:') }}</span>
                             <span class="font-semibold ms-1">{{ data_get($content, 'video_path') ?: __('Default asset') }}</span>
                         </div>
                         <input type="file" name="video_file" accept="video/mp4,video/webm"
                             class="block w-full rounded-lg border-gray-200 text-sm file:me-4 file:rounded-md file:border-0 file:bg-emerald-600 file:px-4 file:py-2 file:text-white" />
-                        <p class="text-xs text-gray-500">{{ __('MP4/WEBM only, up to 50MB. Leave empty to keep current video.') }}</p>
+                        <p class="text-s text-gray-500">{{ __('MP4/WEBM only, up to 50MB. Leave empty to keep current video.') }}</p>
                     </div>
                     <div class="space-y-3 border rounded-xl border-dashed border-gray-200 p-4">
-                        <p class="text-xs font-semibold uppercase tracking-wide text-gray-500">{{ __('Poster image (optional)') }}</p>
-                        <div class="aspect-video w-full rounded-xl bg-gradient-to-br from-emerald-100 to-white flex items-center justify-center text-gray-500 text-xs">
+                        <p class="text-s font-semibold uppercase tracking-wide text-gray-500">{{ __('Poster image (optional)') }}</p>
+                        <div class="aspect-video w-full rounded-xl bg-gradient-to-br from-emerald-100 to-white flex items-center justify-center text-gray-500 text-s">
                             <span>{{ data_get($content, 'poster_image_path') ? __('Custom poster active') : __('Using default frame') }}</span>
                         </div>
                         <input type="file" name="poster_image" accept="image/png,image/jpeg,image/webp"
                             class="block w-full rounded-lg border-gray-200 text-sm file:me-4 file:rounded-md file:border-0 file:bg-emerald-600 file:px-4 file:py-2 file:text-white" />
-                        <p class="text-xs text-gray-500">{{ __('JPG/PNG/WEBP, up to 20MB. Keeps the previous image if left blank.') }}</p>
+                        <p class="text-s text-gray-500">{{ __('JPG/PNG/WEBP, up to 20MB. Keeps the previous image if left blank.') }}</p>
                     </div>
                 </div>
             </section>
@@ -78,7 +78,7 @@
                             <button type="button"
                                 class="w-full rounded-lg bg-white border border-emerald-100 px-3 py-2 text-left transition hover:border-emerald-500 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-emerald-500"
                                 data-node-trigger="stat-{{ $index }}">
-                                <div class="text-xs font-semibold text-emerald-700 uppercase tracking-wide">
+                                <div class="text-s font-semibold text-emerald-700 uppercase tracking-wide">
                                     {{ __('Stat card') }} #{{ $loop->iteration }}
                                 </div>
                                 <div class="mt-1 text-2xl font-bold text-gray-900">
@@ -92,25 +92,25 @@
                             <div class="space-y-3 rounded-lg border border-gray-100 bg-white p-3 text-sm hidden" data-node-panel="stat-{{ $index }}">
                                 <input type="hidden" name="stats[{{ $index }}][id]" value="{{ $stat['id'] ?? ('stat_' . $index) }}">
                                 <div class="grid gap-2">
-                                    <label class="text-xs font-semibold text-gray-500 uppercase">{{ __('Value') }}</label>
+                                    <label class="text-s font-semibold text-gray-500 uppercase">{{ __('Value') }}</label>
                                     <input type="number" name="stats[{{ $index }}][value]"
                                         value="{{ old('stats.' . $index . '.value', $stat['value'] ?? 0) }}"
                                         class="rounded-lg border-gray-200 text-sm" min="0">
                                 </div>
                                 <div class="grid gap-2">
-                                    <label class="text-xs font-semibold text-gray-500 uppercase">{{ __('Suffix') }}</label>
+                                    <label class="text-s font-semibold text-gray-500 uppercase">{{ __('Suffix') }}</label>
                                     <input type="text" name="stats[{{ $index }}][suffix]"
                                         value="{{ old('stats.' . $index . '.suffix', $stat['suffix'] ?? '') }}"
                                         class="rounded-lg border-gray-200 text-sm">
                                 </div>
                                 <div class="grid gap-2">
-                                    <label class="text-xs font-semibold text-gray-500 uppercase">{{ __('English label') }}</label>
+                                    <label class="text-s font-semibold text-gray-500 uppercase">{{ __('English label') }}</label>
                                     <input type="text" name="stats[{{ $index }}][label][en]"
                                         value="{{ old('stats.' . $index . '.label.en', data_get($stat, 'label.en')) }}"
                                         class="rounded-lg border-gray-200 text-sm">
                                 </div>
                                 <div class="grid gap-2">
-                                    <label class="text-xs font-semibold text-gray-500 uppercase">{{ __('Arabic label') }}</label>
+                                    <label class="text-s font-semibold text-gray-500 uppercase">{{ __('Arabic label') }}</label>
                                     <input type="text" name="stats[{{ $index }}][label][ar]"
                                         value="{{ old('stats.' . $index . '.label.ar', data_get($stat, 'label.ar')) }}"
                                         class="rounded-lg border-gray-200 text-sm">

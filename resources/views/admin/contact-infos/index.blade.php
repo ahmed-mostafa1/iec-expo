@@ -4,19 +4,19 @@
     <h1 class="text-lg font-semibold mb-4">{{ __('Contact info') }}</h1>
 
     @if(session('success'))
-        <div class="mb-3 rounded-lg bg-emerald-50 border border-emerald-200 px-3 py-2 text-xs text-emerald-800">
+        <div class="mb-3 rounded-lg bg-emerald-50 border border-emerald-200 px-3 py-2 text-s text-emerald-800">
             {{ session('success') }}
         </div>
     @endif
 
     <div class="mb-3">
         <a href="{{ route('admin.contact-infos.create') }}"
-           class="inline-flex items-center rounded-lg bg-gray-900 px-3 py-1.5 text-xs font-semibold text-white hover:bg-black">
+           class="inline-flex items-center rounded-lg bg-gray-900 px-3 py-1.5 text-s font-semibold text-white hover:bg-black">
             {{ __('Add contact') }}
         </a>
     </div>
 
-    <div class="overflow-x-auto bg-white border border-gray-200 rounded-xl text-xs">
+    <div class="overflow-x-auto bg-white border border-gray-200 rounded-xl text-s">
         <table class="min-w-full">
             <thead class="bg-gray-50 text-[10px] uppercase tracking-wide text-gray-500 border-b border-gray-200">
                 <tr>

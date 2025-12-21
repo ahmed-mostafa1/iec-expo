@@ -8,7 +8,7 @@
                 <p class="text-sm text-gray-500">{{ __('Control the message form, support cards, and map block exactly as they appear on the landing page.') }}</p>
             </div>
             <a href="{{ $previewUrl }}" target="_blank" rel="noopener"
-                class="text-xs inline-flex items-center gap-2 rounded-full border border-emerald-600 px-4 py-2 font-semibold text-emerald-700 hover:bg-emerald-50 transition">
+                class="text-s inline-flex items-center gap-2 rounded-full border border-emerald-600 px-4 py-2 font-semibold text-emerald-700 hover:bg-emerald-50 transition">
                 <span>{{ __('Preview on landing') }}</span>
                 <svg class="w-3 h-3" viewBox="0 0 24 24" fill="none" stroke="currentColor">
                     <path d="M5 12h14M12 5l7 7-7 7" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
@@ -51,23 +51,23 @@
                 </div>
                 <div class="grid gap-4 md:grid-cols-2">
                     <div>
-                        <label class="text-xs font-semibold text-gray-500 uppercase">{{ __('Title (EN)') }}</label>
+                        <label class="text-s font-semibold text-gray-500 uppercase">{{ __('Title (EN)') }}</label>
                         <input type="text" name="title[en]" value="{{ old('title.en', data_get($title, 'en')) }}"
                             class="w-full mt-1 rounded-lg border-gray-200 text-sm" />
                     </div>
                     <div>
-                        <label class="text-xs font-semibold text-gray-500 uppercase">{{ __('Title (AR)') }}</label>
+                        <label class="text-s font-semibold text-gray-500 uppercase">{{ __('Title (AR)') }}</label>
                         <input type="text" name="title[ar]" value="{{ old('title.ar', data_get($title, 'ar')) }}"
                             class="w-full mt-1 rounded-lg border-gray-200 text-sm" />
                     </div>
                 </div>
                 <div class="grid gap-4 md:grid-cols-2">
                     <div>
-                        <label class="text-xs font-semibold text-gray-500 uppercase">{{ __('Description (EN)') }}</label>
+                        <label class="text-s font-semibold text-gray-500 uppercase">{{ __('Description (EN)') }}</label>
                         <textarea name="description[en]" rows="3" class="w-full mt-1 rounded-lg border-gray-200 text-sm">{{ old('description.en', data_get($description, 'en')) }}</textarea>
                     </div>
                     <div>
-                        <label class="text-xs font-semibold text-gray-500 uppercase">{{ __('Description (AR)') }}</label>
+                        <label class="text-s font-semibold text-gray-500 uppercase">{{ __('Description (AR)') }}</label>
                         <textarea name="description[ar]" rows="3" class="w-full mt-1 rounded-lg border-gray-200 text-sm">{{ old('description.ar', data_get($description, 'ar')) }}</textarea>
                     </div>
                 </div>
@@ -79,30 +79,30 @@
                         <div class="flex items-center justify-between">
                             <div>
                                 <h3 class="font-semibold text-gray-900">{{ __('Contact form block') }}</h3>
-                                <p class="text-xs text-gray-500">{{ __('Inputs sit where visitors type messages.') }}</p>
+                                <p class="text-s text-gray-500">{{ __('Inputs sit where visitors type messages.') }}</p>
                             </div>
-                            <button type="button" class="text-xs font-semibold text-emerald-700" data-node-trigger="form-meta">
+                            <button type="button" class="text-s font-semibold text-emerald-700" data-node-trigger="form-meta">
                                 {{ __('Edit text') }}
                             </button>
                         </div>
                         <div class="rounded-xl border border-gray-200 bg-white p-4 space-y-3 hidden" data-node-panel="form-meta">
                             <div>
-                                <label class="text-xs font-semibold text-gray-500 uppercase">{{ __('Form title (EN)') }}</label>
+                                <label class="text-s font-semibold text-gray-500 uppercase">{{ __('Form title (EN)') }}</label>
                                 <input type="text" name="form_title[en]" value="{{ old('form_title.en', data_get($formTitle, 'en')) }}"
                                     class="w-full mt-1 rounded-lg border-gray-200 text-sm" />
                             </div>
                             <div>
-                                <label class="text-xs font-semibold text-gray-500 uppercase">{{ __('Form title (AR)') }}</label>
+                                <label class="text-s font-semibold text-gray-500 uppercase">{{ __('Form title (AR)') }}</label>
                                 <input type="text" name="form_title[ar]" value="{{ old('form_title.ar', data_get($formTitle, 'ar')) }}"
                                     class="w-full mt-1 rounded-lg border-gray-200 text-sm" />
                             </div>
                             <div>
-                                <label class="text-xs font-semibold text-gray-500 uppercase">{{ __('Submit button (EN)') }}</label>
+                                <label class="text-s font-semibold text-gray-500 uppercase">{{ __('Submit button (EN)') }}</label>
                                 <input type="text" name="form_button[en]" value="{{ old('form_button.en', data_get($formButton, 'en')) }}"
                                     class="w-full mt-1 rounded-lg border-gray-200 text-sm" />
                             </div>
                             <div>
-                                <label class="text-xs font-semibold text-gray-500 uppercase">{{ __('Submit button (AR)') }}</label>
+                                <label class="text-s font-semibold text-gray-500 uppercase">{{ __('Submit button (AR)') }}</label>
                                 <input type="text" name="form_button[ar]" value="{{ old('form_button.ar', data_get($formButton, 'ar')) }}"
                                     class="w-full mt-1 rounded-lg border-gray-200 text-sm" />
                             </div>
@@ -116,10 +116,10 @@
                                 <div class="rounded-2xl border border-gray-200 bg-gradient-to-br from-white to-gray-50 p-4 space-y-4" data-node-group>
                                     <div class="flex items-center justify-between">
                                         <div>
-                                            <p class="text-xs font-semibold text-gray-500 uppercase">{{ __('Card') }} #{{ $loop->iteration }}</p>
+                                            <p class="text-s font-semibold text-gray-500 uppercase">{{ __('Card') }} #{{ $loop->iteration }}</p>
                                             <p class="text-base font-semibold text-gray-900">{{ data_get($card, 'title.en') }}</p>
                                         </div>
-                                        <button type="button" class="text-xs font-semibold text-emerald-700" data-node-trigger="card-{{ $cardIndex }}">
+                                        <button type="button" class="text-s font-semibold text-emerald-700" data-node-trigger="card-{{ $cardIndex }}">
                                             {{ __('Edit card') }}
                                         </button>
                                     </div>
@@ -128,13 +128,13 @@
                                         <input type="hidden" name="support_cards[{{ $cardIndex }}][id]" value="{{ $card['id'] ?? ('card_' . $cardIndex) }}">
                                         <div class="grid gap-4 md:grid-cols-2">
                                             <div>
-                                                <label class="text-xs font-semibold text-gray-500 uppercase">{{ __('Title (EN)') }}</label>
+                                                <label class="text-s font-semibold text-gray-500 uppercase">{{ __('Title (EN)') }}</label>
                                                 <input type="text" name="support_cards[{{ $cardIndex }}][title][en]"
                                                     value="{{ old("support_cards.$cardIndex.title.en", data_get($card, 'title.en')) }}"
                                                     class="w-full mt-1 rounded-lg border-gray-200 text-sm" />
                                             </div>
                                             <div>
-                                                <label class="text-xs font-semibold text-gray-500 uppercase">{{ __('Title (AR)') }}</label>
+                                                <label class="text-s font-semibold text-gray-500 uppercase">{{ __('Title (AR)') }}</label>
                                                 <input type="text" name="support_cards[{{ $cardIndex }}][title][ar]"
                                                     value="{{ old("support_cards.$cardIndex.title.ar", data_get($card, 'title.ar')) }}"
                                                     class="w-full mt-1 rounded-lg border-gray-200 text-sm" />
@@ -145,13 +145,13 @@
                                             <div class="rounded-xl border border-gray-100 bg-white p-4 space-y-3">
                                                 <div class="grid gap-4 md:grid-cols-2">
                                                     <div>
-                                                        <label class="text-xs font-semibold text-gray-500 uppercase">{{ __('Column heading (EN)') }}</label>
+                                                        <label class="text-s font-semibold text-gray-500 uppercase">{{ __('Column heading (EN)') }}</label>
                                                         <input type="text" name="support_cards[{{ $cardIndex }}][columns][{{ $columnIndex }}][heading][en]"
                                                             value="{{ old("support_cards.$cardIndex.columns.$columnIndex.heading.en", data_get($column, 'heading.en')) }}"
                                                             class="w-full mt-1 rounded-lg border-gray-200 text-sm" />
                                                     </div>
                                                     <div>
-                                                        <label class="text-xs font-semibold text-gray-500 uppercase">{{ __('Column heading (AR)') }}</label>
+                                                        <label class="text-s font-semibold text-gray-500 uppercase">{{ __('Column heading (AR)') }}</label>
                                                         <input type="text" name="support_cards[{{ $cardIndex }}][columns][{{ $columnIndex }}][heading][ar]"
                                                             value="{{ old("support_cards.$cardIndex.columns.$columnIndex.heading.ar", data_get($column, 'heading.ar')) }}"
                                                             class="w-full mt-1 rounded-lg border-gray-200 text-sm" />
@@ -159,8 +159,8 @@
                                                 </div>
                                                 <div class="space-y-3">
                                                     <div class="flex items-center justify-between">
-                                                        <p class="text-xs font-semibold text-gray-500 uppercase">{{ __('Contacts') }}</p>
-                                                        <button type="button" class="text-xs font-semibold text-emerald-700"
+                                                        <p class="text-s font-semibold text-gray-500 uppercase">{{ __('Contacts') }}</p>
+                                                        <button type="button" class="text-s font-semibold text-emerald-700"
                                                             data-add-contact="card{{ $cardIndex }}-col{{ $columnIndex }}"
                                                             data-name-prefix="support_cards[{{ $cardIndex }}][columns][{{ $columnIndex }}][contacts]"
                                                             data-target="card{{ $cardIndex }}-col{{ $columnIndex }}">
@@ -199,42 +199,42 @@
                 </div>
                 <div class="grid gap-4 md:grid-cols-2">
                     <div>
-                        <label class="text-xs font-semibold text-gray-500 uppercase">{{ __('Location title (EN)') }}</label>
+                        <label class="text-s font-semibold text-gray-500 uppercase">{{ __('Location title (EN)') }}</label>
                         <input type="text" name="location_title[en]" value="{{ old('location_title.en', data_get($locationTitle, 'en')) }}"
                             class="w-full mt-1 rounded-lg border-gray-200 text-sm" />
                     </div>
                     <div>
-                        <label class="text-xs font-semibold text-gray-500 uppercase">{{ __('Location title (AR)') }}</label>
+                        <label class="text-s font-semibold text-gray-500 uppercase">{{ __('Location title (AR)') }}</label>
                         <input type="text" name="location_title[ar]" value="{{ old('location_title.ar', data_get($locationTitle, 'ar')) }}"
                             class="w-full mt-1 rounded-lg border-gray-200 text-sm" />
                     </div>
                 </div>
                 <div class="grid gap-4 md:grid-cols-2">
                     <div>
-                        <label class="text-xs font-semibold text-gray-500 uppercase">{{ __('Address (EN)') }}</label>
+                        <label class="text-s font-semibold text-gray-500 uppercase">{{ __('Address (EN)') }}</label>
                         <textarea name="location_address[en]" rows="3" class="w-full mt-1 rounded-lg border-gray-200 text-sm">{{ old('location_address.en', data_get($locationAddress, 'en')) }}</textarea>
                     </div>
                     <div>
-                        <label class="text-xs font-semibold text-gray-500 uppercase">{{ __('Address (AR)') }}</label>
+                        <label class="text-s font-semibold text-gray-500 uppercase">{{ __('Address (AR)') }}</label>
                         <textarea name="location_address[ar]" rows="3" class="w-full mt-1 rounded-lg border-gray-200 text-sm">{{ old('location_address.ar', data_get($locationAddress, 'ar')) }}</textarea>
                     </div>
                 </div>
                 <div>
-                    <label class="text-xs font-semibold text-gray-500 uppercase">{{ __('Google Maps embed URL') }}</label>
+                    <label class="text-s font-semibold text-gray-500 uppercase">{{ __('Google Maps embed URL') }}</label>
                     <textarea name="map_embed" rows="2" class="w-full mt-1 rounded-lg border-gray-200 text-sm">{{ old('map_embed', $mapEmbed) }}</textarea>
                 </div>
                 <div class="grid gap-4 md:grid-cols-2">
                     <div>
-                        <label class="text-xs font-semibold text-gray-500 uppercase">{{ __('Location image preview') }}</label>
-                        <div class="mt-2 aspect-video rounded-xl border border-dashed border-gray-300 bg-gray-100 flex items-center justify-center text-xs text-gray-500">
+                        <label class="text-s font-semibold text-gray-500 uppercase">{{ __('Location image preview') }}</label>
+                        <div class="mt-2 aspect-video rounded-xl border border-dashed border-gray-300 bg-gray-100 flex items-center justify-center text-s text-gray-500">
                             {{ data_get($content, 'location_image') ? __('Custom image uploaded') : __('Fallback gradient in use') }}
                         </div>
                     </div>
                     <div>
-                        <label class="text-xs font-semibold text-gray-500 uppercase">{{ __('Replace image (optional)') }}</label>
+                        <label class="text-s font-semibold text-gray-500 uppercase">{{ __('Replace image (optional)') }}</label>
                         <input type="file" name="location_image" accept="image/png,image/jpeg,image/webp"
                             class="block w-full rounded-lg border-gray-200 text-sm file:me-4 file:rounded-md file:border-0 file:bg-emerald-600 file:px-4 file:py-2 file:text-white" />
-                        <p class="mt-1 text-xs text-gray-500">{{ __('Max 8MB, JPG/PNG/WEBP. Keeps the existing image when left blank.') }}</p>
+                        <p class="mt-1 text-s text-gray-500">{{ __('Max 8MB, JPG/PNG/WEBP. Keeps the existing image when left blank.') }}</p>
                     </div>
                 </div>
             </section>
