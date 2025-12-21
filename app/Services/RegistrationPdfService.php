@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\SponsorRegistration;
 use App\Models\VisitorRegistration;
+use App\Models\IconRegistration;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Storage;
 
@@ -29,6 +30,19 @@ class RegistrationPdfService
         ]);
 
         $path = "registrations/visitors/{$registration->id}.pdf";
+
+        Storage::disk('public')->put($path, $pdf->output());
+
+        return $path;
+    }
+
+    public function generateIconPdf(IconRegistration $registration): string
+    {
+        $pdf = Pdf::loadView('pdf.icon_registration', [
+            'registration' => $registration,
+        ]);
+
+        $path = "registrations/icons/{$registration->id}.pdf";
 
         Storage::disk('public')->put($path, $pdf->output());
 

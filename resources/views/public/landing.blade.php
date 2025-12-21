@@ -2095,10 +2095,10 @@
         <nav class="nav">
           <a href="#" class="btn-primary nav-link" data-en="Home" data-ar="الرئيسية">Home</a>
           <a href="#register" class="btn-primary nav-link" data-en="Register" data-ar="سجل الآن">Register</a>
+          <a href="#about" class="nav-link" data-en="About" data-ar="عن المعرض">About</a>
           <a href="#sponsors" class="nav-link" data-en="Sponsors" data-ar="الرعاة">Sponsors</a>
           <a href="#participants" class="nav-link" data-en="Icons" data-ar="أيقونات المعرض">Icons</a>
           <a href="#organizers" class="nav-link" data-en="Owned by" data-ar="المنظمون">Owned by</a>
-          <a href="#about" class="nav-link" data-en="About" data-ar="عن المعرض">About</a>
           <a href="#contact" class="nav-link" data-en="Contact" data-ar="تواصل معنا">Contact</a>
           <a href="#" class="nav-link" data-en="Previous Editions of IEC" data-ar="نسخ المعرض السابقة">Previous Editions of IEC</a>
         </nav>
@@ -2126,10 +2126,10 @@
       <nav class="mobile-nav" id="mobile-nav">
         <a href="#" class="mobile-nav-link" data-en="Home" data-ar="الرئيسية">Home</a>
         <a href="#register" class="mobile-nav-link" data-en="Register" data-ar="سجل الآن">Register</a>
+        <a href="#about" class="mobile-nav-link" data-en="About" data-ar="عن المعرض">About</a>
         <a href="#sponsors" class="mobile-nav-link" data-en="Sponsors" data-ar="الرعاة">Sponsors</a>
         <a href="#participants" class="mobile-nav-link" data-en="Icons" data-ar="أيقونات المعرض">Icons</a>
         <a href="#organizers" class="mobile-nav-link" data-en="Owned by" data-ar="المنظمون">Owned by</a>
-        <a href="#about" class="mobile-nav-link" data-en="About" data-ar="عن المعرض">About</a>
         <a href="#contact" class="mobile-nav-link" data-en="Contact" data-ar="تواصل معنا">Contact</a>
         <a href="#" class="mobile-nav-link" data-en="Previous Editions of IEC" data-ar="نسخ المعرض السابقة">Previous Editions of IEC</a>
 

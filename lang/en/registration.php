@@ -45,5 +45,6 @@ return [
         'logo_hint' => 'PNG, JPG, WEBP files only accepted',
         'national_address' => 'National Address',
         'national_address_document' => 'National Address Document',
+        'duplicate' => 'VAT or CR already exists in Icon registrations.',
     ],
 ];

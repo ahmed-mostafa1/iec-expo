@@ -36,6 +36,9 @@
                 <a href="{{ route('admin.sponsors.index') }}" class="block rounded-lg px-2 py-1.5 hover:bg-emerald-50 text-gray-700">
                     {{ __('Sponsor registrations') }}
                 </a>
+                <a href="{{ route('admin.icons.index') }}" class="block rounded-lg px-2 py-1.5 hover:bg-emerald-50 text-gray-700">
+                    {{ __('Icon registrations') }}
+                </a>
                 <a href="{{ route('admin.visitors.index') }}" class="block rounded-lg px-2 py-1.5 hover:bg-emerald-50 text-gray-700">
                     {{ __('Visitor registrations') }}
                 </a>
@@ -63,7 +66,7 @@
                     {{ __('Sponsors (public)') }}
                 </a>
                 <a href="{{ route('admin.participants.index') }}" class="block rounded-lg px-2 py-1.5 hover:bg-emerald-50 text-gray-700">
-                    {{ __('Participants') }}
+                    {{ __('Icons') }}
                 </a>
                 <a href="{{ route('admin.organizers.index') }}" class="block rounded-lg px-2 py-1.5 hover:bg-emerald-50 text-gray-700">
                     {{ __('Organizers') }}

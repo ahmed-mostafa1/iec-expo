@@ -10,6 +10,11 @@
         </div>
 
         <div class="rounded-xl bg-white border border-gray-200 p-4">
+            <div class="text-s text-gray-500">{{ __('Total icons') }}</div>
+            <div class="mt-2 text-2xl font-semibold text-gray-900">{{ $totalIcons }}</div>
+        </div>
+
+        <div class="rounded-xl bg-white border border-gray-200 p-4">
             <div class="text-s text-gray-500">{{ __('Total visitors') }}</div>
             <div class="mt-2 text-2xl font-semibold text-gray-900">{{ $totalVisitors }}</div>
         </div>
@@ -17,6 +22,11 @@
         <div class="rounded-xl bg-white border border-gray-200 p-4">
             <div class="text-s text-gray-500">{{ __('Today sponsors') }}</div>
             <div class="mt-2 text-2xl font-semibold text-gray-900">{{ $todaySponsors }}</div>
+        </div>
+
+        <div class="rounded-xl bg-white border border-gray-200 p-4">
+            <div class="text-s text-gray-500">{{ __('Today icons') }}</div>
+            <div class="mt-2 text-2xl font-semibold text-gray-900">{{ $todayIcons }}</div>
         </div>
 
         <div class="rounded-xl bg-white border border-gray-200 p-4">
