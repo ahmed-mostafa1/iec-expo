@@ -13,8 +13,8 @@
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <style>
     :root {
-      --primary-color: #057a02;
-      --secondary-color: #00ff44;
+      --primary-color: #00ff00;
+      --secondary-color: #00ff00;
       --accent-color: #00ff88;
       --dark-color: #1a1a1a;
       --light-color: #f8f9fa;
@@ -27,7 +27,7 @@
       /* --card: 251 251 248; */
       --card: 18 18 18;
       --card-foreground: 248 248 248;
-      --primary: 51 153 88;
+      --primary: 0 255 0;
       --primary-foreground: 251 251 248;
       --secondary: 226 233 226;
       --secondary-foreground: 69 84 69;
@@ -35,13 +35,13 @@
       --muted-foreground: 248 248 248;
       --accent: 28 28 28;
       --accent-foreground: 248 248 248;
-      --border: 68 68 68;
+      --border: 152, 3, 189;
       --ring: 51 153 88;
       --radius: 0.75rem;
-      --chart-1: 57 172 99;
+      --chart-1: #9803bd;
       --chart-2: 70 185 147;
       --chart-3: 69 161 161;
-      --button-bg: #9873AC;
+      --button-bg: #9803bd;
       --button-hover-bg: #b5ffb5;
       --button-text: #ffffff;
       --hover-accent: #000000;
@@ -632,9 +632,22 @@
     }
 
     @media (min-width: 768px) {
-      .role-card.guest-card,
+      .role-card.guest-card {
+        grid-column: 1 / -1;
+        justify-self: center;
+        max-width: calc((100% - 1.5rem) / 2);
+        width: 100%;
+      }
+
       .form-card.guest-form {
         grid-column: 1 / -1;
+      }
+
+      .role-cards.guest-selected .guest-card,
+      .role-cards.guest-selected .guest-form {
+        grid-column: auto;
+        justify-self: stretch;
+        max-width: none;
       }
     }
 
@@ -1158,7 +1171,7 @@
     
 
     .sponsor-featured-card.sponsor-strategic {
-      --sponsor-gradient: linear-gradient(120deg, #fde68a, #f59e0b, #fcd34d);
+      --sponsor-gradient: linear-gradient(120deg, #9803bd, #9803bd, #9803bd);
     }
 
     .sponsor-featured-card.sponsor-business {
@@ -2084,9 +2097,10 @@
           <a href="#register" class="btn-primary nav-link" data-en="Register" data-ar="سجل الآن">Register</a>
           <a href="#sponsors" class="nav-link" data-en="Sponsors" data-ar="الرعاة">Sponsors</a>
           <a href="#participants" class="nav-link" data-en="Icons" data-ar="أيقونات المعرض">Icons</a>
-          <a href="#organizers" class="nav-link" data-en="Organizers" data-ar="المنظمون">Organizers</a>
+          <a href="#organizers" class="nav-link" data-en="Owned by" data-ar="المنظمون">Owned by</a>
           <a href="#about" class="nav-link" data-en="About" data-ar="عن المعرض">About</a>
           <a href="#contact" class="nav-link" data-en="Contact" data-ar="تواصل معنا">Contact</a>
+          <a href="#" class="nav-link" data-en="Previous Editions of IEC" data-ar="نسخ المعرض السابقة">Previous Editions of IEC</a>
         </nav>
 
         <div class="header-right">
@@ -2114,9 +2128,11 @@
         <a href="#register" class="mobile-nav-link" data-en="Register" data-ar="سجل الآن">Register</a>
         <a href="#sponsors" class="mobile-nav-link" data-en="Sponsors" data-ar="الرعاة">Sponsors</a>
         <a href="#participants" class="mobile-nav-link" data-en="Icons" data-ar="أيقونات المعرض">Icons</a>
-        <a href="#organizers" class="mobile-nav-link" data-en="Organizers" data-ar="المنظمون">Organizers</a>
+        <a href="#organizers" class="mobile-nav-link" data-en="Owned by" data-ar="المنظمون">Owned by</a>
         <a href="#about" class="mobile-nav-link" data-en="About" data-ar="عن المعرض">About</a>
         <a href="#contact" class="mobile-nav-link" data-en="Contact" data-ar="تواصل معنا">Contact</a>
+        <a href="#" class="mobile-nav-link" data-en="Previous Editions of IEC" data-ar="نسخ المعرض السابقة">Previous Editions of IEC</a>
+
       </nav>
     </div>
   </header>
@@ -2940,7 +2956,7 @@
         <section class="organizers" id="organizers">
       <div class="container">
         <div class="section-header" data-animate>
-          <h2 class="section-title" data-en="Organizers" data-ar="المنظمون">Organizers</h2>
+          <h2 class="section-title" data-en="Owned by" data-ar="المنظمون">Owned by</h2>
           <p class="section-desc" data-en="Meet the teams orchestrating the IEC Expo experience." data-ar="تعرّف على الفرق التي تنظم تجربة المعرض الدولي للتجارة اﻹلكترونية.">
             Meet the teams orchestrating the IEC Expo experience.
           </p>
@@ -3373,6 +3389,7 @@
       toggleRoleVisibility(role);
       const roleCards = document.getElementById('role-cards');
       roleCards.classList.add('has-selection');
+      roleCards.classList.toggle('guest-selected', role === 'visitor');
 
       const roles = [
         { key: 'visitor', card: 'visitor-card', form: 'visitor-form', cta: 'visitor-cta' },
@@ -3396,6 +3413,7 @@
 
       const roleCards = document.getElementById('role-cards');
       roleCards.classList.remove('has-selection');
+      roleCards.classList.remove('guest-selected');
 
       document.getElementById('visitor-card').classList.remove('selected', 'dimmed');
       document.getElementById('visitor-cta').style.display = 'flex';
