@@ -11,7 +11,7 @@ class SponsorRegistration extends Model
         'email',
         'phone',
         'job_title',
-        // 'organization' removed - field not used anymore
+        'organization',
         'vat_number',
         'cr_number',
         'national_address',
