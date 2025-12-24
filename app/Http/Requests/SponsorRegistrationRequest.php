@@ -20,7 +20,7 @@ class SponsorRegistrationRequest extends FormRequest
             'email'           => ['required', 'email', 'max:255'],
             'phone'           => ['required', 'string', 'max:50'],
             'job_title'       => ['required', 'string', 'max:255'],
-            // 'organization' removed: field removed from form
+            'organization'    => ['required', 'string', 'max:255'],
             'vat_number'      => ['nullable', 'digits:15', new UniqueSponsorVatCr],
             'cr_number'       => ['nullable', 'string', 'max:255', new UniqueSponsorVatCr],
             'national_address'=> ['nullable', 'string'],
@@ -34,6 +34,7 @@ class SponsorRegistrationRequest extends FormRequest
     public function attributes(): array
     {
         return [
+            'organization' => __('Company / Organization'),
             'vat_number' => __('registration.sponsor.vat_number'),
             'cr_number'  => __('registration.sponsor.cr_number'),
         ];
