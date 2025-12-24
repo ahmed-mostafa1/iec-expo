@@ -35,7 +35,7 @@ return [
         'email' => 'Email *',
         'phone' => 'Phone *',
         'job_title' => 'Job Title *',
-        'organization' => 'Company / Organization *',
+        'organization' => 'Company / Organization',
         'corporate_profile' => 'Corporate Profile',
         'file_hint' => 'PDF, PNG, JPG files only accepted',
         'vat_number' => 'VAT (Value Added Tax)',

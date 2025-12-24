@@ -2472,8 +2472,8 @@
                   </div>
                   <div class="form-grid form-grid-2" style="margin-top:1rem;">
                     <div class="form-group" style="grid-column: span 2;">
-                      <label class="form-label" data-en="Company / Organization *" data-ar="الشركة / الجهة *">Company / Organization *</label>
-                      <input type="text" name="organization" class="form-input" required placeholder="Umbrella Inc."
+                      <label class="form-label" data-en="Company / Organization" data-ar="الشركة / الجهة">Company / Organization</label>
+                      <input type="text" name="organization" class="form-input" placeholder="Umbrella Inc."
                         value="{{ $sponsorFormActive ? old('organization') : '' }}">
                       @if($sponsorFormActive && $errors->has('organization'))
                       <p class="mt-1 text-xs text-red-600">{{ $errors->first('organization') }}</p>
@@ -2648,7 +2648,7 @@
                   <div class="form-grid form-grid-2" style="margin-top:1rem;">
                     <div class="form-group" style="grid-column: span 2;">
                       <label class="form-label" data-en="{{ e(trans('registration.icon.organization', [], 'en')) }}" data-ar="{{ e(trans('registration.icon.organization', [], 'ar')) }}">{{ __('registration.icon.organization') }}</label>
-                      <input type="text" name="organization" class="form-input" required placeholder="Umbrella Inc."
+                      <input type="text" name="organization" class="form-input" placeholder="Umbrella Inc."
                         value="{{ $iconFormActive ? old('organization') : '' }}">
                       @if($iconFormActive && $errors->has('organization'))
                       <p class="mt-1 text-xs text-red-600">{{ $errors->first('organization') }}</p>

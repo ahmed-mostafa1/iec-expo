@@ -20,7 +20,7 @@ class SponsorRegistrationRequest extends FormRequest
             'email'           => ['required', 'email', 'max:255'],
             'phone'           => ['required', 'string', 'max:50'],
             'job_title'       => ['required', 'string', 'max:255'],
-            'organization'    => ['required', 'string', 'max:255'],
+            'organization'    => ['nullable', 'string', 'max:255'],
             'vat_number'      => ['nullable', 'digits:15', new UniqueSponsorVatCr],
             'cr_number'       => ['nullable', 'string', 'max:255', new UniqueSponsorVatCr],
             'national_address'=> ['nullable', 'string'],

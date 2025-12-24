@@ -35,7 +35,7 @@ return [
         'email' => 'البريد الإلكتروني *',
         'phone' => 'الهاتف *',
         'job_title' => 'المسمى الوظيفي *',
-        'organization' => 'الشركة / الجهة *',
+        'organization' => 'الشركة / الجهة',
         'corporate_profile' => 'الملف التعريفي للشركة',
         'file_hint' => 'يتم قبول ملفات PDF أو PNG أو JPG فقط',
         'vat_number' => 'ضريبة القيمة المضافة',

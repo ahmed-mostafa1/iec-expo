@@ -52,7 +52,7 @@ class IconRegistrationController extends Controller
             'email'            => $data['email'],
             'phone'            => $data['phone'],
             'job_title'        => $data['job_title'],
-            'organization'     => $data['organization'],
+            'organization'     => $data['organization'] ?? '',
             'vat_number'       => $data['vat_number'] ?? '',
             'cr_number'        => $data['cr_number'] ?? '',
             'national_address' => $data['national_address'] ?? '',
