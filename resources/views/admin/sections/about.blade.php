@@ -5,7 +5,7 @@
         <div class="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
             <div>
                 <h1 class="text-xl font-semibold text-gray-900">{{ __('About section') }}</h1>
-                <p class="text-sm text-gray-500">{{ __('Edit the mission block, goals, and looping background media.') }}</p>
+                <p class="text-sm text-gray-500">{{ __('Edit the mission block and goals for the landing page.') }}</p>
             </div>
             <a href="{{ $previewUrl }}" target="_blank" rel="noopener"
                 class="text-s inline-flex items-center gap-2 rounded-full border border-emerald-600 px-4 py-2 font-semibold text-emerald-700 hover:bg-emerald-50 transition">
@@ -39,27 +39,6 @@
 
         <form method="POST" enctype="multipart/form-data" class="space-y-6">
             @csrf
-
-            <section class="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm space-y-4">
-                <div>
-                    <h2 class="text-lg font-semibold text-gray-900">{{ __('Background media') }}</h2>
-                    <p class="text-sm text-gray-500">{{ __('Match the cinematic video used on the public section.') }}</p>
-                </div>
-                <div class="grid gap-4 md:grid-cols-2">
-                    <div>
-                        <label class="text-s font-semibold uppercase text-gray-500">{{ __('Current video') }}</label>
-                        <div class="mt-2 aspect-video rounded-xl bg-gray-900/5 flex items-center justify-center text-s text-gray-600 border border-dashed border-gray-300">
-                            {{ data_get($content, 'background_video') ?: __('Default asset') }}
-                        </div>
-                    </div>
-                    <div class="space-y-2">
-                        <label class="text-s font-semibold uppercase text-gray-500">{{ __('Replace video file') }}</label>
-                        <input type="file" name="background_video_file" accept="video/mp4,video/webm"
-                            class="block w-full rounded-lg border-gray-200 text-sm file:me-4 file:rounded-md file:border-0 file:bg-emerald-600 file:px-4 file:py-2 file:text-white" />
-                        <p class="text-s text-gray-500">{{ __('MP4/WEBM only, up to 50MB. Leave empty to keep the current clip.') }}</p>
-                    </div>
-                </div>
-            </section>
 
             <section class="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm space-y-4" data-node-group>
                 <div class="flex items-center justify-between">

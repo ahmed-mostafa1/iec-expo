@@ -5,7 +5,7 @@
         <div class="flex flex-col gap-2 md:flex-row md:items-center md:justify-between">
             <div>
                 <h1 class="text-xl font-semibold text-gray-900">{{ __('Hero section') }}</h1>
-                <p class="text-sm text-gray-500">{{ __('Update the hero media and stats that appear on the landing page.') }}</p>
+                <p class="text-sm text-gray-500">{{ __('Edit the hero stats that appear on the landing page.') }}</p>
             </div>
             <a href="{{ $previewUrl }}" target="_blank" rel="noopener"
                 class="text-s inline-flex items-center gap-2 rounded-full border border-emerald-600 px-4 py-2 font-semibold text-emerald-700 hover:bg-emerald-50 transition">
@@ -32,35 +32,6 @@
 
         <form method="POST" enctype="multipart/form-data" class="space-y-6">
             @csrf
-
-            <section class="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm">
-                <div class="flex flex-col gap-2 mb-6">
-                    <h2 class="text-lg font-semibold text-gray-900">{{ __('Hero media block') }}</h2>
-                    <p class="text-sm text-gray-500">{{ __('Match the landing layout by updating the looping hero video and optional overlay image.') }}</p>
-                </div>
-
-                <div class="grid gap-6 md:grid-cols-2">
-                    <div class="space-y-3 border rounded-xl border-dashed border-gray-200 p-4">
-                        <p class="text-s font-semibold uppercase tracking-wide text-gray-500">{{ __('Video file') }}</p>
-                        <div class="aspect-video w-full rounded-xl bg-gray-900/5 flex items-center justify-center text-gray-500 text-s">
-                            <span>{{ __('Current video:') }}</span>
-                            <span class="font-semibold ms-1">{{ data_get($content, 'video_path') ?: __('Default asset') }}</span>
-                        </div>
-                        <input type="file" name="video_file" accept="video/mp4,video/webm"
-                            class="block w-full rounded-lg border-gray-200 text-sm file:me-4 file:rounded-md file:border-0 file:bg-emerald-600 file:px-4 file:py-2 file:text-white" />
-                        <p class="text-s text-gray-500">{{ __('MP4/WEBM only, up to 50MB. Leave empty to keep current video.') }}</p>
-                    </div>
-                    <div class="space-y-3 border rounded-xl border-dashed border-gray-200 p-4">
-                        <p class="text-s font-semibold uppercase tracking-wide text-gray-500">{{ __('Poster image (optional)') }}</p>
-                        <div class="aspect-video w-full rounded-xl bg-gradient-to-br from-emerald-100 to-white flex items-center justify-center text-gray-500 text-s">
-                            <span>{{ data_get($content, 'poster_image_path') ? __('Custom poster active') : __('Using default frame') }}</span>
-                        </div>
-                        <input type="file" name="poster_image" accept="image/png,image/jpeg,image/webp"
-                            class="block w-full rounded-lg border-gray-200 text-sm file:me-4 file:rounded-md file:border-0 file:bg-emerald-600 file:px-4 file:py-2 file:text-white" />
-                        <p class="text-s text-gray-500">{{ __('JPG/PNG/WEBP, up to 20MB. Keeps the previous image if left blank.') }}</p>
-                    </div>
-                </div>
-            </section>
 
             @php
                 $stats = old('stats', $content['stats'] ?? []);
