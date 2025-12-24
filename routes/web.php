@@ -26,6 +26,11 @@ Route::get('/', function () {
     return redirect('/en');
 });
 
+ Route::get('/map', function () {
+            return view('public.map');
+        });
+
+
 Route::redirect('/login', '/admin/login')->name('login');
 
 // Route::get('/', function () {
@@ -40,6 +45,8 @@ Route::prefix('{locale}')
         // Landing page (we will create the controller later)
         Route::get('/', [LandingPageController::class, 'index'])
             ->name('public.landing');
+
+       
 
         Route::post('/register/visitor', [VisitorRegistrationController::class, 'store'])
             ->name('public.register.visitor');

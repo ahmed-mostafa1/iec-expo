@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Hall Map (Perfect Match)</title>
+  <style>
+    body{ margin:0; font-family:system-ui,Segoe UI,Roboto,Arial; background:#f6f7f9; }
+    .wrap{ max-width:980px; margin:24px auto; padding:0 14px; }
+
+    .card{
+      background:#fff; border:1px solid #e6e8ee; border-radius:14px;
+      box-shadow:0 8px 22px rgba(0,0,0,.06);
+      padding:16px;
+    }
+
+    .topbar{
+      display:flex; gap:12px; align-items:center; justify-content:space-between; flex-wrap:wrap;
+      margin-bottom:12px;
+    }
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:8px 10px; border-radius:999px; background:#f2f4f8; border:1px solid #e6e8ee;
+      font-size:14px;
+    }
+    .pill strong{ font-weight:800; }
+    .hint{ color:#4b5563; font-size:13px; }
+
+    /* The map wrapper keeps image + overlay perfectly aligned */
+    .plan{
+      position:relative;
+      border-radius:12px;
+      overflow:hidden;
+      border:1px solid #e6e8ee;
+      background:#fff;
+    }
+    .plan img{
+      display:block;
+      width:100%;
+      height:auto;
+      user-select:none;
+      -webkit-user-drag:none;
+    }
+    .overlay{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+    }
+
+    /* Hitboxes */
+    .hitbox{
+      fill: rgba(255, 200, 0, 0.0); /* invisible by default */
+      stroke: rgba(255, 200, 0, 0.0);
+      cursor:pointer;
+    }
+    .hitbox:hover{
+      fill: rgba(255, 200, 0, 0.22);
+      stroke: rgba(255, 200, 0, 0.55);
+      stroke-width: 2;
+    }
+    .hitbox.selected{
+      fill: rgba(255, 140, 0, 0.25);
+      stroke: rgba(255, 140, 0, 0.9);
+      stroke-width: 3;
+    }
+
+    /* Optional debug mode (shows outlines always) */
+    .debug .hitbox{
+      fill: rgba(0, 150, 255, 0.10);
+      stroke: rgba(0, 150, 255, 0.7);
+      stroke-width: 1.5;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrap">
+    <div class="card">
+      <div class="topbar">
+        <div class="pill">Selected space: <strong id="selectedSpace">—</strong></div>
+        <div class="hint">Click any booth (L.W.* / R.W.*). Press <b>D</b> for debug boxes.</div>
+      </div>
+
+      <!-- Registration input -->
+      <form id="regForm">
+        <input type="hidden" id="spaceInput" name="space" value="">
+      </form>
+
+      <div id="plan" class="plan">
+        <!-- Exported image of the PDF page -->
+        <img src="{{ asset('img/hall-design.png') }}" alt="Hall Layout">
+
+        <!-- Overlay: viewBox MUST match the image pixel size -->
+        <!-- Your exported image here is 1653 x 2339 -->
+        <svg id="overlay" class="overlay" viewBox="0 0 1653 2339" preserveAspectRatio="xMidYMid meet"></svg>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    /**
+     * Pixel-perfect booth hitboxes aligned to the PDF image.
+     * Image size: 1653 x 2339
+     *
+     * Booth grid geometry measured from the PDF:
+     * - each booth cell is 59px wide
+     * - top row height 39px, bottom row height 40px
+     * - cluster gap ~35px
+     * - cluster step = 114px
+     * - first cluster starts at y = 428px
+     *
+     * X positions (left edges) of each aisle grid:
+     * - Left outer  (Aisle L.W.1): x = 392
+     * - Left inner  (Aisle L.W.2): x = 569
+     * - Right inner (Aisle R.W.2): x = 963
+     * - Right outer (Aisle R.W.1): x = 1140
+     */
+
+    const overlay = document.getElementById("overlay");
+    const selectedSpaceEl = document.getElementById("selectedSpace");
+    const spaceInput = document.getElementById("spaceInput");
+    const planEl = document.getElementById("plan");
+
+    let selectedEl = null;
+
+    function selectSpace(name, el){
+      selectedSpaceEl.textContent = name;
+      spaceInput.value = name;
+
+      if (selectedEl) selectedEl.classList.remove("selected");
+      selectedEl = el;
+      if (selectedEl) selectedEl.classList.add("selected");
+
+      // Optional callback for your registration flow
+      if (typeof window.onSpaceClick === "function") window.onSpaceClick(name);
+    }
+
+    function svgEl(tag, attrs = {}, parent = overlay){
+      const el = document.createElementNS("http://www.w3.org/2000/svg", tag);
+      for (const [k,v] of Object.entries(attrs)) el.setAttribute(k, v);
+      parent.appendChild(el);
+      return el;
+    }
+
+    function addHitbox({ name, x, y, w, h }){
+      const r = svgEl("rect", { x, y, width:w, height:h, class:"hitbox", "data-name": name });
+      r.addEventListener("click", () => selectSpace(name, r));
+      return r;
+    }
+
+    function generateAisle({
+      prefix,        // "L.W." or "R.W."
+      lowStart,      // 1 or 57
+      highStart,     // 29 or 85
+      lowOnRight,    // true => low numbers on right column
+      x0,            // left edge of the 2-column grid
+      yStart = 428,
+      clusters = 14,
+      cellW = 59,
+      topH = 39,
+      bottomH = 40,
+      gapY = 35
+    }){
+      const clusterStep = topH + bottomH + gapY; // 114
+
+      // rowIndex goes from top to bottom (0..13)
+      for (let rowIndex = 0; rowIndex < clusters; rowIndex++){
+        const i = (clusters - 1) - rowIndex; // i=13 at top, i=0 at bottom
+        const y0 = yStart + rowIndex * clusterStep;
+
+        const lowBottom  = lowStart  + (2 * i);
+        const lowTop     = lowStart  + (2 * i) + 1;
+        const highBottom = highStart + (2 * i);
+        const highTop    = highStart + (2 * i) + 1;
+
+        // In the PDF each cluster is:
+        // top row: higher number, bottom row: lower number (by 1)
+        // left column vs right column depends on aisle side.
+        const TL = lowOnRight ? `${prefix}${highTop}`   : `${prefix}${lowTop}`;
+        const TR = lowOnRight ? `${prefix}${lowTop}`    : `${prefix}${highTop}`;
+        const BL = lowOnRight ? `${prefix}${highBottom}`: `${prefix}${lowBottom}`;
+        const BR = lowOnRight ? `${prefix}${lowBottom}` : `${prefix}${highBottom}`;
+
+        // Top row
+        addHitbox({ name: TL, x: x0,        y: y0, w: cellW, h: topH });
+        addHitbox({ name: TR, x: x0+cellW,  y: y0, w: cellW, h: topH });
+
+        // Bottom row
+        addHitbox({ name: BL, x: x0,        y: y0+topH, w: cellW, h: bottomH });
+        addHitbox({ name: BR, x: x0+cellW,  y: y0+topH, w: cellW, h: bottomH });
+      }
+    }
+
+    // LEFT side (orange in PDF)
+    // Outer aisle = L.W.1 (57-112)
+    generateAisle({
+      prefix:"L.W.",
+      lowStart:57, highStart:85,
+      lowOnRight:true,
+      x0:392
+    });
+
+    // Inner aisle = L.W.2 (1-56)
+    generateAisle({
+      prefix:"L.W.",
+      lowStart:1, highStart:29,
+      lowOnRight:true,
+      x0:569
+    });
+
+    // RIGHT side (blue in PDF)
+    // Inner aisle = R.W.2 (1-56) -> low on left, high on right
+    generateAisle({
+      prefix:"R.W.",
+      lowStart:1, highStart:29,
+      lowOnRight:false,
+      x0:963
+    });
+
+    // Outer aisle = R.W.1 (57-112)
+    generateAisle({
+      prefix:"R.W.",
+      lowStart:57, highStart:85,
+      lowOnRight:false,
+      x0:1140
+    });
+
+    // Debug toggle (press D)
+    window.addEventListener("keydown", (e) => {
+      if (e.key.toLowerCase() === "d") planEl.classList.toggle("debug");
+    });
+
+    // Helper for your form
+    window.getSelectedSpace = () => spaceInput.value;
+  </script>
+</body>
+</html>
+<!-- End of MAP -->

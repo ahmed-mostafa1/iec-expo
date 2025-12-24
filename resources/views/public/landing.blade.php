@@ -141,7 +141,7 @@
     .nav {
       display: none;
       align-items: center;
-      gap: 2rem;
+      gap: 1rem;
       justify-self: center;
     }
 
@@ -1111,7 +1111,7 @@
     }
 
     /* @media (max-width: 640px) { */
-      /* .organizer-grid {
+    /* .organizer-grid {
         grid-template-columns: 1fr;
       }
     } 
@@ -1149,7 +1149,7 @@
       text-decoration: underline;
     } */
 
-.sponsor-featured-list {
+    .sponsor-featured-list {
       display: flex;
       flex-direction: column;
       gap: 2rem;
@@ -1168,7 +1168,7 @@
       animation: sponsorBorderFlow 8s linear infinite;
       overflow: hidden;
     }
-    
+
 
     .sponsor-featured-card.sponsor-strategic {
       --sponsor-gradient: linear-gradient(120deg, #9803bd, #9803bd, #9803bd);
@@ -1321,7 +1321,7 @@
 
 
 
-      /*  */
+    /*  */
 
     .sponsor-card {
       background: transparent;
@@ -2118,8 +2118,9 @@
               </svg>
             </button>
           </div>
-          <img class="nav-logo" src="{{ asset('./img/bu_logo.png') }}" alt="IEC Logo" />
-
+          <a href="https://umbrella.sa" />
+            <img class="nav-logo" src="{{ asset('./img/bu_logo.png') }}" alt="IEC Logo"/>
+          </a>
         </div>
       </div>
 
@@ -2140,10 +2141,10 @@
   <main>
     <!-- Hero Section -->
     @php
-      $heroVideoUrl = \App\Models\LandingSection::mediaUrl($heroSection['video_path'] ?? null) ?? asset('video/hero.mp4');
-      $heroPoster = \App\Models\LandingSection::mediaUrl($heroSection['poster_image_path'] ?? null);
-      $heroStats = $heroSection['stats'] ?? [];
-      $activeLocale = app()->getLocale();
+    $heroVideoUrl = \App\Models\LandingSection::mediaUrl($heroSection['video_path'] ?? null) ?? asset('video/hero.mp4');
+    $heroPoster = \App\Models\LandingSection::mediaUrl($heroSection['poster_image_path'] ?? null);
+    $heroStats = $heroSection['stats'] ?? [];
+    $activeLocale = app()->getLocale();
     @endphp
 
     <section class="hero" id="hero">
@@ -2164,104 +2165,104 @@
     <!-- Statistics Section -->
     <div class="stats-section">
       @forelse($heroStats as $index => $stat)
-        @php
-          $labelEn = data_get($stat, 'label.en', '');
-          $labelAr = data_get($stat, 'label.ar', $labelEn);
-          $label = $activeLocale === 'ar' ? $labelAr : $labelEn;
-          $value = $stat['value'] ?? 0;
-          $suffix = $stat['suffix'] ?? '';
-          $iconClass = $stat['icon'] ?? 'fas fa-circle';
-        @endphp
-        <div class="stat-item" data-aos="zoom-in" data-aos-delay="{{ 100 * ($index + 1) }}">
-          <div class="stat-icon-wrapper">
-            <i class="{{ $iconClass }}"></i>
-          </div>
-          <div class="stat-number" data-count="{{ $value }}" data-suffix="{{ $suffix }}">{{ $value }}</div>
-          <div class="stat-label" data-en="{{ e($labelEn) }}" data-ar="{{ e($labelAr) }}">{{ $label }}</div>
-          <div class="stat-progress">
-            <div class="progress-fill"></div>
-          </div>
+      @php
+      $labelEn = data_get($stat, 'label.en', '');
+      $labelAr = data_get($stat, 'label.ar', $labelEn);
+      $label = $activeLocale === 'ar' ? $labelAr : $labelEn;
+      $value = $stat['value'] ?? 0;
+      $suffix = $stat['suffix'] ?? '';
+      $iconClass = $stat['icon'] ?? 'fas fa-circle';
+      @endphp
+      <div class="stat-item" data-aos="zoom-in" data-aos-delay="{{ 100 * ($index + 1) }}">
+        <div class="stat-icon-wrapper">
+          <i class="{{ $iconClass }}"></i>
         </div>
+        <div class="stat-number" data-count="{{ $value }}" data-suffix="{{ $suffix }}">{{ $value }}</div>
+        <div class="stat-label" data-en="{{ e($labelEn) }}" data-ar="{{ e($labelAr) }}">{{ $label }}</div>
+        <div class="stat-progress">
+          <div class="progress-fill"></div>
+        </div>
+      </div>
       @empty
-        <p class="text-center text-sm text-gray-500">{{ __('Stats will be announced soon.') }}</p>
+      <p class="text-center text-sm text-gray-500">{{ __('Stats will be announced soon.') }}</p>
       @endforelse
     </div>
 
 
     <!-- Registration Section -->
     @php
-      $registrationLocale = app()->getLocale();
-      $translate = function ($node, $fallback = '') use ($registrationLocale) {
-        $en = data_get($node, 'en', $fallback);
-        $ar = data_get($node, 'ar', $en);
-        return [
-          'en' => $en,
-          'ar' => $ar,
-          'text' => $registrationLocale === 'ar' ? $ar : $en,
-        ];
-      };
-      $registrationTitle = $translate(data_get($registrationSection, 'title'), __('Registration'));
-      $registrationDescription = $translate(data_get($registrationSection, 'description'), '');
-      $visitorCard = data_get($registrationSection, 'visitor_card', []);
-      $visitorCardTitle = $translate(data_get($visitorCard, 'title'), '');
-      $visitorCardDescription = $translate(data_get($visitorCard, 'description'), '');
-      $visitorCta = $translate(data_get($visitorCard, 'cta_label'), __('Select'));
-      $visitorForm = data_get($registrationSection, 'visitor_form', []);
-      $visitorFormTitle = $translate(data_get($visitorForm, 'title'), '');
-      $visitorSubmit = $translate(data_get($visitorForm, 'cta_submit'), __('Submit Registration'));
-      $visitorContact = $translate(data_get($visitorForm, 'cta_contact'), __('Contact Us'));
-      $visitorFields = data_get($visitorForm, 'fields', []);
-      $exhibitorCard = data_get($registrationSection, 'exhibitor_card', []);
-      $exhibitorCardTitle = $translate(data_get($exhibitorCard, 'title'), '');
-      $exhibitorCardDescription = $translate(data_get($exhibitorCard, 'description'), '');
-      $exhibitorCta = $translate(data_get($exhibitorCard, 'cta_label'), __('Select'));
-      $exhibitorForm = data_get($registrationSection, 'exhibitor_form', []);
-      $exhibitorFormTitle = $translate(data_get($exhibitorForm, 'title'), '');
-      $exhibitorStepOne = $translate(data_get($exhibitorForm, 'step_one'), '');
-      $exhibitorStepTwo = $translate(data_get($exhibitorForm, 'step_two'), '');
-      $exhibitorNext = $translate(data_get($exhibitorForm, 'cta_next'), __('Next Step'));
-      $exhibitorSubmit = $translate(data_get($exhibitorForm, 'cta_submit'), __('Submit Application'));
-      $exhibitorFieldsStepOne = data_get($exhibitorForm, 'fields_step_one', []);
-      $exhibitorFieldsStepTwo = data_get($exhibitorForm, 'fields_step_two', []);
+    $registrationLocale = app()->getLocale();
+    $translate = function ($node, $fallback = '') use ($registrationLocale) {
+    $en = data_get($node, 'en', $fallback);
+    $ar = data_get($node, 'ar', $en);
+    return [
+    'en' => $en,
+    'ar' => $ar,
+    'text' => $registrationLocale === 'ar' ? $ar : $en,
+    ];
+    };
+    $registrationTitle = $translate(data_get($registrationSection, 'title'), __('Registration'));
+    $registrationDescription = $translate(data_get($registrationSection, 'description'), '');
+    $visitorCard = data_get($registrationSection, 'visitor_card', []);
+    $visitorCardTitle = $translate(data_get($visitorCard, 'title'), '');
+    $visitorCardDescription = $translate(data_get($visitorCard, 'description'), '');
+    $visitorCta = $translate(data_get($visitorCard, 'cta_label'), __('Select'));
+    $visitorForm = data_get($registrationSection, 'visitor_form', []);
+    $visitorFormTitle = $translate(data_get($visitorForm, 'title'), '');
+    $visitorSubmit = $translate(data_get($visitorForm, 'cta_submit'), __('Submit Registration'));
+    $visitorContact = $translate(data_get($visitorForm, 'cta_contact'), __('Contact Us'));
+    $visitorFields = data_get($visitorForm, 'fields', []);
+    $exhibitorCard = data_get($registrationSection, 'exhibitor_card', []);
+    $exhibitorCardTitle = $translate(data_get($exhibitorCard, 'title'), '');
+    $exhibitorCardDescription = $translate(data_get($exhibitorCard, 'description'), '');
+    $exhibitorCta = $translate(data_get($exhibitorCard, 'cta_label'), __('Select'));
+    $exhibitorForm = data_get($registrationSection, 'exhibitor_form', []);
+    $exhibitorFormTitle = $translate(data_get($exhibitorForm, 'title'), '');
+    $exhibitorStepOne = $translate(data_get($exhibitorForm, 'step_one'), '');
+    $exhibitorStepTwo = $translate(data_get($exhibitorForm, 'step_two'), '');
+    $exhibitorNext = $translate(data_get($exhibitorForm, 'cta_next'), __('Next Step'));
+    $exhibitorSubmit = $translate(data_get($exhibitorForm, 'cta_submit'), __('Submit Application'));
+    $exhibitorFieldsStepOne = data_get($exhibitorForm, 'fields_step_one', []);
+    $exhibitorFieldsStepTwo = data_get($exhibitorForm, 'fields_step_two', []);
 
-      $transKey = function (string $key) use ($registrationLocale) {
-        $en = trans($key, [], 'en');
-        $ar = trans($key, [], 'ar');
-        return [
-          'en' => $en,
-          'ar' => $ar,
-          'text' => $registrationLocale === 'ar' ? $ar : $en,
-        ];
-      };
+    $transKey = function (string $key) use ($registrationLocale) {
+    $en = trans($key, [], 'en');
+    $ar = trans($key, [], 'ar');
+    return [
+    'en' => $en,
+    'ar' => $ar,
+    'text' => $registrationLocale === 'ar' ? $ar : $en,
+    ];
+    };
 
-      $guestCardTitle = $transKey('registration.guest.title');
-      $guestCardDescription = $transKey('registration.guest.description');
-      $guestCta = $transKey('registration.guest.cta_label');
-      $guestFormTitle = $transKey('registration.guest.form_title');
-      $guestSubmit = $transKey('registration.guest.cta_submit');
-      $guestContact = $transKey('registration.guest.cta_contact');
+    $guestCardTitle = $transKey('registration.guest.title');
+    $guestCardDescription = $transKey('registration.guest.description');
+    $guestCta = $transKey('registration.guest.cta_label');
+    $guestFormTitle = $transKey('registration.guest.form_title');
+    $guestSubmit = $transKey('registration.guest.cta_submit');
+    $guestContact = $transKey('registration.guest.cta_contact');
 
-      $iconCardTitle = $transKey('registration.icon.title');
-      $iconCardDescription = $transKey('registration.icon.description');
-      $iconCta = $transKey('registration.icon.cta_label');
-      $iconFormTitle = $transKey('registration.icon.form_title');
-      $iconStepOne = $transKey('registration.icon.step_one');
-      $iconStepTwo = $transKey('registration.icon.step_two');
-      $iconNext = $transKey('registration.icon.cta_next');
-      $iconBack = $transKey('registration.icon.cta_back');
-      $iconSubmit = $transKey('registration.icon.cta_submit');
+    $iconCardTitle = $transKey('registration.icon.title');
+    $iconCardDescription = $transKey('registration.icon.description');
+    $iconCta = $transKey('registration.icon.cta_label');
+    $iconFormTitle = $transKey('registration.icon.form_title');
+    $iconStepOne = $transKey('registration.icon.step_one');
+    $iconStepTwo = $transKey('registration.icon.step_two');
+    $iconNext = $transKey('registration.icon.cta_next');
+    $iconBack = $transKey('registration.icon.cta_back');
+    $iconSubmit = $transKey('registration.icon.cta_submit');
     @endphp
 
     @php
-      $visitorFormActive = old('form_identifier') === 'visitor';
-      $sponsorFormActive = old('form_identifier') === 'sponsor';
-      $iconFormActive = old('form_identifier') === 'icon';
-      $visitorShouldOpen = $visitorFormActive || session()->has('visitor_success');
-      $sponsorShouldOpen = $sponsorFormActive || session()->has('sponsor_success');
-      $iconShouldOpen = $iconFormActive || session()->has('icon_success');
+    $visitorFormActive = old('form_identifier') === 'visitor';
+    $sponsorFormActive = old('form_identifier') === 'sponsor';
+    $iconFormActive = old('form_identifier') === 'icon';
+    $visitorShouldOpen = $visitorFormActive || session()->has('visitor_success');
+    $sponsorShouldOpen = $sponsorFormActive || session()->has('sponsor_success');
+    $iconShouldOpen = $iconFormActive || session()->has('icon_success');
     @endphp
 
-<section class="registration" id="register">
+    <section class="registration" id="register">
       <div class="container">
         <div class="section-header" data-animate>
           <h2 class="section-title" data-en="{{ e($registrationTitle['en']) }}" data-ar="{{ e($registrationTitle['ar']) }}">{{ $registrationTitle['text'] }}</h2>
@@ -2288,9 +2289,9 @@
             </div>
             <div class="form-card guest-form" id="visitor-form">
               @if(session('visitor_success'))
-                <div class="mb-4 rounded-lg border border-emerald-100 bg-emerald-50 px-3 py-2 text-sm text-emerald-900">
-                  {{ session('visitor_success') }}
-                </div>
+              <div class="mb-4 rounded-lg border border-emerald-100 bg-emerald-50 px-3 py-2 text-sm text-emerald-900">
+                {{ session('visitor_success') }}
+              </div>
               @endif
               <h3 class="form-title" data-en="{{ e($guestFormTitle['en']) }}" data-ar="{{ e($guestFormTitle['ar']) }}">{{ $guestFormTitle['text'] }}</h3>
               <form id="visitor-registration-form"
@@ -2307,7 +2308,7 @@
                     <input type="text" name="full_name" class="form-input" required placeholder="John Doe"
                       value="{{ $visitorFormActive ? old('full_name') : '' }}">
                     @if($visitorFormActive && $errors->has('full_name'))
-                      <p class="mt-1 text-xs text-red-600">{{ $errors->first('full_name') }}</p>
+                    <p class="mt-1 text-xs text-red-600">{{ $errors->first('full_name') }}</p>
                     @endif
                   </div>
                   <div class="form-group">
@@ -2315,7 +2316,7 @@
                     <input type="email" name="email" class="form-input" required placeholder="john@example.com"
                       value="{{ $visitorFormActive ? old('email') : '' }}">
                     @if($visitorFormActive && $errors->has('email'))
-                      <p class="mt-1 text-xs text-red-600">{{ $errors->first('email') }}</p>
+                    <p class="mt-1 text-xs text-red-600">{{ $errors->first('email') }}</p>
                     @endif
                   </div>
                 </div>
@@ -2326,7 +2327,7 @@
                     <input type="tel" name="phone" class="form-input" placeholder="+966 50 000 0000"
                       value="{{ $visitorFormActive ? old('phone') : '' }}">
                     @if($visitorFormActive && $errors->has('phone'))
-                      <p class="mt-1 text-xs text-red-600">{{ $errors->first('phone') }}</p>
+                    <p class="mt-1 text-xs text-red-600">{{ $errors->first('phone') }}</p>
                     @endif
                   </div>
                   <div class="form-group">
@@ -2334,7 +2335,7 @@
                     <input type="text" name="job_title" class="form-input" placeholder="Marketing Manager"
                       value="{{ $visitorFormActive ? old('job_title') : '' }}">
                     @if($visitorFormActive && $errors->has('job_title'))
-                      <p class="mt-1 text-xs text-red-600">{{ $errors->first('job_title') }}</p>
+                    <p class="mt-1 text-xs text-red-600">{{ $errors->first('job_title') }}</p>
                     @endif
                   </div>
                 </div>
@@ -2345,20 +2346,20 @@
                     <input type="text" name="company_name" class="form-input" placeholder="Umbrella Inc."
                       value="{{ $visitorFormActive ? old('company_name') : '' }}">
                     @if($visitorFormActive && $errors->has('company_name'))
-                      <p class="mt-1 text-xs text-red-600">{{ $errors->first('company_name') }}</p>
+                    <p class="mt-1 text-xs text-red-600">{{ $errors->first('company_name') }}</p>
                     @endif
                   </div>
                   <div class="form-group">
                     <label class="form-label" data-en="How did you hear about us?" data-ar="كيف سمعت عنا؟">How did you hear about us?</label>
                     <select class="form-select" name="heard_about" data-heard-select data-other-target="#visitor-heard-other">
                       <option value="">{{ __('Select option') }}</option>
-                      <option value="social_media" @selected($visitorFormActive && old('heard_about') === 'social_media')>Social Media</option>
-                      <option value="ads" @selected($visitorFormActive && old('heard_about') === 'ads')>Advertising</option>
-                      <option value="friends" @selected($visitorFormActive && old('heard_about') === 'friends')>Friends / Colleagues</option>
-                      <option value="other" @selected($visitorFormActive && old('heard_about') === 'other')>Other</option>
+                      <option value="social_media" @selected($visitorFormActive && old('heard_about')==='social_media' )>Social Media</option>
+                      <option value="ads" @selected($visitorFormActive && old('heard_about')==='ads' )>Advertising</option>
+                      <option value="friends" @selected($visitorFormActive && old('heard_about')==='friends' )>Friends / Colleagues</option>
+                      <option value="other" @selected($visitorFormActive && old('heard_about')==='other' )>Other</option>
                     </select>
                     @if($visitorFormActive && $errors->has('heard_about'))
-                      <p class="mt-1 text-xs text-red-600">{{ $errors->first('heard_about') }}</p>
+                    <p class="mt-1 text-xs text-red-600">{{ $errors->first('heard_about') }}</p>
                     @endif
                   </div>
                 </div>
@@ -2368,7 +2369,7 @@
                   <input type="text" name="heard_about_other_text" class="form-input" placeholder="Conference website"
                     value="{{ $visitorFormActive ? old('heard_about_other_text') : '' }}">
                   @if($visitorFormActive && $errors->has('heard_about_other_text'))
-                    <p class="mt-1 text-xs text-red-600">{{ $errors->first('heard_about_other_text') }}</p>
+                  <p class="mt-1 text-xs text-red-600">{{ $errors->first('heard_about_other_text') }}</p>
                   @endif
                 </div>
 
@@ -2405,9 +2406,9 @@
 
             <div class="form-card" id="exhibitor-form">
               @if(session('sponsor_success'))
-                <div class="mb-4 rounded-lg border border-emerald-100 bg-emerald-50 px-3 py-2 text-sm text-emerald-900">
-                  {{ session('sponsor_success') }}
-                </div>
+              <div class="mb-4 rounded-lg border border-emerald-100 bg-emerald-50 px-3 py-2 text-sm text-emerald-900">
+                {{ session('sponsor_success') }}
+              </div>
               @endif
               <h3 class="form-title" data-en="{{ e($exhibitorFormTitle['en']) }}" data-ar="{{ e($exhibitorFormTitle['ar']) }}">{{ $exhibitorFormTitle['text'] }}</h3>
               <div class="step-indicator">
@@ -2439,7 +2440,7 @@
                       <input type="text" name="full_name" class="form-input" required placeholder="John Doe"
                         value="{{ $sponsorFormActive ? old('full_name') : '' }}">
                       @if($sponsorFormActive && $errors->has('full_name'))
-                        <p class="mt-1 text-xs text-red-600">{{ $errors->first('full_name') }}</p>
+                      <p class="mt-1 text-xs text-red-600">{{ $errors->first('full_name') }}</p>
                       @endif
                     </div>
                     <div class="form-group">
@@ -2447,7 +2448,7 @@
                       <input type="email" name="email" class="form-input" required placeholder="john@company.com"
                         value="{{ $sponsorFormActive ? old('email') : '' }}">
                       @if($sponsorFormActive && $errors->has('email'))
-                        <p class="mt-1 text-xs text-red-600">{{ $errors->first('email') }}</p>
+                      <p class="mt-1 text-xs text-red-600">{{ $errors->first('email') }}</p>
                       @endif
                     </div>
                   </div>
@@ -2457,7 +2458,7 @@
                       <input type="tel" name="phone" class="form-input" required placeholder="+966 50 000 0000"
                         value="{{ $sponsorFormActive ? old('phone') : '' }}">
                       @if($sponsorFormActive && $errors->has('phone'))
-                        <p class="mt-1 text-xs text-red-600">{{ $errors->first('phone') }}</p>
+                      <p class="mt-1 text-xs text-red-600">{{ $errors->first('phone') }}</p>
                       @endif
                     </div>
                     <div class="form-group">
@@ -2465,7 +2466,7 @@
                       <input type="text" name="job_title" class="form-input" required placeholder="Marketing Manager"
                         value="{{ $sponsorFormActive ? old('job_title') : '' }}">
                       @if($sponsorFormActive && $errors->has('job_title'))
-                        <p class="mt-1 text-xs text-red-600">{{ $errors->first('job_title') }}</p>
+                      <p class="mt-1 text-xs text-red-600">{{ $errors->first('job_title') }}</p>
                       @endif
                     </div>
                   </div>
@@ -2475,7 +2476,7 @@
                       <input type="text" name="organization" class="form-input" required placeholder="Umbrella Inc."
                         value="{{ $sponsorFormActive ? old('organization') : '' }}">
                       @if($sponsorFormActive && $errors->has('organization'))
-                        <p class="mt-1 text-xs text-red-600">{{ $errors->first('organization') }}</p>
+                      <p class="mt-1 text-xs text-red-600">{{ $errors->first('organization') }}</p>
                       @endif
                     </div>
                   </div>
@@ -2485,63 +2486,63 @@
                       <input type="file" name="corporate_profile" class="form-input" accept="application/pdf,image/png,image/jpeg">
                       <span class="form-hint" data-en="PDF, PNG, JPG files only accepted" data-ar="يمكن إرفاق ملفات PDF أو JPG أو PNG">PDF, PNG, JPG files only accepted</span>
                       @if($sponsorFormActive && $errors->has('corporate_profile'))
-                        <p class="mt-1 text-xs text-red-600">{{ $errors->first('corporate_profile') }}</p>
+                      <p class="mt-1 text-xs text-red-600">{{ $errors->first('corporate_profile') }}</p>
                       @endif
                     </div>
                   </div>
                 </div>
 
-	                <div id="exhibitor-step2" style="display: none;">
-	                  <div class="form-grid form-grid-2">
-	                    <div class="form-group">
-	                      <label class="form-label" data-en="VAT (Value Added Tax)" data-ar="ضريبة القيمة المضافة">VAT (Value Added Tax)</label>
-	                      <input type="text" name="vat_number" class="form-input" placeholder="300000000000003"
-	                        value="{{ $sponsorFormActive ? old('vat_number') : '' }}">
-	                      @if($sponsorFormActive && $errors->has('vat_number'))
-	                        <p class="mt-1 text-xs text-red-600">{{ $errors->first('vat_number') }}</p>
-	                      @endif
-	                    </div>
-	                    <div class="form-group">
-	                      <label class="form-label" data-en="CR Number" data-ar="رقم السجل التجاري">CR Number</label>
-	                      <input type="text" name="cr_number" class="form-input" placeholder="1010101010"
-	                        value="{{ $sponsorFormActive ? old('cr_number') : '' }}">
-	                      @if($sponsorFormActive && $errors->has('cr_number'))
-	                        <p class="mt-1 text-xs text-red-600">{{ $errors->first('cr_number') }}</p>
-	                      @endif
-	                    </div>
-	                  </div>
-	                  <div class="form-grid form-grid-2" style="margin-top: 1rem;">
-	                    <div class="form-group">
-	                      <label class="form-label" data-en="CR Copy (Commercial Registration)" data-ar="نسخة السجل التجاري">CR Copy (Commercial Registration)</label>
-	                      <input type="file" name="cr_copy" class="form-input" accept="application/pdf,image/png,image/jpeg">
-	                      @if($sponsorFormActive && $errors->has('cr_copy'))
-	                        <p class="mt-1 text-xs text-red-600">{{ $errors->first('cr_copy') }}</p>
-	                      @endif
-	                    </div>
-	                    <div class="form-group">
-	                      <label class="form-label" data-en="Company Logo" data-ar="شعار الشركة">Company Logo</label>
-	                      <input type="file" name="company_logo" class="form-input" accept="image/png,image/jpeg,image/webp">
-	                      <span class="form-hint" data-en="PNG, JPG, WEBP files only accepted" data-ar="يمكن إرفاق ملفات PNG أو JPG أو WEBP">PNG, JPG, WEBP files only accepted</span>
-	                      @if($sponsorFormActive && $errors->has('company_logo'))
-	                        <p class="mt-1 text-xs text-red-600">{{ $errors->first('company_logo') }}</p>
-	                      @endif
-	                    </div>
-	                  </div>
-	                  <div class="form-group" style="margin-top: 1rem;">
-	                    <label class="form-label" data-en="National Address" data-ar="العنوان الوطني">National Address</label>
-	                    <textarea name="national_address" class="form-textarea" rows="3" placeholder="Complete company address">{{ $sponsorFormActive ? old('national_address') : '' }}</textarea>
-	                    @if($sponsorFormActive && $errors->has('national_address'))
-	                      <p class="mt-1 text-xs text-red-600">{{ $errors->first('national_address') }}</p>
-	                    @endif
-	                  </div>
-	                  <div class="form-group" style="margin-top: 1rem;">
-	                    <label class="form-label" data-en="National Address Document" data-ar="مستند العنوان الوطني">National Address Document</label>
-	                    <input type="file" name="national_address_document" class="form-input" accept="application/pdf,image/png,image/jpeg">
-	                    @if($sponsorFormActive && $errors->has('national_address_document'))
-	                      <p class="mt-1 text-xs text-red-600">{{ $errors->first('national_address_document') }}</p>
-	                    @endif
-	                  </div>
-	                </div>
+                <div id="exhibitor-step2" style="display: none;">
+                  <div class="form-grid form-grid-2">
+                    <div class="form-group">
+                      <label class="form-label" data-en="VAT (Value Added Tax)" data-ar="ضريبة القيمة المضافة">VAT (Value Added Tax)</label>
+                      <input type="text" name="vat_number" class="form-input" placeholder="300000000000003"
+                        value="{{ $sponsorFormActive ? old('vat_number') : '' }}">
+                      @if($sponsorFormActive && $errors->has('vat_number'))
+                      <p class="mt-1 text-xs text-red-600">{{ $errors->first('vat_number') }}</p>
+                      @endif
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label" data-en="CR Number" data-ar="رقم السجل التجاري">CR Number</label>
+                      <input type="text" name="cr_number" class="form-input" placeholder="1010101010"
+                        value="{{ $sponsorFormActive ? old('cr_number') : '' }}">
+                      @if($sponsorFormActive && $errors->has('cr_number'))
+                      <p class="mt-1 text-xs text-red-600">{{ $errors->first('cr_number') }}</p>
+                      @endif
+                    </div>
+                  </div>
+                  <div class="form-grid form-grid-2" style="margin-top: 1rem;">
+                    <div class="form-group">
+                      <label class="form-label" data-en="CR Copy (Commercial Registration)" data-ar="نسخة السجل التجاري">CR Copy (Commercial Registration)</label>
+                      <input type="file" name="cr_copy" class="form-input" accept="application/pdf,image/png,image/jpeg">
+                      @if($sponsorFormActive && $errors->has('cr_copy'))
+                      <p class="mt-1 text-xs text-red-600">{{ $errors->first('cr_copy') }}</p>
+                      @endif
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label" data-en="Company Logo" data-ar="شعار الشركة">Company Logo</label>
+                      <input type="file" name="company_logo" class="form-input" accept="image/png,image/jpeg,image/webp">
+                      <span class="form-hint" data-en="PNG, JPG, WEBP files only accepted" data-ar="يمكن إرفاق ملفات PNG أو JPG أو WEBP">PNG, JPG, WEBP files only accepted</span>
+                      @if($sponsorFormActive && $errors->has('company_logo'))
+                      <p class="mt-1 text-xs text-red-600">{{ $errors->first('company_logo') }}</p>
+                      @endif
+                    </div>
+                  </div>
+                  <div class="form-group" style="margin-top: 1rem;">
+                    <label class="form-label" data-en="National Address" data-ar="العنوان الوطني">National Address</label>
+                    <textarea name="national_address" class="form-textarea" rows="3" placeholder="Complete company address">{{ $sponsorFormActive ? old('national_address') : '' }}</textarea>
+                    @if($sponsorFormActive && $errors->has('national_address'))
+                    <p class="mt-1 text-xs text-red-600">{{ $errors->first('national_address') }}</p>
+                    @endif
+                  </div>
+                  <div class="form-group" style="margin-top: 1rem;">
+                    <label class="form-label" data-en="National Address Document" data-ar="مستند العنوان الوطني">National Address Document</label>
+                    <input type="file" name="national_address_document" class="form-input" accept="application/pdf,image/png,image/jpeg">
+                    @if($sponsorFormActive && $errors->has('national_address_document'))
+                    <p class="mt-1 text-xs text-red-600">{{ $errors->first('national_address_document') }}</p>
+                    @endif
+                  </div>
+                </div>
 
                 <div class="form-buttons">
                   <button type="button" class="btn btn-outline" onclick="exhibitorBack()">
@@ -2580,9 +2581,9 @@
 
             <div class="form-card" id="icon-form">
               @if(session('icon_success'))
-                <div class="mb-4 rounded-lg border border-emerald-100 bg-emerald-50 px-3 py-2 text-sm text-emerald-900">
-                  {{ session('icon_success') }}
-                </div>
+              <div class="mb-4 rounded-lg border border-emerald-100 bg-emerald-50 px-3 py-2 text-sm text-emerald-900">
+                {{ session('icon_success') }}
+              </div>
               @endif
               <h3 class="form-title" data-en="{{ e($iconFormTitle['en']) }}" data-ar="{{ e($iconFormTitle['ar']) }}">{{ $iconFormTitle['text'] }}</h3>
               <div class="step-indicator">
@@ -2614,7 +2615,7 @@
                       <input type="text" name="full_name" class="form-input" required placeholder="John Doe"
                         value="{{ $iconFormActive ? old('full_name') : '' }}">
                       @if($iconFormActive && $errors->has('full_name'))
-                        <p class="mt-1 text-xs text-red-600">{{ $errors->first('full_name') }}</p>
+                      <p class="mt-1 text-xs text-red-600">{{ $errors->first('full_name') }}</p>
                       @endif
                     </div>
                     <div class="form-group">
@@ -2622,7 +2623,7 @@
                       <input type="email" name="email" class="form-input" required placeholder="john@company.com"
                         value="{{ $iconFormActive ? old('email') : '' }}">
                       @if($iconFormActive && $errors->has('email'))
-                        <p class="mt-1 text-xs text-red-600">{{ $errors->first('email') }}</p>
+                      <p class="mt-1 text-xs text-red-600">{{ $errors->first('email') }}</p>
                       @endif
                     </div>
                   </div>
@@ -2632,7 +2633,7 @@
                       <input type="tel" name="phone" class="form-input" required placeholder="+966 50 000 0000"
                         value="{{ $iconFormActive ? old('phone') : '' }}">
                       @if($iconFormActive && $errors->has('phone'))
-                        <p class="mt-1 text-xs text-red-600">{{ $errors->first('phone') }}</p>
+                      <p class="mt-1 text-xs text-red-600">{{ $errors->first('phone') }}</p>
                       @endif
                     </div>
                     <div class="form-group">
@@ -2640,7 +2641,7 @@
                       <input type="text" name="job_title" class="form-input" required placeholder="Marketing Manager"
                         value="{{ $iconFormActive ? old('job_title') : '' }}">
                       @if($iconFormActive && $errors->has('job_title'))
-                        <p class="mt-1 text-xs text-red-600">{{ $errors->first('job_title') }}</p>
+                      <p class="mt-1 text-xs text-red-600">{{ $errors->first('job_title') }}</p>
                       @endif
                     </div>
                   </div>
@@ -2650,7 +2651,7 @@
                       <input type="text" name="organization" class="form-input" required placeholder="Umbrella Inc."
                         value="{{ $iconFormActive ? old('organization') : '' }}">
                       @if($iconFormActive && $errors->has('organization'))
-                        <p class="mt-1 text-xs text-red-600">{{ $errors->first('organization') }}</p>
+                      <p class="mt-1 text-xs text-red-600">{{ $errors->first('organization') }}</p>
                       @endif
                     </div>
                   </div>
@@ -2660,7 +2661,7 @@
                       <input type="file" name="corporate_profile" class="form-input" accept="application/pdf,image/png,image/jpeg">
                       <span class="form-hint" data-en="{{ e(trans('registration.icon.file_hint', [], 'en')) }}" data-ar="{{ e(trans('registration.icon.file_hint', [], 'ar')) }}">{{ __('registration.icon.file_hint') }}</span>
                       @if($iconFormActive && $errors->has('corporate_profile'))
-                        <p class="mt-1 text-xs text-red-600">{{ $errors->first('corporate_profile') }}</p>
+                      <p class="mt-1 text-xs text-red-600">{{ $errors->first('corporate_profile') }}</p>
                       @endif
                     </div>
                   </div>
@@ -2673,7 +2674,7 @@
                       <input type="text" name="vat_number" class="form-input" placeholder="300000000000003"
                         value="{{ $iconFormActive ? old('vat_number') : '' }}">
                       @if($iconFormActive && $errors->has('vat_number'))
-                        <p class="mt-1 text-xs text-red-600">{{ $errors->first('vat_number') }}</p>
+                      <p class="mt-1 text-xs text-red-600">{{ $errors->first('vat_number') }}</p>
                       @endif
                     </div>
                     <div class="form-group">
@@ -2681,7 +2682,7 @@
                       <input type="text" name="cr_number" class="form-input" placeholder="1010101010"
                         value="{{ $iconFormActive ? old('cr_number') : '' }}">
                       @if($iconFormActive && $errors->has('cr_number'))
-                        <p class="mt-1 text-xs text-red-600">{{ $errors->first('cr_number') }}</p>
+                      <p class="mt-1 text-xs text-red-600">{{ $errors->first('cr_number') }}</p>
                       @endif
                     </div>
                   </div>
@@ -2690,7 +2691,7 @@
                       <label class="form-label" data-en="{{ e(trans('registration.icon.cr_copy', [], 'en')) }}" data-ar="{{ e(trans('registration.icon.cr_copy', [], 'ar')) }}">{{ __('registration.icon.cr_copy') }}</label>
                       <input type="file" name="cr_copy" class="form-input" accept="application/pdf,image/png,image/jpeg">
                       @if($iconFormActive && $errors->has('cr_copy'))
-                        <p class="mt-1 text-xs text-red-600">{{ $errors->first('cr_copy') }}</p>
+                      <p class="mt-1 text-xs text-red-600">{{ $errors->first('cr_copy') }}</p>
                       @endif
                     </div>
                     <div class="form-group">
@@ -2698,7 +2699,7 @@
                       <input type="file" name="company_logo" class="form-input" accept="image/png,image/jpeg,image/webp">
                       <span class="form-hint" data-en="{{ e(trans('registration.icon.logo_hint', [], 'en')) }}" data-ar="{{ e(trans('registration.icon.logo_hint', [], 'ar')) }}">{{ __('registration.icon.logo_hint') }}</span>
                       @if($iconFormActive && $errors->has('company_logo'))
-                        <p class="mt-1 text-xs text-red-600">{{ $errors->first('company_logo') }}</p>
+                      <p class="mt-1 text-xs text-red-600">{{ $errors->first('company_logo') }}</p>
                       @endif
                     </div>
                   </div>
@@ -2706,14 +2707,14 @@
                     <label class="form-label" data-en="{{ e(trans('registration.icon.national_address', [], 'en')) }}" data-ar="{{ e(trans('registration.icon.national_address', [], 'ar')) }}">{{ __('registration.icon.national_address') }}</label>
                     <textarea name="national_address" class="form-textarea" rows="3" placeholder="Complete company address">{{ $iconFormActive ? old('national_address') : '' }}</textarea>
                     @if($iconFormActive && $errors->has('national_address'))
-                      <p class="mt-1 text-xs text-red-600">{{ $errors->first('national_address') }}</p>
+                    <p class="mt-1 text-xs text-red-600">{{ $errors->first('national_address') }}</p>
                     @endif
                   </div>
                   <div class="form-group" style="margin-top: 1rem;">
                     <label class="form-label" data-en="{{ e(trans('registration.icon.national_address_document', [], 'en')) }}" data-ar="{{ e(trans('registration.icon.national_address_document', [], 'ar')) }}">{{ __('registration.icon.national_address_document') }}</label>
                     <input type="file" name="national_address_document" class="form-input" accept="application/pdf,image/png,image/jpeg">
                     @if($iconFormActive && $errors->has('national_address_document'))
-                      <p class="mt-1 text-xs text-red-600">{{ $errors->first('national_address_document') }}</p>
+                    <p class="mt-1 text-xs text-red-600">{{ $errors->first('national_address_document') }}</p>
                     @endif
                   </div>
                 </div>
@@ -2743,22 +2744,22 @@
 
     <!-- About Section -->
     @php
-      $aboutLocale = app()->getLocale();
-      $aboutTranslate = function ($node, $fallback = '') use ($aboutLocale) {
-        $en = data_get($node, 'en', $fallback);
-        $ar = data_get($node, 'ar', $en);
-        return [
-          'en' => $en,
-          'ar' => $ar,
-          'text' => $aboutLocale === 'ar' ? $ar : $en,
-        ];
-      };
-      $aboutTitle = $aboutTranslate(data_get($aboutSection, 'title'), __('About us'));
-      $missionBlock = data_get($aboutSection, 'mission', []);
-      $missionTitle = $aboutTranslate(data_get($missionBlock, 'title'), __('Our Mission'));
-      $missionParagraphs = data_get($missionBlock, 'paragraphs', []);
-      $goals = data_get($aboutSection, 'goals', []);
-      $aboutVideo = \App\Models\LandingSection::mediaUrl($aboutSection['background_video'] ?? null) ?? asset('video/video.mp4');
+    $aboutLocale = app()->getLocale();
+    $aboutTranslate = function ($node, $fallback = '') use ($aboutLocale) {
+    $en = data_get($node, 'en', $fallback);
+    $ar = data_get($node, 'ar', $en);
+    return [
+    'en' => $en,
+    'ar' => $ar,
+    'text' => $aboutLocale === 'ar' ? $ar : $en,
+    ];
+    };
+    $aboutTitle = $aboutTranslate(data_get($aboutSection, 'title'), __('About us'));
+    $missionBlock = data_get($aboutSection, 'mission', []);
+    $missionTitle = $aboutTranslate(data_get($missionBlock, 'title'), __('Our Mission'));
+    $missionParagraphs = data_get($missionBlock, 'paragraphs', []);
+    $goals = data_get($aboutSection, 'goals', []);
+    $aboutVideo = \App\Models\LandingSection::mediaUrl($aboutSection['background_video'] ?? null) ?? asset('video/video.mp4');
     @endphp
 
     <section class="about" id="about">
@@ -2782,10 +2783,10 @@
             </div>
             <div class="about-card">
               @forelse($missionParagraphs as $paragraph)
-                @php $paragraphCopy = $aboutTranslate($paragraph); @endphp
-                <p class="about-text" data-en="{{ e($paragraphCopy['en']) }}" data-ar="{{ e($paragraphCopy['ar']) }}">{{ $paragraphCopy['text'] }}</p>
+              @php $paragraphCopy = $aboutTranslate($paragraph); @endphp
+              <p class="about-text" data-en="{{ e($paragraphCopy['en']) }}" data-ar="{{ e($paragraphCopy['ar']) }}">{{ $paragraphCopy['text'] }}</p>
               @empty
-                <p class="about-text">{{ __('Mission details will be shared soon.') }}</p>
+              <p class="about-text">{{ __('Mission details will be shared soon.') }}</p>
               @endforelse
             </div>
           </div>
@@ -2795,23 +2796,23 @@
             <h2 class="about-title" data-en="{{ e($goalsTitle['en']) }}" data-ar="{{ e($goalsTitle['ar']) }}" style="margin-bottom: 1.5rem;">{{ $goalsTitle['text'] }}</h2>
             <div class="goals-list">
               @forelse($goals as $goal)
-                @php
-                  $goalTitle = $aboutTranslate(data_get($goal, 'title'), '');
-                  $goalDesc = $aboutTranslate(data_get($goal, 'description'), '');
-                @endphp
-                <div class="goal-card" data-animate>
-                  <div class="goal-icon">
-                    <svg class="icon" viewBox="0 0 24 24">
-                      <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 1 1 7.072 0l-.548.547A3.374 3.374 0 0 0 14 18.469V19a2 2 0 1 1-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547Z" />
-                    </svg>
-                  </div>
-                  <div>
-                    <h3 class="goal-title" data-en="{{ e($goalTitle['en']) }}" data-ar="{{ e($goalTitle['ar']) }}">{{ $goalTitle['text'] }}</h3>
-                    <p class="goal-desc" data-en="{{ e($goalDesc['en']) }}" data-ar="{{ e($goalDesc['ar']) }}">{{ $goalDesc['text'] }}</p>
-                  </div>
+              @php
+              $goalTitle = $aboutTranslate(data_get($goal, 'title'), '');
+              $goalDesc = $aboutTranslate(data_get($goal, 'description'), '');
+              @endphp
+              <div class="goal-card" data-animate>
+                <div class="goal-icon">
+                  <svg class="icon" viewBox="0 0 24 24">
+                    <path d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 1 1 7.072 0l-.548.547A3.374 3.374 0 0 0 14 18.469V19a2 2 0 1 1-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547Z" />
+                  </svg>
                 </div>
+                <div>
+                  <h3 class="goal-title" data-en="{{ e($goalTitle['en']) }}" data-ar="{{ e($goalTitle['ar']) }}">{{ $goalTitle['text'] }}</h3>
+                  <p class="goal-desc" data-en="{{ e($goalDesc['en']) }}" data-ar="{{ e($goalDesc['ar']) }}">{{ $goalDesc['text'] }}</p>
+                </div>
+              </div>
               @empty
-                <p class="text-sm text-gray-200">{{ __('Goals will be announced soon.') }}</p>
+              <p class="text-sm text-gray-200">{{ __('Goals will be announced soon.') }}</p>
               @endforelse
             </div>
           </div>
@@ -2847,18 +2848,18 @@
             <h2 class="sponsor-tier-title" data-en="{{ e($labelEn) }}" data-ar="{{ e($labelAr) }}">{{ $label }}</h2>
             <div class="sponsor-tier-grid tier-{{ $tierKey }}">
               @foreach($tierSponsors as $sponsor)
-                @php
-                  $logoPath = $sponsor->logo_path ? asset('storage/'.$sponsor->logo_path) : asset('img/IEC-logo.png');
-                
-                @endphp
-                <article class="sponsor-card sponsor-{{ $tierKey }}" data-animate>
-                  <a href="" class="sponsor-card-link">
-                    <div class="sponsor-logo">
-                      <img src="{{ $logoPath }}" alt="">
-                    </div>
-                   
-                  </a>
-                </article>
+              @php
+              $logoPath = $sponsor->logo_path ? asset('storage/'.$sponsor->logo_path) : asset('img/IEC-logo.png');
+
+              @endphp
+              <article class="sponsor-card sponsor-{{ $tierKey }}" data-animate>
+                <a href="" class="sponsor-card-link">
+                  <div class="sponsor-logo">
+                    <img src="{{ $logoPath }}" alt="">
+                  </div>
+
+                </a>
+              </article>
               @endforeach
             </div>
           </div>
@@ -2879,7 +2880,7 @@
               @foreach($otherSponsors as $sponsor)
               @php
               $logoPath = $sponsor->logo_path ? asset('storage/'.$sponsor->logo_path) : asset('img/IEC-logo.png');
-              
+
               @endphp
               <article class="sponsor-card" data-animate>
                 <a href=""
@@ -2887,7 +2888,7 @@
                   <div class="sponsor-logo">
                     <img src="{{ $logoPath }}" alt="">
                   </div>
-                 
+
                 </a>
               </article>
               @endforeach
@@ -2953,7 +2954,7 @@
     </section>
 
     <!-- Organizers Section -->
-        <section class="organizers" id="organizers">
+    <section class="organizers" id="organizers">
       <div class="container">
         <div class="section-header" data-animate>
           <h2 class="section-title" data-en="Owned by" data-ar="المنظمون">Owned by</h2>
@@ -2963,54 +2964,54 @@
         </div>
 
         @php
-          $organizerFallbackDesc = [
-            'en' => __('Driving the strategic vision for IEC Expo.'),
-            'ar' => __('يقودون الرؤية الاستراتيجية لمعرض IEC.'),
-          ];
-          $organizerVisitCopy = [
-            'en' => __('Visit Website'),
-            'ar' => __('زيارة الموقع'),
-          ];
-          $currentLocale = app()->getLocale();
+        $organizerFallbackDesc = [
+        'en' => __('Driving the strategic vision for IEC Expo.'),
+        'ar' => __('يقودون الرؤية الاستراتيجية لمعرض IEC.'),
+        ];
+        $organizerVisitCopy = [
+        'en' => __('Visit Website'),
+        'ar' => __('زيارة الموقع'),
+        ];
+        $currentLocale = app()->getLocale();
         @endphp
 
         @if($organizers->count())
-          <div class="sponsor-featured-list">
-            @foreach($organizers as $organizer)
-              @php
-                $logoPath = $organizer->logo_path ? asset('storage/'.$organizer->logo_path) : asset('img/IEC-logo.png');
-                $englishName = $organizer->name ?? '';
-                $arabicName = $organizer->name_ar ?? $englishName;
-                $displayName = $currentLocale === 'ar' ? $arabicName : $englishName;
-                $descriptionEn = $organizer->description_en ?? $organizerFallbackDesc['en'];
-                $descriptionAr = $organizer->description_ar ?? $organizerFallbackDesc['ar'];
-                $description = $currentLocale === 'ar' ? $descriptionAr : $descriptionEn;
-              @endphp
-              <article class="sponsor-featured-card sponsor-strategic" data-animate>
-                <div class="sponsor-featured-content">
-                  <div class="sponsor-featured-media">
-                    <div class="sponsor-featured-logo">
-                      <img src="{{ $logoPath }}" alt="{{ $displayName }}">
-                    </div>
-                    @if($organizer->url)
-                      <a href="{{ $organizer->url }}" class="sponsor-visit-btn" target="_blank" rel="noopener">
-                        <span data-en="{{ e($organizerVisitCopy['en']) }}" data-ar="{{ e($organizerVisitCopy['ar']) }}">{{ $organizerVisitCopy[$currentLocale] }}</span>
-                        <svg class="icon icon-sm" viewBox="0 0 24 24">
-                          <path d="M5 12h14M12 5l7 7-7 7" />
-                        </svg>
-                      </a>
-                    @endif
-                  </div>
-                  <div class="sponsor-featured-body">
-                    <h3 class="sponsor-featured-name" data-en="{{ e($englishName) }}" data-ar="{{ e($arabicName) }}">{{ $displayName }}</h3>
-                    <p class="sponsor-featured-desc" data-en="{{ e($descriptionEn) }}" data-ar="{{ e($descriptionAr) }}">{{ $description }}</p>
-                  </div>
+        <div class="sponsor-featured-list">
+          @foreach($organizers as $organizer)
+          @php
+          $logoPath = $organizer->logo_path ? asset('storage/'.$organizer->logo_path) : asset('img/IEC-logo.png');
+          $englishName = $organizer->name ?? '';
+          $arabicName = $organizer->name_ar ?? $englishName;
+          $displayName = $currentLocale === 'ar' ? $arabicName : $englishName;
+          $descriptionEn = $organizer->description_en ?? $organizerFallbackDesc['en'];
+          $descriptionAr = $organizer->description_ar ?? $organizerFallbackDesc['ar'];
+          $description = $currentLocale === 'ar' ? $descriptionAr : $descriptionEn;
+          @endphp
+          <article class="sponsor-featured-card sponsor-strategic" data-animate>
+            <div class="sponsor-featured-content">
+              <div class="sponsor-featured-media">
+                <div class="sponsor-featured-logo">
+                  <img src="{{ $logoPath }}" alt="{{ $displayName }}">
                 </div>
-              </article>
-            @endforeach
-          </div>
+                @if($organizer->url)
+                <a href="{{ $organizer->url }}" class="sponsor-visit-btn" target="_blank" rel="noopener">
+                  <span data-en="{{ e($organizerVisitCopy['en']) }}" data-ar="{{ e($organizerVisitCopy['ar']) }}">{{ $organizerVisitCopy[$currentLocale] }}</span>
+                  <svg class="icon icon-sm" viewBox="0 0 24 24">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </a>
+                @endif
+              </div>
+              <div class="sponsor-featured-body">
+                <h3 class="sponsor-featured-name" data-en="{{ e($englishName) }}" data-ar="{{ e($arabicName) }}">{{ $displayName }}</h3>
+                <p class="sponsor-featured-desc" data-en="{{ e($descriptionEn) }}" data-ar="{{ e($descriptionAr) }}">{{ $description }}</p>
+              </div>
+            </div>
+          </article>
+          @endforeach
+        </div>
         @else
-          <p class="text-center text-gray-500 text-sm">{{ __('Organizers will be announced soon.') }}</p>
+        <p class="text-center text-gray-500 text-sm">{{ __('Organizers will be announced soon.') }}</p>
         @endif
       </div>
     </section>
@@ -3018,25 +3019,25 @@
 
     <!-- Contact Section -->
     @php
-      $contactLocale = app()->getLocale();
-      $contactTranslate = function ($node, $fallback = '') use ($contactLocale) {
-        $en = data_get($node, 'en', $fallback);
-        $ar = data_get($node, 'ar', $en);
-        return [
-          'en' => $en,
-          'ar' => $ar,
-          'text' => $contactLocale === 'ar' ? $ar : $en,
-        ];
-      };
-      $contactTitleBlock = $contactTranslate(data_get($contactSection, 'title'), __('Contact Us'));
-      $contactDescriptionBlock = $contactTranslate(data_get($contactSection, 'description'), '');
-      $contactFormTitle = $contactTranslate(data_get($contactSection, 'form_title'), __('Send us a message'));
-      $contactFormButton = $contactTranslate(data_get($contactSection, 'form_button'), __('Send Message'));
-      $supportCards = data_get($contactSection, 'support_cards', []);
-      $locationTitleBlock = $contactTranslate(data_get($contactSection, 'location_title'), __('Event Location'));
-      $locationAddressBlock = $contactTranslate(data_get($contactSection, 'location_address'), '');
-      $mapEmbedUrl = data_get($contactSection, 'map_embed', 'https://www.google.com/maps?q=Riyadh+International+Convention+%26+Exhibition+Center&output=embed');
-      $locationImageUrl = \App\Models\LandingSection::mediaUrl(data_get($contactSection, 'location_image'));
+    $contactLocale = app()->getLocale();
+    $contactTranslate = function ($node, $fallback = '') use ($contactLocale) {
+    $en = data_get($node, 'en', $fallback);
+    $ar = data_get($node, 'ar', $en);
+    return [
+    'en' => $en,
+    'ar' => $ar,
+    'text' => $contactLocale === 'ar' ? $ar : $en,
+    ];
+    };
+    $contactTitleBlock = $contactTranslate(data_get($contactSection, 'title'), __('Contact Us'));
+    $contactDescriptionBlock = $contactTranslate(data_get($contactSection, 'description'), '');
+    $contactFormTitle = $contactTranslate(data_get($contactSection, 'form_title'), __('Send us a message'));
+    $contactFormButton = $contactTranslate(data_get($contactSection, 'form_button'), __('Send Message'));
+    $supportCards = data_get($contactSection, 'support_cards', []);
+    $locationTitleBlock = $contactTranslate(data_get($contactSection, 'location_title'), __('Event Location'));
+    $locationAddressBlock = $contactTranslate(data_get($contactSection, 'location_address'), '');
+    $mapEmbedUrl = data_get($contactSection, 'map_embed', 'https://www.google.com/maps?q=Riyadh+International+Convention+%26+Exhibition+Center&output=embed');
+    $locationImageUrl = \App\Models\LandingSection::mediaUrl(data_get($contactSection, 'location_image'));
     @endphp
 
     <section class="contact" id="contact">
@@ -3083,48 +3084,48 @@
           <div class="contact-col" data-animate>
             <div class="contact-info-list">
               @forelse($supportCards as $card)
-                @php $cardTitle = $contactTranslate(data_get($card, 'title'), ''); @endphp
-                <div class="contact-info-card">
-                  <div class="contact-info-header">
-                    <div style="flex: 1;">
-                      <div class="contact-info-name" data-en="{{ e($cardTitle['en']) }}" data-ar="{{ e($cardTitle['ar']) }}">
-                        {{ $cardTitle['text'] }}
-                      </div>
-                      <div class="contact-info-links two-columns">
-                        @foreach (data_get($card, 'columns', []) as $column)
-                          @php $columnHeading = $contactTranslate(data_get($column, 'heading'), ''); @endphp
-                          <div class="contact-info-column">
-                            <div class="contact-info-column-header" data-en="{{ e($columnHeading['en']) }}" data-ar="{{ e($columnHeading['ar']) }}">
-                              {{ $columnHeading['text'] }}
-                            </div>
-                            @foreach (data_get($column, 'contacts', []) as $contact)
-                              @php
-                                $contactType = $contact['type'] ?? 'phone';
-                                $contactValue = $contact['value'] ?? '';
-                                $contactHref = $contactType === 'email' ? 'mailto:' . $contactValue : 'tel:' . $contactValue;
-                              @endphp
-                              <a href="{{ $contactHref }}" class="contact-info-link">
-                                @if ($contactType === 'email')
-                                  <svg class="icon icon-sm" viewBox="0 0 24 24">
-                                    <rect width="20" height="16" x="2" y="4" rx="2" />
-                                    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-                                  </svg>
-                                @else
-                                  <svg class="icon icon-sm" viewBox="0 0 24 24">
-                                    <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-                                  </svg>
-                                @endif
-                                {{ $contactValue }}
-                              </a>
-                            @endforeach
-                          </div>
+              @php $cardTitle = $contactTranslate(data_get($card, 'title'), ''); @endphp
+              <div class="contact-info-card">
+                <div class="contact-info-header">
+                  <div style="flex: 1;">
+                    <div class="contact-info-name" data-en="{{ e($cardTitle['en']) }}" data-ar="{{ e($cardTitle['ar']) }}">
+                      {{ $cardTitle['text'] }}
+                    </div>
+                    <div class="contact-info-links two-columns">
+                      @foreach (data_get($card, 'columns', []) as $column)
+                      @php $columnHeading = $contactTranslate(data_get($column, 'heading'), ''); @endphp
+                      <div class="contact-info-column">
+                        <div class="contact-info-column-header" data-en="{{ e($columnHeading['en']) }}" data-ar="{{ e($columnHeading['ar']) }}">
+                          {{ $columnHeading['text'] }}
+                        </div>
+                        @foreach (data_get($column, 'contacts', []) as $contact)
+                        @php
+                        $contactType = $contact['type'] ?? 'phone';
+                        $contactValue = $contact['value'] ?? '';
+                        $contactHref = $contactType === 'email' ? 'mailto:' . $contactValue : 'tel:' . $contactValue;
+                        @endphp
+                        <a href="{{ $contactHref }}" class="contact-info-link">
+                          @if ($contactType === 'email')
+                          <svg class="icon icon-sm" viewBox="0 0 24 24">
+                            <rect width="20" height="16" x="2" y="4" rx="2" />
+                            <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                          </svg>
+                          @else
+                          <svg class="icon icon-sm" viewBox="0 0 24 24">
+                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                          </svg>
+                          @endif
+                          {{ $contactValue }}
+                        </a>
                         @endforeach
                       </div>
+                      @endforeach
                     </div>
                   </div>
                 </div>
+              </div>
               @empty
-                <p class="text-sm text-gray-500">{{ __('Support contacts will be shared soon.') }}</p>
+              <p class="text-sm text-gray-500">{{ __('Support contacts will be shared soon.') }}</p>
               @endforelse
             </div>
           </div>
@@ -3143,9 +3144,9 @@
             </div>
           </div>
           @if ($locationImageUrl)
-            <div class="location-image" style="margin-top:1rem;">
-              <img src="{{ $locationImageUrl }}" alt="{{ $locationTitleBlock['text'] }}" style="width:100%; border-radius:1rem;">
-            </div>
+          <div class="location-image" style="margin-top:1rem;">
+            <img src="{{ $locationImageUrl }}" alt="{{ $locationTitleBlock['text'] }}" style="width:100%; border-radius:1rem;">
+          </div>
           @endif
           <div class="map-embed">
             <iframe
@@ -3170,6 +3171,22 @@
       </div>
     </div>
   </footer>
+
+
+<!-- 
+  Testing Map
+
+-->
+
+
+
+
+
+
+
+
+
+
 
   <!-- Toast Container -->
   <div class="toast-container" id="toast-container"></div>
@@ -3391,13 +3408,32 @@
       roleCards.classList.add('has-selection');
       roleCards.classList.toggle('guest-selected', role === 'visitor');
 
-      const roles = [
-        { key: 'visitor', card: 'visitor-card', form: 'visitor-form', cta: 'visitor-cta' },
-        { key: 'exhibitor', card: 'exhibitor-card', form: 'exhibitor-form', cta: 'exhibitor-cta' },
-        { key: 'icon', card: 'icon-card', form: 'icon-form', cta: 'icon-cta' },
+      const roles = [{
+          key: 'visitor',
+          card: 'visitor-card',
+          form: 'visitor-form',
+          cta: 'visitor-cta'
+        },
+        {
+          key: 'exhibitor',
+          card: 'exhibitor-card',
+          form: 'exhibitor-form',
+          cta: 'exhibitor-cta'
+        },
+        {
+          key: 'icon',
+          card: 'icon-card',
+          form: 'icon-form',
+          cta: 'icon-cta'
+        },
       ];
 
-      roles.forEach(({ key, card, form, cta }) => {
+      roles.forEach(({
+        key,
+        card,
+        form,
+        cta
+      }) => {
         const isActive = role === key;
         document.getElementById(card).classList.toggle('selected', isActive);
         document.getElementById(card).classList.toggle('dimmed', !isActive);
@@ -3583,7 +3619,9 @@
       }
     }
 
-    function bindAjaxRegistrationForm(form, { onSuccess } = {}) {
+    function bindAjaxRegistrationForm(form, {
+      onSuccess
+    } = {}) {
       form.addEventListener('submit', async (event) => {
         event.preventDefault();
         const submitter = event.submitter || form.querySelector('button[type="submit"]');
@@ -3662,7 +3700,9 @@
         field.insertAdjacentElement('afterend', errorEl);
       }
       const eventType = field.matches('select, textarea, input[type="file"]') ? 'change' : 'input';
-      field.addEventListener(eventType, () => clearFieldError(field), { once: true });
+      field.addEventListener(eventType, () => clearFieldError(field), {
+        once: true
+      });
     }
 
     function clearFieldError(field) {

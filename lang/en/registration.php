@@ -6,7 +6,7 @@ return [
         'toast_title' => 'Registration received',
     ],
     'guest' => [
-        'title' => 'Guest',
+        'title' => 'Guests',
         'description' => 'Join us as a guest and stay updated on the event.',
         'cta_label' => 'Select',
         'form_title' => 'Guest Registration',
