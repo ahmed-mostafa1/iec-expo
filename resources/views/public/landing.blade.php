@@ -3621,7 +3621,7 @@
 
     function openHallDesign(targetInputId) {
       hallSelectionTargetId = targetInputId;
-      window.open('/hall-design', '_blank', 'noopener');
+      window.open('/hall-design', '_blank');
     }
 
     window.addEventListener('message', (event) => {
