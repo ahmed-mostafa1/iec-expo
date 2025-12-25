@@ -54,10 +54,6 @@
                         <div class="text-[10px] text-gray-500">{{ __('CR number') }}</div>
                         <div class="text-gray-900">{{ $registration->cr_number }}</div>
                     </div>
-                    <div class="col-span-2">
-                        <div class="text-[10px] text-gray-500">{{ __('National address') }}</div>
-                        <div class="text-gray-900 whitespace-pre-line">{{ $registration->national_address }}</div>
-                    </div>
                 </div>
             </div>
         </div>

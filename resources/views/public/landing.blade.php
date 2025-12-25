@@ -2503,16 +2503,6 @@
                     @endif
                   </div>
                   </div>
-                  <div class="form-grid" style="margin-top: 1rem;">
-                    <div class="form-group">
-                      <label class="form-label" data-en="Corporate Profile" data-ar="الملف التعريفي للشركة">Corporate Profile</label>
-                      <input type="file" name="corporate_profile" class="form-input" accept="application/pdf,image/png,image/jpeg">
-                      <span class="form-hint" data-en="PDF, PNG, JPG files only accepted" data-ar="يمكن إرفاق ملفات PDF أو JPG أو PNG">PDF, PNG, JPG files only accepted</span>
-                      @if($sponsorFormActive && $errors->has('corporate_profile'))
-                      <p class="mt-1 text-xs text-red-600">{{ $errors->first('corporate_profile') }}</p>
-                      @endif
-                    </div>
-                  </div>
                 </div>
 
                 <div id="exhibitor-step2" style="display: none;">
@@ -2538,29 +2528,34 @@
                     <div class="form-group">
                       <label class="form-label" data-en="CR Copy (Commercial Registration)" data-ar="نسخة السجل التجاري">CR Copy (Commercial Registration)</label>
                       <input type="file" name="cr_copy" class="form-input" accept="application/pdf,image/png,image/jpeg">
+                      <span class="form-hint" data-en="PDF files only (max 8MB)" data-ar="ملفات PDF فقط (بحد أقصى 8 ميغابايت)">PDF files only (max 8MB)</span>
                       @if($sponsorFormActive && $errors->has('cr_copy'))
                       <p class="mt-1 text-xs text-red-600">{{ $errors->first('cr_copy') }}</p>
                       @endif
                     </div>
                     <div class="form-group">
                       <label class="form-label" data-en="Company Logo" data-ar="شعار الشركة">Company Logo</label>
-                      <input type="file" name="company_logo" class="form-input" accept="image/png,image/jpeg,image/webp">
-                      <span class="form-hint" data-en="PNG, JPG, WEBP files only accepted" data-ar="يمكن إرفاق ملفات PNG أو JPG أو WEBP">PNG, JPG, WEBP files only accepted</span>
+                      <input type="file" name="company_logo" class="form-input" accept="application/pdf">
+                      <span class="form-hint" data-en="PDF files only (max 8MB)" data-ar="ملفات PDF فقط (بحد أقصى 8 ميغابايت)">PDF files only (max 8MB)</span>
                       @if($sponsorFormActive && $errors->has('company_logo'))
                       <p class="mt-1 text-xs text-red-600">{{ $errors->first('company_logo') }}</p>
                       @endif
                     </div>
                   </div>
-                  <div class="form-group" style="margin-top: 1rem;">
-                    <label class="form-label" data-en="National Address" data-ar="العنوان الوطني">National Address</label>
-                    <textarea name="national_address" class="form-textarea" rows="3" placeholder="Complete company address">{{ $sponsorFormActive ? old('national_address') : '' }}</textarea>
-                    @if($sponsorFormActive && $errors->has('national_address'))
-                    <p class="mt-1 text-xs text-red-600">{{ $errors->first('national_address') }}</p>
-                    @endif
+                  <div class="form-grid" style="margin-top: 1rem;">
+                    <div class="form-group">
+                      <label class="form-label" data-en="Corporate Profile" data-ar="الملف التعريفي للشركة">Corporate Profile</label>
+                      <input type="file" name="corporate_profile" class="form-input" accept="application/pdf">
+                      <span class="form-hint" data-en="PDF files only (max 8MB)" data-ar="ملفات PDF فقط (بحد أقصى 8 ميغابايت)">PDF files only (max 8MB)</span>
+                      @if($sponsorFormActive && $errors->has('corporate_profile'))
+                      <p class="mt-1 text-xs text-red-600">{{ $errors->first('corporate_profile') }}</p>
+                      @endif
+                    </div>
                   </div>
                   <div class="form-group" style="margin-top: 1rem;">
                     <label class="form-label" data-en="National Address Document" data-ar="مستند العنوان الوطني">National Address Document</label>
                     <input type="file" name="national_address_document" class="form-input" accept="application/pdf,image/png,image/jpeg">
+                    <span class="form-hint" data-en="PDF files only (max 8MB)" data-ar="ملفات PDF فقط (بحد أقصى 8 ميغابايت)">PDF files only (max 8MB)</span>
                     @if($sponsorFormActive && $errors->has('national_address_document'))
                     <p class="mt-1 text-xs text-red-600">{{ $errors->first('national_address_document') }}</p>
                     @endif
@@ -2701,16 +2696,6 @@
                       @endif
                     </div>
                   </div>
-                  <div class="form-grid" style="margin-top: 1rem;">
-                    <div class="form-group">
-                      <label class="form-label" data-en="{{ e(trans('registration.icon.corporate_profile', [], 'en')) }}" data-ar="{{ e(trans('registration.icon.corporate_profile', [], 'ar')) }}">{{ __('registration.icon.corporate_profile') }}</label>
-                      <input type="file" name="corporate_profile" class="form-input" accept="application/pdf,image/png,image/jpeg">
-                      <span class="form-hint" data-en="{{ e(trans('registration.icon.file_hint', [], 'en')) }}" data-ar="{{ e(trans('registration.icon.file_hint', [], 'ar')) }}">{{ __('registration.icon.file_hint') }}</span>
-                      @if($iconFormActive && $errors->has('corporate_profile'))
-                      <p class="mt-1 text-xs text-red-600">{{ $errors->first('corporate_profile') }}</p>
-                      @endif
-                    </div>
-                  </div>
                 </div>
 
                 <div id="icon-step2" style="display: none;">
@@ -2736,13 +2721,14 @@
                     <div class="form-group">
                       <label class="form-label" data-en="{{ e(trans('registration.icon.cr_copy', [], 'en')) }}" data-ar="{{ e(trans('registration.icon.cr_copy', [], 'ar')) }}">{{ __('registration.icon.cr_copy') }}</label>
                       <input type="file" name="cr_copy" class="form-input" accept="application/pdf,image/png,image/jpeg">
+                      <span class="form-hint" data-en="{{ e(trans('registration.icon.file_hint', [], 'en')) }}" data-ar="{{ e(trans('registration.icon.file_hint', [], 'ar')) }}">{{ __('registration.icon.file_hint') }}</span>
                       @if($iconFormActive && $errors->has('cr_copy'))
                       <p class="mt-1 text-xs text-red-600">{{ $errors->first('cr_copy') }}</p>
                       @endif
                     </div>
                     <div class="form-group">
                       <label class="form-label" data-en="{{ e(trans('registration.icon.company_logo', [], 'en')) }}" data-ar="{{ e(trans('registration.icon.company_logo', [], 'ar')) }}">{{ __('registration.icon.company_logo') }}</label>
-                      <input type="file" name="company_logo" class="form-input" accept="image/png,image/jpeg,image/webp">
+                      <input type="file" name="company_logo" class="form-input" accept="application/pdf">
                       <span class="form-hint" data-en="{{ e(trans('registration.icon.logo_hint', [], 'en')) }}" data-ar="{{ e(trans('registration.icon.logo_hint', [], 'ar')) }}">{{ __('registration.icon.logo_hint') }}</span>
                       @if($iconFormActive && $errors->has('company_logo'))
                       <p class="mt-1 text-xs text-red-600">{{ $errors->first('company_logo') }}</p>
@@ -2750,15 +2736,17 @@
                     </div>
                   </div>
                   <div class="form-group" style="margin-top: 1rem;">
-                    <label class="form-label" data-en="{{ e(trans('registration.icon.national_address', [], 'en')) }}" data-ar="{{ e(trans('registration.icon.national_address', [], 'ar')) }}">{{ __('registration.icon.national_address') }}</label>
-                    <textarea name="national_address" class="form-textarea" rows="3" placeholder="Complete company address">{{ $iconFormActive ? old('national_address') : '' }}</textarea>
-                    @if($iconFormActive && $errors->has('national_address'))
-                    <p class="mt-1 text-xs text-red-600">{{ $errors->first('national_address') }}</p>
+                    <label class="form-label" data-en="{{ e(trans('registration.icon.corporate_profile', [], 'en')) }}" data-ar="{{ e(trans('registration.icon.corporate_profile', [], 'ar')) }}">{{ __('registration.icon.corporate_profile') }}</label>
+                    <input type="file" name="corporate_profile" class="form-input" accept="application/pdf">
+                    <span class="form-hint" data-en="{{ e(trans('registration.icon.file_hint', [], 'en')) }}" data-ar="{{ e(trans('registration.icon.file_hint', [], 'ar')) }}">{{ __('registration.icon.file_hint') }}</span>
+                    @if($iconFormActive && $errors->has('corporate_profile'))
+                    <p class="mt-1 text-xs text-red-600">{{ $errors->first('corporate_profile') }}</p>
                     @endif
                   </div>
                   <div class="form-group" style="margin-top: 1rem;">
                     <label class="form-label" data-en="{{ e(trans('registration.icon.national_address_document', [], 'en')) }}" data-ar="{{ e(trans('registration.icon.national_address_document', [], 'ar')) }}">{{ __('registration.icon.national_address_document') }}</label>
                     <input type="file" name="national_address_document" class="form-input" accept="application/pdf,image/png,image/jpeg">
+                    <span class="form-hint" data-en="{{ e(trans('registration.icon.file_hint', [], 'en')) }}" data-ar="{{ e(trans('registration.icon.file_hint', [], 'ar')) }}">{{ __('registration.icon.file_hint') }}</span>
                     @if($iconFormActive && $errors->has('national_address_document'))
                     <p class="mt-1 text-xs text-red-600">{{ $errors->first('national_address_document') }}</p>
                     @endif
