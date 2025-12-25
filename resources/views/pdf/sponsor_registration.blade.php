@@ -59,10 +59,6 @@
             <td>{{ $registration->cr_number }}</td>
         </tr>
         <tr>
-            <td class="label">National address</td>
-            <td>{{ $registration->national_address }}</td>
-        </tr>
-        <tr>
             <td class="label">Status</td>
             <td>{{ ucfirst($registration->status) }}</td>
         </tr>
