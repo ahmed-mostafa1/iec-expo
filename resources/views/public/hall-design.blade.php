@@ -93,6 +93,7 @@
       border:1px solid #e5e7eb;
       text-align:center;
     }
+    .modal-backdrop.hidden{ display:none !important; }
     .modal h3{
       margin:0 0 8px;
       font-size:18px;
@@ -190,6 +191,7 @@
 
     let selectedEl = null;
     let pendingSpace = null;
+    hideConfirmModal();
 
     function selectSpace(name, el){
       selectedSpaceEl.textContent = name;
@@ -209,11 +211,13 @@
     function showConfirmModal(name) {
       confirmName.textContent = name;
       confirmModal.classList.remove("hidden");
+      confirmModal.style.display = 'flex';
       confirmModal.setAttribute('aria-hidden', 'false');
     }
 
     function hideConfirmModal() {
       confirmModal.classList.add("hidden");
+      confirmModal.style.display = 'none';
       confirmModal.setAttribute('aria-hidden', 'true');
     }
 
