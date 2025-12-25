@@ -90,7 +90,7 @@ class IconRegistrationController extends Controller
             $handle = fopen('php://output', 'w');
 
             fputcsv($handle, [
-                'ID', 'Full Name', 'Email', 'Phone', 'Organization',
+                'ID', 'Full Name', 'Email', 'Phone', 'Organization', 'Booked Location',
                 'VAT', 'CR', 'Status', 'Created At',
             ]);
 
@@ -102,6 +102,7 @@ class IconRegistrationController extends Controller
                         $row->email,
                         $row->phone,
                         $row->organization,
+                        $row->location_selection,
                         $row->vat_number,
                         $row->cr_number,
                         $row->status,

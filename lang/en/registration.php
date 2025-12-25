@@ -18,6 +18,7 @@ return [
     'sponsor' => [
         'success' => 'Thank you for your sponsorship application. Our team will follow up soon.',
         'toast_title' => 'Application submitted',
+        'book_location' => 'Book Location *',
     ],
     'icon' => [
         'title' => 'Icons',
@@ -36,6 +37,7 @@ return [
         'phone' => 'Phone *',
         'job_title' => 'Job Title *',
         'organization' => 'Company / Organization',
+        'book_location' => 'Book Location *',
         'corporate_profile' => 'Corporate Profile',
         'file_hint' => 'PDF, PNG, JPG files only accepted',
         'vat_number' => 'VAT (Value Added Tax)',

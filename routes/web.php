@@ -26,8 +26,8 @@ Route::get('/', function () {
     return redirect('/en');
 });
 
- Route::get('/map', function () {
-            return view('public.map');
+ Route::get('/hall-design', function () {
+            return view('public.hall-design');
         });
 
 

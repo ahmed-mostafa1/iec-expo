@@ -21,6 +21,7 @@ class SponsorRegistrationRequest extends FormRequest
             'phone'           => ['required', 'string', 'max:50'],
             'job_title'       => ['required', 'string', 'max:255'],
             'organization'    => ['nullable', 'string', 'max:255'],
+            'location_selection' => ['required', 'string', 'max:255'],
             'vat_number'      => ['nullable', 'digits:15', new UniqueSponsorVatCr],
             'cr_number'       => ['nullable', 'string', 'max:255', new UniqueSponsorVatCr],
             'national_address'=> ['nullable', 'string'],
@@ -35,6 +36,7 @@ class SponsorRegistrationRequest extends FormRequest
     {
         return [
             'organization' => __('Company / Organization'),
+            'location_selection' => __('Book Location'),
             'vat_number' => __('registration.sponsor.vat_number'),
             'cr_number'  => __('registration.sponsor.cr_number'),
         ];
