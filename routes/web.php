@@ -18,6 +18,8 @@ use App\Http\Controllers\Admin\HeroMediaController;
 use App\Http\Controllers\Admin\SponsorRegistrationController as AdminSponsorController;
 use App\Http\Controllers\Admin\IconRegistrationController as AdminIconController;
 use App\Http\Controllers\Admin\VisitorRegistrationController as AdminVisitorController;
+use App\Models\SponsorRegistration;
+use App\Models\IconRegistration;
 use Illuminate\Support\Facades\Route;
 
 
@@ -27,7 +29,17 @@ Route::get('/', function () {
 });
 
  Route::get('/hall-design', function () {
-            return view('public.hall-design');
+            $occupiedSpaces = SponsorRegistration::whereNotNull('location_selection')
+                ->pluck('location_selection')
+                ->merge(
+                    IconRegistration::whereNotNull('location_selection')->pluck('location_selection')
+                )
+                ->filter()
+                ->unique()
+                ->values()
+                ->all();
+
+            return view('public.hall-design', compact('occupiedSpaces'));
         });
 
 

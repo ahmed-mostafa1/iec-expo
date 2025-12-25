@@ -65,6 +65,12 @@
       stroke: rgba(255, 140, 0, 0.9);
       stroke-width: 3;
     }
+    .hitbox.occupied{
+      fill: rgba(239, 68, 68, 0.35);
+      stroke: rgba(220, 38, 38, 0.95);
+      stroke-width: 3;
+      cursor:not-allowed;
+    }
 
     /* Optional debug mode (shows outlines always) */
     .debug .hitbox{
@@ -188,6 +194,7 @@
     const confirmName = document.getElementById("confirmName");
     const confirmSelectionBtn = document.getElementById("confirmSelection");
     const cancelConfirmBtn = document.getElementById("cancelConfirm");
+    const occupiedSpaces = new Set(@json($occupiedSpaces ?? []));
 
     let selectedEl = null;
     let pendingSpace = null;
@@ -242,8 +249,17 @@
     }
 
     function addHitbox({ name, x, y, w, h }){
-      const r = svgEl("rect", { x, y, width:w, height:h, class:"hitbox", "data-name": name });
-      r.addEventListener("click", () => selectSpace(name, r));
+      const isOccupied = occupiedSpaces.has(name);
+      const classes = ["hitbox"];
+      if (isOccupied) {
+        classes.push("occupied");
+      }
+      const r = svgEl("rect", { x, y, width:w, height:h, class:classes.join(" "), "data-name": name });
+      if (!isOccupied) {
+        r.addEventListener("click", () => selectSpace(name, r));
+      } else {
+        r.style.pointerEvents = 'none';
+      }
       return r;
     }
 
