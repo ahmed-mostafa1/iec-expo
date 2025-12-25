@@ -3621,7 +3621,8 @@
 
     function openHallDesign(targetInputId) {
       hallSelectionTargetId = targetInputId;
-      window.open('/hall-design', '_blank');
+      const localeSuffix = currentLocale ? `?locale=${encodeURIComponent(currentLocale)}` : '';
+      window.open('/hall-design' + localeSuffix, '_blank');
     }
 
     window.addEventListener('message', (event) => {
