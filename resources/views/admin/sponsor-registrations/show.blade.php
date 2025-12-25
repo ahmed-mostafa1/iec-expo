@@ -43,6 +43,10 @@
                         <div class="text-gray-900">{{ $registration->organization }}</div>
                     </div>
                     <div>
+                        <div class="text-[10px] text-gray-500">{{ __('Booked location') }}</div>
+                        <div class="text-gray-900">{{ $registration->location_selection }}</div>
+                    </div>
+                    <div>
                         <div class="text-[10px] text-gray-500">{{ __('VAT number') }}</div>
                         <div class="text-gray-900">{{ $registration->vat_number }}</div>
                     </div>

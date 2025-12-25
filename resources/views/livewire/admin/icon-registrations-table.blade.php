@@ -57,6 +57,7 @@
                     <th class="px-3 py-2 text-start">#</th>
                     <th class="px-3 py-2 text-start">{{ __('Name') }}</th>
                     <th class="px-3 py-2 text-start">{{ __('Organization') }}</th>
+                    <th class="px-3 py-2 text-start">{{ __('Booked location') }}</th>
                     <th class="px-3 py-2 text-start">{{ __('VAT') }}</th>
                     <th class="px-3 py-2 text-start">{{ __('CR') }}</th>
                     <th class="px-3 py-2 text-start">{{ __('Status') }}</th>
@@ -74,6 +75,9 @@
                         </td>
                         <td class="px-3 py-2 align-top text-gray-700">
                             {{ $registration->organization }}
+                        </td>
+                        <td class="px-3 py-2 align-top text-gray-700">
+                            {{ $registration->location_selection }}
                         </td>
                         <td class="px-3 py-2 align-top text-gray-700">
                             {{ $registration->vat_number }}

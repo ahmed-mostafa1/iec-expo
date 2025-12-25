@@ -18,6 +18,7 @@ return [
     'sponsor' => [
         'success' => 'شكرا لتقديم طلب الرعاية. سيتواصل فريقنا معك قريبا.',
         'toast_title' => 'تم استلام الطلب',
+        'book_location' => 'احجز مساحة *',
     ],
     'icon' => [
         'title' => 'أيقونات المعرض',
@@ -36,6 +37,7 @@ return [
         'phone' => 'الهاتف *',
         'job_title' => 'المسمى الوظيفي *',
         'organization' => 'الشركة / الجهة',
+        'book_location' => 'احجز مساحة *',
         'corporate_profile' => 'الملف التعريفي للشركة',
         'file_hint' => 'يتم قبول ملفات PDF أو PNG أو JPG فقط',
         'vat_number' => 'ضريبة القيمة المضافة',

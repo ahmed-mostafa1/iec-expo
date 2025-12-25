@@ -21,6 +21,7 @@ class IconRegistrationRequest extends FormRequest
             'phone'           => ['required', 'string', 'max:50'],
             'job_title'       => ['required', 'string', 'max:255'],
             'organization'    => ['nullable', 'string', 'max:255'],
+            'location_selection' => ['required', 'string', 'max:255'],
             'vat_number'      => ['nullable', 'digits:15', new UniqueIconVatCr],
             'cr_number'       => ['nullable', 'string', 'max:255', new UniqueIconVatCr],
             'national_address'=> ['nullable', 'string'],
@@ -34,6 +35,7 @@ class IconRegistrationRequest extends FormRequest
     public function attributes(): array
     {
         return [
+            'location_selection' => __('Book Location'),
             'vat_number' => __('registration.icon.vat_number'),
             'cr_number'  => __('registration.icon.cr_number'),
         ];

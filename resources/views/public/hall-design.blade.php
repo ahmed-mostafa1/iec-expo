@@ -7,6 +7,7 @@
   <style>
     body{ margin:0; font-family:system-ui,Segoe UI,Roboto,Arial; background:#f6f7f9; }
     .wrap{ max-width:980px; margin:24px auto; padding:0 14px; }
+    .hidden{ display:none; }
 
     .card{
       background:#fff; border:1px solid #e6e8ee; border-radius:14px;
@@ -71,6 +72,56 @@
       stroke: rgba(0, 150, 255, 0.7);
       stroke-width: 1.5;
     }
+
+    .modal-backdrop{
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.4);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:16px;
+      z-index:50;
+    }
+    .modal{
+      background:#fff;
+      border-radius:12px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.18);
+      max-width:420px;
+      width:100%;
+      padding:20px;
+      border:1px solid #e5e7eb;
+      text-align:center;
+    }
+    .modal h3{
+      margin:0 0 8px;
+      font-size:18px;
+      color:#111827;
+    }
+    .modal p{
+      margin:0 0 16px;
+      color:#4b5563;
+      font-size:14px;
+    }
+    .modal-actions{
+      display:flex;
+      gap:10px;
+      justify-content:center;
+    }
+    .btn{
+      padding:10px 14px;
+      border-radius:10px;
+      border:1px solid #d1d5db;
+      background:#f9fafb;
+      cursor:pointer;
+      font-weight:600;
+    }
+    .btn-primary{
+      background:#0f9f6e;
+      color:#fff;
+      border-color:#0f9f6e;
+    }
+    .btn:hover{ filter:brightness(0.98); }
   </style>
 </head>
 
@@ -98,6 +149,17 @@
     </div>
   </div>
 
+  <div id="confirmModal" class="modal-backdrop hidden" aria-hidden="true">
+    <div class="modal">
+      <h3>Confirm selection</h3>
+      <p>Space: <strong id="confirmName">—</strong></p>
+      <div class="modal-actions">
+        <button type="button" class="btn" id="cancelConfirm">Cancel</button>
+        <button type="button" class="btn btn-primary" id="confirmSelection">Confirm &amp; return</button>
+      </div>
+    </div>
+  </div>
+
   <script>
     /**
      * Pixel-perfect booth hitboxes aligned to the PDF image.
@@ -121,12 +183,18 @@
     const selectedSpaceEl = document.getElementById("selectedSpace");
     const spaceInput = document.getElementById("spaceInput");
     const planEl = document.getElementById("plan");
+    const confirmModal = document.getElementById("confirmModal");
+    const confirmName = document.getElementById("confirmName");
+    const confirmSelectionBtn = document.getElementById("confirmSelection");
+    const cancelConfirmBtn = document.getElementById("cancelConfirm");
 
     let selectedEl = null;
+    let pendingSpace = null;
 
     function selectSpace(name, el){
       selectedSpaceEl.textContent = name;
       spaceInput.value = name;
+      pendingSpace = name;
 
       if (selectedEl) selectedEl.classList.remove("selected");
       selectedEl = el;
@@ -134,7 +202,33 @@
 
       // Optional callback for your registration flow
       if (typeof window.onSpaceClick === "function") window.onSpaceClick(name);
+
+      showConfirmModal(name);
     }
+
+    function showConfirmModal(name) {
+      confirmName.textContent = name;
+      confirmModal.classList.remove("hidden");
+      confirmModal.setAttribute('aria-hidden', 'false');
+    }
+
+    function hideConfirmModal() {
+      confirmModal.classList.add("hidden");
+      confirmModal.setAttribute('aria-hidden', 'true');
+    }
+
+    confirmSelectionBtn.addEventListener('click', () => {
+      if (!pendingSpace) {
+        hideConfirmModal();
+        return;
+      }
+      if (window.opener && !window.opener.closed) {
+        window.opener.postMessage({ type: 'hall-selection', space: pendingSpace }, window.location.origin);
+      }
+      window.close();
+    });
+
+    cancelConfirmBtn.addEventListener('click', () => hideConfirmModal());
 
     function svgEl(tag, attrs = {}, parent = overlay){
       const el = document.createElementNS("http://www.w3.org/2000/svg", tag);

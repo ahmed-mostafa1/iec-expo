@@ -2471,7 +2471,7 @@
                     </div>
                   </div>
                   <div class="form-grid form-grid-2" style="margin-top:1rem;">
-                    <div class="form-group" style="grid-column: span 2;">
+                  <div class="form-group" style="grid-column: span 2;">
                       <label class="form-label" data-en="Company / Organization" data-ar="الشركة / الجهة">Company / Organization</label>
                       <input type="text" name="organization" class="form-input" placeholder="Umbrella Inc."
                         value="{{ $sponsorFormActive ? old('organization') : '' }}">
@@ -2479,6 +2479,29 @@
                       <p class="mt-1 text-xs text-red-600">{{ $errors->first('organization') }}</p>
                       @endif
                     </div>
+                  <div class="form-group" style="grid-column: span 2;">
+                    <label class="form-label"
+                      data-en="{{ e(trans('registration.sponsor.book_location', [], 'en')) }}"
+                      data-ar="{{ e(trans('registration.sponsor.book_location', [], 'ar')) }}">
+                      {{ __('registration.sponsor.book_location') }}
+                    </label>
+                    <div class="flex gap-3 flex-col sm:flex-row">
+                      <input type="text"
+                        id="sponsor-location-selection"
+                        name="location_selection"
+                        class="form-input flex-1"
+                        required
+                        readonly
+                        placeholder="{{ __('Book Location') }}"
+                        value="{{ $sponsorFormActive ? old('location_selection') : '' }}">
+                      <button type="button" class="btn btn-outline flex-none" onclick="openHallDesign('sponsor-location-selection')">
+                        <span data-en="Open hall map" data-ar="افتح خريطة القاعة">Open hall map</span>
+                      </button>
+                    </div>
+                    @if($sponsorFormActive && $errors->has('location_selection'))
+                    <p class="mt-1 text-xs text-red-600">{{ $errors->first('location_selection') }}</p>
+                    @endif
+                  </div>
                   </div>
                   <div class="form-grid" style="margin-top: 1rem;">
                     <div class="form-group">
@@ -2652,6 +2675,29 @@
                         value="{{ $iconFormActive ? old('organization') : '' }}">
                       @if($iconFormActive && $errors->has('organization'))
                       <p class="mt-1 text-xs text-red-600">{{ $errors->first('organization') }}</p>
+                      @endif
+                    </div>
+                    <div class="form-group" style="grid-column: span 2;">
+                      <label class="form-label"
+                        data-en="{{ e(trans('registration.icon.book_location', [], 'en')) }}"
+                        data-ar="{{ e(trans('registration.icon.book_location', [], 'ar')) }}">
+                        {{ __('registration.icon.book_location') }}
+                      </label>
+                      <div class="flex gap-3 flex-col sm:flex-row">
+                        <input type="text"
+                          id="icon-location-selection"
+                          name="location_selection"
+                          class="form-input flex-1"
+                          required
+                          readonly
+                          placeholder="{{ __('Book Location') }}"
+                          value="{{ $iconFormActive ? old('location_selection') : '' }}">
+                        <button type="button" class="btn btn-outline flex-none" onclick="openHallDesign('icon-location-selection')">
+                          <span data-en="Open hall map" data-ar="افتح خريطة القاعة">Open hall map</span>
+                        </button>
+                      </div>
+                      @if($iconFormActive && $errors->has('location_selection'))
+                      <p class="mt-1 text-xs text-red-600">{{ $errors->first('location_selection') }}</p>
                       @endif
                     </div>
                   </div>
@@ -3570,6 +3616,38 @@
     function resetHeardAboutSelectsWithin(form) {
       form.querySelectorAll('[data-heard-select]').forEach(select => syncHeardSelect(select));
     }
+
+    let hallSelectionTargetId = null;
+
+    function openHallDesign(targetInputId) {
+      hallSelectionTargetId = targetInputId;
+      window.open('/hall-design', '_blank', 'noopener');
+    }
+
+    window.addEventListener('message', (event) => {
+      if (event.origin !== window.location.origin) {
+        return;
+      }
+      const data = event.data || {};
+      if (data.type !== 'hall-selection' || !data.space) {
+        return;
+      }
+      const targetId = hallSelectionTargetId || '';
+      const input = targetId ? document.getElementById(targetId) : null;
+      if (input) {
+        input.value = data.space;
+        input.dispatchEvent(new Event('input', { bubbles: true }));
+        const form = input.closest('form');
+        if (form && form.id === 'sponsor-registration-form') {
+          setExhibitorStep(1);
+        }
+        if (form && form.id === 'icon-registration-form') {
+          setIconStep(1);
+        }
+      }
+      hallSelectionTargetId = null;
+      try { window.focus(); } catch (e) {}
+    });
 
     function initAjaxRegistrationForms() {
       const visitorForm = document.getElementById('visitor-registration-form');

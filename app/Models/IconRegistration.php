@@ -12,6 +12,7 @@ class IconRegistration extends Model
         'phone',
         'job_title',
         'organization',
+        'location_selection',
         'vat_number',
         'cr_number',
         'national_address',

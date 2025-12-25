@@ -42,6 +42,10 @@
             <td class="label">Organization</td>
             <td>{{ $registration->organization }}</td>
         </tr>
+        <tr>
+            <td class="label">Booked location</td>
+            <td>{{ $registration->location_selection }}</td>
+        </tr>
     </table>
 
     <h2>Company details</h2>
