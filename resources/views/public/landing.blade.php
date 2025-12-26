@@ -2465,8 +2465,8 @@
                       @endif
                     </div>
                   </div>
-                  <div class="form-grid form-grid-2" style="margin-top:1rem;">
-                  <div class="form-group">
+                  <div class="form-grid" style="margin-top:1rem;">
+                    <div class="form-group">
                       <label class="form-label" data-en="{{ e($exOrgLabel['en']) }}" data-ar="{{ e($exOrgLabel['ar']) }}">{{ $exOrgLabel['text'] }}</label>
                       <input type="text" name="organization" class="form-input" placeholder="{{ $exOrgPlaceholder['text'] }}"
                         value="{{ $sponsorFormActive ? old('organization') : '' }}">
@@ -2474,12 +2474,14 @@
                       <p class="mt-1 text-xs text-red-600">{{ $errors->first('organization') }}</p>
                       @endif
                     </div>
-                  <div class="form-group">
-                    <label class="form-label"
-                      data-en="{{ e($exLocationLabel['en']) }}"
-                      data-ar="{{ e($exLocationLabel['ar']) }}">
-                      {{ $exLocationLabel['text'] }}
-                    </label>
+                  </div>
+                  <div class="form-grid" style="margin-top:1rem;">
+                    <div class="form-group">
+                      <label class="form-label"
+                        data-en="{{ e($exLocationLabel['en']) }}"
+                        data-ar="{{ e($exLocationLabel['ar']) }}">
+                        {{ $exLocationLabel['text'] }}
+                      </label>
                     <div class="flex gap-3 flex-col sm:flex-row">
                       <input type="text"
                         id="sponsor-location-selection"
@@ -2697,7 +2699,7 @@
                       @endif
                     </div>
                   </div>
-                  <div class="form-grid form-grid-2" style="margin-top:1rem;">
+                  <div class="form-grid" style="margin-top:1rem;">
                     <div class="form-group">
                       <label class="form-label" data-en="{{ e($iconOrgLabel['en']) }}" data-ar="{{ e($iconOrgLabel['ar']) }}">{{ $iconOrgLabel['text'] }}</label>
                       <input type="text" name="organization" class="form-input" placeholder="{{ $iconOrgPlaceholder['text'] }}"
@@ -2706,6 +2708,8 @@
                       <p class="mt-1 text-xs text-red-600">{{ $errors->first('organization') }}</p>
                       @endif
                     </div>
+                  </div>
+                  <div class="form-grid" style="margin-top:1rem;">
                     <div class="form-group">
                       <label class="form-label"
                         data-en="{{ e($iconLocationLabel['en']) }}"
