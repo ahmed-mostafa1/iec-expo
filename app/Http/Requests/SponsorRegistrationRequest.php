@@ -28,6 +28,7 @@ class SponsorRegistrationRequest extends FormRequest
             'cr_copy'                   => ['nullable', 'file', 'mimes:pdf', 'max:8192'],
             'national_address_document' => ['nullable', 'file', 'mimes:pdf', 'max:8192'],
             'company_logo'              => ['nullable', 'file', 'mimes:pdf', 'max:8192'],
+            'privacy_policy'            => ['accepted'],
         ];
     }
 
@@ -38,6 +39,7 @@ class SponsorRegistrationRequest extends FormRequest
             'location_selection' => __('Book Location'),
             'vat_number' => __('registration.sponsor.vat_number'),
             'cr_number'  => __('registration.sponsor.cr_number'),
+            'privacy_policy' => __('Privacy Policy'),
         ];
     }
 

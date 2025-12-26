@@ -22,6 +22,7 @@ class VisitorRegistrationRequest extends FormRequest
             'company_name'           => ['nullable', 'string', 'max:255'],
             'heard_about'            => ['nullable', 'string', 'in:social_media,ads,friends,other'],
             'heard_about_other_text' => ['nullable', 'string', 'max:1000'],
+            'privacy_policy'         => ['accepted'],
         ];
     }
 
