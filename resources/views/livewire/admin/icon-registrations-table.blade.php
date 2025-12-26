@@ -1,6 +1,6 @@
 <div class="space-y-4">
     <div class="flex flex-wrap items-end gap-3 justify-between">
-        <div class="flex flex-wrap gap-3">
+        <!-- <div class="flex flex-wrap gap-3">
             <div>
                 <label class="block text-[10px] font-medium text-gray-500 mb-1">
                     {{ __('Search') }}
@@ -37,7 +37,7 @@
                 <input type="date" wire:model="dateTo"
                        class="w-36 rounded-lg border-gray-300 text-s">
             </div>
-        </div>
+        </div> -->
 
         <div class="flex items-center gap-2">
             <button

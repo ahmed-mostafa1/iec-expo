@@ -71,6 +71,11 @@ class LandingSectionController extends Controller
                 $request->input('exhibitor_form'),
                 $content['exhibitor_form'] ?? []
             );
+            $payload['icon_card'] = $request->input('icon_card');
+            $payload['icon_form'] = $this->syncExhibitorForm(
+                $request->input('icon_form'),
+                $content['icon_form'] ?? []
+            );
 
             $section->saveContent($payload);
 
@@ -228,6 +233,7 @@ class LandingSectionController extends Controller
                 $options = collect($field['options'] ?? $original['options'] ?? [])
                     ->map(function ($option) {
                         return [
+                            'value' => Arr::get($option, 'value'),
                             'en' => Arr::get($option, 'en', ''),
                             'ar' => Arr::get($option, 'ar', ''),
                         ];

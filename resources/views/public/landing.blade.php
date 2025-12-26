@@ -2094,13 +2094,13 @@
         <img src="{{ asset('./img/IEC-logo.png') }}" alt="IEC Logo" class="nav-logo" />
         <nav class="nav">
           <a href="#" class="btn-primary nav-link" data-en="Home" data-ar="الرئيسية">Home</a>
+          <a href="#" class="nav-link" data-en="Previous Editions of IEC" data-ar="نسخ المعرض السابقة">Previous Editions of IEC</a>
           <a href="#register" class="btn-primary nav-link" data-en="Register" data-ar="سجل الآن">Register</a>
           <a href="#about" class="nav-link" data-en="About" data-ar="عن المعرض">About</a>
           <a href="#sponsors" class="nav-link" data-en="Sponsors" data-ar="الرعاة">Sponsors</a>
           <a href="#participants" class="nav-link" data-en="Icons" data-ar="أيقونات المعرض">Icons</a>
           <a href="#organizers" class="nav-link" data-en="Owned by" data-ar="المنظمون">Owned by</a>
           <a href="#contact" class="nav-link" data-en="Contact" data-ar="تواصل معنا">Contact</a>
-          <a href="#" class="nav-link" data-en="Previous Editions of IEC" data-ar="نسخ المعرض السابقة">Previous Editions of IEC</a>
         </nav>
 
         <div class="header-right">
@@ -2126,14 +2126,14 @@
 
       <nav class="mobile-nav" id="mobile-nav">
         <a href="#" class="mobile-nav-link" data-en="Home" data-ar="الرئيسية">Home</a>
+        <a href="#" class="mobile-nav-link" data-en="Previous Editions of IEC" data-ar="نسخ المعرض السابقة">Previous Editions of IEC</a>
         <a href="#register" class="mobile-nav-link" data-en="Register" data-ar="سجل الآن">Register</a>
         <a href="#about" class="mobile-nav-link" data-en="About" data-ar="عن المعرض">About</a>
         <a href="#sponsors" class="mobile-nav-link" data-en="Sponsors" data-ar="الرعاة">Sponsors</a>
         <a href="#participants" class="mobile-nav-link" data-en="Icons" data-ar="أيقونات المعرض">Icons</a>
         <a href="#organizers" class="mobile-nav-link" data-en="Owned by" data-ar="المنظمون">Owned by</a>
         <a href="#contact" class="mobile-nav-link" data-en="Contact" data-ar="تواصل معنا">Contact</a>
-        <a href="#" class="mobile-nav-link" data-en="Previous Editions of IEC" data-ar="نسخ المعرض السابقة">Previous Editions of IEC</a>
-
+        
       </nav>
     </div>
   </header>
@@ -2203,15 +2203,37 @@
     };
     $registrationTitle = $translate(data_get($registrationSection, 'title'), __('Registration'));
     $registrationDescription = $translate(data_get($registrationSection, 'description'), '');
+
     $visitorCard = data_get($registrationSection, 'visitor_card', []);
-    $visitorCardTitle = $translate(data_get($visitorCard, 'title'), '');
-    $visitorCardDescription = $translate(data_get($visitorCard, 'description'), '');
-    $visitorCta = $translate(data_get($visitorCard, 'cta_label'), __('Select'));
     $visitorForm = data_get($registrationSection, 'visitor_form', []);
-    $visitorFormTitle = $translate(data_get($visitorForm, 'title'), '');
-    $visitorSubmit = $translate(data_get($visitorForm, 'cta_submit'), __('Submit Registration'));
-    $visitorContact = $translate(data_get($visitorForm, 'cta_contact'), __('Contact Us'));
     $visitorFields = data_get($visitorForm, 'fields', []);
+    $visitorFieldsByName = collect($visitorFields)->keyBy('name');
+
+    $guestCardTitle = $translate(data_get($visitorCard, 'title') ?? [
+    'en' => trans('registration.guest.title', [], 'en'),
+    'ar' => trans('registration.guest.title', [], 'ar'),
+    ]);
+    $guestCardDescription = $translate(data_get($visitorCard, 'description') ?? [
+    'en' => trans('registration.guest.description', [], 'en'),
+    'ar' => trans('registration.guest.description', [], 'ar'),
+    ]);
+    $guestCta = $translate(data_get($visitorCard, 'cta_label') ?? [
+    'en' => trans('registration.guest.cta_label', [], 'en'),
+    'ar' => trans('registration.guest.cta_label', [], 'ar'),
+    ]);
+    $guestFormTitle = $translate(data_get($visitorForm, 'title') ?? [
+    'en' => trans('registration.guest.form_title', [], 'en'),
+    'ar' => trans('registration.guest.form_title', [], 'ar'),
+    ]);
+    $guestSubmit = $translate(data_get($visitorForm, 'cta_submit') ?? [
+    'en' => trans('registration.guest.cta_submit', [], 'en'),
+    'ar' => trans('registration.guest.cta_submit', [], 'ar'),
+    ]);
+    $guestContact = $translate(data_get($visitorForm, 'cta_contact') ?? [
+    'en' => trans('registration.guest.cta_contact', [], 'en'),
+    'ar' => trans('registration.guest.cta_contact', [], 'ar'),
+    ]);
+
     $exhibitorCard = data_get($registrationSection, 'exhibitor_card', []);
     $exhibitorCardTitle = $translate(data_get($exhibitorCard, 'title'), '');
     $exhibitorCardDescription = $translate(data_get($exhibitorCard, 'description'), '');
@@ -2224,33 +2246,64 @@
     $exhibitorSubmit = $translate(data_get($exhibitorForm, 'cta_submit'), __('Submit Application'));
     $exhibitorFieldsStepOne = data_get($exhibitorForm, 'fields_step_one', []);
     $exhibitorFieldsStepTwo = data_get($exhibitorForm, 'fields_step_two', []);
+    $exhibitorFieldsStepOneByName = collect($exhibitorFieldsStepOne)->keyBy('name');
+    $exhibitorFieldsStepTwoByName = collect($exhibitorFieldsStepTwo)->keyBy('name');
 
-    $transKey = function (string $key) use ($registrationLocale) {
-    $en = trans($key, [], 'en');
-    $ar = trans($key, [], 'ar');
-    return [
-    'en' => $en,
-    'ar' => $ar,
-    'text' => $registrationLocale === 'ar' ? $ar : $en,
-    ];
+    $iconCard = data_get($registrationSection, 'icon_card', []);
+    $iconForm = data_get($registrationSection, 'icon_form', []);
+    $iconFieldsStepOne = data_get($iconForm, 'fields_step_one', []);
+    $iconFieldsStepTwo = data_get($iconForm, 'fields_step_two', []);
+    $iconFieldsStepOneByName = collect($iconFieldsStepOne)->keyBy('name');
+    $iconFieldsStepTwoByName = collect($iconFieldsStepTwo)->keyBy('name');
+
+    $iconCardTitle = $translate(data_get($iconCard, 'title') ?? [
+    'en' => trans('registration.icon.title', [], 'en'),
+    'ar' => trans('registration.icon.title', [], 'ar'),
+    ]);
+    $iconCardDescription = $translate(data_get($iconCard, 'description') ?? [
+    'en' => trans('registration.icon.description', [], 'en'),
+    'ar' => trans('registration.icon.description', [], 'ar'),
+    ]);
+    $iconCta = $translate(data_get($iconCard, 'cta_label') ?? [
+    'en' => trans('registration.icon.cta_label', [], 'en'),
+    'ar' => trans('registration.icon.cta_label', [], 'ar'),
+    ]);
+    $iconFormTitle = $translate(data_get($iconForm, 'title') ?? [
+    'en' => trans('registration.icon.form_title', [], 'en'),
+    'ar' => trans('registration.icon.form_title', [], 'ar'),
+    ]);
+    $iconStepOne = $translate(data_get($iconForm, 'step_one') ?? [
+    'en' => trans('registration.icon.step_one', [], 'en'),
+    'ar' => trans('registration.icon.step_one', [], 'ar'),
+    ]);
+    $iconStepTwo = $translate(data_get($iconForm, 'step_two') ?? [
+    'en' => trans('registration.icon.step_two', [], 'en'),
+    'ar' => trans('registration.icon.step_two', [], 'ar'),
+    ]);
+    $iconNext = $translate(data_get($iconForm, 'cta_next') ?? [
+    'en' => trans('registration.icon.cta_next', [], 'en'),
+    'ar' => trans('registration.icon.cta_next', [], 'ar'),
+    ]);
+    $iconBack = $translate(data_get($iconForm, 'cta_back') ?? [
+    'en' => trans('registration.icon.cta_back', [], 'en'),
+    'ar' => trans('registration.icon.cta_back', [], 'ar'),
+    ]);
+    $iconSubmit = $translate(data_get($iconForm, 'cta_submit') ?? [
+    'en' => trans('registration.icon.cta_submit', [], 'en'),
+    'ar' => trans('registration.icon.cta_submit', [], 'ar'),
+    ]);
+
+    $fieldCopy = function ($fieldsByName, string $name, string $key, array $fallback) use ($translate) {
+    $field = $fieldsByName->get($name);
+    $value = $field ? data_get($field, $key) : null;
+    return $translate($value ?? $fallback);
     };
 
-    $guestCardTitle = $transKey('registration.guest.title');
-    $guestCardDescription = $transKey('registration.guest.description');
-    $guestCta = $transKey('registration.guest.cta_label');
-    $guestFormTitle = $transKey('registration.guest.form_title');
-    $guestSubmit = $transKey('registration.guest.cta_submit');
-    $guestContact = $transKey('registration.guest.cta_contact');
-
-    $iconCardTitle = $transKey('registration.icon.title');
-    $iconCardDescription = $transKey('registration.icon.description');
-    $iconCta = $transKey('registration.icon.cta_label');
-    $iconFormTitle = $transKey('registration.icon.form_title');
-    $iconStepOne = $transKey('registration.icon.step_one');
-    $iconStepTwo = $transKey('registration.icon.step_two');
-    $iconNext = $transKey('registration.icon.cta_next');
-    $iconBack = $transKey('registration.icon.cta_back');
-    $iconSubmit = $transKey('registration.icon.cta_submit');
+    $fieldOptions = function ($fieldsByName, string $name, array $fallback) {
+    $field = $fieldsByName->get($name);
+    $options = data_get($field, 'options');
+    return (is_array($options) && count($options)) ? $options : $fallback;
+    };
     @endphp
 
     @php
@@ -2293,6 +2346,27 @@
                 {{ session('visitor_success') }}
               </div>
               @endif
+              @php
+              $guestFullNameLabel = $fieldCopy($visitorFieldsByName, 'full_name', 'label', ['en' => 'Full Name *', 'ar' => 'الاسم الكامل *']);
+              $guestFullNamePlaceholder = $fieldCopy($visitorFieldsByName, 'full_name', 'placeholder', ['en' => 'John Doe', 'ar' => 'جون دو']);
+              $guestEmailLabel = $fieldCopy($visitorFieldsByName, 'email', 'label', ['en' => 'Email *', 'ar' => 'البريد الإلكتروني *']);
+              $guestEmailPlaceholder = $fieldCopy($visitorFieldsByName, 'email', 'placeholder', ['en' => 'john@example.com', 'ar' => 'john@example.com']);
+              $guestPhoneLabel = $fieldCopy($visitorFieldsByName, 'phone', 'label', ['en' => 'Phone', 'ar' => 'الهاتف']);
+              $guestPhonePlaceholder = $fieldCopy($visitorFieldsByName, 'phone', 'placeholder', ['en' => '+966 50 000 0000', 'ar' => '+966 50 000 0000']);
+              $guestJobLabel = $fieldCopy($visitorFieldsByName, 'job_title', 'label', ['en' => 'Job Title', 'ar' => 'المسمى الوظيفي']);
+              $guestJobPlaceholder = $fieldCopy($visitorFieldsByName, 'job_title', 'placeholder', ['en' => 'Marketing Manager', 'ar' => 'مدير التسويق']);
+              $guestCompanyLabel = $fieldCopy($visitorFieldsByName, 'company_name', 'label', ['en' => 'Company / Organization', 'ar' => 'الشركة / الجهة']);
+              $guestCompanyPlaceholder = $fieldCopy($visitorFieldsByName, 'company_name', 'placeholder', ['en' => 'Umbrella Inc.', 'ar' => 'شركة أمبريلا']);
+              $guestHeardLabel = $fieldCopy($visitorFieldsByName, 'heard_about', 'label', ['en' => 'How did you hear about us?', 'ar' => 'كيف سمعت عنا؟']);
+              $guestHeardOptions = $fieldOptions($visitorFieldsByName, 'heard_about', [
+              ['value' => 'social_media', 'en' => 'Social Media', 'ar' => 'وسائل التواصل الاجتماعي'],
+              ['value' => 'ads', 'en' => 'Advertising', 'ar' => 'الإعلانات'],
+              ['value' => 'friends', 'en' => 'Friends / Colleagues', 'ar' => 'الأصدقاء / الزملاء'],
+              ['value' => 'other', 'en' => 'Other', 'ar' => 'أخرى'],
+              ]);
+              $guestHeardOtherLabel = $fieldCopy($visitorFieldsByName, 'heard_about_other_text', 'label', ['en' => 'Please specify', 'ar' => 'يرجى التحديد']);
+              $guestHeardOtherPlaceholder = $fieldCopy($visitorFieldsByName, 'heard_about_other_text', 'placeholder', ['en' => 'Conference website', 'ar' => 'موقع المؤتمر']);
+              @endphp
               <h3 class="form-title" data-en="{{ e($guestFormTitle['en']) }}" data-ar="{{ e($guestFormTitle['ar']) }}">{{ $guestFormTitle['text'] }}</h3>
               <form id="visitor-registration-form"
                 method="POST"
@@ -2304,16 +2378,16 @@
                 <input type="hidden" name="form_identifier" value="visitor">
                 <div class="form-grid form-grid-2">
                   <div class="form-group">
-                    <label class="form-label" data-en="Full Name *" data-ar="الاسم الكامل *">Full Name *</label>
-                    <input type="text" name="full_name" class="form-input" required placeholder="John Doe"
+                    <label class="form-label" data-en="{{ e($guestFullNameLabel['en']) }}" data-ar="{{ e($guestFullNameLabel['ar']) }}">{{ $guestFullNameLabel['text'] }}</label>
+                    <input type="text" name="full_name" class="form-input" required placeholder="{{ $guestFullNamePlaceholder['text'] }}"
                       value="{{ $visitorFormActive ? old('full_name') : '' }}">
                     @if($visitorFormActive && $errors->has('full_name'))
                     <p class="mt-1 text-xs text-red-600">{{ $errors->first('full_name') }}</p>
                     @endif
                   </div>
                   <div class="form-group">
-                    <label class="form-label" data-en="Email *" data-ar="البريد الإلكتروني *">Email *</label>
-                    <input type="email" name="email" class="form-input" required placeholder="john@example.com"
+                    <label class="form-label" data-en="{{ e($guestEmailLabel['en']) }}" data-ar="{{ e($guestEmailLabel['ar']) }}">{{ $guestEmailLabel['text'] }}</label>
+                    <input type="email" name="email" class="form-input" required placeholder="{{ $guestEmailPlaceholder['text'] }}"
                       value="{{ $visitorFormActive ? old('email') : '' }}">
                     @if($visitorFormActive && $errors->has('email'))
                     <p class="mt-1 text-xs text-red-600">{{ $errors->first('email') }}</p>
@@ -2323,16 +2397,16 @@
 
                 <div class="form-grid form-grid-2" style="margin-top:1rem;">
                   <div class="form-group">
-                    <label class="form-label" data-en="Phone" data-ar="الهاتف">Phone</label>
-                    <input type="tel" name="phone" class="form-input" placeholder="+966 50 000 0000"
+                    <label class="form-label" data-en="{{ e($guestPhoneLabel['en']) }}" data-ar="{{ e($guestPhoneLabel['ar']) }}">{{ $guestPhoneLabel['text'] }}</label>
+                    <input type="tel" name="phone" class="form-input" placeholder="{{ $guestPhonePlaceholder['text'] }}"
                       value="{{ $visitorFormActive ? old('phone') : '' }}">
                     @if($visitorFormActive && $errors->has('phone'))
                     <p class="mt-1 text-xs text-red-600">{{ $errors->first('phone') }}</p>
                     @endif
                   </div>
                   <div class="form-group">
-                    <label class="form-label" data-en="Job Title" data-ar="المسمى الوظيفي">Job Title</label>
-                    <input type="text" name="job_title" class="form-input" placeholder="Marketing Manager"
+                    <label class="form-label" data-en="{{ e($guestJobLabel['en']) }}" data-ar="{{ e($guestJobLabel['ar']) }}">{{ $guestJobLabel['text'] }}</label>
+                    <input type="text" name="job_title" class="form-input" placeholder="{{ $guestJobPlaceholder['text'] }}"
                       value="{{ $visitorFormActive ? old('job_title') : '' }}">
                     @if($visitorFormActive && $errors->has('job_title'))
                     <p class="mt-1 text-xs text-red-600">{{ $errors->first('job_title') }}</p>
@@ -2342,21 +2416,26 @@
 
                 <div class="form-grid form-grid-2" style="margin-top:1rem;">
                   <div class="form-group">
-                    <label class="form-label" data-en="Company / Organization" data-ar="الشركة / الجهة">Company / Organization</label>
-                    <input type="text" name="company_name" class="form-input" placeholder="Umbrella Inc."
+                    <label class="form-label" data-en="{{ e($guestCompanyLabel['en']) }}" data-ar="{{ e($guestCompanyLabel['ar']) }}">{{ $guestCompanyLabel['text'] }}</label>
+                    <input type="text" name="company_name" class="form-input" placeholder="{{ $guestCompanyPlaceholder['text'] }}"
                       value="{{ $visitorFormActive ? old('company_name') : '' }}">
                     @if($visitorFormActive && $errors->has('company_name'))
                     <p class="mt-1 text-xs text-red-600">{{ $errors->first('company_name') }}</p>
                     @endif
                   </div>
                   <div class="form-group">
-                    <label class="form-label" data-en="How did you hear about us?" data-ar="كيف سمعت عنا؟">How did you hear about us?</label>
+                    <label class="form-label" data-en="{{ e($guestHeardLabel['en']) }}" data-ar="{{ e($guestHeardLabel['ar']) }}">{{ $guestHeardLabel['text'] }}</label>
                     <select class="form-select" name="heard_about" data-heard-select data-other-target="#visitor-heard-other">
                       <option value="">{{ __('Select option') }}</option>
-                      <option value="social_media" @selected($visitorFormActive && old('heard_about')==='social_media' )>Social Media</option>
-                      <option value="ads" @selected($visitorFormActive && old('heard_about')==='ads' )>Advertising</option>
-                      <option value="friends" @selected($visitorFormActive && old('heard_about')==='friends' )>Friends / Colleagues</option>
-                      <option value="other" @selected($visitorFormActive && old('heard_about')==='other' )>Other</option>
+                      @foreach($guestHeardOptions as $option)
+                      @php
+                      $optionLabelEn = data_get($option, 'en', '');
+                      $optionLabelAr = data_get($option, 'ar', $optionLabelEn);
+                      $optionValue = data_get($option, 'value', $optionLabelEn);
+                      $optionLabel = $registrationLocale === 'ar' ? $optionLabelAr : $optionLabelEn;
+                      @endphp
+                      <option value="{{ $optionValue }}" @selected($visitorFormActive && old('heard_about')===$optionValue ) data-en="{{ e($optionLabelEn) }}" data-ar="{{ e($optionLabelAr) }}">{{ $optionLabel }}</option>
+                      @endforeach
                     </select>
                     @if($visitorFormActive && $errors->has('heard_about'))
                     <p class="mt-1 text-xs text-red-600">{{ $errors->first('heard_about') }}</p>
@@ -2365,8 +2444,8 @@
                 </div>
 
                 <div class="form-group" id="visitor-heard-other" style="{{ $visitorFormActive && old('heard_about') === 'other' ? '' : 'display:none;' }}; margin-top:1rem;">
-                  <label class="form-label" data-en="Please specify" data-ar="يرجى التحديد">Please specify</label>
-                  <input type="text" name="heard_about_other_text" class="form-input" placeholder="Conference website"
+                  <label class="form-label" data-en="{{ e($guestHeardOtherLabel['en']) }}" data-ar="{{ e($guestHeardOtherLabel['ar']) }}">{{ $guestHeardOtherLabel['text'] }}</label>
+                  <input type="text" name="heard_about_other_text" class="form-input" placeholder="{{ $guestHeardOtherPlaceholder['text'] }}"
                     value="{{ $visitorFormActive ? old('heard_about_other_text') : '' }}">
                   @if($visitorFormActive && $errors->has('heard_about_other_text'))
                   <p class="mt-1 text-xs text-red-600">{{ $errors->first('heard_about_other_text') }}</p>
@@ -2410,6 +2489,35 @@
                 {{ session('sponsor_success') }}
               </div>
               @endif
+              @php
+              $exFullNameLabel = $fieldCopy($exhibitorFieldsStepOneByName, 'full_name', 'label', ['en' => 'Full Name *', 'ar' => 'الاسم الكامل *']);
+              $exFullNamePlaceholder = $fieldCopy($exhibitorFieldsStepOneByName, 'full_name', 'placeholder', ['en' => 'John Doe', 'ar' => 'جون دو']);
+              $exEmailLabel = $fieldCopy($exhibitorFieldsStepOneByName, 'email', 'label', ['en' => 'Email *', 'ar' => 'البريد الإلكتروني *']);
+              $exEmailPlaceholder = $fieldCopy($exhibitorFieldsStepOneByName, 'email', 'placeholder', ['en' => 'john@company.com', 'ar' => 'john@company.com']);
+              $exPhoneLabel = $fieldCopy($exhibitorFieldsStepOneByName, 'phone', 'label', ['en' => 'Phone *', 'ar' => 'الهاتف *']);
+              $exPhonePlaceholder = $fieldCopy($exhibitorFieldsStepOneByName, 'phone', 'placeholder', ['en' => '+966 50 000 0000', 'ar' => '+966 50 000 0000']);
+              $exJobLabel = $fieldCopy($exhibitorFieldsStepOneByName, 'job_title', 'label', ['en' => 'Job Title *', 'ar' => 'المسمى الوظيفي *']);
+              $exJobPlaceholder = $fieldCopy($exhibitorFieldsStepOneByName, 'job_title', 'placeholder', ['en' => 'Marketing Manager', 'ar' => 'مدير التسويق']);
+              $exOrgLabel = $fieldCopy($exhibitorFieldsStepOneByName, 'organization', 'label', ['en' => 'Company / Organization', 'ar' => 'الشركة / الجهة']);
+              $exOrgPlaceholder = $fieldCopy($exhibitorFieldsStepOneByName, 'organization', 'placeholder', ['en' => 'Umbrella Inc.', 'ar' => 'شركة أمبريلا']);
+              $exLocationLabel = $fieldCopy($exhibitorFieldsStepOneByName, 'location_selection', 'label', ['en' => __('registration.sponsor.book_location', [], 'en'), 'ar' => __('registration.sponsor.book_location', [], 'ar')]);
+              $exLocationPlaceholder = $fieldCopy($exhibitorFieldsStepOneByName, 'location_selection', 'placeholder', ['en' => 'Select on the hall map', 'ar' => 'اختر من خريطة القاعة']);
+
+              $exVatLabel = $fieldCopy($exhibitorFieldsStepTwoByName, 'vat_number', 'label', ['en' => 'VAT (Value Added Tax)', 'ar' => 'ضريبة القيمة المضافة']);
+              $exVatPlaceholder = $fieldCopy($exhibitorFieldsStepTwoByName, 'vat_number', 'placeholder', ['en' => '300000000000003', 'ar' => '300000000000003']);
+              $exCrNumberLabel = $fieldCopy($exhibitorFieldsStepTwoByName, 'cr_number', 'label', ['en' => 'CR Number', 'ar' => 'رقم السجل التجاري']);
+              $exCrNumberPlaceholder = $fieldCopy($exhibitorFieldsStepTwoByName, 'cr_number', 'placeholder', ['en' => '1010101010', 'ar' => '1010101010']);
+
+              $pdfHint = ['en' => 'PDF files only (max 8MB)', 'ar' => 'ملفات PDF فقط (بحد أقصى 8 ميغابايت)'];
+              $exCrCopyLabel = $fieldCopy($exhibitorFieldsStepTwoByName, 'cr_copy', 'label', ['en' => 'CR Copy (Commercial Registration)', 'ar' => 'نسخة السجل التجاري']);
+              $exCrCopyHint = $fieldCopy($exhibitorFieldsStepTwoByName, 'cr_copy', 'hint', $pdfHint);
+              $exLogoLabel = $fieldCopy($exhibitorFieldsStepTwoByName, 'company_logo', 'label', ['en' => 'Company Logo', 'ar' => 'شعار الشركة']);
+              $exLogoHint = $fieldCopy($exhibitorFieldsStepTwoByName, 'company_logo', 'hint', $pdfHint);
+              $exProfileLabel = $fieldCopy($exhibitorFieldsStepTwoByName, 'corporate_profile', 'label', ['en' => 'Corporate Profile', 'ar' => 'الملف التعريفي للشركة']);
+              $exProfileHint = $fieldCopy($exhibitorFieldsStepTwoByName, 'corporate_profile', 'hint', $pdfHint);
+              $exAddressLabel = $fieldCopy($exhibitorFieldsStepTwoByName, 'national_address_document', 'label', ['en' => 'National Address Document', 'ar' => 'مستند العنوان الوطني']);
+              $exAddressHint = $fieldCopy($exhibitorFieldsStepTwoByName, 'national_address_document', 'hint', $pdfHint);
+              @endphp
               <h3 class="form-title" data-en="{{ e($exhibitorFormTitle['en']) }}" data-ar="{{ e($exhibitorFormTitle['ar']) }}">{{ $exhibitorFormTitle['text'] }}</h3>
               <div class="step-indicator">
                 <div class="step active" id="step1-indicator">
@@ -2436,16 +2544,16 @@
                 <div id="exhibitor-step1">
                   <div class="form-grid form-grid-2">
                     <div class="form-group">
-                      <label class="form-label" data-en="Full Name *" data-ar="الاسم الكامل *">Full Name *</label>
-                      <input type="text" name="full_name" class="form-input" required placeholder="John Doe"
+                      <label class="form-label" data-en="{{ e($exFullNameLabel['en']) }}" data-ar="{{ e($exFullNameLabel['ar']) }}">{{ $exFullNameLabel['text'] }}</label>
+                      <input type="text" name="full_name" class="form-input" required placeholder="{{ $exFullNamePlaceholder['text'] }}"
                         value="{{ $sponsorFormActive ? old('full_name') : '' }}">
                       @if($sponsorFormActive && $errors->has('full_name'))
                       <p class="mt-1 text-xs text-red-600">{{ $errors->first('full_name') }}</p>
                       @endif
                     </div>
                     <div class="form-group">
-                      <label class="form-label" data-en="Email *" data-ar="البريد الإلكتروني *">Email *</label>
-                      <input type="email" name="email" class="form-input" required placeholder="john@company.com"
+                      <label class="form-label" data-en="{{ e($exEmailLabel['en']) }}" data-ar="{{ e($exEmailLabel['ar']) }}">{{ $exEmailLabel['text'] }}</label>
+                      <input type="email" name="email" class="form-input" required placeholder="{{ $exEmailPlaceholder['text'] }}"
                         value="{{ $sponsorFormActive ? old('email') : '' }}">
                       @if($sponsorFormActive && $errors->has('email'))
                       <p class="mt-1 text-xs text-red-600">{{ $errors->first('email') }}</p>
@@ -2454,16 +2562,16 @@
                   </div>
                   <div class="form-grid form-grid-2" style="margin-top: 1rem;">
                     <div class="form-group">
-                      <label class="form-label" data-en="Phone *" data-ar="الهاتف *">Phone *</label>
-                      <input type="tel" name="phone" class="form-input" required placeholder="+966 50 000 0000"
+                      <label class="form-label" data-en="{{ e($exPhoneLabel['en']) }}" data-ar="{{ e($exPhoneLabel['ar']) }}">{{ $exPhoneLabel['text'] }}</label>
+                      <input type="tel" name="phone" class="form-input" required placeholder="{{ $exPhonePlaceholder['text'] }}"
                         value="{{ $sponsorFormActive ? old('phone') : '' }}">
                       @if($sponsorFormActive && $errors->has('phone'))
                       <p class="mt-1 text-xs text-red-600">{{ $errors->first('phone') }}</p>
                       @endif
                     </div>
                     <div class="form-group">
-                      <label class="form-label" data-en="Job Title *" data-ar="المسمى الوظيفي *">Job Title *</label>
-                      <input type="text" name="job_title" class="form-input" required placeholder="Marketing Manager"
+                      <label class="form-label" data-en="{{ e($exJobLabel['en']) }}" data-ar="{{ e($exJobLabel['ar']) }}">{{ $exJobLabel['text'] }}</label>
+                      <input type="text" name="job_title" class="form-input" required placeholder="{{ $exJobPlaceholder['text'] }}"
                         value="{{ $sponsorFormActive ? old('job_title') : '' }}">
                       @if($sponsorFormActive && $errors->has('job_title'))
                       <p class="mt-1 text-xs text-red-600">{{ $errors->first('job_title') }}</p>
@@ -2472,8 +2580,8 @@
                   </div>
                   <div class="form-grid form-grid-2" style="margin-top:1rem;">
                   <div class="form-group" style="grid-column: span 2;">
-                      <label class="form-label" data-en="Company / Organization" data-ar="الشركة / الجهة">Company / Organization</label>
-                      <input type="text" name="organization" class="form-input" placeholder="Umbrella Inc."
+                      <label class="form-label" data-en="{{ e($exOrgLabel['en']) }}" data-ar="{{ e($exOrgLabel['ar']) }}">{{ $exOrgLabel['text'] }}</label>
+                      <input type="text" name="organization" class="form-input" placeholder="{{ $exOrgPlaceholder['text'] }}"
                         value="{{ $sponsorFormActive ? old('organization') : '' }}">
                       @if($sponsorFormActive && $errors->has('organization'))
                       <p class="mt-1 text-xs text-red-600">{{ $errors->first('organization') }}</p>
@@ -2481,9 +2589,9 @@
                     </div>
                   <div class="form-group" style="grid-column: span 2;">
                     <label class="form-label"
-                      data-en="{{ e(trans('registration.sponsor.book_location', [], 'en')) }}"
-                      data-ar="{{ e(trans('registration.sponsor.book_location', [], 'ar')) }}">
-                      {{ __('registration.sponsor.book_location') }}
+                      data-en="{{ e($exLocationLabel['en']) }}"
+                      data-ar="{{ e($exLocationLabel['ar']) }}">
+                      {{ $exLocationLabel['text'] }}
                     </label>
                     <div class="flex gap-3 flex-col sm:flex-row">
                       <input type="text"
@@ -2492,7 +2600,7 @@
                         class="form-input flex-1"
                         required
                         readonly
-                        placeholder="{{ __('Book Location') }}"
+                        placeholder="{{ $exLocationPlaceholder['text'] }}"
                         value="{{ $sponsorFormActive ? old('location_selection') : '' }}">
                       <button type="button" class="btn btn-outline flex-none" onclick="openHallDesign('sponsor-location-selection')">
                         <span data-en="Open hall map" data-ar="افتح خريطة القاعة">Open hall map</span>
@@ -2508,16 +2616,16 @@
                 <div id="exhibitor-step2" style="display: none;">
                   <div class="form-grid form-grid-2">
                     <div class="form-group">
-                      <label class="form-label" data-en="VAT (Value Added Tax)" data-ar="ضريبة القيمة المضافة">VAT (Value Added Tax)</label>
-                      <input type="text" name="vat_number" class="form-input" placeholder="300000000000003"
+                      <label class="form-label" data-en="{{ e($exVatLabel['en']) }}" data-ar="{{ e($exVatLabel['ar']) }}">{{ $exVatLabel['text'] }}</label>
+                      <input type="text" name="vat_number" class="form-input" placeholder="{{ $exVatPlaceholder['text'] }}"
                         value="{{ $sponsorFormActive ? old('vat_number') : '' }}">
                       @if($sponsorFormActive && $errors->has('vat_number'))
                       <p class="mt-1 text-xs text-red-600">{{ $errors->first('vat_number') }}</p>
                       @endif
                     </div>
                     <div class="form-group">
-                      <label class="form-label" data-en="CR Number" data-ar="رقم السجل التجاري">CR Number</label>
-                      <input type="text" name="cr_number" class="form-input" placeholder="1010101010"
+                      <label class="form-label" data-en="{{ e($exCrNumberLabel['en']) }}" data-ar="{{ e($exCrNumberLabel['ar']) }}">{{ $exCrNumberLabel['text'] }}</label>
+                      <input type="text" name="cr_number" class="form-input" placeholder="{{ $exCrNumberPlaceholder['text'] }}"
                         value="{{ $sponsorFormActive ? old('cr_number') : '' }}">
                       @if($sponsorFormActive && $errors->has('cr_number'))
                       <p class="mt-1 text-xs text-red-600">{{ $errors->first('cr_number') }}</p>
@@ -2526,17 +2634,17 @@
                   </div>
                   <div class="form-grid form-grid-2" style="margin-top: 1rem;">
                     <div class="form-group">
-                      <label class="form-label" data-en="CR Copy (Commercial Registration)" data-ar="نسخة السجل التجاري">CR Copy (Commercial Registration)</label>
+                      <label class="form-label" data-en="{{ e($exCrCopyLabel['en']) }}" data-ar="{{ e($exCrCopyLabel['ar']) }}">{{ $exCrCopyLabel['text'] }}</label>
                       <input type="file" name="cr_copy" class="form-input" accept="application/pdf,image/png,image/jpeg">
-                      <span class="form-hint" data-en="PDF files only (max 8MB)" data-ar="ملفات PDF فقط (بحد أقصى 8 ميغابايت)">PDF files only (max 8MB)</span>
+                      <span class="form-hint" data-en="{{ e($exCrCopyHint['en']) }}" data-ar="{{ e($exCrCopyHint['ar']) }}">{{ $exCrCopyHint['text'] }}</span>
                       @if($sponsorFormActive && $errors->has('cr_copy'))
                       <p class="mt-1 text-xs text-red-600">{{ $errors->first('cr_copy') }}</p>
                       @endif
                     </div>
                     <div class="form-group">
-                      <label class="form-label" data-en="Company Logo" data-ar="شعار الشركة">Company Logo</label>
+                      <label class="form-label" data-en="{{ e($exLogoLabel['en']) }}" data-ar="{{ e($exLogoLabel['ar']) }}">{{ $exLogoLabel['text'] }}</label>
                       <input type="file" name="company_logo" class="form-input" accept="application/pdf">
-                      <span class="form-hint" data-en="PDF files only (max 8MB)" data-ar="ملفات PDF فقط (بحد أقصى 8 ميغابايت)">PDF files only (max 8MB)</span>
+                      <span class="form-hint" data-en="{{ e($exLogoHint['en']) }}" data-ar="{{ e($exLogoHint['ar']) }}">{{ $exLogoHint['text'] }}</span>
                       @if($sponsorFormActive && $errors->has('company_logo'))
                       <p class="mt-1 text-xs text-red-600">{{ $errors->first('company_logo') }}</p>
                       @endif
@@ -2544,18 +2652,18 @@
                   </div>
                   <div class="form-grid" style="margin-top: 1rem;">
                     <div class="form-group">
-                      <label class="form-label" data-en="Corporate Profile" data-ar="الملف التعريفي للشركة">Corporate Profile</label>
+                      <label class="form-label" data-en="{{ e($exProfileLabel['en']) }}" data-ar="{{ e($exProfileLabel['ar']) }}">{{ $exProfileLabel['text'] }}</label>
                       <input type="file" name="corporate_profile" class="form-input" accept="application/pdf">
-                      <span class="form-hint" data-en="PDF files only (max 8MB)" data-ar="ملفات PDF فقط (بحد أقصى 8 ميغابايت)">PDF files only (max 8MB)</span>
+                      <span class="form-hint" data-en="{{ e($exProfileHint['en']) }}" data-ar="{{ e($exProfileHint['ar']) }}">{{ $exProfileHint['text'] }}</span>
                       @if($sponsorFormActive && $errors->has('corporate_profile'))
                       <p class="mt-1 text-xs text-red-600">{{ $errors->first('corporate_profile') }}</p>
                       @endif
                     </div>
                   </div>
                   <div class="form-group" style="margin-top: 1rem;">
-                    <label class="form-label" data-en="National Address Document" data-ar="مستند العنوان الوطني">National Address Document</label>
+                    <label class="form-label" data-en="{{ e($exAddressLabel['en']) }}" data-ar="{{ e($exAddressLabel['ar']) }}">{{ $exAddressLabel['text'] }}</label>
                     <input type="file" name="national_address_document" class="form-input" accept="application/pdf,image/png,image/jpeg">
-                    <span class="form-hint" data-en="PDF files only (max 8MB)" data-ar="ملفات PDF فقط (بحد أقصى 8 ميغابايت)">PDF files only (max 8MB)</span>
+                    <span class="form-hint" data-en="{{ e($exAddressHint['en']) }}" data-ar="{{ e($exAddressHint['ar']) }}">{{ $exAddressHint['text'] }}</span>
                     @if($sponsorFormActive && $errors->has('national_address_document'))
                     <p class="mt-1 text-xs text-red-600">{{ $errors->first('national_address_document') }}</p>
                     @endif
@@ -2603,6 +2711,34 @@
                 {{ session('icon_success') }}
               </div>
               @endif
+              @php
+              $iconFullNameLabel = $fieldCopy($iconFieldsStepOneByName, 'full_name', 'label', ['en' => 'Full Name *', 'ar' => 'الاسم الكامل *']);
+              $iconFullNamePlaceholder = $fieldCopy($iconFieldsStepOneByName, 'full_name', 'placeholder', ['en' => 'John Doe', 'ar' => 'جون دو']);
+              $iconEmailLabel = $fieldCopy($iconFieldsStepOneByName, 'email', 'label', ['en' => 'Email *', 'ar' => 'البريد الإلكتروني *']);
+              $iconEmailPlaceholder = $fieldCopy($iconFieldsStepOneByName, 'email', 'placeholder', ['en' => 'john@company.com', 'ar' => 'john@company.com']);
+              $iconPhoneLabel = $fieldCopy($iconFieldsStepOneByName, 'phone', 'label', ['en' => 'Phone *', 'ar' => 'الهاتف *']);
+              $iconPhonePlaceholder = $fieldCopy($iconFieldsStepOneByName, 'phone', 'placeholder', ['en' => '+966 50 000 0000', 'ar' => '+966 50 000 0000']);
+              $iconJobLabel = $fieldCopy($iconFieldsStepOneByName, 'job_title', 'label', ['en' => 'Job Title *', 'ar' => 'المسمى الوظيفي *']);
+              $iconJobPlaceholder = $fieldCopy($iconFieldsStepOneByName, 'job_title', 'placeholder', ['en' => 'Marketing Manager', 'ar' => 'مدير التسويق']);
+              $iconOrgLabel = $fieldCopy($iconFieldsStepOneByName, 'organization', 'label', ['en' => 'Company / Organization', 'ar' => 'الشركة / الجهة']);
+              $iconOrgPlaceholder = $fieldCopy($iconFieldsStepOneByName, 'organization', 'placeholder', ['en' => 'Umbrella Inc.', 'ar' => 'شركة أمبريلا']);
+              $iconLocationLabel = $fieldCopy($iconFieldsStepOneByName, 'location_selection', 'label', ['en' => trans('registration.icon.book_location', [], 'en'), 'ar' => trans('registration.icon.book_location', [], 'ar')]);
+              $iconLocationPlaceholder = $fieldCopy($iconFieldsStepOneByName, 'location_selection', 'placeholder', ['en' => 'Select on the hall map', 'ar' => 'اختر من خريطة القاعة']);
+
+              $iconVatLabel = $fieldCopy($iconFieldsStepTwoByName, 'vat_number', 'label', ['en' => trans('registration.icon.vat_number', [], 'en'), 'ar' => trans('registration.icon.vat_number', [], 'ar')]);
+              $iconVatPlaceholder = $fieldCopy($iconFieldsStepTwoByName, 'vat_number', 'placeholder', ['en' => '300000000000003', 'ar' => '300000000000003']);
+              $iconCrLabel = $fieldCopy($iconFieldsStepTwoByName, 'cr_number', 'label', ['en' => trans('registration.icon.cr_number', [], 'en'), 'ar' => trans('registration.icon.cr_number', [], 'ar')]);
+              $iconCrPlaceholder = $fieldCopy($iconFieldsStepTwoByName, 'cr_number', 'placeholder', ['en' => '1010101010', 'ar' => '1010101010']);
+
+              $iconCrCopyLabel = $fieldCopy($iconFieldsStepTwoByName, 'cr_copy', 'label', ['en' => trans('registration.icon.cr_copy', [], 'en'), 'ar' => trans('registration.icon.cr_copy', [], 'ar')]);
+              $iconCrCopyHint = $fieldCopy($iconFieldsStepTwoByName, 'cr_copy', 'hint', $pdfHint);
+              $iconLogoLabel = $fieldCopy($iconFieldsStepTwoByName, 'company_logo', 'label', ['en' => trans('registration.icon.company_logo', [], 'en'), 'ar' => trans('registration.icon.company_logo', [], 'ar')]);
+              $iconLogoHint = $fieldCopy($iconFieldsStepTwoByName, 'company_logo', 'hint', $pdfHint);
+              $iconProfileLabel = $fieldCopy($iconFieldsStepTwoByName, 'corporate_profile', 'label', ['en' => trans('registration.icon.corporate_profile', [], 'en'), 'ar' => trans('registration.icon.corporate_profile', [], 'ar')]);
+              $iconProfileHint = $fieldCopy($iconFieldsStepTwoByName, 'corporate_profile', 'hint', $pdfHint);
+              $iconAddressLabel = $fieldCopy($iconFieldsStepTwoByName, 'national_address_document', 'label', ['en' => trans('registration.icon.national_address_document', [], 'en'), 'ar' => trans('registration.icon.national_address_document', [], 'ar')]);
+              $iconAddressHint = $fieldCopy($iconFieldsStepTwoByName, 'national_address_document', 'hint', $pdfHint);
+              @endphp
               <h3 class="form-title" data-en="{{ e($iconFormTitle['en']) }}" data-ar="{{ e($iconFormTitle['ar']) }}">{{ $iconFormTitle['text'] }}</h3>
               <div class="step-indicator">
                 <div class="step active" id="icon-step1-indicator">
@@ -2629,16 +2765,16 @@
                 <div id="icon-step1">
                   <div class="form-grid form-grid-2">
                     <div class="form-group">
-                      <label class="form-label" data-en="{{ e(trans('registration.icon.full_name', [], 'en')) }}" data-ar="{{ e(trans('registration.icon.full_name', [], 'ar')) }}">{{ __('registration.icon.full_name') }}</label>
-                      <input type="text" name="full_name" class="form-input" required placeholder="John Doe"
+                      <label class="form-label" data-en="{{ e($iconFullNameLabel['en']) }}" data-ar="{{ e($iconFullNameLabel['ar']) }}">{{ $iconFullNameLabel['text'] }}</label>
+                      <input type="text" name="full_name" class="form-input" required placeholder="{{ $iconFullNamePlaceholder['text'] }}"
                         value="{{ $iconFormActive ? old('full_name') : '' }}">
                       @if($iconFormActive && $errors->has('full_name'))
                       <p class="mt-1 text-xs text-red-600">{{ $errors->first('full_name') }}</p>
                       @endif
                     </div>
                     <div class="form-group">
-                      <label class="form-label" data-en="{{ e(trans('registration.icon.email', [], 'en')) }}" data-ar="{{ e(trans('registration.icon.email', [], 'ar')) }}">{{ __('registration.icon.email') }}</label>
-                      <input type="email" name="email" class="form-input" required placeholder="john@company.com"
+                      <label class="form-label" data-en="{{ e($iconEmailLabel['en']) }}" data-ar="{{ e($iconEmailLabel['ar']) }}">{{ $iconEmailLabel['text'] }}</label>
+                      <input type="email" name="email" class="form-input" required placeholder="{{ $iconEmailPlaceholder['text'] }}"
                         value="{{ $iconFormActive ? old('email') : '' }}">
                       @if($iconFormActive && $errors->has('email'))
                       <p class="mt-1 text-xs text-red-600">{{ $errors->first('email') }}</p>
@@ -2647,16 +2783,16 @@
                   </div>
                   <div class="form-grid form-grid-2" style="margin-top: 1rem;">
                     <div class="form-group">
-                      <label class="form-label" data-en="{{ e(trans('registration.icon.phone', [], 'en')) }}" data-ar="{{ e(trans('registration.icon.phone', [], 'ar')) }}">{{ __('registration.icon.phone') }}</label>
-                      <input type="tel" name="phone" class="form-input" required placeholder="+966 50 000 0000"
+                      <label class="form-label" data-en="{{ e($iconPhoneLabel['en']) }}" data-ar="{{ e($iconPhoneLabel['ar']) }}">{{ $iconPhoneLabel['text'] }}</label>
+                      <input type="tel" name="phone" class="form-input" required placeholder="{{ $iconPhonePlaceholder['text'] }}"
                         value="{{ $iconFormActive ? old('phone') : '' }}">
                       @if($iconFormActive && $errors->has('phone'))
                       <p class="mt-1 text-xs text-red-600">{{ $errors->first('phone') }}</p>
                       @endif
                     </div>
                     <div class="form-group">
-                      <label class="form-label" data-en="{{ e(trans('registration.icon.job_title', [], 'en')) }}" data-ar="{{ e(trans('registration.icon.job_title', [], 'ar')) }}">{{ __('registration.icon.job_title') }}</label>
-                      <input type="text" name="job_title" class="form-input" required placeholder="Marketing Manager"
+                      <label class="form-label" data-en="{{ e($iconJobLabel['en']) }}" data-ar="{{ e($iconJobLabel['ar']) }}">{{ $iconJobLabel['text'] }}</label>
+                      <input type="text" name="job_title" class="form-input" required placeholder="{{ $iconJobPlaceholder['text'] }}"
                         value="{{ $iconFormActive ? old('job_title') : '' }}">
                       @if($iconFormActive && $errors->has('job_title'))
                       <p class="mt-1 text-xs text-red-600">{{ $errors->first('job_title') }}</p>
@@ -2665,8 +2801,8 @@
                   </div>
                   <div class="form-grid form-grid-2" style="margin-top:1rem;">
                     <div class="form-group" style="grid-column: span 2;">
-                      <label class="form-label" data-en="{{ e(trans('registration.icon.organization', [], 'en')) }}" data-ar="{{ e(trans('registration.icon.organization', [], 'ar')) }}">{{ __('registration.icon.organization') }}</label>
-                      <input type="text" name="organization" class="form-input" placeholder="Umbrella Inc."
+                      <label class="form-label" data-en="{{ e($iconOrgLabel['en']) }}" data-ar="{{ e($iconOrgLabel['ar']) }}">{{ $iconOrgLabel['text'] }}</label>
+                      <input type="text" name="organization" class="form-input" placeholder="{{ $iconOrgPlaceholder['text'] }}"
                         value="{{ $iconFormActive ? old('organization') : '' }}">
                       @if($iconFormActive && $errors->has('organization'))
                       <p class="mt-1 text-xs text-red-600">{{ $errors->first('organization') }}</p>
@@ -2674,9 +2810,9 @@
                     </div>
                     <div class="form-group" style="grid-column: span 2;">
                       <label class="form-label"
-                        data-en="{{ e(trans('registration.icon.book_location', [], 'en')) }}"
-                        data-ar="{{ e(trans('registration.icon.book_location', [], 'ar')) }}">
-                        {{ __('registration.icon.book_location') }}
+                        data-en="{{ e($iconLocationLabel['en']) }}"
+                        data-ar="{{ e($iconLocationLabel['ar']) }}">
+                        {{ $iconLocationLabel['text'] }}
                       </label>
                       <div class="flex gap-3 flex-col sm:flex-row">
                         <input type="text"
@@ -2685,7 +2821,7 @@
                           class="form-input flex-1"
                           required
                           readonly
-                          placeholder="{{ __('Book Location') }}"
+                          placeholder="{{ $iconLocationPlaceholder['text'] }}"
                           value="{{ $iconFormActive ? old('location_selection') : '' }}">
                         <button type="button" class="btn btn-outline flex-none" onclick="openHallDesign('icon-location-selection')">
                           <span data-en="Open hall map" data-ar="افتح خريطة القاعة">Open hall map</span>
@@ -2701,16 +2837,16 @@
                 <div id="icon-step2" style="display: none;">
                   <div class="form-grid form-grid-2">
                     <div class="form-group">
-                      <label class="form-label" data-en="{{ e(trans('registration.icon.vat_number', [], 'en')) }}" data-ar="{{ e(trans('registration.icon.vat_number', [], 'ar')) }}">{{ __('registration.icon.vat_number') }}</label>
-                      <input type="text" name="vat_number" class="form-input" placeholder="300000000000003"
+                      <label class="form-label" data-en="{{ e($iconVatLabel['en']) }}" data-ar="{{ e($iconVatLabel['ar']) }}">{{ $iconVatLabel['text'] }}</label>
+                      <input type="text" name="vat_number" class="form-input" placeholder="{{ $iconVatPlaceholder['text'] }}"
                         value="{{ $iconFormActive ? old('vat_number') : '' }}">
                       @if($iconFormActive && $errors->has('vat_number'))
                       <p class="mt-1 text-xs text-red-600">{{ $errors->first('vat_number') }}</p>
                       @endif
                     </div>
                     <div class="form-group">
-                      <label class="form-label" data-en="{{ e(trans('registration.icon.cr_number', [], 'en')) }}" data-ar="{{ e(trans('registration.icon.cr_number', [], 'ar')) }}">{{ __('registration.icon.cr_number') }}</label>
-                      <input type="text" name="cr_number" class="form-input" placeholder="1010101010"
+                      <label class="form-label" data-en="{{ e($iconCrLabel['en']) }}" data-ar="{{ e($iconCrLabel['ar']) }}">{{ $iconCrLabel['text'] }}</label>
+                      <input type="text" name="cr_number" class="form-input" placeholder="{{ $iconCrPlaceholder['text'] }}"
                         value="{{ $iconFormActive ? old('cr_number') : '' }}">
                       @if($iconFormActive && $errors->has('cr_number'))
                       <p class="mt-1 text-xs text-red-600">{{ $errors->first('cr_number') }}</p>
@@ -2719,34 +2855,34 @@
                   </div>
                   <div class="form-grid form-grid-2" style="margin-top: 1rem;">
                     <div class="form-group">
-                      <label class="form-label" data-en="{{ e(trans('registration.icon.cr_copy', [], 'en')) }}" data-ar="{{ e(trans('registration.icon.cr_copy', [], 'ar')) }}">{{ __('registration.icon.cr_copy') }}</label>
+                      <label class="form-label" data-en="{{ e($iconCrCopyLabel['en']) }}" data-ar="{{ e($iconCrCopyLabel['ar']) }}">{{ $iconCrCopyLabel['text'] }}</label>
                       <input type="file" name="cr_copy" class="form-input" accept="application/pdf,image/png,image/jpeg">
-                      <span class="form-hint" data-en="{{ e(trans('registration.icon.file_hint', [], 'en')) }}" data-ar="{{ e(trans('registration.icon.file_hint', [], 'ar')) }}">{{ __('registration.icon.file_hint') }}</span>
+                      <span class="form-hint" data-en="{{ e($iconCrCopyHint['en']) }}" data-ar="{{ e($iconCrCopyHint['ar']) }}">{{ $iconCrCopyHint['text'] }}</span>
                       @if($iconFormActive && $errors->has('cr_copy'))
                       <p class="mt-1 text-xs text-red-600">{{ $errors->first('cr_copy') }}</p>
                       @endif
                     </div>
                     <div class="form-group">
-                      <label class="form-label" data-en="{{ e(trans('registration.icon.company_logo', [], 'en')) }}" data-ar="{{ e(trans('registration.icon.company_logo', [], 'ar')) }}">{{ __('registration.icon.company_logo') }}</label>
+                      <label class="form-label" data-en="{{ e($iconLogoLabel['en']) }}" data-ar="{{ e($iconLogoLabel['ar']) }}">{{ $iconLogoLabel['text'] }}</label>
                       <input type="file" name="company_logo" class="form-input" accept="application/pdf">
-                      <span class="form-hint" data-en="{{ e(trans('registration.icon.logo_hint', [], 'en')) }}" data-ar="{{ e(trans('registration.icon.logo_hint', [], 'ar')) }}">{{ __('registration.icon.logo_hint') }}</span>
+                      <span class="form-hint" data-en="{{ e($iconLogoHint['en']) }}" data-ar="{{ e($iconLogoHint['ar']) }}">{{ $iconLogoHint['text'] }}</span>
                       @if($iconFormActive && $errors->has('company_logo'))
                       <p class="mt-1 text-xs text-red-600">{{ $errors->first('company_logo') }}</p>
                       @endif
                     </div>
                   </div>
                   <div class="form-group" style="margin-top: 1rem;">
-                    <label class="form-label" data-en="{{ e(trans('registration.icon.corporate_profile', [], 'en')) }}" data-ar="{{ e(trans('registration.icon.corporate_profile', [], 'ar')) }}">{{ __('registration.icon.corporate_profile') }}</label>
+                    <label class="form-label" data-en="{{ e($iconProfileLabel['en']) }}" data-ar="{{ e($iconProfileLabel['ar']) }}">{{ $iconProfileLabel['text'] }}</label>
                     <input type="file" name="corporate_profile" class="form-input" accept="application/pdf">
-                    <span class="form-hint" data-en="{{ e(trans('registration.icon.file_hint', [], 'en')) }}" data-ar="{{ e(trans('registration.icon.file_hint', [], 'ar')) }}">{{ __('registration.icon.file_hint') }}</span>
+                    <span class="form-hint" data-en="{{ e($iconProfileHint['en']) }}" data-ar="{{ e($iconProfileHint['ar']) }}">{{ $iconProfileHint['text'] }}</span>
                     @if($iconFormActive && $errors->has('corporate_profile'))
                     <p class="mt-1 text-xs text-red-600">{{ $errors->first('corporate_profile') }}</p>
                     @endif
                   </div>
                   <div class="form-group" style="margin-top: 1rem;">
-                    <label class="form-label" data-en="{{ e(trans('registration.icon.national_address_document', [], 'en')) }}" data-ar="{{ e(trans('registration.icon.national_address_document', [], 'ar')) }}">{{ __('registration.icon.national_address_document') }}</label>
+                    <label class="form-label" data-en="{{ e($iconAddressLabel['en']) }}" data-ar="{{ e($iconAddressLabel['ar']) }}">{{ $iconAddressLabel['text'] }}</label>
                     <input type="file" name="national_address_document" class="form-input" accept="application/pdf,image/png,image/jpeg">
-                    <span class="form-hint" data-en="{{ e(trans('registration.icon.file_hint', [], 'en')) }}" data-ar="{{ e(trans('registration.icon.file_hint', [], 'ar')) }}">{{ __('registration.icon.file_hint') }}</span>
+                    <span class="form-hint" data-en="{{ e($iconAddressHint['en']) }}" data-ar="{{ e($iconAddressHint['ar']) }}">{{ $iconAddressHint['text'] }}</span>
                     @if($iconFormActive && $errors->has('national_address_document'))
                     <p class="mt-1 text-xs text-red-600">{{ $errors->first('national_address_document') }}</p>
                     @endif
@@ -3192,8 +3328,6 @@
         </div>
       </div>
     </section>
-
-
   </main>
 
   <!-- Footer -->
@@ -3205,22 +3339,6 @@
       </div>
     </div>
   </footer>
-
-
-<!-- 
-  Testing Map
-
--->
-
-
-
-
-
-
-
-
-
-
 
   <!-- Toast Container -->
   <div class="toast-container" id="toast-container"></div>
