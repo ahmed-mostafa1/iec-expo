@@ -795,6 +795,16 @@
       gap: 0.5rem;
     }
 
+    .blue-url-style {
+      color: #3b82f6;
+      font-weight: 600;
+      text-decoration: underline;
+    }
+
+    .blue-url-style:hover {
+      color: #2563eb;
+    }
+
     .form-label {
       font-size: 0.875rem;
       font-weight: 500;
@@ -2452,6 +2462,17 @@
                   @endif
                 </div>
 
+                <div class="form-group" style="margin-top: 1rem;">
+                  <label class="form-label" style="flex-direction: row; align-items: center; gap: 0.5rem;">
+                    <input type="checkbox" name="privacy_policy" value="1" required @checked($visitorFormActive && old('privacy_policy'))>
+                    <span data-en="I accept the privacy policy" data-ar="أوافق على سياسة الخصوصية">I accept the privacy policy</span>
+                    <a class="blue-url-style" href="{{ asset('pdf/privacy-policy.pdf') }}" target="_blank" rel="noopener" download data-en="Download" data-ar="تحميل">Download</a>
+                  </label>
+                  @if($visitorFormActive && $errors->has('privacy_policy'))
+                  <p class="mt-1 text-xs text-red-600">{{ $errors->first('privacy_policy') }}</p>
+                  @endif
+                </div>
+
                 <div class="form-buttons">
                   <button type="button" class="btn btn-outline" onclick="clearRole()">
                     <svg class="icon icon-sm" style="margin-right: 0.5rem;" viewBox="0 0 24 24">
@@ -2667,6 +2688,17 @@
                       <p class="mt-1 text-xs text-red-600">{{ $errors->first('national_address_document') }}</p>
                       @endif
                     </div>
+                  </div>
+
+                  <div class="form-group" style="margin-top: 1rem;">
+                    <label class="form-label" style="flex-direction: row; align-items: center; gap: 0.5rem;">
+                      <input type="checkbox" name="privacy_policy" value="1" required @checked($sponsorFormActive && old('privacy_policy'))>
+                      <span data-en="I accept the privacy policy" data-ar="أوافق على سياسة الخصوصية">I accept the privacy policy</span>
+                      <a class="blue-url-style" href="{{ asset('pdf/privacy-policy.pdf') }}" target="_blank" rel="noopener" download data-en="Download" data-ar="تحميل">Download</a>
+                    </label>
+                    @if($sponsorFormActive && $errors->has('privacy_policy'))
+                    <p class="mt-1 text-xs text-red-600">{{ $errors->first('privacy_policy') }}</p>
+                    @endif
                   </div>
                 </div>
 
@@ -2888,6 +2920,17 @@
                       <p class="mt-1 text-xs text-red-600">{{ $errors->first('national_address_document') }}</p>
                       @endif
                     </div>
+                  </div>
+
+                  <div class="form-group" style="margin-top: 1rem;">
+                    <label class="form-label" style="flex-direction: row; align-items: center; gap: 0.5rem;">
+                      <input type="checkbox" name="privacy_policy" value="1" required @checked($iconFormActive && old('privacy_policy'))>
+                      <span data-en="I accept the privacy policy" data-ar="أوافق على سياسة الخصوصية">I accept the privacy policy</span>
+                      <a class="blue-url-style" href="{{ asset('pdf/privacy-policy.pdf') }}" target="_blank" rel="noopener" download data-en="Download" data-ar="تحميل">Download</a>
+                    </label>
+                    @if($iconFormActive && $errors->has('privacy_policy'))
+                    <p class="mt-1 text-xs text-red-600">{{ $errors->first('privacy_policy') }}</p>
+                    @endif
                   </div>
                 </div>
 
