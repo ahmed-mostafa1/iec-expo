@@ -2650,7 +2650,7 @@
                       @endif
                     </div>
                   </div>
-                  <div class="form-grid" style="margin-top: 1rem;">
+                  <div class="form-grid form-grid-2" style="margin-top: 1rem;">
                     <div class="form-group">
                       <label class="form-label" data-en="{{ e($exProfileLabel['en']) }}" data-ar="{{ e($exProfileLabel['ar']) }}">{{ $exProfileLabel['text'] }}</label>
                       <input type="file" name="corporate_profile" class="form-input" accept="application/pdf">
@@ -2659,14 +2659,14 @@
                       <p class="mt-1 text-xs text-red-600">{{ $errors->first('corporate_profile') }}</p>
                       @endif
                     </div>
-                  </div>
-                  <div class="form-group" style="margin-top: 1rem;">
-                    <label class="form-label" data-en="{{ e($exAddressLabel['en']) }}" data-ar="{{ e($exAddressLabel['ar']) }}">{{ $exAddressLabel['text'] }}</label>
-                    <input type="file" name="national_address_document" class="form-input" accept="application/pdf,image/png,image/jpeg">
-                    <span class="form-hint" data-en="{{ e($exAddressHint['en']) }}" data-ar="{{ e($exAddressHint['ar']) }}">{{ $exAddressHint['text'] }}</span>
-                    @if($sponsorFormActive && $errors->has('national_address_document'))
-                    <p class="mt-1 text-xs text-red-600">{{ $errors->first('national_address_document') }}</p>
-                    @endif
+                    <div class="form-group">
+                      <label class="form-label" data-en="{{ e($exAddressLabel['en']) }}" data-ar="{{ e($exAddressLabel['ar']) }}">{{ $exAddressLabel['text'] }}</label>
+                      <input type="file" name="national_address_document" class="form-input" accept="application/pdf,image/png,image/jpeg">
+                      <span class="form-hint" data-en="{{ e($exAddressHint['en']) }}" data-ar="{{ e($exAddressHint['ar']) }}">{{ $exAddressHint['text'] }}</span>
+                      @if($sponsorFormActive && $errors->has('national_address_document'))
+                      <p class="mt-1 text-xs text-red-600">{{ $errors->first('national_address_document') }}</p>
+                      @endif
+                    </div>
                   </div>
                 </div>
 
@@ -2871,21 +2871,23 @@
                       @endif
                     </div>
                   </div>
-                  <div class="form-group" style="margin-top: 1rem;">
-                    <label class="form-label" data-en="{{ e($iconProfileLabel['en']) }}" data-ar="{{ e($iconProfileLabel['ar']) }}">{{ $iconProfileLabel['text'] }}</label>
-                    <input type="file" name="corporate_profile" class="form-input" accept="application/pdf">
-                    <span class="form-hint" data-en="{{ e($iconProfileHint['en']) }}" data-ar="{{ e($iconProfileHint['ar']) }}">{{ $iconProfileHint['text'] }}</span>
-                    @if($iconFormActive && $errors->has('corporate_profile'))
-                    <p class="mt-1 text-xs text-red-600">{{ $errors->first('corporate_profile') }}</p>
-                    @endif
-                  </div>
-                  <div class="form-group" style="margin-top: 1rem;">
-                    <label class="form-label" data-en="{{ e($iconAddressLabel['en']) }}" data-ar="{{ e($iconAddressLabel['ar']) }}">{{ $iconAddressLabel['text'] }}</label>
-                    <input type="file" name="national_address_document" class="form-input" accept="application/pdf,image/png,image/jpeg">
-                    <span class="form-hint" data-en="{{ e($iconAddressHint['en']) }}" data-ar="{{ e($iconAddressHint['ar']) }}">{{ $iconAddressHint['text'] }}</span>
-                    @if($iconFormActive && $errors->has('national_address_document'))
-                    <p class="mt-1 text-xs text-red-600">{{ $errors->first('national_address_document') }}</p>
-                    @endif
+                  <div class="form-grid form-grid-2" style="margin-top: 1rem;">
+                    <div class="form-group">
+                      <label class="form-label" data-en="{{ e($iconProfileLabel['en']) }}" data-ar="{{ e($iconProfileLabel['ar']) }}">{{ $iconProfileLabel['text'] }}</label>
+                      <input type="file" name="corporate_profile" class="form-input" accept="application/pdf">
+                      <span class="form-hint" data-en="{{ e($iconProfileHint['en']) }}" data-ar="{{ e($iconProfileHint['ar']) }}">{{ $iconProfileHint['text'] }}</span>
+                      @if($iconFormActive && $errors->has('corporate_profile'))
+                      <p class="mt-1 text-xs text-red-600">{{ $errors->first('corporate_profile') }}</p>
+                      @endif
+                    </div>
+                    <div class="form-group">
+                      <label class="form-label" data-en="{{ e($iconAddressLabel['en']) }}" data-ar="{{ e($iconAddressLabel['ar']) }}">{{ $iconAddressLabel['text'] }}</label>
+                      <input type="file" name="national_address_document" class="form-input" accept="application/pdf,image/png,image/jpeg">
+                      <span class="form-hint" data-en="{{ e($iconAddressHint['en']) }}" data-ar="{{ e($iconAddressHint['ar']) }}">{{ $iconAddressHint['text'] }}</span>
+                      @if($iconFormActive && $errors->has('national_address_document'))
+                      <p class="mt-1 text-xs text-red-600">{{ $errors->first('national_address_document') }}</p>
+                      @endif
+                    </div>
                   </div>
                 </div>
 
