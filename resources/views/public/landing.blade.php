@@ -2348,156 +2348,8 @@
 
         <div class="registration-content">
           <div class="role-cards" id="role-cards">
-            <div class="role-card guest-card" id="visitor-card" onclick="selectRole('visitor')">
-              <div class="role-icon">
-                <svg class="icon icon-lg" viewBox="0 0 24 24">
-                  <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
-                  <circle cx="12" cy="7" r="4" />
-                </svg>
-              </div>
-              <h3 class="role-title" data-en="{{ e($guestCardTitle['en']) }}" data-ar="{{ e($guestCardTitle['ar']) }}">{{ $guestCardTitle['text'] }}</h3>
-              <p class="role-desc" data-en="{{ e($guestCardDescription['en']) }}" data-ar="{{ e($guestCardDescription['ar']) }}">{{ $guestCardDescription['text'] }}</p>
-              <div class="role-cta" id="visitor-cta">
-                <span data-en="{{ e($guestCta['en']) }}" data-ar="{{ e($guestCta['ar']) }}">{{ $guestCta['text'] }}</span>
-                <svg class="icon icon-sm" viewBox="0 0 24 24">
-                  <path d="M5 12h14M12 5l7 7-7 7" />
-                </svg>
-              </div>
-            </div>
-            <div class="form-card guest-form" id="visitor-form">
-              @if(session('visitor_success'))
-              <div class="mb-4 rounded-lg border border-emerald-100 bg-emerald-50 px-3 py-2 text-sm text-emerald-900">
-                {{ session('visitor_success') }}
-              </div>
-              @endif
-              @php
-              $guestFullNameLabel = $fieldCopy($visitorFieldsByName, 'full_name', 'label', ['en' => 'Full Name *', 'ar' => 'الاسم الكامل *']);
-              $guestFullNamePlaceholder = $fieldCopy($visitorFieldsByName, 'full_name', 'placeholder', ['en' => 'John Doe', 'ar' => 'جون دو']);
-              $guestEmailLabel = $fieldCopy($visitorFieldsByName, 'email', 'label', ['en' => 'Email *', 'ar' => 'البريد الإلكتروني *']);
-              $guestEmailPlaceholder = $fieldCopy($visitorFieldsByName, 'email', 'placeholder', ['en' => 'john@example.com', 'ar' => 'john@example.com']);
-              $guestPhoneLabel = $fieldCopy($visitorFieldsByName, 'phone', 'label', ['en' => 'Phone', 'ar' => 'الهاتف']);
-              $guestPhonePlaceholder = $fieldCopy($visitorFieldsByName, 'phone', 'placeholder', ['en' => '+966 50 000 0000', 'ar' => '+966 50 000 0000']);
-              $guestJobLabel = $fieldCopy($visitorFieldsByName, 'job_title', 'label', ['en' => 'Job Title', 'ar' => 'المسمى الوظيفي']);
-              $guestJobPlaceholder = $fieldCopy($visitorFieldsByName, 'job_title', 'placeholder', ['en' => 'Marketing Manager', 'ar' => 'مدير التسويق']);
-              $guestCompanyLabel = $fieldCopy($visitorFieldsByName, 'company_name', 'label', ['en' => 'Company / Organization', 'ar' => 'الشركة / الجهة']);
-              $guestCompanyPlaceholder = $fieldCopy($visitorFieldsByName, 'company_name', 'placeholder', ['en' => 'Umbrella Inc.', 'ar' => 'شركة أمبريلا']);
-              $guestHeardLabel = $fieldCopy($visitorFieldsByName, 'heard_about', 'label', ['en' => 'How did you hear about us?', 'ar' => 'كيف سمعت عنا؟']);
-              $guestHeardOptions = $fieldOptions($visitorFieldsByName, 'heard_about', [
-              ['value' => 'social_media', 'en' => 'Social Media', 'ar' => 'وسائل التواصل الاجتماعي'],
-              ['value' => 'ads', 'en' => 'Advertising', 'ar' => 'الإعلانات'],
-              ['value' => 'friends', 'en' => 'Friends / Colleagues', 'ar' => 'الأصدقاء / الزملاء'],
-              ['value' => 'other', 'en' => 'Other', 'ar' => 'أخرى'],
-              ]);
-              $guestHeardOtherLabel = $fieldCopy($visitorFieldsByName, 'heard_about_other_text', 'label', ['en' => 'Please specify', 'ar' => 'يرجى التحديد']);
-              $guestHeardOtherPlaceholder = $fieldCopy($visitorFieldsByName, 'heard_about_other_text', 'placeholder', ['en' => 'Conference website', 'ar' => 'موقع المؤتمر']);
-              @endphp
-              <h3 class="form-title" data-en="{{ e($guestFormTitle['en']) }}" data-ar="{{ e($guestFormTitle['ar']) }}">{{ $guestFormTitle['text'] }}</h3>
-              <form id="visitor-registration-form"
-                method="POST"
-                action="{{ route('public.register.visitor', ['locale' => $locale]) }}"
-                novalidate
-                data-success-title="{{ e(__('registration.guest.toast_title')) }}"
-                data-success-message="{{ e(__('registration.guest.success')) }}">
-                @csrf
-                <input type="hidden" name="form_identifier" value="visitor">
-                <div class="form-grid form-grid-2">
-                  <div class="form-group">
-                    <label class="form-label" data-en="{{ e($guestFullNameLabel['en']) }}" data-ar="{{ e($guestFullNameLabel['ar']) }}">{{ $guestFullNameLabel['text'] }}</label>
-                    <input type="text" name="full_name" class="form-input" required placeholder="{{ $guestFullNamePlaceholder['text'] }}"
-                      value="{{ $visitorFormActive ? old('full_name') : '' }}">
-                    @if($visitorFormActive && $errors->has('full_name'))
-                    <p class="mt-1 text-xs text-red-600">{{ $errors->first('full_name') }}</p>
-                    @endif
-                  </div>
-                  <div class="form-group">
-                    <label class="form-label" data-en="{{ e($guestEmailLabel['en']) }}" data-ar="{{ e($guestEmailLabel['ar']) }}">{{ $guestEmailLabel['text'] }}</label>
-                    <input type="email" name="email" class="form-input" required placeholder="{{ $guestEmailPlaceholder['text'] }}"
-                      value="{{ $visitorFormActive ? old('email') : '' }}">
-                    @if($visitorFormActive && $errors->has('email'))
-                    <p class="mt-1 text-xs text-red-600">{{ $errors->first('email') }}</p>
-                    @endif
-                  </div>
-                </div>
-
-                <div class="form-grid form-grid-2" style="margin-top:1rem;">
-                  <div class="form-group">
-                    <label class="form-label" data-en="{{ e($guestPhoneLabel['en']) }}" data-ar="{{ e($guestPhoneLabel['ar']) }}">{{ $guestPhoneLabel['text'] }}</label>
-                    <input type="tel" name="phone" class="form-input" placeholder="{{ $guestPhonePlaceholder['text'] }}"
-                      value="{{ $visitorFormActive ? old('phone') : '' }}">
-                    @if($visitorFormActive && $errors->has('phone'))
-                    <p class="mt-1 text-xs text-red-600">{{ $errors->first('phone') }}</p>
-                    @endif
-                  </div>
-                  <div class="form-group">
-                    <label class="form-label" data-en="{{ e($guestJobLabel['en']) }}" data-ar="{{ e($guestJobLabel['ar']) }}">{{ $guestJobLabel['text'] }}</label>
-                    <input type="text" name="job_title" class="form-input" placeholder="{{ $guestJobPlaceholder['text'] }}"
-                      value="{{ $visitorFormActive ? old('job_title') : '' }}">
-                    @if($visitorFormActive && $errors->has('job_title'))
-                    <p class="mt-1 text-xs text-red-600">{{ $errors->first('job_title') }}</p>
-                    @endif
-                  </div>
-                </div>
-
-                <div class="form-grid form-grid-2" style="margin-top:1rem;">
-                  <div class="form-group">
-                    <label class="form-label" data-en="{{ e($guestCompanyLabel['en']) }}" data-ar="{{ e($guestCompanyLabel['ar']) }}">{{ $guestCompanyLabel['text'] }}</label>
-                    <input type="text" name="company_name" class="form-input" placeholder="{{ $guestCompanyPlaceholder['text'] }}"
-                      value="{{ $visitorFormActive ? old('company_name') : '' }}">
-                    @if($visitorFormActive && $errors->has('company_name'))
-                    <p class="mt-1 text-xs text-red-600">{{ $errors->first('company_name') }}</p>
-                    @endif
-                  </div>
-                  <div class="form-group">
-                    <label class="form-label" data-en="{{ e($guestHeardLabel['en']) }}" data-ar="{{ e($guestHeardLabel['ar']) }}">{{ $guestHeardLabel['text'] }}</label>
-                    <select class="form-select" name="heard_about" data-heard-select data-other-target="#visitor-heard-other">
-                      <option value="">{{ __('Select option') }}</option>
-                      @foreach($guestHeardOptions as $option)
-                      @php
-                      $optionLabelEn = data_get($option, 'en', '');
-                      $optionLabelAr = data_get($option, 'ar', $optionLabelEn);
-                      $optionValue = data_get($option, 'value', $optionLabelEn);
-                      $optionLabel = $registrationLocale === 'ar' ? $optionLabelAr : $optionLabelEn;
-                      @endphp
-                      <option value="{{ $optionValue }}" @selected($visitorFormActive && old('heard_about')===$optionValue ) data-en="{{ e($optionLabelEn) }}" data-ar="{{ e($optionLabelAr) }}">{{ $optionLabel }}</option>
-                      @endforeach
-                    </select>
-                    @if($visitorFormActive && $errors->has('heard_about'))
-                    <p class="mt-1 text-xs text-red-600">{{ $errors->first('heard_about') }}</p>
-                    @endif
-                  </div>
-                </div>
-
-                <div class="form-group" id="visitor-heard-other" style="{{ $visitorFormActive && old('heard_about') === 'other' ? '' : 'display:none;' }}; margin-top:1rem;">
-                  <label class="form-label" data-en="{{ e($guestHeardOtherLabel['en']) }}" data-ar="{{ e($guestHeardOtherLabel['ar']) }}">{{ $guestHeardOtherLabel['text'] }}</label>
-                  <input type="text" name="heard_about_other_text" class="form-input" placeholder="{{ $guestHeardOtherPlaceholder['text'] }}"
-                    value="{{ $visitorFormActive ? old('heard_about_other_text') : '' }}">
-                  @if($visitorFormActive && $errors->has('heard_about_other_text'))
-                  <p class="mt-1 text-xs text-red-600">{{ $errors->first('heard_about_other_text') }}</p>
-                  @endif
-                </div>
-
-                <div class="form-group" style="margin-top: 1rem;">
-                  <label class="form-label" style="flex-direction: row; align-items: center; gap: 0.5rem;">
-                    <input type="checkbox" name="privacy_policy" value="1" required @checked($visitorFormActive && old('privacy_policy'))>
-                    <span data-en="I accept the privacy policy" data-ar="أوافق على سياسة الخصوصية">I accept the privacy policy</span>
-                    <a class="blue-url-style" href="{{ asset('pdf/privacy-policy.pdf') }}" target="_blank" rel="noopener" download data-en="Download from here" data-ar="يمكنك تحميل الملف منها">Download from here</a>
-                  </label>
-                  @if($visitorFormActive && $errors->has('privacy_policy'))
-                  <p class="mt-1 text-xs text-red-600">{{ $errors->first('privacy_policy') }}</p>
-                  @endif
-                </div>
-
-                <div class="form-buttons">
-                  <button type="button" class="btn btn-outline" onclick="clearRole()">
-                    <svg class="icon icon-sm" style="margin-right: 0.5rem;" viewBox="0 0 24 24">
-                      <path d="M19 12H5M12 19l-7-7 7-7" />
-                    </svg>
-                    <span data-en="Back" data-ar="رجوع">{{ __('Back') }}</span>
-                  </button>
-                  <button type="submit" class="btn btn-primary" data-en="{{ e($guestSubmit['en']) }}" data-ar="{{ e($guestSubmit['ar']) }}">{{ $guestSubmit['text'] }}</button>
-                  <button type="button" class="btn btn-outline" onclick="scrollToContact()" data-en="{{ e($guestContact['en']) }}" data-ar="{{ e($guestContact['ar']) }}">{{ $guestContact['text'] }}</button>
-                </div>
-              </form>
+            <div class="row-logo" id="sponsor-row-logo">
+              <img src="{{ asset('img/IEC-logo.png') }}" alt="IEC Logo">
             </div>
 
             <div class="role-card" id="exhibitor-card" onclick="selectRole('exhibitor')">
@@ -2961,6 +2813,162 @@
                     </svg>
                   </button>
                   <button type="submit" class="btn btn-primary" id="icon-submit-btn" style="display: none;" data-en="{{ e($iconSubmit['en']) }}" data-ar="{{ e($iconSubmit['ar']) }}">{{ $iconSubmit['text'] }}</button>
+                  <button type="button" class="btn btn-outline" onclick="scrollToContact()" data-en="{{ e($guestContact['en']) }}" data-ar="{{ e($guestContact['ar']) }}">{{ $guestContact['text'] }}</button>
+                </div>
+              </form>
+            </div>
+
+            <div class="row-logo" id="guest-row-logo">
+              <img src="{{ asset('img/IEC-logo.png') }}" alt="IEC Logo">
+            </div>
+
+            <div class="role-card guest-card" id="visitor-card" onclick="selectRole('visitor')">
+              <div class="role-icon">
+                <svg class="icon icon-lg" viewBox="0 0 24 24">
+                  <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+                  <circle cx="12" cy="7" r="4" />
+                </svg>
+              </div>
+              <h3 class="role-title" data-en="{{ e($guestCardTitle['en']) }}" data-ar="{{ e($guestCardTitle['ar']) }}">{{ $guestCardTitle['text'] }}</h3>
+              <p class="role-desc" data-en="{{ e($guestCardDescription['en']) }}" data-ar="{{ e($guestCardDescription['ar']) }}">{{ $guestCardDescription['text'] }}</p>
+              <div class="role-cta" id="visitor-cta">
+                <span data-en="{{ e($guestCta['en']) }}" data-ar="{{ e($guestCta['ar']) }}">{{ $guestCta['text'] }}</span>
+                <svg class="icon icon-sm" viewBox="0 0 24 24">
+                  <path d="M5 12h14M12 5l7 7-7 7" />
+                </svg>
+              </div>
+            </div>
+            <div class="form-card guest-form" id="visitor-form">
+              @if(session('visitor_success'))
+              <div class="mb-4 rounded-lg border border-emerald-100 bg-emerald-50 px-3 py-2 text-sm text-emerald-900">
+                {{ session('visitor_success') }}
+              </div>
+              @endif
+              @php
+              $guestFullNameLabel = $fieldCopy($visitorFieldsByName, 'full_name', 'label', ['en' => 'Full Name *', 'ar' => 'الاسم الكامل *']);
+              $guestFullNamePlaceholder = $fieldCopy($visitorFieldsByName, 'full_name', 'placeholder', ['en' => 'John Doe', 'ar' => 'جون دو']);
+              $guestEmailLabel = $fieldCopy($visitorFieldsByName, 'email', 'label', ['en' => 'Email *', 'ar' => 'البريد الإلكتروني *']);
+              $guestEmailPlaceholder = $fieldCopy($visitorFieldsByName, 'email', 'placeholder', ['en' => 'john@example.com', 'ar' => 'john@example.com']);
+              $guestPhoneLabel = $fieldCopy($visitorFieldsByName, 'phone', 'label', ['en' => 'Phone', 'ar' => 'الهاتف']);
+              $guestPhonePlaceholder = $fieldCopy($visitorFieldsByName, 'phone', 'placeholder', ['en' => '+966 50 000 0000', 'ar' => '+966 50 000 0000']);
+              $guestJobLabel = $fieldCopy($visitorFieldsByName, 'job_title', 'label', ['en' => 'Job Title', 'ar' => 'المسمى الوظيفي']);
+              $guestJobPlaceholder = $fieldCopy($visitorFieldsByName, 'job_title', 'placeholder', ['en' => 'Marketing Manager', 'ar' => 'مدير التسويق']);
+              $guestCompanyLabel = $fieldCopy($visitorFieldsByName, 'company_name', 'label', ['en' => 'Company / Organization', 'ar' => 'الشركة / الجهة']);
+              $guestCompanyPlaceholder = $fieldCopy($visitorFieldsByName, 'company_name', 'placeholder', ['en' => 'Umbrella Inc.', 'ar' => 'شركة أمبريلا']);
+              $guestHeardLabel = $fieldCopy($visitorFieldsByName, 'heard_about', 'label', ['en' => 'How did you hear about us?', 'ar' => 'كيف سمعت عنا؟']);
+              $guestHeardOptions = $fieldOptions($visitorFieldsByName, 'heard_about', [
+              ['value' => 'social_media', 'en' => 'Social Media', 'ar' => 'وسائل التواصل الاجتماعي'],
+              ['value' => 'ads', 'en' => 'Advertising', 'ar' => 'الإعلانات'],
+              ['value' => 'friends', 'en' => 'Friends / Colleagues', 'ar' => 'الأصدقاء / الزملاء'],
+              ['value' => 'other', 'en' => 'Other', 'ar' => 'أخرى'],
+              ]);
+              $guestHeardOtherLabel = $fieldCopy($visitorFieldsByName, 'heard_about_other_text', 'label', ['en' => 'Please specify', 'ar' => 'يرجى التحديد']);
+              $guestHeardOtherPlaceholder = $fieldCopy($visitorFieldsByName, 'heard_about_other_text', 'placeholder', ['en' => 'Conference website', 'ar' => 'موقع المؤتمر']);
+              @endphp
+              <h3 class="form-title" data-en="{{ e($guestFormTitle['en']) }}" data-ar="{{ e($guestFormTitle['ar']) }}">{{ $guestFormTitle['text'] }}</h3>
+              <form id="visitor-registration-form"
+                method="POST"
+                action="{{ route('public.register.visitor', ['locale' => $locale]) }}"
+                novalidate
+                data-success-title="{{ e(__('registration.guest.toast_title')) }}"
+                data-success-message="{{ e(__('registration.guest.success')) }}">
+                @csrf
+                <input type="hidden" name="form_identifier" value="visitor">
+                <div class="form-grid form-grid-2">
+                  <div class="form-group">
+                    <label class="form-label" data-en="{{ e($guestFullNameLabel['en']) }}" data-ar="{{ e($guestFullNameLabel['ar']) }}">{{ $guestFullNameLabel['text'] }}</label>
+                    <input type="text" name="full_name" class="form-input" required placeholder="{{ $guestFullNamePlaceholder['text'] }}"
+                      value="{{ $visitorFormActive ? old('full_name') : '' }}">
+                    @if($visitorFormActive && $errors->has('full_name'))
+                    <p class="mt-1 text-xs text-red-600">{{ $errors->first('full_name') }}</p>
+                    @endif
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" data-en="{{ e($guestEmailLabel['en']) }}" data-ar="{{ e($guestEmailLabel['ar']) }}">{{ $guestEmailLabel['text'] }}</label>
+                    <input type="email" name="email" class="form-input" required placeholder="{{ $guestEmailPlaceholder['text'] }}"
+                      value="{{ $visitorFormActive ? old('email') : '' }}">
+                    @if($visitorFormActive && $errors->has('email'))
+                    <p class="mt-1 text-xs text-red-600">{{ $errors->first('email') }}</p>
+                    @endif
+                  </div>
+                </div>
+
+                <div class="form-grid form-grid-2" style="margin-top:1rem;">
+                  <div class="form-group">
+                    <label class="form-label" data-en="{{ e($guestPhoneLabel['en']) }}" data-ar="{{ e($guestPhoneLabel['ar']) }}">{{ $guestPhoneLabel['text'] }}</label>
+                    <input type="tel" name="phone" class="form-input" placeholder="{{ $guestPhonePlaceholder['text'] }}"
+                      value="{{ $visitorFormActive ? old('phone') : '' }}">
+                    @if($visitorFormActive && $errors->has('phone'))
+                    <p class="mt-1 text-xs text-red-600">{{ $errors->first('phone') }}</p>
+                    @endif
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" data-en="{{ e($guestJobLabel['en']) }}" data-ar="{{ e($guestJobLabel['ar']) }}">{{ $guestJobLabel['text'] }}</label>
+                    <input type="text" name="job_title" class="form-input" placeholder="{{ $guestJobPlaceholder['text'] }}"
+                      value="{{ $visitorFormActive ? old('job_title') : '' }}">
+                    @if($visitorFormActive && $errors->has('job_title'))
+                    <p class="mt-1 text-xs text-red-600">{{ $errors->first('job_title') }}</p>
+                    @endif
+                  </div>
+                </div>
+
+                <div class="form-grid form-grid-2" style="margin-top:1rem;">
+                  <div class="form-group">
+                    <label class="form-label" data-en="{{ e($guestCompanyLabel['en']) }}" data-ar="{{ e($guestCompanyLabel['ar']) }}">{{ $guestCompanyLabel['text'] }}</label>
+                    <input type="text" name="company_name" class="form-input" placeholder="{{ $guestCompanyPlaceholder['text'] }}"
+                      value="{{ $visitorFormActive ? old('company_name') : '' }}">
+                    @if($visitorFormActive && $errors->has('company_name'))
+                    <p class="mt-1 text-xs text-red-600">{{ $errors->first('company_name') }}</p>
+                    @endif
+                  </div>
+                  <div class="form-group">
+                    <label class="form-label" data-en="{{ e($guestHeardLabel['en']) }}" data-ar="{{ e($guestHeardLabel['ar']) }}">{{ $guestHeardLabel['text'] }}</label>
+                    <select class="form-select" name="heard_about" data-heard-select data-other-target="#visitor-heard-other">
+                      <option value="">{{ __('Select option') }}</option>
+                      @foreach($guestHeardOptions as $option)
+                      @php
+                      $optionLabelEn = data_get($option, 'en', '');
+                      $optionLabelAr = data_get($option, 'ar', $optionLabelEn);
+                      $optionValue = data_get($option, 'value', $optionLabelEn);
+                      $optionLabel = $registrationLocale === 'ar' ? $optionLabelAr : $optionLabelEn;
+                      @endphp
+                      <option value="{{ $optionValue }}" @selected($visitorFormActive && old('heard_about')===$optionValue ) data-en="{{ e($optionLabelEn) }}" data-ar="{{ e($optionLabelAr) }}">{{ $optionLabel }}</option>
+                      @endforeach
+                    </select>
+                    @if($visitorFormActive && $errors->has('heard_about'))
+                    <p class="mt-1 text-xs text-red-600">{{ $errors->first('heard_about') }}</p>
+                    @endif
+                  </div>
+                </div>
+
+                <div class="form-group" id="visitor-heard-other" style="{{ $visitorFormActive && old('heard_about') === 'other' ? '' : 'display:none;' }}; margin-top:1rem;">
+                  <label class="form-label" data-en="{{ e($guestHeardOtherLabel['en']) }}" data-ar="{{ e($guestHeardOtherLabel['ar']) }}">{{ $guestHeardOtherLabel['text'] }}</label>
+                  <input type="text" name="heard_about_other_text" class="form-input" placeholder="{{ $guestHeardOtherPlaceholder['text'] }}"
+                    value="{{ $visitorFormActive ? old('heard_about_other_text') : '' }}">
+                  @if($visitorFormActive && $errors->has('heard_about_other_text'))
+                  <p class="mt-1 text-xs text-red-600">{{ $errors->first('heard_about_other_text') }}</p>
+                  @endif
+                </div>
+
+                <div class="form-group" style="margin-top: 1rem;">
+                  <label class="form-label" style="flex-direction: row; align-items: center; gap: 0.5rem;">
+                    <input type="checkbox" name="privacy_policy" value="1" required @checked($visitorFormActive && old('privacy_policy'))>
+                    <span data-en="I accept the privacy policy" data-ar="أوافق على سياسة الخصوصية">I accept the privacy policy</span>
+                    <a class="blue-url-style" href="{{ asset('pdf/privacy-policy.pdf') }}" target="_blank" rel="noopener" download data-en="Download from here" data-ar="يمكنك تحميل الملف منها">Download from here</a>
+                  </label>
+                  @if($visitorFormActive && $errors->has('privacy_policy'))
+                  <p class="mt-1 text-xs text-red-600">{{ $errors->first('privacy_policy') }}</p>
+                  @endif
+                </div>
+
+                <div class="form-buttons">
+                  <button type="button" class="btn btn-outline" onclick="clearRole()">
+                    <svg class="icon icon-sm" style="margin-right: 0.5rem;" viewBox="0 0 24 24">
+                      <path d="M19 12H5M12 19l-7-7 7-7" />
+                    </svg>
+                    <span data-en="Back" data-ar="رجوع">{{ __('Back') }}</span>
+                  </button>
+                  <button type="submit" class="btn btn-primary" data-en="{{ e($guestSubmit['en']) }}" data-ar="{{ e($guestSubmit['ar']) }}">{{ $guestSubmit['text'] }}</button>
                   <button type="button" class="btn btn-outline" onclick="scrollToContact()" data-en="{{ e($guestContact['en']) }}" data-ar="{{ e($guestContact['ar']) }}">{{ $guestContact['text'] }}</button>
                 </div>
               </form>
@@ -3544,43 +3552,21 @@
       const exhibitorForm = document.getElementById('exhibitor-form');
       const iconCard = document.getElementById('icon-card');
       const iconForm = document.getElementById('icon-form');
+      const guestLogo = document.getElementById('guest-row-logo');
+      const sponsorLogo = document.getElementById('sponsor-row-logo');
 
-      const resetOrder = () => {
+      const setBaseOrder = () => {
+        if (sponsorLogo) sponsorLogo.style.order = '0';
         exhibitorCard.style.order = '1';
         exhibitorForm.style.order = '2';
         iconCard.style.order = '3';
         iconForm.style.order = '4';
-        visitorCard.style.order = '5';
-        visitorForm.style.order = '6';
+        if (guestLogo) guestLogo.style.order = '5';
+        visitorCard.style.order = '6';
+        visitorForm.style.order = '7';
       };
 
-      if (!role) {
-        resetOrder();
-        return;
-      }
-
-      if (role === 'visitor') {
-        visitorCard.style.order = '1';
-        visitorForm.style.order = '2';
-        exhibitorCard.style.order = '3';
-        exhibitorForm.style.order = '4';
-        iconCard.style.order = '5';
-        iconForm.style.order = '6';
-      } else if (role === 'exhibitor') {
-        exhibitorCard.style.order = '1';
-        exhibitorForm.style.order = '2';
-        visitorCard.style.order = '3';
-        visitorForm.style.order = '4';
-        iconCard.style.order = '5';
-        iconForm.style.order = '6';
-      } else if (role === 'icon') {
-        iconCard.style.order = '1';
-        iconForm.style.order = '2';
-        exhibitorCard.style.order = '3';
-        exhibitorForm.style.order = '4';
-        visitorCard.style.order = '5';
-        visitorForm.style.order = '6';
-      }
+      setBaseOrder();
     }
 
     function toggleRoleVisibility(role) {
@@ -3617,6 +3603,11 @@
       const roleCards = document.getElementById('role-cards');
       roleCards.classList.add('has-selection');
       roleCards.classList.toggle('guest-selected', role === 'visitor');
+
+      const guestLogo = document.getElementById('guest-row-logo');
+      if (guestLogo && role) {
+        guestLogo.style.display = 'none';
+      }
 
       const roles = [{
           key: 'visitor',
@@ -3656,6 +3647,11 @@
       selectedRole = null;
       exhibitorStep = 1;
       iconStep = 1;
+
+      const guestLogo = document.getElementById('guest-row-logo');
+      if (guestLogo) {
+        guestLogo.style.display = '';
+      }
 
       const roleCards = document.getElementById('role-cards');
       roleCards.classList.remove('has-selection');
