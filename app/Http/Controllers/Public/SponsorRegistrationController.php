@@ -53,7 +53,7 @@ class SponsorRegistrationController extends Controller
             'phone'            => $data['phone'],
             'job_title'        => $data['job_title'],
             'organization'     => $data['organization'] ?? '',
-            'location_selection' => $data['location_selection'],
+            'location_selection' => $data['location_selection'] ?? null,
             'vat_number'       => $data['vat_number'] ?? '',
             'cr_number'        => $data['cr_number'] ?? '',
             'national_address' => $data['national_address'] ?? '',

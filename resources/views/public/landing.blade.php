@@ -2387,8 +2387,6 @@
               $exJobPlaceholder = $fieldCopy($exhibitorFieldsStepOneByName, 'job_title', 'placeholder', ['en' => 'Marketing Manager', 'ar' => 'مدير التسويق']);
               $exOrgLabel = $fieldCopy($exhibitorFieldsStepOneByName, 'organization', 'label', ['en' => 'Company / Organization', 'ar' => 'الشركة / الجهة']);
               $exOrgPlaceholder = $fieldCopy($exhibitorFieldsStepOneByName, 'organization', 'placeholder', ['en' => 'Umbrella Inc.', 'ar' => 'شركة أمبريلا']);
-              $exLocationLabel = $fieldCopy($exhibitorFieldsStepOneByName, 'location_selection', 'label', ['en' => __('registration.sponsor.book_location', [], 'en'), 'ar' => __('registration.sponsor.book_location', [], 'ar')]);
-              $exLocationPlaceholder = $fieldCopy($exhibitorFieldsStepOneByName, 'location_selection', 'placeholder', ['en' => 'Select on the hall map', 'ar' => 'اختر من خريطة القاعة']);
 
               $exVatLabel = $fieldCopy($exhibitorFieldsStepTwoByName, 'vat_number', 'label', ['en' => 'VAT (Value Added Tax)', 'ar' => 'ضريبة القيمة المضافة']);
               $exVatPlaceholder = $fieldCopy($exhibitorFieldsStepTwoByName, 'vat_number', 'placeholder', ['en' => '300000000000003', 'ar' => '300000000000003']);
@@ -2474,31 +2472,6 @@
                       <p class="mt-1 text-xs text-red-600">{{ $errors->first('organization') }}</p>
                       @endif
                     </div>
-                  </div>
-                  <div class="form-grid" style="margin-top:1rem;">
-                    <div class="form-group">
-                      <label class="form-label"
-                        data-en="{{ e($exLocationLabel['en']) }}"
-                        data-ar="{{ e($exLocationLabel['ar']) }}">
-                        {{ $exLocationLabel['text'] }}
-                      </label>
-                    <div class="flex gap-3 flex-col sm:flex-row">
-                      <input type="text"
-                        id="sponsor-location-selection"
-                        name="location_selection"
-                        class="form-input flex-1"
-                        required
-                        readonly
-                        placeholder="{{ $exLocationPlaceholder['text'] }}"
-                        value="{{ $sponsorFormActive ? old('location_selection') : '' }}">
-                      <button type="button" class="btn btn-outline flex-none" onclick="openHallDesign('sponsor-location-selection')">
-                        <span data-en="Open hall map" data-ar="افتح خريطة القاعة">Open hall map</span>
-                      </button>
-                    </div>
-                    @if($sponsorFormActive && $errors->has('location_selection'))
-                    <p class="mt-1 text-xs text-red-600">{{ $errors->first('location_selection') }}</p>
-                    @endif
-                  </div>
                   </div>
                 </div>
 
