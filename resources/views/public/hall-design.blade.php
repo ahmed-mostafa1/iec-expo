@@ -1,21 +1,30 @@
 @php
+$locale = request('locale', app()->getLocale());
+if (!in_array($locale, ['en', 'ar'], true)) {
+    $locale = app()->getLocale();
+}
+app()->setLocale($locale);
+$isAr = app()->getLocale() === 'ar';
+
 $copy = [
-    'title' => 'Hall Map',
-    'selected' => 'Selected space:',
-    'hint' => 'Click any booth (L.W.* / R.W.*). Press D for debug boxes.',
-    'openConfirmTitle' => 'Confirm selection',
-    'spaceLabel' => 'Space:',
-    'cancel' => 'Cancel',
-    'confirm' => 'Confirm & return',
+    'title' => ['en' => 'Hall Map', 'ar' => 'خريطة القاعة'],
+    'selected' => ['en' => 'Selected space:', 'ar' => 'المساحة المختارة:'],
+    'hint' => ['en' => 'Click any booth (L.W.* / R.W.*). Press D for debug boxes.', 'ar' => 'اضغط على أي مساحة (L.W.* / R.W.*). اضغط D لعرض الصناديق للتجربة.'],
+    'openConfirmTitle' => ['en' => 'Confirm selection', 'ar' => 'تأكيد الاختيار'],
+    'spaceLabel' => ['en' => 'Space:', 'ar' => 'المساحة:'],
+    'cancel' => ['en' => 'Cancel', 'ar' => 'إلغاء'],
+    'confirm' => ['en' => 'Confirm & return', 'ar' => 'تأكيد والعودة'],
 ];
+
+$t = fn(string $key) => $copy[$key][$isAr ? 'ar' : 'en'];
 @endphp
 <!doctype html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="{{ $isAr ? 'rtl' : 'ltr' }}">
 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>{{ $copy['title'] }}</title>
+  <title>{{ $t('title') }}</title>
   <style>
     body {
       margin: 0;
@@ -193,8 +202,8 @@ $copy = [
   <div class="wrap">
     <div class="card">
       <div class="topbar">
-        <div class="pill">{{ $copy['selected'] }} <strong id="selectedSpace">—</strong></div>
-        <div class="hint">{{ $copy['hint'] }}</div>
+        <div class="pill">{{ $t('selected') }} <strong id="selectedSpace">—</strong></div>
+        
       </div>
 
       <div id="plan" class="plan">
@@ -206,11 +215,11 @@ $copy = [
 
   <div id="confirmModal" class="modal-backdrop hidden" aria-hidden="true">
     <div class="modal">
-      <h3>{{ $copy['openConfirmTitle'] }}</h3>
-      <p>{{ $copy['spaceLabel'] }} <strong id="confirmName">—</strong></p>
+      <h3>{{ $t('openConfirmTitle') }}</h3>
+      <p>{{ $t('spaceLabel') }} <strong id="confirmName">—</strong></p>
       <div class="modal-actions">
-        <button type="button" class="btn" id="cancelConfirm">{{ $copy['cancel'] }}</button>
-        <button type="button" class="btn btn-primary" id="confirmSelection">{{ $copy['confirm'] }}</button>
+        <button type="button" class="btn" id="cancelConfirm">{{ $t('cancel') }}</button>
+        <button type="button" class="btn btn-primary" id="confirmSelection">{{ $t('confirm') }}</button>
       </div>
     </div>
   </div>
