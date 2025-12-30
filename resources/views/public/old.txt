@@ -1,21 +1,24 @@
 @php
+$locale = request('locale', app()->getLocale());
+$isAr = $locale === 'ar';
 $copy = [
-    'title' => 'Hall Map',
-    'selected' => 'Selected space:',
-    'hint' => 'Click any booth (L.W.* / R.W.*). Press D for debug boxes.',
-    'openConfirmTitle' => 'Confirm selection',
-    'spaceLabel' => 'Space:',
-    'cancel' => 'Cancel',
-    'confirm' => 'Confirm & return',
+'title' => ['en' => 'Hall Map', 'ar' => 'خريطة القاعة'],
+'selected' => ['en' => 'Selected space:', 'ar' => 'المساحة المختارة:'],
+'hint' => ['en' => 'Click any booth (L.W.* / R.W.*). Press D for debug boxes.', 'ar' => 'اضغط على أي مساحة (L.W.* / R.W.*). اضغط D لعرض الصناديق للتجربة.'],
+'openConfirmTitle' => ['en' => 'Confirm selection', 'ar' => 'تأكيد الاختيار'],
+'spaceLabel' => ['en' => 'Space:', 'ar' => 'المساحة:'],
+'cancel' => ['en' => 'Cancel', 'ar' => 'إلغاء'],
+'confirm' => ['en' => 'Confirm & return', 'ar' => 'تأكيد والعودة'],
 ];
+$t = fn($key) => $copy[$key][$isAr ? 'ar' : 'en'];
 @endphp
 <!doctype html>
-<html lang="en">
+<html lang="{{ $locale }}" dir="{{ $isAr ? 'rtl' : 'ltr' }}">
 
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>{{ $copy['title'] }}</title>
+  <title>{{ $t('title') }}</title>
   <style>
     body {
       margin: 0;
@@ -24,7 +27,7 @@ $copy = [
     }
 
     .wrap {
-      max-width: 1080px;
+      max-width: 980px;
       margin: 24px auto;
       padding: 0 14px;
     }
@@ -70,6 +73,7 @@ $copy = [
       font-size: 13px;
     }
 
+    /* The map wrapper keeps image + overlay perfectly aligned */
     .plan {
       position: relative;
       border-radius: 12px;
@@ -93,8 +97,10 @@ $copy = [
       height: 100%;
     }
 
+    /* Hitboxes */
     .hitbox {
       fill: rgba(255, 200, 0, 0.0);
+      /* invisible by default */
       stroke: rgba(255, 200, 0, 0.0);
       cursor: pointer;
     }
@@ -118,6 +124,7 @@ $copy = [
       cursor: not-allowed;
     }
 
+    /* Optional debug mode (shows outlines always) */
     .debug .hitbox {
       fill: rgba(0, 150, 255, 0.10);
       stroke: rgba(0, 150, 255, 0.7);
@@ -193,12 +200,21 @@ $copy = [
   <div class="wrap">
     <div class="card">
       <div class="topbar">
-        <div class="pill">{{ $copy['selected'] }} <strong id="selectedSpace">—</strong></div>
-        <div class="hint">{{ $copy['hint'] }}</div>
+        <div class="pill">{{ $t('selected') }} <strong id="selectedSpace">—</strong></div>
+
       </div>
 
+      <!-- Registration input -->
+      <form id="regForm">
+        <input type="hidden" id="spaceInput" name="space" value="">
+      </form>
+
       <div id="plan" class="plan">
+        <!-- Exported image of the PDF page -->
         <img src="{{ asset('img/hall-design.png') }}" alt="Hall Layout">
+
+        <!-- Overlay: viewBox MUST match the image pixel size -->
+        <!-- New exported image is 3490 x 6294 (base measurements remain 1653 x 2339) -->
         <svg id="overlay" class="overlay" viewBox="0 0 3490 6294" preserveAspectRatio="xMidYMid meet"></svg>
       </div>
     </div>
@@ -206,30 +222,48 @@ $copy = [
 
   <div id="confirmModal" class="modal-backdrop hidden" aria-hidden="true">
     <div class="modal">
-      <h3>{{ $copy['openConfirmTitle'] }}</h3>
-      <p>{{ $copy['spaceLabel'] }} <strong id="confirmName">—</strong></p>
+      <h3>{{ $t('openConfirmTitle') }}</h3>
+      <p>{{ $t('spaceLabel') }} <strong id="confirmName">—</strong></p>
       <div class="modal-actions">
-        <button type="button" class="btn" id="cancelConfirm">{{ $copy['cancel'] }}</button>
-        <button type="button" class="btn btn-primary" id="confirmSelection">{{ $copy['confirm'] }}</button>
+        <button type="button" class="btn" id="cancelConfirm">{{ $t('cancel') }}</button>
+        <button type="button" class="btn btn-primary" id="confirmSelection">{{ $t('confirm') }}</button>
       </div>
     </div>
   </div>
 
   <script>
-    // Geometry is measured in PDF pixels (base 1653 x 2339).
+    /**
+     * Pixel-perfect booth hitboxes aligned to the PDF image.
+     * Base measurements: 1653 x 2339 (geometry below).
+     * Current PNG: 3490 x 6294 (scaled in code).
+     *
+     * Booth grid geometry measured from the PDF:
+     * - each booth cell is 59px wide
+     * - top row height 39px, bottom row height 40px
+     * - cluster gap ~35px
+     * - cluster step = 114px
+     * - first cluster starts at y = 428px
+     *
+     * X positions (left edges) of each aisle grid:
+     * - Left outer  (Aisle L.W.1): x = 392
+     * - Left inner  (Aisle L.W.2): x = 569
+     * - Right inner (Aisle R.W.2): x = 963
+     * - Right outer (Aisle R.W.1): x = 1140
+     */
+
     const overlay = document.getElementById("overlay");
     const mapImage = document.querySelector("#plan img");
     const CALIBRATION_URL = "{{ asset('hall-calibration.json') }}";
+    const BASE_WIDTH = 1653;
     const BASE_HEIGHT = 2339;
-    let MAP_WIDTH = 3490;
-    let MAP_HEIGHT = 6294;
+    const MAP_WIDTH = (mapImage && mapImage.naturalWidth) || 3490;
+    const MAP_HEIGHT = (mapImage && mapImage.naturalHeight) || 6294;
+    let SCALE_X = MAP_WIDTH / BASE_WIDTH;
     let SCALE_Y = MAP_HEIGHT / BASE_HEIGHT;
-    const X_SCALE = 2.7866;
-    const X_OFFSET = -555.3;
-    const Y_OFFSET = -25;
     let useCalibrationCoords = false;
     overlay.setAttribute("viewBox", `0 0 ${MAP_WIDTH} ${MAP_HEIGHT}`);
     const selectedSpaceEl = document.getElementById("selectedSpace");
+    const spaceInput = document.getElementById("spaceInput");
     const planEl = document.getElementById("plan");
     const confirmModal = document.getElementById("confirmModal");
     const confirmName = document.getElementById("confirmName");
@@ -243,13 +277,16 @@ $copy = [
 
     function selectSpace(name, el) {
       selectedSpaceEl.textContent = name;
+      spaceInput.value = name;
       pendingSpace = name;
 
       if (selectedEl) selectedEl.classList.remove("selected");
       selectedEl = el;
       if (selectedEl) selectedEl.classList.add("selected");
 
+      // Optional callback for your registration flow
       if (typeof window.onSpaceClick === "function") window.onSpaceClick(name);
+
       showConfirmModal(name);
     }
 
@@ -271,8 +308,13 @@ $copy = [
         hideConfirmModal();
         return;
       }
-      alert(`You selected ${pendingSpace}`);
-      hideConfirmModal();
+      if (window.opener && !window.opener.closed) {
+        window.opener.postMessage({
+          type: 'hall-selection',
+          space: pendingSpace
+        }, window.location.origin);
+      }
+      window.close();
     });
 
     cancelConfirmBtn.addEventListener('click', () => hideConfirmModal());
@@ -284,10 +326,16 @@ $copy = [
       return el;
     }
 
-    function addHitbox({ name, x, y, w, h }) {
-      const scaledX = useCalibrationCoords ? x : (x * X_SCALE) + X_OFFSET;
-      const scaledY = useCalibrationCoords ? y : (y * SCALE_Y) + Y_OFFSET;
-      const scaledW = useCalibrationCoords ? w : w * X_SCALE;
+    function addHitbox({
+      name,
+      x,
+      y,
+      w,
+      h
+    }) {
+      const scaledX = useCalibrationCoords ? x : x * SCALE_X;
+      const scaledY = useCalibrationCoords ? y : y * SCALE_Y;
+      const scaledW = useCalibrationCoords ? w : w * SCALE_X;
       const scaledH = useCalibrationCoords ? h : h * SCALE_Y;
       const isOccupied = occupiedSpaces.has(name);
       const classes = ["hitbox"];
@@ -311,11 +359,11 @@ $copy = [
     }
 
     function generateAisle({
-      prefix,
-      lowStart,
-      highStart,
-      lowOnRight,
-      x0,
+      prefix, // "L.W." or "R.W."
+      lowStart, // 1 or 57
+      highStart, // 29 or 85
+      lowOnRight, // true => low numbers on right column
+      x0, // left edge of the 2-column grid
       yStart = 365,
       clusters = 14,
       cellW = 59,
@@ -323,10 +371,11 @@ $copy = [
       bottomH = 40,
       gapY = 40
     }) {
-      const clusterStep = topH + bottomH + gapY;
+      const clusterStep = topH + bottomH + gapY; // 114
 
+      // rowIndex goes from top to bottom (0..13)
       for (let rowIndex = 0; rowIndex < clusters; rowIndex++) {
-        const i = (clusters - 1) - rowIndex;
+        const i = (clusters - 1) - rowIndex; // i=13 at top, i=0 at bottom
         const y0 = yStart + rowIndex * clusterStep;
 
         const lowBottom = lowStart + (2 * i);
@@ -334,15 +383,45 @@ $copy = [
         const highBottom = highStart + (2 * i);
         const highTop = highStart + (2 * i) + 1;
 
+        // In the PDF each cluster is:
+        // top row: higher number, bottom row: lower number (by 1)
+        // left column vs right column depends on aisle side.
         const TL = lowOnRight ? `${prefix}${highTop}` : `${prefix}${lowTop}`;
         const TR = lowOnRight ? `${prefix}${lowTop}` : `${prefix}${highTop}`;
         const BL = lowOnRight ? `${prefix}${highBottom}` : `${prefix}${lowBottom}`;
         const BR = lowOnRight ? `${prefix}${lowBottom}` : `${prefix}${highBottom}`;
 
-        addHitbox({ name: TL, x: x0, y: y0, w: cellW, h: topH });
-        addHitbox({ name: TR, x: x0 + cellW, y: y0, w: cellW, h: topH });
-        addHitbox({ name: BL, x: x0, y: y0 + topH, w: cellW, h: bottomH });
-        addHitbox({ name: BR, x: x0 + cellW, y: y0 + topH, w: cellW, h: bottomH });
+        // Top row
+        addHitbox({
+          name: TL,
+          x: x0,
+          y: y0,
+          w: cellW,
+          h: topH
+        });
+        addHitbox({
+          name: TR,
+          x: x0 + cellW,
+          y: y0,
+          w: cellW,
+          h: topH
+        });
+
+        // Bottom row
+        addHitbox({
+          name: BL,
+          x: x0,
+          y: y0 + topH,
+          w: cellW,
+          h: bottomH
+        });
+        addHitbox({
+          name: BR,
+          x: x0 + cellW,
+          y: y0 + topH,
+          w: cellW,
+          h: bottomH
+        });
       }
     }
 
@@ -363,6 +442,8 @@ $copy = [
     }
 
     function renderProceduralGrid() {
+      // LEFT side (orange in PDF)
+      // Outer aisle = L.W.1 (57-112)
       generateAisle({
         prefix: "L.W.",
         lowStart: 57,
@@ -371,6 +452,7 @@ $copy = [
         x0: 392
       });
 
+      // Inner aisle = L.W.2 (1-56)
       generateAisle({
         prefix: "L.W.",
         lowStart: 1,
@@ -379,6 +461,8 @@ $copy = [
         x0: 569
       });
 
+      // RIGHT side (blue in PDF)
+      // Inner aisle = R.W.2 (1-56) -> low on left, high on right
       generateAisle({
         prefix: "R.W.",
         lowStart: 1,
@@ -387,6 +471,7 @@ $copy = [
         x0: 963
       });
 
+      // Outer aisle = R.W.1 (57-112)
       generateAisle({
         prefix: "R.W.",
         lowStart: 57,
@@ -397,12 +482,8 @@ $copy = [
     }
 
     async function initOverlay() {
-      if (mapImage && mapImage.complete && mapImage.naturalWidth) {
-        MAP_WIDTH = mapImage.naturalWidth;
-        MAP_HEIGHT = mapImage.naturalHeight;
-      }
-      SCALE_Y = MAP_HEIGHT / BASE_HEIGHT;
-      overlay.setAttribute("viewBox", `0 0 ${MAP_WIDTH} ${MAP_HEIGHT}`);
+      // If a calibration file exists (exported with the calibrator helper),
+      // use its pixel-perfect rectangles; otherwise fall back to the procedural grid.
       const calibrationRects = await fetchCalibrationRects();
       if (calibrationRects.length) {
         useCalibrationCoords = true;
@@ -411,19 +492,23 @@ $copy = [
         calibrationRects.forEach(rect => addHitbox(rect));
       } else {
         useCalibrationCoords = false;
+        SCALE_X = MAP_WIDTH / BASE_WIDTH;
+        SCALE_Y = MAP_HEIGHT / BASE_HEIGHT;
         renderProceduralGrid();
       }
     }
 
     window.addEventListener("load", initOverlay);
-    if (mapImage) {
-      mapImage.addEventListener("load", initOverlay, { once: true });
-    }
 
+    // Debug toggle (press D)
     window.addEventListener("keydown", (e) => {
       if (e.key.toLowerCase() === "d") planEl.classList.toggle("debug");
     });
+
+    // Helper for your form
+    window.getSelectedSpace = () => spaceInput.value;
   </script>
 </body>
 
 </html>
+<!-- End of MAP -->
