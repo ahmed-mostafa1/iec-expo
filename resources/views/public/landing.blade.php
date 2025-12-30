@@ -3162,7 +3162,7 @@
           : route('public.participants.show', ['locale' => app()->getLocale(), 'participant' => $participant]);
           $isExternalParticipant = (bool) $participant->url;
           @endphp
-          <a href="{{ $participantHref }}"
+          <a href=""
             class="participant-card"
             data-animate
             @if($isExternalParticipant) target="_blank" rel="noopener" @endif>
