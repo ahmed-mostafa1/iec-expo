@@ -3771,7 +3771,12 @@
         return;
       }
       const targetId = hallSelectionTargetId || '';
-      const input = targetId ? document.getElementById(targetId) : null;
+      let input = targetId ? document.getElementById(targetId) : null;
+      if (!input) {
+        input = document.getElementById('icon-location-selection') ||
+          document.querySelector('#icon-form input[name="location_selection"]') ||
+          document.querySelector('input[name="location_selection"]');
+      }
       if (input) {
         input.value = data.space;
         input.dispatchEvent(new Event('input', { bubbles: true }));
@@ -3780,12 +3785,49 @@
           setExhibitorStep(1);
         }
         if (form && form.id === 'icon-registration-form') {
+          selectRole('icon');
           setIconStep(1);
         }
+        try {
+          input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        } catch (e) {}
       }
       hallSelectionTargetId = null;
       try { window.focus(); } catch (e) {}
     });
+
+    function applyHallSelectionFromQuery() {
+      const params = new URLSearchParams(window.location.search || '');
+      const space = params.get('hall_space');
+      if (!space) {
+        return;
+      }
+
+      const target = params.get('hall_target') || 'icon';
+      let input = document.getElementById(target);
+      if (!input && target === 'icon') {
+        input = document.getElementById('icon-location-selection') ||
+          document.querySelector('#icon-form input[name="location_selection"]');
+      }
+
+      if (input) {
+        selectRole('icon');
+        setIconStep(1);
+        input.value = space;
+        input.dispatchEvent(new Event('input', { bubbles: true }));
+        try {
+          input.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        } catch (e) {}
+      }
+
+      params.delete('hall_space');
+      params.delete('hall_target');
+      const nextQuery = params.toString();
+      const nextUrl = window.location.pathname + (nextQuery ? `?${nextQuery}` : '') + window.location.hash;
+      try {
+        window.history.replaceState({}, '', nextUrl);
+      } catch (e) {}
+    }
 
     function initAjaxRegistrationForms() {
       const visitorForm = document.getElementById('visitor-registration-form');
@@ -4049,6 +4091,8 @@
         selectRole('icon');
         setIconStep(initialIconStep);
       }
+
+      applyHallSelectionFromQuery();
     });
 
     // Toast Notification

@@ -271,8 +271,24 @@ $copy = [
         hideConfirmModal();
         return;
       }
-      alert(`You selected ${pendingSpace}`);
-      hideConfirmModal();
+      const payload = { type: 'hall-selection', space: pendingSpace };
+      const origin = window.location.origin;
+
+      if (window.opener && !window.opener.closed) {
+        try {
+          window.opener.postMessage(payload, origin);
+          window.opener.focus();
+        } catch (e) {}
+        try {
+          window.close();
+          return;
+        } catch (e) {}
+      }
+
+      const params = new URLSearchParams(window.location.search || '');
+      const locale = params.get('locale') || 'en';
+      const landingUrl = `/${encodeURIComponent(locale)}?hall_space=${encodeURIComponent(pendingSpace)}&hall_target=icon`;
+      window.location.assign(landingUrl);
     });
 
     cancelConfirmBtn.addEventListener('click', () => hideConfirmModal());
