@@ -4060,6 +4060,12 @@
     document.addEventListener('DOMContentLoaded', () => {
       initHeardAboutSelects();
       initAjaxRegistrationForms();
+      document.querySelectorAll('.sponsor-card-link, .participant-card').forEach(el => {
+        el.addEventListener('click', (event) => {
+          event.preventDefault();
+          event.stopPropagation();
+        });
+      });
 
       if (initialForm === 'visitor') {
         selectRole('visitor');
