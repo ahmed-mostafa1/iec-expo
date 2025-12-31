@@ -248,6 +248,9 @@
     .nav-logo {
       height: 60px;
     }
+    .nav-logo-bu{
+      height: 40px;
+    }
 
     .header-right {
       display: flex;
@@ -2143,7 +2146,7 @@
             </button>
           </div>
           <a href="https://umbrella.sa" />
-            <img class="nav-logo" src="{{ asset('./img/bu_logo.png') }}" alt="IEC Logo"/>
+            <img class="nav-logo-bu" src="{{ asset('./img/bu_logo.png') }}" alt="BU Logo"/>
           </a>
         </div>
       </div>
