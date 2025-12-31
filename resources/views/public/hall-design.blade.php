@@ -245,11 +245,6 @@ $t = fn(string $key) => $copy[$key][$isAr ? 'ar' : 'en'];
     const confirmSelectionBtn = document.getElementById("confirmSelection");
     const cancelConfirmBtn = document.getElementById("cancelConfirm");
     const occupiedSpaces = new Set(@json($occupiedSpaces ?? []));
-    // Force-disable already booked spaces (hardcoded)
-    for (let i = 1; i <= 28; i++) {
-      occupiedSpaces.add(`L.W.${i}`);
-      occupiedSpaces.add(`R.W.${i}`);
-    }
 
     let selectedEl = null;
     let pendingSpace = null;

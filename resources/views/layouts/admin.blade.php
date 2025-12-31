@@ -44,6 +44,13 @@
                 </a>
 
                 <div class="mt-4 text-[10px] uppercase tracking-wide text-gray-400 ps-2">
+                    {{ __('Hall design') }}
+                </div>
+                <a href="{{ route('admin.hall-spaces.index') }}" class="block rounded-lg px-2 py-1.5 hover:bg-emerald-50 text-gray-700">
+                    {{ __('Hall bookings') }}
+                </a>
+
+                <div class="mt-4 text-[10px] uppercase tracking-wide text-gray-400 ps-2">
                     {{ __('Landing sections') }}
                 </div>
                 <a href="{{ route('admin.sections.hero') }}" class="block rounded-lg px-2 py-1.5 hover:bg-emerald-50 text-gray-700">
