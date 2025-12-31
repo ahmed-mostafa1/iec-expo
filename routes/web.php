@@ -18,8 +18,10 @@ use App\Http\Controllers\Admin\HeroMediaController;
 use App\Http\Controllers\Admin\SponsorRegistrationController as AdminSponsorController;
 use App\Http\Controllers\Admin\IconRegistrationController as AdminIconController;
 use App\Http\Controllers\Admin\VisitorRegistrationController as AdminVisitorController;
+use App\Http\Controllers\Admin\HallSpaceBookingController;
 use App\Models\SponsorRegistration;
 use App\Models\IconRegistration;
+use App\Models\HallSpaceBooking;
 use Illuminate\Support\Facades\Route;
 
 
@@ -34,7 +36,11 @@ Route::get('/', function () {
                 ->merge(
                     IconRegistration::whereNotNull('location_selection')->pluck('location_selection')
                 )
+                ->merge(
+                    HallSpaceBooking::pluck('space')
+                )
                 ->filter()
+                ->map(fn ($space) => strtoupper($space))
                 ->unique()
                 ->values()
                 ->all();
@@ -141,6 +147,14 @@ Route::prefix('admin')
 
         Route::post('/visitor-registrations/{registration}/pdf/regenerate', [AdminVisitorController::class, 'regeneratePdf'])
             ->name('visitors.regenerate-pdf');
+
+        // Hall design controls
+        Route::get('/hall-spaces', [HallSpaceBookingController::class, 'index'])
+            ->name('hall-spaces.index');
+        Route::post('/hall-spaces', [HallSpaceBookingController::class, 'store'])
+            ->name('hall-spaces.store');
+        Route::delete('/hall-spaces/{hallSpaceBooking}', [HallSpaceBookingController::class, 'destroy'])
+            ->name('hall-spaces.destroy');
 
         Route::resource('public-sponsors', PublicSponsorController::class);
         Route::resource('participants', ParticipantController::class);
