@@ -13,9 +13,9 @@
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <style>
     :root {
-      --primary-color: #00ff00;
-      --secondary-color: #00ff00;
-      --accent-color: #00ff88;
+      --primary-color: #6024c1;
+      --secondary-color: #6024c1;
+      --accent-color: #6024c1;
       --dark-color: #1a1a1a;
       --light-color: #f8f9fa;
       --text-color: #333;
@@ -27,7 +27,7 @@
       /* --card: 251 251 248; */
       --card: 18 18 18;
       --card-foreground: 248 248 248;
-      --primary: 0 255 0;
+      --primary: 36 96 193;
       --primary-foreground: 251 251 248;
       --secondary: 226 233 226;
       --secondary-foreground: 69 84 69;
@@ -42,9 +42,9 @@
       --chart-2: 70 185 147;
       --chart-3: 69 161 161;
       --button-bg: #9803bd;
-      --button-hover-bg: #b5ffb5;
+      --button-hover-bg: #6024c1;
       --button-text: #ffffff;
-      --hover-accent: #000000;
+      --hover-accent: #ffffff;
     }
 
 
@@ -1102,7 +1102,7 @@
       font-size: 2rem !important;
       font-weight: 600;
       margin-bottom: 1rem;
-      color: #4bee49ff;
+      color: var(--accent-color);
     }
 
     .sponsor-tier-grid {
@@ -1274,7 +1274,8 @@
     }
 
     .sponsor-visit-btn:hover {
-      background: #046302;
+      background: var(--accent-color);
+      color
       transform: translateY(-1px);
     }
 
@@ -3236,7 +3237,7 @@
     $supportCards = data_get($contactSection, 'support_cards', []);
     $locationTitleBlock = $contactTranslate(data_get($contactSection, 'location_title'), __('Event Location'));
     $locationAddressBlock = $contactTranslate(data_get($contactSection, 'location_address'), '');
-    $mapEmbedUrl = data_get($contactSection, 'map_embed', 'https://www.google.com/maps?q=Riyadh+International+Convention+%26+Exhibition+Center&output=embed');
+    $mapEmbedUrl = data_get($contactSection, 'map_embed', 'https://www.google.com/maps/place/The+Arena+Riyadh+Venue+for+Exhibitions+%7C+%D9%85%D8%B1%D9%83%D8%B2+%D8%B0%D9%8A+%D8%A3%D8%B1%D9%8A%D9%86%D8%A7+%D8%A7%D9%84%D8%B1%D9%8A%D8%A7%D8%B6+%D9%84%D9%84%D9%85%D8%B9%D8%A7%D8%B1%D8%B6+%D9%88%D8%A7%D9%84%D9%81%D8%B9%D8%A7%D9%84%D9%8A%D8%A7%D8%AA%E2%80%AD/@24.7779833,46.7296192,17z/data=!4m14!1m7!3m6!1s0x3e2efde8f1cd0b5d:0x4992b4380d1f29e5!2zVGhlIEFyZW5hIFJpeWFkaCBWZW51ZSBmb3IgRXhoaWJpdGlvbnMgfCDZhdix2YPYsiDYsNmKINij2LHZitmG2Kcg2KfZhNix2YrYp9i2INmE2YTZhdi52KfYsdi2INmI2KfZhNmB2LnYp9mE2YrYp9iq!8m2!3d24.7779833!4d46.7321941!16s%2Fg%2F11rwj51wpq!3m5!1s0x3e2efde8f1cd0b5d:0x4992b4380d1f29e5!8m2!3d24.7779833!4d46.7321941!16s%2Fg%2F11rwj51wpq?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D');
     $locationImageUrl = \App\Models\LandingSection::mediaUrl(data_get($contactSection, 'location_image'));
     @endphp
 
