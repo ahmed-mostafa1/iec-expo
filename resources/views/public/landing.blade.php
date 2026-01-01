@@ -1275,7 +1275,7 @@
 
     .sponsor-visit-btn:hover {
       background: var(--accent-color);
-      color
+      color:#fff;
       transform: translateY(-1px);
     }
 
