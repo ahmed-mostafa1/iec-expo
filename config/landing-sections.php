@@ -450,40 +450,12 @@ return [
                                 'heading' => ['en' => 'Ahmed', 'ar' => 'أحمد'],
                                 'contacts' => [
                                     ['type' => 'phone', 'value' => '+966566668892'],
-                                    ['type' => 'phone', 'value' => '+966541164491'],
                                 ],
                             ],
                             [
                                 'heading' => ['en' => 'Tamim', 'ar' => 'تميم'],
                                 'contacts' => [
                                     ['type' => 'phone', 'value' => '+966594650976'],
-                                ],
-                            ],
-                        ],
-                    ],
-                    [
-                        'id' => 'english_support',
-                        'title' => ['en' => 'English Support', 'ar' => 'التواصل باللغة الإنجليزية'],
-                        'columns' => [
-                            [
-                                'heading' => ['en' => 'Support', 'ar' => 'الدعم'],
-                                'contacts' => [
-                                    ['type' => 'phone', 'value' => '+966566668892'],
-                                    ['type' => 'phone', 'value' => '+966541164491'],
-                                ],
-                            ],
-                        ],
-                    ],
-                    [
-                        'id' => 'email_support',
-                        'title' => ['en' => 'Email Support', 'ar' => 'التواصل بالبريد'],
-                        'columns' => [
-                            [
-                                'heading' => ['en' => 'Team', 'ar' => 'الفريق'],
-                                'contacts' => [
-                                    ['type' => 'email', 'value' => 'tamim@umbrella.sa'],
-                                    ['type' => 'email', 'value' => 'aomar@umbrella.sa'],
-                                    ['type' => 'email', 'value' => 'hello@umbrella.sa'],
                                 ],
                             ],
                         ],
