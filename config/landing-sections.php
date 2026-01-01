@@ -218,7 +218,7 @@ return [
                         [
                             'name' => 'vat_number',
                             'type' => 'text',
-                            'label' => ['en' => 'VAT (Value Added Tax) *', 'ar' => 'ضريبة القيمة المضافة *'],
+                            'label' => ['en' => 'VAT (Value Added Tax)', 'ar' => 'ضريبة القيمة المضافة'],
                             'placeholder' => ['en' => '300000000000003', 'ar' => '300000000000003'],
                         ],
                         [
@@ -237,12 +237,6 @@ return [
                             'name' => 'company_logo',
                             'type' => 'file',
                             'label' => ['en' => 'Company Logo', 'ar' => 'شعار الشركة'],
-                            'hint' => ['en' => 'PDF files only (max 8MB)', 'ar' => 'ملفات PDF فقط (بحد أقصى 8 ميغابايت)'],
-                        ],
-                        [
-                            'name' => 'corporate_profile',
-                            'type' => 'file',
-                            'label' => ['en' => 'Corporate Profile', 'ar' => 'الملف التعريفي للشركة'],
                             'hint' => ['en' => 'PDF files only (max 8MB)', 'ar' => 'ملفات PDF فقط (بحد أقصى 8 ميغابايت)'],
                         ],
                         [
@@ -353,12 +347,6 @@ return [
                             'name' => 'company_logo',
                             'type' => 'file',
                             'label' => ['en' => 'Company Logo', 'ar' => 'شعار الشركة'],
-                            'hint' => ['en' => 'PDF files only (max 8MB)', 'ar' => 'ملفات PDF فقط (بحد أقصى 8 ميغابايت)'],
-                        ],
-                        [
-                            'name' => 'corporate_profile',
-                            'type' => 'file',
-                            'label' => ['en' => 'Corporate Profile', 'ar' => 'الملف التعريفي للشركة'],
                             'hint' => ['en' => 'PDF files only (max 8MB)', 'ar' => 'ملفات PDF فقط (بحد أقصى 8 ميغابايت)'],
                         ],
                         [

@@ -19,13 +19,6 @@ class IconRegistrationController extends Controller
     {
         $data = $request->validated();
 
-        $corporateProfilePath = $request->hasFile('corporate_profile')
-            ? $request->file('corporate_profile')->store(
-                'registrations/icons/corporate-profile/' . now()->year,
-                'public'
-            )
-            : null;
-
         $crCopyPath = $request->hasFile('cr_copy')
             ? $request->file('cr_copy')->store(
                 'registrations/icons/cr-copy/' . now()->year,
@@ -57,7 +50,7 @@ class IconRegistrationController extends Controller
             'vat_number'       => $data['vat_number'] ?? '',
             'cr_number'        => $data['cr_number'] ?? '',
             'national_address' => $data['national_address'] ?? '',
-            'document_path'    => $corporateProfilePath,
+            'document_path'    => null,
             'cr_copy_path'     => $crCopyPath,
             'national_address_doc_path' => $nationalAddressDocPath,
             'company_logo_path'=> $companyLogoPath,

@@ -24,7 +24,6 @@ class IconRegistrationRequest extends FormRequest
             'location_selection' => ['required', 'string', 'max:255'],
             'vat_number'      => ['nullable', 'digits:15', new UniqueIconVatCr],
             'cr_number'       => ['nullable', 'string', 'max:255', new UniqueIconVatCr],
-            'corporate_profile'         => ['nullable', 'file', 'mimes:pdf', 'max:8192'],
             'cr_copy'                   => ['nullable', 'file', 'mimes:pdf', 'max:8192'],
             'national_address_document' => ['nullable', 'file', 'mimes:pdf', 'max:8192'],
             'company_logo'              => ['nullable', 'file', 'mimes:pdf', 'max:8192'],
