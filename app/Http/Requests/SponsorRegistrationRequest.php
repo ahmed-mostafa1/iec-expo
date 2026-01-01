@@ -24,7 +24,6 @@ class SponsorRegistrationRequest extends FormRequest
             'location_selection' => ['nullable', 'string', 'max:255'],
             'vat_number'      => ['nullable', 'digits:15', new UniqueSponsorVatCr],
             'cr_number'       => ['nullable', 'string', 'max:255', new UniqueSponsorVatCr],
-            'corporate_profile'         => ['nullable', 'file', 'mimes:pdf', 'max:8192'],
             'cr_copy'                   => ['nullable', 'file', 'mimes:pdf', 'max:8192'],
             'national_address_document' => ['nullable', 'file', 'mimes:pdf', 'max:8192'],
             'company_logo'              => ['nullable', 'file', 'mimes:pdf', 'max:8192'],

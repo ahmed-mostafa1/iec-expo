@@ -2379,8 +2379,6 @@
               $exCrCopyHint = $fieldCopy($exhibitorFieldsStepTwoByName, 'cr_copy', 'hint', $pdfHint);
               $exLogoLabel = $fieldCopy($exhibitorFieldsStepTwoByName, 'company_logo', 'label', ['en' => 'Company Logo', 'ar' => 'شعار الشركة']);
               $exLogoHint = $fieldCopy($exhibitorFieldsStepTwoByName, 'company_logo', 'hint', $pdfHint);
-              $exProfileLabel = $fieldCopy($exhibitorFieldsStepTwoByName, 'corporate_profile', 'label', ['en' => 'Corporate Profile', 'ar' => 'الملف التعريفي للشركة']);
-              $exProfileHint = $fieldCopy($exhibitorFieldsStepTwoByName, 'corporate_profile', 'hint', $pdfHint);
               $exAddressLabel = $fieldCopy($exhibitorFieldsStepTwoByName, 'national_address_document', 'label', ['en' => 'National Address Document', 'ar' => 'مستند العنوان الوطني']);
               $exAddressHint = $fieldCopy($exhibitorFieldsStepTwoByName, 'national_address_document', 'hint', $pdfHint);
               @endphp
@@ -2495,14 +2493,6 @@
                   </div>
                   <div class="form-grid form-grid-2" style="margin-top: 1rem;">
                     <div class="form-group">
-                      <label class="form-label" data-en="{{ e($exProfileLabel['en']) }}" data-ar="{{ e($exProfileLabel['ar']) }}">{{ $exProfileLabel['text'] }}</label>
-                      <input type="file" name="corporate_profile" class="form-input" accept="application/pdf">
-                      <span class="form-hint" data-en="{{ e($exProfileHint['en']) }}" data-ar="{{ e($exProfileHint['ar']) }}">{{ $exProfileHint['text'] }}</span>
-                      @if($sponsorFormActive && $errors->has('corporate_profile'))
-                      <p class="mt-1 text-xs text-red-600">{{ $errors->first('corporate_profile') }}</p>
-                      @endif
-                    </div>
-                    <div class="form-group">
                       <label class="form-label" data-en="{{ e($exAddressLabel['en']) }}" data-ar="{{ e($exAddressLabel['ar']) }}">{{ $exAddressLabel['text'] }}</label>
                       <input type="file" name="national_address_document" class="form-input" accept="application/pdf,image/png,image/jpeg">
                       <span class="form-hint" data-en="{{ e($exAddressHint['en']) }}" data-ar="{{ e($exAddressHint['ar']) }}">{{ $exAddressHint['text'] }}</span>
@@ -2588,8 +2578,6 @@
               $iconCrCopyHint = $fieldCopy($iconFieldsStepTwoByName, 'cr_copy', 'hint', $pdfHint);
               $iconLogoLabel = $fieldCopy($iconFieldsStepTwoByName, 'company_logo', 'label', ['en' => trans('registration.icon.company_logo', [], 'en'), 'ar' => trans('registration.icon.company_logo', [], 'ar')]);
               $iconLogoHint = $fieldCopy($iconFieldsStepTwoByName, 'company_logo', 'hint', $pdfHint);
-              $iconProfileLabel = $fieldCopy($iconFieldsStepTwoByName, 'corporate_profile', 'label', ['en' => trans('registration.icon.corporate_profile', [], 'en'), 'ar' => trans('registration.icon.corporate_profile', [], 'ar')]);
-              $iconProfileHint = $fieldCopy($iconFieldsStepTwoByName, 'corporate_profile', 'hint', $pdfHint);
               $iconAddressLabel = $fieldCopy($iconFieldsStepTwoByName, 'national_address_document', 'label', ['en' => trans('registration.icon.national_address_document', [], 'en'), 'ar' => trans('registration.icon.national_address_document', [], 'ar')]);
               $iconAddressHint = $fieldCopy($iconFieldsStepTwoByName, 'national_address_document', 'hint', $pdfHint);
               @endphp
@@ -2728,14 +2716,6 @@
                     </div>
                   </div>
                   <div class="form-grid form-grid-2" style="margin-top: 1rem;">
-                    <div class="form-group">
-                      <label class="form-label" data-en="{{ e($iconProfileLabel['en']) }}" data-ar="{{ e($iconProfileLabel['ar']) }}">{{ $iconProfileLabel['text'] }}</label>
-                      <input type="file" name="corporate_profile" class="form-input" accept="application/pdf">
-                      <span class="form-hint" data-en="{{ e($iconProfileHint['en']) }}" data-ar="{{ e($iconProfileHint['ar']) }}">{{ $iconProfileHint['text'] }}</span>
-                      @if($iconFormActive && $errors->has('corporate_profile'))
-                      <p class="mt-1 text-xs text-red-600">{{ $errors->first('corporate_profile') }}</p>
-                      @endif
-                    </div>
                     <div class="form-group">
                       <label class="form-label" data-en="{{ e($iconAddressLabel['en']) }}" data-ar="{{ e($iconAddressLabel['ar']) }}">{{ $iconAddressLabel['text'] }}</label>
                       <input type="file" name="national_address_document" class="form-input" accept="application/pdf,image/png,image/jpeg">
@@ -3282,8 +3262,8 @@
                     <input type="email" class="form-input" required placeholder="you@example.com">
                   </div>
                   <div class="form-group">
-                    <label class="form-label" data-en="Phone (Optional)" data-ar="الهاتف (اختياري)">{{ __('Phone (Optional)') }}</label>
-                    <input type="tel" class="form-input" placeholder="+966 50 000 0000">
+                    <label class="form-label" data-en="Phone *" data-ar="الهاتف *">{{ __('Phone *') }}</label>
+                    <input type="tel" class="form-input" required placeholder="+966 50 000 0000">
                   </div>
                   <div class="form-group">
                     <label class="form-label" data-en="Message *" data-ar="الرسالة *">{{ __('Message *') }}</label>
@@ -3349,7 +3329,8 @@
               @endforelse
             </div>
           </div>
-        </div>
+        </div> 
+                 <!-- map -->
         <div class="location-card">
           <div class="location-header">
             <div class="contact-info-icon">
@@ -3375,7 +3356,8 @@
               loading="lazy"
               referrerpolicy="no-referrer-when-downgrade"></iframe>
           </div>
-        </div>
+        </div> 
+                  <!-- map was here -->
       </div>
     </section>
   </main>
