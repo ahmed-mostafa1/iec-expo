@@ -3759,10 +3759,10 @@
 
     let hallSelectionTargetId = null;
 
-    function openHallDesign(targetInputId) {
+     function openHallDesign(targetInputId) {
       hallSelectionTargetId = targetInputId;
       const localeSuffix = currentLocale ? `?locale=${encodeURIComponent(currentLocale)}` : '';
-      window.open('/hall-design' + localeSuffix, '_blank');
+      window.open('/iec360/hall-design' + localeSuffix, '_blank');
     }
 
     window.addEventListener('message', (event) => {
