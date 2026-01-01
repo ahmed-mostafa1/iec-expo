@@ -19,7 +19,13 @@ Route::prefix('admin')->name('admin.')->group(function () {
 
     // Authenticated admins
     Route::middleware('auth:admin')->group(function () {
-        Route::post('/logout', Logout::class)->name('logout');
+        Route::post('/logout', function (Logout $logout) {
+            $logout();
+
+            $locale = app()->getLocale() ?: config('app.locale');
+
+            return redirect()->route('public.landing', ['locale' => $locale]);
+        })->name('logout');
 
         // You can also protect email verification/confirm-password if you use them
         Volt::route('/verify-email', 'pages.auth.verify-email')->name('verification.notice');
