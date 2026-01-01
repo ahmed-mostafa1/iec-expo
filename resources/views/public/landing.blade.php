@@ -349,9 +349,9 @@
       cursor: pointer;
     }
 
-    @media (min-width: 768px) {
+    @media (max-width: 768px) {
       .mobile-menu-btn {
-        display: none;
+        display: block;
       }
     }
 
@@ -1854,7 +1854,7 @@
     .icon {
       width: 24px;
       height: 24px;
-      stroke: currentColor;
+      stroke: #ffffff;
       stroke-width: 2;
       fill: none;
       stroke-linecap: round;
