@@ -1342,6 +1342,10 @@
         width: 100%;
         /* margin: 0 auto; */
       }
+
+      .sponsor-featured-desc {
+        display: none;
+      }
     }
 
 
