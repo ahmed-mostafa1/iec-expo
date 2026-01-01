@@ -3758,12 +3758,21 @@
     }
 
     let hallSelectionTargetId = null;
-
-     function openHallDesign(targetInputId) {
+    
+    // TODO: remove this after uploading
+    function openHallDesign(targetInputId) {
       hallSelectionTargetId = targetInputId;
       const localeSuffix = currentLocale ? `?locale=${encodeURIComponent(currentLocale)}` : '';
-      window.open('/iec360/hall-design' + localeSuffix, '_blank');
+      window.open((window.APP_BASE_PATH || '') + '/hall-design' + localeSuffix, '_blank');
     }
+    // TODO: uncomment this after uploading
+    // function openHallDesign(targetInputId) {
+    //   hallSelectionTargetId = targetInputId;
+    //   const localeSuffix = currentLocale ? `?locale=${encodeURIComponent(currentLocale)}` : '';
+    //   window.open('/iec360/hall-design' + localeSuffix, '_blank');
+    // }
+
+
 
     window.addEventListener('message', (event) => {
       if (event.origin !== window.location.origin) {
