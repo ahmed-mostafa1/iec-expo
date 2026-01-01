@@ -110,18 +110,34 @@
                     </div>
 
                     <div class="space-y-5">
-                        <h3 class="font-semibold text-gray-900">{{ __('Support cards') }}</h3>
-                        <div class="space-y-5">
+                        <div class="flex items-center justify-between gap-3">
+                            <h3 class="font-semibold text-gray-900">{{ __('Support cards') }}</h3>
+                            <button type="button"
+                                class="inline-flex items-center gap-2 rounded-lg border border-emerald-200 bg-white px-3 py-1.5 text-sm font-semibold text-emerald-700 hover:bg-emerald-50 transition"
+                                data-add-card>
+                                <span class="text-base leading-none">+</span>
+                                <span>{{ __('Add support card') }}</span>
+                            </button>
+                        </div>
+                        <div class="space-y-5" data-support-cards data-card-count="{{ count($supportCards) }}">
                             @foreach ($supportCards as $cardIndex => $card)
-                                <div class="rounded-2xl border border-gray-200 bg-gradient-to-br from-white to-gray-50 p-4 space-y-4" data-node-group>
-                                    <div class="flex items-center justify-between">
+                                <div class="rounded-2xl border border-gray-200 bg-gradient-to-br from-white to-gray-50 p-4 space-y-4"
+                                    data-node-group data-card-key="{{ $card['id'] ?? $cardIndex }}">
+                                    <div class="flex items-center justify-between gap-3">
                                         <div>
                                             <p class="text-s font-semibold text-gray-500 uppercase">{{ __('Card') }} #{{ $loop->iteration }}</p>
                                             <p class="text-base font-semibold text-gray-900">{{ data_get($card, 'title.en') }}</p>
                                         </div>
-                                        <button type="button" class="text-s font-semibold text-emerald-700" data-node-trigger="card-{{ $cardIndex }}">
-                                            {{ __('Edit card') }}
-                                        </button>
+                                        <div class="flex items-center gap-3">
+                                            <button type="button" class="text-s font-semibold text-red-600"
+                                                data-delete-card>
+                                                {{ __('Delete card') }}
+                                            </button>
+                                            <button type="button" class="text-s font-semibold text-emerald-700"
+                                                data-node-trigger="card-{{ $cardIndex }}">
+                                                {{ __('Edit card') }}
+                                            </button>
+                                        </div>
                                     </div>
 
                                     <div class="space-y-4 hidden" data-node-panel="card-{{ $cardIndex }}">
@@ -169,7 +185,7 @@
                                                     </div>
                                                     <div class="space-y-2" data-contact-container="card{{ $cardIndex }}-col{{ $columnIndex }}">
                                                         @foreach ($column['contacts'] ?? [] as $contactIndex => $contact)
-                                                            <div class="flex flex-col gap-2 md:flex-row">
+                                                            <div class="flex flex-col gap-2 md:flex-row md:items-center" data-contact-row>
                                                                 <select name="support_cards[{{ $cardIndex }}][columns][{{ $columnIndex }}][contacts][{{ $contactIndex }}][type]"
                                                                     class="rounded-lg border-gray-200 text-sm md:w-32">
                                                                     <option value="phone" @if (($contact['type'] ?? '') === 'phone') selected @endif>{{ __('Phone') }}</option>
@@ -178,6 +194,10 @@
                                                                 <input type="text" name="support_cards[{{ $cardIndex }}][columns][{{ $columnIndex }}][contacts][{{ $contactIndex }}][value]"
                                                                     value="{{ old("support_cards.$cardIndex.columns.$columnIndex.contacts.$contactIndex.value", $contact['value'] ?? '') }}"
                                                                     class="flex-1 rounded-lg border-gray-200 text-sm" placeholder="+966..." />
+                                                                <button type="button" class="text-xs font-semibold text-red-600 md:w-24"
+                                                                    data-delete-contact>
+                                                                    {{ __('Delete') }}
+                                                                </button>
                                                             </div>
                                                         @endforeach
                                                     </div>
@@ -252,42 +272,168 @@
     </div>
 
     <script>
-        document.querySelectorAll('[data-node-group]').forEach(group => {
-            group.addEventListener('click', event => {
-                const trigger = event.target.closest('[data-node-trigger]');
-                if (!trigger) {
-                    return;
-                }
-                const target = trigger.getAttribute('data-node-trigger');
-                group.querySelectorAll('[data-node-panel]').forEach(panel => {
-                    if (panel.getAttribute('data-node-panel') === target) {
-                        panel.classList.toggle('hidden');
-                    } else {
-                        panel.classList.add('hidden');
-                    }
-                });
-            });
-        });
+        (() => {
+            const cardsContainer = document.querySelector('[data-support-cards]');
+            const addCardButton = document.querySelector('[data-add-card]');
+            let cardCounter = Number(cardsContainer?.getAttribute('data-card-count') || 0);
 
-        document.querySelectorAll('[data-add-contact]').forEach(button => {
-            button.addEventListener('click', () => {
-                const target = button.getAttribute('data-target');
-                const container = document.querySelector(`[data-contact-container="${target}"]`);
-                const prefix = button.getAttribute('data-name-prefix');
-                if (!container) return;
-
-                const uniqueIndex = Date.now();
+            const createContactRow = (prefix) => {
+                const uniqueIndex = Date.now() + Math.floor(Math.random() * 1000);
                 const row = document.createElement('div');
-                row.className = 'flex flex-col gap-2 md:flex-row';
+                row.className = 'flex flex-col gap-2 md:flex-row md:items-center';
                 row.innerHTML = `
                     <select name="${prefix}[${uniqueIndex}][type]" class="rounded-lg border-gray-200 text-sm md:w-32">
                         <option value="phone">{{ __('Phone') }}</option>
                         <option value="email">{{ __('Email') }}</option>
                     </select>
                     <input type="text" name="${prefix}[${uniqueIndex}][value]" class="flex-1 rounded-lg border-gray-200 text-sm" placeholder="+966..." />
+                    <button type="button" class="text-xs font-semibold text-red-600 md:w-24" data-delete-contact>
+                        {{ __('Delete') }}
+                    </button>
                 `;
-                container.appendChild(row);
+                return row;
+            };
+
+            const createColumnBlock = (cardKey, columnKey) => {
+                const target = `card${cardKey}-col${columnKey}`;
+                const prefix = `support_cards[${cardKey}][columns][${columnKey}][contacts]`;
+                const wrapper = document.createElement('div');
+                wrapper.className = 'rounded-xl border border-gray-100 bg-white p-4 space-y-3';
+                wrapper.innerHTML = `
+                    <div class="grid gap-4 md:grid-cols-2">
+                        <div>
+                            <label class="text-s font-semibold text-gray-500 uppercase">{{ __('Column heading (EN)') }}</label>
+                            <input type="text" name="support_cards[${cardKey}][columns][${columnKey}][heading][en]"
+                                class="w-full mt-1 rounded-lg border-gray-200 text-sm" />
+                        </div>
+                        <div>
+                            <label class="text-s font-semibold text-gray-500 uppercase">{{ __('Column heading (AR)') }}</label>
+                            <input type="text" name="support_cards[${cardKey}][columns][${columnKey}][heading][ar]"
+                                class="w-full mt-1 rounded-lg border-gray-200 text-sm" />
+                        </div>
+                    </div>
+                    <div class="space-y-3">
+                        <div class="flex items-center justify-between">
+                            <p class="text-s font-semibold text-gray-500 uppercase">{{ __('Contacts') }}</p>
+                            <button type="button" class="text-s font-semibold text-emerald-700"
+                                data-add-contact="${target}"
+                                data-name-prefix="${prefix}"
+                                data-target="${target}">
+                                {{ __('Add contact') }}
+                            </button>
+                        </div>
+                        <div class="space-y-2" data-contact-container="${target}"></div>
+                    </div>
+                `;
+
+                const contactContainer = wrapper.querySelector('[data-contact-container]');
+                if (contactContainer) {
+                    contactContainer.appendChild(createContactRow(prefix));
+                }
+
+                return wrapper;
+            };
+
+            const createSupportCard = (cardKey) => {
+                const panelId = `card-${cardKey}`;
+                const columnKey = 0;
+                const wrapper = document.createElement('div');
+                wrapper.innerHTML = `
+                    <div class="rounded-2xl border border-gray-200 bg-gradient-to-br from-white to-gray-50 p-4 space-y-4"
+                        data-node-group data-card-key="${cardKey}">
+                        <div class="flex items-center justify-between gap-3">
+                            <div>
+                                <p class="text-s font-semibold text-gray-500 uppercase">{{ __('Card') }} #${cardKey}</p>
+                                <p class="text-base font-semibold text-gray-900">{{ __('New support card') }}</p>
+                            </div>
+                            <div class="flex items-center gap-3">
+                                <button type="button" class="text-s font-semibold text-red-600" data-delete-card>
+                                    {{ __('Delete card') }}
+                                </button>
+                                <button type="button" class="text-s font-semibold text-emerald-700" data-node-trigger="${panelId}">
+                                    {{ __('Edit card') }}
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="space-y-4" data-node-panel="${panelId}">
+                            <input type="hidden" name="support_cards[${cardKey}][id]" value="card_${cardKey}">
+                            <div class="grid gap-4 md:grid-cols-2">
+                                <div>
+                                    <label class="text-s font-semibold text-gray-500 uppercase">{{ __('Title (EN)') }}</label>
+                                    <input type="text" name="support_cards[${cardKey}][title][en]"
+                                        class="w-full mt-1 rounded-lg border-gray-200 text-sm" />
+                                </div>
+                                <div>
+                                    <label class="text-s font-semibold text-gray-500 uppercase">{{ __('Title (AR)') }}</label>
+                                    <input type="text" name="support_cards[${cardKey}][title][ar]"
+                                        class="w-full mt-1 rounded-lg border-gray-200 text-sm" />
+                                </div>
+                            </div>
+                            <div class="space-y-4" data-dynamic-columns></div>
+                        </div>
+                    </div>
+                `;
+
+                const card = wrapper.firstElementChild;
+                const columnsWrapper = card?.querySelector('[data-dynamic-columns]');
+                if (columnsWrapper) {
+                    columnsWrapper.appendChild(createColumnBlock(cardKey, columnKey));
+                }
+
+                return card;
+            };
+
+            document.addEventListener('click', (event) => {
+                const trigger = event.target.closest('[data-node-trigger]');
+                if (trigger) {
+                    const group = trigger.closest('[data-node-group]');
+                    const target = trigger.getAttribute('data-node-trigger');
+                    if (group && target) {
+                        group.querySelectorAll('[data-node-panel]').forEach(panel => {
+                            if (panel.getAttribute('data-node-panel') === target) {
+                                panel.classList.toggle('hidden');
+                            } else {
+                                panel.classList.add('hidden');
+                            }
+                        });
+                    }
+                }
+
+                const addContactButton = event.target.closest('[data-add-contact]');
+                if (addContactButton) {
+                    const target = addContactButton.getAttribute('data-target');
+                    const prefix = addContactButton.getAttribute('data-name-prefix');
+                    const container = target ? document.querySelector(`[data-contact-container="${target}"]`) : null;
+                    if (container && prefix) {
+                        container.appendChild(createContactRow(prefix));
+                    }
+                }
+
+                const deleteCardButton = event.target.closest('[data-delete-card]');
+                if (deleteCardButton) {
+                    const card = deleteCardButton.closest('[data-card-key]');
+                    if (card) {
+                        card.remove();
+                    }
+                }
+
+                const deleteContactButton = event.target.closest('[data-delete-contact]');
+                if (deleteContactButton) {
+                    const row = deleteContactButton.closest('[data-contact-row]');
+                    if (row) {
+                        row.remove();
+                    }
+                }
             });
-        });
+
+            addCardButton?.addEventListener('click', () => {
+                cardCounter += 1;
+                const newCard = createSupportCard(cardCounter);
+                if (cardsContainer && newCard) {
+                    cardsContainer.appendChild(newCard);
+                }
+            });
+        })();
     </script>
 @endsection

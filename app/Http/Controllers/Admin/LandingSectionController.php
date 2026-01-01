@@ -122,6 +122,7 @@ class LandingSectionController extends Controller
     public function contact(ContactSectionRequest $request)
     {
         [$section, $definition, $content] = $this->resolveSection('contact');
+        $content['support_cards'] = $this->pruneSupportCards($content['support_cards'] ?? []);
 
         if ($request->isMethod('post')) {
             $payload = $content;
@@ -132,9 +133,11 @@ class LandingSectionController extends Controller
             $payload['map_embed'] = $request->input('map_embed');
             $payload['location_title'] = $request->input('location_title');
             $payload['location_address'] = $request->input('location_address');
-            $payload['support_cards'] = $this->syncSupportCards(
-                $request->input('support_cards', []),
-                $content['support_cards'] ?? []
+            $payload['support_cards'] = $this->pruneSupportCards(
+                $this->syncSupportCards(
+                    $request->input('support_cards', []),
+                    $content['support_cards'] ?? []
+                )
             );
 
             if ($request->hasFile('location_image')) {
@@ -155,6 +158,44 @@ class LandingSectionController extends Controller
             'definition' => $definition,
             'previewUrl' => $this->previewUrl($definition),
         ]);
+    }
+
+    private function pruneSupportCards(array $cards): array
+    {
+        $removedIds = ['english_support', 'email_support'];
+        $removedContacts = ['+966541164491'];
+
+        return collect($cards)
+            ->reject(function ($card) use ($removedIds) {
+                return in_array($card['id'] ?? null, $removedIds, true);
+            })
+            ->map(function ($card) use ($removedContacts) {
+                $columns = collect($card['columns'] ?? [])
+                    ->map(function ($column) use ($removedContacts) {
+                        $contacts = collect($column['contacts'] ?? [])
+                            ->reject(function ($contact) use ($removedContacts) {
+                                return in_array($contact['value'] ?? null, $removedContacts, true);
+                            })
+                            ->values()
+                            ->all();
+
+                        return array_merge($column, ['contacts' => $contacts]);
+                    })
+                    ->reject(function ($column) {
+                        return empty($column['contacts']);
+                    })
+                    ->values()
+                    ->all();
+
+                $card['columns'] = $columns;
+
+                return $card;
+            })
+            ->reject(function ($card) {
+                return empty($card['columns']);
+            })
+            ->values()
+            ->all();
     }
 
     private function resolveSection(string $section): array

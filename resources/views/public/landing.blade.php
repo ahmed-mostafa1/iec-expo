@@ -2193,32 +2193,6 @@
       </div>
     </section>
 
-    <!-- Statistics Section -->
-    <div class="stats-section">
-      @forelse($heroStats as $index => $stat)
-      @php
-      $labelEn = data_get($stat, 'label.en', '');
-      $labelAr = data_get($stat, 'label.ar', $labelEn);
-      $label = $activeLocale === 'ar' ? $labelAr : $labelEn;
-      $value = $stat['value'] ?? 0;
-      $suffix = $stat['suffix'] ?? '';
-      $iconClass = $stat['icon'] ?? 'fas fa-circle';
-      @endphp
-      <div class="stat-item" data-aos="zoom-in" data-aos-delay="{{ 100 * ($index + 1) }}">
-        <div class="stat-icon-wrapper">
-          <i class="{{ $iconClass }}"></i>
-        </div>
-        <div class="stat-number" data-count="{{ $value }}" data-suffix="{{ $suffix }}">{{ $value }}</div>
-        <div class="stat-label" data-en="{{ e($labelEn) }}" data-ar="{{ e($labelAr) }}">{{ $label }}</div>
-        <div class="stat-progress">
-          <div class="progress-fill"></div>
-        </div>
-      </div>
-      @empty
-      <p class="text-center text-sm text-gray-500">{{ __('Stats will be announced soon.') }}</p>
-      @endforelse
-    </div>
-
 
     <!-- Registration Section -->
     @php
@@ -3235,6 +3209,32 @@
         @endif
       </div>
     </section>
+
+        <!-- Statistics Section -->
+    <div class="stats-section">
+      @forelse($heroStats as $index => $stat)
+      @php
+      $labelEn = data_get($stat, 'label.en', '');
+      $labelAr = data_get($stat, 'label.ar', $labelEn);
+      $label = $activeLocale === 'ar' ? $labelAr : $labelEn;
+      $value = $stat['value'] ?? 0;
+      $suffix = $stat['suffix'] ?? '';
+      $iconClass = $stat['icon'] ?? 'fas fa-circle';
+      @endphp
+      <div class="stat-item" data-aos="zoom-in" data-aos-delay="{{ 100 * ($index + 1) }}">
+        <div class="stat-icon-wrapper">
+          <i class="{{ $iconClass }}"></i>
+        </div>
+        <div class="stat-number" data-count="{{ $value }}" data-suffix="{{ $suffix }}">{{ $value }}</div>
+        <div class="stat-label" data-en="{{ e($labelEn) }}" data-ar="{{ e($labelAr) }}">{{ $label }}</div>
+        <div class="stat-progress">
+          <div class="progress-fill"></div>
+        </div>
+      </div>
+      @empty
+      <p class="text-center text-sm text-gray-500">{{ __('Stats will be announced soon.') }}</p>
+      @endforelse
+    </div>
 
 
     <!-- Contact Section -->
