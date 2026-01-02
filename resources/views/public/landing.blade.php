@@ -249,7 +249,7 @@
       height: 60px;
     }
     .nav-logo-bu{
-      height: 40px;
+      height: 60px;
     }
 
     .header-right {
@@ -353,6 +353,13 @@
       .mobile-menu-btn {
         display: block;
       }
+      .nav-logo {
+      height: 40px;
+    }
+    .nav-logo-bu{
+      height: 40px;
+    }
+
     }
 
     .mobile-nav {
@@ -378,7 +385,7 @@
       min-height: 100vh;
       display: flex;
       align-items: center;
-      padding: 6rem 0 4rem;
+      padding-bottom: 20px;
       position: relative;
       overflow: hidden;
     }
@@ -426,6 +433,12 @@
       .hero-video-frame {
         aspect-ratio: 16 / 8.5;
       }
+      .nav-logo {
+      height: 40px;
+    }
+    .nav-logo-bu{
+      height: 40px;
+    }
     }
 
     .hero-video-frame::after {
@@ -577,7 +590,7 @@
 
     /* Registration Section */
     .registration {
-      padding: 5rem 0;
+      padding: 1rem 0;
       background: rgb(var(--accent) / 0.2);
     }
 
@@ -608,6 +621,13 @@
       .section-title {
         font-size: 2.25rem;
       }
+      .nav-logo {
+      height: 40px;
+    }
+    .nav-logo-bu{
+      height: 40px;
+    }
+
     }
 
     .section-desc {
@@ -632,6 +652,13 @@
       .role-cards {
         grid-template-columns: repeat(2, 1fr);
       }
+      .nav-logo {
+      height: 40px;
+    }
+    .nav-logo-bu{
+      height: 40px;
+    }
+
     }
 
     @media (min-width: 768px) {
@@ -641,6 +668,13 @@
         max-width: calc((100% - 1.5rem) / 2);
         width: 100%;
       }
+      .nav-logo {
+      height: 40px;
+    }
+    .nav-logo-bu{
+      height: 40px;
+    }
+
 
       .form-card.guest-form {
         grid-column: 1 / -1;
@@ -662,6 +696,13 @@
       .role-cards.has-selection {
         grid-template-columns: 1fr;
       }
+      .nav-logo {
+      height: 40px;
+    }
+    .nav-logo-bu{
+      height: 40px;
+    }
+
     }
 
     .role-card {
