@@ -145,11 +145,7 @@
       justify-self: center;
     }
 
-    @media (min-width: 768px) {
-      .nav {
-        display: flex;
-      }
-    }
+
 
     .nav-link {
       text-decoration: none;
@@ -235,13 +231,7 @@
       }
     }
 
-    @media (prefers-reduced-motion: reduce) {
-      .nav-link {
-        animation: none;
-        opacity: 1;
-        transform: none;
-      }
-    }
+
 
 
 
@@ -342,24 +332,11 @@
     }
 
     .mobile-menu-btn {
-      display: block;
+      display: none;
       padding: 0.5rem;
       background: none;
       border: none;
       cursor: pointer;
-    }
-
-    @media (max-width: 768px) {
-      .mobile-menu-btn {
-        display: block;
-      }
-      .nav-logo {
-      height: 40px;
-    }
-    .nav-logo-bu{
-      height: 40px;
-    }
-
     }
 
     .mobile-nav {
@@ -382,7 +359,7 @@
 
     /* Hero Section */
     .hero {
-      min-height: 100vh;
+      min-height: 40vh;
       display: flex;
       align-items: center;
       padding-bottom: 20px;
@@ -410,7 +387,7 @@
       display: grid;
       place-items: center;
       gap: 2rem;
-      min-height: calc(100vh - 8rem);
+      min-height: calc(100vh - 20rem);
       width: 100vw;
     }
 
@@ -427,18 +404,6 @@
       aspect-ratio: 16 / 9;
       background: #000;
       animation: heroFloat 12s ease-in-out infinite;
-    }
-
-    @media (min-width: 640px) {
-      .hero-video-frame {
-        aspect-ratio: 16 / 8.5;
-      }
-      .nav-logo {
-      height: 40px;
-    }
-    .nav-logo-bu{
-      height: 40px;
-    }
     }
 
     .hero-video-frame::after {
@@ -530,11 +495,7 @@
       gap: 1.5rem;
     }
 
-    @media (min-width: 1024px) {
-      .highlights-grid {
-        grid-template-columns: repeat(4, 1fr);
-      }
-    }
+
 
     .highlight-card {
       background: rgb(var(--card));
@@ -617,19 +578,6 @@
       margin-bottom: 1rem;
     }
 
-    @media (min-width: 768px) {
-      .section-title {
-        font-size: 2.25rem;
-      }
-      .nav-logo {
-      height: 40px;
-    }
-    .nav-logo-bu{
-      height: 40px;
-    }
-
-    }
-
     .section-desc {
       font-size: 1.125rem;
       color: rgb(var(--muted-foreground));
@@ -648,61 +596,8 @@
       transition: all 0.5s;
     }
 
-    @media (min-width: 768px) {
-      .role-cards {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      .nav-logo {
-      height: 40px;
-    }
-    .nav-logo-bu{
-      height: 40px;
-    }
-
-    }
-
-    @media (min-width: 768px) {
-      .role-card.guest-card {
-        grid-column: 1 / -1;
-        justify-self: center;
-        max-width: calc((100% - 1.5rem) / 2);
-        width: 100%;
-      }
-      .nav-logo {
-      height: 40px;
-    }
-    .nav-logo-bu{
-      height: 40px;
-    }
-
-
-      .form-card.guest-form {
-        grid-column: 1 / -1;
-      }
-
-      .role-cards.guest-selected .guest-card,
-      .role-cards.guest-selected .guest-form {
-        grid-column: auto;
-        justify-self: stretch;
-        max-width: none;
-      }
-    }
-
     .role-cards.has-selection {
       grid-template-columns: 1fr 1.5fr;
-    }
-
-    @media (max-width: 767px) {
-      .role-cards.has-selection {
-        grid-template-columns: 1fr;
-      }
-      .nav-logo {
-      height: 40px;
-    }
-    .nav-logo-bu{
-      height: 40px;
-    }
-
     }
 
     .role-card {
@@ -793,11 +688,7 @@
       animation: fadeSlideIn 0.5s ease-out;
     }
 
-    @media (min-width: 768px) {
-      .form-card {
-        padding: 2rem;
-      }
-    }
+
 
     .form-card.active {
       display: block;
@@ -841,11 +732,7 @@
       gap: 1rem;
     }
 
-    @media (min-width: 768px) {
-      .form-grid-2 {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
+
 
     .form-group {
       display: flex;
@@ -991,12 +878,7 @@
       transform: scaleX(1);
     }
 
-    @media (prefers-reduced-motion: reduce) {
-      .about-video-container {
-        transform: scaleX(1);
-        transition: none;
-      }
-    }
+
 
     .about-grid {
       display: grid;
@@ -1004,11 +886,7 @@
       align-items: start;
     }
 
-    @media (min-width: 1024px) {
-      .about-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
+
 
     .about-col {
       opacity: 0;
@@ -1290,7 +1168,7 @@
       align-items: center;
       justify-content: center;
       /* padding: 1rem; */
-      border: solid 1px rgb(var(--border));
+      /* border: solid 1px rgb(var(--border)); */
     }
 
     .sponsor-featured-logo img {
@@ -1355,40 +1233,11 @@
       line-height: 1.7;
     }
 
-    @media (prefers-reduced-motion: reduce) {
-      .sponsor-featured-card {
-        animation: none;
-      }
-    }
 
-    @media (max-width: 900px) {
-      .sponsor-featured-media {
-        flex-basis: 30%;
-        max-width: 30%;
-      }
-    }
 
-    @media (max-width: 768px) {
-      .sponsor-featured-content {
-        flex-direction: column;
-        padding: 1.5rem;
-      }
 
-      .sponsor-featured-media {
-        flex-basis: auto;
-        max-width: none;
-        width: 100%;
-      }
 
-      .sponsor-featured-logo {
-        width: 100%;
-        /* margin: 0 auto; */
-      }
 
-      .sponsor-featured-desc {
-        display: none;
-      }
-    }
 
 
 
@@ -1426,6 +1275,7 @@
 
     .sponsor-card .sponsor-logo {
       width: 100%;
+      height: 100%;
       aspect-ratio: 1 / 1;
       border-radius: 1rem;
       overflow: hidden;
@@ -1570,27 +1420,15 @@
       grid-template-columns: 1fr;
     }
 
-    @media (min-width: 640px) {
-      .participants-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-    }
 
-    @media (min-width: 1024px) {
-      .participants-grid {
-        grid-template-columns: repeat(3, 1fr);
-      }
-    }
 
-    @media (min-width: 1280px) {
-      .participants-grid {
-        grid-template-columns: repeat(4, 1fr);
-      }
-    }
+
+
+
 
     .participant-card {
-      background: rgb(var(--card));
-      border: 1px solid rgb(var(--border));
+      /* background: rgb(var(--card));
+      border: 1px solid rgb(var(--border)); */
       border-radius: var(--radius);
       padding: 0.5rem;
       transition: all 0.45s cubic-bezier(0.4, 0, 0.2, 1);
@@ -1671,11 +1509,7 @@
       margin: 0 auto;
     }
 
-    @media (min-width: 1024px) {
-      .contact-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
+
 
     .contact-col {
       opacity: 0;
@@ -2058,11 +1892,7 @@
     }
 
     /* Stack on mobile if you want */
-    @media (max-width: 600px) {
-      .contact-info-card .contact-info-links.two-columns {
-        grid-template-columns: 1fr;
-      }
-    }
+
 
     .contact-info-column {
       display: flex;
@@ -2075,6 +1905,168 @@
       font-size: 0.9rem;
       margin-bottom: 0.25rem;
       opacity: 0.8;
+    }
+
+
+    /* Refactored Media Queries */
+
+    /* Min Width Queries (Mobile First) */
+    @media (min-width: 640px) {
+      .hero-video-frame {
+        aspect-ratio: 16 / 8.5;
+      }
+
+      .participants-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .nav-logo,
+      .nav-logo-bu {
+        height: 40px;
+      }
+    }
+
+    @media (min-width: 768px) {
+      .nav {
+        display: flex;
+      }
+
+      .section-title {
+        font-size: 2.25rem;
+      }
+
+      .role-cards {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .role-card.guest-card {
+        grid-column: 1 / -1;
+        justify-self: center;
+        max-width: calc((100% - 1.5rem) / 2);
+        width: 100%;
+      }
+
+      .form-card.guest-form {
+        grid-column: 1 / -1;
+      }
+
+      .role-cards.guest-selected .guest-card,
+      .role-cards.guest-selected .guest-form {
+        grid-column: auto;
+        justify-self: stretch;
+        max-width: none;
+      }
+
+      .form-card {
+        padding: 2rem;
+      }
+
+      .form-grid-2 {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      
+      .nav-logo,
+      .nav-logo-bu {
+        height: 40px;
+      }
+    }
+
+    @media (min-width: 1024px) {
+      .highlights-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+
+      .about-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+
+      .participants-grid {
+        grid-template-columns: repeat(3, 1fr);
+      }
+
+      .contact-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    @media (min-width: 1280px) {
+      .participants-grid {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
+
+    /* Max Width Queries */
+    @media (max-width: 900px) {
+      .sponsor-featured-media {
+        flex-basis: 30%;
+        max-width: 30%;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .mobile-menu-btn {
+        display: block;
+      }
+
+      .sponsor-featured-content {
+        flex-direction: column;
+        padding: 1.5rem;
+      }
+
+      .sponsor-featured-media {
+        flex-basis: auto;
+        max-width: none;
+        width: 100%;
+      }
+
+      .sponsor-featured-logo {
+        width: 100%;
+        /* margin: 0 auto; */
+      }
+
+      .sponsor-featured-desc {
+        display: none;
+      }
+      
+      .nav-logo,
+      .nav-logo-bu {
+        height: 40px;
+      }
+    }
+
+    @media (max-width: 767px) {
+      .role-cards.has-selection {
+        grid-template-columns: 1fr;
+      }
+      
+      .nav-logo,
+      .nav-logo-bu {
+        height: 40px;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .contact-info-card .contact-info-links.two-columns {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* Preference Queries */
+    @media (prefers-reduced-motion: reduce) {
+      .nav-link {
+        animation: none;
+        opacity: 1;
+        transform: none;
+      }
+
+      .about-video-container {
+        transform: scaleX(1);
+        transition: none;
+      }
+
+      .sponsor-featured-card {
+        animation: none;
+      }
     }
   </style>
 </head>
@@ -2171,7 +2163,7 @@
           <a href="#register" class="btn-primary nav-link" data-en="Register" data-ar="سجل الآن">Register</a>
           <a href="#about" class="nav-link" data-en="About" data-ar="عن المعرض">About</a>
           <a href="#sponsors" class="nav-link" data-en="Sponsors" data-ar="الرعاة">Sponsors</a>
-          <a href="#participants" class="nav-link" data-en="Icons" data-ar="أيقونات المعرض">Icons</a>
+          <a href="#participants" class="nav-link" data-en="Icons" data-ar="الأيقونات">Icons</a>
           <a href="#organizers" class="nav-link" data-en="Owned by" data-ar="المنظمون">Owned by</a>
           <a href="#contact" class="nav-link" data-en="Contact" data-ar="تواصل معنا">Contact</a>
         </nav>
@@ -2203,7 +2195,7 @@
         <a href="#register" class="mobile-nav-link" data-en="Register" data-ar="سجل الآن">Register</a>
         <a href="#about" class="mobile-nav-link" data-en="About" data-ar="عن المعرض">About</a>
         <a href="#sponsors" class="mobile-nav-link" data-en="Sponsors" data-ar="الرعاة">Sponsors</a>
-        <a href="#participants" class="mobile-nav-link" data-en="Icons" data-ar="أيقونات المعرض">Icons</a>
+        <a href="#participants" class="mobile-nav-link" data-en="Icons" data-ar="الأيقونات">Icons</a>
         <a href="#organizers" class="mobile-nav-link" data-en="Owned by" data-ar="المنظمون">Owned by</a>
         <a href="#contact" class="mobile-nav-link" data-en="Contact" data-ar="تواصل معنا">Contact</a>
         
@@ -3069,12 +3061,9 @@
 
               @endphp
               <article class="sponsor-card sponsor-{{ $tierKey }}" data-animate>
-                <a href="" class="sponsor-card-link">
                   <div class="sponsor-logo">
                     <img src="{{ $logoPath }}" alt="">
                   </div>
-
-                </a>
               </article>
               @endforeach
             </div>
@@ -3099,13 +3088,12 @@
 
               @endphp
               <article class="sponsor-card" data-animate>
-                <a href=""
-                  class="sponsor-card-link">
+                <!-- <a href=""
+                  class="sponsor-card-link"> -->
                   <div class="sponsor-logo">
                     <img src="{{ $logoPath }}" alt="">
                   </div>
-
-                </a>
+                <!-- </a> -->
               </article>
               @endforeach
             </div>
@@ -3123,8 +3111,8 @@
     <section class="participants" id="participants">
       <div class="container">
         <div class="section-header" data-animate>
-          <h2 class="section-title" data-en="Icons" data-ar="أيقونات المعرض">Icons</h2>
-          <p class="section-desc" data-en="Meet the industry leaders who will be showcasing at the event." data-ar="تعرّف على قادة الصناعة الذين سيشاركون في الحدث.">Meet the industry leaders who will be showcasing at the event.</p>
+          <h2 class="section-title" data-en="Icons" data-ar="الأيقونات">Icons</h2>
+          <p class="section-desc" data-en="Meet the icons of IEC 360&deg;" data-ar="تعرّف على الـ Icons  المشاركين في IEC 360&deg;">Meet the icons of IEC 360&deg;</p>
         </div>
 
         <div class="participants-grid">
@@ -3149,14 +3137,14 @@
               <span>{{ mb_strtoupper(mb_substr($participantName, 0, 1)) }}</span>
               @endif
             </div>
-            <div class="participant-name" data-en="{{ e($englishName) }}" data-ar="{{ e($arabicName) }}">
+            <!-- <div class="participant-name" data-en="{{ e($englishName) }}" data-ar="{{ e($arabicName) }}">
               {{ $participantName }}
               @if($participant->url)
               <svg class="icon icon-sm external-icon" viewBox="0 0 24 24">
                 <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14 21 3" />
               </svg>
               @endif
-            </div>
+            </div> -->
           </a>
           @empty
           <div class="participant-card" data-animate>
