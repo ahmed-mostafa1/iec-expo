@@ -3220,8 +3220,14 @@
 
         <!-- Statistics Section -->
     <div class="stats-section">
-      @forelse($heroStats as $index => $stat)
       @php
+      $defaultStat = ['label' => ['en' => '', 'ar' => ''], 'value' => 0, 'suffix' => '', 'icon' => 'fas fa-circle'];
+      $stats = array_pad($heroStats, 4, $defaultStat);
+      @endphp
+      
+      <!-- Stat 1 -->
+      @php
+      $stat = $stats[0];
       $labelEn = data_get($stat, 'label.en', '');
       $labelAr = data_get($stat, 'label.ar', $labelEn);
       $label = $activeLocale === 'ar' ? $labelAr : $labelEn;
@@ -3229,9 +3235,9 @@
       $suffix = $stat['suffix'] ?? '';
       $iconClass = $stat['icon'] ?? 'fas fa-circle';
       @endphp
-      <div class="stat-item" data-aos="zoom-in" data-aos-delay="{{ 100 * ($index + 1) }}">
-        <div class="stat-icon-wrapper">
-          <i class="{{ $iconClass }}"></i>
+      <div class="stat-item" data-aos="zoom-in" data-aos-delay="100">
+        <div class="stat-icon-wrapper stat-icon-wrapper-1">
+          <img src="{{ asset('img/icons/person.png') }}" alt="Stat Icon">
         </div>
         <div class="stat-number" data-count="{{ $value }}" data-suffix="{{ $suffix }}">{{ $value }}</div>
         <div class="stat-label" data-en="{{ e($labelEn) }}" data-ar="{{ e($labelAr) }}">{{ $label }}</div>
@@ -3239,9 +3245,69 @@
           <div class="progress-fill"></div>
         </div>
       </div>
-      @empty
-      <p class="text-center text-sm text-gray-500">{{ __('Stats will be announced soon.') }}</p>
-      @endforelse
+
+      <!-- Stat 2 -->
+      @php
+      $stat = $stats[1];
+      $labelEn = data_get($stat, 'label.en', '');
+      $labelAr = data_get($stat, 'label.ar', $labelEn);
+      $label = $activeLocale === 'ar' ? $labelAr : $labelEn;
+      $value = $stat['value'] ?? 0;
+      $suffix = $stat['suffix'] ?? '';
+      $iconClass = $stat['icon'] ?? 'fas fa-circle';
+      @endphp
+      <div class="stat-item" data-aos="zoom-in" data-aos-delay="200">
+        <div class="stat-icon-wrapper stat-icon-wrapper-2">
+          <img src="{{ asset('img/icons/call.png') }}" alt="Stat Icon">
+        </div>
+        <div class="stat-number" data-count="{{ $value }}" data-suffix="{{ $suffix }}">{{ $value }}</div>
+        <div class="stat-label" data-en="{{ e($labelEn) }}" data-ar="{{ e($labelAr) }}">{{ $label }}</div>
+        <div class="stat-progress">
+          <div class="progress-fill"></div>
+        </div>
+      </div>
+
+      <!-- Stat 3 -->
+      @php
+      $stat = $stats[2];
+      $labelEn = data_get($stat, 'label.en', '');
+      $labelAr = data_get($stat, 'label.ar', $labelEn);
+      $label = $activeLocale === 'ar' ? $labelAr : $labelEn;
+      $value = $stat['value'] ?? 0;
+      $suffix = $stat['suffix'] ?? '';
+      $iconClass = $stat['icon'] ?? 'fas fa-circle';
+      @endphp
+      <div class="stat-item" data-aos="zoom-in" data-aos-delay="300">
+        <div class="stat-icon-wrapper stat-icon-wrapper-3">
+          <img src="{{ asset('img/icons/calendar.png') }}" alt="Stat Icon">
+        </div>
+        <div class="stat-number" data-count="{{ $value }}" data-suffix="{{ $suffix }}">{{ $value }}</div>
+        <div class="stat-label" data-en="{{ e($labelEn) }}" data-ar="{{ e($labelAr) }}">{{ $label }}</div>
+        <div class="stat-progress">
+          <div class="progress-fill"></div>
+        </div>
+      </div>
+
+      <!-- Stat 4 -->
+      @php
+      $stat = $stats[3];
+      $labelEn = data_get($stat, 'label.en', '');
+      $labelAr = data_get($stat, 'label.ar', $labelEn);
+      $label = $activeLocale === 'ar' ? $labelAr : $labelEn;
+      $value = $stat['value'] ?? 0;
+      $suffix = $stat['suffix'] ?? '';
+      $iconClass = $stat['icon'] ?? 'fas fa-circle';
+      @endphp
+      <div class="stat-item" data-aos="zoom-in" data-aos-delay="400">
+        <div class="stat-icon-wrapper stat-icon-wrapper-4">
+``          <img src="{{ asset('img/icons/flag.png') }}" alt="Stat Icon">
+      </div>
+        <div class="stat-number" data-count="{{ $value }}" data-suffix="{{ $suffix }}">{{ $value }}</div>
+        <div class="stat-label" data-en="{{ e($labelEn) }}" data-ar="{{ e($labelAr) }}">{{ $label }}</div>
+        <div class="stat-progress">
+          <div class="progress-fill"></div>
+        </div>
+      </div>
     </div>
 
 
