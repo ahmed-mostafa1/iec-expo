@@ -13,7 +13,7 @@
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <style>
     :root {
-      --primary-color: #6024c1;
+      --primary-color: rgba(96, 36, 193, 1);
       --secondary-color: #6024c1;
       --accent-color: #6024c1;
       --dark-color: #1a1a1a;
@@ -27,7 +27,7 @@
       /* --card: 251 251 248; */
       --card: 18 18 18;
       --card-foreground: 248 248 248;
-      --primary: 36 96 193;
+      --primary: 152, 3, 189, 1;
       --primary-foreground: 251 251 248;
       --secondary: 226 233 226;
       --secondary-foreground: 69 84 69;
@@ -35,14 +35,14 @@
       --muted-foreground: 248 248 248;
       --accent: 28 28 28;
       --accent-foreground: 248 248 248;
-      --border: 152, 3, 189;
+      --border:152, 3, 189, 1;
       --ring: 51 153 88;
       --radius: 0.75rem;
       --chart-1: #9803bd;
       --chart-2: 70 185 147;
       --chart-3: 69 161 161;
       --button-bg: #9803bd;
-      --button-hover-bg: #6024c1;
+      --button-hover-bg: rgba(96, 36, 193, 1);
       --button-text: #ffffff;
       --hover-accent: #ffffff;
     }
@@ -2164,7 +2164,7 @@
           <a href="#about" class="nav-link" data-en="About" data-ar="عن المعرض">About</a>
           <a href="#sponsors" class="nav-link" data-en="Sponsors" data-ar="الرعاة">Sponsors</a>
           <a href="#participants" class="nav-link" data-en="Icons" data-ar="الأيقونات">Icons</a>
-          <a href="#organizers" class="nav-link" data-en="Owned by" data-ar="المنظمون">Owned by</a>
+          <a href="#organizers" class="nav-link" data-en="Owned by" data-ar="الشركة المالكة">Owned by</a>
           <a href="#contact" class="nav-link" data-en="Contact" data-ar="تواصل معنا">Contact</a>
         </nav>
 
@@ -2196,7 +2196,7 @@
         <a href="#about" class="mobile-nav-link" data-en="About" data-ar="عن المعرض">About</a>
         <a href="#sponsors" class="mobile-nav-link" data-en="Sponsors" data-ar="الرعاة">Sponsors</a>
         <a href="#participants" class="mobile-nav-link" data-en="Icons" data-ar="الأيقونات">Icons</a>
-        <a href="#organizers" class="mobile-nav-link" data-en="Owned by" data-ar="المنظمون">Owned by</a>
+        <a href="#organizers" class="mobile-nav-link" data-en="Owned by" data-ar="الشركة المالكة">Owned by</a>
         <a href="#contact" class="mobile-nav-link" data-en="Contact" data-ar="تواصل معنا">Contact</a>
         
       </nav>
@@ -3161,7 +3161,7 @@
     <section class="organizers" id="organizers">
       <div class="container">
         <div class="section-header" data-animate>
-          <h2 class="section-title" data-en="Owned by" data-ar="المنظمون">Owned by</h2>
+          <h2 class="section-title" data-en="Owned by" data-ar="الشركة المالكة">Owned by</h2>
           <p class="section-desc" data-en="Meet the teams orchestrating the IEC Expo experience." data-ar="تعرّف على الفرق التي تنظم تجربة المعرض الدولي للتجارة اﻹلكترونية.">
             Meet the teams orchestrating the IEC Expo experience.
           </p>
