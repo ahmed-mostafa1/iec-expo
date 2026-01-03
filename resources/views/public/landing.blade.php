@@ -362,7 +362,7 @@
       min-height: 40vh;
       display: flex;
       align-items: center;
-      padding-bottom: 20px;
+      padding-bottom: 0px;
       position: relative;
       overflow: hidden;
     }
@@ -387,7 +387,7 @@
       display: grid;
       place-items: center;
       gap: 2rem;
-      min-height: calc(100vh - 20rem);
+      min-height: calc(100vh - 50rem);
       width: 100vw;
     }
 
@@ -551,8 +551,10 @@
 
     /* Registration Section */
     .registration {
-      padding: 1rem 0;
-      background: rgb(var(--accent) / 0.2);
+      padding:  0px;
+      background-image: url('/img/background.png');
+      background-size: cover;
+      background-position: center;
     }
 
     .registration {
@@ -1048,52 +1050,6 @@
       grid-template-columns: repeat(auto-fit, minmax(300px, 250px));
     }
 
-    /* .organizer-grid {
-      display: grid;
-      gap: 1.5rem;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      max-width: 1000px;
-      margin: 0 auto;
-    }
-
-    /* @media (max-width: 640px) { */
-    /* .organizer-grid {
-        grid-template-columns: 1fr;
-      }
-    } 
-
-    .organizer-details {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      gap: 0.75rem;
-      text-align: center;
-    }
-
-    .organizer-name {
-      font-size: 1.25rem;
-      font-weight: 700;
-      margin: 0;
-      color: rgb(var(--foreground));
-    }
-
-    .organizer-desc {
-      font-size: 0.95rem;
-      color: rgb(var(--muted-foreground));
-      line-height: 1.5;
-    }
-
-    .organizer-link {
-      color: var(--hover-accent);
-      text-decoration: none;
-      font-weight: 600;
-      align-self: center;
-    }
-
-    .organizer-link:hover {
-      text-decoration: underline;
-    } */
 
     .sponsor-featured-list {
       display: flex;
@@ -1232,8 +1188,6 @@
       color: rgb(var(--muted-foreground));
       line-height: 1.7;
     }
-
-
 
 
 
@@ -1405,13 +1359,17 @@
 
     .organizers {
       padding: 5rem 0;
-      background: rgb(var(--background));
+      background-image: url('/img/background2.png');
+      background-size: cover;
+      background-position: center;
     }
 
     /* Participants Section */
     .participants {
-      padding: 5rem 0;
-      background: rgb(var(--background));
+      padding:  0px;
+      background-image: url('/img/background2.png');
+      background-size: cover;
+      background-position: center;
     }
 
     .participants-grid {
@@ -1420,15 +1378,7 @@
       grid-template-columns: 1fr;
     }
 
-
-
-
-
-
-
     .participant-card {
-      /* background: rgb(var(--card));
-      border: 1px solid rgb(var(--border)); */
       border-radius: var(--radius);
       padding: 0.5rem;
       transition: all 0.45s cubic-bezier(0.4, 0, 0.2, 1);
@@ -1440,7 +1390,6 @@
       flex-direction: column;
       align-items: center;
       text-align: center;
-      /* min-height: 200px; */
       will-change: transform;
       position: relative;
       overflow: hidden;
@@ -1499,7 +1448,9 @@
     /* Contact Section */
     .contact {
       padding: 5rem 0;
-      background: rgb(var(--accent) / 0.2);
+      background-image: url('/img/background.png');
+      background-size: cover;
+      background-position: center;
     }
 
     .contact-grid {
