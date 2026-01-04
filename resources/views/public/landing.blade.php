@@ -1547,7 +1547,7 @@
     .location-card {
       margin: auto;
       margin-top: 2rem;
-      background: rgb(var(--card));
+      background: #ffffff;
       border: 1px solid rgb(var(--border));
       border-radius: var(--radius);
       padding: 1.5rem;
@@ -1559,6 +1559,7 @@
       display: flex;
       align-items: start;
       gap: 1rem;
+      justify-content: center;
     }
 
     .location-title {
@@ -1724,7 +1725,7 @@
     }
 
     .stat-item {
-      background: #88808048;
+      background: #dadadaff;
       padding: 40px 30px;
       border-radius: 20px;
       text-align: center;
@@ -1758,7 +1759,6 @@
     .stat-icon-wrapper {
       width: 70px;
       height: 70px;
-      background: linear-gradient(135deg, rgba(0, 255, 68, 0.1), rgba(0, 255, 136, 0.05));
       border-radius: 50%;
       display: flex;
       align-items: center;
@@ -1770,7 +1770,6 @@
     }
 
     .stat-item:hover .stat-icon-wrapper {
-      background: linear-gradient(135deg, var(--secondary-color), var(--accent-color));
       color: white;
       transform: rotateY(180deg);
     }
@@ -1778,13 +1777,13 @@
     .stat-number {
       font-size: 2.8rem;
       font-weight: 800;
-      color: #9873AC;
+      color: rgb(var(--primary));;
       margin-bottom: 10px;
     }
 
     .stat-label {
       font-size: 1rem;
-      color: #9873AC;
+      color: rgb(var(--primary));;
       text-transform: uppercase;
       letter-spacing: 1px;
       margin-bottom: 20px;
@@ -1802,7 +1801,7 @@
     .progress-fill {
       width: 0;
       height: 100%;
-      background: linear-gradient(90deg, var(--secondary-color), var(--accent-color));
+      background:rgb(var(--primary));;
       border-radius: 3px;
       transition: width 2s ease;
     }
@@ -3087,7 +3086,7 @@
     <div class="stats-section">
       @php
       $defaultStat = ['label' => ['en' => '', 'ar' => ''], 'value' => 0, 'suffix' => '', 'icon' => 'fas fa-circle'];
-      $stats = array_pad($heroStats, 4, $defaultStat);
+      $stats = array_pad($heroStats, 5, $defaultStat);
       @endphp
       
       <!-- Stat 1 -->
@@ -3102,7 +3101,7 @@
       @endphp
       <div class="stat-item" data-aos="zoom-in" data-aos-delay="100">
         <div class="stat-icon-wrapper stat-icon-wrapper-1">
-          <img src="{{ asset('img/icons/person.png') }}" alt="Stat Icon">
+          <img src="{{ asset('img/icons/people.png') }}" alt="Stat Icon">
         </div>
         <div class="stat-number" data-count="{{ $value }}" data-suffix="{{ $suffix }}">{{ $value }}</div>
         <div class="stat-label" data-en="{{ e($labelEn) }}" data-ar="{{ e($labelAr) }}">{{ $label }}</div>
@@ -3123,7 +3122,7 @@
       @endphp
       <div class="stat-item" data-aos="zoom-in" data-aos-delay="200">
         <div class="stat-icon-wrapper stat-icon-wrapper-2">
-          <img src="{{ asset('img/icons/call.png') }}" alt="Stat Icon">
+          <img src="{{ asset('img/icons/organization.png') }}" alt="Stat Icon">
         </div>
         <div class="stat-number" data-count="{{ $value }}" data-suffix="{{ $suffix }}">{{ $value }}</div>
         <div class="stat-label" data-en="{{ e($labelEn) }}" data-ar="{{ e($labelAr) }}">{{ $label }}</div>
@@ -3144,7 +3143,7 @@
       @endphp
       <div class="stat-item" data-aos="zoom-in" data-aos-delay="300">
         <div class="stat-icon-wrapper stat-icon-wrapper-3">
-          <img src="{{ asset('img/icons/calendar.png') }}" alt="Stat Icon">
+          <img src="{{ asset('img/icons/sponsor.png') }}" alt="Stat Icon">
         </div>
         <div class="stat-number" data-count="{{ $value }}" data-suffix="{{ $suffix }}">{{ $value }}</div>
         <div class="stat-label" data-en="{{ e($labelEn) }}" data-ar="{{ e($labelAr) }}">{{ $label }}</div>
@@ -3165,8 +3164,29 @@
       @endphp
       <div class="stat-item" data-aos="zoom-in" data-aos-delay="400">
         <div class="stat-icon-wrapper stat-icon-wrapper-4">
-``          <img src="{{ asset('img/icons/flag.png') }}" alt="Stat Icon">
+                 <img src="{{ asset('img/icons/workshop.png') }}" alt="Stat Icon">
       </div>
+        <div class="stat-number" data-count="{{ $value }}" data-suffix="{{ $suffix }}">{{ $value }}</div>
+        <div class="stat-label" data-en="{{ e($labelEn) }}" data-ar="{{ e($labelAr) }}">{{ $label }}</div>
+        <div class="stat-progress">
+          <div class="progress-fill"></div>
+        </div>
+      </div>
+
+      <!-- Stat 5 -->
+      @php
+      $stat = $stats[4];
+      $labelEn = data_get($stat, 'label.en', '');
+      $labelAr = data_get($stat, 'label.ar', $labelEn);
+      $label = $activeLocale === 'ar' ? $labelAr : $labelEn;
+      $value = $stat['value'] ?? 0;
+      $suffix = $stat['suffix'] ?? '';
+      $iconClass = $stat['icon'] ?? 'fas fa-circle';
+      @endphp
+      <div class="stat-item" data-aos="zoom-in" data-aos-delay="500">
+        <div class="stat-icon-wrapper stat-icon-wrapper-5">
+          <img src="{{ asset('img/icons/media.png') }}" alt="Stat Icon">
+        </div>
         <div class="stat-number" data-count="{{ $value }}" data-suffix="{{ $suffix }}">{{ $value }}</div>
         <div class="stat-label" data-en="{{ e($labelEn) }}" data-ar="{{ e($labelAr) }}">{{ $label }}</div>
         <div class="stat-progress">
@@ -3202,7 +3222,7 @@
       <div class="container">
         <div class="section-header" data-animate>
           <h2 class="section-title" data-en="{{ e($contactTitleBlock['en']) }}" data-ar="{{ e($contactTitleBlock['ar']) }}">{{ $contactTitleBlock['text'] }}</h2>
-          <p class="section-desc" data-en="{{ e($contactDescriptionBlock['en']) }}" data-ar="{{ e($contactDescriptionBlock['ar']) }}">{{ $contactDescriptionBlock['text'] }}</p>
+          <!-- <p class="section-desc" data-en="{{ e($contactDescriptionBlock['en']) }}" data-ar="{{ e($contactDescriptionBlock['ar']) }}">{{ $contactDescriptionBlock['text'] }}</p> -->
         </div>
 
         <div class="contact-grid">
@@ -3298,8 +3318,8 @@
               </svg>
             </div>
             <div>
-              <div class="location-title" data-en="{{ e($locationTitleBlock['en']) }}" data-ar="{{ e($locationTitleBlock['ar']) }}">{{ $locationTitleBlock['text'] }}</div>
-              <p class="location-address" data-en="{{ e($locationAddressBlock['en']) }}" data-ar="{{ e($locationAddressBlock['ar']) }}">{{ $locationAddressBlock['text'] }}</p>
+              <div class="location-title"><img src="{{ asset('img/theArena.png') }}" alt="" style="text-center;"/> </div>
+              <!-- <p class="location-address" data-en="{{ e($locationAddressBlock['en']) }}" data-ar="{{ e($locationAddressBlock['ar']) }}">{{ $locationAddressBlock['text'] }}</p> -->
             </div>
           </div>
           @if ($locationImageUrl)
@@ -3326,8 +3346,8 @@
   <footer class="footer">
     <div class="container">
       <div class="footer-inner">
-        <div class="footer-text"> <span data-en="INTERNATIONAL E-COMMERCE EXPO | Terms & Conditions" data-ar="المعرض الدولي للتجارة اﻹلكترونية"> INTERNATIONAL E-COMMERCE EXPO | Terms & Conditions</span></div>
-        <div class="footer-text" data-en="All rights reserved." data-ar="جميع الحقوق محفوظة© 2025.">2025© All rights reserved.</div>
+        <div class="footer-text"> <span data-en="IEC 360 &deg; EXPO" data-ar="المعرض الدولي للتجارة اﻹلكترونية"> IEC 360 &deg; EXPO</span></div>
+        <div class="footer-text" data-en="All rights reserved." data-ar="جميع الحقوق محفوظة© 2026.">2026© All rights reserved.</div>
       </div>
     </div>
   </footer>
