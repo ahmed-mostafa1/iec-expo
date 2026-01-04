@@ -2866,25 +2866,67 @@
 
           <div class="about-col" data-animate>
             @php $goalsTitle = $aboutTranslate(['en' => __('Our Goals'), 'ar' => __('أهدافنا')], __('Our Goals')); @endphp
-            <h2 class="about-title" data-en="{{ e($goalsTitle['en']) }}" data-ar="{{ e($goalsTitle['ar']) }}" style="margin-bottom: 1.5rem;">{{ $goalsTitle['text'] }}</h2>
+            <h2 class="about-title" data-en="" data-ar="" style="margin-bottom: 1.5rem;"> . </h2>
             <div class="goals-list">
-              @forelse($goals as $goal)
+              @php
+              $goals = [
+                [
+                  'title' => ['en' => 'Objectives', 'ar' => 'الأهــــداف'],
+                  'description' => [
+                    'en' => 'With distinction and uniqueness, the IEC
+Trade Exhibition returns in its third edition
+under the theme IEC360°, continuing its
+journey as an interactive platform that
+brings together innovation, development,
+and connection in an exceptional
+experience that unites ambitious minds
+and leaders from various sectors under
+one roof',
+                    'ar' => 'يهدف المعرض إلى إبراز خبرات الأيكونز والتواصل مع
+جمهـــور متخصص لخلق فرص تعـــاون ومعرفة تدعم
+ّ نمـــو الأعمال، مـــع توفير مســـاحة تمكن الشـــركات
+الناشئة من بناء شراكات وعلاقات وتطوير مشاريعها.',
+                  ],
+                  'icon' => asset('img/icons/flag.png'),
+                ],
+                [
+                  'title' => ['en' => 'Mission', 'ar' => 'الرسالة'],
+                  'description' => [
+                    'en' => 'The exhibition aims to empower
+individuals and organizations, enhance
+innovation, and build strategic
+partnerships that contribute to developing
+business environments in alignment
+with Saudi Vision 2030.',
+                    'ar' => 'يهـــدف المعـــرض إلى تمكيـــن الأفـــراد والمنظمات،
+وتعزيز الابتكار، وبناء شراكات استراتيجية تسهم في
+تطــــــوير بيئـــــــات الأعمـــــــال بمـــا يـــــــواكب رؤيـــــــة
+المملكة .203',
+                  ],
+                  'icon' => asset('img/icons/message.png'),
+                ],
+              ];
+              @endphp
+              @foreach($goals as $goal)
               @php
               $goalTitle = $aboutTranslate(data_get($goal, 'title'), '');
               $goalDesc = $aboutTranslate(data_get($goal, 'description'), '');
+              $goalIcon = data_get($goal, 'icon');
+              $goalIconUrl = $goalIcon
+                ? (\App\Models\LandingSection::mediaUrl($goalIcon) ?? $goalIcon)
+                : asset('img/icons/star.png');
+              $goalIconAlt = $goalTitle['text'] ? ($goalTitle['text'].' icon') : __('Goal Icon');
               @endphp
               <div class="goal-card" data-animate>
                 <div class="goal-icon">
-                  <img src="{{ asset('img/icons/star.png') }}" alt="Goal Icon" style="width: 40px; height: 40px;">
+                  <img src="{{ $goalIconUrl }}" alt="{{ e($goalIconAlt) }}" style="width: 40px; height: 40px;">
                 </div>
                 <div>
                   <h3 class="goal-title" data-en="{{ e($goalTitle['en']) }}" data-ar="{{ e($goalTitle['ar']) }}">{{ $goalTitle['text'] }}</h3>
                   <p class="goal-desc" data-en="{{ e($goalDesc['en']) }}" data-ar="{{ e($goalDesc['ar']) }}">{{ $goalDesc['text'] }}</p>
                 </div>
               </div>
-              @empty
-              <p class="text-sm text-gray-200">{{ __('Goals will be announced soon.') }}</p>
-              @endforelse
+              @endforeach
             </div>
           </div>
         </div>
