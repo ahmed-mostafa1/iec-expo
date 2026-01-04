@@ -66,8 +66,8 @@ return [
                 ],
                 'visitor_card' => [
                     'title' => [
-                        'en' => 'Visitor / Client',
-                        'ar' => 'زائر / عميل',
+                        'en' => 'Visitor',
+                        'ar' =>'الزائر',
                     ],
                     'description' => [
                         'en' => 'Attend the conference and explore opportunities',

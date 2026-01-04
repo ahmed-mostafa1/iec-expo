@@ -20,8 +20,8 @@ class RegistrationSectionRequest extends FormRequest
         return [
             'title.en' => ['required', 'string'],
             'title.ar' => ['required', 'string'],
-            'description.en' => ['required', 'string'],
-            'description.ar' => ['required', 'string'],
+            'description.en' => ['nullable', 'string'],
+            'description.ar' => ['nullable', 'string'],
             'visitor_card.title.en' => ['required', 'string'],
             'visitor_card.title.ar' => ['required', 'string'],
             'visitor_card.description.en' => ['required', 'string'],
