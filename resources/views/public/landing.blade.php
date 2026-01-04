@@ -445,32 +445,7 @@
       font-weight: 700;
     }
 
-    /* Scroll indicator */
-    /* .scroll-indicator {
-      position: absolute;
-      bottom: 0.5rem;
-      left: 50%;
-      transform: translateX(-50%);
-      animation: bounce 1s infinite;
-      z-index: 30;
-      text-decoration: none;
-      color: rgb(var(--muted-foreground));
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 44px;
-      height: 44px;
-      border-radius: 999px;
-      border: 1px solid rgb(var(--border));
-      background: rgb(var(--card) / 0.6);
-      backdrop-filter: blur(6px);
-    }
-
-    .scroll-indicator:hover {
-      color: rgb(var(--primary));
-      border-color: rgb(var(--primary) / 0.4);
-    } */
-
+  
     @keyframes bounce {
 
       0%,
@@ -552,7 +527,7 @@
     /* Registration Section */
     .registration {
       padding:  0px;
-      background-image: url('/img/background.png');
+      background-image: url( "{{ asset('/img/background.png') }}");
       background-size: cover;
       background-position: center;
     }
@@ -1359,7 +1334,7 @@
 
     .organizers {
       padding: 5rem 0;
-      background-image: url('/img/background2.png');
+      background-image: url("{{ asset('/img/background2.png') }}");
       background-size: cover;
       background-position: center;
     }
@@ -1367,7 +1342,7 @@
     /* Participants Section */
     .participants {
       padding:  0px;
-      background-image: url('/img/background2.png');
+      background-image: url("{{ asset('/img/background2.png') }}");
       background-size: cover;
       background-position: center;
     }
@@ -1448,7 +1423,7 @@
     /* Contact Section */
     .contact {
       padding: 5rem 0;
-      background-image: url('/img/background.png');
+      background-image: url("{{ asset('/img/background.png') }}");
       background-size: cover;
       background-position: center;
     }
