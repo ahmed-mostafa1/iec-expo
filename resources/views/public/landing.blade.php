@@ -993,7 +993,7 @@
     /* Sponsors Section */
     .sponsors {
       padding: 5rem 0;
-      background: rgb(var(--accent) / 0.2);
+      background: transparent;
     }
 
     .sponsor-tiers {
@@ -1319,19 +1319,24 @@
       text-decoration: none;
     }
 
-    .organizers {
-      padding: 5rem 0;
-      background-image: url("{{ asset('/img/background2.png') }}");
+    .sponsor-participant-organizer-band {
+      background-image: url("{{ asset('/img/background.png') }}");
       background-size: cover;
       background-position: center;
+      background-repeat: no-repeat;
+    }
+
+    .engagement-band {
+      background: transparent;
+    }
+
+    .organizers {
+      padding: 5rem 0;
     }
 
     /* Participants Section */
     .participants {
-      padding:  0px;
-      background-image: url("{{ asset('/img/background2.png') }}");
-      background-size: cover;
-      background-position: center;
+      padding: 0px;
     }
 
     .participants-grid {
@@ -1410,9 +1415,14 @@
     /* Contact Section */
     .contact {
       padding: 5rem 0;
-      background-image: url("{{ asset('/img/background.png') }}");
+      background: transparent;
+    }
+
+    .stats-contact-band {
+      background-image: url("{{ asset('/img/background1.png') }}");
       background-size: cover;
       background-position: center;
+      background-repeat: no-repeat;
     }
 
     .contact-grid {
@@ -2884,6 +2894,7 @@
 
 
 
+    <div class="sponsor-participant-organizer-band">
     <!-- Sponsors Section -->
     <section class="sponsors" id="sponsors">
       <div class="container">
@@ -2960,7 +2971,6 @@
         </div>
       </div>
     </section>
-
     <!-- Participants Section -->
     <section class="participants" id="participants">
       <div class="container">
@@ -3069,7 +3079,10 @@
         @endif
       </div>
     </section>
+    </div>
 
+        <div class="stats-contact-band">
+        <div class="engagement-band">
         <!-- Statistics Section -->
     <div class="stats-section">
       @php
@@ -3161,7 +3174,6 @@
         </div>
       </div>
     </div>
-
 
     <!-- Contact Section -->
     @php
@@ -3306,6 +3318,8 @@
                   <!-- map was here -->
       </div>
     </section>
+        </div>
+    </div>
   </main>
 
   <!-- Footer -->
