@@ -90,10 +90,14 @@
     }
 
     body {
-      font-family: 'Cairo', 'Work Sans', sans-serif;
+      font-family: 'Poppins', sans-serif;
       background-color: rgb(var(--background));
       color: rgb(var(--foreground));
       line-height: 1.6;
+    }
+
+    body.locale-ar {
+      font-family: 'Somar', sans-serif;
     }
 
     html {
@@ -273,7 +277,7 @@
       cursor: pointer;
       transition: color 0.2s;
       color: #fff;
-      font-family: 'Cairo', 'Work Sans', sans-serif;
+      font-family: inherit;
     }
 
     .lang-switch:hover {
@@ -281,7 +285,7 @@
     }
 
     #lang-text {
-      font-family: 'Cairo', 'Work Sans', sans-serif;
+      font-family: inherit;
     }
 
     .btn {
@@ -997,8 +1001,8 @@
 
     .sponsor-tier-title {
       text-align: center;
-      font-size: 2rem !important;
-      font-weight: 600;
+      font-size: 2rem;
+      /* font-weight: 600; */
       margin-bottom: 1rem;
       color: rgb(var(--border));
     }
@@ -1655,7 +1659,7 @@
 
     /* RTL Support */
     [dir="rtl"] {
-      font-family: 'Cairo', sans-serif;
+      font-family: inherit;
     }
 
     /* Icons (using SVG) */
@@ -1999,7 +2003,7 @@
   </style>
 </head>
 
-<body>
+<body class="{{ app()->getLocale() === 'ar' ? 'locale-ar' : 'locale-en' }}">
   @php
   $publicSponsors = \App\Models\PublicSponsor::query()
   ->where('is_active', true)
@@ -2271,14 +2275,14 @@
       <div class="container">
         <div class="section-header" data-animate>
           <h2 class="section-title" data-en="{{ e($registrationTitle['en']) }}" data-ar="{{ e($registrationTitle['ar']) }}">{{ $registrationTitle['text'] }}</h2>
-          <p class="section-desc" data-en="{{ e($registrationDescription['en']) }}" data-ar="{{ e($registrationDescription['ar']) }}">{{ $registrationDescription['text'] }}</p>
+          <!-- <p class="section-desc" data-en="{{ e($registrationDescription['en']) }}" data-ar="{{ e($registrationDescription['ar']) }}">{{ $registrationDescription['text'] }}</p> -->
         </div>
 
         <div class="registration-content">
           <div class="role-cards" id="role-cards">
-            <div class="row-logo" id="sponsor-row-logo">
+            <!-- <div class="row-logo" id="sponsor-row-logo">
               <img src="{{ asset('img/IEC-logo.png') }}" alt="IEC Logo">
-            </div>
+            </div> -->
 
             <div class="role-card" id="exhibitor-card" onclick="selectRole('exhibitor')">
               <div class="role-icon">
@@ -2903,7 +2907,7 @@
     <section class="sponsors" id="sponsors">
       <div class="container">
         <div class="section-header" data-animate>
-          <h2 class="section-title" data-en="Sponsors" data-ar="الرعاة">Sponsors</h2>
+          <h2 class="section-title" data-en="Sponsors" data-ar="الرعاة" style="font: size 3rem !important;;">Sponsors</h2>
           <!-- <p class="section-desc" data-en="We are grateful to our sponsors who make this event possible." data-ar="نحن ممتنون لرعاتنا الذين يجعلون هذا الحدث ممكناً.">We are grateful to our sponsors who make this event possible.</p> -->
         </div>
 
@@ -2980,8 +2984,8 @@
     <section class="participants" id="participants">
       <div class="container">
         <div class="section-header" data-animate>
-          <h2 class="section-title" data-en="Icons" data-ar="الأيقونات">Icons</h2>
-          <p class="section-desc" data-en="Meet the icons of IEC 360&deg;" data-ar="تعرّف على الـ Icons  المشاركين في IEC 360&deg;">Meet the icons of IEC 360&deg;</p>
+          <h2 class="section-title" data-en="ICONS" data-ar="الأيكونز">ICONS</h2>
+          <!-- <p class="section-desc" data-en="Meet the icons of IEC 360&deg;" data-ar="تعرّف على الـ Icons  المشاركين في IEC 360&deg;">Meet the icons of IEC 360&deg;</p> -->
         </div>
 
         <div class="participants-grid">
