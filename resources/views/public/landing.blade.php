@@ -9,7 +9,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&family=Work+Sans:wght@400;500;600;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Cairo:wght@400;500;600;700&family=Work+Sans:wght@400;500;600;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
   <style>
     :root {
@@ -45,6 +45,8 @@
       --button-hover-bg: rgba(96, 36, 193, 1);
       --button-text: #ffffff;
       --hover-accent: #ffffff;
+      --font-en: 'Poppins', sans-serif;
+      --font-ar: 'Somar', sans-serif;
     }
 
 
@@ -90,14 +92,15 @@
     }
 
     body {
-      font-family: 'Poppins', sans-serif;
+      --font-base: var(--font-en);
+      font-family: var(--font-base);
       background-color: rgb(var(--background));
       color: rgb(var(--foreground));
       line-height: 1.6;
     }
 
     body.locale-ar {
-      font-family: 'Somar', sans-serif;
+      --font-base: var(--font-ar);
     }
 
     html {
@@ -277,7 +280,7 @@
       cursor: pointer;
       transition: color 0.2s;
       color: #fff;
-      font-family: inherit;
+      font-family: var(--font-base);
     }
 
     .lang-switch:hover {
@@ -285,7 +288,7 @@
     }
 
     #lang-text {
-      font-family: inherit;
+      font-family: var(--font-base);
     }
 
     .btn {
@@ -1033,28 +1036,36 @@
 
 
     .sponsor-featured-list {
-      display: flex;
-      flex-direction: column;
-      gap: 2rem;
-      max-width: 70%;
+      display: grid;
+      gap: 1.5rem;
+      justify-content: center;
+      justify-items: center;
+      max-width: 1000px;
       margin: 0 auto;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 250px));
     }
 
     .sponsor-featured-card {
       width: 100%;
-      position: relative;
-      border-radius: 1.5rem;
-      padding: 2px;
-      --sponsor-gradient: linear-gradient(120deg, #2dd4bf, #0f9f6e, #2dd4bf);
-      background: var(--sponsor-gradient);
-      background-size: 250% 250%;
-      animation: sponsorBorderFlow 8s linear infinite;
+      background: transparent;
+      border: 1px solid rgb(var(--border) / 0.6);
+      border-radius: var(--radius);
+      padding: 0.5rem;
+      transition: all 0.5s;
       overflow: hidden;
+      min-height: 260px;
+      will-change: transform;
     }
 
+    .sponsor-featured-card:hover {
+      box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.25);
+      transform: translateY(0) scale(1.02);
+      background: rgb(var(--card) / 0.4);
+      box-shadow: #9803bde1 0px 0px 10px, #9803bde1 0px 0px 20px, #9803bde1 0px 0px 30px, #9803bde1 0px 0px 40px, #9803bde1 0px 0px 50px;
+    }
 
     .sponsor-featured-card.sponsor-strategic {
-      --sponsor-gradient: linear-gradient(120deg, #9803bd, #9803bd, #9803bd);
+      border-color: rgba(253, 230, 138, 0.6);
     }
 
     .sponsor-featured-card.sponsor-business {
@@ -1079,17 +1090,18 @@
       position: relative;
       z-index: 1;
       display: flex;
-      gap: 2rem;
+      flex-direction: column;
+      gap: 1rem;
       align-items: stretch;
-      padding: 2rem;
-      border-radius: calc(1.5rem - 2px);
-      background: #000000;
-      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6);
+      padding: 0;
+      border-radius: 0;
+      background: transparent;
+      box-shadow: none;
     }
 
     .sponsor-featured-media {
-      flex: 0 0 25%;
-      max-width: 25%;
+      flex: 1;
+      max-width: 100%;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -1100,18 +1112,18 @@
       width: 100%;
       aspect-ratio: 1 / 1;
       border-radius: 1rem;
-      /* background: #ffffff; */
+      background: rgb(var(--muted));
       display: flex;
       align-items: center;
       justify-content: center;
-      /* padding: 1rem; */
-      /* border: solid 1px rgb(var(--border)); */
+      box-shadow: inset 0 0 0 1px rgb(var(--border) / 1);
     }
 
     .sponsor-featured-logo img {
       width: 100%;
       height: 100%;
       object-fit: contain;
+      display: block;
     }
 
     .sponsor-visit-btn {
@@ -1136,38 +1148,7 @@
     }
 
     .sponsor-featured-body {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      gap: 0.75rem;
-    }
-
-    .sponsor-featured-label {
-      font-size: 0.85rem;
-      letter-spacing: 0.2em;
-      font-weight: 600;
-      text-transform: uppercase;
-      color: rgb(var(--primary));
-    }
-
-    .sponsor-featured-name-link {
-      text-decoration: none;
-    }
-
-    .sponsor-featured-name {
-      font-size: clamp(1.5rem, 2.2vw, 2.25rem);
-      font-weight: 700;
-      text-align: center;
-      margin: 0;
-      color: rgb(var(--foreground));
-    }
-
-    .sponsor-featured-desc {
-      font-size: 1.15rem;
-      text-align: center;
-      color: rgb(var(--muted-foreground));
-      line-height: 1.7;
+      display: none;
     }
 
 
@@ -3035,9 +3016,9 @@
       <div class="container">
         <div class="section-header" data-animate>
           <h2 class="section-title" data-en="Owned by" data-ar="الشركة المالكة">Owned by</h2>
-          <p class="section-desc" data-en="Meet the teams orchestrating the IEC Expo experience." data-ar="تعرّف على الفرق التي تنظم تجربة المعرض الدولي للتجارة اﻹلكترونية.">
+          <!-- <p class="section-desc" data-en="Meet the teams orchestrating the IEC Expo experience." data-ar="تعرّف على الفرق التي تنظم تجربة المعرض الدولي للتجارة اﻹلكترونية.">
             Meet the teams orchestrating the IEC Expo experience.
-          </p>
+          </p> -->
         </div>
 
         @php
@@ -3064,7 +3045,7 @@
           $descriptionAr = $organizer->description_ar ?? $organizerFallbackDesc['ar'];
           $description = $currentLocale === 'ar' ? $descriptionAr : $descriptionEn;
           @endphp
-          <article class="sponsor-featured-card sponsor-strategic" data-animate>
+          <article class="sponsor-featured-card sponsor-strategic visible" data-animate>
             <div class="sponsor-featured-content">
               <div class="sponsor-featured-media">
                 <div class="sponsor-featured-logo">
@@ -3078,10 +3059,6 @@
                   </svg>
                 </a>
                 @endif
-              </div>
-              <div class="sponsor-featured-body">
-                <h3 class="sponsor-featured-name" data-en="{{ e($englishName) }}" data-ar="{{ e($arabicName) }}">{{ $displayName }}</h3>
-                <p class="sponsor-featured-desc" data-en="{{ e($descriptionEn) }}" data-ar="{{ e($descriptionAr) }}">{{ $description }}</p>
               </div>
             </div>
           </article>
