@@ -49,6 +49,16 @@ return [
                             'ar' => 'دولة مشاركة',
                         ],
                     ],
+                    [
+                        'id' => 'exhibitors',
+                        'icon' => 'fas fa-building',
+                        'value' => 200,
+                        'suffix' => '+',
+                        'label' => [
+                            'en' => 'Exhibitors',
+                            'ar' => 'العارضون',
+                        ],
+                    ],
                 ],
             ],
         ],
