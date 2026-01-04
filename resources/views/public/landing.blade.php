@@ -2206,9 +2206,6 @@
     $exhibitorCta = $translate(data_get($exhibitorCard, 'cta_label'), __('Select'));
     $exhibitorForm = data_get($registrationSection, 'exhibitor_form', []);
     $exhibitorFormTitle = $translate(data_get($exhibitorForm, 'title'), '');
-    $exhibitorStepOne = $translate(data_get($exhibitorForm, 'step_one'), '');
-    $exhibitorStepTwo = $translate(data_get($exhibitorForm, 'step_two'), '');
-    $exhibitorNext = $translate(data_get($exhibitorForm, 'cta_next'), __('Next Step'));
     $exhibitorSubmit = $translate(data_get($exhibitorForm, 'cta_submit'), __('Submit Application'));
     $exhibitorFieldsStepOne = data_get($exhibitorForm, 'fields_step_one', []);
     $exhibitorFieldsStepTwo = data_get($exhibitorForm, 'fields_step_two', []);
@@ -2237,18 +2234,6 @@
     $iconFormTitle = $translate(data_get($iconForm, 'title') ?? [
     'en' => trans('registration.icon.form_title', [], 'en'),
     'ar' => trans('registration.icon.form_title', [], 'ar'),
-    ]);
-    $iconStepOne = $translate(data_get($iconForm, 'step_one') ?? [
-    'en' => trans('registration.icon.step_one', [], 'en'),
-    'ar' => trans('registration.icon.step_one', [], 'ar'),
-    ]);
-    $iconStepTwo = $translate(data_get($iconForm, 'step_two') ?? [
-    'en' => trans('registration.icon.step_two', [], 'en'),
-    'ar' => trans('registration.icon.step_two', [], 'ar'),
-    ]);
-    $iconNext = $translate(data_get($iconForm, 'cta_next') ?? [
-    'en' => trans('registration.icon.cta_next', [], 'en'),
-    'ar' => trans('registration.icon.cta_next', [], 'ar'),
     ]);
     $iconBack = $translate(data_get($iconForm, 'cta_back') ?? [
     'en' => trans('registration.icon.cta_back', [], 'en'),
@@ -2344,18 +2329,6 @@
               $exAddressHint = $fieldCopy($exhibitorFieldsStepTwoByName, 'national_address_document', 'hint', $pdfHint);
               @endphp
               <h3 class="form-title" data-en="{{ e($exhibitorFormTitle['en']) }}" data-ar="{{ e($exhibitorFormTitle['ar']) }}">{{ $exhibitorFormTitle['text'] }}</h3>
-              <div class="step-indicator">
-                <div class="step active" id="step1-indicator">
-                  <span>1</span>
-                  <span data-en="{{ e($exhibitorStepOne['en']) }}" data-ar="{{ e($exhibitorStepOne['ar']) }}">{{ $exhibitorStepOne['text'] }}</span>
-                </div>
-                <div class="step-divider"></div>
-                <div class="step" id="step2-indicator">
-                  <span>2</span>
-                  <span data-en="{{ e($exhibitorStepTwo['en']) }}" data-ar="{{ e($exhibitorStepTwo['ar']) }}">{{ $exhibitorStepTwo['text'] }}</span>
-                </div>
-              </div>
-
               <form id="sponsor-registration-form"
                 method="POST"
                 action="{{ route('public.register.sponsor', ['locale' => $locale]) }}"
@@ -2365,8 +2338,7 @@
                 data-success-message="{{ e(__('registration.sponsor.success')) }}">
                 @csrf
                 <input type="hidden" name="form_identifier" value="sponsor">
-                <input type="hidden" name="exhibitor_step" id="exhibitor_step_input" value="{{ $sponsorFormActive ? old('exhibitor_step', 1) : 1 }}">
-                <div id="exhibitor-step1">
+                <div>
                   <div class="form-grid form-grid-2">
                     <div class="form-group">
                       <label class="form-label" data-en="{{ e($exFullNameLabel['en']) }}" data-ar="{{ e($exFullNameLabel['ar']) }}">{{ $exFullNameLabel['text'] }}</label>
@@ -2413,9 +2385,7 @@
                       @endif
                     </div>
                   </div>
-                </div>
-
-                <div id="exhibitor-step2" style="display: none;">
+                
                   <div class="form-grid form-grid-2">
                     <div class="form-group">
                       <label class="form-label" data-en="{{ e($exVatLabel['en']) }}" data-ar="{{ e($exVatLabel['ar']) }}">{{ $exVatLabel['text'] }}</label>
@@ -2476,19 +2446,13 @@
                 </div>
 
                 <div class="form-buttons">
-                  <button type="button" class="btn btn-outline" onclick="exhibitorBack()">
+                  <button type="button" class="btn btn-outline" onclick="clearRole()">
                     <svg class="icon icon-sm" style="margin-right: 0.5rem;" viewBox="0 0 24 24">
                       <path d="M19 12H5M12 19l-7-7 7-7" />
                     </svg>
                     <span data-en="Back" data-ar="رجوع">{{ __('Back') }}</span>
                   </button>
-                  <button type="button" class="btn btn-primary" id="exhibitor-next-btn" onclick="exhibitorNext()">
-                    <span data-en="{{ e($exhibitorNext['en']) }}" data-ar="{{ e($exhibitorNext['ar']) }}">{{ $exhibitorNext['text'] }}</span>
-                    <svg class="icon icon-sm" style="margin-left: 0.5rem;" viewBox="0 0 24 24">
-                      <path d="M5 12h14M12 5l7 7-7 7" />
-                    </svg>
-                  </button>
-                  <button type="submit" class="btn btn-primary" id="exhibitor-submit-btn" style="display: none;" data-en="{{ e($exhibitorSubmit['en']) }}" data-ar="{{ e($exhibitorSubmit['ar']) }}">{{ $exhibitorSubmit['text'] }}</button>
+                  <button type="submit" class="btn btn-primary" data-en="{{ e($exhibitorSubmit['en']) }}" data-ar="{{ e($exhibitorSubmit['ar']) }}">{{ $exhibitorSubmit['text'] }}</button>
                   <button type="button" class="btn btn-outline" onclick="scrollToContact()" data-en="{{ e($guestContact['en']) }}" data-ar="{{ e($guestContact['ar']) }}">{{ $guestContact['text'] }}</button>
                 </div>
               </form>
@@ -2543,18 +2507,6 @@
               $iconAddressHint = $fieldCopy($iconFieldsStepTwoByName, 'national_address_document', 'hint', $pdfHint);
               @endphp
               <h3 class="form-title" data-en="{{ e($iconFormTitle['en']) }}" data-ar="{{ e($iconFormTitle['ar']) }}">{{ $iconFormTitle['text'] }}</h3>
-              <div class="step-indicator">
-                <div class="step active" id="icon-step1-indicator">
-                  <span>1</span>
-                  <span data-en="{{ e($iconStepOne['en']) }}" data-ar="{{ e($iconStepOne['ar']) }}">{{ $iconStepOne['text'] }}</span>
-                </div>
-                <div class="step-divider"></div>
-                <div class="step" id="icon-step2-indicator">
-                  <span>2</span>
-                  <span data-en="{{ e($iconStepTwo['en']) }}" data-ar="{{ e($iconStepTwo['ar']) }}">{{ $iconStepTwo['text'] }}</span>
-                </div>
-              </div>
-
               <form id="icon-registration-form"
                 method="POST"
                 action="{{ \Illuminate\Support\Facades\Route::has('public.register.icon') ? route('public.register.icon', ['locale' => $locale]) : '#' }}"
@@ -2564,8 +2516,7 @@
                 data-success-message="{{ e(__('registration.icon.success')) }}">
                 @csrf
                 <input type="hidden" name="form_identifier" value="icon">
-                <input type="hidden" name="icon_step" id="icon_step_input" value="{{ $iconFormActive ? old('icon_step', 1) : 1 }}">
-                <div id="icon-step1">
+                <div>
                   <div class="form-grid form-grid-2">
                     <div class="form-group">
                       <label class="form-label" data-en="{{ e($iconFullNameLabel['en']) }}" data-ar="{{ e($iconFullNameLabel['ar']) }}">{{ $iconFullNameLabel['text'] }}</label>
@@ -2637,9 +2588,7 @@
                       @endif
                     </div>
                   </div>
-                </div>
-
-                <div id="icon-step2" style="display: none;">
+                
                   <div class="form-grid form-grid-2">
                     <div class="form-group">
                       <label class="form-label" data-en="{{ e($iconVatLabel['en']) }}" data-ar="{{ e($iconVatLabel['ar']) }}">{{ $iconVatLabel['text'] }}</label>
@@ -2699,19 +2648,13 @@
                 </div>
 
                 <div class="form-buttons">
-                  <button type="button" class="btn btn-outline" onclick="iconBack()">
+                  <button type="button" class="btn btn-outline" onclick="clearRole()">
                     <svg class="icon icon-sm" style="margin-right: 0.5rem;" viewBox="0 0 24 24">
                       <path d="M19 12H5M12 19l-7-7 7-7" />
                     </svg>
                     <span data-en="{{ e($iconBack['en']) }}" data-ar="{{ e($iconBack['ar']) }}">{{ $iconBack['text'] }}</span>
                   </button>
-                  <button type="button" class="btn btn-primary" id="icon-next-btn" onclick="iconNext()">
-                    <span data-en="{{ e($iconNext['en']) }}" data-ar="{{ e($iconNext['ar']) }}">{{ $iconNext['text'] }}</span>
-                    <svg class="icon icon-sm" style="margin-left: 0.5rem;" viewBox="0 0 24 24">
-                      <path d="M5 12h14M12 5l7 7-7 7" />
-                    </svg>
-                  </button>
-                  <button type="submit" class="btn btn-primary" id="icon-submit-btn" style="display: none;" data-en="{{ e($iconSubmit['en']) }}" data-ar="{{ e($iconSubmit['ar']) }}">{{ $iconSubmit['text'] }}</button>
+                  <button type="submit" class="btn btn-primary" data-en="{{ e($iconSubmit['en']) }}" data-ar="{{ e($iconSubmit['ar']) }}">{{ $iconSubmit['text'] }}</button>
                   <button type="button" class="btn btn-outline" onclick="scrollToContact()" data-en="{{ e($guestContact['en']) }}" data-ar="{{ e($guestContact['ar']) }}">{{ $guestContact['text'] }}</button>
                 </div>
               </form>
@@ -3529,8 +3472,6 @@
 
     // Registration Role Selection
     let selectedRole = null;
-    let exhibitorStep = 1;
-    let iconStep = 1;
 
     function applyRoleOrder(role) {
       const visitorCard = document.getElementById('visitor-card');
@@ -3632,9 +3573,6 @@
 
     function clearRole() {
       selectedRole = null;
-      exhibitorStep = 1;
-      iconStep = 1;
-
       const guestLogo = document.getElementById('guest-row-logo');
       if (guestLogo) {
         guestLogo.style.display = '';
@@ -3655,80 +3593,8 @@
       document.getElementById('icon-card').classList.remove('selected', 'dimmed');
       document.getElementById('icon-cta').style.display = 'flex';
       document.getElementById('icon-form').classList.remove('active');
-      const stepInput = document.getElementById('exhibitor_step_input');
-      if (stepInput) {
-        stepInput.value = '1';
-      }
-      const iconStepInput = document.getElementById('icon_step_input');
-      if (iconStepInput) {
-        iconStepInput.value = '1';
-      }
       toggleRoleVisibility(null);
       applyRoleOrder(null);
-      updateExhibitorStep();
-      updateIconStep();
-    }
-
-    function exhibitorNext() {
-      setExhibitorStep(2);
-    }
-
-    function exhibitorBack() {
-      if (exhibitorStep === 1) {
-        clearRole();
-      } else {
-        setExhibitorStep(1);
-      }
-    }
-
-    function iconNext() {
-      setIconStep(2);
-    }
-
-    function iconBack() {
-      if (iconStep === 1) {
-        clearRole();
-      } else {
-        setIconStep(1);
-      }
-    }
-
-    function setExhibitorStep(step) {
-      exhibitorStep = step;
-      const stepInput = document.getElementById('exhibitor_step_input');
-      if (stepInput) {
-        stepInput.value = String(step);
-      }
-      updateExhibitorStep();
-    }
-
-    function setIconStep(step) {
-      iconStep = step;
-      const stepInput = document.getElementById('icon_step_input');
-      if (stepInput) {
-        stepInput.value = String(step);
-      }
-      updateIconStep();
-    }
-
-    function updateExhibitorStep() {
-      document.getElementById('exhibitor-step1').style.display = exhibitorStep === 1 ? 'block' : 'none';
-      document.getElementById('exhibitor-step2').style.display = exhibitorStep === 2 ? 'block' : 'none';
-      document.getElementById('exhibitor-next-btn').style.display = exhibitorStep === 1 ? 'inline-flex' : 'none';
-      document.getElementById('exhibitor-submit-btn').style.display = exhibitorStep === 2 ? 'inline-flex' : 'none';
-
-      document.getElementById('step1-indicator').classList.toggle('active', exhibitorStep >= 1);
-      document.getElementById('step2-indicator').classList.toggle('active', exhibitorStep >= 2);
-    }
-
-    function updateIconStep() {
-      document.getElementById('icon-step1').style.display = iconStep === 1 ? 'block' : 'none';
-      document.getElementById('icon-step2').style.display = iconStep === 2 ? 'block' : 'none';
-      document.getElementById('icon-next-btn').style.display = iconStep === 1 ? 'inline-flex' : 'none';
-      document.getElementById('icon-submit-btn').style.display = iconStep === 2 ? 'inline-flex' : 'none';
-
-      document.getElementById('icon-step1-indicator').classList.toggle('active', iconStep >= 1);
-      document.getElementById('icon-step2-indicator').classList.toggle('active', iconStep >= 2);
     }
 
     function initHeardAboutSelects() {
@@ -3800,12 +3666,8 @@
         input.value = data.space;
         input.dispatchEvent(new Event('input', { bubbles: true }));
         const form = input.closest('form');
-        if (form && form.id === 'sponsor-registration-form') {
-          setExhibitorStep(1);
-        }
         if (form && form.id === 'icon-registration-form') {
           selectRole('icon');
-          setIconStep(1);
         }
         try {
           input.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -3831,7 +3693,6 @@
 
       if (input) {
         selectRole('icon');
-        setIconStep(1);
         input.value = space;
         input.dispatchEvent(new Event('input', { bubbles: true }));
         try {
@@ -3868,7 +3729,6 @@
         bindAjaxRegistrationForm(sponsorForm, {
           onSuccess: (payload) => {
             sponsorForm.reset();
-            setExhibitorStep(1);
             clearRole();
             const title = (payload && payload.toast_title) || sponsorForm.dataset.successTitle;
             const message = (payload && payload.message) || sponsorForm.dataset.successMessage;
@@ -3885,7 +3745,6 @@
           bindAjaxRegistrationForm(iconForm, {
             onSuccess: (payload) => {
               iconForm.reset();
-              setIconStep(1);
               clearRole();
               const title = (payload && payload.toast_title) || iconForm.dataset.successTitle;
               const message = (payload && payload.message) || iconForm.dataset.successMessage;
@@ -4021,12 +3880,6 @@
         hasFieldErrors = true;
         markFieldError(field, message);
 
-        if (form.id === 'sponsor-registration-form') {
-          ensureSponsorFieldVisible(field);
-        }
-        if (form.id === 'icon-registration-form') {
-          ensureIconFieldVisible(field);
-        }
       });
 
       if (generalMessages.length && !hasFieldErrors) {
@@ -4034,26 +3887,6 @@
         showToast(fallback.errorTitle, generalMessages[0]);
       }
 
-    }
-
-    function ensureSponsorFieldVisible(field) {
-      const step1 = document.getElementById('exhibitor-step1');
-      const step2 = document.getElementById('exhibitor-step2');
-      if (step1 && step1.contains(field)) {
-        setExhibitorStep(1);
-      } else if (step2 && step2.contains(field)) {
-        setExhibitorStep(2);
-      }
-    }
-
-    function ensureIconFieldVisible(field) {
-      const step1 = document.getElementById('icon-step1');
-      const step2 = document.getElementById('icon-step2');
-      if (step1 && step1.contains(field)) {
-        setIconStep(1);
-      } else if (step2 && step2.contains(field)) {
-        setIconStep(2);
-      }
     }
 
     function escapeSelector(value) {
@@ -4088,9 +3921,6 @@
     }
 
     const initialForm = @json($visitorShouldOpen ? 'visitor' : ($sponsorShouldOpen ? 'sponsor' : ($iconShouldOpen ? 'icon' : '')));
-    const initialExhibitorStep = Number(@json($sponsorFormActive ? old('exhibitor_step', 1) : 1));
-    const initialIconStep = Number(@json($iconFormActive ? old('icon_step', 1) : 1));
-
     document.addEventListener('DOMContentLoaded', () => {
       initHeardAboutSelects();
       initAjaxRegistrationForms();
@@ -4105,10 +3935,8 @@
         selectRole('visitor');
       } else if (initialForm === 'sponsor') {
         selectRole('exhibitor');
-        setExhibitorStep(initialExhibitorStep);
       } else if (initialForm === 'icon') {
         selectRole('icon');
-        setIconStep(initialIconStep);
       }
 
       applyHallSelectionFromQuery();
