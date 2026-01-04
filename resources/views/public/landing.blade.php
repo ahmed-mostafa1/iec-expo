@@ -553,6 +553,7 @@
       font-size: 1.875rem;
       font-weight: 700;
       margin-bottom: 1rem;
+      color: rgb(var(--primary-color));
     }
 
     .section-desc {
@@ -999,7 +1000,7 @@
       font-size: 2rem !important;
       font-weight: 600;
       margin-bottom: 1rem;
-      color: var(--accent-color);
+      color: rgb(var(--border));
     }
 
     .sponsor-tier-grid {
@@ -1880,7 +1881,7 @@
       .role-cards.guest-selected .guest-card,
       .role-cards.guest-selected .guest-form {
         grid-column: auto;
-        justify-self: stretch;
+        justify-self: center;
         max-width: none;
       }
 
@@ -2902,8 +2903,8 @@
     <section class="sponsors" id="sponsors">
       <div class="container">
         <div class="section-header" data-animate>
-          <h2 class="section-title" data-en="Our Sponsors" data-ar="رعاتنا">Our Sponsors</h2>
-          <p class="section-desc" data-en="We are grateful to our sponsors who make this event possible." data-ar="نحن ممتنون لرعاتنا الذين يجعلون هذا الحدث ممكناً.">We are grateful to our sponsors who make this event possible.</p>
+          <h2 class="section-title" data-en="Sponsors" data-ar="الرعاة">Sponsors</h2>
+          <!-- <p class="section-desc" data-en="We are grateful to our sponsors who make this event possible." data-ar="نحن ممتنون لرعاتنا الذين يجعلون هذا الحدث ممكناً.">We are grateful to our sponsors who make this event possible.</p> -->
         </div>
 
         @php
