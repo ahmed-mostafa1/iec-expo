@@ -2854,10 +2854,7 @@
           <div class="about-col" data-animate>
             <div class="about-header">
               <div class="about-icon">
-                <svg class="icon" viewBox="0 0 24 24">
-                  <circle cx="12" cy="12" r="10" />
-                  <path d="M12 8v4l3 3" />
-                </svg>
+               <img src="{{ asset('img/icons/star.png') }}" alt="star Icon" style="width: 60px; height: 60px;">
               </div>
               <h2 class="about-title" data-en="{{ e($missionTitle['en']) }}" data-ar="{{ e($missionTitle['ar']) }}">{{ $missionTitle['text'] }}</h2>
             </div>
@@ -2873,7 +2870,7 @@
 
           <div class="about-col" data-animate>
             @php $goalsTitle = $aboutTranslate(['en' => __('Our Goals'), 'ar' => __('أهدافنا')], __('Our Goals')); @endphp
-            <h2 class="about-title" data-en="" data-ar="" style="margin-bottom: 1.5rem;"> . </h2>
+            <h2 class="about-title" data-en="" data-ar="" style="margin-top: 2rem; font-size: 1px;">.</h2>
             <div class="goals-list">
               @php
               $goals = [
