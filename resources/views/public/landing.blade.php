@@ -583,6 +583,7 @@
       border: 2px solid rgb(var(--border));
       border-radius: 1rem;
       padding: 2rem;
+      margin: 3rem;
       text-align: center;
       cursor: pointer;
       transition: all 0.5s;
@@ -1868,7 +1869,7 @@
       .role-card.guest-card {
         grid-column: 1 / -1;
         justify-self: center;
-        max-width: calc((100% - 1.5rem) / 2);
+        max-width: calc((100% - 1.5rem) / 2.5);
         width: 100%;
       }
 
