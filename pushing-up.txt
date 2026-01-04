@@ -1,0 +1,10 @@
+cd /home/umbrell9/iec360
+
+# (optional) see what will be lost
+git status
+
+# fetch latest remote commits
+git fetch origin
+
+# WARNING: this discards ALL local changes and makes your branch identical to origin/main
+git reset --hard origin/main
