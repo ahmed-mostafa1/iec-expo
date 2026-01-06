@@ -973,10 +973,10 @@
       transition: all 0.3s;
     }
 
-    .goal-card:hover .goal-icon {
+    /* .goal-card:hover .goal-icon {
       background: rgb(var(--primary));
       color: rgb(var(--primary-foreground));
-    }
+    } */
 
     .goal-title {
       font-size: 1.5rem;
@@ -3396,7 +3396,7 @@ with Saudi Vision 2030.',
     <div class="container">
       <div class="footer-inner">
         <div class="footer-text"> <span data-en="IEC 360 &deg; EXPO" data-ar="IEC 360 &deg; EXPO"> IEC 360 &deg; EXPO</span></div>
-        <div class="footer-text" data-en="All rights reserved." data-ar="جميع الحقوق محفوظة لشركة مظلة الأعمال© 2026.">2026© All rights reserved.</div>
+        <div class="footer-text" data-en="All rights reserved." data-ar="جميع الحقوق محفوظة لشركة مظلة الأعمال© 2026.">2026© All rights reserved BU</div>
       </div>
     </div>
   </footer>
