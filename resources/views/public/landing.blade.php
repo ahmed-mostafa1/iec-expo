@@ -590,8 +590,7 @@
       background-color: rgb(var(--card));
       border: 2px solid rgb(var(--border));
       border-radius: 1rem;
-      padding: 2rem;
-      margin: 3rem;
+      margin: 5rem;
       text-align: center;
       cursor: pointer;
       transition: all 0.5s;
@@ -2092,7 +2091,7 @@
           <a href="#register" class="btn-primary nav-link" data-en="Register" data-ar="سجل الآن">Register</a>
           <a href="#about" class="nav-link" data-en="About" data-ar="عن المعرض">About</a>
           <a href="#sponsors" class="nav-link" data-en="Sponsors" data-ar="الرعاة">Sponsors</a>
-          <a href="#participants" class="nav-link" data-en="Icons" data-ar="الأيقونات">Icons</a>
+          <a href="#participants" class="nav-link" data-en="Icons" data-ar="الأيكونز">Icons</a>
           <a href="#organizers" class="nav-link" data-en="Owned by" data-ar="الشركة المالكة">Owned by</a>
           <a href="#contact" class="nav-link" data-en="Contact" data-ar="تواصل معنا">Contact</a>
         </nav>
@@ -2124,7 +2123,7 @@
         <a href="#register" class="mobile-nav-link" data-en="Register" data-ar="سجل الآن">Register</a>
         <a href="#about" class="mobile-nav-link" data-en="About" data-ar="عن المعرض">About</a>
         <a href="#sponsors" class="mobile-nav-link" data-en="Sponsors" data-ar="الرعاة">Sponsors</a>
-        <a href="#participants" class="mobile-nav-link" data-en="Icons" data-ar="الأيقونات">Icons</a>
+        <a href="#participants" class="mobile-nav-link" data-en="Icons" data-ar="الأيكونز">Icons</a>
         <a href="#organizers" class="mobile-nav-link" data-en="Owned by" data-ar="الشركة المالكة">Owned by</a>
         <a href="#contact" class="mobile-nav-link" data-en="Contact" data-ar="تواصل معنا">Contact</a>
         
@@ -2854,7 +2853,7 @@
           <div class="about-col" data-animate>
             <div class="about-header">
               <div class="about-icon">
-               <img src="{{ asset('img/icons/star.png') }}" alt="star Icon" style="width: 60px; height: 60px;">
+               <img src="{{ asset('img/icons/star.png') }}" alt="star Icon" style="height: 60px;">
               </div>
               <h2 class="about-title" data-en="{{ e($missionTitle['en']) }}" data-ar="{{ e($missionTitle['ar']) }}">{{ $missionTitle['text'] }}</h2>
             </div>
@@ -2923,7 +2922,7 @@ with Saudi Vision 2030.',
               @endphp
               <div class="goal-card" data-animate>
                 <div class="goal-icon">
-                  <img src="{{ $goalIconUrl }}" alt="{{ e($goalIconAlt) }}" style="width: 40px; height: 40px;">
+                  <img src="{{ $goalIconUrl }}" alt="{{ e($goalIconAlt) }}" style="height: 40px;">
                 </div>
                 <div>
                   <h3 class="goal-title" data-en="{{ e($goalTitle['en']) }}" data-ar="{{ e($goalTitle['ar']) }}">{{ $goalTitle['text'] }}</h3>
