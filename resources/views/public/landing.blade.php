@@ -3395,7 +3395,7 @@ with Saudi Vision 2030.',
   <footer class="footer">
     <div class="container">
       <div class="footer-inner">
-        <div class="footer-text"> <span data-en="IEC 360 &deg; EXPO" data-ar="المعرض الدولي للتجارة اﻹلكترونية"> IEC 360 &deg; EXPO</span></div>
+        <div class="footer-text"> <span data-en="IEC 360 &deg; EXPO" data-ar="IEC 360 &deg; EXPO"> IEC 360 &deg; EXPO</span></div>
         <div class="footer-text" data-en="All rights reserved." data-ar="جميع الحقوق محفوظة© 2026.">2026© All rights reserved.</div>
       </div>
     </div>
