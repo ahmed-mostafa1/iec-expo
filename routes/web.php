@@ -64,7 +64,8 @@ Route::prefix('{locale}')
         Route::get('/', [LandingPageController::class, 'index'])
             ->name('public.landing');
 
-       
+        Route::view('/ed', 'public.ed')
+            ->name('public.ed');
 
         Route::post('/register/visitor', [VisitorRegistrationController::class, 'store'])
             ->name('public.register.visitor');
