@@ -641,11 +641,11 @@
     }
 
     .role-cta {
-      margin-top: 1.5rem;
+      margin: .5rem;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 0.5rem;
+      gap: 0.2rem;
       color: rgb(var(--card-foreground));
       font-weight: 500;
     }
@@ -1964,6 +1964,10 @@
       .role-cards.has-selection {
         grid-template-columns: 1fr;
       }
+
+      .role-cards.has-selection .role-card.selected {
+        display: none;
+      }
       
       .nav-logo {
       height: 60px;
@@ -2087,7 +2091,7 @@
         <img src="{{ asset('./img/IEC-logo.png') }}" alt="IEC Logo" class="nav-logo" />
         <nav class="nav">
           <a href="#" class="btn-primary nav-link" data-en="Home" data-ar="الرئيسية">Home</a>
-          <a href="#" class="nav-link" data-en="Previous Editions of IEC" data-ar="نسخ المعرض السابقة">Previous Editions of IEC</a>
+          <a href="{{ route('public.ed', ['locale' => app()->getLocale()]) }}" class="nav-link" data-en="Previous Editions of IEC" data-ar="نسخ المعرض السابقة">Previous Editions of IEC</a>
           <a href="#register" class="btn-primary nav-link" data-en="Register" data-ar="سجل الآن">Register</a>
           <a href="#about" class="nav-link" data-en="About" data-ar="عن المعرض">About</a>
           <a href="#sponsors" class="nav-link" data-en="Sponsors" data-ar="الرعاة">Sponsors</a>
@@ -2119,7 +2123,7 @@
 
       <nav class="mobile-nav" id="mobile-nav">
         <a href="#" class="mobile-nav-link" data-en="Home" data-ar="الرئيسية">Home</a>
-        <a href="#" class="mobile-nav-link" data-en="Previous Editions of IEC" data-ar="نسخ المعرض السابقة">Previous Editions of IEC</a>
+        <a href="{{ route('public.ed', ['locale' => app()->getLocale()]) }}" class="mobile-nav-link" data-en="Previous Editions of IEC" data-ar="نسخ المعرض السابقة">Previous Editions of IEC</a>
         <a href="#register" class="mobile-nav-link" data-en="Register" data-ar="سجل الآن">Register</a>
         <a href="#about" class="mobile-nav-link" data-en="About" data-ar="عن المعرض">About</a>
         <a href="#sponsors" class="mobile-nav-link" data-en="Sponsors" data-ar="الرعاة">Sponsors</a>
@@ -4098,3 +4102,4 @@ with Saudi Vision 2030.',
 </body>
 
 </html>
+
