@@ -3367,7 +3367,7 @@ with Saudi Vision 2030.',
               </svg>
             </div>
             <div>
-              <div class="location-title"><img src="{{ asset('img/theArena.png') }}" alt="" style="text-center;"/> </div>
+              <div class="location-title"><img src="{{ asset('img/theArena.png') }}" alt="" style="text-align:center; height: 80px;"/> </div>
               <!-- <p class="location-address" data-en="{{ e($locationAddressBlock['en']) }}" data-ar="{{ e($locationAddressBlock['ar']) }}">{{ $locationAddressBlock['text'] }}</p> -->
             </div>
           </div>
