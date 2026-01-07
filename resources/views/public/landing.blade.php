@@ -835,11 +835,12 @@
       background-color: rgb(var(--card));
       border: 2px solid rgb(var(--border));
       border-radius: 1rem;
-      margin: 5rem;
+      margin: auto;
       text-align: center;
       cursor: pointer;
       transition: all 0.5s;
       overflow: hidden;
+      width: calc((100% - 1.5rem) / 1.5);
     }
 
     .role-card:hover {
@@ -859,8 +860,9 @@
 
     .role-icon {
       width: 80px;
-      height: 80px;
-      margin: 0 auto 1.5rem;
+      /* height: 80px; */
+      margin:  0 auto;
+      padding-top: 10px;
       border-radius: 1rem;
       background: rgb(var(--primary) / 0.1);
       color: rgb(var(--primary));
@@ -870,15 +872,15 @@
       transition: all 0.3s;
     }
 
-    .role-card:hover .role-icon {
+    /* .role-card:hover .role-icon {
       background: rgb(var(--primary));
       color: rgb(var(--primary-foreground));
-    }
+    } */
 
     .role-title {
       font-size: 1.5rem;
       font-weight: 700;
-      margin-bottom: 0.75rem;
+      margin: 1rem;
     }
 
     .role-desc {
@@ -886,13 +888,25 @@
     }
 
     .role-cta {
-      margin: .5rem;
-      display: flex;
+      display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 0.2rem;
-      color: rgb(var(--card-foreground));
-      font-weight: 500;
+      gap: 0.4rem;
+      padding: 0.5rem;
+      margin: 1.5rem auto 1rem;
+      border-radius: 9999px;
+      background: rgb(var(--primary));
+      color: rgb(var(--primary-foreground));
+      font-weight: 600;
+      text-decoration: none;
+      transition: background 0.3s ease, transform 0.3s ease;
+      width: 50%;
+    }
+
+    .role-cta:hover {
+      background: var(--accent-color);
+      color:#fff;
+      transform: translateY(-1px);
     }
 
     .row-logo {
@@ -1757,6 +1771,7 @@
       margin-bottom: 0.75rem;
       display: flex;
       align-items: center;
+      justify-content: center;
       gap: 0.5rem;
     }
 
@@ -1963,6 +1978,7 @@
     .stats-section {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      margin-top: 4rem;
       gap: 30px;
       padding: 20px;
       margin-bottom: 5px;
@@ -1970,7 +1986,7 @@
 
     .stat-item {
       background: #dadadaff;
-      padding: 40px 30px;
+      padding: 20px 20px;
       border-radius: 20px;
       text-align: center;
       box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
@@ -2001,16 +2017,22 @@
     }
 
     .stat-icon-wrapper {
-      width: 70px;
-      height: 70px;
+      width: 90px;
+      height: 90px;
       border-radius: 50%;
       display: flex;
       align-items: center;
       justify-content: center;
-      margin: 0 auto 20px;
+      margin: 0 auto;
       font-size: 1.8rem;
       color: var(--secondary-color);
       transition: var(--transition);
+    }
+
+    .stat-icon-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
     }
 
     .stat-item:hover .stat-icon-wrapper {
@@ -2064,6 +2086,7 @@
       display: flex;
       flex-direction: column;
       gap: 0.5rem;
+      align-items: center;
     }
 
     .contact-info-column-header {
@@ -2109,7 +2132,7 @@
       .role-card.guest-card {
         grid-column: 1 / -1;
         justify-self: center;
-        max-width: calc((100% - 1.5rem) / 2.5);
+        max-width: calc((100% - 1.5rem) / 3);
         width: 100%;
       }
 
@@ -2409,15 +2432,15 @@
         <div class="event-info-grid">
           <div class="event-info-copy" data-animate>
             <h2 class="event-info-title" data-en="Mark your calendar for IEC 360&deg; Expo" data-ar="حدد موعدك لـ IEC 360&deg; Expo">Mark your calendar for IEC 360&deg; Expo</h2>
-            <p class="event-info-subtitle" data-en="Three days of innovation and networking await. Save the date and get ready to join us in person." data-ar="ثلاثة أيام من الابتكار والتواصل بانتظارك. احفظ الموعد واستعد للانضمام إلينا حضورياً.">Three days of innovation and networking await. Save the date and get ready to join us in person.</p>
+            <p class="event-info-subtitle" data-en="Three days of innovation and networking await. Save the date and get ready to join us in person." data-ar="ثلاثة أيام من الابتكار والتواصل بانتظارك. احفظ الموعد واستعد للانضمام.">Three days of innovation and networking await. Save the date and get ready to join us in person.</p>
             <div class="event-badges">
               <div class="event-badge" data-animate>
                 <i class="fa-solid fa-calendar-days" aria-hidden="true"></i>
                 <div>
-                  <div class="event-badge-title" data-en="Event Dates" data-ar="تواريخ الحدث">Event Dates</div>
+                  <!-- <div class="event-badge-title" data-en="Event Dates" data-ar="تواريخ الحدث">Event Dates</div> -->
                   <div class="event-badge-meta">
-                    <span class="meta-line" data-en="24-9-2026" data-ar="24-9-2026">24-9-2026</span>
-                    <span class="meta-line" data-en="to 26-9-2026" data-ar="إلى 26-9-2026">to 26-9-2026</span>
+                    <span class="meta-line" data-en="Start 24-9-2026" data-ar="من 24-9-2026">Start 24-9-2026</span>
+                    <span class="meta-line" data-en="End 26-9-2026" data-ar="إلى 26-9-2026">End  26-9-2026</span>
                   </div>
                 </div>
               </div>
@@ -2581,16 +2604,12 @@
 
     <section class="registration" id="register">
       <div class="container">
-        <div class="section-header" data-animate>
+        <div class="section-header" data-animate style="margin-top: 1rem; margin-bottom: 0px !important;">
           <h2 class="section-title" data-en="{{ e($registrationTitle['en']) }}" data-ar="{{ e($registrationTitle['ar']) }}">{{ $registrationTitle['text'] }}</h2>
-          <!-- <p class="section-desc" data-en="{{ e($registrationDescription['en']) }}" data-ar="{{ e($registrationDescription['ar']) }}">{{ $registrationDescription['text'] }}</p> -->
         </div>
 
         <div class="registration-content">
           <div class="role-cards" id="role-cards">
-            <!-- <div class="row-logo" id="sponsor-row-logo">
-              <img src="{{ asset('img/IEC-logo.png') }}" alt="IEC Logo">
-            </div> -->
 
             <div class="role-card" id="exhibitor-card" onclick="selectRole('exhibitor')">
               <div class="role-icon">
@@ -3133,6 +3152,119 @@
       </div>
     </section>
 
+            <!-- Statistics Section -->
+    <div class="stats-section">
+      @php
+      $defaultStat = ['label' => ['en' => '', 'ar' => ''], 'value' => 0, 'suffix' => '', 'icon' => 'fas fa-circle'];
+      $stats = array_pad($heroStats, 5, $defaultStat);
+      @endphp
+      
+      <!-- Stat 1 -->
+      @php
+      $stat = $stats[0];
+      $labelEn = data_get($stat, 'label.en', '');
+      $labelAr = data_get($stat, 'label.ar', $labelEn);
+      $label = $activeLocale === 'ar' ? $labelAr : $labelEn;
+      $value = $stat['value'] ?? 0;
+      $suffix = $stat['suffix'] ?? '';
+      $iconClass = $stat['icon'] ?? 'fas fa-circle';
+      @endphp
+      <div class="stat-item" data-aos="zoom-in" data-aos-delay="100">
+        <div class="stat-icon-wrapper stat-icon-wrapper-1">
+          <img src="{{ asset('img/icons/people.png') }}" alt="Stat Icon">
+        </div>
+        <div class="stat-number" data-count="{{ $value }}" data-suffix="{{ $suffix }}">{{ $value }}</div>
+        <div class="stat-label" data-en="{{ e($labelEn) }}" data-ar="{{ e($labelAr) }}">{{ $label }}</div>
+        <div class="stat-progress">
+          <div class="progress-fill"></div>
+        </div>
+      </div>
+
+      <!-- Stat 2 -->
+      @php
+      $stat = $stats[1];
+      $labelEn = data_get($stat, 'label.en', '');
+      $labelAr = data_get($stat, 'label.ar', $labelEn);
+      $label = $activeLocale === 'ar' ? $labelAr : $labelEn;
+      $value = $stat['value'] ?? 0;
+      $suffix = $stat['suffix'] ?? '';
+      $iconClass = $stat['icon'] ?? 'fas fa-circle';
+      @endphp
+      <div class="stat-item" data-aos="zoom-in" data-aos-delay="200">
+        <div class="stat-icon-wrapper stat-icon-wrapper-2">
+          <img src="{{ asset('img/icons/organization.png') }}" alt="Stat Icon">
+        </div>
+        <div class="stat-number" data-count="{{ $value }}" data-suffix="{{ $suffix }}">{{ $value }}</div>
+        <div class="stat-label" data-en="{{ e($labelEn) }}" data-ar="{{ e($labelAr) }}">{{ $label }}</div>
+        <div class="stat-progress">
+          <div class="progress-fill"></div>
+        </div>
+      </div>
+
+      <!-- Stat 3 -->
+      @php
+      $stat = $stats[2];
+      $labelEn = data_get($stat, 'label.en', '');
+      $labelAr = data_get($stat, 'label.ar', $labelEn);
+      $label = $activeLocale === 'ar' ? $labelAr : $labelEn;
+      $value = $stat['value'] ?? 0;
+      $suffix = $stat['suffix'] ?? '';
+      $iconClass = $stat['icon'] ?? 'fas fa-circle';
+      @endphp
+      <div class="stat-item" data-aos="zoom-in" data-aos-delay="300">
+        <div class="stat-icon-wrapper stat-icon-wrapper-3">
+          <img src="{{ asset('img/icons/sponsor.png') }}" alt="Stat Icon">
+        </div>
+        <div class="stat-number" data-count="{{ $value }}" data-suffix="{{ $suffix }}">{{ $value }}</div>
+        <div class="stat-label" data-en="{{ e($labelEn) }}" data-ar="{{ e($labelAr) }}">{{ $label }}</div>
+        <div class="stat-progress">
+          <div class="progress-fill"></div>
+        </div>
+      </div>
+
+      <!-- Stat 4 -->
+      @php
+      $stat = $stats[3];
+      $labelEn = data_get($stat, 'label.en', '');
+      $labelAr = data_get($stat, 'label.ar', $labelEn);
+      $label = $activeLocale === 'ar' ? $labelAr : $labelEn;
+      $value = $stat['value'] ?? 0;
+      $suffix = $stat['suffix'] ?? '';
+      $iconClass = $stat['icon'] ?? 'fas fa-circle';
+      @endphp
+      <div class="stat-item" data-aos="zoom-in" data-aos-delay="400">
+        <div class="stat-icon-wrapper stat-icon-wrapper-4">
+                 <img src="{{ asset('img/icons/workshop.png') }}" alt="Stat Icon">
+      </div>
+        <div class="stat-number" data-count="{{ $value }}" data-suffix="{{ $suffix }}">{{ $value }}</div>
+        <div class="stat-label" data-en="{{ e($labelEn) }}" data-ar="{{ e($labelAr) }}">{{ $label }}</div>
+        <div class="stat-progress">
+          <div class="progress-fill"></div>
+        </div>
+      </div>
+
+      <!-- Stat 5 -->
+      @php
+      $stat = $stats[4];
+      $labelEn = data_get($stat, 'label.en', '');
+      $labelAr = data_get($stat, 'label.ar', $labelEn);
+      $label = $activeLocale === 'ar' ? $labelAr : $labelEn;
+      $value = $stat['value'] ?? 0;
+      $suffix = $stat['suffix'] ?? '';
+      $iconClass = $stat['icon'] ?? 'fas fa-circle';
+      @endphp
+      <div class="stat-item" data-aos="zoom-in" data-aos-delay="500">
+        <div class="stat-icon-wrapper stat-icon-wrapper-5">
+          <img src="{{ asset('img/icons/media.png') }}" alt="Stat Icon">
+        </div>
+        <div class="stat-number" data-count="{{ $value }}" data-suffix="{{ $suffix }}">{{ $value }}</div>
+        <div class="stat-label" data-en="{{ e($labelEn) }}" data-ar="{{ e($labelAr) }}">{{ $label }}</div>
+        <div class="stat-progress">
+          <div class="progress-fill"></div>
+        </div>
+      </div>
+    </div>
+
     <!-- About Section -->
     @php
     $aboutLocale = app()->getLocale();
@@ -3250,13 +3382,12 @@ with Saudi Vision 2030.',
 
 
 
-    <div class="sponsor-participant-organizer-band">
     <!-- Sponsors Section -->
+    <div class="sponsor-participant-organizer-band">
     <section class="sponsors" id="sponsors">
       <div class="container">
         <div class="section-header" data-animate>
           <h2 class="section-title" data-en="Sponsors" data-ar="الرعاة" style="font: size 3rem !important;;">Sponsors</h2>
-          <!-- <p class="section-desc" data-en="We are grateful to our sponsors who make this event possible." data-ar="نحن ممتنون لرعاتنا الذين يجعلون هذا الحدث ممكناً.">We are grateful to our sponsors who make this event possible.</p> -->
         </div>
 
         @php
@@ -3437,123 +3568,8 @@ with Saudi Vision 2030.',
     </section>
     </div>
 
-        <div class="stats-contact-band">
-        <div class="engagement-band">
-        <!-- Statistics Section -->
-    <div class="stats-section">
-      @php
-      $defaultStat = ['label' => ['en' => '', 'ar' => ''], 'value' => 0, 'suffix' => '', 'icon' => 'fas fa-circle'];
-      $stats = array_pad($heroStats, 5, $defaultStat);
-      @endphp
-      
-      <!-- Stat 1 -->
-      @php
-      $stat = $stats[0];
-      $labelEn = data_get($stat, 'label.en', '');
-      $labelAr = data_get($stat, 'label.ar', $labelEn);
-      $label = $activeLocale === 'ar' ? $labelAr : $labelEn;
-      $value = $stat['value'] ?? 0;
-      $suffix = $stat['suffix'] ?? '';
-      $iconClass = $stat['icon'] ?? 'fas fa-circle';
-      @endphp
-      <div class="stat-item" data-aos="zoom-in" data-aos-delay="100">
-        <div class="stat-icon-wrapper stat-icon-wrapper-1">
-          <img src="{{ asset('img/icons/people.png') }}" alt="Stat Icon">
-        </div>
-        <div class="stat-number" data-count="{{ $value }}" data-suffix="{{ $suffix }}">{{ $value }}</div>
-        <div class="stat-label" data-en="{{ e($labelEn) }}" data-ar="{{ e($labelAr) }}">{{ $label }}</div>
-        <div class="stat-progress">
-          <div class="progress-fill"></div>
-        </div>
-      </div>
-
-      <!-- Stat 2 -->
-      @php
-      $stat = $stats[1];
-      $labelEn = data_get($stat, 'label.en', '');
-      $labelAr = data_get($stat, 'label.ar', $labelEn);
-      $label = $activeLocale === 'ar' ? $labelAr : $labelEn;
-      $value = $stat['value'] ?? 0;
-      $suffix = $stat['suffix'] ?? '';
-      $iconClass = $stat['icon'] ?? 'fas fa-circle';
-      @endphp
-      <div class="stat-item" data-aos="zoom-in" data-aos-delay="200">
-        <div class="stat-icon-wrapper stat-icon-wrapper-2">
-          <img src="{{ asset('img/icons/organization.png') }}" alt="Stat Icon">
-        </div>
-        <div class="stat-number" data-count="{{ $value }}" data-suffix="{{ $suffix }}">{{ $value }}</div>
-        <div class="stat-label" data-en="{{ e($labelEn) }}" data-ar="{{ e($labelAr) }}">{{ $label }}</div>
-        <div class="stat-progress">
-          <div class="progress-fill"></div>
-        </div>
-      </div>
-
-      <!-- Stat 3 -->
-      @php
-      $stat = $stats[2];
-      $labelEn = data_get($stat, 'label.en', '');
-      $labelAr = data_get($stat, 'label.ar', $labelEn);
-      $label = $activeLocale === 'ar' ? $labelAr : $labelEn;
-      $value = $stat['value'] ?? 0;
-      $suffix = $stat['suffix'] ?? '';
-      $iconClass = $stat['icon'] ?? 'fas fa-circle';
-      @endphp
-      <div class="stat-item" data-aos="zoom-in" data-aos-delay="300">
-        <div class="stat-icon-wrapper stat-icon-wrapper-3">
-          <img src="{{ asset('img/icons/sponsor.png') }}" alt="Stat Icon">
-        </div>
-        <div class="stat-number" data-count="{{ $value }}" data-suffix="{{ $suffix }}">{{ $value }}</div>
-        <div class="stat-label" data-en="{{ e($labelEn) }}" data-ar="{{ e($labelAr) }}">{{ $label }}</div>
-        <div class="stat-progress">
-          <div class="progress-fill"></div>
-        </div>
-      </div>
-
-      <!-- Stat 4 -->
-      @php
-      $stat = $stats[3];
-      $labelEn = data_get($stat, 'label.en', '');
-      $labelAr = data_get($stat, 'label.ar', $labelEn);
-      $label = $activeLocale === 'ar' ? $labelAr : $labelEn;
-      $value = $stat['value'] ?? 0;
-      $suffix = $stat['suffix'] ?? '';
-      $iconClass = $stat['icon'] ?? 'fas fa-circle';
-      @endphp
-      <div class="stat-item" data-aos="zoom-in" data-aos-delay="400">
-        <div class="stat-icon-wrapper stat-icon-wrapper-4">
-                 <img src="{{ asset('img/icons/workshop.png') }}" alt="Stat Icon">
-      </div>
-        <div class="stat-number" data-count="{{ $value }}" data-suffix="{{ $suffix }}">{{ $value }}</div>
-        <div class="stat-label" data-en="{{ e($labelEn) }}" data-ar="{{ e($labelAr) }}">{{ $label }}</div>
-        <div class="stat-progress">
-          <div class="progress-fill"></div>
-        </div>
-      </div>
-
-      <!-- Stat 5 -->
-      @php
-      $stat = $stats[4];
-      $labelEn = data_get($stat, 'label.en', '');
-      $labelAr = data_get($stat, 'label.ar', $labelEn);
-      $label = $activeLocale === 'ar' ? $labelAr : $labelEn;
-      $value = $stat['value'] ?? 0;
-      $suffix = $stat['suffix'] ?? '';
-      $iconClass = $stat['icon'] ?? 'fas fa-circle';
-      @endphp
-      <div class="stat-item" data-aos="zoom-in" data-aos-delay="500">
-        <div class="stat-icon-wrapper stat-icon-wrapper-5">
-          <img src="{{ asset('img/icons/media.png') }}" alt="Stat Icon">
-        </div>
-        <div class="stat-number" data-count="{{ $value }}" data-suffix="{{ $suffix }}">{{ $value }}</div>
-        <div class="stat-label" data-en="{{ e($labelEn) }}" data-ar="{{ e($labelAr) }}">{{ $label }}</div>
-        <div class="stat-progress">
-          <div class="progress-fill"></div>
-        </div>
-      </div>
-    </div>
-
     <!-- Contact Section -->
-    @php
+@php
     $contactLocale = app()->getLocale();
     $contactTranslate = function ($node, $fallback = '') use ($contactLocale) {
     $en = data_get($node, 'en', $fallback);
@@ -3675,7 +3691,7 @@ with Saudi Vision 2030.',
               </svg>
             </div>
             <div>
-              <div class="location-title"><img src="{{ asset('img/theArena.png') }}" alt="" style="text-align:center; height: 100px;"/> </div>
+              <div class="location-title"><img src="{{ asset('img/theArena.png') }}" alt="" style="text-align:center; height: 120px;"/> </div>
               <!-- <p class="location-address" data-en="{{ e($locationAddressBlock['en']) }}" data-ar="{{ e($locationAddressBlock['ar']) }}">{{ $locationAddressBlock['text'] }}</p> -->
             </div>
           </div>
