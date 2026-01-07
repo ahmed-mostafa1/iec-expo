@@ -2408,10 +2408,6 @@
       <div class="container">
         <div class="event-info-grid">
           <div class="event-info-copy" data-animate>
-            <div class="event-kicker" data-en="Live in Riyadh" data-ar="مباشر في الرياض">
-              <i class="fa-solid fa-location-dot"></i>
-              <span data-en="Live in Riyadh" data-ar="مباشر في الرياض">Live in Riyadh</span>
-            </div>
             <h2 class="event-info-title" data-en="Mark your calendar for IEC 360&deg; Expo" data-ar="حدد موعدك لـ IEC 360&deg; Expo">Mark your calendar for IEC 360&deg; Expo</h2>
             <p class="event-info-subtitle" data-en="Three days of innovation and networking await. Save the date and get ready to join us in person." data-ar="ثلاثة أيام من الابتكار والتواصل بانتظارك. احفظ الموعد واستعد للانضمام إلينا حضورياً.">Three days of innovation and networking await. Save the date and get ready to join us in person.</p>
             <div class="event-badges">
@@ -2428,12 +2424,12 @@
               <div class="event-badge" data-animate>
                 <i class="fa-solid fa-award" aria-hidden="true"></i>
                 <div>
-                  <div class="event-badge-title" data-en="Certification" data-ar="الاعتماد">Certification</div>
+                  <div class="event-badge-title" data-en="Certificate" data-ar="الرخصة">Certificate</div>
                   <div class="event-badge-meta">26/165</div>
                 </div>
               </div>
               <div class="event-badge" data-animate>
-                <i class="fa-solid fa-map-pin" aria-hidden="true"></i>
+                <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
                 <div class="hero-location" role="button" tabindex="0" data-scroll-target="#location-card">
                   <div class="event-badge-title" data-en="Location" data-ar="الموقع">Location</div>
                   <div class="event-badge-meta">The Arena Riyadh</div>
