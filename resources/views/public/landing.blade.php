@@ -95,11 +95,16 @@
     }
 
     body {
-        --font-base: var(--font-en);
-        font-family: var(--font-base);
-        background-color: rgb(var(--background));
-        color: rgb(var(--foreground));
-        line-height: 1.6;
+      --font-base: var(--font-en);
+      font-family: var(--font-base);
+      background-color: rgb(var(--background));
+      background-image: url("{{ asset('img/background.PNG') }}");
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-attachment: fixed;
+      background-position: center top;
+      color: rgb(var(--foreground));
+      line-height: 1.6;
     }
 
     body.locale-ar {
@@ -379,17 +384,17 @@
     }
 
     .hero::before {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background: linear-gradient(135deg, rgb(var(--accent)), rgb(var(--background)), rgb(var(--background)));
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: transparent;
     }
 
     .hero::after {
-        content: '';
-        position: absolute;
-        inset: 0;
-        background: radial-gradient(ellipse at top right, rgb(var(--primary) / 0.1), transparent 50%);
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: transparent;
     }
 
     .hero-grid {
@@ -411,7 +416,6 @@
     .event-info {
         position: relative;
         padding: 3rem 0 1.5rem;
-        background: linear-gradient(140deg, rgba(152, 3, 189, 0.08), rgba(0, 0, 0, 0.65));
         overflow: hidden;
         isolation: isolate;
     }
@@ -734,7 +738,7 @@
     /* Highlights Section */
     .highlights {
         padding: 4rem 0;
-        background: rgb(var(--background));
+        background: transparent;
     }
 
     .highlights-grid {
@@ -800,9 +804,6 @@
     /* Registration Section */
     .registration {
         padding: 0px;
-        background-image: url("{{ asset('/img/background.png') }}");
-        background-size: cover;
-        background-position: center;
     }
 
     .registration {
@@ -1108,7 +1109,6 @@
     .about {
         position: relative;
         padding: 5rem 0;
-        background: rgb(var(--background));
         overflow: hidden;
         isolation: isolate;
     }
@@ -1117,7 +1117,6 @@
         content: "";
         position: absolute;
         inset: 0;
-        background: linear-gradient(120deg, rgba(0, 0, 0, 0.55), rgba(5, 122, 2, 0.35));
         z-index: 1;
         pointer-events: none;
     }
@@ -1138,7 +1137,6 @@
         transform-origin: center;
         transform: scaleX(0);
         transition: transform 1.25s ease-in-out;
-        background: #000;
     }
 
     .about-video-container video {
@@ -1607,8 +1605,6 @@
     }
 
     .sponsor-participant-organizer-band {
-        background-image: url("{{ asset('/img/background.png') }}");
-        background-size: cover;
         background-position: center;
         background-repeat: no-repeat;
     }
@@ -3491,16 +3487,9 @@
         $missionTitle = $aboutTranslate(data_get($missionBlock, 'title'), __('Our Mission'));
         $missionParagraphs = data_get($missionBlock, 'paragraphs', []);
         $goals = data_get($aboutSection, 'goals', []);
-        $aboutVideo = \App\Models\LandingSection::mediaUrl($aboutSection['background_video'] ?? null) ??
-        asset('video/video.mp4');
         @endphp
 
         <section class="about" id="about">
-            <div class="about-video-container" aria-hidden="true">
-                <video class="about-video" autoplay muted loop playsinline preload="auto">
-                    <source src="{{ $aboutVideo }}" type="video/mp4">
-                </video>
-            </div>
             <div class="container">
                 <h2 class="section-title" data-en="{{ e($aboutTitle['en']) }}" data-ar="{{ e($aboutTitle['ar']) }}"
                     style="margin-bottom:20px; color:#fff; text-align: center;">{{ $aboutTitle['text'] }}</h2>
@@ -3956,7 +3945,7 @@
     <footer class="footer">
         <div class="container">
             <div class="footer-inner">
-                <div class="footer-text"> <span data-en="IEC 360 &deg; EXPO" data-ar="IEC 360 &deg; EXPO"> IEC 360 &deg;
+                <div class="footer-text"> <span data-en="IEC 360&deg; EXPO" data-ar="IEC 360&deg; EXPO"> IEC 360&deg;
                         EXPO</span></div>
                 <div class="footer-text" data-en="All rights reserved BU© 2026 "
                     data-ar="جميع الحقوق محفوظة لشركة مظلة الأعمال© 2026.">2026© All rights reserved BU</div>
@@ -4756,3 +4745,4 @@
 </body>
 
 </html>
+
