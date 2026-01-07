@@ -8,3 +8,5 @@ git fetch origin
 
 # WARNING: this discards ALL local changes and makes your branch identical to origin/main
 git reset --hard origin/main
+
+php artisan optimize:clear
