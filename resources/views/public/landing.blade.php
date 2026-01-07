@@ -830,6 +830,14 @@
       grid-template-columns: 1fr 1.5fr;
     }
 
+    .role-cards.hide-cards {
+      grid-template-columns: 1fr;
+    }
+
+    .role-cards.hide-cards .role-card {
+      display: none;
+    }
+
     .role-card {
       position: relative;
       background-color: rgb(var(--card));
@@ -1676,12 +1684,6 @@
       background: transparent;
     }
 
-    .stats-contact-band {
-      background-image: url("{{ asset('/img/background1.png') }}");
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-    }
 
     .contact-grid {
       display: grid;
@@ -2001,8 +2003,8 @@
       top: 0;
       left: 0;
       width: 100%;
-      height: 4px;
-      background: linear-gradient(90deg, var(--secondary-color), var(--accent-color));
+      height: 10px;
+      background: rgb(var(--primary));
       transform: scaleX(0);
       transition: transform 0.3s ease;
     }
@@ -3987,6 +3989,7 @@ with Saudi Vision 2030.',
       toggleRoleVisibility(role);
       const roleCards = document.getElementById('role-cards');
       roleCards.classList.add('has-selection');
+      roleCards.classList.add('hide-cards');
       roleCards.classList.toggle('guest-selected', role === 'visitor');
 
       const guestLogo = document.getElementById('guest-row-logo');
@@ -4037,6 +4040,7 @@ with Saudi Vision 2030.',
 
       const roleCards = document.getElementById('role-cards');
       roleCards.classList.remove('has-selection');
+      roleCards.classList.remove('hide-cards');
       roleCards.classList.remove('guest-selected');
 
       document.getElementById('visitor-card').classList.remove('selected', 'dimmed');
