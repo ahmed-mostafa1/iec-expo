@@ -2173,6 +2173,8 @@
 
         .form-card {
             padding: 2rem;
+            max-width: 80%;
+            margin: auto;
         }
 
         .form-grid-2 {
