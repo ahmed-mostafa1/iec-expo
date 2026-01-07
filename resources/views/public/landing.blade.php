@@ -403,6 +403,220 @@
       max-width: none;
     }
 
+    /* Event Info Section */
+    .event-info {
+      position: relative;
+      padding: 3rem 0 1.5rem;
+      background: linear-gradient(140deg, rgba(152, 3, 189, 0.08), rgba(0, 0, 0, 0.65));
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .event-info::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 25% 20%, rgba(152, 3, 189, 0.15), transparent 35%), radial-gradient(circle at 80% 30%, rgba(255, 255, 255, 0.08), transparent 40%);
+      z-index: 0;
+      pointer-events: none;
+      animation: floatGlow 14s ease-in-out infinite alternate;
+    }
+
+    .event-info .container {
+      position: relative;
+      z-index: 1;
+    }
+
+    .event-info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      align-items: center;
+    }
+
+    .event-info-copy {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+      color: #fff;
+    }
+
+    .event-kicker {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.4rem 0.9rem;
+      background: rgba(152, 3, 189, 0.14);
+      border: 1px solid rgba(152, 3, 189, 0.3);
+      border-radius: 999px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      width: fit-content;
+    }
+
+    .event-info-title {
+      font-size: 1.9rem;
+      font-weight: 800;
+      line-height: 1.25;
+    }
+
+    .event-info-subtitle {
+      color: rgb(var(--muted-foreground));
+      max-width: 46ch;
+    }
+
+    .event-badges {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 0.8rem;
+    }
+
+    .event-badge {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 0.75rem;
+      align-items: center;
+      padding: 0.9rem 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      background: rgba(255, 255, 255, 0.02);
+      backdrop-filter: blur(4px);
+      box-shadow: 0 12px 30px -14px rgba(0, 0, 0, 0.45);
+      transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+
+    .event-badge:hover {
+      transform: translateY(-4px);
+      border-color: rgba(152, 3, 189, 0.4);
+    }
+
+    .event-badge i {
+      color: #9803bd;
+      font-size: 1.2rem;
+    }
+
+    .event-badge-title {
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.15rem;
+    }
+
+    .event-badge-meta {
+      color: rgb(var(--muted-foreground));
+      font-size: 0.95rem;
+    }
+
+    .countdown-card {
+      background: linear-gradient(160deg, rgba(152, 3, 189, 0.15), rgba(0, 0, 0, 0.85));
+      border: 1px solid rgba(152, 3, 189, 0.35);
+      border-radius: 16px;
+      padding: 1.5rem;
+      box-shadow: 0 20px 50px -28px rgba(0, 0, 0, 0.75);
+      position: relative;
+      overflow: hidden;
+      color: #fff;
+    }
+
+    .countdown-card::before {
+      content: "";
+      position: absolute;
+      inset: -20%;
+      background: radial-gradient(circle at 50% 50%, rgba(255, 255, 255, 0.08), transparent 45%);
+      filter: blur(24px);
+      opacity: 0.7;
+      animation: slowSpin 18s linear infinite;
+      pointer-events: none;
+    }
+
+    .countdown-card > * {
+      position: relative;
+      z-index: 1;
+    }
+
+    .countdown-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 1rem;
+      margin-bottom: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .countdown-label {
+      font-weight: 700;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    .pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.35rem 0.8rem;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 999px;
+      font-size: 0.9rem;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .countdown-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(70px, 1fr));
+      gap: 0.75rem;
+    }
+
+    .countdown-tile {
+      text-align: center;
+      background: rgba(0, 0, 0, 0.35);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      border-radius: 12px;
+      padding: 0.9rem 0.75rem;
+      backdrop-filter: blur(3px);
+      box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04);
+    }
+
+    .countdown-number {
+      font-size: 2rem;
+      font-weight: 800;
+      letter-spacing: 0.04em;
+      color: #fff;
+      animation: pulseGlow 2.8s ease-in-out infinite alternate;
+    }
+
+    .countdown-label-text {
+      color: rgb(var(--muted-foreground));
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      margin-top: 0.35rem;
+      display: block;
+    }
+
+    @keyframes pulseGlow {
+      0% { text-shadow: 0 0 12px rgba(152, 3, 189, 0.15); }
+      100% { text-shadow: 0 0 26px rgba(152, 3, 189, 0.45); }
+    }
+
+    @keyframes slowSpin {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    @keyframes floatGlow {
+      from { transform: translateY(0px); opacity: 0.9; }
+      to { transform: translateY(-10px); opacity: 1; }
+    }
+
+    @media (max-width: 768px) {
+      .event-info {
+        padding: 2.5rem 0 1.25rem;
+      }
+
+      .countdown-grid {
+        grid-template-columns: repeat(2, minmax(120px, 1fr));
+      }
+    }
+
     .hero-video-frame {
       position: relative;
       /* border-radius: 1.5rem; */
@@ -2159,6 +2373,70 @@
       </div>
     </section>
 
+    <section class="event-info" id="event-info">
+      <div class="container">
+        <div class="event-info-grid">
+          <div class="event-info-copy" data-animate>
+            <div class="event-kicker" data-en="Live in Riyadh" data-ar="مباشر في الرياض">
+              <i class="fa-solid fa-location-dot"></i>
+              <span data-en="Live in Riyadh" data-ar="مباشر في الرياض">Live in Riyadh</span>
+            </div>
+            <h2 class="event-info-title" data-en="Mark your calendar for IEC 360&deg; Expo" data-ar="حدد موعدك لـ IEC 360&deg; Expo">Mark your calendar for IEC 360&deg; Expo</h2>
+            <p class="event-info-subtitle" data-en="Three days of innovation and networking await. Save the date and get ready to join us in person." data-ar="ثلاثة أيام من الابتكار والتواصل بانتظارك. احفظ الموعد واستعد للانضمام إلينا حضورياً.">Three days of innovation and networking await. Save the date and get ready to join us in person.</p>
+            <div class="event-badges">
+              <div class="event-badge" data-animate>
+                <i class="fa-solid fa-calendar-days" aria-hidden="true"></i>
+                <div>
+                  <div class="event-badge-title" data-en="Event Dates" data-ar="تواريخ الحدث">Event Dates</div>
+                  <div class="event-badge-meta">24-9-2026 to 26-9-2026</div>
+                </div>
+              </div>
+              <div class="event-badge" data-animate>
+                <i class="fa-solid fa-award" aria-hidden="true"></i>
+                <div>
+                  <div class="event-badge-title" data-en="Certification" data-ar="الاعتماد">Certification</div>
+                  <div class="event-badge-meta">26/165</div>
+                </div>
+              </div>
+              <div class="event-badge" data-animate>
+                <i class="fa-solid fa-map-pin" aria-hidden="true"></i>
+                <div>
+                  <div class="event-badge-title" data-en="Location" data-ar="الموقع">Location</div>
+                  <div class="event-badge-meta">The Arena Riyadh</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="countdown-card" data-animate>
+            <div class="countdown-header">
+              <span class="countdown-label" data-en="Countdown to opening" data-ar="العد التنازلي للانطلاق">Countdown to opening</span>
+              <span class="pill">
+                <i class="fa-solid fa-hourglass-half" aria-hidden="true"></i>
+                24-9-2026
+              </span>
+            </div>
+            <div class="countdown-grid" data-countdown-target="2026-09-24T00:00:00+03:00">
+              <div class="countdown-tile">
+                <div class="countdown-number" data-countdown-part="days">--</div>
+                <span class="countdown-label-text" data-en="Days" data-ar="أيام">Days</span>
+              </div>
+              <div class="countdown-tile">
+                <div class="countdown-number" data-countdown-part="hours">--</div>
+                <span class="countdown-label-text" data-en="Hours" data-ar="ساعات">Hours</span>
+              </div>
+              <div class="countdown-tile">
+                <div class="countdown-number" data-countdown-part="minutes">--</div>
+                <span class="countdown-label-text" data-en="Minutes" data-ar="دقائق">Minutes</span>
+              </div>
+              <div class="countdown-tile">
+                <div class="countdown-number" data-countdown-part="seconds">--</div>
+                <span class="countdown-label-text" data-en="Seconds" data-ar="ثوانٍ">Seconds</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
     <!-- Registration Section -->
     @php
@@ -3447,6 +3725,49 @@ with Saudi Vision 2030.',
       }
     }
 
+    // Event Countdown
+    function initEventCountdown() {
+      const countdownGrid = document.querySelector('[data-countdown-target]');
+      if (!countdownGrid) {
+        return;
+      }
+
+      const targetValue = countdownGrid.dataset.countdownTarget || '';
+      const targetDate = new Date(targetValue);
+      if (Number.isNaN(targetDate.getTime())) {
+        return;
+      }
+
+      const setPart = (part, value) => {
+        const el = countdownGrid.querySelector(`[data-countdown-part="${part}"]`);
+        if (el) {
+          el.textContent = value;
+        }
+      };
+
+      let timerId = null;
+      const updateCountdown = () => {
+        const now = new Date();
+        const diffSeconds = Math.max(0, Math.floor((targetDate.getTime() - now.getTime()) / 1000));
+        const days = Math.floor(diffSeconds / 86400);
+        const hours = Math.floor((diffSeconds % 86400) / 3600);
+        const minutes = Math.floor((diffSeconds % 3600) / 60);
+        const seconds = diffSeconds % 60;
+
+        setPart('days', String(days).padStart(2, '0'));
+        setPart('hours', String(hours).padStart(2, '0'));
+        setPart('minutes', String(minutes).padStart(2, '0'));
+        setPart('seconds', String(seconds).padStart(2, '0'));
+
+        if (diffSeconds <= 0 && timerId) {
+          clearInterval(timerId);
+        }
+      };
+
+      updateCountdown();
+      timerId = setInterval(updateCountdown, 1000);
+    }
+
 
     // Count Up Animation
     function animateCountUp(element, target, suffix) {
@@ -3989,6 +4310,7 @@ with Saudi Vision 2030.',
     document.addEventListener('DOMContentLoaded', () => {
       initHeardAboutSelects();
       initAjaxRegistrationForms();
+      initEventCountdown();
       document.querySelectorAll('.sponsor-card-link, .participant-card').forEach(el => {
         el.addEventListener('click', (event) => {
           event.preventDefault();
@@ -4102,4 +4424,3 @@ with Saudi Vision 2030.',
 </body>
 
 </html>
-
