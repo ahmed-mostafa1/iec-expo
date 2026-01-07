@@ -2732,7 +2732,7 @@
                                 enctype="multipart/form-data" novalidate
                                 data-success-title="{{ e(__('registration.sponsor.toast_title')) }}"
                                 data-success-message="{{ e(__('registration.sponsor.success')) }}">
-                                <div class="form-buttons" style="justify-content: flex-start; margin-bottom: 0.75rem;">
+                                <div class="form-buttons" style="justify-content: flex-start; margin-bottom: 0.75rem; width: 50%!important; margin: auto;">
                                     <a class="btn btn-outline" href="https://umbrella.sa/iec360/pdf/privacy-policy.pdf" target="_blank" rel="noopener" data-en="Download SPONSOR Profile" data-ar="تحميل ملف الراعي">Download SPONSOR Profile</a>
                                 </div>
                                 @csrf
@@ -2912,9 +2912,7 @@
                         </div>
 
                         <div class="form-card" id="icon-form">
-                          <div class="form-buttons" style="justify-content: flex-start; margin-bottom: 0.75rem;">
-                            <a class="btn btn-outline" href="https://umbrella.sa/iec360/pdf/privacy-policy.pdf" target="_blank" rel="noopener" data-en="Download ICON Profile" data-ar="تحميل ملف الأيكون">Download ICON Profile</a>
-                          </div>
+                          
                           @if(session('icon_success'))
                           <div
                               class="mb-4 rounded-lg border border-emerald-100 bg-emerald-50 px-3 py-2 text-sm text-emerald-900">
@@ -2982,6 +2980,9 @@
                                 data-success-message="{{ e(__('registration.icon.success')) }}">
                                 @csrf
                                 <input type="hidden" name="form_identifier" value="icon">
+                                <div class="form-buttons" style="justify-content: flex-start; margin-bottom: 0.75rem; width: 50%!important; margin: auto;">
+                            <a class="btn btn-outline" href="https://umbrella.sa/iec360/pdf/privacy-policy.pdf" target="_blank" rel="noopener" data-en="Download ICON Profile" data-ar="تحميل ملف الأيكون">Download ICON Profile</a>
+                          </div>
                                 <div>
                                     <div class="form-grid form-grid-2">
                                         <div class="form-group">

@@ -157,7 +157,7 @@ return [
                         'ar' => 'الرعاة',
                     ],
                     'description' => [
-                        'en' => 'Showcase your products and connect with attendees',
+                        'en' => 'Showcase your products',
                         'ar' => 'اعرض منتجاتك وتواصل مع الحضور',
                     ],
                     'cta_label' => [
@@ -167,7 +167,7 @@ return [
                 ],
                 'exhibitor_form' => [
                     'title' => [
-                        'en' => 'Exhibitor Application',
+                        'en' => 'Sponsor Application',
                         'ar' => 'طلب العرض',
                     ],
                     'step_one' => [
@@ -273,7 +273,7 @@ return [
                 ],
                 'icon_form' => [
                     'title' => [
-                        'en' => 'Icon Registration',
+                        'en' => 'ICON Registration',
                         'ar' => 'تسجيل الأيقونات',
                     ],
                     'step_one' => [
