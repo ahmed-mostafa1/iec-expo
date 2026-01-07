@@ -507,6 +507,21 @@
       font-size: 0.95rem;
     }
 
+    .event-badge-meta .meta-line {
+      display: block;
+      line-height: 1.3;
+    }
+
+    .hero-location {
+      cursor: pointer;
+    }
+
+    .hero-location:focus-visible {
+      outline: 2px solid rgba(152, 3, 189, 0.7);
+      outline-offset: 4px;
+      border-radius: 10px;
+    }
+
     .countdown-card {
       background: linear-gradient(160deg, rgba(152, 3, 189, 0.15), rgba(0, 0, 0, 0.85));
       border: 1px solid rgba(152, 3, 189, 0.35);
@@ -607,9 +622,25 @@
       to { transform: translateY(-10px); opacity: 1; }
     }
 
+    @media (min-width: 1024px) {
+      .event-badges {
+        grid-template-columns: repeat(3, 1fr);
+      }
+    }
+
     @media (max-width: 768px) {
       .event-info {
         padding: 2.5rem 0 1.25rem;
+      }
+
+      .event-badge {
+        grid-template-columns: 1fr;
+        text-align: center;
+        justify-items: center;
+      }
+
+      .event-badge i {
+        justify-self: center;
       }
 
       .countdown-grid {
@@ -2388,7 +2419,10 @@
                 <i class="fa-solid fa-calendar-days" aria-hidden="true"></i>
                 <div>
                   <div class="event-badge-title" data-en="Event Dates" data-ar="تواريخ الحدث">Event Dates</div>
-                  <div class="event-badge-meta">24-9-2026 to 26-9-2026</div>
+                  <div class="event-badge-meta">
+                    <span class="meta-line" data-en="24-9-2026" data-ar="24-9-2026">24-9-2026</span>
+                    <span class="meta-line" data-en="to 26-9-2026" data-ar="إلى 26-9-2026">to 26-9-2026</span>
+                  </div>
                 </div>
               </div>
               <div class="event-badge" data-animate>
@@ -2400,7 +2434,7 @@
               </div>
               <div class="event-badge" data-animate>
                 <i class="fa-solid fa-map-pin" aria-hidden="true"></i>
-                <div>
+                <div class="hero-location" role="button" tabindex="0" data-scroll-target="#location-card">
                   <div class="event-badge-title" data-en="Location" data-ar="الموقع">Location</div>
                   <div class="event-badge-meta">The Arena Riyadh</div>
                 </div>
@@ -3636,7 +3670,7 @@ with Saudi Vision 2030.',
           </div>
         </div> 
                  <!-- map -->
-        <div class="location-card">
+        <div class="location-card" id="location-card">
           <div class="location-header">
             <div class="contact-info-icon">
               <svg class="icon icon-sm" viewBox="0 0 24 24">
@@ -3723,6 +3757,31 @@ with Saudi Vision 2030.',
           behavior: 'smooth'
         });
       }
+    }
+
+    function initLocationScroll() {
+      const trigger = document.querySelector('.hero-location');
+      const targetSelector = trigger ? trigger.getAttribute('data-scroll-target') : null;
+      const target = targetSelector ? document.querySelector(targetSelector) : document.getElementById('location-card');
+      if (!trigger || !target) {
+        return;
+      }
+
+      const scrollToTarget = () => {
+        try {
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        } catch (e) {
+          target.scrollIntoView();
+        }
+      };
+
+      trigger.addEventListener('click', scrollToTarget);
+      trigger.addEventListener('keydown', (event) => {
+        if (event.key === 'Enter' || event.key === ' ') {
+          event.preventDefault();
+          scrollToTarget();
+        }
+      });
     }
 
     // Event Countdown
@@ -4311,6 +4370,7 @@ with Saudi Vision 2030.',
       initHeardAboutSelects();
       initAjaxRegistrationForms();
       initEventCountdown();
+      initLocationScroll();
       document.querySelectorAll('.sponsor-card-link, .participant-card').forEach(el => {
         el.addEventListener('click', (event) => {
           event.preventDefault();
