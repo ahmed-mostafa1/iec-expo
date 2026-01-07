@@ -2088,7 +2088,7 @@
   <header class="header">
     <div class="container">
       <div class="header-inner">
-        <img src="{{ asset('./img/IEC-logo.png') }}" alt="IEC Logo" class="nav-logo" />
+        <img src="{{ asset('./img/IEC-logo-nav.png') }}" alt="IEC Logo" class="nav-logo" />
         <nav class="nav">
           <a href="#" class="btn-primary nav-link" data-en="Home" data-ar="الرئيسية">Home</a>
           <a href="{{ route('public.ed', ['locale' => app()->getLocale()]) }}" class="nav-link" data-en="Previous Editions of IEC" data-ar="نسخ المعرض السابقة">Previous Editions of IEC</a>
