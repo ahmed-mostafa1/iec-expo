@@ -2397,15 +2397,15 @@ $organizers = \App\Models\Organizer::query()
             <div class="header-inner">
                 <img src="{{ asset('./img/IEC-logo-nav.png') }}" alt="IEC Logo" class="nav-logo" />
                 <nav class="nav">
-                    <a href="#" class="btn-primary nav-link" data-en="Home" data-ar="????????">Home</a>
+                    <a href="#" class="btn-primary nav-link" data-en="Home" data-ar="Home">Home</a>
                     <a href="{{ route('public.ed', ['locale' => app()->getLocale()]) }}" class="nav-link"
-                        data-en="Previous Editions of IEC" data-ar="??? ?????? ???????">Previous Editions of IEC</a>
-                    <a href="#register" class="btn-primary nav-link" data-en="Register" data-ar="??? ????">Register</a>
-                    <a href="#about" class="nav-link" data-en="About" data-ar="?? ??????">About</a>
-                    <a href="#sponsors" class="nav-link" data-en="Sponsors" data-ar="??????"??????">Sponsors</a>
-                    <a href="#participants" class="nav-link" data-en="Icons" data-ar="????????">Icons</a>
-                    <a href="#organizers" class="nav-link" data-en="Owned by" data-ar="?????? ???????">Owned by</a>
-                    <a href="#contact" class="nav-link" data-en="Contact" data-ar="????? ????">Contact</a>
+                        data-en="Previous Editions of IEC" data-ar="Previous Editions of IEC">Previous Editions of IEC</a>
+                    <a href="#register" class="btn-primary nav-link" data-en="Register" data-ar="Register">Register</a>
+                    <a href="#about" class="nav-link" data-en="About" data-ar="About">About</a>
+                    <a href="#sponsors" class="nav-link" data-en="Sponsors" data-ar="Sponsors"">Sponsors</a>
+                    <a href="#participants" class="nav-link" data-en="Icons" data-ar="Icons">Icons</a>
+                    <a href="#organizers" class="nav-link" data-en="Owned by" data-ar="Owned by">Owned by</a>
+                    <a href="#contact" class="nav-link" data-en="Contact" data-ar="Contact">Contact</a>
                 </nav>
 
                 <div class="header-right">
@@ -2416,7 +2416,7 @@ $organizers = \App\Models\Organizer::query()
                                 <path
                                     d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
                             </svg>
-                            <span id="lang-text">???????</span>
+                            <span id="lang-text">العربية</span>
                         </button>
                         <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
                             <svg class="icon" viewBox="0 0 24 24" id="menu-icon">
@@ -2431,15 +2431,15 @@ $organizers = \App\Models\Organizer::query()
             </div>
 
             <nav class="mobile-nav" id="mobile-nav">
-                <a href="#" class="mobile-nav-link" data-en="Home" data-ar="????????">Home</a>
+                <a href="#" class="mobile-nav-link" data-en="Home" data-ar="Home">Home</a>
                 <a href="{{ route('public.ed', ['locale' => app()->getLocale()]) }}" class="mobile-nav-link"
-                    data-en="Previous Editions of IEC" data-ar="??? ?????? ???????">Previous Editions of IEC</a>
-                <a href="#register" class="mobile-nav-link" data-en="Register" data-ar="??? ????">Register</a>
-                <a href="#about" class="mobile-nav-link" data-en="About" data-ar="?? ??????">About</a>
-                <a href="#sponsors" class="mobile-nav-link" data-en="Sponsors" data-ar="??????"??????">Sponsors</a>
-                <a href="#participants" class="mobile-nav-link" data-en="Icons" data-ar="????????">Icons</a>
-                <a href="#organizers" class="mobile-nav-link" data-en="Owned by" data-ar="?????? ???????">Owned by</a>
-                <a href="#contact" class="mobile-nav-link" data-en="Contact" data-ar="????? ????">Contact</a>
+                    data-en="Previous Editions of IEC" data-ar="Previous Editions of IEC">Previous Editions of IEC</a>
+                <a href="#register" class="mobile-nav-link" data-en="Register" data-ar="Register">Register</a>
+                <a href="#about" class="mobile-nav-link" data-en="About" data-ar="About">About</a>
+                <a href="#sponsors" class="mobile-nav-link" data-en="Sponsors" data-ar="Sponsors"">Sponsors</a>
+                <a href="#participants" class="mobile-nav-link" data-en="Icons" data-ar="Icons">Icons</a>
+                <a href="#organizers" class="mobile-nav-link" data-en="Owned by" data-ar="Owned by">Owned by</a>
+                <a href="#contact" class="mobile-nav-link" data-en="Contact" data-ar="Contact">Contact</a>
 
             </nav>
         </div>
@@ -2476,27 +2476,28 @@ $organizers = \App\Models\Organizer::query()
                 <div class="event-info-grid">
                     <div class="event-info-copy" data-animate>
                         <h2 class="event-info-title" data-en="Mark your calendar for IEC 360&deg; Expo"
-                            data-ar="??? ????? ?? IEC 360&deg; Expo">Mark your calendar for IEC 360&deg; Expo</h2>
+                            data-ar="حدد موعدك لـ IEC 360° Expo">Mark your calendar for IEC 360&deg; Expo</h2>
                         <p class="event-info-subtitle"
                             data-en="Three days of innovation and networking await. Save the date and get ready to join us in person."
-                            data-ar="????? ???? ?? ???????? ???????? ????????. ???? ?????? ?????? ????????.">Three days
+                            data-ar="ثلاثة أيام من الابتكار والتواصل بانتظارك. احفظ الموعد واستعد للانضمام.">Three days
                             of innovation and networking await. Save the date and get ready to join us in person.</p>
                         <div class="event-badges">
                             <div class="event-badge" data-animate>
                                 <i class="fa-solid fa-calendar-days" aria-hidden="true"></i>
                                 <div>
-                                    <!-- <div class="event-badge-title" data-en="Event Dates" data-ar="?????? ?????">Event Dates</div> -->
                                     <div class="event-badge-meta">
-                                        <span class="meta-line" data-en="Start 24-9-2026" data-ar="?? 24-9-2026">Start
+                                        <span class="meta-line" data-en="Start 24-9-2026" data-ar="يبدأ
+                                            24-9-2026">Start
                                             24-9-2026</span>
-                                        <span class="meta-line" data-en="End 26-9-2026" data-ar="??? 26-9-2026">End
+                                        <span class="meta-line" data-en="End 26-9-2026" data-ar="ينتهي
+                                            26-9-2026">End
                                             26-9-2026</span>
                                     </div>
                                 </div>
                             </div>
                             <div class="event-badge event-badge-license" data-animate>
                                 <div>
-                                    <div class="event-badge-title" data-en="License No." data-ar="رقم الترخيص">License No.
+                                    <div class="event-badge-title" data-en="License No." data-ar="الترخيص">License No.
                                     </div>
                                     <div class="event-badge-meta">26/165</div>
                                 </div>
@@ -2506,8 +2507,8 @@ $organizers = \App\Models\Organizer::query()
                                 <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
                                 <div class="hero-location" role="button" tabindex="0"
                                     data-scroll-target="#location-card">
-                                    <div class="event-badge-title" data-en="Location" data-ar="???? ?????">Event Location</div>
-                                    <div class="event-badge-meta" data-en="The Arena Riyadh" data-ar="?? ????? ??????">The Arena Riyadh</div>
+                                    <div class="event-badge-title" data-en="Location" data-ar="موقع الحدث">Event Location</div>
+                                    <div class="event-badge-meta" data-en="The Arena Riyadh" data-ar="ذا أرينا الرياض">The Arena Riyadh</div>
                                 </div>
                             </div>
                         </div>
@@ -2515,7 +2516,7 @@ $organizers = \App\Models\Organizer::query()
                     <div class="countdown-card" data-animate>
                         <div class="countdown-header">
                             <span class="countdown-label" data-en="Countdown to opening"
-                                data-ar="???? ????">Starts in</span>
+                                data-ar="يبدأ خلال">Starts in</span>
                             <span class="pill">
                                 <i class="fa-solid fa-hourglass-half" aria-hidden="true"></i>
                                 24-9-2026
@@ -2524,19 +2525,19 @@ $organizers = \App\Models\Organizer::query()
                         <div class="countdown-grid" data-countdown-target="2026-09-24T00:00:00+03:00">
                             <div class="countdown-tile">
                                 <div class="countdown-number" data-countdown-part="days">--</div>
-                                <span class="countdown-label-text" data-en="Days" data-ar="????">Days</span>
+                                <span class="countdown-label-text" data-en="Days" data-ar="Days">Days</span>
                             </div>
                             <div class="countdown-tile">
                                 <div class="countdown-number" data-countdown-part="hours">--</div>
-                                <span class="countdown-label-text" data-en="Hours" data-ar="?????">Hours</span>
+                                <span class="countdown-label-text" data-en="Hours" data-ar="Hours">Hours</span>
                             </div>
                             <div class="countdown-tile">
                                 <div class="countdown-number" data-countdown-part="minutes">--</div>
-                                <span class="countdown-label-text" data-en="Minutes" data-ar="?????">Minutes</span>
+                                <span class="countdown-label-text" data-en="Minutes" data-ar="Minutes">Minutes</span>
                             </div>
                             <div class="countdown-tile">
                                 <div class="countdown-number" data-countdown-part="seconds">--</div>
-                                <span class="countdown-label-text" data-en="Seconds" data-ar="?????">Seconds</span>
+                                <span class="countdown-label-text" data-en="Seconds" data-ar="Seconds">Seconds</span>
                             </div>
                         </div>
                     </div>
@@ -2679,7 +2680,7 @@ $organizers = \App\Models\Organizer::query()
                                 data-ar="{{ e($exhibitorCardDescription['ar']) }}">
                                 {{ $exhibitorCardDescription['text'] }}</p>
                             <div class="role-cta" id="exhibitor-cta">
-                                <span data-en="Click" data-ar="????">Click</span>
+                                <span data-en="Click" data-ar="Click">Click</span>
                                 <svg class="icon icon-sm" viewBox="0 0 24 24">
                                     <path d="M5 12h14M12 5l7 7-7 7" />
                                 </svg>
@@ -2694,46 +2695,36 @@ $organizers = \App\Models\Organizer::query()
                             </div>
                             @endif
                             @php
-                            $exFullNameLabel = $fieldCopy($exhibitorFieldsStepOneByName, 'full_name', 'label', ['en' =>
-                            'Full Name *', 'ar' => '????? ?????? *']);
+                            $exFullNameLabel = $fieldCopy($exhibitorFieldsStepOneByName, 'full_name', 'label', ['en' => 'Full Name *', 'ar' => 'الاسم الكامل *']);
                             $exFullNamePlaceholder = $fieldCopy($exhibitorFieldsStepOneByName, 'full_name',
-                            'placeholder', ['en' => 'John Doe', 'ar' => '??? ??']);
-                            $exEmailLabel = $fieldCopy($exhibitorFieldsStepOneByName, 'email', 'label', ['en' => 'Email
-                            *', 'ar' => '?????? ?????????? *']);
+                            'placeholder', ['en' => 'John Doe', 'ar' => 'جون دو']);
+                            $exEmailLabel = $fieldCopy($exhibitorFieldsStepOneByName, 'email', 'label', ['en' => 'Email *', 'ar' => 'البريد الإلكتروني *']);
                             $exEmailPlaceholder = $fieldCopy($exhibitorFieldsStepOneByName, 'email', 'placeholder',
                             ['en' => 'john@company.com', 'ar' => 'john@company.com']);
-                            $exPhoneLabel = $fieldCopy($exhibitorFieldsStepOneByName, 'phone', 'label', ['en' => 'Phone
-                            *', 'ar' => '?????? *']);
+                            $exPhoneLabel = $fieldCopy($exhibitorFieldsStepOneByName, 'phone', 'label', ['en' => 'Phone *', 'ar' => 'الهاتف *']);
                             $exPhonePlaceholder = $fieldCopy($exhibitorFieldsStepOneByName, 'phone', 'placeholder',
                             ['en' => '+966 50 000 0000', 'ar' => '+966 50 000 0000']);
-                            $exJobLabel = $fieldCopy($exhibitorFieldsStepOneByName, 'job_title', 'label', ['en' => 'Job
-                            Title *', 'ar' => '?????? ??????? *']);
+                            $exJobLabel = $fieldCopy($exhibitorFieldsStepOneByName, 'job_title', 'label', ['en' => 'Job Title *', 'ar' => 'المسمى الوظيفي *']);
                             $exJobPlaceholder = $fieldCopy($exhibitorFieldsStepOneByName, 'job_title', 'placeholder',
-                            ['en' => 'Marketing Manager', 'ar' => '???? ???????']);
-                            $exOrgLabel = $fieldCopy($exhibitorFieldsStepOneByName, 'organization', 'label', ['en' =>
-                            'Company / Organization', 'ar' => '?????? / ?????']);
+                            ['en' => 'Marketing Manager', 'ar' => 'مدير التسويق']);
+                            $exOrgLabel = $fieldCopy($exhibitorFieldsStepOneByName, 'organization', 'label', ['en' => 'Company / Organization', 'ar' => 'الشركة / الجهة']);
                             $exOrgPlaceholder = $fieldCopy($exhibitorFieldsStepOneByName, 'organization', 'placeholder',
-                            ['en' => 'Umbrella Inc.', 'ar' => '???? ???????']);
+                            ['en' => 'Umbrella Inc.', 'ar' => 'شركة أمبريلا']);
 
-                            $exVatLabel = $fieldCopy($exhibitorFieldsStepTwoByName, 'vat_number', 'label', ['en' => 'VAT
-                            (Value Added Tax)', 'ar' => '????? ?????? ???????']);
+                            $exVatLabel = $fieldCopy($exhibitorFieldsStepTwoByName, 'vat_number', 'label', ['en' => 'VAT (Value Added Tax)', 'ar' => 'ضريبة القيمة المضافة']);
                             $exVatPlaceholder = $fieldCopy($exhibitorFieldsStepTwoByName, 'vat_number', 'placeholder',
                             ['en' => '300000000000003', 'ar' => '300000000000003']);
-                            $exCrNumberLabel = $fieldCopy($exhibitorFieldsStepTwoByName, 'cr_number', 'label', ['en' =>
-                            'CR Number', 'ar' => '??? ????? ???????']);
+                            $exCrNumberLabel = $fieldCopy($exhibitorFieldsStepTwoByName, 'cr_number', 'label', ['en' => 'CR Number', 'ar' => 'رقم السجل التجاري']);
                             $exCrNumberPlaceholder = $fieldCopy($exhibitorFieldsStepTwoByName, 'cr_number',
                             'placeholder', ['en' => '1010101010', 'ar' => '1010101010']);
 
-                            $pdfHint = ['en' => 'PDF files only (max 8MB)', 'ar' => '????? PDF ??? (??? ???? 8
-                            ????????)'];
-                            $exCrCopyLabel = $fieldCopy($exhibitorFieldsStepTwoByName, 'cr_copy', 'label', ['en' => 'CR
-                            Copy (Commercial Registration)', 'ar' => '???? ????? ???????']);
+                            $pdfHint = ['en' => 'PDF files only (max 8MB)', 'ar' => 'ملفات PDF فقط (بحد أقصى 8 ميغابايت)'];
+                            $exCrCopyLabel = $fieldCopy($exhibitorFieldsStepTwoByName, 'cr_copy', 'label', ['en' => 'CR Copy (Commercial Registration)', 'ar' => 'نسخة السجل التجاري']);
                             $exCrCopyHint = $fieldCopy($exhibitorFieldsStepTwoByName, 'cr_copy', 'hint', $pdfHint);
-                            $exLogoLabel = $fieldCopy($exhibitorFieldsStepTwoByName, 'company_logo', 'label', ['en' =>
-                            'Company Logo', 'ar' => '???? ??????']);
+                            $exLogoLabel = $fieldCopy($exhibitorFieldsStepTwoByName, 'company_logo', 'label', ['en' => 'Company Logo', 'ar' => 'شعار الشركة']);
                             $exLogoHint = $fieldCopy($exhibitorFieldsStepTwoByName, 'company_logo', 'hint', $pdfHint);
                             $exAddressLabel = $fieldCopy($exhibitorFieldsStepTwoByName, 'national_address_document',
-                            'label', ['en' => 'National Address Document', 'ar' => '????? ??????? ??????']);
+                            'label', ['en' => 'National Address Document', 'ar' => 'مستند العنوان الوطني']);
                             $exAddressHint = $fieldCopy($exhibitorFieldsStepTwoByName, 'national_address_document',
                             'hint', $pdfHint);
                             @endphp
@@ -2745,7 +2736,7 @@ $organizers = \App\Models\Organizer::query()
                                 data-success-title="{{ e(__('registration.sponsor.toast_title')) }}"
                                 data-success-message="{{ e(__('registration.sponsor.success')) }}">
                                 <div class="form-buttons" style="justify-content: flex-start; margin-bottom: 0.75rem; width: 50%!important; margin: auto;">
-                                    <a class="btn btn-outline" href="https://umbrella.sa/iec360/pdf/privacy-policy.pdf" target="_blank" rel="noopener" data-en="Download SPONSOR Profile" data-ar="????? ??? ??????">Download SPONSOR Profile</a>
+                                    <a class="btn btn-outline" href="https://umbrella.sa/iec360/pdf/privacy-policy.pdf" target="_blank" rel="noopener" data-en="Download SPONSOR Profile" data-ar="Download SPONSOR Profile">Download SPONSOR Profile</a>
                                 </div>
                                 @csrf
                                 <input type="hidden" name="form_identifier" value="sponsor">
@@ -2876,10 +2867,10 @@ $organizers = \App\Models\Organizer::query()
                                             <input type="checkbox" name="privacy_policy" value="1" required
                                                 @checked($sponsorFormActive && old('privacy_policy'))>
                                             <span data-en="I accept the privacy policy"
-                                                data-ar="????? ??? ????? ????????">I accept the privacy policy</span>
+                                                data-ar="أوافق على شروط الخصوصية">I accept the privacy policy</span>
                                             <a class="blue-url-style" href="{{ asset('pdf/privacy-policy.pdf') }}"
                                                 target="_blank" rel="noopener" download data-en="Download from here"
-                                                data-ar="????? ????? ????? ????">Download from here</a>
+                                                data-ar="يمكنك تحميل الملف من هنا">Download from here</a>
                                         </label>
                                         @if($sponsorFormActive && $errors->has('privacy_policy'))
                                         <p class="mt-1 text-xs text-red-600">{{ $errors->first('privacy_policy') }}</p>
@@ -2892,7 +2883,7 @@ $organizers = \App\Models\Organizer::query()
                                         <svg class="icon icon-sm" style="margin-right: 0.5rem;" viewBox="0 0 24 24">
                                             <path d="M19 12H5M12 19l-7-7 7-7" />
                                         </svg>
-                                        <span data-en="Back" data-ar="????">{{ __('Back') }}</span>
+                                        <span data-en="Back" data-ar="Back">{{ __('Back') }}</span>
                                     </button>
                                     <button type="submit" class="btn btn-primary"
                                         data-en="{{ e($exhibitorSubmit['en']) }}"
@@ -2916,7 +2907,7 @@ $organizers = \App\Models\Organizer::query()
                             <p class="role-desc" data-en="{{ e($iconCardDescription['en']) }}"
                                 data-ar="{{ e($iconCardDescription['ar']) }}">{{ $iconCardDescription['text'] }}</p>
                             <div class="role-cta" id="icon-cta">
-                                <span data-en="Click" data-ar="????">Click</span>
+                                <span data-en="Click" data-ar="Click">Click</span>
                                 <svg class="icon icon-sm" viewBox="0 0 24 24">
                                     <path d="M5 12h14M12 5l7 7-7 7" />
                                 </svg>
@@ -2932,31 +2923,23 @@ $organizers = \App\Models\Organizer::query()
                             </div>
                             @endif
                             @php
-                            $iconFullNameLabel = $fieldCopy($iconFieldsStepOneByName, 'full_name', 'label', ['en' =>
-                            'Full Name *', 'ar' => '????? ?????? *']);
+                            $iconFullNameLabel = $fieldCopy($iconFieldsStepOneByName, 'full_name', 'label', ['en' => 'Full Name *', 'ar' => 'الاسم الكامل *']);
                             $iconFullNamePlaceholder = $fieldCopy($iconFieldsStepOneByName, 'full_name', 'placeholder',
-                            ['en' => 'John Doe', 'ar' => '??? ??']);
-                            $iconEmailLabel = $fieldCopy($iconFieldsStepOneByName, 'email', 'label', ['en' => 'Email *',
-                            'ar' => '?????? ?????????? *']);
-                            $iconEmailPlaceholder = $fieldCopy($iconFieldsStepOneByName, 'email', 'placeholder', ['en'
-                            => 'john@company.com', 'ar' => 'john@company.com']);
-                            $iconPhoneLabel = $fieldCopy($iconFieldsStepOneByName, 'phone', 'label', ['en' => 'Phone *',
-                            'ar' => '?????? *']);
-                            $iconPhonePlaceholder = $fieldCopy($iconFieldsStepOneByName, 'phone', 'placeholder', ['en'
-                            => '+966 50 000 0000', 'ar' => '+966 50 000 0000']);
-                            $iconJobLabel = $fieldCopy($iconFieldsStepOneByName, 'job_title', 'label', ['en' => 'Job
-                            Title *', 'ar' => '?????? ??????? *']);
-                            $iconJobPlaceholder = $fieldCopy($iconFieldsStepOneByName, 'job_title', 'placeholder', ['en'
-                            => 'Marketing Manager', 'ar' => '???? ???????']);
-                            $iconOrgLabel = $fieldCopy($iconFieldsStepOneByName, 'organization', 'label', ['en' =>
-                            'Company / Organization', 'ar' => '?????? / ?????']);
+                            ['en' => 'John Doe', 'ar' => 'جون دو']);
+                            $iconEmailLabel = $fieldCopy($iconFieldsStepOneByName, 'email', 'label', ['en' => 'Email *', 'ar' => 'البريد الإلكتروني *']);
+                            $iconEmailPlaceholder = $fieldCopy($iconFieldsStepOneByName, 'email', 'placeholder', ['en' => 'john@company.com', 'ar' => 'john@company.com']);
+                            $iconPhoneLabel = $fieldCopy($iconFieldsStepOneByName, 'phone', 'label', ['en' => 'Phone *', 'ar' => 'الهاتف *']);
+                            $iconPhonePlaceholder = $fieldCopy($iconFieldsStepOneByName, 'phone', 'placeholder', ['en' => '+966 50 000 0000', 'ar' => '+966 50 000 0000']);
+                            $iconJobLabel = $fieldCopy($iconFieldsStepOneByName, 'job_title', 'label', ['en' => 'Job Title *', 'ar' => 'المسمى الوظيفي *']);
+                            $iconJobPlaceholder = $fieldCopy($iconFieldsStepOneByName, 'job_title', 'placeholder', ['en' => 'Marketing Manager', 'ar' => 'مدير التسويق']);
+                            $iconOrgLabel = $fieldCopy($iconFieldsStepOneByName, 'organization', 'label', ['en' => 'Company / Organization', 'ar' => 'الشركة / الجهة']);
                             $iconOrgPlaceholder = $fieldCopy($iconFieldsStepOneByName, 'organization', 'placeholder',
-                            ['en' => 'Umbrella Inc.', 'ar' => '???? ???????']);
+                            ['en' => 'Umbrella Inc.', 'ar' => 'شركة أمبريلا']);
                             $iconLocationLabel = $fieldCopy($iconFieldsStepOneByName, 'location_selection', 'label',
                             ['en' => trans('registration.icon.book_location', [], 'en'), 'ar' =>
                             trans('registration.icon.book_location', [], 'ar')]);
                             $iconLocationPlaceholder = $fieldCopy($iconFieldsStepOneByName, 'location_selection',
-                            'placeholder', ['en' => 'Select on the hall map', 'ar' => '???? ?? ????? ??????']);
+                            'placeholder', ['en' => 'Select on the hall map', 'ar' => 'حدد على خريطة المعرض']);
 
                             $iconVatLabel = $fieldCopy($iconFieldsStepTwoByName, 'vat_number', 'label', ['en' =>
                             trans('registration.icon.vat_number', [], 'en'), 'ar' =>
@@ -2966,8 +2949,7 @@ $organizers = \App\Models\Organizer::query()
                             $iconCrLabel = $fieldCopy($iconFieldsStepTwoByName, 'cr_number', 'label', ['en' =>
                             trans('registration.icon.cr_number', [], 'en'), 'ar' => trans('registration.icon.cr_number',
                             [], 'ar')]);
-                            $iconCrPlaceholder = $fieldCopy($iconFieldsStepTwoByName, 'cr_number', 'placeholder', ['en'
-                            => '1010101010', 'ar' => '1010101010']);
+                            $iconCrPlaceholder = $fieldCopy($iconFieldsStepTwoByName, 'cr_number', 'placeholder', ['en' => '1010101010', 'ar' => '1010101010']);
 
                             $iconCrCopyLabel = $fieldCopy($iconFieldsStepTwoByName, 'cr_copy', 'label', ['en' =>
                             trans('registration.icon.cr_copy', [], 'en'), 'ar' => trans('registration.icon.cr_copy', [],
@@ -2993,7 +2975,7 @@ $organizers = \App\Models\Organizer::query()
                                 @csrf
                                 <input type="hidden" name="form_identifier" value="icon">
                                 <div class="form-buttons" style="justify-content: flex-start; margin-bottom: 0.75rem; width: 50%!important; margin: auto;">
-                            <a class="btn btn-outline" href="https://umbrella.sa/iec360/pdf/privacy-policy.pdf" target="_blank" rel="noopener" data-en="Download ICON Profile" data-ar="????? ??? ???????">Download ICON Profile</a>
+                            <a class="btn btn-outline" href="https://umbrella.sa/iec360/pdf/privacy-policy.pdf" target="_blank" rel="noopener" data-en="Download ICON Profile" data-ar="Download ICON Profile">Download ICON Profile</a>
                           </div>
                                 <div>
                                     <div class="form-grid form-grid-2">
@@ -3066,7 +3048,7 @@ $organizers = \App\Models\Organizer::query()
                                                     value="{{ $iconFormActive ? old('location_selection') : '' }}">
                                                 <button type="button" class="btn btn-outline flex-none"
                                                     onclick="openHallDesign('icon-location-selection')">
-                                                    <span data-en="Open hall map" data-ar="???? ????? ??????">Open hall
+                                                    <span data-en="Open hall map" data-ar="فتح خريطة المعرض">Open hall
                                                         map</span>
                                                 </button>
                                             </div>
@@ -3145,10 +3127,10 @@ $organizers = \App\Models\Organizer::query()
                                             <input type="checkbox" name="privacy_policy" value="1" required
                                                 @checked($iconFormActive && old('privacy_policy'))>
                                             <span data-en="I accept the privacy policy"
-                                                data-ar="????? ??? ????? ????????">I accept the privacy policy</span>
+                                                data-ar="أوافق على شروط الخصوصية">I accept the privacy policy</span>
                                             <a class="blue-url-style" href="{{ asset('pdf/privacy-policy.pdf') }}"
                                                 target="_blank" rel="noopener" download data-en="Download from here"
-                                                data-ar="????? ????? ????? ????">Download from here</a>
+                                                data-ar="يمكنك تحميل الملف من هنا">Download from here</a>
                                             @if($iconFormActive && $errors->has('privacy_policy'))
                                             <p class="mt-1 text-xs text-red-600">{{ $errors->first('privacy_policy') }}
                                             </p>
@@ -3189,7 +3171,7 @@ $organizers = \App\Models\Organizer::query()
                             <p class="role-desc" data-en="{{ e($guestCardDescription['en']) }}"
                                 data-ar="{{ e($guestCardDescription['ar']) }}">{{ $guestCardDescription['text'] }}</p>
                             <div class="role-cta" id="visitor-cta">
-                                <span data-en="Click" data-ar="????">Click</span>
+                                <span data-en="Click" data-ar="Click">Click</span>
                                 <svg class="icon icon-sm" viewBox="0 0 24 24">
                                     <path d="M5 12h14M12 5l7 7-7 7" />
                                 </svg>
@@ -3204,37 +3186,31 @@ $organizers = \App\Models\Organizer::query()
                             @endif
                             @php
                             $guestFullNameLabel = $fieldCopy($visitorFieldsByName, 'full_name', 'label', ['en' => 'Full
-                            Name *', 'ar' => '????? ?????? *']);
+                            Name *', 'ar' => 'الاسم الكامل *']);
                             $guestFullNamePlaceholder = $fieldCopy($visitorFieldsByName, 'full_name', 'placeholder',
-                            ['en' => 'John Doe', 'ar' => '??? ??']);
-                            $guestEmailLabel = $fieldCopy($visitorFieldsByName, 'email', 'label', ['en' => 'Email *',
-                            'ar' => '?????? ?????????? *']);
-                            $guestEmailPlaceholder = $fieldCopy($visitorFieldsByName, 'email', 'placeholder', ['en' =>
-                            'john@example.com', 'ar' => 'john@example.com']);
-                            $guestPhoneLabel = $fieldCopy($visitorFieldsByName, 'phone', 'label', ['en' => 'Phone', 'ar'
-                            => '??????']);
-                            $guestPhonePlaceholder = $fieldCopy($visitorFieldsByName, 'phone', 'placeholder', ['en' =>
-                            '+966 50 000 0000', 'ar' => '+966 50 000 0000']);
+                            ['en' => 'John Doe', 'ar' => 'جون دو']);
+                            $guestEmailLabel = $fieldCopy($visitorFieldsByName, 'email', 'label', ['en' => 'Email *', 'ar' => 'البريد الإلكتروني *']);
+                            $guestEmailPlaceholder = $fieldCopy($visitorFieldsByName, 'email', 'placeholder', ['en' => 'john@example.com', 'ar' => 'john@example.com']);
+                            $guestPhoneLabel = $fieldCopy($visitorFieldsByName, 'phone', 'label', ['en' => 'Phone', 'ar' => 'الهاتف']);
+                            $guestPhonePlaceholder = $fieldCopy($visitorFieldsByName, 'phone', 'placeholder', ['en' => '+966 50 000 0000', 'ar' => '+966 50 000 0000']);
                             $guestJobLabel = $fieldCopy($visitorFieldsByName, 'job_title', 'label', ['en' => 'Job
-                            Title', 'ar' => '?????? ???????']);
-                            $guestJobPlaceholder = $fieldCopy($visitorFieldsByName, 'job_title', 'placeholder', ['en' =>
-                            'Marketing Manager', 'ar' => '???? ???????']);
-                            $guestCompanyLabel = $fieldCopy($visitorFieldsByName, 'company_name', 'label', ['en' =>
-                            'Company / Organization', 'ar' => '?????? / ?????']);
+                            Title', 'ar' => 'المسمى الوظيفي']);
+                            $guestJobPlaceholder = $fieldCopy($visitorFieldsByName, 'job_title', 'placeholder', ['en' => 'Marketing Manager', 'ar' => 'مدير التسويق']);
+                            $guestCompanyLabel = $fieldCopy($visitorFieldsByName, 'company_name', 'label', ['en' => 'Company / Organization', 'ar' => 'الشركة / الجهة']);
                             $guestCompanyPlaceholder = $fieldCopy($visitorFieldsByName, 'company_name', 'placeholder',
-                            ['en' => 'Umbrella Inc.', 'ar' => '???? ???????']);
+                            ['en' => 'Umbrella Inc.', 'ar' => 'شركة أمبريلا']);
                             $guestHeardLabel = $fieldCopy($visitorFieldsByName, 'heard_about', 'label', ['en' => 'How
-                            did you hear about us?', 'ar' => '??? ???? ????']);
+                            did you hear about us?', 'ar' => 'كيف سمعت عنا؟']);
                             $guestHeardOptions = $fieldOptions($visitorFieldsByName, 'heard_about', [
-                            ['value' => 'social_media', 'en' => 'Social Media', 'ar' => '????? ??????? ?????????'],
-                            ['value' => 'ads', 'en' => 'Advertising', 'ar' => '?????????'],
-                            ['value' => 'friends', 'en' => 'Friends / Colleagues', 'ar' => '???????? / ???????'],
-                            ['value' => 'other', 'en' => 'Other', 'ar' => '????'],
+                            ['value' => 'social_media', 'en' => 'Social Media', 'ar' => 'وسائل التواصل الاجتماعي'],
+                            ['value' => 'ads', 'en' => 'Advertising', 'ar' => 'الإعلانات'],
+                            ['value' => 'friends', 'en' => 'Friends / Colleagues', 'ar' => 'الأصدقاء / الزملاء'],
+                            ['value' => 'other', 'en' => 'Other', 'ar' => 'أخرى'],
                             ]);
                             $guestHeardOtherLabel = $fieldCopy($visitorFieldsByName, 'heard_about_other_text', 'label',
-                            ['en' => 'Please specify', 'ar' => '???? ???????']);
+                            ['en' => 'Please specify', 'ar' => 'يرجى التحديد']);
                             $guestHeardOtherPlaceholder = $fieldCopy($visitorFieldsByName, 'heard_about_other_text',
-                            'placeholder', ['en' => 'Conference website', 'ar' => '???? ???????']);
+                            'placeholder', ['en' => 'Conference website', 'ar' => 'موقع المؤتمر']);
                             @endphp
                             <h3 class="form-title" data-en="{{ e($guestFormTitle['en']) }}"
                                 data-ar="{{ e($guestFormTitle['ar']) }}">{{ $guestFormTitle['text'] }}</h3>
@@ -3344,11 +3320,11 @@ $organizers = \App\Models\Organizer::query()
                                         style="flex-direction: row; align-items: center; gap: 0.5rem;">
                                         <input type="checkbox" name="privacy_policy" value="1" required
                                             @checked($visitorFormActive && old('privacy_policy'))>
-                                        <span data-en="I accept the privacy policy" data-ar="????? ??? ????? ????????">I
+                                        <span data-en="أوافق على شروط الخصوصية" data-ar="I accept the privacy policy">I
                                             accept the privacy policy</span>
                                         <a class="blue-url-style" href="{{ asset('pdf/privacy-policy.pdf') }}"
                                             target="_blank" rel="noopener" download data-en="Download from here"
-                                            data-ar="????? ????? ????? ????">Download from here</a>
+                                            data-ar="يمكنك تحميل الملف من هنا">Download from here</a>
                                     </label>
                                     @if($visitorFormActive && $errors->has('privacy_policy'))
                                     <p class="mt-1 text-xs text-red-600">{{ $errors->first('privacy_policy') }}</p>
@@ -3360,7 +3336,7 @@ $organizers = \App\Models\Organizer::query()
                                         <svg class="icon icon-sm" style="margin-right: 0.5rem;" viewBox="0 0 24 24">
                                             <path d="M19 12H5M12 19l-7-7 7-7" />
                                         </svg>
-                                        <span data-en="Back" data-ar="????">{{ __('Back') }}</span>
+                                        <span data-en="Back" data-ar="Back">{{ __('Back') }}</span>
                                     </button>
                                     <button type="submit" class="btn btn-primary" data-en="{{ e($guestSubmit['en']) }}"
                                         data-ar="{{ e($guestSubmit['ar']) }}">{{ $guestSubmit['text'] }}</button>
@@ -3506,8 +3482,8 @@ $organizers = \App\Models\Organizer::query()
 
         <section class="about" id="about">
             <div class="container">
-                <h2 class="section-title" data-en="About IEC 360�" data-ar="?? ??????"
-                    style="margin-bottom:20px; color:#fff; text-align: center;">About IEC 360�</h2>
+                <h2 class="section-title" data-en="About IEC 360&deg;" data-ar="عن معرض IEC 360&deg;"
+                    style="margin-bottom:20px; color:#fff; text-align: center;">About IEC 360&deg;</h2>
                 <div class="about-grid">
                     <div class="about-col" data-animate>
                         <div class="goals-list">
@@ -3517,10 +3493,10 @@ $organizers = \App\Models\Organizer::query()
                                         <div class="goal-icon">
                                             <img src="{{ asset('img/icons/mission.png') }}" alt="mission Icon" style="height: 40px;">
                                         </div>
-                                        <h3 class="goal-title" data-en="Mission" data-ar="??????">Mission</h3>
+                                        <h3 class="goal-title" data-en="Mission" data-ar="المهمة">Mission</h3>
                                     </div>
-                                    <p class="goal-desc" data-en="{{ __('With distinction and uniqueness, the IEC Trade Exhibition returns in its third edition under the theme IEC360�, continuing its journey as an interactive platform that brings together innovation, development, and connection in an exceptional experience that unites ambitious minds and leaders from various sectors under one roof') }}" data-ar="{{ __('??? ???? ?????? ???? ???? IEC ?? ????? ??????? ??? ????? 360IEC� ?????? ?????? ????? ??????? ????? ???? ??? ????????? ????????? ???????? ?? ????? ????????? ???? ?????? ??????? ????? ???????? ???????? ??? ??? ????') }}">
-                                        {{ __('With distinction and uniqueness, the IEC Trade Exhibition returns in its third edition under the theme IEC360�, continuing its journey as an interactive platform that brings together innovation, development, and connection in an exceptional experience that unites ambitious minds and leaders from various sectors under one roof') }}
+                                    <p class="goal-desc" data-en="{{ __('With distinction and uniqueness, the IEC Trade Exhibition returns in its third edition under the theme IEC 360&deg;, continuing its journey as an interactive platform that brings together innovation, development, and connection in an exceptional experience that unites ambitious minds and leaders from various sectors under one roof') }}" data-ar="{{ __('بتميز وتفرّد، يعود معرض IEC التجاري في نسخته الثالثة تحت شعار IEC 360&deg;، مواصلاً رحلته كمنصة تفاعلية تجمع بين الابتكار والتطوير والتواصل في تجربة استثنائية توحّد العقول الطموحة وقادة القطاعات المختلفة تحت سقف واحد') }}">
+                                        {{ __('With distinction and uniqueness, the IEC Trade Exhibition returns in its third edition under the theme IEC 360&deg;, continuing its journey as an interactive platform that brings together innovation, development, and connection in an exceptional experience that unites ambitious minds and leaders from various sectors under one roof') }}
                                     </p>
                                 </div>
                             </div>
@@ -3530,10 +3506,10 @@ $organizers = \App\Models\Organizer::query()
                                         <div class="goal-icon">
                                             <img src="{{ asset('img/icons/goal.png') }}" alt="flag Icon" style="height: 40px;">
                                         </div>
-                                        <h3 class="goal-title" data-en="Objectives" data-ar="???????">Objectives</h3>
+                                        <h3 class="goal-title" data-en="Objectives" data-ar="الأهداف">Objectives</h3>
                                     </div>
-                                    <p class="goal-desc" data-en="{{ __('With distinction and uniqueness, the IEC Trade Exhibition returns in its third edition under the theme IEC360�, continuing its journey as an interactive platform that brings together innovation, development, and connection in an exceptional experience that unites ambitious minds and leaders from various sectors under one roof') }}" data-ar="{{ __('???? ?????? ??? ????? ????? ???????? ???????? ?? ???????? ????? ???? ??? ???????? ?????? ???? ? ?????? ???????? ????? ????? ???????? ???? ?????????? ??????? ?? ???? ?????? ??????? ?????? ????????') }}">
-                                        {{ __('With distinction and uniqueness, the IEC Trade Exhibition returns in its third edition under the theme IEC360�, continuing its journey as an interactive platform that brings together innovation, development, and connection in an exceptional experience that unites ambitious minds and leaders from various sectors under one roof') }}
+                                    <p class="goal-desc" data-en="{{ __('With distinction and uniqueness, the IEC Trade Exhibition returns in its third edition under the theme IEC 360&deg;, continuing its journey as an interactive platform that brings together innovation, development, and connection in an exceptional experience that unites ambitious minds and leaders from various sectors under one roof') }}" data-ar="{{ __('بتميز وتفرّد، يعود معرض IEC التجاري في نسخته الثالثة تحت شعار IEC 360&deg;، مواصلاً رحلته كمنصة تفاعلية تجمع بين الابتكار والتطوير والتواصل في تجربة استثنائية توحّد العقول الطموحة وقادة القطاعات المختلفة تحت سقف واحد') }}">
+                                        {{ __('With distinction and uniqueness, the IEC Trade Exhibition returns in its third edition under the theme IEC 360&deg;, continuing its journey as an interactive platform that brings together innovation, development, and connection in an exceptional experience that unites ambitious minds and leaders from various sectors under one roof') }}
                                     </p>
                                 </div>
                             </div>
@@ -3543,9 +3519,9 @@ $organizers = \App\Models\Organizer::query()
                                         <div class="goal-icon">
                                             <img src="{{ asset('img/icons/message.png') }}" alt="flag Icon" style="height: 40px;">
                                         </div>
-                                        <h3 class="goal-title" data-en="Vision" data-ar="???????">Vision</h3>
+                                        <h3 class="goal-title" data-en="Vision" data-ar="الرؤية">Vision</h3>
                                     </div>
-                                    <p class="goal-desc" data-en="{{ __('The exhibition aims to empower individuals and organizations, enhance innovation, and build strategic partnerships that contribute to developing business environments in alignment with Saudi Vision 2030') }}" data-ar="{{ __('??????? ????????? ??? ???????? ?????????? ?????????? ?????? ????????? ????? ?????? ?????????? ???? ?? ??????????? ???????????? ?????????????? ?????? ???????????? ??????????? ??????? .2030') }}">
+                                    <p class="goal-desc" data-en="{{ __('The exhibition aims to empower individuals and organizations, enhance innovation, and build strategic partnerships that contribute to developing business environments in alignment with Saudi Vision 2030') }}" data-ar="{{ __('يهدف المعرض إلى تمكين الأفراد والمنظمات، وتعزيز الابتكار، وبناء شراكات استراتيجية تسهم في تطوير بيئات الأعمال بما يتوافق مع رؤية السعودية 2030') }}">
                                         {{ __('The exhibition aims to empower individuals and organizations, enhance innovation, and build strategic partnerships that contribute to developing business environments in alignment with Saudi Vision 2030') }}
                                     </p>
                                 </div>
@@ -3562,14 +3538,14 @@ $organizers = \App\Models\Organizer::query()
             <section class="sponsors" id="sponsors">
                 <div class="container">
                     <div class="section-header" data-animate>
-                        <h2 class="section-title" data-en="Sponsors" data-ar="??????"
+                        <h2 class="section-title" data-en="Sponsors" data-ar="الرعاة"
                             style="font: size 3rem !important;;">SPONSORS</h2>
                     </div>
 
                     <div class="sponsor-tiers">
                         <!-- STRATEGIC -->
                         <div class="sponsor-tier">
-                            <h2 class="sponsor-tier-title" data-en="Strategic" data-ar="???????????">STRATEGIC</h2>
+                            <h2 class="sponsor-tier-title" data-en="Strategic" data-ar="الإستراتيجي">STRATEGIC</h2>
                             <div class="sponsor-tier-grid tier-strategic">
                                 <article class="sponsor-card sponsor-strategic" data-animate>
                                     <div class="sponsor-logo">
@@ -3580,7 +3556,7 @@ $organizers = \App\Models\Organizer::query()
                         </div>
                         <!-- DIAMOND -->
                         <div class="sponsor-tier">
-                            <h2 class="sponsor-tier-title" data-en="Diamond" data-ar="??????">DIAMOND</h2>
+                            <h2 class="sponsor-tier-title" data-en="Diamond" data-ar="الماسي">DIAMOND</h2>
                             <div class="sponsor-tier-grid tier-business">
                                 <article class="sponsor-card sponsor-business" data-animate>
                                     <div class="sponsor-logo">
@@ -3591,7 +3567,7 @@ $organizers = \App\Models\Organizer::query()
                         </div>
                         <!-- GOVERNMENT -->
                         <div class="sponsor-tier">
-                            <h2 class="sponsor-tier-title" data-en="Government" data-ar="???????">GOVERNMENT</h2>
+                            <h2 class="sponsor-tier-title" data-en="Government" data-ar="الحكومي">GOVERNMENT</h2>
                             <div class="sponsor-tier-grid tier-marketing">
                                 <article class="sponsor-card sponsor-marketing" data-animate>
                                     <div class="sponsor-logo">
@@ -3604,7 +3580,7 @@ $organizers = \App\Models\Organizer::query()
                         <!-- Marketing & Media -->
                         <div class="sponsor-tier-pair">
                             <div class="sponsor-tier">
-                                <h2 class="sponsor-tier-title" data-en="Marketing" data-ar="????????">MARKETING</h2>
+                                <h2 class="sponsor-tier-title" data-en="Marketing" data-ar="التسويقي">MARKETING</h2>
                                 <div class="sponsor-tier-grid tier-marketing single-sponsor-grid">
                                     <article class="sponsor-card sponsor-marketing" data-animate>
                                         <div class="sponsor-logo">
@@ -3614,7 +3590,7 @@ $organizers = \App\Models\Organizer::query()
                                 </div>
                             </div>
                             <div class="sponsor-tier">
-                                <h2 class="sponsor-tier-title" data-en="Media" data-ar="????????">MEDIA</h2>
+                                <h2 class="sponsor-tier-title" data-en="Media" data-ar="الإعلامي">MEDIA</h2>
                                 <div class="sponsor-tier-grid tier-marketing single-sponsor-grid">
                                     <article class="sponsor-card sponsor-marketing" data-animate>
                                         <div class="sponsor-logo">
@@ -3628,7 +3604,7 @@ $organizers = \App\Models\Organizer::query()
                         <!-- TECH & SECURITY -->
                         <div class="sponsor-tier-pair">
                             <div class="sponsor-tier">
-                                <h2 class="sponsor-tier-title" data-en="Tech" data-ar="??????">TECHNOLOGY</h2>
+                                <h2 class="sponsor-tier-title" data-en="TECHNOLOGY" data-ar="التكنولوجي">TECHNOLOGY</h2>
                                 <div class="sponsor-tier-grid tier-marketing single-sponsor-grid">
                                     <article class="sponsor-card sponsor-marketing" data-animate>
                                         <div class="sponsor-logo">
@@ -3638,7 +3614,7 @@ $organizers = \App\Models\Organizer::query()
                                 </div>
                             </div>
                             <div class="sponsor-tier">
-                                <h2 class="sponsor-tier-title" data-en="Security" data-ar="??????">SAFETY AND SECURITY</h2>
+                                <h2 class="sponsor-tier-title" data-en="SAFETY AND SECURITY" data-ar="الأمني">SAFETY AND SECURITY</h2>
                                 <div class="sponsor-tier-grid tier-marketing single-sponsor-grid">
                                     <article class="sponsor-card sponsor-marketing" data-animate>
                                         <div class="sponsor-logo">
@@ -3651,7 +3627,7 @@ $organizers = \App\Models\Organizer::query()
 
                         <!-- GOLD -->
                         <div class="sponsor-tier">
-                            <h2 class="sponsor-tier-title" data-en="Gold" data-ar="??????">GOLD</h2>
+                            <h2 class="sponsor-tier-title" data-en="GOLD" data-ar="الذهبي">GOLD</h2>
                             <div class="participants-grid gold-sponsors-grid">
                                 <article class="participant-card gold-sponsor-card" data-animate>
                                     <div class="participant-logo">
@@ -3683,7 +3659,7 @@ $organizers = \App\Models\Organizer::query()
                         
                         <!-- OTHER SPONSORS -->
                         <div class="sponsor-tier">
-                            <h2 class="sponsor-tier-title" data-en="Sponsors" data-ar="??????">SPONORS</h2>
+                            <h2 class="sponsor-tier-title" data-en="SPONORS" data-ar="الرعاة">SPONORS</h2>
                             <div class="sponsor-tier-grid tier-main other-sponsors-grid">
                                 <article class="sponsor-card" data-animate>
                                     <div class="sponsor-logo">
@@ -3709,7 +3685,7 @@ $organizers = \App\Models\Organizer::query()
              <section class="participants" id="participants">
                 <div class="container">
                     <div class="section-header" data-animate>
-                        <h2 class="section-title" data-en="ICONS" data-ar="????????">ICONS</h2>
+                        <h2 class="section-title" data-en="ICONS" data-ar="الأيكونز">ICONS</h2>
                     </div>
 
                     <div class="participants-grid">
@@ -3740,17 +3716,14 @@ $organizers = \App\Models\Organizer::query()
             <section class="organizers" id="organizers">
                 <div class="container">
                     <div class="section-header" data-animate>
-                        <h2 class="section-title" data-en="Owned by" data-ar="?????? ???????">OWNED BY</h2>
+                        <h2 class="section-title" data-en="OWNED BY" data-ar="الشركة المالكة">OWNED BY</h2>
                     </div>
-
                     @php
                     $organizerFallbackDesc = [
-                    'en' => __('Driving the strategic vision for IEC Expo.'),
-                    'ar' => __('?????? ?????? ???????????? ????? IEC.'),
+                    'en' => __('Driving the strategic vision for IEC Expo.'), 'ar' => __('يقود الرؤية الاستراتيجية لمعرض IEC.'),
                     ];
                     $organizerVisitCopy = [
-                    'en' => __('Visit Website'),
-                    'ar' => __('????? ??????'),
+                    'en' => __('Visit Website'), 'ar' => __('زيارة الموقع'),
                     ];
                     $currentLocale = app()->getLocale();
                     @endphp
@@ -3830,29 +3803,27 @@ $organizers = \App\Models\Organizer::query()
                 <div class="contact-grid">
                     <div class="contact-col" data-animate>
                         <div class="contact-form-card">
-                            <!-- <h3 class="form-title" data-en="{{ e($contactFormTitle['en']) }}"
-                                data-ar="{{ e($contactFormTitle['ar']) }}">{{ $contactFormTitle['text'] }}</h3> -->
                             <form onsubmit="handleContactSubmit(event)">
                                 <div class="form-grid">
                                     <div class="form-group">
                                         <label class="form-label" data-en="Name *"
-                                            data-ar="????? *">{{ __('Name *') }}</label>
+                                            data-ar="الاسم الكامل *">{{ __('Name *') }}</label>
                                         <input type="text" class="form-input" required
                                             placeholder="{{ __('Your name') }}">
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label" data-en="Email *"
-                                            data-ar="?????? ?????????? *">{{ __('Email *') }}</label>
+                                            data-ar="البريد الإلكتروني *">{{ __('Email *') }}</label>
                                         <input type="email" class="form-input" required placeholder="you@example.com">
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label" data-en="Phone *"
-                                            data-ar="?????? *">{{ __('Phone *') }}</label>
+                                            data-ar="الهاتف *">{{ __('Phone *') }}</label>
                                         <input type="tel" class="form-input" required placeholder="+966 50 000 0000">
                                     </div>
                                     <div class="form-group">
                                         <label class="form-label" data-en="Message *"
-                                            data-ar="??????? *">{{ __('Message *') }}</label>
+                                            data-ar="Message *">{{ __('Message *') }}</label>
                                         <textarea class="form-textarea" required rows="4"
                                             placeholder="{{ __('How can we help you?') }}"></textarea>
                                     </div>
@@ -3956,10 +3927,11 @@ $organizers = \App\Models\Organizer::query()
     <footer class="footer">
         <div class="container">
             <div class="footer-inner">
-                <div class="footer-text"> <span data-en="IEC 360&deg; EXPO" data-ar="IEC 360&deg; EXPO"> IEC 360&deg;
+                <div class="footer-text"> <span data-en="IEC 360&deg; EXPO" data-ar="IEC 360&deg;
+                        EXPO"> IEC 360&deg;
                         EXPO</span></div>
-                <div class="footer-text" data-en="All rights reserved BU� 2026 "
-                    data-ar="???? ?????? ?????? ????? ???? ???????� 2026.">2026� All rights reserved BU</div>
+                <div class="footer-text" data-en="All rights reserved BU 2026 "
+                    data-ar="جميع الحقوق محفوظة BU 2026.">2026 All rights reserved BU</div>
             </div>
         </div>
     </footer>
@@ -3981,7 +3953,7 @@ $organizers = \App\Models\Organizer::query()
         currentLocale = currentLocale === 'en' ? 'ar' : 'en';
         document.documentElement.lang = currentLocale;
         document.documentElement.dir = currentLocale === 'ar' ? 'rtl' : 'ltr';
-        document.getElementById('lang-text').textContent = currentLocale === 'en' ? '???????' : 'English';
+        document.getElementById('lang-text').textContent = currentLocale === 'en' ? 'العربية' : 'English';
 
         // Update all translatable elements
         document.querySelectorAll('[data-en][data-ar]').forEach(el => {
@@ -4615,14 +4587,14 @@ $organizers = \App\Models\Organizer::query()
     function getRegistrationErrorMessages() {
         if (currentLocale === 'ar') {
             return {
-                errorTitle: '??? ???',
-                errorMessage: '???? ????? ???????. ???? ??? ????.',
+                errorTitle: 'حدث خطأ',
+                errorMessage: 'تعذر إرسال النموذج. يرجى المحاولة مرة أخرى.',
             };
         }
 
         return {
-            errorTitle: 'Something went wrong',
-            errorMessage: 'We could not submit the form. Please try again.',
+            errorTitle: 'حدث خطأ',
+            errorMessage: 'تعذر إرسال النموذج. يرجى المحاولة مرة أخرى.',
         };
     }
 
@@ -4630,8 +4602,8 @@ $organizers = \App\Models\Organizer::query()
     function handleContactSubmit(event) {
         event.preventDefault();
         showToast(
-            currentLocale === 'ar' ? '?? ????? ???????!' : 'Message Sent!',
-            currentLocale === 'ar' ? '??????? ??? ??????.' : 'We will get back to you soon.'
+            currentLocale === 'ar' ? 'تم إرسال الرسالة!' : 'Message Sent!',
+            currentLocale === 'ar' ? 'سنتواصل معك قريباً.' : 'We will get back to you soon.'
         );
         event.target.reset();
     }
@@ -4754,8 +4726,4 @@ $organizers = \App\Models\Organizer::query()
     }
     </script>
 </body>
-
 </html>
-
-
-
