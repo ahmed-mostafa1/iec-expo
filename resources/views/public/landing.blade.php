@@ -3495,7 +3495,7 @@ $organizers = \App\Models\Organizer::query()
                                 <div>
                                     <div class="goal-title-row">
                                         <div class="goal-icon">
-                                            <img src="{{ asset('img/icons/mission.png') }}" alt="flag Icon" style="height: 40px;">
+                                            <img src="{{ asset('img/icons/mission.png') }}" alt="mission Icon" style="height: 40px;">
                                         </div>
                                         <h3 class="goal-title" data-en="Mission" data-ar="المهمة">Mission</h3>
                                     </div>
@@ -3553,7 +3553,7 @@ $organizers = \App\Models\Organizer::query()
                             <div class="sponsor-tier-grid tier-strategic">
                                 <article class="sponsor-card sponsor-strategic" data-animate>
                                     <div class="sponsor-logo">
-                                        <img src="{{ asset('storage/logos/sponsors/lgZ1RGxW0GPu5ErevigGeZnoL4yWxqeR45u3cqHz.png') }}" alt="">
+                                        <img src="{{ asset('img/placeholder.png') }}" alt="">
                                     </div>
                                 </article>
                             </div>
@@ -3564,7 +3564,7 @@ $organizers = \App\Models\Organizer::query()
                             <div class="sponsor-tier-grid tier-business">
                                 <article class="sponsor-card sponsor-business" data-animate>
                                     <div class="sponsor-logo">
-                                        <img src="{{ asset('storage/logos/sponsors/XThi5on40DXFF0nLA7NFBZoE0WabMyoryZHqyI8E.png') }}" alt="">
+                                        <img src="{{ asset('img/placeholder.png') }}" alt="">
                                     </div>
                                 </article>
                             </div>
@@ -3575,7 +3575,7 @@ $organizers = \App\Models\Organizer::query()
                             <div class="sponsor-tier-grid tier-marketing">
                                 <article class="sponsor-card sponsor-marketing" data-animate>
                                     <div class="sponsor-logo">
-                                        <img src="{{ asset('storage/logos/sponsors/czhCcPHjyDOom9Xi3BO1MNHFRIJTMoJzhSyGPrY7.png') }}" alt="">
+                                        <img src="{{ asset('img/placeholder.png') }}" alt="">
                                     </div>
                                 </article>
                             </div>
@@ -3588,7 +3588,7 @@ $organizers = \App\Models\Organizer::query()
                                 <div class="sponsor-tier-grid tier-marketing single-sponsor-grid">
                                     <article class="sponsor-card sponsor-marketing" data-animate>
                                         <div class="sponsor-logo">
-                                            <img src="{{ asset('storage/logos/sponsors/czhCcPHjyDOom9Xi3BO1MNHFRIJTMoJzhSyGPrY7.png') }}" alt="">
+                                            <img src="{{ asset('img/placeholder.png') }}" alt="">
                                         </div>
                                     </article>
                                 </div>
@@ -3598,7 +3598,7 @@ $organizers = \App\Models\Organizer::query()
                                 <div class="sponsor-tier-grid tier-marketing single-sponsor-grid">
                                     <article class="sponsor-card sponsor-marketing" data-animate>
                                         <div class="sponsor-logo">
-                                            <img src="{{ asset('storage/logos/sponsors/czhCcPHjyDOom9Xi3BO1MNHFRIJTMoJzhSyGPrY7.png') }}" alt="">
+                                            <img src="{{ asset('img/placeholder.png') }}" alt="">
                                         </div>
                                     </article>
                                 </div>
@@ -3612,7 +3612,7 @@ $organizers = \App\Models\Organizer::query()
                                 <div class="sponsor-tier-grid tier-marketing single-sponsor-grid">
                                     <article class="sponsor-card sponsor-marketing" data-animate>
                                         <div class="sponsor-logo">
-                                            <img src="{{ asset('storage/logos/sponsors/czhCcPHjyDOom9Xi3BO1MNHFRIJTMoJzhSyGPrY7.png') }}" alt="">
+                                            <img src="{{ asset('img/placeholder.png') }}" alt="">
                                         </div>
                                     </article>
                                 </div>
@@ -3622,7 +3622,7 @@ $organizers = \App\Models\Organizer::query()
                                 <div class="sponsor-tier-grid tier-marketing single-sponsor-grid">
                                     <article class="sponsor-card sponsor-marketing" data-animate>
                                         <div class="sponsor-logo">
-                                            <img src="{{ asset('storage/logos/sponsors/czhCcPHjyDOom9Xi3BO1MNHFRIJTMoJzhSyGPrY7.png') }}" alt="">
+                                            <img src="{{ asset('img/placeholder.png') }}" alt="">
                                         </div>
                                     </article>
                                 </div>
@@ -3635,27 +3635,27 @@ $organizers = \App\Models\Organizer::query()
                             <div class="participants-grid gold-sponsors-grid">
                                 <article class="participant-card gold-sponsor-card" data-animate>
                                     <div class="participant-logo">
-                                        <img src="{{ asset('storage/logos/sponsors/vVLy2CSZmnRJwZ6RYvVGqUfh2WAr51vgtGrOilLw.png') }}" alt="">
+                                        <img src="{{ asset('img/placeholder.png') }}" alt="">
                                     </div>
                                 </article>
                                 <article class="participant-card gold-sponsor-card" data-animate>
                                     <div class="participant-logo">
-                                        <img src="{{ asset('storage/logos/sponsors/laB3RCNc9cEooeyXMASxXOzDuAUnxF9ISJiUKqNE.png') }}" alt="">
+                                        <img src="{{ asset('img/placeholder.png') }}" alt="">
                                     </div>
                                 </article>
                                 <article class="participant-card gold-sponsor-card" data-animate>
                                     <div class="participant-logo">
-                                        <img src="{{ asset('storage/logos/sponsors/CbTzJBsViyzzbWchkE6TQrIeNW3imxfGcCHaPAra.png') }}" alt="">
+                                        <img src="{{ asset('img/placeholder.png') }}" alt="">
                                     </div>
                                 </article>
                                 <article class="participant-card gold-sponsor-card" data-animate>
                                     <div class="participant-logo">
-                                        <img src="{{ asset('storage/logos/sponsors/vVLy2CSZmnRJwZ6RYvVGqUfh2WAr51vgtGrOilLw.png') }}" alt="">
+                                        <img src="{{ asset('img/placeholder.png') }}" alt="">
                                     </div>
                                 </article>
                                 <article class="participant-card gold-sponsor-card" data-animate>
                                     <div class="participant-logo">
-                                        <img src="{{ asset('storage/logos/sponsors/laB3RCNc9cEooeyXMASxXOzDuAUnxF9ISJiUKqNE.png') }}" alt="">
+                                        <img src="{{ asset('img/placeholder.png') }}" alt="">
                                     </div>
                                 </article>
                             </div>
@@ -3667,17 +3667,17 @@ $organizers = \App\Models\Organizer::query()
                             <div class="sponsor-tier-grid tier-main other-sponsors-grid">
                                 <article class="sponsor-card" data-animate>
                                     <div class="sponsor-logo">
-                                        <img src="{{ asset('storage/logos/sponsors/vVLy2CSZmnRJwZ6RYvVGqUfh2WAr51vgtGrOilLw.png') }}" alt="">
+                                        <img src="{{ asset('img/placeholder.png') }}" alt="">
                                     </div>
                                 </article>
                                 <article class="sponsor-card" data-animate>
                                     <div class="sponsor-logo">
-                                        <img src="{{ asset('storage/logos/sponsors/laB3RCNc9cEooeyXMASxXOzDuAUnxF9ISJiUKqNE.png') }}" alt="">
+                                        <img src="{{ asset('img/placeholder.png') }}" alt="">
                                     </div>
                                 </article>
                                 <article class="sponsor-card" data-animate>
                                     <div class="sponsor-logo">
-                                        <img src="{{ asset('storage/logos/sponsors/CbTzJBsViyzzbWchkE6TQrIeNW3imxfGcCHaPAra.png') }}" alt="">
+                                        <img src="{{ asset('img/placeholder.png') }}" alt="">
                                     </div>
                                 </article>
                             </div>
@@ -3695,22 +3695,22 @@ $organizers = \App\Models\Organizer::query()
                     <div class="participants-grid">
                         <a href="" class="participant-card" data-animate>
                             <div class="participant-logo">
-                                <img src="{{ asset('storage/logos/participants/8NzTxjIrrDIEczBcGjSq9klSImE8rtVQWG0gmSMM.png') }}" alt="Icon">
+                                <img src="{{ asset('img/placeholder.png') }}" alt="Icon">
                             </div>
                         </a>
                         <a href="" class="participant-card" data-animate>
                             <div class="participant-logo">
-                                <img src="{{ asset('storage/logos/participants/pPIEhl193ePekNPtHzjzV0eTjHxDBawRH5l6mU4t.png') }}" alt="Icon">
+                                <img src="{{ asset('img/placeholder.png') }}" alt="Icon">
                             </div>
                         </a>
                         <a href="" class="participant-card" data-animate>
                             <div class="participant-logo">
-                                <img src="{{ asset('storage/logos/participants/zJlxwskdjI8ovmx3YIKMMMxa1NfWS2adpvbnQZAq.png') }}" alt="Icon">
+                                <img src="{{ asset('img/placeholder.png') }}" alt="Icon">
                             </div>
                         </a>
                         <a href="" class="participant-card" data-animate>
                             <div class="participant-logo">
-                                <img src="{{ asset('storage/logos/participants/zV26WhAoRn0AmouVE3EYMkzgdfS7mWeExwtdxJnu.png') }}" alt="Icon">
+                                <img src="{{ asset('img/placeholder.png') }}" alt="Icon">
                             </div>
                         </a>
                     </div>
