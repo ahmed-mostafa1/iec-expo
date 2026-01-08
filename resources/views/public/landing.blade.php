@@ -2306,148 +2306,7 @@
 
 <body class="{{ app()->getLocale() === 'ar' ? 'locale-ar' : 'locale-en' }}">
     @php
-    $publicSponsors = collect([
-        [
-            'id' => 5,
-            'name' => 'sponsor',
-            'name_en' => 'sponsor',
-            'name_ar' => 'راعي',
-            'logo_path' => 'logos/sponsors/vVLy2CSZmnRJwZ6RYvVGqUfh2WAr51vgtGrOilLw.png',
-            'tier' => null,
-            'is_active' => 1,
-            'display_order' => 0,
-        ],
-        [
-            'id' => 1,
-            'name' => 'Saudi bussiness center',
-            'name_en' => 'Saudi bussiness center',
-            'name_ar' => 'المركز السعودي للأعمال',
-            'logo_path' => 'logos/sponsors/XThi5on40DXFF0nLA7NFBZoE0WabMyoryZHqyI8E.png',
-            'tier' => 'business',
-            'is_active' => 1,
-            'display_order' => 0,
-        ],
-        [
-            'id' => 3,
-            'name' => 'Third Eye',
-            'name_en' => 'Third Eye',
-            'name_ar' => 'العين الثالثة',
-            'logo_path' => 'logos/sponsors/czhCcPHjyDOom9Xi3BO1MNHFRIJTMoJzhSyGPrY7.png',
-            'tier' => 'marketing',
-            'is_active' => 1,
-            'display_order' => 0,
-        ],
-        [
-            'id' => 4,
-            'name' => 'sponsor',
-            'name_en' => 'sponsor',
-            'name_ar' => 'راعي',
-            'logo_path' => 'logos/sponsors/laB3RCNc9cEooeyXMASxXOzDuAUnxF9ISJiUKqNE.png',
-            'tier' => 'other',
-            'is_active' => 1,
-            'display_order' => 0,
-        ],
-        [
-            'id' => 6,
-            'name' => 'sponsor',
-            'name_en' => 'sponsor',
-            'name_ar' => 'راعي',
-            'logo_path' => 'logos/sponsors/CbTzJBsViyzzbWchkE6TQrIeNW3imxfGcCHaPAra.png',
-            'tier' => 'other',
-            'is_active' => 1,
-            'display_order' => 0,
-        ],
-        [
-            'id' => 2,
-            'name' => 'Salla',
-            'name_en' => 'Salla',
-            'name_ar' => 'سلة',
-            'logo_path' => 'logos/sponsors/lgZ1RGxW0GPu5ErevigGeZnoL4yWxqeR45u3cqHz.png',
-            'tier' => 'strategic',
-            'is_active' => 1,
-            'display_order' => 0,
-        ],
-    ])
-    ->map(function ($data) {
-    $model = new \App\Models\PublicSponsor($data);
-    $model->id = $data['id'];
-    $model->exists = false;
-
-    return $model;
-    });
-        $sponsorTierLabels = [
-        'strategic' => [
-            'en' => 'Strategic',
-            'ar' => 'الإستراتيجي',
-        ],
-        'business' => [
-            'en' => 'Diamond',
-            'ar' => 'الماسي',
-        ],
-        'marketing' => [
-            'en' => 'Government',
-            'ar' => 'الحكومي',
-        ],
-    ];
-
-    $tierAliases = [
-    'main' => 'strategic',
-    'gold' => 'business',
-    'silver' => 'marketing',
-    'strategic' => 'strategic',
-    'business' => 'business',
-    'marketing' => 'marketing',
-    ];
-
-    $groupedSponsors = $publicSponsors->groupBy(function ($sponsor) use ($tierAliases) {
-    $tier = strtolower($sponsor->tier ?? 'other');
-
-    return $tierAliases[$tier] ?? $tier;
-    });
-
-    $participants = collect([
-        [
-            'id' => 1,
-            'name' => 'Icon',
-            'name_ar' => 'أيقون',
-            'logo_path' => 'logos/participants/8NzTxjIrrDIEczBcGjSq9klSImE8rtVQWG0gmSMM.png',
-            'is_active' => 1,
-            'display_order' => 0,
-        ],
-        [
-            'id' => 2,
-            'name' => 'Icon',
-            'name_ar' => 'أيقون',
-            'logo_path' => 'logos/participants/pPIEhl193ePekNPtHzjzV0eTjHxDBawRH5l6mU4t.png',
-            'is_active' => 1,
-            'display_order' => 0,
-        ],
-        [
-            'id' => 3,
-            'name' => 'Icon',
-            'name_ar' => 'أيقون',
-            'logo_path' => 'logos/participants/zJlxwskdjI8ovmx3YIKMMMxa1NfWS2adpvbnQZAq.png',
-            'is_active' => 1,
-            'display_order' => 0,
-        ],
-        [
-            'id' => 4,
-            'name' => 'Icon',
-            'name_ar' => 'أيقون',
-            'logo_path' => 'logos/participants/zV26WhAoRn0AmouVE3EYMkzgdfS7mWeExwtdxJnu.png',
-            'is_active' => 1,
-            'display_order' => 0,
-        ],
-    ])
-    ->map(function ($data) {
-    $model = new \App\Models\Participant($data);
-    $model->id = $data['id'];
-    $model->exists = false;
-
-    return $model;
-    });
-
-    $organizers = \App\Models\Organizer::query()
+$organizers = \App\Models\Organizer::query()
     ->where('is_active', true)
     ->orderBy('display_order')
     ->get();
@@ -2474,7 +2333,7 @@
                         data-en="Previous Editions of IEC" data-ar="نسخ المعرض السابقة">Previous Editions of IEC</a>
                     <a href="#register" class="btn-primary nav-link" data-en="Register" data-ar="سجل الآن">Register</a>
                     <a href="#about" class="nav-link" data-en="About" data-ar="عن المعرض">About</a>
-                    <a href="#sponsors" class="nav-link" data-en="Sponsors" data-ar="الرعاة">Sponsors</a>
+                    <a href="#sponsors" class="nav-link" data-en="Sponsors" data-ar="??????"الرعاة">Sponsors</a>
                     <a href="#participants" class="nav-link" data-en="Icons" data-ar="الأيكونز">Icons</a>
                     <a href="#organizers" class="nav-link" data-en="Owned by" data-ar="الشركة المالكة">Owned by</a>
                     <a href="#contact" class="nav-link" data-en="Contact" data-ar="تواصل معنا">Contact</a>
@@ -2508,7 +2367,7 @@
                     data-en="Previous Editions of IEC" data-ar="نسخ المعرض السابقة">Previous Editions of IEC</a>
                 <a href="#register" class="mobile-nav-link" data-en="Register" data-ar="سجل الآن">Register</a>
                 <a href="#about" class="mobile-nav-link" data-en="About" data-ar="عن المعرض">About</a>
-                <a href="#sponsors" class="mobile-nav-link" data-en="Sponsors" data-ar="الرعاة">Sponsors</a>
+                <a href="#sponsors" class="mobile-nav-link" data-en="Sponsors" data-ar="??????"الرعاة">Sponsors</a>
                 <a href="#participants" class="mobile-nav-link" data-en="Icons" data-ar="الأيكونز">Icons</a>
                 <a href="#organizers" class="mobile-nav-link" data-en="Owned by" data-ar="الشركة المالكة">Owned by</a>
                 <a href="#contact" class="mobile-nav-link" data-en="Contact" data-ar="تواصل معنا">Contact</a>
@@ -2569,7 +2428,7 @@
                             <div class="event-badge" data-animate>
                                 <i class="fa-solid fa-award" aria-hidden="true"></i>
                                 <div>
-                                    <div class="event-badge-title" data-en="Certificate" data-ar="الرخصة">Certificate
+                                    <div class="event-badge-title" data-en="License" data-ar="الرخصة">License
                                     </div>
                                     <div class="event-badge-meta">26/165</div>
                                 </div>
@@ -2578,8 +2437,8 @@
                                 <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
                                 <div class="hero-location" role="button" tabindex="0"
                                     data-scroll-target="#location-card">
-                                    <div class="event-badge-title" data-en="Location" data-ar="الموقع">Location</div>
-                                    <div class="event-badge-meta">The Arena Riyadh</div>
+                                    <div class="event-badge-title" data-en="Location" data-ar="موقع الحدث">Event Location</div>
+                                    <div class="event-badge-meta" data-en="The Arena Riyadh" data-ar="ذا أرينا الرياض">The Arena Riyadh</div>
                                 </div>
                             </div>
                         </div>
@@ -2587,7 +2446,7 @@
                     <div class="countdown-card" data-animate>
                         <div class="countdown-header">
                             <span class="countdown-label" data-en="Countdown to opening"
-                                data-ar="العد التنازلي للانطلاق">Countdown to opening</span>
+                                data-ar="يبدأ خلال">Starts in</span>
                             <span class="pill">
                                 <i class="fa-solid fa-hourglass-half" aria-hidden="true"></i>
                                 24-9-2026
@@ -3617,7 +3476,7 @@
                                         </div>
                                         <h3 class="goal-title" data-en="Vision" data-ar="الرسالة">Vision</h3>
                                     </div>
-                                    <p class="goal-desc" data-en="{{ __('The exhibition aims to empower individuals and organizations, enhance innovation, and build strategic partnerships that contribute to developing business environments in alignment with Saudi Vision 2030') }}" data-ar="{{ __('يهـــدف المعـــرض إلى تمكيـــن الأفـــراد والمنظمات، وتعزيز الابتكار، وبناء شراكات استراتيجية تسهم في تطــــــوير بيئـــــــات الأعمـــــــال بمـــا يـــــــواكب رؤيـــــــة المملكة .203') }}">
+                                    <p class="goal-desc" data-en="{{ __('The exhibition aims to empower individuals and organizations, enhance innovation, and build strategic partnerships that contribute to developing business environments in alignment with Saudi Vision 2030') }}" data-ar="{{ __('يهـــدف المعـــرض إلى تمكيـــن الأفـــراد والمنظمات، وتعزيز الابتكار، وبناء شراكات استراتيجية تسهم في تطــــــوير بيئـــــــات الأعمـــــــال بمـــا يـــــــواكب رؤيـــــــة المملكة .2030') }}">
                                         {{ __('The exhibition aims to empower individuals and organizations, enhance innovation, and build strategic partnerships that contribute to developing business environments in alignment with Saudi Vision 2030') }}
                                     </p>
                                 </div>
@@ -3636,77 +3495,65 @@
                 <div class="container">
                     <div class="section-header" data-animate>
                         <h2 class="section-title" data-en="Sponsors" data-ar="الرعاة"
-                            style="font: size 3rem !important;;">Sponsors</h2>
+                            style="font: size 3rem !important;;">SPONSORS</h2>
                     </div>
 
-                    @php
-                    $currentLocale = app()->getLocale();
-                    @endphp
                     <div class="sponsor-tiers">
-                        @php $renderedSponsors = false; @endphp
-                        @foreach($sponsorTierLabels as $tierKey => $labelSet)
-                        @php
-                        $tierSponsors = $groupedSponsors->get($tierKey);
-                        $labelEn = $labelSet['en'] ?? '';
-                        $labelAr = $labelSet['ar'] ?? $labelEn;
-                        $label = $currentLocale === 'ar' ? $labelAr : $labelEn;
-                        @endphp
-                        @if($tierSponsors && $tierSponsors->count())
-                        @php $renderedSponsors = true; @endphp
+                        <!-- STRATEGIC -->
                         <div class="sponsor-tier">
-                            <h2 class="sponsor-tier-title" data-en="{{ e($labelEn) }}" data-ar="{{ e($labelAr) }}">
-                                {{ $label }}</h2>
-                            <div class="sponsor-tier-grid tier-{{ $tierKey }}">
-                                @foreach($tierSponsors as $sponsor)
-                                @php
-                                $logoPath = $sponsor->logo_path ? asset('storage/'.$sponsor->logo_path) :
-                                asset('img/IEC-logo.png');
-
-                                @endphp
-                                <article class="sponsor-card sponsor-{{ $tierKey }}" data-animate>
+                            <h2 class="sponsor-tier-title" data-en="Strategic" data-ar="الإستراتيجي">STRATEGIC</h2>
+                            <div class="sponsor-tier-grid tier-strategic">
+                                <article class="sponsor-card sponsor-strategic" data-animate>
                                     <div class="sponsor-logo">
-                                        <img src="{{ $logoPath }}" alt="">
+                                        <img src="{{ asset('storage/logos/sponsors/lgZ1RGxW0GPu5ErevigGeZnoL4yWxqeR45u3cqHz.png') }}" alt="">
                                     </div>
                                 </article>
-                                @endforeach
                             </div>
                         </div>
-                        @endif
-                        @endforeach
-
-                        @php
-                        $otherSponsors = $groupedSponsors->filter(function ($_, $key) use ($sponsorTierLabels) {
-                        return ! array_key_exists($key, $sponsorTierLabels);
-                        })->flatten();
-                        @endphp
-
-                        @if($otherSponsors->count())
-                        @php $renderedSponsors = true; @endphp
+                        <!-- DIAMOND -->
                         <div class="sponsor-tier">
-                            <h2 class="sponsor-tier-title" data-en="Sponsors" data-ar="الرعاة">Sponsors</h2>
+                            <h2 class="sponsor-tier-title" data-en="Diamond" data-ar="الماسي">DIAMOND</h2>
+                            <div class="sponsor-tier-grid tier-business">
+                                <article class="sponsor-card sponsor-business" data-animate>
+                                    <div class="sponsor-logo">
+                                        <img src="{{ asset('storage/logos/sponsors/XThi5on40DXFF0nLA7NFBZoE0WabMyoryZHqyI8E.png') }}" alt="">
+                                    </div>
+                                </article>
+                            </div>
+                        </div>
+                        <!-- GOVERNMENT -->
+                        <div class="sponsor-tier">
+                            <h2 class="sponsor-tier-title" data-en="Government" data-ar="الحكومي">GOVERNMENT</h2>
+                            <div class="sponsor-tier-grid tier-marketing">
+                                <article class="sponsor-card sponsor-marketing" data-animate>
+                                    <div class="sponsor-logo">
+                                        <img src="{{ asset('storage/logos/sponsors/czhCcPHjyDOom9Xi3BO1MNHFRIJTMoJzhSyGPrY7.png') }}" alt="">
+                                    </div>
+                                </article>
+                            </div>
+                        </div>
+                        
+                        <!-- OTHER SPONSORS -->
+                        <div class="sponsor-tier">
+                            <h2 class="sponsor-tier-title" data-en="Sponsors" data-ar="الرعاة">SPONORS</h2>
                             <div class="sponsor-tier-grid tier-main other-sponsors-grid">
-                                @foreach($otherSponsors as $sponsor)
-                                @php
-                                $logoPath = $sponsor->logo_path ? asset('storage/'.$sponsor->logo_path) :
-                                asset('img/IEC-logo.png');
-
-                                @endphp
                                 <article class="sponsor-card" data-animate>
-                                    <!-- <a href=""
-                  class="sponsor-card-link"> -->
                                     <div class="sponsor-logo">
-                                        <img src="{{ $logoPath }}" alt="">
+                                        <img src="{{ asset('storage/logos/sponsors/vVLy2CSZmnRJwZ6RYvVGqUfh2WAr51vgtGrOilLw.png') }}" alt="">
                                     </div>
-                                    <!-- </a> -->
                                 </article>
-                                @endforeach
+                                <article class="sponsor-card" data-animate>
+                                    <div class="sponsor-logo">
+                                        <img src="{{ asset('storage/logos/sponsors/laB3RCNc9cEooeyXMASxXOzDuAUnxF9ISJiUKqNE.png') }}" alt="">
+                                    </div>
+                                </article>
+                                <article class="sponsor-card" data-animate>
+                                    <div class="sponsor-logo">
+                                        <img src="{{ asset('storage/logos/sponsors/CbTzJBsViyzzbWchkE6TQrIeNW3imxfGcCHaPAra.png') }}" alt="">
+                                    </div>
+                                </article>
                             </div>
                         </div>
-                        @endif
-
-                        @unless($renderedSponsors)
-                        <p class="text-center text-gray-500 text-sm">{{ __('Sponsors will be announced soon.') }}</p>
-                        @endunless
                     </div>
                 </div>
             </section>
@@ -3719,54 +3566,34 @@
                     </div>
 
                     <div class="participants-grid">
-                        @forelse($participants as $participant)
-                        @php
-                        $englishName = $participant->name ?? '';
-                        $arabicName = $participant->name_ar ?? $englishName;
-                        $participantName = app()->getLocale() === 'ar' ? $arabicName : $englishName;
-                        $participantHref = $participant->url
-                        ? $participant->url
-                        : route('public.participants.show', ['locale' => app()->getLocale(), 'participant' =>
-                        $participant]);
-                        $isExternalParticipant = (bool) $participant->url;
-                        @endphp
-                        <a href="" class="participant-card" data-animate @if($isExternalParticipant) target="_blank"
-                            rel="noopener" @endif>
+                        <a href="" class="participant-card" data-animate>
                             <div class="participant-logo">
-                                @if($participant->logo_path)
-                                <img src="{{ asset('storage/'.$participant->logo_path) }}" alt="{{ $participantName }}">
-                                @else
-                                <span>{{ mb_strtoupper(mb_substr($participantName, 0, 1)) }}</span>
-                                @endif
+                                <img src="{{ asset('storage/logos/participants/8NzTxjIrrDIEczBcGjSq9klSImE8rtVQWG0gmSMM.png') }}" alt="Icon">
                             </div>
-                            <!-- <div class="participant-name" data-en="{{ e($englishName) }}" data-ar="{{ e($arabicName) }}">
-              {{ $participantName }}
-              @if($participant->url)
-              <svg class="icon icon-sm external-icon" viewBox="0 0 24 24">
-                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14 21 3" />
-              </svg>
-              @endif
-            </div> -->
                         </a>
-                        @empty
-                        <div class="participant-card" data-animate>
-                            <div class="participant-logo">ℹ️</div>
-                            <div class="participant-name">{{ __('Coming soon') }}</div>
-                            <p class="participant-desc">{{ __('Participants will be announced soon.') }}</p>
-                        </div>
-                        @endforelse
+                        <a href="" class="participant-card" data-animate>
+                            <div class="participant-logo">
+                                <img src="{{ asset('storage/logos/participants/pPIEhl193ePekNPtHzjzV0eTjHxDBawRH5l6mU4t.png') }}" alt="Icon">
+                            </div>
+                        </a>
+                        <a href="" class="participant-card" data-animate>
+                            <div class="participant-logo">
+                                <img src="{{ asset('storage/logos/participants/zJlxwskdjI8ovmx3YIKMMMxa1NfWS2adpvbnQZAq.png') }}" alt="Icon">
+                            </div>
+                        </a>
+                        <a href="" class="participant-card" data-animate>
+                            <div class="participant-logo">
+                                <img src="{{ asset('storage/logos/participants/zV26WhAoRn0AmouVE3EYMkzgdfS7mWeExwtdxJnu.png') }}" alt="Icon">
+                            </div>
+                        </a>
                     </div>
                 </div>
             </section>
-
             <!-- Organizers Section -->
             <section class="organizers" id="organizers">
                 <div class="container">
                     <div class="section-header" data-animate>
-                        <h2 class="section-title" data-en="Owned by" data-ar="الشركة المالكة">Owned by</h2>
-                        <!-- <p class="section-desc" data-en="Meet the teams orchestrating the IEC Expo experience." data-ar="تعرّف على الفرق التي تنظم تجربة المعرض الدولي للتجارة اﻹلكترونية.">
-            Meet the teams orchestrating the IEC Expo experience.
-          </p> -->
+                        <h2 class="section-title" data-en="Owned by" data-ar="الشركة المالكة">OWNED BY</h2>
                     </div>
 
                     @php
