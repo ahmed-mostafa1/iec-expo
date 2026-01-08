@@ -3584,7 +3584,7 @@ $organizers = \App\Models\Organizer::query()
                         <!-- Marketing & Media -->
                         <div class="sponsor-tier-pair">
                             <div class="sponsor-tier">
-                                <h2 class="sponsor-tier-title" data-en="Marketing" data-ar="التسويق">MARKETING</h2>
+                                <h2 class="sponsor-tier-title" data-en="Marketing" data-ar="التسويقي">MARKETING</h2>
                                 <div class="sponsor-tier-grid tier-marketing single-sponsor-grid">
                                     <article class="sponsor-card sponsor-marketing" data-animate>
                                         <div class="sponsor-logo">
@@ -3594,7 +3594,7 @@ $organizers = \App\Models\Organizer::query()
                                 </div>
                             </div>
                             <div class="sponsor-tier">
-                                <h2 class="sponsor-tier-title" data-en="Media" data-ar="الإعلام">MEDIA</h2>
+                                <h2 class="sponsor-tier-title" data-en="Media" data-ar="الإعلامي">MEDIA</h2>
                                 <div class="sponsor-tier-grid tier-marketing single-sponsor-grid">
                                     <article class="sponsor-card sponsor-marketing" data-animate>
                                         <div class="sponsor-logo">
@@ -3608,7 +3608,7 @@ $organizers = \App\Models\Organizer::query()
                         <!-- TECH & SECURITY -->
                         <div class="sponsor-tier-pair">
                             <div class="sponsor-tier">
-                                <h2 class="sponsor-tier-title" data-en="Tech" data-ar="التقنية">TECH</h2>
+                                <h2 class="sponsor-tier-title" data-en="Tech" data-ar="التقني">TECHNOLOGY</h2>
                                 <div class="sponsor-tier-grid tier-marketing single-sponsor-grid">
                                     <article class="sponsor-card sponsor-marketing" data-animate>
                                         <div class="sponsor-logo">
@@ -3618,7 +3618,7 @@ $organizers = \App\Models\Organizer::query()
                                 </div>
                             </div>
                             <div class="sponsor-tier">
-                                <h2 class="sponsor-tier-title" data-en="Security" data-ar="الأمن">SECURITY</h2>
+                                <h2 class="sponsor-tier-title" data-en="Security" data-ar="الأمني">SAFETY AND SECURITY</h2>
                                 <div class="sponsor-tier-grid tier-marketing single-sponsor-grid">
                                     <article class="sponsor-card sponsor-marketing" data-animate>
                                         <div class="sponsor-logo">
