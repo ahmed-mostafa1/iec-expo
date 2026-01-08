@@ -1308,6 +1308,25 @@
         margin: 0 auto;
     }
 
+    .sponsor-tier-pair {
+        display: grid;
+        gap: 1.5rem;
+        grid-template-columns: 1fr;
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+
+    .sponsor-tier-grid.single-sponsor-grid {
+        grid-template-columns: 1fr;
+        max-width: 360px;
+        margin: 0 auto;
+    }
+
+    .gold-sponsors-grid {
+        max-width: 1100px;
+        margin: 0 auto;
+    }
+
     .sponsor-tier-grid.tier-main,
     .sponsor-tier-grid.tier-strategic {
         grid-template-columns: repeat(auto-fit, minmax(300px, 250px));
@@ -1634,19 +1653,20 @@
 
     .participant-card {
         border-radius: var(--radius);
-        padding: 0.5rem;
-        transition: all 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+        padding: 0.9rem;
+        transition: all 0.5s;
         opacity: 0;
         transform: translateY(2rem);
         text-decoration: none;
         color: inherit;
         display: flex;
         flex-direction: column;
-        align-items: center;
+        /* align-items: center; */
         text-align: center;
         will-change: transform;
         position: relative;
         overflow: hidden;
+        /* min-height: 260px; */
     }
 
     .participant-card.visible {
@@ -1655,9 +1675,27 @@
     }
 
     .participant-card:hover {
-        box-shadow: 0 20px 35px -15px rgba(0, 0, 0, 0.25);
-        border-color: rgb(var(--primary) / 0.4);
-        transform: translateY(-6px);
+        box-shadow: 0 15px 35px -10px rgba(0, 0, 0, 0.25);
+        transform: translateY(0) scale(1.02);
+        background: rgb(var(--card) / 0.4);
+        box-shadow: #9803bde1 0px 0px 10px, #9803bde1 0px 0px 20px, #9803bde1 0px 0px 30px,
+            #9803bde1 0px 0px 40px, #9803bde1 0px 0px 50px;
+    }
+
+    .gold-sponsor-card {
+        padding: 0.35rem;
+    }
+
+    .gold-sponsor-card .participant-logo {
+        margin-bottom: 0;
+        aspect-ratio: 1 / 1;
+    }
+
+    .gold-sponsor-card:hover {
+        transform: translateY(0) scale(1.02);
+        background: rgb(var(--card) / 0.4);
+        box-shadow: #9803bde1 0px 0px 10px, #9803bde1 0px 0px 20px, #9803bde1 0px 0px 30px,
+            #9803bde1 0px 0px 40px, #9803bde1 0px 0px 50px;
     }
 
     .participant-logo {
@@ -1673,9 +1711,8 @@
     .participant-logo img {
         width: 100%;
         height: 100%;
-        object-fit: contain;
+        /* object-fit: contain; */
         border-radius: 10px;
-
     }
 
     .participant-card:hover .participant-logo {
@@ -2192,6 +2229,14 @@
         .nav-logo-bu {
             height: 40px;
         }
+
+        .sponsor-tier-pair {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .sponsor-tier-grid.single-sponsor-grid {
+            max-width: 100%;
+        }
     }
 
     @media (min-width: 1024px) {
@@ -2215,6 +2260,10 @@
     @media (min-width: 1280px) {
         .participants-grid {
             grid-template-columns: repeat(4, 1fr);
+        }
+
+        .gold-sponsors-grid {
+            grid-template-columns: repeat(5, minmax(0, 1fr));
         }
     }
 
@@ -3490,7 +3539,6 @@ $organizers = \App\Models\Organizer::query()
 
 
         <!-- Sponsors Section -->
-        <div class="sponsor-participant-organizer-band">
             <section class="sponsors" id="sponsors">
                 <div class="container">
                     <div class="section-header" data-animate>
@@ -3532,6 +3580,86 @@ $organizers = \App\Models\Organizer::query()
                                 </article>
                             </div>
                         </div>
+
+                        <!-- Marketing & Media -->
+                        <div class="sponsor-tier-pair">
+                            <div class="sponsor-tier">
+                                <h2 class="sponsor-tier-title" data-en="Marketing" data-ar="التسويق">MARKETING</h2>
+                                <div class="sponsor-tier-grid tier-marketing single-sponsor-grid">
+                                    <article class="sponsor-card sponsor-marketing" data-animate>
+                                        <div class="sponsor-logo">
+                                            <img src="{{ asset('storage/logos/sponsors/czhCcPHjyDOom9Xi3BO1MNHFRIJTMoJzhSyGPrY7.png') }}" alt="">
+                                        </div>
+                                    </article>
+                                </div>
+                            </div>
+                            <div class="sponsor-tier">
+                                <h2 class="sponsor-tier-title" data-en="Media" data-ar="الإعلام">MEDIA</h2>
+                                <div class="sponsor-tier-grid tier-marketing single-sponsor-grid">
+                                    <article class="sponsor-card sponsor-marketing" data-animate>
+                                        <div class="sponsor-logo">
+                                            <img src="{{ asset('storage/logos/sponsors/czhCcPHjyDOom9Xi3BO1MNHFRIJTMoJzhSyGPrY7.png') }}" alt="">
+                                        </div>
+                                    </article>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- TECH & SECURITY -->
+                        <div class="sponsor-tier-pair">
+                            <div class="sponsor-tier">
+                                <h2 class="sponsor-tier-title" data-en="Tech" data-ar="التقنية">TECH</h2>
+                                <div class="sponsor-tier-grid tier-marketing single-sponsor-grid">
+                                    <article class="sponsor-card sponsor-marketing" data-animate>
+                                        <div class="sponsor-logo">
+                                            <img src="{{ asset('storage/logos/sponsors/czhCcPHjyDOom9Xi3BO1MNHFRIJTMoJzhSyGPrY7.png') }}" alt="">
+                                        </div>
+                                    </article>
+                                </div>
+                            </div>
+                            <div class="sponsor-tier">
+                                <h2 class="sponsor-tier-title" data-en="Security" data-ar="الأمن">SECURITY</h2>
+                                <div class="sponsor-tier-grid tier-marketing single-sponsor-grid">
+                                    <article class="sponsor-card sponsor-marketing" data-animate>
+                                        <div class="sponsor-logo">
+                                            <img src="{{ asset('storage/logos/sponsors/czhCcPHjyDOom9Xi3BO1MNHFRIJTMoJzhSyGPrY7.png') }}" alt="">
+                                        </div>
+                                    </article>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- GOLD -->
+                        <div class="sponsor-tier">
+                            <h2 class="sponsor-tier-title" data-en="Gold" data-ar="الذهبي">GOLD</h2>
+                            <div class="participants-grid gold-sponsors-grid">
+                                <article class="participant-card gold-sponsor-card" data-animate>
+                                    <div class="participant-logo">
+                                        <img src="{{ asset('storage/logos/sponsors/vVLy2CSZmnRJwZ6RYvVGqUfh2WAr51vgtGrOilLw.png') }}" alt="">
+                                    </div>
+                                </article>
+                                <article class="participant-card gold-sponsor-card" data-animate>
+                                    <div class="participant-logo">
+                                        <img src="{{ asset('storage/logos/sponsors/laB3RCNc9cEooeyXMASxXOzDuAUnxF9ISJiUKqNE.png') }}" alt="">
+                                    </div>
+                                </article>
+                                <article class="participant-card gold-sponsor-card" data-animate>
+                                    <div class="participant-logo">
+                                        <img src="{{ asset('storage/logos/sponsors/CbTzJBsViyzzbWchkE6TQrIeNW3imxfGcCHaPAra.png') }}" alt="">
+                                    </div>
+                                </article>
+                                <article class="participant-card gold-sponsor-card" data-animate>
+                                    <div class="participant-logo">
+                                        <img src="{{ asset('storage/logos/sponsors/vVLy2CSZmnRJwZ6RYvVGqUfh2WAr51vgtGrOilLw.png') }}" alt="">
+                                    </div>
+                                </article>
+                                <article class="participant-card gold-sponsor-card" data-animate>
+                                    <div class="participant-logo">
+                                        <img src="{{ asset('storage/logos/sponsors/laB3RCNc9cEooeyXMASxXOzDuAUnxF9ISJiUKqNE.png') }}" alt="">
+                                    </div>
+                                </article>
+                            </div>
+                        </div>
                         
                         <!-- OTHER SPONSORS -->
                         <div class="sponsor-tier">
@@ -3558,11 +3686,10 @@ $organizers = \App\Models\Organizer::query()
                 </div>
             </section>
             <!-- Participants Section -->
-            <section class="participants" id="participants">
+             <section class="participants" id="participants">
                 <div class="container">
                     <div class="section-header" data-animate>
                         <h2 class="section-title" data-en="ICONS" data-ar="الأيكونز">ICONS</h2>
-                        <!-- <p class="section-desc" data-en="Meet the icons of IEC 360&deg;" data-ar="تعرّف على الـ Icons  المشاركين في IEC 360&deg;">Meet the icons of IEC 360&deg;</p> -->
                     </div>
 
                     <div class="participants-grid">
@@ -3647,7 +3774,7 @@ $organizers = \App\Models\Organizer::query()
                     @endif
                 </div>
             </section>
-        </div>
+        
 
         <!-- Contact Section -->
         @php
