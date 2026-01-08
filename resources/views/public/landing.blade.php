@@ -3805,14 +3805,13 @@ $organizers = \App\Models\Organizer::query()
                 <div class="section-header" data-animate>
                     <h2 class="section-title" data-en="{{ e($contactTitleBlock['en']) }}"
                         data-ar="{{ e($contactTitleBlock['ar']) }}">{{ $contactTitleBlock['text'] }}</h2>
-                    <!-- <p class="section-desc" data-en="{{ e($contactDescriptionBlock['en']) }}" data-ar="{{ e($contactDescriptionBlock['ar']) }}">{{ $contactDescriptionBlock['text'] }}</p> -->
                 </div>
 
                 <div class="contact-grid">
                     <div class="contact-col" data-animate>
                         <div class="contact-form-card">
-                            <h3 class="form-title" data-en="{{ e($contactFormTitle['en']) }}"
-                                data-ar="{{ e($contactFormTitle['ar']) }}">{{ $contactFormTitle['text'] }}</h3>
+                            <!-- <h3 class="form-title" data-en="{{ e($contactFormTitle['en']) }}"
+                                data-ar="{{ e($contactFormTitle['ar']) }}">{{ $contactFormTitle['text'] }}</h3> -->
                             <form onsubmit="handleContactSubmit(event)">
                                 <div class="form-grid">
                                     <div class="form-group">
@@ -3908,15 +3907,10 @@ $organizers = \App\Models\Organizer::query()
                 <!-- map -->
                 <div class="location-card" id="location-card">
                     <div class="location-header">
-                        <div class="contact-info-icon">
-                            <svg class="icon icon-sm" viewBox="0 0 24 24">
-                                <path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0Z" />
-                                <circle cx="12" cy="10" r="3" />
-                            </svg>
-                        </div>
                         <div>
                             <div class="location-title"><img src="{{ asset('img/theArena.png') }}" alt=""
-                                    style="text-align:center; height: 120px;" /> </div>
+                                    style="text-align:center; height: 120px;" />
+                                 </div>
                             <!-- <p class="location-address" data-en="{{ e($locationAddressBlock['en']) }}" data-ar="{{ e($locationAddressBlock['ar']) }}">{{ $locationAddressBlock['text'] }}</p> -->
                         </div>
                     </div>
