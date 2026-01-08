@@ -1232,8 +1232,6 @@
     }
 
     .goal-card {
-        display: flex;
-        gap: 1rem;
         transition: all 0.5s;
         opacity: 0;
         transform: translateY(1rem);
@@ -1250,12 +1248,19 @@
     }
 
     .goal-icon {
-        flex-shrink: 0;
-        padding: 0.75rem;
+        /* padding: 0.75rem; */
         border-radius: 0.5rem;
         background: rgb(var(--primary) / 0.1);
         color: rgb(var(--primary));
         transition: all 0.3s;
+    }
+
+    .goal-title-row {
+        display: flex;
+        align-items: center;
+        /* gap: 0.75rem; */
+        margin-bottom: 0.5rem;
+        justify-content: center;
     }
 
     /* .goal-card:hover .goal-icon {
@@ -1266,12 +1271,12 @@
     .goal-title {
         font-size: 1.5rem;
         font-weight: 700;
-        margin-bottom: 0.25rem;
         color: rgb(var(--card-foreground));
     }
 
     .goal-desc {
         color: rgb(var(--muted-foreground));
+        text-align: center;
     }
 
     /* Sponsors Section */
@@ -1291,7 +1296,7 @@
         font-size: 2rem;
         /* font-weight: 600; */
         margin-bottom: 1rem;
-        color: rgb(var(--border));
+        color: var(--light-color);
     }
 
     .sponsor-tier-grid {
@@ -2320,15 +2325,15 @@
 
     $sponsorTierLabels = [
     'strategic' => [
-    'en' => 'Strategic Sponsors',
+    'en' => 'Strategic',
     'ar' => 'الراعي اﻹستراتيجي',
     ],
     'business' => [
-    'en' => 'Business Sponsors',
+    'en' => 'Diamond',
     'ar' => 'راعي الأعمال',
     ],
     'marketing' => [
-    'en' => 'Marketing Sponsors',
+    'en' => 'Government',
     'ar' => 'الراعي التسويقي',
     ],
     ];
@@ -3501,33 +3506,39 @@
                     <div class="about-col" data-animate>
                         <div class="goals-list">
                             <div class="goal-card" data-animate>
-                                <div class="goal-icon">
-                                    <img src="{{ asset('img/icons/mission.png') }}" alt="flag Icon" style="height: 40px;">
-                                </div>
                                 <div>
-                                    <h3 class="goal-title" data-en="Mission" data-ar="المهمة">Mission</h3>
+                                    <div class="goal-title-row">
+                                        <div class="goal-icon">
+                                            <img src="{{ asset('img/icons/mission.png') }}" alt="flag Icon" style="height: 40px;">
+                                        </div>
+                                        <h3 class="goal-title" data-en="Mission" data-ar="المهمة">Mission</h3>
+                                    </div>
                                     <p class="goal-desc" data-en="{{ __('With distinction and uniqueness, the IEC Trade Exhibition returns in its third edition under the theme IEC360°, continuing its journey as an interactive platform that brings together innovation, development, and connection in an exceptional experience that unites ambitious minds and leaders from various sectors under one roof') }}" data-ar="{{ __('بكل تفرد وتميز، يعود معرض IEC في نسخته الثالثة تحت عنوان 360IEC° ليواصل مسيرته كمنصة تفاعلية شاملة تجمع بين الابتكار، والتطوير، والتواصل في تجربة استثنائية توحد العقول الطموحة ورواد القطاعات المختلفة تحت سقف واحد') }}">
                                         {{ __('With distinction and uniqueness, the IEC Trade Exhibition returns in its third edition under the theme IEC360°, continuing its journey as an interactive platform that brings together innovation, development, and connection in an exceptional experience that unites ambitious minds and leaders from various sectors under one roof') }}
                                     </p>
                                 </div>
                             </div>
                             <div class="goal-card" data-animate>
-                                <div class="goal-icon">
-                                    <img src="{{ asset('img/icons/goal.png') }}" alt="flag Icon" style="height: 40px;">
-                                </div>
                                 <div>
-                                    <h3 class="goal-title" data-en="Objectives" data-ar="الأهداف">Objectives</h3>
+                                    <div class="goal-title-row">
+                                        <div class="goal-icon">
+                                            <img src="{{ asset('img/icons/goal.png') }}" alt="flag Icon" style="height: 40px;">
+                                        </div>
+                                        <h3 class="goal-title" data-en="Objectives" data-ar="الأهداف">Objectives</h3>
+                                    </div>
                                     <p class="goal-desc" data-en="{{ __('With distinction and uniqueness, the IEC Trade Exhibition returns in its third edition under the theme IEC360°, continuing its journey as an interactive platform that brings together innovation, development, and connection in an exceptional experience that unites ambitious minds and leaders from various sectors under one roof') }}" data-ar="{{ __('يهدف المعرض إلى إبراز خبرات الأيكونز والتواصل مع جمهـــور متخصص لخلق فرص تعـــاون ومعرفة تدعم ّ نمـــو الأعمال، مـــع توفير مســـاحة تمكن الشـــركات الناشئة من بناء شراكات وعلاقات وتطوير مشاريعها') }}">
                                         {{ __('With distinction and uniqueness, the IEC Trade Exhibition returns in its third edition under the theme IEC360°, continuing its journey as an interactive platform that brings together innovation, development, and connection in an exceptional experience that unites ambitious minds and leaders from various sectors under one roof') }}
                                     </p>
                                 </div>
                             </div>
                             <div class="goal-card" data-animate>
-                                <div class="goal-icon">
-                                    <img src="{{ asset('img/icons/message.png') }}" alt="flag Icon" style="height: 40px;">
-                                </div>
                                 <div>
-                                    <h3 class="goal-title" data-en="Vision" data-ar="الرسالة">Vision</h3>
+                                    <div class="goal-title-row">
+                                        <div class="goal-icon">
+                                            <img src="{{ asset('img/icons/message.png') }}" alt="flag Icon" style="height: 40px;">
+                                        </div>
+                                        <h3 class="goal-title" data-en="Vision" data-ar="الرسالة">Vision</h3>
+                                    </div>
                                     <p class="goal-desc" data-en="{{ __('The exhibition aims to empower individuals and organizations, enhance innovation, and build strategic partnerships that contribute to developing business environments in alignment with Saudi Vision 2030') }}" data-ar="{{ __('يهـــدف المعـــرض إلى تمكيـــن الأفـــراد والمنظمات، وتعزيز الابتكار، وبناء شراكات استراتيجية تسهم في تطــــــوير بيئـــــــات الأعمـــــــال بمـــا يـــــــواكب رؤيـــــــة المملكة .203') }}">
                                         {{ __('The exhibition aims to empower individuals and organizations, enhance innovation, and build strategic partnerships that contribute to developing business environments in alignment with Saudi Vision 2030') }}
                                     </p>
