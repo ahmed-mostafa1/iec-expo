@@ -2306,36 +2306,88 @@
 
 <body class="{{ app()->getLocale() === 'ar' ? 'locale-ar' : 'locale-en' }}">
     @php
-    $publicSponsors = \App\Models\PublicSponsor::query()
-    ->where('is_active', true)
-    ->orderBy('tier')
-    ->orderBy('display_order')
-    ->get();
-
-    if ($publicSponsors->isEmpty()) {
-    $publicSponsors = collect(config('demo.sponsors'))
-    ->map(function ($data, $id) {
+    $publicSponsors = collect([
+        [
+            'id' => 5,
+            'name' => 'sponsor',
+            'name_en' => 'sponsor',
+            'name_ar' => 'راعي',
+            'logo_path' => 'logos/sponsors/vVLy2CSZmnRJwZ6RYvVGqUfh2WAr51vgtGrOilLw.png',
+            'tier' => null,
+            'is_active' => 1,
+            'display_order' => 0,
+        ],
+        [
+            'id' => 1,
+            'name' => 'Saudi bussiness center',
+            'name_en' => 'Saudi bussiness center',
+            'name_ar' => 'المركز السعودي للأعمال',
+            'logo_path' => 'logos/sponsors/XThi5on40DXFF0nLA7NFBZoE0WabMyoryZHqyI8E.png',
+            'tier' => 'business',
+            'is_active' => 1,
+            'display_order' => 0,
+        ],
+        [
+            'id' => 3,
+            'name' => 'Third Eye',
+            'name_en' => 'Third Eye',
+            'name_ar' => 'العين الثالثة',
+            'logo_path' => 'logos/sponsors/czhCcPHjyDOom9Xi3BO1MNHFRIJTMoJzhSyGPrY7.png',
+            'tier' => 'marketing',
+            'is_active' => 1,
+            'display_order' => 0,
+        ],
+        [
+            'id' => 4,
+            'name' => 'sponsor',
+            'name_en' => 'sponsor',
+            'name_ar' => 'راعي',
+            'logo_path' => 'logos/sponsors/laB3RCNc9cEooeyXMASxXOzDuAUnxF9ISJiUKqNE.png',
+            'tier' => 'other',
+            'is_active' => 1,
+            'display_order' => 0,
+        ],
+        [
+            'id' => 6,
+            'name' => 'sponsor',
+            'name_en' => 'sponsor',
+            'name_ar' => 'راعي',
+            'logo_path' => 'logos/sponsors/CbTzJBsViyzzbWchkE6TQrIeNW3imxfGcCHaPAra.png',
+            'tier' => 'other',
+            'is_active' => 1,
+            'display_order' => 0,
+        ],
+        [
+            'id' => 2,
+            'name' => 'Salla',
+            'name_en' => 'Salla',
+            'name_ar' => 'سلة',
+            'logo_path' => 'logos/sponsors/lgZ1RGxW0GPu5ErevigGeZnoL4yWxqeR45u3cqHz.png',
+            'tier' => 'strategic',
+            'is_active' => 1,
+            'display_order' => 0,
+        ],
+    ])
+    ->map(function ($data) {
     $model = new \App\Models\PublicSponsor($data);
-    $model->id = $id;
+    $model->id = $data['id'];
     $model->exists = false;
 
     return $model;
     });
-    }
-
-    $sponsorTierLabels = [
-    'strategic' => [
-    'en' => 'Strategic',
-    'ar' => 'الراعي اﻹستراتيجي',
-    ],
-    'business' => [
-    'en' => 'Diamond',
-    'ar' => 'راعي الأعمال',
-    ],
-    'marketing' => [
-    'en' => 'Government',
-    'ar' => 'الراعي التسويقي',
-    ],
+        $sponsorTierLabels = [
+        'strategic' => [
+            'en' => 'Strategic',
+            'ar' => 'الإستراتيجي',
+        ],
+        'business' => [
+            'en' => 'Diamond',
+            'ar' => 'الماسي',
+        ],
+        'marketing' => [
+            'en' => 'Government',
+            'ar' => 'الحكومي',
+        ],
     ];
 
     $tierAliases = [
@@ -2353,21 +2405,47 @@
     return $tierAliases[$tier] ?? $tier;
     });
 
-    $participants = \App\Models\Participant::query()
-    ->where('is_active', true)
-    ->orderBy('display_order')
-    ->get();
-
-    if ($participants->isEmpty()) {
-    $participants = collect(config('demo.participants'))
-    ->map(function ($data, $id) {
+    $participants = collect([
+        [
+            'id' => 1,
+            'name' => 'Icon',
+            'name_ar' => 'أيقون',
+            'logo_path' => 'logos/participants/8NzTxjIrrDIEczBcGjSq9klSImE8rtVQWG0gmSMM.png',
+            'is_active' => 1,
+            'display_order' => 0,
+        ],
+        [
+            'id' => 2,
+            'name' => 'Icon',
+            'name_ar' => 'أيقون',
+            'logo_path' => 'logos/participants/pPIEhl193ePekNPtHzjzV0eTjHxDBawRH5l6mU4t.png',
+            'is_active' => 1,
+            'display_order' => 0,
+        ],
+        [
+            'id' => 3,
+            'name' => 'Icon',
+            'name_ar' => 'أيقون',
+            'logo_path' => 'logos/participants/zJlxwskdjI8ovmx3YIKMMMxa1NfWS2adpvbnQZAq.png',
+            'is_active' => 1,
+            'display_order' => 0,
+        ],
+        [
+            'id' => 4,
+            'name' => 'Icon',
+            'name_ar' => 'أيقون',
+            'logo_path' => 'logos/participants/zV26WhAoRn0AmouVE3EYMkzgdfS7mWeExwtdxJnu.png',
+            'is_active' => 1,
+            'display_order' => 0,
+        ],
+    ])
+    ->map(function ($data) {
     $model = new \App\Models\Participant($data);
-    $model->id = $id;
+    $model->id = $data['id'];
     $model->exists = false;
 
     return $model;
     });
-    }
 
     $organizers = \App\Models\Organizer::query()
     ->where('is_active', true)
