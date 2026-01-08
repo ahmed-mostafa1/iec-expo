@@ -2397,15 +2397,15 @@ $organizers = \App\Models\Organizer::query()
             <div class="header-inner">
                 <img src="{{ asset('./img/IEC-logo-nav.png') }}" alt="IEC Logo" class="nav-logo" />
                 <nav class="nav">
-                    <a href="#" class="btn-primary nav-link" data-en="Home" data-ar="Home">Home</a>
+                    <a href="#" class="btn-primary nav-link" data-en="Home" data-ar="الرئيسية">Home</a>
                     <a href="{{ route('public.ed', ['locale' => app()->getLocale()]) }}" class="nav-link"
-                        data-en="Previous Editions of IEC" data-ar="Previous Editions of IEC">Previous Editions of IEC</a>
-                    <a href="#register" class="btn-primary nav-link" data-en="Register" data-ar="Register">Register</a>
-                    <a href="#about" class="nav-link" data-en="About" data-ar="About">About</a>
-                    <a href="#sponsors" class="nav-link" data-en="Sponsors" data-ar="Sponsors"">Sponsors</a>
-                    <a href="#participants" class="nav-link" data-en="Icons" data-ar="Icons">Icons</a>
-                    <a href="#organizers" class="nav-link" data-en="Owned by" data-ar="Owned by">Owned by</a>
-                    <a href="#contact" class="nav-link" data-en="Contact" data-ar="Contact">Contact</a>
+                        data-en="Previous Editions of IEC" data-ar="النسخ السابقة من المعرض">Previous Editions of IEC</a>
+                    <a href="#register" class="btn-primary nav-link" data-en="Register" data-ar="التسجيل">Register</a>
+                    <a href="#about" class="nav-link" data-en="About" data-ar="عن المعرض">About</a>
+                    <a href="#sponsors" class="nav-link" data-en="Sponsors" data-ar="الرعاة"">Sponsors</a>
+                    <a href="#participants" class="nav-link" data-en="Icons" data-ar="الأيكونز">Icons</a>
+                    <a href="#organizers" class="nav-link" data-en="Owned by" data-ar="الشركة المالكة">Owned by</a>
+                    <a href="#contact" class="nav-link" data-en="Contact" data-ar="تواصل معنا">Contact</a>
                 </nav>
 
                 <div class="header-right">
@@ -2431,15 +2431,15 @@ $organizers = \App\Models\Organizer::query()
             </div>
 
             <nav class="mobile-nav" id="mobile-nav">
-                <a href="#" class="mobile-nav-link" data-en="Home" data-ar="Home">Home</a>
+                <a href="#" class="mobile-nav-link" data-en="Home" data-ar="الرئيسية">Home</a>
                 <a href="{{ route('public.ed', ['locale' => app()->getLocale()]) }}" class="mobile-nav-link"
-                    data-en="Previous Editions of IEC" data-ar="Previous Editions of IEC">Previous Editions of IEC</a>
-                <a href="#register" class="mobile-nav-link" data-en="Register" data-ar="Register">Register</a>
-                <a href="#about" class="mobile-nav-link" data-en="About" data-ar="About">About</a>
-                <a href="#sponsors" class="mobile-nav-link" data-en="Sponsors" data-ar="Sponsors"">Sponsors</a>
-                <a href="#participants" class="mobile-nav-link" data-en="Icons" data-ar="Icons">Icons</a>
-                <a href="#organizers" class="mobile-nav-link" data-en="Owned by" data-ar="Owned by">Owned by</a>
-                <a href="#contact" class="mobile-nav-link" data-en="Contact" data-ar="Contact">Contact</a>
+                    data-en="Previous Editions of IEC" data-ar="النسخ السابقة من المعرض">Previous Editions of IEC</a>
+                <a href="#register" class="mobile-nav-link" data-en="Register" data-ar="التسجيل">Register</a>
+                <a href="#about" class="mobile-nav-link" data-en="About" data-ar="عن المعرض">About</a>
+                <a href="#sponsors" class="mobile-nav-link" data-en="Sponsors" data-ar="الرعاة"">Sponsors</a>
+                <a href="#participants" class="mobile-nav-link" data-en="Icons" data-ar="الأيكونز">Icons</a>
+                <a href="#organizers" class="mobile-nav-link" data-en="Owned by" data-ar="الشركة المالكة">Owned by</a>
+                <a href="#contact" class="mobile-nav-link" data-en="Contact" data-ar="تواصل معنا">Contact</a>
 
             </nav>
         </div>
@@ -4608,8 +4608,7 @@ $organizers = \App\Models\Organizer::query()
         event.target.reset();
     }
 
-    const initialForm = @json($visitorShouldOpen ? 'visitor' : ($sponsorShouldOpen ? 'sponsor' : ($iconShouldOpen ?
-        'icon' : '')));
+    const initialForm = @json($visitorShouldOpen ? 'visitor' : ($sponsorShouldOpen ? 'sponsor' : ($iconShouldOpen ? 'icon' : '')));
     document.addEventListener('DOMContentLoaded', () => {
         initHeardAboutSelects();
         initAjaxRegistrationForms();
