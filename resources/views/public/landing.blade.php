@@ -1155,6 +1155,7 @@
         display: grid;
         gap: 3rem;
         align-items: start;
+        grid-template-columns: 1fr;
     }
 
 
@@ -1204,7 +1205,8 @@
         color: #fff
     }
 
-    .about-card {
+    .about-card,
+    .goal-card {
         background: rgb(var(--card));
         border: 1px solid rgb(var(--border));
         border-radius: 1rem;
@@ -1225,19 +1227,16 @@
         display: flex;
         flex-direction: column;
         gap: 1rem;
+        max-width: 80%;
+        margin: auto;
     }
 
     .goal-card {
-        background: rgb(var(--card));
-        border: 1px solid rgb(var(--border));
-        border-radius: var(--radius);
-        padding: 1.5rem;
         display: flex;
         gap: 1rem;
         transition: all 0.5s;
         opacity: 0;
         transform: translateY(1rem);
-        /* text-align: center; */
     }
 
     .goal-card.visible {
@@ -2196,7 +2195,7 @@
         }
 
         .about-grid {
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr;
         }
 
         .participants-grid {
@@ -3492,102 +3491,48 @@
         ];
         };
         $aboutTitle = $aboutTranslate(data_get($aboutSection, 'title'), __('About us'));
-        $missionBlock = data_get($aboutSection, 'mission', []);
-        $missionTitle = $aboutTranslate(data_get($missionBlock, 'title'), __('Our Mission'));
-        $missionParagraphs = data_get($missionBlock, 'paragraphs', []);
-        $goals = data_get($aboutSection, 'goals', []);
         @endphp
 
         <section class="about" id="about">
             <div class="container">
-                <h2 class="section-title" data-en="{{ e($aboutTitle['en']) }}" data-ar="{{ e($aboutTitle['ar']) }}"
-                    style="margin-bottom:20px; color:#fff; text-align: center;">{{ $aboutTitle['text'] }}</h2>
+                <h2 class="section-title" data-en="About IEC 360°" data-ar="عن المعرض"
+                    style="margin-bottom:20px; color:#fff; text-align: center;">About IEC 360°</h2>
                 <div class="about-grid">
                     <div class="about-col" data-animate>
-                        <div class="about-header">
-                            <div class="about-icon">
-                                <img src="{{ asset('img/icons/star.png') }}" alt="star Icon" style="height: 60px;">
-                            </div>
-                            <h2 class="about-title" data-en="{{ e($missionTitle['en']) }}"
-                                data-ar="{{ e($missionTitle['ar']) }}">{{ $missionTitle['text'] }}</h2>
-                        </div>
-                        <div class="about-card">
-                            @forelse($missionParagraphs as $paragraph)
-                            @php $paragraphCopy = $aboutTranslate($paragraph); @endphp
-                            <p class="about-text" data-en="{{ e($paragraphCopy['en']) }}"
-                                data-ar="{{ e($paragraphCopy['ar']) }}">{{ $paragraphCopy['text'] }}</p>
-                            @empty
-                            <p class="about-text">{{ __('Mission details will be shared soon.') }}</p>
-                            @endforelse
-                        </div>
-                    </div>
-
-                    <div class="about-col" data-animate>
-                        @php $goalsTitle = $aboutTranslate(['en' => __('Our Goals'), 'ar' => __('أهدافنا')], __('Our
-                        Goals')); @endphp
-                        <h2 class="about-title" data-en="" data-ar="" style="margin-top: 2rem; font-size: 1px;">.</h2>
                         <div class="goals-list">
-                            @php
-                            $goals = [
-                            [
-                            'title' => ['en' => 'Objectives', 'ar' => 'الأهــــداف'],
-                            'description' => [
-                            'en' => 'With distinction and uniqueness, the IEC
-                            Trade Exhibition returns in its third edition
-                            under the theme IEC360°, continuing its
-                            journey as an interactive platform that
-                            brings together innovation, development,
-                            and connection in an exceptional
-                            experience that unites ambitious minds
-                            and leaders from various sectors under
-                            one roof',
-                            'ar' => 'يهدف المعرض إلى إبراز خبرات الأيكونز والتواصل مع
-                            جمهـــور متخصص لخلق فرص تعـــاون ومعرفة تدعم
-                            ّ نمـــو الأعمال، مـــع توفير مســـاحة تمكن الشـــركات
-                            الناشئة من بناء شراكات وعلاقات وتطوير مشاريعها.',
-                            ],
-                            'icon' => asset('img/icons/flag.png'),
-                            ],
-                            [
-                            'title' => ['en' => 'Mission', 'ar' => 'الرسالة'],
-                            'description' => [
-                            'en' => 'The exhibition aims to empower
-                            individuals and organizations, enhance
-                            innovation, and build strategic
-                            partnerships that contribute to developing
-                            business environments in alignment
-                            with Saudi Vision 2030.',
-                            'ar' => 'يهـــدف المعـــرض إلى تمكيـــن الأفـــراد والمنظمات،
-                            وتعزيز الابتكار، وبناء شراكات استراتيجية تسهم في
-                            تطــــــوير بيئـــــــات الأعمـــــــال بمـــا يـــــــواكب رؤيـــــــة
-                            المملكة .203',
-                            ],
-                            'icon' => asset('img/icons/message.png'),
-                            ],
-                            ];
-                            @endphp
-                            @foreach($goals as $goal)
-                            @php
-                            $goalTitle = $aboutTranslate(data_get($goal, 'title'), '');
-                            $goalDesc = $aboutTranslate(data_get($goal, 'description'), '');
-                            $goalIcon = data_get($goal, 'icon');
-                            $goalIconUrl = $goalIcon
-                            ? (\App\Models\LandingSection::mediaUrl($goalIcon) ?? $goalIcon)
-                            : asset('img/icons/star.png');
-                            $goalIconAlt = $goalTitle['text'] ? ($goalTitle['text'].' icon') : __('Goal Icon');
-                            @endphp
                             <div class="goal-card" data-animate>
                                 <div class="goal-icon">
-                                    <img src="{{ $goalIconUrl }}" alt="{{ e($goalIconAlt) }}" style="height: 40px;">
+                                    <img src="{{ asset('img/icons/mission.png') }}" alt="flag Icon" style="height: 40px;">
                                 </div>
                                 <div>
-                                    <h3 class="goal-title" data-en="{{ e($goalTitle['en']) }}"
-                                        data-ar="{{ e($goalTitle['ar']) }}">{{ $goalTitle['text'] }}</h3>
-                                    <p class="goal-desc" data-en="{{ e($goalDesc['en']) }}"
-                                        data-ar="{{ e($goalDesc['ar']) }}">{{ $goalDesc['text'] }}</p>
+                                    <h3 class="goal-title" data-en="Mission" data-ar="المهمة">Mission</h3>
+                                    <p class="goal-desc" data-en="{{ __('With distinction and uniqueness, the IEC Trade Exhibition returns in its third edition under the theme IEC360°, continuing its journey as an interactive platform that brings together innovation, development, and connection in an exceptional experience that unites ambitious minds and leaders from various sectors under one roof') }}" data-ar="{{ __('بكل تفرد وتميز، يعود معرض IEC في نسخته الثالثة تحت عنوان 360IEC° ليواصل مسيرته كمنصة تفاعلية شاملة تجمع بين الابتكار، والتطوير، والتواصل في تجربة استثنائية توحد العقول الطموحة ورواد القطاعات المختلفة تحت سقف واحد') }}">
+                                        {{ __('With distinction and uniqueness, the IEC Trade Exhibition returns in its third edition under the theme IEC360°, continuing its journey as an interactive platform that brings together innovation, development, and connection in an exceptional experience that unites ambitious minds and leaders from various sectors under one roof') }}
+                                    </p>
                                 </div>
                             </div>
-                            @endforeach
+                            <div class="goal-card" data-animate>
+                                <div class="goal-icon">
+                                    <img src="{{ asset('img/icons/goal.png') }}" alt="flag Icon" style="height: 40px;">
+                                </div>
+                                <div>
+                                    <h3 class="goal-title" data-en="Objectives" data-ar="الأهداف">Objectives</h3>
+                                    <p class="goal-desc" data-en="{{ __('With distinction and uniqueness, the IEC Trade Exhibition returns in its third edition under the theme IEC360°, continuing its journey as an interactive platform that brings together innovation, development, and connection in an exceptional experience that unites ambitious minds and leaders from various sectors under one roof') }}" data-ar="{{ __('يهدف المعرض إلى إبراز خبرات الأيكونز والتواصل مع جمهـــور متخصص لخلق فرص تعـــاون ومعرفة تدعم ّ نمـــو الأعمال، مـــع توفير مســـاحة تمكن الشـــركات الناشئة من بناء شراكات وعلاقات وتطوير مشاريعها') }}">
+                                        {{ __('With distinction and uniqueness, the IEC Trade Exhibition returns in its third edition under the theme IEC360°, continuing its journey as an interactive platform that brings together innovation, development, and connection in an exceptional experience that unites ambitious minds and leaders from various sectors under one roof') }}
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="goal-card" data-animate>
+                                <div class="goal-icon">
+                                    <img src="{{ asset('img/icons/message.png') }}" alt="flag Icon" style="height: 40px;">
+                                </div>
+                                <div>
+                                    <h3 class="goal-title" data-en="Vision" data-ar="الرسالة">Vision</h3>
+                                    <p class="goal-desc" data-en="{{ __('The exhibition aims to empower individuals and organizations, enhance innovation, and build strategic partnerships that contribute to developing business environments in alignment with Saudi Vision 2030') }}" data-ar="{{ __('يهـــدف المعـــرض إلى تمكيـــن الأفـــراد والمنظمات، وتعزيز الابتكار، وبناء شراكات استراتيجية تسهم في تطــــــوير بيئـــــــات الأعمـــــــال بمـــا يـــــــواكب رؤيـــــــة المملكة .203') }}">
+                                        {{ __('The exhibition aims to empower individuals and organizations, enhance innovation, and build strategic partnerships that contribute to developing business environments in alignment with Saudi Vision 2030') }}
+                                    </p>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -4334,7 +4279,7 @@
 
     let hallSelectionTargetId = null;
 
-    // TODO: remove this after uploading
+    // TODO: open hall design in a relative path after uploading to the server
     function openHallDesign(targetInputId) {
         hallSelectionTargetId = targetInputId;
         const localeSuffix = currentLocale ? `?locale=${encodeURIComponent(currentLocale)}` : '';
