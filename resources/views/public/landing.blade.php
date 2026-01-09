@@ -1,6 +1,5 @@
 ﻿<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="{{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}">
-
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -1282,7 +1281,7 @@
     .goal-title-row {
         display: flex;
         align-items: center;
-        /* gap: 0.75rem; */
+         gap: 0.75rem;
         margin-bottom: 0.5rem;
         justify-content: center;
     }
@@ -2372,21 +2371,18 @@
     }
     </style>
 </head>
-
 <body class="{{ app()->getLocale() === 'ar' ? 'locale-ar' : 'locale-en' }}">
     @php
 $organizers = \App\Models\Organizer::query()
     ->where('is_active', true)
     ->orderBy('display_order')
     ->get();
-
     if ($organizers->isEmpty()) {
     $organizers = collect(config('demo.organizers'))
     ->map(function ($data, $id) {
     $model = new \App\Models\Organizer($data);
     $model->id = $id;
     $model->exists = false;
-
     return $model;
     });
     }
@@ -2407,7 +2403,6 @@ $organizers = \App\Models\Organizer::query()
                     <a href="#organizers" class="nav-link" data-en="Owned by" data-ar="الشركة المالكة">Owned by</a>
                     <a href="#contact" class="nav-link" data-en="Contact" data-ar="تواصل معنا">Contact</a>
                 </nav>
-
                 <div class="header-right">
                     <div class="header-actions">
                         <button class="lang-switch" onclick="toggleLocale()">
@@ -2429,7 +2424,6 @@ $organizers = \App\Models\Organizer::query()
                     </a>
                 </div>
             </div>
-
             <nav class="mobile-nav" id="mobile-nav">
                 <a href="#" class="mobile-nav-link" data-en="Home" data-ar="الرئيسية">Home</a>
                 <a href="{{ route('public.ed', ['locale' => app()->getLocale()]) }}" class="mobile-nav-link"
@@ -2440,11 +2434,9 @@ $organizers = \App\Models\Organizer::query()
                 <a href="#participants" class="mobile-nav-link" data-en="Icons" data-ar="الأيكونز">Icons</a>
                 <a href="#organizers" class="mobile-nav-link" data-en="Owned by" data-ar="الشركة المالكة">Owned by</a>
                 <a href="#contact" class="mobile-nav-link" data-en="Contact" data-ar="تواصل معنا">Contact</a>
-
             </nav>
         </div>
     </header>
-
     <main>
         <!-- Hero Section -->
         @php
@@ -2454,7 +2446,6 @@ $organizers = \App\Models\Organizer::query()
         $heroStats = $heroSection['stats'] ?? [];
         $activeLocale = app()->getLocale();
         @endphp
-
         <section class="hero" id="hero">
             <div class="container">
                 <div class="hero-grid">
@@ -2470,7 +2461,6 @@ $organizers = \App\Models\Organizer::query()
                 </div>
             </div>
         </section>
-
         <section class="event-info" id="event-info">
             <div class="container">
                 <div class="event-info-grid">
@@ -2544,7 +2534,6 @@ $organizers = \App\Models\Organizer::query()
                 </div>
             </div>
         </section>
-
         <!-- Registration Section -->
         @php
         $registrationLocale = app()->getLocale();
@@ -3495,7 +3484,7 @@ $organizers = \App\Models\Organizer::query()
                                         </div>
                                         <h3 class="goal-title" data-en="Mission" data-ar="المهمة">Mission</h3>
                                     </div>
-                                    <p class="goal-desc" data-en="{{ __('With distinction and uniqueness, the IEC Trade Exhibition returns in its third edition under the theme IEC 360&deg;, continuing its journey as an interactive platform that brings together innovation, development, and connection in an exceptional experience that unites ambitious minds and leaders from various sectors under one roof') }}" data-ar="{{ __('بتميز وتفرّد، يعود معرض IEC التجاري في نسخته الثالثة تحت شعار IEC 360&deg;، مواصلاً رحلته كمنصة تفاعلية تجمع بين الابتكار والتطوير والتواصل في تجربة استثنائية توحّد العقول الطموحة وقادة القطاعات المختلفة تحت سقف واحد') }}">
+                                    <p class="goal-desc" data-en="{{ __('With distinction and uniqueness, the IEC Trade Exhibition returns in its third edition under the theme IEC 360&deg;, continuing its journey as an interactive platform that brings together innovation, development, and connection in an exceptional experience that unites ambitious minds and leaders from various sectors under one roof') }}" data-ar="{{ __('بتميز وتفرّد، يعود معرض IEC التجاري في نسخته الثالثة تحت شعار IEC 360، مواصلاً رحلته كمنصة تفاعلية تجمع بين الابتكار والتطوير والتواصل في تجربة استثنائية توحّد العقول الطموحة وقادة القطاعات المختلفة تحت سقف واحد') }}">
                                         {{ __('With distinction and uniqueness, the IEC Trade Exhibition returns in its third edition under the theme IEC 360&deg;, continuing its journey as an interactive platform that brings together innovation, development, and connection in an exceptional experience that unites ambitious minds and leaders from various sectors under one roof') }}
                                     </p>
                                 </div>
@@ -3508,8 +3497,8 @@ $organizers = \App\Models\Organizer::query()
                                         </div>
                                         <h3 class="goal-title" data-en="Objectives" data-ar="الأهداف">Objectives</h3>
                                     </div>
-                                    <p class="goal-desc" data-en="{{ __('With distinction and uniqueness, the IEC Trade Exhibition returns in its third edition under the theme IEC 360&deg;, continuing its journey as an interactive platform that brings together innovation, development, and connection in an exceptional experience that unites ambitious minds and leaders from various sectors under one roof') }}" data-ar="{{ __('بتميز وتفرّد، يعود معرض IEC التجاري في نسخته الثالثة تحت شعار IEC 360&deg;، مواصلاً رحلته كمنصة تفاعلية تجمع بين الابتكار والتطوير والتواصل في تجربة استثنائية توحّد العقول الطموحة وقادة القطاعات المختلفة تحت سقف واحد') }}">
-                                        {{ __('With distinction and uniqueness, the IEC Trade Exhibition returns in its third edition under the theme IEC 360&deg;, continuing its journey as an interactive platform that brings together innovation, development, and connection in an exceptional experience that unites ambitious minds and leaders from various sectors under one roof') }}
+                                                    <p class="goal-desc" data-en="{{ __('The exhibition aims to empower individuals and organizations, enhance innovation, and build strategic partnerships that contribute to developing business environments in alignment with Saudi Vision 2030') }}" data-ar="{{ __('يهدف المعرض إلى تمكين الأفراد والمنظمات، وتعزيز الابتكار، وبناء شراكات استراتيجية تسهم في تطوير بيئات الأعمال بما يتوافق مع رؤية السعودية 2030') }}">
+                                        {{ __('The exhibition aims to empower individuals and organizations, enhance innovation, and build strategic partnerships that contribute to developing business environments in alignment with Saudi Vision 2030') }}
                                     </p>
                                 </div>
                             </div>
@@ -3519,10 +3508,12 @@ $organizers = \App\Models\Organizer::query()
                                         <div class="goal-icon">
                                             <img src="{{ asset('img/icons/message.png') }}" alt="flag Icon" style="height: 40px;">
                                         </div>
-                                        <h3 class="goal-title" data-en="Vision" data-ar="الرؤية">Vision</h3>
+                                        <h3 class="goal-title" data-en="Vision" data-ar="الرسالة">Vision</h3>
                                     </div>
-                                    <p class="goal-desc" data-en="{{ __('The exhibition aims to empower individuals and organizations, enhance innovation, and build strategic partnerships that contribute to developing business environments in alignment with Saudi Vision 2030') }}" data-ar="{{ __('يهدف المعرض إلى تمكين الأفراد والمنظمات، وتعزيز الابتكار، وبناء شراكات استراتيجية تسهم في تطوير بيئات الأعمال بما يتوافق مع رؤية السعودية 2030') }}">
-                                        {{ __('The exhibition aims to empower individuals and organizations, enhance innovation, and build strategic partnerships that contribute to developing business environments in alignment with Saudi Vision 2030') }}
+                                    <p class="goal-desc" data-en="{{ __('To combine international and local stores, as well as all e-commerce services, provide perceptive insight for both participants and visitors on all aspects allowing them to make the most of this event. As well as deliver a unique opportunity to familiarize with various companies and the projects and services they provide, how to manage these features, and learn about the benefits of e-commerce.
+') }}" data-ar="{{ __('ان نجمع ما بين المتاجر العالمية والمحلية وكل الخدمات المرتبطة في مجال التجارة الإلكترونية، ليعطيكم الرؤية المثالية لكلا الأطراف من الجهات المشاركة والزوار من جميع الأبعاد والزوايا والاستفادة القصوى من هذا الحدث.') }}">
+                                        {{ __(' To combine international and local stores, as well as all e-commerce services, provide perceptive insight for both participants and visitors on all aspects allowing them to make the most of this event. As well as deliver a unique opportunity to familiarize with various companies and the projects and services they provide, how to manage these features, and learn about the benefits of e-commerce.
+') }}
                                     </p>
                                 </div>
                             </div>
