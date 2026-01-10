@@ -2624,7 +2624,7 @@
                                 </div>
                             </div>
                             <div class="event-badge" data-animate>
-                                <img src="{{ asset('img/theArena.png') }}"
+                                <img src="{{ asset('img/TheArena.png') }}"
                                     alt="The Arena" style="width: 70px; height: auto;">
                                 <div class="hero-location" role="button" tabindex="0"
                                     data-scroll-target="#location-card">
@@ -4358,7 +4358,7 @@ one roof. </p>
                 <div class="location-card" id="location-card">
                     <div class="location-header">
                         <div>
-                            <div class="location-title"><img src="{{ asset('img/theArena.png') }}"
+                            <div class="location-title"><img src="{{ asset('img/TheArena.png') }}"
                                     alt="" style="text-align:center; height: 200px;" />
                             </div>
                             <!-- <p class="location-address" data-en="{{ e($locationAddressBlock['en']) }}" data-ar="{{ e($locationAddressBlock['ar']) }}">{{ $locationAddressBlock['text'] }}</p> -->
