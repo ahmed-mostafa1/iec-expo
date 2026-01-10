@@ -481,10 +481,12 @@
         }
 
         .event-badge {
-            display: grid;
-            grid-template-columns: auto 1fr;
+            display: flex;
+            flex-direction: column;
             gap: 0.75rem;
             align-items: center;
+            justify-content: center;
+            text-align: center;
             padding: 0.9rem 1rem;
             border: 1px solid rgba(255, 255, 255, 0.08);
             border-radius: 12px;
@@ -521,7 +523,6 @@
         }
 
         .event-badge.event-badge-license {
-            grid-template-columns: 1fr auto;
             /* background: #050505; */
             /* border-color: rgba(255, 255, 255, 0.12); */
             /* padding: 1.25rem 1.5rem; */
@@ -540,7 +541,7 @@
         }
 
         .event-badge-license .license-mark {
-            width: 110px;
+            width: 100px;
             height: auto;
         }
 
@@ -2484,7 +2485,7 @@
                             of innovation and networking await Join us</h2>
                         <div class="event-badges">
                             <div class="event-badge" data-animate>
-                                <i class="fa-solid fa-calendar-days" aria-hidden="true" style="color: white;"></i>
+                                <i class="fa-solid fa-calendar-days" aria-hidden="true" style="color: white; font-size: 3rem;"></i>
                                 <div>
                                     <div class="event-badge-meta">
                                         <span class="meta-line" data-en="Start 24-9-2026"
@@ -2499,17 +2500,15 @@
                                 </div>
                             </div>
                             <div class="event-badge event-badge-license" data-animate>
-                                <div>
-                                    <div class="event-badge-title" data-en="License" data-ar="الترخيص">License
-                                    </div>
-                                    <div class="event-badge-meta">26/165</div>
-                                </div>
                                 <img class="license-mark" src="{{ asset('img/authority.png') }}"
                                     alt="Saudi Government License">
+                                <div>
+                                    <div class="event-badge-title" data-en="License" data-ar="الترخيص">License 26/165</div>
+                                </div>
                             </div>
                             <div class="event-badge" data-animate>
-                                <div class="event-badge-meta"><img src="{{ asset('img/theArena.png') }}"
-                                        alt="The Arena" style="width: 60px; height: auto;"></div>
+                                <img src="{{ asset('img/theArena.png') }}"
+                                    alt="The Arena" style="width: 70px; height: auto;">
                                 <div class="hero-location" role="button" tabindex="0"
                                     data-scroll-target="#location-card">
                                     <div class="event-badge-title" data-en="Location" data-ar="موقع الحدث">Event
