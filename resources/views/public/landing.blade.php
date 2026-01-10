@@ -1092,7 +1092,7 @@
         }
 
         .about-img img {
-            max-width: 70%;
+            max-width: 90%;
             height: auto;
             display: block;
         }
