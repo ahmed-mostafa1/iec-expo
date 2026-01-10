@@ -97,12 +97,8 @@
         body {
             --font-base: var(--font-en);
             font-family: var(--font-base);
-            background-color: rgb(var(--background));
-            background-image: url("{{ asset('img/background.PNG') }}");
-            background-repeat: no-repeat;
-            background-size: cover;
+            background: linear-gradient(to bottom, #000000 0%, #0f0520 50%, #1a0a2e 100%);
             background-attachment: fixed;
-            background-position: center top;
             color: rgb(var(--foreground));
             line-height: 1.6;
         }
@@ -452,7 +448,7 @@
             color: #fff;
             /* background: linear-gradient(160deg, rgba(152, 3, 189, 0.15), rgba(0, 0, 0, 0.85)); */
             /* box-shadow: 0 20px 50px -28px rgba(0, 0, 0, 0.75); */
-            /* border: 1px solid rgba(152, 3, 189, 0.35); */
+            border: 1px solid rgba(152, 3, 189, 0.35);
             border-radius: 16px;
             padding: 1.5rem;
             position: relative;
@@ -475,7 +471,7 @@
 
         .event-info-title {
             font-size: 1.5rem;
-            text-align:center;
+            text-align: center;
             font-weight: 800;
             line-height: 1.25;
         }
@@ -2524,10 +2520,10 @@
                                 </div>
                             </div>
                         </div>
-                          <h3 class="event-info-title" data-en="Three days of innovation and networking await Join us"
+                    </div>
+                    <h3 class="event-info-title" data-en="Three days of innovation and networking await Join us"
                         data-ar="ثلاثة أيام من الابتكار والتواصل بانتظارك. احفظ الموعد واستعد للانضمام">Three days
                         of innovation and networking await Join us</h3>
-                    </div>
                     <div class="countdown-card" data-animate>
                         <div class="countdown-header">
                             <span class="countdown-label" data-en="Countdown to opening" data-ar="يبدأ خلال">Starts
