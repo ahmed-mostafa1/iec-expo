@@ -1378,7 +1378,7 @@
 
     .sponsor-featured-card {
         width: 100%;
-        background: transparent;
+        background: #0b021a45;
         border: 1px solid rgb(var(--border) / 0.6);
         border-radius: var(--radius);
         padding: 0.5rem;
