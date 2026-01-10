@@ -1499,7 +1499,7 @@
 
         .sponsor-featured-card {
             width: 100%;
-            background: #fff;
+            background: #000;
             border: 1px solid rgb(var(--border) / 0.6);
             border-radius: var(--radius);
             padding: 0.5rem;
