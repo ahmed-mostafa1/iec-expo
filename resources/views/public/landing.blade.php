@@ -1499,7 +1499,7 @@
 
         .sponsor-featured-card {
             width: 100%;
-            background: #0b021a45;
+            background: #fff;
             border: 1px solid rgb(var(--border) / 0.6);
             border-radius: var(--radius);
             padding: 0.5rem;
@@ -4103,10 +4103,6 @@ one roof. </p>
                 </div>
             </div>
         </section>
-
-                <div class="row-logo" id="guest-row-logo" style="order: 5;">
-            <img src="{{ asset('img/IEC-logo.png') }}" alt="IEC Logo" style="text-align:center">
-        </div>
 
         <section class="participants" id="participants">
             <div class="row-logo" id="guest-row-logo" style="order: 5;">
