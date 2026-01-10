@@ -48,8 +48,8 @@
             --button-hover-bg: rgba(96, 36, 193, 1);
             --button-text: #ffffff;
             --hover-accent: #ffffff;
-            --font-en: 'Poppins', sans-serif;
-            --font-ar: 'Somar', sans-serif;
+            --font-en: 'Poppins', 'Work Sans', sans-serif;
+            --font-ar: 'Cairo', 'Noto Sans Arabic', sans-serif;
         }
 
 
@@ -105,6 +105,102 @@
 
         body.locale-ar {
             --font-base: var(--font-ar);
+        }
+
+        body.is-loading {
+            overflow: hidden;
+        }
+
+        .page-loader {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1.5rem;
+            background: rgba(0, 0, 0, 0.92);
+            z-index: 9999;
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+        }
+
+        .page-loader .loader-ring {
+            width: 78px;
+            height: 78px;
+            border-radius: 50%;
+            border: 3px solid rgba(255, 255, 255, 0.18);
+            border-top-color: #9803bd;
+            border-right-color: rgba(152, 3, 189, 0.6);
+            animation: loaderSpin 1s linear infinite;
+            box-shadow: 0 0 30px rgba(152, 3, 189, 0.35);
+        }
+
+        .page-loader .loader-dots {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .page-loader .loader-dots span {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #fff;
+            opacity: 0.7;
+            animation: loaderBounce 0.9s ease-in-out infinite;
+        }
+
+        .page-loader .loader-dots span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .page-loader .loader-dots span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        .page-loader .loader-text {
+            font-weight: 600;
+            letter-spacing: 0.2em;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        body:not(.is-loading) .page-loader {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .page-content {
+            opacity: 0;
+            transform: translateY(18px);
+            filter: blur(2px);
+            transition: opacity 0.8s ease, transform 0.8s ease, filter 0.8s ease;
+        }
+
+        body:not(.is-loading) .page-content {
+            opacity: 1;
+            transform: translateY(0);
+            filter: blur(0);
+        }
+
+        @keyframes loaderSpin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        @keyframes loaderBounce {
+            0%,
+            100% {
+                transform: translateY(0);
+            }
+
+            50% {
+                transform: translateY(-8px);
+            }
         }
 
         html {
@@ -474,6 +570,7 @@
             text-align: center;
             font-weight: 800;
             line-height: 1.25;
+            font-family: var(--font-base);
         }
 
         .event-info-subtitle {
@@ -2073,11 +2170,17 @@
         /* Statistics Section */
         .stats-section {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            grid-template-columns: repeat(5, minmax(0, 1fr));
             margin-top: 4rem;
             gap: 30px;
             padding: 20px;
             margin-bottom: 5px;
+        }
+
+        @media (max-width: 768px) {
+            .stats-section {
+                grid-template-columns: 1fr;
+            }
         }
 
         .stat-item {
@@ -2395,7 +2498,17 @@
     </style>
 </head>
 
-<body class="{{ app()->getLocale() === 'ar' ? 'locale-ar' : 'locale-en' }}">
+<body class="{{ app()->getLocale() === 'ar' ? 'locale-ar' : 'locale-en' }} is-loading">
+    <div class="page-loader" aria-hidden="true">
+        <div class="loader-ring"></div>
+        <div class="loader-dots">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="loader-text">Loading</div>
+    </div>
+    <div class="page-content">
     @php
         $organizers = \App\Models\Organizer::query()->where('is_active', true)->orderBy('display_order')->get();
         if ($organizers->isEmpty()) {
@@ -4292,6 +4405,7 @@ one roof. </p>
         </svg>
     </button>
 
+    </div>
     <script>
         // Locale Management
         let currentLocale = @json($locale);
@@ -5007,6 +5121,10 @@ one roof. </p>
                 }
             });
         }
+
+        window.addEventListener('load', () => {
+            document.body.classList.remove('is-loading');
+        });
 
         function scrollToTop() {
             window.scrollTo({
