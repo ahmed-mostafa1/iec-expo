@@ -970,8 +970,23 @@
         margin: 0 0 1rem;
     }
 
+    
     .row-logo img {
         max-width: 200px;
+        height: auto;
+        display: block;
+    }
+   
+    .about-img {
+        grid-column: 1 / -1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 0 1rem;
+    }
+
+    .about-img img {
+        max-width: 70%;
         height: auto;
         display: block;
     }
@@ -2058,8 +2073,8 @@
     }
 
     .stat-item {
-        background: #dadadaff;
-        padding: 20px 20px;
+        background: #000;
+        padding: 10px 10px;
         border-radius: 20px;
         text-align: center;
         box-shadow: 0 10px 40px rgba(0, 0, 0, 0.08);
@@ -2134,7 +2149,7 @@
     .stat-progress {
         width: 100%;
         height: 6px;
-        background: #f0f0f0;
+        background: #000;
         border-radius: 3px;
         overflow: hidden;
     }
@@ -2398,8 +2413,8 @@ $organizers = \App\Models\Organizer::query()
                         data-en="Previous Editions of IEC" data-ar="النسخ السابقة من المعرض">Previous Editions of IEC</a>
                     <a href="#register" class="btn-primary nav-link" data-en="Register" data-ar="التسجيل">Register</a>
                     <a href="#about" class="nav-link" data-en="About" data-ar="عن المعرض">About</a>
-                    <a href="#sponsors" class="nav-link" data-en="Sponsors" data-ar="الرعاة"">Sponsors</a>
-                    <a href="#participants" class="nav-link" data-en="Icons" data-ar="الأيكونز">Icons</a>
+                    <a href="#sponsors" class="nav-link" data-en="Sponsor" data-ar="الراعي">Sponsor</a>
+                    <a href="#participants" class="nav-link" data-en="Icons" data-ar="الأيكون">Icon</a>
                     <a href="#organizers" class="nav-link" data-en="Owned by" data-ar="الشركة المالكة">Owned by</a>
                     <a href="#contact" class="nav-link" data-en="Contact" data-ar="تواصل معنا">Contact</a>
                 </nav>
@@ -2430,8 +2445,8 @@ $organizers = \App\Models\Organizer::query()
                     data-en="Previous Editions of IEC" data-ar="النسخ السابقة من المعرض">Previous Editions of IEC</a>
                 <a href="#register" class="mobile-nav-link" data-en="Register" data-ar="التسجيل">Register</a>
                 <a href="#about" class="mobile-nav-link" data-en="About" data-ar="عن المعرض">About</a>
-                <a href="#sponsors" class="mobile-nav-link" data-en="Sponsors" data-ar="الرعاة"">Sponsors</a>
-                <a href="#participants" class="mobile-nav-link" data-en="Icons" data-ar="الأيكونز">Icons</a>
+                <a href="#sponsors" class="mobile-nav-link" data-en="Sponsor" data-ar="الراعي">Sponsor</a>
+                <a href="#participants" class="mobile-nav-link" data-en="Icon" data-ar="الأيكون">Icon</a>
                 <a href="#organizers" class="mobile-nav-link" data-en="Owned by" data-ar="الشركة المالكة">Owned by</a>
                 <a href="#contact" class="mobile-nav-link" data-en="Contact" data-ar="تواصل معنا">Contact</a>
             </nav>
@@ -2465,15 +2480,11 @@ $organizers = \App\Models\Organizer::query()
             <div class="container">
                 <div class="event-info-grid">
                     <div class="event-info-copy" data-animate>
-                        <h2 class="event-info-title" data-en="Mark your calendar for IEC 360&deg; Expo"
-                            data-ar="حدد موعدك لـ IEC 360° Expo">Mark your calendar for IEC 360&deg; Expo</h2>
-                        <p class="event-info-subtitle"
-                            data-en="Three days of innovation and networking await. Save the date and get ready to join us in person."
-                            data-ar="ثلاثة أيام من الابتكار والتواصل بانتظارك. احفظ الموعد واستعد للانضمام.">Three days
-                            of innovation and networking await. Save the date and get ready to join us in person.</p>
+                        <h2 class="event-info-title" data-en="Three days of innovation and networking await Join us"
+                            data-ar="ثلاثة أيام من الابتكار والتواصل بانتظارك. احفظ الموعد واستعد للانضمام">Three days of innovation and networking await Join us</h2>
                         <div class="event-badges">
                             <div class="event-badge" data-animate>
-                                <i class="fa-solid fa-calendar-days" aria-hidden="true"></i>
+                                <i class="fa-solid fa-calendar-days" aria-hidden="true" style="color: white;"></i>
                                 <div>
                                     <div class="event-badge-meta">
                                         <span class="meta-line" data-en="Start 24-9-2026" data-ar="يبدأ
@@ -2487,18 +2498,17 @@ $organizers = \App\Models\Organizer::query()
                             </div>
                             <div class="event-badge event-badge-license" data-animate>
                                 <div>
-                                    <div class="event-badge-title" data-en="License No." data-ar="الترخيص">License No.
+                                    <div class="event-badge-title" data-en="License" data-ar="الترخيص">License
                                     </div>
                                     <div class="event-badge-meta">26/165</div>
                                 </div>
                                 <img class="license-mark" src="{{ asset('img/authority.png') }}" alt="Saudi Government License">
                             </div>
                             <div class="event-badge" data-animate>
-                                <i class="fa-solid fa-location-dot" aria-hidden="true"></i>
+                                <div class="event-badge-meta"><img src="{{ asset('img/theArena.png') }}" alt="The Arena" style="width: 60px; height: auto;"></div>
                                 <div class="hero-location" role="button" tabindex="0"
                                     data-scroll-target="#location-card">
                                     <div class="event-badge-title" data-en="Location" data-ar="موقع الحدث">Event Location</div>
-                                    <div class="event-badge-meta" data-en="The Arena Riyadh" data-ar="ذا أرينا الرياض">The Arena Riyadh</div>
                                 </div>
                             </div>
                         </div>
@@ -2665,9 +2675,9 @@ $organizers = \App\Models\Organizer::query()
                             </div>
                             <h3 class="role-title" data-en="{{ e($exhibitorCardTitle['en']) }}"
                                 data-ar="{{ e($exhibitorCardTitle['ar']) }}">{{ $exhibitorCardTitle['text'] }}</h3>
-                            <p class="role-desc" data-en="{{ e($exhibitorCardDescription['en']) }}"
+                            <!-- <p class="role-desc" data-en="{{ e($exhibitorCardDescription['en']) }}"
                                 data-ar="{{ e($exhibitorCardDescription['ar']) }}">
-                                {{ $exhibitorCardDescription['text'] }}</p>
+                                {{ $exhibitorCardDescription['text'] }}</p> -->
                             <div class="role-cta" id="exhibitor-cta">
                                 <span data-en="Click" data-ar="Click">Click</span>
                                 <svg class="icon icon-sm" viewBox="0 0 24 24">
@@ -2893,8 +2903,8 @@ $organizers = \App\Models\Organizer::query()
                             </div>
                             <h3 class="role-title" data-en="{{ e($iconCardTitle['en']) }}"
                                 data-ar="{{ e($iconCardTitle['ar']) }}">{{ $iconCardTitle['text'] }}</h3>
-                            <p class="role-desc" data-en="{{ e($iconCardDescription['en']) }}"
-                                data-ar="{{ e($iconCardDescription['ar']) }}">{{ $iconCardDescription['text'] }}</p>
+                            <!-- <p class="role-desc" data-en="{{ e($iconCardDescription['en']) }}"
+                                data-ar="{{ e($iconCardDescription['ar']) }}">{{ $iconCardDescription['text'] }}</p> -->
                             <div class="role-cta" id="icon-cta">
                                 <span data-en="Click" data-ar="Click">Click</span>
                                 <svg class="icon icon-sm" viewBox="0 0 24 24">
@@ -3145,7 +3155,7 @@ $organizers = \App\Models\Organizer::query()
                         </div>
 
                         <div class="row-logo" id="guest-row-logo">
-                            <img src="{{ asset('img/IEC-logo.png') }}" alt="IEC Logo">
+                           <img src="{{ asset('img/IEC-logo.png') }}" alt="IEC Logo" style="text-align:center">
                         </div>
 
                         <div class="role-card guest-card" id="visitor-card" onclick="selectRole('visitor')">
@@ -3157,8 +3167,8 @@ $organizers = \App\Models\Organizer::query()
                             </div>
                             <h3 class="role-title" data-en="{{ e($guestCardTitle['en']) }}"
                                 data-ar="{{ e($guestCardTitle['ar']) }}">{{ $guestCardTitle['text'] }}</h3>
-                            <p class="role-desc" data-en="{{ e($guestCardDescription['en']) }}"
-                                data-ar="{{ e($guestCardDescription['ar']) }}">{{ $guestCardDescription['text'] }}</p>
+                            <!-- <p class="role-desc" data-en="{{ e($guestCardDescription['en']) }}"
+                                data-ar="{{ e($guestCardDescription['ar']) }}">{{ $guestCardDescription['text'] }}</p> -->
                             <div class="role-cta" id="visitor-cta">
                                 <span data-en="Click" data-ar="Click">Click</span>
                                 <svg class="icon icon-sm" viewBox="0 0 24 24">
@@ -3454,7 +3464,9 @@ $organizers = \App\Models\Organizer::query()
             </div>
         </div>
 
-        <!-- About Section -->
+<div class="row-logo" id="guest-row-logo" style="order: 5;">
+        <img src="{{ asset('img/IEC-logo.png') }}" alt="IEC Logo" style="text-align:center"> </div>
+            <!-- About Section -->
         @php
         $aboutLocale = app()->getLocale();
         $aboutTranslate = function ($node, $fallback = '') use ($aboutLocale) {
@@ -3471,8 +3483,11 @@ $organizers = \App\Models\Organizer::query()
 
         <section class="about" id="about">
             <div class="container">
-                <h2 class="section-title" data-en="About IEC 360&deg;" data-ar="عن معرض IEC 360&deg;"
-                    style="margin-bottom:20px; color:#fff; text-align: center;">About IEC 360&deg;</h2>
+                <!-- <h2 class="section-title" data-en="About IEC 360&deg;" data-ar="عن معرض IEC 360&deg;"
+                    style="margin-bottom:20px; color:#fff; text-align: center;">About IEC 360&deg;</h2> -->
+                    <!-- <img src="{{ asset('img/about.png') }}" alt="About Us"> -->
+                    <div class="row-logo about-img">
+        <img src="{{ asset('img/about.png') }}" alt="About Us" style="text-align:center"> </div>
                 <div class="about-grid">
                     <div class="about-col" data-animate>
                         <div class="goals-list">
@@ -3526,6 +3541,8 @@ $organizers = \App\Models\Organizer::query()
 
 
         <!-- Sponsors Section -->
+<div class="row-logo" id="guest-row-logo" style="order: 5;">
+        <img src="{{ asset('img/IEC-logo.png') }}" alt="IEC Logo" style="text-align:center"> </div>
             <section class="sponsors" id="sponsors">
                 <div class="container">
                     <div class="section-header" data-animate>
@@ -3672,8 +3689,11 @@ $organizers = \App\Models\Organizer::query()
                     </div>
                 </div>
             </section>
+
+            <section class="participants" id="participants">
+<div class="row-logo" id="guest-row-logo" style="order: 5;">
+        <img src="{{ asset('img/IEC-logo.png') }}" alt="IEC Logo" style="text-align:center"> </div>
             <!-- Participants Section -->
-             <section class="participants" id="participants">
                 <div class="container">
                     <div class="section-header" data-animate>
                         <h2 class="section-title" data-en="ICONS" data-ar="الأيكونز">ICONS</h2>
@@ -3703,6 +3723,10 @@ $organizers = \App\Models\Organizer::query()
                     </div>
                 </div>
             </section>
+
+<div class="row-logo" id="guest-row-logo" style="order: 5;">
+        <img src="{{ asset('img/IEC-logo.png') }}" alt="IEC Logo" style="text-align:center"> </div>
+
             <!-- Organizers Section -->
             <section class="organizers" id="organizers">
                 <div class="container">
@@ -3759,7 +3783,8 @@ $organizers = \App\Models\Organizer::query()
                 </div>
             </section>
         
-
+        <div class="row-logo" id="guest-row-logo" style="order: 5;">
+        <img src="{{ asset('img/IEC-logo.png') }}" alt="IEC Logo" style="text-align:center"> </div>
         <!-- Contact Section -->
         @php
         $contactLocale = app()->getLocale();
@@ -3783,7 +3808,7 @@ $organizers = \App\Models\Organizer::query()
         'https://www.google.com/maps/place/The+Arena+Riyadh+Venue+for+Exhibitions+%7C+%D9%85%D8%B1%D9%83%D8%B2+%D8%B0%D9%8A+%D8%A3%D8%B1%D9%8A%D9%86%D8%A7+%D8%A7%D9%84%D8%B1%D9%8A%D8%A7%D8%B6+%D9%84%D9%84%D9%85%D8%B9%D8%A7%D8%B1%D8%B6+%D9%88%D8%A7%D9%84%D9%81%D8%B9%D8%A7%D9%84%D9%8A%D8%A7%D8%AA%E2%80%AD/@24.7779833,46.7296192,17z/data=!4m14!1m7!3m6!1s0x3e2efde8f1cd0b5d:0x4992b4380d1f29e5!2zVGhlIEFyZW5hIFJpeWFkaCBWZW51ZSBmb3IgRXhoaWJpdGlvbnMgfCDZhdix2YPYsiDYsNmKINij2LHZitmG2Kcg2KfZhNix2YrYp9i2INmE2YTZhdi52KfYsdi2INmI2KfZhNmB2LnYp9mE2YrYp9iq!8m2!3d24.7779833!4d46.7321941!16s%2Fg%2F11rwj51wpq!3m5!1s0x3e2efde8f1cd0b5d:0x4992b4380d1f29e5!8m2!3d24.7779833!4d46.7321941!16s%2Fg%2F11rwj51wpq?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D');
         $locationImageUrl = \App\Models\LandingSection::mediaUrl(data_get($contactSection, 'location_image'));
         @endphp
-
+<!-- Contact Section -->
         <section class="contact" id="contact">
             <div class="container">
                 <div class="section-header" data-animate>
