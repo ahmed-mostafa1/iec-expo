@@ -437,9 +437,12 @@
 
         .event-info-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: 1fr;
+            grid-template-rows: auto auto;
             gap: 1.5rem;
-            align-items: center;
+            align-items: stretch;
+            max-width: 800px;
+            margin: 0 auto;
         }
 
         .event-info-copy {
@@ -447,6 +450,13 @@
             flex-direction: column;
             gap: 1rem;
             color: #fff;
+            /* background: linear-gradient(160deg, rgba(152, 3, 189, 0.15), rgba(0, 0, 0, 0.85)); */
+            /* box-shadow: 0 20px 50px -28px rgba(0, 0, 0, 0.75); */
+            /* border: 1px solid rgba(152, 3, 189, 0.35); */
+            border-radius: 16px;
+            padding: 1.5rem;
+            position: relative;
+            overflow: hidden;
         }
 
         .event-kicker {
@@ -464,7 +474,8 @@
         }
 
         .event-info-title {
-            font-size: 1.9rem;
+            font-size: 1.5rem;
+            text-align:center;
             font-weight: 800;
             line-height: 1.25;
         }
@@ -556,11 +567,11 @@
         }
 
         .countdown-card {
-            background: linear-gradient(160deg, rgba(152, 3, 189, 0.15), rgba(0, 0, 0, 0.85));
+            /* background: linear-gradient(160deg, rgba(152, 3, 189, 0.15), rgba(0, 0, 0, 0.85)); */
+            box-shadow: 0 20px 50px -28px rgba(0, 0, 0, 0.75);
             border: 1px solid rgba(152, 3, 189, 0.35);
             border-radius: 16px;
             padding: 1.5rem;
-            box-shadow: 0 20px 50px -28px rgba(0, 0, 0, 0.75);
             position: relative;
             overflow: hidden;
             color: #fff;
@@ -2480,9 +2491,6 @@
             <div class="container">
                 <div class="event-info-grid">
                     <div class="event-info-copy" data-animate>
-                        <h2 class="event-info-title" data-en="Three days of innovation and networking await Join us"
-                            data-ar="ثلاثة أيام من الابتكار والتواصل بانتظارك. احفظ الموعد واستعد للانضمام">Three days
-                            of innovation and networking await Join us</h2>
                         <div class="event-badges">
                             <div class="event-badge" data-animate>
                                 <i class="fa-solid fa-calendar-days" aria-hidden="true" style="color: white; font-size: 3rem;"></i>
@@ -2516,6 +2524,9 @@
                                 </div>
                             </div>
                         </div>
+                          <h3 class="event-info-title" data-en="Three days of innovation and networking await Join us"
+                        data-ar="ثلاثة أيام من الابتكار والتواصل بانتظارك. احفظ الموعد واستعد للانضمام">Three days
+                        of innovation and networking await Join us</h3>
                     </div>
                     <div class="countdown-card" data-animate>
                         <div class="countdown-header">
@@ -3743,7 +3754,7 @@
             $aboutTitle = $aboutTranslate(data_get($aboutSection, 'title'), __('About us'));
         @endphp
 
-        <section class="about" id="about">
+<section class="about" id="about">
             <div class="container">
                 <!-- <h2 class="section-title" data-en="About IEC 360&deg;" data-ar="عن معرض IEC 360&deg;"
                     style="margin-bottom:20px; color:#fff; text-align: center;">About IEC 360&deg;</h2> -->
