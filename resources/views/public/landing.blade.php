@@ -2628,46 +2628,9 @@
             <section class="event-info" id="event-info">
                 <div class="container">
                     <div class="event-info-grid">
-                        <div class="event-info-copy" data-animate>
-                            <div class="event-badges">
-                                <div class="event-badge" data-animate>
-                                    <img src="{{ asset('img/svg/calendar.svg') }}" alt="Calendar" style="width: 4rem;">
-                                    <div>
-                                        <div class="event-badge-meta">
-                                            <span class="meta-line" data-en="Start 24-9-2026" data-ar="يبدأ
-                                            24-9-2026">Start
-                                                24-9-2026</span>
-                                            <span class="meta-line" data-en="End 26-9-2026" data-ar="ينتهي
-                                            26-9-2026">End
-                                                26-9-2026</span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="event-badge event-badge-license" data-animate>
-                                    <img class="license-mark" src="{{ asset('img/authority.png') }}"
-                                        alt="Saudi Government License">
-                                    <div>
-                                        <div class="event-badge-title" data-en="License" data-ar="الترخيص">License
-                                            26/165</div>
-                                    </div>
-                                </div>
-                                <div class="event-badge" data-animate>
-                                    <img src="{{ asset('img/TheArena.png') }}" alt="The Arena"
-                                        style="width: 70px; height: auto;">
-                                    <div class="hero-location" role="button" tabindex="0"
-                                        data-scroll-target="#location-card">
-                                        <div class="event-badge-title" data-en="Location" data-ar="موقع الحدث">Event
-                                            Location</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <h3 class="event-info-title" data-en="Three days of innovation and networking await Join us"
-                            data-ar="ثلاثة أيام من الابتكار والتواصل بانتظارك. احفظ الموعد واستعد للانضمام">Three days
-                            of innovation and networking await Join us</h3>
                         <div class="countdown-card" data-animate>
                             <div class="countdown-header">
-                                <span class="countdown-label" data-en="Countdown to opening" data-ar="يبدأ خلال">Starts
+                                <span class="countdown-label" data-en="Starts in" data-ar="يبدأ خلال">Starts
                                     in</span>
                                 <span class="pill">
                                     <i class="fa-solid fa-hourglass-half" aria-hidden="true"></i>
@@ -4006,9 +3969,6 @@ experience that unites ambitious minds and industry leaders under one roof"
 
 
             <!-- Sponsors Section -->
-            <div class="row-logo" id="guest-row-logo" style="order: 5;">
-                <img src="{{ asset('img/IEC-logo.png') }}" alt="IEC Logo" style="text-align:center">
-            </div>
             <section class="sponsors" id="sponsors">
                 <div class="container">
                     <div class="section-header" data-animate>
@@ -4158,9 +4118,7 @@ experience that unites ambitious minds and industry leaders under one roof"
             </section>
 
             <section class="participants" id="participants">
-                <div class="row-logo" id="guest-row-logo" style="order: 5;">
-                    <img src="{{ asset('img/IEC-logo.png') }}" alt="IEC Logo" style="text-align:center">
-                </div>
+            
                 <!-- Participants Section -->
                 <div class="container">
                     <div class="section-header" data-animate>
@@ -4191,10 +4149,6 @@ experience that unites ambitious minds and industry leaders under one roof"
                     </div>
                 </div>
             </section>
-
-            <div class="row-logo" id="guest-row-logo" style="order: 5;">
-                <img src="{{ asset('img/IEC-logo.png') }}" alt="IEC Logo" style="text-align:center">
-            </div>
 
 
             <!-- Organizers Section -->
@@ -4255,10 +4209,6 @@ experience that unites ambitious minds and industry leaders under one roof"
                     @endif
                 </div>
             </section>
-
-            <div class="row-logo" id="guest-row-logo" style="order: 5;">
-                <img src="{{ asset('img/IEC-logo.png') }}" alt="IEC Logo" style="text-align:center">
-            </div>
             <!-- Contact Section -->
             @php
                 $contactLocale = app()->getLocale();
@@ -4397,25 +4347,53 @@ experience that unites ambitious minds and industry leaders under one roof"
                             </div>
                         </div>
 
-                        <div class="row-logo" id="guest-row-logo" style="order: 5;">
-                            <img src="{{ asset('img/IEC-logo.png') }}" alt="IEC Logo" style="text-align:center">
-                        </div>
+                        
                     </div>
                 </div>
                 <!-- map -->
                 <div class="location-card" id="location-card">
                     <div class="location-header">
                         <div>
-                            <div class="location-title"><img src="{{ asset('img/TheArena.png') }}" alt=""
-                                    style="text-align:center; height: 200px;" />
+                            <div class="location-title">
+                                <!-- <img src="{{ asset('img/TheArena.png') }}" alt="" style="text-align:center; height: 200px;" /> -->
+                            <div class="event-info-copy" data-animate>
+                            <div class="event-badges">
+                                <div class="event-badge" data-animate>
+                                    <img src="{{ asset('img/svg/calendar.svg') }}" alt="Calendar" style="width: 4rem;">
+                                    <div>
+                                        <div class="event-badge-meta">
+                                            <span class="meta-line" data-en="Start 24-9-2026" data-ar="يبدأ
+                                            24-9-2026">Start
+                                                24-9-2026</span>
+                                            <span class="meta-line" data-en="End 26-9-2026" data-ar="ينتهي
+                                            26-9-2026">End
+                                                26-9-2026</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="event-badge event-badge-license" data-animate>
+                                    <img class="license-mark" src="{{ asset('img/authority.png') }}"
+                                        alt="Saudi Government License">
+                                    <div>
+                                        <div class="event-badge-title" data-en="License" data-ar="الترخيص">License
+                                            26/165</div>
+                                    </div>
+                                </div>
+                                <div class="event-badge" data-animate>
+                                    <img src="{{ asset('img/TheArena.png') }}" alt="The Arena"
+                                        style="width: 70px; height: auto;">
+                                    <div class="hero-location" role="button" tabindex="0"
+                                        data-scroll-target="#location-card">
+                                        <div class="event-badge-title" data-en="Event Location" data-ar="موقع الحدث">Event
+                                            Location</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                             </div>
                         </div>
                     </div>
                     @if ($locationImageUrl)
-                        <!-- <div class="location-image" style="margin-top:1rem;">
-                                        <img src="{{ $locationImageUrl }}" alt="{{ $locationTitleBlock['text'] }}"
-                                            style="width:100%; border-radius:1rem;">
-                                    </div> -->
                     @endif
                     <div class="map-embed">
                         <iframe src="{{ $mapEmbedUrl }}" allowfullscreen loading="lazy"
@@ -4432,8 +4410,8 @@ experience that unites ambitious minds and industry leaders under one roof"
                     <div class="footer-text"> <span data-en="IEC 360&deg; EXPO" data-ar="IEC 360&deg;
                         EXPO"> IEC 360&deg;
                             EXPO</span></div>
-                    <div class="footer-text" data-en="All rights reserved BU 2026 "
-                        data-ar="جميع الحقوق محفوظة BU 2026.">2026 All rights reserved BU</div>
+                    <div class="footer-text" data-en="All rights reserved ©️ Business Umbrella Company "
+                        data-ar="جميع الحقوق محفوظة ©️ شركة مظلة الأعمال.">All rights reserved ©️ Business Umbrella Company</div>
                 </div>
             </div>
         </footer>
