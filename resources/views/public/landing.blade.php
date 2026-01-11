@@ -525,7 +525,7 @@
         /* Event Info Section */
         .event-info {
             position: relative;
-            padding: 3rem 0 1.5rem;
+            padding: 0px;
             overflow: hidden;
             isolation: isolate;
         }
@@ -802,8 +802,9 @@
         }
 
         @media (max-width: 768px) {
+            
             .event-info {
-                padding: 2.5rem 0 1.25rem;
+                padding: 0px;
             }
 
             .event-badge {
@@ -1452,7 +1453,7 @@
 
         /* Sponsors Section */
         .sponsors {
-            padding: 5rem 0;
+            padding: 0px;
             background: transparent;
         }
 
@@ -2499,7 +2500,9 @@
                 height: 40px;
             }
 
-            .goal-icon {
+            .goal-icon,
+            body.locale-en .goal-icon,
+            body.locale-ar .goal-icon {
                 margin-left: 0;
                 margin-right: 0;
             }
@@ -2825,7 +2828,7 @@
                                 data-ar="{{ e($exhibitorCardDescription['ar']) }}">
                                 {{ $exhibitorCardDescription['text'] }}</p> -->
                                 <div class="role-cta" id="exhibitor-cta">
-                                    <span data-en="Click" data-ar="Click">Click</span>
+                                    <span data-en="Click" data-ar="إضغط">Click</span>
                                     <svg class="icon icon-sm" viewBox="0 0 24 24">
                                         <path d="M5 12h14M12 5l7 7-7 7" />
                                     </svg>
@@ -2956,7 +2959,7 @@
                                         <a class="btn btn-outline"
                                             href="https://umbrella.sa/iec360/pdf/privacy-policy.pdf" target="_blank"
                                             rel="noopener" data-en="Download SPONSOR Profile"
-                                            data-ar="Download SPONSOR Profile">Download SPONSOR Profile</a>
+                                            data-ar="تنزيل ملف الراعي">Download SPONSOR Profile</a>
                                     </div>
                                     @csrf
                                     <input type="hidden" name="form_identifier" value="sponsor">
@@ -3114,7 +3117,7 @@
                                             <svg class="icon icon-sm" style="margin-right: 0.5rem;" viewBox="0 0 24 24">
                                                 <path d="M19 12H5M12 19l-7-7 7-7" />
                                             </svg>
-                                            <span data-en="Back" data-ar="Back">{{ __('Back') }}</span>
+                                            <span data-en="Back" data-ar="رجوع">Back</span>
                                         </button>
                                         <button type="submit" class="btn btn-primary"
                                             data-en="{{ e($exhibitorSubmit['en']) }}"
@@ -3138,7 +3141,7 @@
                                 <!-- <p class="role-desc" data-en="{{ e($iconCardDescription['en']) }}"
                                 data-ar="{{ e($iconCardDescription['ar']) }}">{{ $iconCardDescription['text'] }}</p> -->
                                 <div class="role-cta" id="icon-cta">
-                                    <span data-en="Click" data-ar="Click">Click</span>
+                                    <span data-en="Click" data-ar="اضغط">Click</span>
                                     <svg class="icon icon-sm" viewBox="0 0 24 24">
                                         <path d="M5 12h14M12 5l7 7-7 7" />
                                     </svg>
@@ -3273,7 +3276,7 @@
                                         <a class="btn btn-outline"
                                             href="https://umbrella.sa/iec360/pdf/privacy-policy.pdf" target="_blank"
                                             rel="noopener" data-en="Download ICON Profile"
-                                            data-ar="Download ICON Profile">Download ICON Profile</a>
+                                            data-ar="تنزيل ملف الأيكون">Download ICON Profile</a>
                                     </div>
                                     <div>
                                         <div class="form-grid form-grid-2">
@@ -3487,7 +3490,7 @@
                                 <!-- <p class="role-desc" data-en="{{ e($guestCardDescription['en']) }}"
                                 data-ar="{{ e($guestCardDescription['ar']) }}">{{ $guestCardDescription['text'] }}</p> -->
                                 <div class="role-cta" id="visitor-cta">
-                                    <span data-en="Click" data-ar="Click">Click</span>
+                                    <span data-en="Click" data-ar="إضغط">Click</span>
                                     <svg class="icon icon-sm" viewBox="0 0 24 24">
                                         <path d="M5 12h14M12 5l7 7-7 7" />
                                     </svg>
@@ -3898,7 +3901,7 @@
                                                     style="height: 40px;">
                                             </div>
                                             <h3 class="goal-title" data-en="Introduction" data-ar="المقدمة"
-                                                style="margin-left:10px;">Introduction</h3>
+                                                >Introduction</h3>
                                         </div>
                                         <p class="goal-desc" data-en="With unmatched uniqueness and excellence, the IEC EXPO returns for its third edition
 under the theme IEC 360°. It continues its journey as a comprehensive interactive
@@ -3923,7 +3926,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                                                     style="height: 40px;">
                                             </div>
                                             <h3 class="goal-title" data-en="Objectives" data-ar="الأهداف"
-                                                style="margin-right:10px;">Objectives</h3>
+                                                >Objectives</h3>
                                         </div>
                                         <p class="goal-desc" data-en="With distinction and uniqueness, the IEC Trade
                 Exhibition returns in its third edition under the
@@ -3954,7 +3957,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                                                     style="height: 40px;">
                                             </div>
                                             <h3 class="goal-title" data-en="Mission" data-ar="الرسالة"
-                                                style="margin-right:50px;">Mission</h3>
+                                                >Mission</h3>
                                         </div>
                                         <p class="goal-desc"
                                             data-en="The exhibition aims to empower individuals and organizations, enhance innovation, and build strategic partnerships that contribute to developing business environments in alignment with Saudi Vision 2030"
@@ -3991,7 +3994,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                             <div class="sponsor-tier-grid tier-strategic">
                                 <article class="sponsor-card sponsor-strategic" data-animate>
                                     <div class="sponsor-logo">
-                                        <img src="{{ asset('img/placeholder.png') }}" alt="">
+                                        <img src="{{ asset('img/placeholder-img.png') }}" alt="">
                                     </div>
                                 </article>
                             </div>
@@ -4002,7 +4005,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                             <div class="sponsor-tier-grid tier-business">
                                 <article class="sponsor-card sponsor-business" data-animate>
                                     <div class="sponsor-logo">
-                                        <img src="{{ asset('img/placeholder.png') }}" alt="">
+                                        <img src="{{ asset('img/placeholder-img.png') }}" alt="">
                                     </div>
                                 </article>
                             </div>
@@ -4013,7 +4016,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                             <div class="sponsor-tier-grid tier-marketing">
                                 <article class="sponsor-card sponsor-marketing" data-animate>
                                     <div class="sponsor-logo">
-                                        <img src="{{ asset('img/placeholder.png') }}" alt="">
+                                        <img src="{{ asset('img/placeholder-img.png') }}" alt="">
                                     </div>
                                 </article>
                             </div>
@@ -4026,7 +4029,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                                 <div class="sponsor-tier-grid tier-marketing single-sponsor-grid">
                                     <article class="sponsor-card sponsor-marketing" data-animate>
                                         <div class="sponsor-logo">
-                                            <img src="{{ asset('img/placeholder.png') }}" alt="">
+                                            <img src="{{ asset('img/placeholder-img.png') }}" alt="">
                                         </div>
                                     </article>
                                 </div>
@@ -4036,7 +4039,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                                 <div class="sponsor-tier-grid tier-marketing single-sponsor-grid">
                                     <article class="sponsor-card sponsor-marketing" data-animate>
                                         <div class="sponsor-logo">
-                                            <img src="{{ asset('img/placeholder.png') }}" alt="">
+                                            <img src="{{ asset('img/placeholder-img.png') }}" alt="">
                                         </div>
                                     </article>
                                 </div>
@@ -4050,7 +4053,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                                 <div class="sponsor-tier-grid tier-marketing single-sponsor-grid">
                                     <article class="sponsor-card sponsor-marketing" data-animate>
                                         <div class="sponsor-logo">
-                                            <img src="{{ asset('img/placeholder.png') }}" alt="">
+                                            <img src="{{ asset('img/placeholder-img.png') }}" alt="">
                                         </div>
                                     </article>
                                 </div>
@@ -4061,7 +4064,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                                 <div class="sponsor-tier-grid tier-marketing single-sponsor-grid">
                                     <article class="sponsor-card sponsor-marketing" data-animate>
                                         <div class="sponsor-logo">
-                                            <img src="{{ asset('img/placeholder.png') }}" alt="">
+                                            <img src="{{ asset('img/placeholder-img.png') }}" alt="">
                                         </div>
                                     </article>
                                 </div>
@@ -4074,27 +4077,27 @@ experience that unites ambitious minds and industry leaders under one roof"
                             <div class="participants-grid gold-sponsors-grid">
                                 <article class="participant-card gold-sponsor-card" data-animate>
                                     <div class="participant-logo">
-                                        <img src="{{ asset('img/placeholder.png') }}" alt="">
+                                        <img src="{{ asset('img/placeholder-img.png') }}" alt="">
                                     </div>
                                 </article>
                                 <article class="participant-card gold-sponsor-card" data-animate>
                                     <div class="participant-logo">
-                                        <img src="{{ asset('img/placeholder.png') }}" alt="">
+                                        <img src="{{ asset('img/placeholder-img.png') }}" alt="">
                                     </div>
                                 </article>
                                 <article class="participant-card gold-sponsor-card" data-animate>
                                     <div class="participant-logo">
-                                        <img src="{{ asset('img/placeholder.png') }}" alt="">
+                                        <img src="{{ asset('img/placeholder-img.png') }}" alt="">
                                     </div>
                                 </article>
                                 <article class="participant-card gold-sponsor-card" data-animate>
                                     <div class="participant-logo">
-                                        <img src="{{ asset('img/placeholder.png') }}" alt="">
+                                        <img src="{{ asset('img/placeholder-img.png') }}" alt="">
                                     </div>
                                 </article>
                                 <article class="participant-card gold-sponsor-card" data-animate>
                                     <div class="participant-logo">
-                                        <img src="{{ asset('img/placeholder.png') }}" alt="">
+                                        <img src="{{ asset('img/placeholder-img.png') }}" alt="">
                                     </div>
                                 </article>
                             </div>
@@ -4106,17 +4109,17 @@ experience that unites ambitious minds and industry leaders under one roof"
                             <div class="sponsor-tier-grid tier-main other-sponsors-grid">
                                 <article class="sponsor-card" data-animate>
                                     <div class="sponsor-logo">
-                                        <img src="{{ asset('img/placeholder.png') }}" alt="">
+                                        <img src="{{ asset('img/placeholder-img.png') }}" alt="">
                                     </div>
                                 </article>
                                 <article class="sponsor-card" data-animate>
                                     <div class="sponsor-logo">
-                                        <img src="{{ asset('img/placeholder.png') }}" alt="">
+                                        <img src="{{ asset('img/placeholder-img.png') }}" alt="">
                                     </div>
                                 </article>
                                 <article class="sponsor-card" data-animate>
                                     <div class="sponsor-logo">
-                                        <img src="{{ asset('img/placeholder.png') }}" alt="">
+                                        <img src="{{ asset('img/placeholder-img.png') }}" alt="">
                                     </div>
                                 </article>
                             </div>
@@ -4136,22 +4139,22 @@ experience that unites ambitious minds and industry leaders under one roof"
                     <div class="participants-grid">
                         <a href="" class="participant-card" data-animate>
                             <div class="participant-logo">
-                                <img src="{{ asset('img/placeholder.png') }}" alt="Icon">
+                                <img src="{{ asset('img/placeholder-img.png') }}" alt="Icon">
                             </div>
                         </a>
                         <a href="" class="participant-card" data-animate>
                             <div class="participant-logo">
-                                <img src="{{ asset('img/placeholder.png') }}" alt="Icon">
+                                <img src="{{ asset('img/placeholder-img.png') }}" alt="Icon">
                             </div>
                         </a>
                         <a href="" class="participant-card" data-animate>
                             <div class="participant-logo">
-                                <img src="{{ asset('img/placeholder.png') }}" alt="Icon">
+                                <img src="{{ asset('img/placeholder-img.png') }}" alt="Icon">
                             </div>
                         </a>
                         <a href="" class="participant-card" data-animate>
                             <div class="participant-logo">
-                                <img src="{{ asset('img/placeholder.png') }}" alt="Icon">
+                                <img src="{{ asset('img/placeholder-img.png') }}" alt="Icon">
                             </div>
                         </a>
                     </div>
