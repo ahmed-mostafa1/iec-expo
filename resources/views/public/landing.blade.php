@@ -562,9 +562,9 @@
             color: #fff;
             /* background: linear-gradient(160deg, rgba(152, 3, 189, 0.15), rgba(0, 0, 0, 0.85)); */
             /* box-shadow: 0 20px 50px -28px rgba(0, 0, 0, 0.75); */
-            border: 1px solid rgba(152, 3, 189, 0.35);
-            border-radius: 16px;
-            padding: 1.5rem;
+            /* border: 1px solid rgba(152, 3, 189, 0.35); */
+            /* border-radius: 16px; */
+            /* padding: 1.5rem; */
             position: relative;
             overflow: hidden;
         }
@@ -1412,11 +1412,18 @@
 
         .goal-icon {
             /* padding: 0.75rem; */
-            margin-left: 40%;
             border-radius: 0.5rem;
             background: rgb(var(--primary) / 0.1);
             color: rgb(var(--primary));
             transition: all 0.3s;
+        }
+
+        body.locale-en .goal-icon {
+            margin-left: 40%;
+        }
+
+        body.locale-ar .goal-icon {
+            margin-right: 40%;
         }
 
         .goal-title-row {
@@ -2494,6 +2501,7 @@
 
             .goal-icon {
                 margin-left: 0;
+                margin-right: 0;
             }
         }
 
@@ -4435,6 +4443,10 @@ experience that unites ambitious minds and industry leaders under one roof"
             document.documentElement.lang = currentLocale;
             document.documentElement.dir = currentLocale === 'ar' ? 'rtl' : 'ltr';
             document.getElementById('lang-text').textContent = currentLocale === 'en' ? 'العربية' : 'English';
+
+            // Update body class for locale-specific styling
+            document.body.classList.remove('locale-en', 'locale-ar');
+            document.body.classList.add(`locale-${currentLocale}`);
 
             // Update all translatable elements
             document.querySelectorAll('[data-en][data-ar]').forEach(el => {
