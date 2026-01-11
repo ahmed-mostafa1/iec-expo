@@ -2287,9 +2287,9 @@
 
         .contact-info-column {
             display: flex;
-            flex-direction: column;
+            flex-direction: row;
             gap: 0.5rem;
-            align-items: center;
+            /* align-items: center; */
             line-height: 5rem;
         }
 
@@ -4314,20 +4314,18 @@ experience that unites ambitious minds and industry leaders under one roof    </
                                 </div>
                            
                             <!-- social -->
-                            
                                 <div class="contact-info-header">   
                                     <div style="flex: 1;">  
                                         <div class="contact-info-links two-columns">  
                                             <div class="contact-info-column">   
-                                                <a href="tel:+966566668892" class="contact-info-link"><img class="icon icon-lg" src="{{ asset('img/svg/instagram.svg') }}">iec360expo </a> 
+                                                <a href="https://www.instagram.com/iec360expo" class="contact-info-link"><img class="icon icon-lg" src="{{ asset('img/svg/instagram.svg') }}">iec360expo </a> 
                                             </div>  
                                             <div class="contact-info-column">  
-                                                <a href="tel:+966594650976" class="contact-info-link"><img class="icon icon-lg" src="{{ asset('img/svg/tiktok.svg') }}">iec360expo </a>
+                                                <a href="https://www.tiktok.com/@iec360expo" class="contact-info-link"><img class="icon icon-lg" src="{{ asset('img/svg/tiktok.svg') }}">iec360expo </a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            
         </div>
                     </div>
                 </div>
