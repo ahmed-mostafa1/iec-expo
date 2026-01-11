@@ -1412,6 +1412,7 @@
 
         .goal-icon {
             /* padding: 0.75rem; */
+            margin-left: 40%;
             border-radius: 0.5rem;
             background: rgb(var(--primary) / 0.1);
             color: rgb(var(--primary));
@@ -1423,7 +1424,7 @@
             align-items: center;
             gap: 0.75rem;
             margin-bottom: 0.5rem;
-            justify-content: center;
+            justify-content: flex-start;
         }
 
         /* .goal-card:hover .goal-icon {
@@ -2490,6 +2491,10 @@
             .nav-logo-bu {
                 height: 40px;
             }
+
+            .goal-icon {
+                margin-left: 0;
+            }
         }
 
         @media (max-width: 600px) {
@@ -3527,7 +3532,7 @@
                                 @php
                                     $guestFullNameLabel = $fieldCopy($visitorFieldsByName, 'full_name', 'label', [
                                         'en' => 'Full
-                                                                Name *',
+                                                                                                                                        Name *',
                                         'ar' => 'الاسم الكامل *',
                                     ]);
                                     $guestFullNamePlaceholder = $fieldCopy(
@@ -3554,7 +3559,7 @@
                                     ]);
                                     $guestJobLabel = $fieldCopy($visitorFieldsByName, 'job_title', 'label', [
                                         'en' => 'Job
-                                                                Title',
+                                                                                                                                        Title',
                                         'ar' => 'المسمى الوظيفي',
                                     ]);
                                     $guestJobPlaceholder = $fieldCopy($visitorFieldsByName, 'job_title', 'placeholder', [
@@ -3573,7 +3578,7 @@
                                     );
                                     $guestHeardLabel = $fieldCopy($visitorFieldsByName, 'heard_about', 'label', [
                                         'en' => 'How
-                                                                did you hear about us?',
+                                                                                                                                        did you hear about us?',
                                         'ar' => 'كيف سمعت عنا؟',
                                     ]);
                                     $guestHeardOptions = $fieldOptions($visitorFieldsByName, 'heard_about', [
@@ -3757,7 +3762,7 @@
                         'value' => 0,
                         'suffix' => '',
                         'icon' => 'fas
-                                fa-circle',
+                                                                        fa-circle',
                     ];
                     $stats = array_pad($heroStats, 5, $defaultStat);
                 @endphp
@@ -4408,9 +4413,9 @@ experience that unites ambitious minds and industry leaders under one roof"
                     </div>
                     @if ($locationImageUrl)
                         <!-- <div class="location-image" style="margin-top:1rem;">
-                                <img src="{{ $locationImageUrl }}" alt="{{ $locationTitleBlock['text'] }}"
-                                    style="width:100%; border-radius:1rem;">
-                            </div> -->
+                                        <img src="{{ $locationImageUrl }}" alt="{{ $locationTitleBlock['text'] }}"
+                                            style="width:100%; border-radius:1rem;">
+                                    </div> -->
                     @endif
                     <div class="map-embed">
                         <iframe src="{{ $mapEmbedUrl }}" allowfullscreen loading="lazy"
@@ -4612,7 +4617,7 @@ experience that unites ambitious minds and industry leaders under one roof"
         });
 
         // About Section Video Reveal
-        (function()  {
+        (function () {
             const aboutSection = document.querySelector('.about');
             if (!aboutSection) return;
 
@@ -4711,23 +4716,23 @@ experience that unites ambitious minds and industry leaders under one roof"
             }
 
             const roles = [{
-                  key: 'visitor',
-                    card: 'visitor-card',
-                    form: 'visitor-form',
-                    cta: 'visitor-cta'
-                },
-                {
-                    key: 'exhibitor',
-                    card: 'exhibitor-card',
-                    form: 'exhibitor-form',
-                    cta: 'exhibitor-cta'
-                },
-                {
-                    key: 'icon',
-                    card: 'icon-card',
-                    form: 'icon-form',
-                    cta: 'icon-cta'
-                },
+                key: 'visitor',
+                card: 'visitor-card',
+                form: 'visitor-form',
+                cta: 'visitor-cta'
+            },
+            {
+                key: 'exhibitor',
+                card: 'exhibitor-card',
+                form: 'exhibitor-form',
+                cta: 'exhibitor-cta'
+            },
+            {
+                key: 'icon',
+                card: 'icon-card',
+                form: 'icon-form',
+                cta: 'icon-cta'
+            },
             ];
 
             roles.forEach(({
@@ -4850,12 +4855,12 @@ experience that unites ambitious minds and industry leaders under one roof"
                         behavior: 'smooth',
                         block: 'center'
                     });
-                } catch (e) {}
+                } catch (e) { }
             }
             hallSelectionTargetId = null;
             try {
                 window.focus();
-            } catch (e) {}
+            } catch (e) { }
         });
 
         function applyHallSelectionFromQuery() {
@@ -4883,7 +4888,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                         behavior: 'smooth',
                         block: 'center'
                     });
-                } catch (e) {}
+                } catch (e) { }
             }
 
             params.delete('hall_space');
@@ -4892,7 +4897,7 @@ experience that unites ambitious minds and industry leaders under one roof"
             const nextUrl = window.location.pathname + (nextQuery ? `?${nextQuery}` : '') + window.location.hash;
             try {
                 window.history.replaceState({}, '', nextUrl);
-            } catch (e) {}
+            } catch (e) { }
         }
 
         function initAjaxRegistrationForms() {
