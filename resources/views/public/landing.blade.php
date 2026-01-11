@@ -4339,6 +4339,8 @@ experience that unites ambitious minds and industry leaders under one roof    </
                         <div class="row-logo" id="guest-row-logo" style="order: 5;">
             <img src="{{ asset('img/IEC-logo.png') }}" alt="IEC Logo" style="text-align:center">
         </div>
+                </div>
+                </div>
                 <!-- map -->
                 <div class="location-card" id="location-card">
                     <div class="location-header">
@@ -4360,10 +4362,7 @@ experience that unites ambitious minds and industry leaders under one roof    </
                             referrerpolicy="no-referrer-when-downgrade"></iframe>
                     </div>
                 </div>
-            </div>
         </section>
-        </div>
-        </div>
     </main>
 
     <!-- Footer -->
