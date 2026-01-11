@@ -210,7 +210,7 @@
         .container {
             max-width: 1280px;
             margin: 0 auto;
-            padding: 1rem;
+            /* padding: 1rem; */
         }
 
         .hero .container {
@@ -1073,7 +1073,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            margin: 0 0 1rem;
+            margin: 0px;
         }
 
 
@@ -1088,7 +1088,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            margin: 0 0 1rem;
+            margin: 0px;
         }
 
         .about-img img {
@@ -1252,7 +1252,7 @@
         /* About Section */
         .about {
             position: relative;
-            padding: 5rem 0;
+            padding: 0px;
             overflow: hidden;
             isolation: isolate;
         }
@@ -1386,10 +1386,10 @@
             transform: translateY(0);
         }
 
-        .goal-card:hover {
+        /* .goal-card:hover {
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
             border-color: rgb(var(--primary) / 0.3);
-        }
+        } */
 
         .goal-icon {
             /* padding: 0.75rem; */
@@ -2173,8 +2173,8 @@
             grid-template-columns: repeat(5, minmax(0, 1fr));
             margin-top: 4rem;
             gap: 30px;
-            padding: 20px;
-            margin-bottom: 5px;
+            padding: 0px;
+            margin-bottom: 0px;
         }
 
         @media (max-width: 768px) {
@@ -2586,9 +2586,8 @@
                 <div class="hero-grid">
                     <div class="hero-media">
                         <div class="hero-video-frame">
-                            <video class="hero-video" autoplay muted loop playsinline
-                                @if ($heroPoster) poster="{{ $heroPoster }}" @endif>
-                                <source src="{{ $heroVideoUrl }}" type="video/mp4">
+                            <video class="hero-video" autoplay muted loop playsinline>
+                                <source src="{{ asset('video/hero-video.mp4') }}" type="video/mp4">
                                 Your browser does not support the video tag.
                             </video>
                         </div>
@@ -2596,6 +2595,7 @@
                 </div>
             </div>
         </section>
+        <!-- Event Info Section -->
         <section class="event-info" id="event-info">
             <div class="container">
                 <div class="event-info-grid">
@@ -2792,9 +2792,6 @@
                 $options = data_get($field, 'options');
                 return is_array($options) && count($options) ? $options : $fallback;
             };
-        @endphp
-
-        @php
             $visitorFormActive = old('form_identifier') === 'visitor';
             $sponsorFormActive = old('form_identifier') === 'sponsor';
             $iconFormActive = old('form_identifier') === 'icon';
@@ -4283,67 +4280,16 @@ one roof. </p>
                     </div>
 
                     <div class="contact-col" data-animate>
-                        <div class="contact-info-list">
-                            @forelse($supportCards as $card)
-                                @php $cardTitle = $contactTranslate(data_get($card, 'title'), ''); @endphp
-                                <div class="contact-info-card">
-                                    <div class="contact-info-header">
-                                        <div style="flex: 1;">
-                                            <div class="contact-info-name" data-en="{{ e($cardTitle['en']) }}"
-                                                data-ar="{{ e($cardTitle['ar']) }}">
-                                                {{ $cardTitle['text'] }}
-                                            </div>
-                                            <div class="contact-info-links two-columns">
-                                                @foreach (data_get($card, 'columns', []) as $column)
-                                                    @php $columnHeading = $contactTranslate(
-                                                            data_get($column, 'heading'),
-                                                            '',
-                                                        );
-                                                    @endphp
-                                                    <div class="contact-info-column">
-                                                        <div class="contact-info-column-header"
-                                                            data-en="{{ e($columnHeading['en']) }}"
-                                                            data-ar="{{ e($columnHeading['ar']) }}">
-                                                            {{ $columnHeading['text'] }}
-                                                        </div>
-                                                        @foreach (data_get($column, 'contacts', []) as $contact)
-                                                            @php
-                                                                $contactType = $contact['type'] ?? 'phone';
-                                                                $contactValue = $contact['value'] ?? '';
-                                                                $contactHref =
-                                                                    $contactType === 'email'
-                                                                        ? 'mailto:' . $contactValue
-                                                                        : 'tel:' . $contactValue;
-                                                            @endphp
-                                                            <a href="{{ $contactHref }}"
-                                                                class="contact-info-link">
-                                                                @if ($contactType === 'email')
-                                                                    <svg class="icon icon-sm" viewBox="0 0 24 24">
-                                                                        <rect width="20" height="16" x="2"
-                                                                            y="4" rx="2" />
-                                                                        <path
-                                                                            d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-                                                                    </svg>
-                                                                @else
-                                                                    <svg class="icon icon-sm" viewBox="0 0 24 24">
-                                                                        <path
-                                                                            d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-                                                                    </svg>
-                                                                @endif
-                                                                {{ $contactValue }}
-                                                            </a>
-                                                        @endforeach
-                                                    </div>
-                                                @endforeach
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            @empty
-                                <p class="text-sm text-gray-500">{{ __('Support contacts will be shared soon.') }}
-                                </p>
-                            @endforelse
-                        </div>
+                        <div class="contact-info-list"> <div class="contact-info-card">  <div class="contact-info-header">   <div style="flex: 1;">  <div class="contact-info-name" data-en="Arabic Support" data-ar="التواصل باللغة العربية"> Arabic Support  </div> <div class="contact-info-links two-columns">  <div class="contact-info-column">   <div class="contact-info-column-header" data-en="Ahmed" data-ar="أحمد">   Ahmed </div>
+<a href="tel:+966566668892" class="contact-info-link"> <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>  </svg> +966566668892
+</a> </div>  <div class="contact-info-column">  <div class="contact-info-column-header" data-en="Tamim" data-ar="تميم">  Tamim </div><a href="tel:+966594650976" class="contact-info-link">    <svg class="icon icon-sm" viewBox="0 0 24 24">   <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>  </svg>    +966594650976
+    </a>
+ </div>
+ </div>
+   </div>
+   </div>
+ </div>
+ </div>
                     </div>
                 </div>
 
