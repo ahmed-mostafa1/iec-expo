@@ -127,14 +127,31 @@
         }
 
         .page-loader .loader-ring {
-            width: 78px;
-            height: 78px;
+            position: relative;
+            width: 120px;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .page-loader .loader-ring::before {
+            content: '';
+            position: absolute;
+            inset: 0;
             border-radius: 50%;
-            border: 3px solid rgba(255, 255, 255, 0.18);
+            border: 4px solid rgba(255, 255, 255, 0.18);
             border-top-color: #9803bd;
             border-right-color: rgba(152, 3, 189, 0.6);
             animation: loaderSpin 1s linear infinite;
             box-shadow: 0 0 30px rgba(152, 3, 189, 0.35);
+        }
+
+        .page-loader .loader-ring img {
+            width: 70px;
+            height: 70px;
+            object-fit: contain;
+            z-index: 1;
         }
 
         .page-loader .loader-dots {
@@ -193,6 +210,7 @@
         }
 
         @keyframes loaderBounce {
+
             0%,
             100% {
                 transform: translateY(0);
@@ -225,7 +243,7 @@
             top: 0;
             left: 0;
             right: 0;
-            z-index: 50;
+            z-index: 9999;
             background: #000;
             backdrop-filter: blur(12px);
         }
@@ -619,7 +637,7 @@
         .event-badge-meta {
             color: rgb(var(--muted-foreground));
             font-size: 1rem;
-            font-weight:700;
+            font-weight: 700;
         }
 
         .event-badge-meta .meta-line {
@@ -2502,7 +2520,9 @@
 
 <body class="{{ app()->getLocale() === 'ar' ? 'locale-ar' : 'locale-en' }} is-loading">
     <div class="page-loader" aria-hidden="true">
-        <div class="loader-ring"></div>
+        <div class="loader-ring">
+            <img src="{{ asset('img/IEC-logo.png') }}" alt="IEC Logo">
+        </div>
         <div class="loader-dots">
             <span></span>
             <span></span>
@@ -2511,1875 +2531,1916 @@
         <div class="loader-text">Loading</div>
     </div>
     <div class="page-content">
-    @php
-        $organizers = \App\Models\Organizer::query()->where('is_active', true)->orderBy('display_order')->get();
-        if ($organizers->isEmpty()) {
-            $organizers = collect(config('demo.organizers'))->map(function ($data, $id) {
-                $model = new \App\Models\Organizer($data);
-                $model->id = $id;
-                $model->exists = false;
-                return $model;
-            });
-        }
-    @endphp
-    <!-- Header -->
-    <header class="header">
-        <div class="container">
-            <div class="header-inner">
-                <img src="{{ asset('./img/IEC-logo-nav.png') }}" alt="IEC Logo" class="nav-logo" />
-                <nav class="nav">
-                    <a href="#" class="btn-primary nav-link" data-en="Home" data-ar="الرئيسية">Home</a>
-                    <a href="{{ route('public.ed', ['locale' => app()->getLocale()]) }}" class="nav-link"
+        @php
+            $organizers = \App\Models\Organizer::query()->where('is_active', true)->orderBy('display_order')->get();
+            if ($organizers->isEmpty()) {
+                $organizers = collect(config('demo.organizers'))->map(function ($data, $id) {
+                    $model = new \App\Models\Organizer($data);
+                    $model->id = $id;
+                    $model->exists = false;
+                    return $model;
+                });
+            }
+        @endphp
+        <!-- Header -->
+        <header class="header">
+            <div class="container">
+                <div class="header-inner">
+                    <img src="{{ asset('./img/IEC-logo-nav.png') }}" alt="IEC Logo" class="nav-logo" />
+                    <nav class="nav">
+                        <a href="#" class="btn-primary nav-link" data-en="Home" data-ar="الرئيسية">Home</a>
+                        <a href="{{ route('public.ed', ['locale' => app()->getLocale()]) }}" class="nav-link"
+                            data-en="Previous Editions of IEC" data-ar="النسخ السابقة من المعرض">Previous Editions of
+                            IEC</a>
+                        <a href="#register" class="btn-primary nav-link" data-en="Register"
+                            data-ar="التسجيل">Register</a>
+                        <a href="#about" class="nav-link" data-en="About" data-ar="عن المعرض">About</a>
+                        <a href="#sponsors" class="nav-link" data-en="Sponsor" data-ar="الراعي">Sponsor</a>
+                        <a href="#participants" class="nav-link" data-en="Icons" data-ar="الأيكون">Icon</a>
+                        <a href="#organizers" class="nav-link" data-en="Owned by" data-ar="الشركة المالكة">Owned by</a>
+                        <a href="#contact" class="nav-link" data-en="Contact" data-ar="تواصل معنا">Contact</a>
+                    </nav>
+                    <div class="header-right">
+                        <div class="header-actions">
+                            <button class="lang-switch" onclick="toggleLocale()">
+                                <svg class="icon icon-sm" viewBox="0 0 24 24">
+                                    <circle cx="12" cy="12" r="10" />
+                                    <path
+                                        d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                                </svg>
+                                <span id="lang-text">العربية</span>
+                            </button>
+                            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                                <svg class="icon" viewBox="0 0 24 24" id="menu-icon">
+                                    <path d="M3 12h18M3 6h18M3 18h18" />
+                                </svg>
+                            </button>
+                        </div>
+                        <a href="https://umbrella.sa" />
+                        <img class="nav-logo-bu" src="{{ asset('./img/bu_logo.png') }}" alt="BU Logo" />
+                        </a>
+                    </div>
+                </div>
+                <nav class="mobile-nav" id="mobile-nav">
+                    <a href="#" class="mobile-nav-link" data-en="Home" data-ar="الرئيسية">Home</a>
+                    <a href="{{ route('public.ed', ['locale' => app()->getLocale()]) }}" class="mobile-nav-link"
                         data-en="Previous Editions of IEC" data-ar="النسخ السابقة من المعرض">Previous Editions of
                         IEC</a>
-                    <a href="#register" class="btn-primary nav-link" data-en="Register" data-ar="التسجيل">Register</a>
-                    <a href="#about" class="nav-link" data-en="About" data-ar="عن المعرض">About</a>
-                    <a href="#sponsors" class="nav-link" data-en="Sponsor" data-ar="الراعي">Sponsor</a>
-                    <a href="#participants" class="nav-link" data-en="Icons" data-ar="الأيكون">Icon</a>
-                    <a href="#organizers" class="nav-link" data-en="Owned by" data-ar="الشركة المالكة">Owned by</a>
-                    <a href="#contact" class="nav-link" data-en="Contact" data-ar="تواصل معنا">Contact</a>
+                    <a href="#register" class="mobile-nav-link" data-en="Register" data-ar="التسجيل">Register</a>
+                    <a href="#about" class="mobile-nav-link" data-en="About" data-ar="عن المعرض">About</a>
+                    <a href="#sponsors" class="mobile-nav-link" data-en="Sponsor" data-ar="الراعي">Sponsor</a>
+                    <a href="#participants" class="mobile-nav-link" data-en="Icon" data-ar="الأيكون">Icon</a>
+                    <a href="#organizers" class="mobile-nav-link" data-en="Owned by" data-ar="الشركة المالكة">Owned
+                        by</a>
+                    <a href="#contact" class="mobile-nav-link" data-en="Contact" data-ar="تواصل معنا">Contact</a>
                 </nav>
-                <div class="header-right">
-                    <div class="header-actions">
-                        <button class="lang-switch" onclick="toggleLocale()">
-                            <svg class="icon icon-sm" viewBox="0 0 24 24">
-                                <circle cx="12" cy="12" r="10" />
-                                <path
-                                    d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-                            </svg>
-                            <span id="lang-text">العربية</span>
-                        </button>
-                        <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
-                            <svg class="icon" viewBox="0 0 24 24" id="menu-icon">
-                                <path d="M3 12h18M3 6h18M3 18h18" />
-                            </svg>
-                        </button>
-                    </div>
-                    <a href="https://umbrella.sa" />
-                    <img class="nav-logo-bu" src="{{ asset('./img/bu_logo.png') }}" alt="BU Logo" />
-                    </a>
-                </div>
             </div>
-            <nav class="mobile-nav" id="mobile-nav">
-                <a href="#" class="mobile-nav-link" data-en="Home" data-ar="الرئيسية">Home</a>
-                <a href="{{ route('public.ed', ['locale' => app()->getLocale()]) }}" class="mobile-nav-link"
-                    data-en="Previous Editions of IEC" data-ar="النسخ السابقة من المعرض">Previous Editions of IEC</a>
-                <a href="#register" class="mobile-nav-link" data-en="Register" data-ar="التسجيل">Register</a>
-                <a href="#about" class="mobile-nav-link" data-en="About" data-ar="عن المعرض">About</a>
-                <a href="#sponsors" class="mobile-nav-link" data-en="Sponsor" data-ar="الراعي">Sponsor</a>
-                <a href="#participants" class="mobile-nav-link" data-en="Icon" data-ar="الأيكون">Icon</a>
-                <a href="#organizers" class="mobile-nav-link" data-en="Owned by" data-ar="الشركة المالكة">Owned
-                    by</a>
-                <a href="#contact" class="mobile-nav-link" data-en="Contact" data-ar="تواصل معنا">Contact</a>
-            </nav>
-        </div>
-    </header>
-    <main>
-        <!-- Hero Section -->
-        @php
-            $heroVideoUrl =
-                \App\Models\LandingSection::mediaUrl($heroSection['video_path'] ?? null) ?? asset('video/hero-video.mp4');
-            $heroPoster = \App\Models\LandingSection::mediaUrl($heroSection['poster_image_path'] ?? null);
-            $heroStats = $heroSection['stats'] ?? [];
-            $activeLocale = app()->getLocale();
-        @endphp
-        <section class="hero" id="hero">
-            <div class="container">
-                <div class="hero-grid">
-                    <div class="hero-media">
-                        <div class="hero-video-frame">
-                            <video class="hero-video" autoplay muted loop playsinline>
-                                <source src="{{ asset('video/hero-video.mp4') }}" type="video/mp4">
-                                Your browser does not support the video tag.
-                            </video>
+        </header>
+        <main>
+            <!-- Hero Section -->
+            @php
+                $heroVideoUrl =
+                    \App\Models\LandingSection::mediaUrl($heroSection['video_path'] ?? null) ?? asset('video/hero-video.mp4');
+                $heroPoster = \App\Models\LandingSection::mediaUrl($heroSection['poster_image_path'] ?? null);
+                $heroStats = $heroSection['stats'] ?? [];
+                $activeLocale = app()->getLocale();
+            @endphp
+            <section class="hero" id="hero">
+                <div class="container">
+                    <div class="hero-grid">
+                        <div class="hero-media">
+                            <div class="hero-video-frame">
+                                <video class="hero-video" autoplay muted loop playsinline>
+                                    <source src="{{ asset('video/hero-video.mp4') }}" type="video/mp4">
+                                    Your browser does not support the video tag.
+                                </video>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
-        <!-- Event Info Section -->
-        <section class="event-info" id="event-info">
-            <div class="container">
-                <div class="event-info-grid">
-                    <div class="event-info-copy" data-animate>
-                        <div class="event-badges">
-                            <div class="event-badge" data-animate>
-                                <img src="{{ asset('img/svg/calendar.svg') }}" alt="Calendar" style="width: 4rem;">
-                                <div>
-                                    <div class="event-badge-meta">
-                                        <span class="meta-line" data-en="Start 24-9-2026"
-                                            data-ar="يبدأ
+            </section>
+            <!-- Event Info Section -->
+            <section class="event-info" id="event-info">
+                <div class="container">
+                    <div class="event-info-grid">
+                        <div class="event-info-copy" data-animate>
+                            <div class="event-badges">
+                                <div class="event-badge" data-animate>
+                                    <img src="{{ asset('img/svg/calendar.svg') }}" alt="Calendar" style="width: 4rem;">
+                                    <div>
+                                        <div class="event-badge-meta">
+                                            <span class="meta-line" data-en="Start 24-9-2026" data-ar="يبدأ
                                             24-9-2026">Start
-                                            24-9-2026</span>
-                                        <span class="meta-line" data-en="End 26-9-2026"
-                                            data-ar="ينتهي
+                                                24-9-2026</span>
+                                            <span class="meta-line" data-en="End 26-9-2026" data-ar="ينتهي
                                             26-9-2026">End
-                                            26-9-2026</span>
+                                                26-9-2026</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="event-badge event-badge-license" data-animate>
+                                    <img class="license-mark" src="{{ asset('img/authority.png') }}"
+                                        alt="Saudi Government License">
+                                    <div>
+                                        <div class="event-badge-title" data-en="License" data-ar="الترخيص">License
+                                            26/165</div>
+                                    </div>
+                                </div>
+                                <div class="event-badge" data-animate>
+                                    <img src="{{ asset('img/TheArena.png') }}" alt="The Arena"
+                                        style="width: 70px; height: auto;">
+                                    <div class="hero-location" role="button" tabindex="0"
+                                        data-scroll-target="#location-card">
+                                        <div class="event-badge-title" data-en="Location" data-ar="موقع الحدث">Event
+                                            Location</div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="event-badge event-badge-license" data-animate>
-                                <img class="license-mark" src="{{ asset('img/authority.png') }}"
-                                    alt="Saudi Government License">
-                                <div>
-                                    <div class="event-badge-title" data-en="License" data-ar="الترخيص">License 26/165</div>
-                                </div>
+                        </div>
+                        <h3 class="event-info-title" data-en="Three days of innovation and networking await Join us"
+                            data-ar="ثلاثة أيام من الابتكار والتواصل بانتظارك. احفظ الموعد واستعد للانضمام">Three days
+                            of innovation and networking await Join us</h3>
+                        <div class="countdown-card" data-animate>
+                            <div class="countdown-header">
+                                <span class="countdown-label" data-en="Countdown to opening" data-ar="يبدأ خلال">Starts
+                                    in</span>
+                                <span class="pill">
+                                    <i class="fa-solid fa-hourglass-half" aria-hidden="true"></i>
+                                    24-9-2026
+                                </span>
                             </div>
-                            <div class="event-badge" data-animate>
-                                <img src="{{ asset('img/TheArena.png') }}"
-                                    alt="The Arena" style="width: 70px; height: auto;">
-                                <div class="hero-location" role="button" tabindex="0"
-                                    data-scroll-target="#location-card">
-                                    <div class="event-badge-title" data-en="Location" data-ar="موقع الحدث">Event
-                                        Location</div>
+                            <div class="countdown-grid" data-countdown-target="2026-09-24T00:00:00+03:00">
+                                <div class="countdown-tile">
+                                    <div class="countdown-number" data-countdown-part="days">--</div>
+                                    <span class="countdown-label-text" data-en="Days" data-ar="Days">Days</span>
+                                </div>
+                                <div class="countdown-tile">
+                                    <div class="countdown-number" data-countdown-part="hours">--</div>
+                                    <span class="countdown-label-text" data-en="Hours" data-ar="Hours">Hours</span>
+                                </div>
+                                <div class="countdown-tile">
+                                    <div class="countdown-number" data-countdown-part="minutes">--</div>
+                                    <span class="countdown-label-text" data-en="Minutes"
+                                        data-ar="Minutes">Minutes</span>
+                                </div>
+                                <div class="countdown-tile">
+                                    <div class="countdown-number" data-countdown-part="seconds">--</div>
+                                    <span class="countdown-label-text" data-en="Seconds"
+                                        data-ar="Seconds">Seconds</span>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <h3 class="event-info-title" data-en="Three days of innovation and networking await Join us"
-                        data-ar="ثلاثة أيام من الابتكار والتواصل بانتظارك. احفظ الموعد واستعد للانضمام">Three days
-                        of innovation and networking await Join us</h3>
-                    <div class="countdown-card" data-animate>
-                        <div class="countdown-header">
-                            <span class="countdown-label" data-en="Countdown to opening" data-ar="يبدأ خلال">Starts
-                                in</span>
-                            <span class="pill">
-                                <i class="fa-solid fa-hourglass-half" aria-hidden="true"></i>
-                                24-9-2026
-                            </span>
-                        </div>
-                        <div class="countdown-grid" data-countdown-target="2026-09-24T00:00:00+03:00">
-                            <div class="countdown-tile">
-                                <div class="countdown-number" data-countdown-part="days">--</div>
-                                <span class="countdown-label-text" data-en="Days" data-ar="Days">Days</span>
-                            </div>
-                            <div class="countdown-tile">
-                                <div class="countdown-number" data-countdown-part="hours">--</div>
-                                <span class="countdown-label-text" data-en="Hours" data-ar="Hours">Hours</span>
-                            </div>
-                            <div class="countdown-tile">
-                                <div class="countdown-number" data-countdown-part="minutes">--</div>
-                                <span class="countdown-label-text" data-en="Minutes" data-ar="Minutes">Minutes</span>
-                            </div>
-                            <div class="countdown-tile">
-                                <div class="countdown-number" data-countdown-part="seconds">--</div>
-                                <span class="countdown-label-text" data-en="Seconds" data-ar="Seconds">Seconds</span>
-                            </div>
-                        </div>
+                </div>
+            </section>
+            <!-- Registration Section -->
+            @php
+                $registrationLocale = app()->getLocale();
+                $translate = function ($node, $fallback = '') use ($registrationLocale) {
+                    $en = data_get($node, 'en', $fallback);
+                    $ar = data_get($node, 'ar', $en);
+                    return [
+                        'en' => $en,
+                        'ar' => $ar,
+                        'text' => $registrationLocale === 'ar' ? $ar : $en,
+                    ];
+                };
+                $registrationTitle = $translate(data_get($registrationSection, 'title'), __('Registration'));
+                $registrationDescription = $translate(data_get($registrationSection, 'description'), '');
+
+                $visitorCard = data_get($registrationSection, 'visitor_card', []);
+                $visitorForm = data_get($registrationSection, 'visitor_form', []);
+                $visitorFields = data_get($visitorForm, 'fields', []);
+                $visitorFieldsByName = collect($visitorFields)->keyBy('name');
+
+                $guestCardTitle = $translate(
+                    data_get($visitorCard, 'title') ?? [
+                        'en' => trans('registration.guest.title', [], 'en'),
+                        'ar' => trans('registration.guest.title', [], 'ar'),
+                    ],
+                );
+                $guestCardDescription = $translate(
+                    data_get($visitorCard, 'description') ?? [
+                        'en' => trans('registration.guest.description', [], 'en'),
+                        'ar' => trans('registration.guest.description', [], 'ar'),
+                    ],
+                );
+                $guestCta = $translate(
+                    data_get($visitorCard, 'cta_label') ?? [
+                        'en' => trans('registration.guest.cta_label', [], 'en'),
+                        'ar' => trans('registration.guest.cta_label', [], 'ar'),
+                    ],
+                );
+                $guestFormTitle = $translate(
+                    data_get($visitorForm, 'title') ?? [
+                        'en' => trans('registration.guest.form_title', [], 'en'),
+                        'ar' => trans('registration.guest.form_title', [], 'ar'),
+                    ],
+                );
+                $guestSubmit = $translate(
+                    data_get($visitorForm, 'cta_submit') ?? [
+                        'en' => trans('registration.guest.cta_submit', [], 'en'),
+                        'ar' => trans('registration.guest.cta_submit', [], 'ar'),
+                    ],
+                );
+                $guestContact = $translate(
+                    data_get($visitorForm, 'cta_contact') ?? [
+                        'en' => trans('registration.guest.cta_contact', [], 'en'),
+                        'ar' => trans('registration.guest.cta_contact', [], 'ar'),
+                    ],
+                );
+
+                $exhibitorCard = data_get($registrationSection, 'exhibitor_card', []);
+                $exhibitorCardTitle = $translate(data_get($exhibitorCard, 'title'), '');
+                $exhibitorCardDescription = $translate(data_get($exhibitorCard, 'description'), '');
+                $exhibitorCta = $translate(data_get($exhibitorCard, 'cta_label'), __('Select'));
+                $exhibitorForm = data_get($registrationSection, 'exhibitor_form', []);
+                $exhibitorFormTitle = $translate(data_get($exhibitorForm, 'title'), '');
+                $exhibitorSubmit = $translate(data_get($exhibitorForm, 'cta_submit'), __('Submit Application'));
+                $exhibitorFieldsStepOne = data_get($exhibitorForm, 'fields_step_one', []);
+                $exhibitorFieldsStepTwo = data_get($exhibitorForm, 'fields_step_two', []);
+                $exhibitorFieldsStepOneByName = collect($exhibitorFieldsStepOne)->keyBy('name');
+                $exhibitorFieldsStepTwoByName = collect($exhibitorFieldsStepTwo)->keyBy('name');
+
+                $iconCard = data_get($registrationSection, 'icon_card', []);
+                $iconForm = data_get($registrationSection, 'icon_form', []);
+                $iconFieldsStepOne = data_get($iconForm, 'fields_step_one', []);
+                $iconFieldsStepTwo = data_get($iconForm, 'fields_step_two', []);
+                $iconFieldsStepOneByName = collect($iconFieldsStepOne)->keyBy('name');
+                $iconFieldsStepTwoByName = collect($iconFieldsStepTwo)->keyBy('name');
+
+                $iconCardTitle = $translate(
+                    data_get($iconCard, 'title') ?? [
+                        'en' => trans('registration.icon.title', [], 'en'),
+                        'ar' => trans('registration.icon.title', [], 'ar'),
+                    ],
+                );
+                $iconCardDescription = $translate(
+                    data_get($iconCard, 'description') ?? [
+                        'en' => trans('registration.icon.description', [], 'en'),
+                        'ar' => trans('registration.icon.description', [], 'ar'),
+                    ],
+                );
+                $iconCta = $translate(
+                    data_get($iconCard, 'cta_label') ?? [
+                        'en' => trans('registration.icon.cta_label', [], 'en'),
+                        'ar' => trans('registration.icon.cta_label', [], 'ar'),
+                    ],
+                );
+                $iconFormTitle = $translate(
+                    data_get($iconForm, 'title') ?? [
+                        'en' => trans('registration.icon.form_title', [], 'en'),
+                        'ar' => trans('registration.icon.form_title', [], 'ar'),
+                    ],
+                );
+                $iconBack = $translate(
+                    data_get($iconForm, 'cta_back') ?? [
+                        'en' => trans('registration.icon.cta_back', [], 'en'),
+                        'ar' => trans('registration.icon.cta_back', [], 'ar'),
+                    ],
+                );
+                $iconSubmit = $translate(
+                    data_get($iconForm, 'cta_submit') ?? [
+                        'en' => trans('registration.icon.cta_submit', [], 'en'),
+                        'ar' => trans('registration.icon.cta_submit', [], 'ar'),
+                    ],
+                );
+
+                $fieldCopy = function ($fieldsByName, string $name, string $key, array $fallback) use ($translate) {
+                    $field = $fieldsByName->get($name);
+                    $value = $field ? data_get($field, $key) : null;
+                    return $translate($value ?? $fallback);
+                };
+
+                $fieldOptions = function ($fieldsByName, string $name, array $fallback) {
+                    $field = $fieldsByName->get($name);
+                    $options = data_get($field, 'options');
+                    return is_array($options) && count($options) ? $options : $fallback;
+                };
+                $visitorFormActive = old('form_identifier') === 'visitor';
+                $sponsorFormActive = old('form_identifier') === 'sponsor';
+                $iconFormActive = old('form_identifier') === 'icon';
+                $visitorShouldOpen = $visitorFormActive || session()->has('visitor_success');
+                $sponsorShouldOpen = $sponsorFormActive || session()->has('sponsor_success');
+                $iconShouldOpen = $iconFormActive || session()->has('icon_success');
+            @endphp
+
+            <section class="registration" id="register">
+                <div class="container">
+                    <div class="section-header" data-animate style="margin-top: 1rem; margin-bottom: 0px !important;">
+                        <h2 class="section-title" data-en="{{ e($registrationTitle['en']) }}"
+                            data-ar="{{ e($registrationTitle['ar']) }}">{{ $registrationTitle['text'] }}</h2>
                     </div>
-                </div>
-            </div>
-        </section>
-        <!-- Registration Section -->
-        @php
-            $registrationLocale = app()->getLocale();
-            $translate = function ($node, $fallback = '') use ($registrationLocale) {
-                $en = data_get($node, 'en', $fallback);
-                $ar = data_get($node, 'ar', $en);
-                return [
-                    'en' => $en,
-                    'ar' => $ar,
-                    'text' => $registrationLocale === 'ar' ? $ar : $en,
-                ];
-            };
-            $registrationTitle = $translate(data_get($registrationSection, 'title'), __('Registration'));
-            $registrationDescription = $translate(data_get($registrationSection, 'description'), '');
 
-            $visitorCard = data_get($registrationSection, 'visitor_card', []);
-            $visitorForm = data_get($registrationSection, 'visitor_form', []);
-            $visitorFields = data_get($visitorForm, 'fields', []);
-            $visitorFieldsByName = collect($visitorFields)->keyBy('name');
+                    <div class="registration-content">
+                        <div class="role-cards" id="role-cards">
 
-            $guestCardTitle = $translate(
-                data_get($visitorCard, 'title') ?? [
-                    'en' => trans('registration.guest.title', [], 'en'),
-                    'ar' => trans('registration.guest.title', [], 'ar'),
-                ],
-            );
-            $guestCardDescription = $translate(
-                data_get($visitorCard, 'description') ?? [
-                    'en' => trans('registration.guest.description', [], 'en'),
-                    'ar' => trans('registration.guest.description', [], 'ar'),
-                ],
-            );
-            $guestCta = $translate(
-                data_get($visitorCard, 'cta_label') ?? [
-                    'en' => trans('registration.guest.cta_label', [], 'en'),
-                    'ar' => trans('registration.guest.cta_label', [], 'ar'),
-                ],
-            );
-            $guestFormTitle = $translate(
-                data_get($visitorForm, 'title') ?? [
-                    'en' => trans('registration.guest.form_title', [], 'en'),
-                    'ar' => trans('registration.guest.form_title', [], 'ar'),
-                ],
-            );
-            $guestSubmit = $translate(
-                data_get($visitorForm, 'cta_submit') ?? [
-                    'en' => trans('registration.guest.cta_submit', [], 'en'),
-                    'ar' => trans('registration.guest.cta_submit', [], 'ar'),
-                ],
-            );
-            $guestContact = $translate(
-                data_get($visitorForm, 'cta_contact') ?? [
-                    'en' => trans('registration.guest.cta_contact', [], 'en'),
-                    'ar' => trans('registration.guest.cta_contact', [], 'ar'),
-                ],
-            );
-
-            $exhibitorCard = data_get($registrationSection, 'exhibitor_card', []);
-            $exhibitorCardTitle = $translate(data_get($exhibitorCard, 'title'), '');
-            $exhibitorCardDescription = $translate(data_get($exhibitorCard, 'description'), '');
-            $exhibitorCta = $translate(data_get($exhibitorCard, 'cta_label'), __('Select'));
-            $exhibitorForm = data_get($registrationSection, 'exhibitor_form', []);
-            $exhibitorFormTitle = $translate(data_get($exhibitorForm, 'title'), '');
-            $exhibitorSubmit = $translate(data_get($exhibitorForm, 'cta_submit'), __('Submit Application'));
-            $exhibitorFieldsStepOne = data_get($exhibitorForm, 'fields_step_one', []);
-            $exhibitorFieldsStepTwo = data_get($exhibitorForm, 'fields_step_two', []);
-            $exhibitorFieldsStepOneByName = collect($exhibitorFieldsStepOne)->keyBy('name');
-            $exhibitorFieldsStepTwoByName = collect($exhibitorFieldsStepTwo)->keyBy('name');
-
-            $iconCard = data_get($registrationSection, 'icon_card', []);
-            $iconForm = data_get($registrationSection, 'icon_form', []);
-            $iconFieldsStepOne = data_get($iconForm, 'fields_step_one', []);
-            $iconFieldsStepTwo = data_get($iconForm, 'fields_step_two', []);
-            $iconFieldsStepOneByName = collect($iconFieldsStepOne)->keyBy('name');
-            $iconFieldsStepTwoByName = collect($iconFieldsStepTwo)->keyBy('name');
-
-            $iconCardTitle = $translate(
-                data_get($iconCard, 'title') ?? [
-                    'en' => trans('registration.icon.title', [], 'en'),
-                    'ar' => trans('registration.icon.title', [], 'ar'),
-                ],
-            );
-            $iconCardDescription = $translate(
-                data_get($iconCard, 'description') ?? [
-                    'en' => trans('registration.icon.description', [], 'en'),
-                    'ar' => trans('registration.icon.description', [], 'ar'),
-                ],
-            );
-            $iconCta = $translate(
-                data_get($iconCard, 'cta_label') ?? [
-                    'en' => trans('registration.icon.cta_label', [], 'en'),
-                    'ar' => trans('registration.icon.cta_label', [], 'ar'),
-                ],
-            );
-            $iconFormTitle = $translate(
-                data_get($iconForm, 'title') ?? [
-                    'en' => trans('registration.icon.form_title', [], 'en'),
-                    'ar' => trans('registration.icon.form_title', [], 'ar'),
-                ],
-            );
-            $iconBack = $translate(
-                data_get($iconForm, 'cta_back') ?? [
-                    'en' => trans('registration.icon.cta_back', [], 'en'),
-                    'ar' => trans('registration.icon.cta_back', [], 'ar'),
-                ],
-            );
-            $iconSubmit = $translate(
-                data_get($iconForm, 'cta_submit') ?? [
-                    'en' => trans('registration.icon.cta_submit', [], 'en'),
-                    'ar' => trans('registration.icon.cta_submit', [], 'ar'),
-                ],
-            );
-
-            $fieldCopy = function ($fieldsByName, string $name, string $key, array $fallback) use ($translate) {
-                $field = $fieldsByName->get($name);
-                $value = $field ? data_get($field, $key) : null;
-                return $translate($value ?? $fallback);
-            };
-
-            $fieldOptions = function ($fieldsByName, string $name, array $fallback) {
-                $field = $fieldsByName->get($name);
-                $options = data_get($field, 'options');
-                return is_array($options) && count($options) ? $options : $fallback;
-            };
-            $visitorFormActive = old('form_identifier') === 'visitor';
-            $sponsorFormActive = old('form_identifier') === 'sponsor';
-            $iconFormActive = old('form_identifier') === 'icon';
-            $visitorShouldOpen = $visitorFormActive || session()->has('visitor_success');
-            $sponsorShouldOpen = $sponsorFormActive || session()->has('sponsor_success');
-            $iconShouldOpen = $iconFormActive || session()->has('icon_success');
-        @endphp
-
-        <section class="registration" id="register">
-            <div class="container">
-                <div class="section-header" data-animate style="margin-top: 1rem; margin-bottom: 0px !important;">
-                    <h2 class="section-title" data-en="{{ e($registrationTitle['en']) }}"
-                        data-ar="{{ e($registrationTitle['ar']) }}">{{ $registrationTitle['text'] }}</h2>
-                </div>
-
-                <div class="registration-content">
-                    <div class="role-cards" id="role-cards">
-
-                        <div class="role-card" id="exhibitor-card" onclick="selectRole('exhibitor')">
-                            <div class="role-icon">
-                                <svg class="icon icon-lg" viewBox="0 0 24 24">
-                                    <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z" />
-                                    <path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2" />
-                                    <path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2" />
-                                </svg>
-                            </div>
-                            <h3 class="role-title" data-en="{{ e($exhibitorCardTitle['en']) }}"
-                                data-ar="{{ e($exhibitorCardTitle['ar']) }}">{{ $exhibitorCardTitle['text'] }}</h3>
-                            <!-- <p class="role-desc" data-en="{{ e($exhibitorCardDescription['en']) }}"
+                            <div class="role-card" id="exhibitor-card" onclick="selectRole('exhibitor')">
+                                <div class="role-icon">
+                                    <svg class="icon icon-lg" viewBox="0 0 24 24">
+                                        <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z" />
+                                        <path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2" />
+                                        <path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2" />
+                                    </svg>
+                                </div>
+                                <h3 class="role-title" data-en="{{ e($exhibitorCardTitle['en']) }}"
+                                    data-ar="{{ e($exhibitorCardTitle['ar']) }}">{{ $exhibitorCardTitle['text'] }}</h3>
+                                <!-- <p class="role-desc" data-en="{{ e($exhibitorCardDescription['en']) }}"
                                 data-ar="{{ e($exhibitorCardDescription['ar']) }}">
                                 {{ $exhibitorCardDescription['text'] }}</p> -->
-                            <div class="role-cta" id="exhibitor-cta">
-                                <span data-en="Click" data-ar="Click">Click</span>
-                                <svg class="icon icon-sm" viewBox="0 0 24 24">
-                                    <path d="M5 12h14M12 5l7 7-7 7" />
-                                </svg>
+                                <div class="role-cta" id="exhibitor-cta">
+                                    <span data-en="Click" data-ar="Click">Click</span>
+                                    <svg class="icon icon-sm" viewBox="0 0 24 24">
+                                        <path d="M5 12h14M12 5l7 7-7 7" />
+                                    </svg>
+                                </div>
                             </div>
-                        </div>
 
-                        <div class="form-card" id="exhibitor-form">
-                            @if (session('sponsor_success'))
-                                <div
-                                    class="mb-4 rounded-lg border border-emerald-100 bg-emerald-50 px-3 py-2 text-sm text-emerald-900">
-                                    {{ session('sponsor_success') }}
+                            <div class="form-card" id="exhibitor-form">
+                                @if (session('sponsor_success'))
+                                    <div
+                                        class="mb-4 rounded-lg border border-emerald-100 bg-emerald-50 px-3 py-2 text-sm text-emerald-900">
+                                        {{ session('sponsor_success') }}
+                                    </div>
+                                @endif
+                                @php
+                                    $exFullNameLabel = $fieldCopy($exhibitorFieldsStepOneByName, 'full_name', 'label', [
+                                        'en' => 'Full Name *',
+                                        'ar' => 'الاسم الكامل *',
+                                    ]);
+                                    $exFullNamePlaceholder = $fieldCopy(
+                                        $exhibitorFieldsStepOneByName,
+                                        'full_name',
+                                        'placeholder',
+                                        ['en' => 'John Doe', 'ar' => 'جون دو'],
+                                    );
+                                    $exEmailLabel = $fieldCopy($exhibitorFieldsStepOneByName, 'email', 'label', [
+                                        'en' => 'Email *',
+                                        'ar' => 'البريد الإلكتروني *',
+                                    ]);
+                                    $exEmailPlaceholder = $fieldCopy(
+                                        $exhibitorFieldsStepOneByName,
+                                        'email',
+                                        'placeholder',
+                                        ['en' => 'john@company.com', 'ar' => 'john@company.com'],
+                                    );
+                                    $exPhoneLabel = $fieldCopy($exhibitorFieldsStepOneByName, 'phone', 'label', [
+                                        'en' => 'Phone *',
+                                        'ar' => 'الهاتف *',
+                                    ]);
+                                    $exPhonePlaceholder = $fieldCopy(
+                                        $exhibitorFieldsStepOneByName,
+                                        'phone',
+                                        'placeholder',
+                                        ['en' => '+966 50 000 0000', 'ar' => '+966 50 000 0000'],
+                                    );
+                                    $exJobLabel = $fieldCopy($exhibitorFieldsStepOneByName, 'job_title', 'label', [
+                                        'en' => 'Job Title *',
+                                        'ar' => 'المسمى الوظيفي *',
+                                    ]);
+                                    $exJobPlaceholder = $fieldCopy(
+                                        $exhibitorFieldsStepOneByName,
+                                        'job_title',
+                                        'placeholder',
+                                        ['en' => 'Marketing Manager', 'ar' => 'مدير التسويق'],
+                                    );
+                                    $exOrgLabel = $fieldCopy($exhibitorFieldsStepOneByName, 'organization', 'label', [
+                                        'en' => 'Company / Organization',
+                                        'ar' => 'الشركة / الجهة',
+                                    ]);
+                                    $exOrgPlaceholder = $fieldCopy(
+                                        $exhibitorFieldsStepOneByName,
+                                        'organization',
+                                        'placeholder',
+                                        ['en' => 'Umbrella Inc.', 'ar' => 'شركة أمبريلا'],
+                                    );
+
+                                    $exVatLabel = $fieldCopy($exhibitorFieldsStepTwoByName, 'vat_number', 'label', [
+                                        'en' => 'VAT (Value Added Tax)',
+                                        'ar' => 'ضريبة القيمة المضافة',
+                                    ]);
+                                    $exVatPlaceholder = $fieldCopy(
+                                        $exhibitorFieldsStepTwoByName,
+                                        'vat_number',
+                                        'placeholder',
+                                        ['en' => '300000000000003', 'ar' => '300000000000003'],
+                                    );
+                                    $exCrNumberLabel = $fieldCopy($exhibitorFieldsStepTwoByName, 'cr_number', 'label', [
+                                        'en' => 'CR Number',
+                                        'ar' => 'رقم السجل التجاري',
+                                    ]);
+                                    $exCrNumberPlaceholder = $fieldCopy(
+                                        $exhibitorFieldsStepTwoByName,
+                                        'cr_number',
+                                        'placeholder',
+                                        ['en' => '1010101010', 'ar' => '1010101010'],
+                                    );
+
+                                    $pdfHint = [
+                                        'en' => 'PDF files only (max 8MB)',
+                                        'ar' => 'ملفات PDF فقط (بحد أقصى 8 ميغابايت)',
+                                    ];
+                                    $exCrCopyLabel = $fieldCopy($exhibitorFieldsStepTwoByName, 'cr_copy', 'label', [
+                                        'en' => 'CR Copy (Commercial Registration)',
+                                        'ar' => 'نسخة السجل التجاري',
+                                    ]);
+                                    $exCrCopyHint = $fieldCopy($exhibitorFieldsStepTwoByName, 'cr_copy', 'hint', $pdfHint);
+                                    $exLogoLabel = $fieldCopy($exhibitorFieldsStepTwoByName, 'company_logo', 'label', [
+                                        'en' => 'Company Logo',
+                                        'ar' => 'شعار الشركة',
+                                    ]);
+                                    $exLogoHint = $fieldCopy(
+                                        $exhibitorFieldsStepTwoByName,
+                                        'company_logo',
+                                        'hint',
+                                        $pdfHint,
+                                    );
+                                    $exAddressLabel = $fieldCopy(
+                                        $exhibitorFieldsStepTwoByName,
+                                        'national_address_document',
+                                        'label',
+                                        ['en' => 'National Address Document', 'ar' => 'مستند العنوان الوطني'],
+                                    );
+                                    $exAddressHint = $fieldCopy(
+                                        $exhibitorFieldsStepTwoByName,
+                                        'national_address_document',
+                                        'hint',
+                                        $pdfHint,
+                                    );
+                                @endphp
+                                <h3 class="form-title" data-en="{{ e($exhibitorFormTitle['en']) }}"
+                                    data-ar="{{ e($exhibitorFormTitle['ar']) }}">{{ $exhibitorFormTitle['text'] }}</h3>
+                                <form id="sponsor-registration-form" method="POST"
+                                    action="{{ route('public.register.sponsor', ['locale' => $locale]) }}"
+                                    enctype="multipart/form-data" novalidate
+                                    data-success-title="{{ e(__('registration.sponsor.toast_title')) }}"
+                                    data-success-message="{{ e(__('registration.sponsor.success')) }}">
+                                    <div class="form-buttons"
+                                        style="justify-content: flex-start; margin-bottom: 0.75rem; width: 50%!important; margin: auto;">
+                                        <a class="btn btn-outline"
+                                            href="https://umbrella.sa/iec360/pdf/privacy-policy.pdf" target="_blank"
+                                            rel="noopener" data-en="Download SPONSOR Profile"
+                                            data-ar="Download SPONSOR Profile">Download SPONSOR Profile</a>
+                                    </div>
+                                    @csrf
+                                    <input type="hidden" name="form_identifier" value="sponsor">
+                                    <div>
+                                        <div class="form-grid form-grid-2">
+                                            <div class="form-group">
+                                                <label class="form-label" data-en="{{ e($exFullNameLabel['en']) }}"
+                                                    data-ar="{{ e($exFullNameLabel['ar']) }}">{{ $exFullNameLabel['text'] }}</label>
+                                                <input type="text" name="full_name" class="form-input" required
+                                                    placeholder="{{ $exFullNamePlaceholder['text'] }}"
+                                                    value="{{ $sponsorFormActive ? old('full_name') : '' }}">
+                                                @if ($sponsorFormActive && $errors->has('full_name'))
+                                                    <p class="mt-1 text-xs text-red-600">{{ $errors->first('full_name') }}
+                                                    </p>
+                                                @endif
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-label" data-en="{{ e($exEmailLabel['en']) }}"
+                                                    data-ar="{{ e($exEmailLabel['ar']) }}">{{ $exEmailLabel['text'] }}</label>
+                                                <input type="email" name="email" class="form-input" required
+                                                    placeholder="{{ $exEmailPlaceholder['text'] }}"
+                                                    value="{{ $sponsorFormActive ? old('email') : '' }}">
+                                                @if ($sponsorFormActive && $errors->has('email'))
+                                                    <p class="mt-1 text-xs text-red-600">{{ $errors->first('email') }}</p>
+                                                @endif
+                                            </div>
+                                        </div>
+                                        <div class="form-grid form-grid-2" style="margin-top: 1rem;">
+                                            <div class="form-group">
+                                                <label class="form-label" data-en="{{ e($exPhoneLabel['en']) }}"
+                                                    data-ar="{{ e($exPhoneLabel['ar']) }}">{{ $exPhoneLabel['text'] }}</label>
+                                                <input type="tel" name="phone" class="form-input" required
+                                                    placeholder="{{ $exPhonePlaceholder['text'] }}"
+                                                    value="{{ $sponsorFormActive ? old('phone') : '' }}">
+                                                @if ($sponsorFormActive && $errors->has('phone'))
+                                                    <p class="mt-1 text-xs text-red-600">{{ $errors->first('phone') }}</p>
+                                                @endif
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-label" data-en="{{ e($exJobLabel['en']) }}"
+                                                    data-ar="{{ e($exJobLabel['ar']) }}">{{ $exJobLabel['text'] }}</label>
+                                                <input type="text" name="job_title" class="form-input" required
+                                                    placeholder="{{ $exJobPlaceholder['text'] }}"
+                                                    value="{{ $sponsorFormActive ? old('job_title') : '' }}">
+                                                @if ($sponsorFormActive && $errors->has('job_title'))
+                                                    <p class="mt-1 text-xs text-red-600">{{ $errors->first('job_title') }}
+                                                    </p>
+                                                @endif
+                                            </div>
+                                        </div>
+                                        <div class="form-grid" style="margin-top:1rem;">
+                                            <div class="form-group">
+                                                <label class="form-label" data-en="{{ e($exOrgLabel['en']) }}"
+                                                    data-ar="{{ e($exOrgLabel['ar']) }}">{{ $exOrgLabel['text'] }}</label>
+                                                <input type="text" name="organization" class="form-input"
+                                                    placeholder="{{ $exOrgPlaceholder['text'] }}"
+                                                    value="{{ $sponsorFormActive ? old('organization') : '' }}">
+                                                @if ($sponsorFormActive && $errors->has('organization'))
+                                                    <p class="mt-1 text-xs text-red-600">
+                                                        {{ $errors->first('organization') }}
+                                                    </p>
+                                                @endif
+                                            </div>
+                                        </div>
+
+                                        <div class="form-grid form-grid-2">
+                                            <div class="form-group">
+                                                <label class="form-label" data-en="{{ e($exVatLabel['en']) }}"
+                                                    data-ar="{{ e(value: $exVatLabel['ar']) }}">{{ $exVatLabel['text'] }}</label>
+                                                <input type="text" name="vat_number" class="form-input"
+                                                    placeholder="{{ $exVatPlaceholder['text'] }}"
+                                                    value="{{ $sponsorFormActive ? old('vat_number') : '' }}">
+                                                @if ($sponsorFormActive && $errors->has('vat_number'))
+                                                    <p class="mt-1 text-xs text-red-600">
+                                                        {{ $errors->first('vat_number') }}
+                                                    </p>
+                                                @endif
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-label" data-en="{{ e($exCrNumberLabel['en']) }}"
+                                                    data-ar="{{ e($exCrNumberLabel['ar']) }}">{{ $exCrNumberLabel['text'] }}</label>
+                                                <input type="text" name="cr_number" class="form-input"
+                                                    placeholder="{{ $exCrNumberPlaceholder['text'] }}"
+                                                    value="{{ $sponsorFormActive ? old('cr_number') : '' }}">
+                                                @if ($sponsorFormActive && $errors->has('cr_number'))
+                                                    <p class="mt-1 text-xs text-red-600">{{ $errors->first('cr_number') }}
+                                                    </p>
+                                                @endif
+                                            </div>
+                                        </div>
+                                        <div class="form-grid form-grid-2" style="margin-top: 1rem;">
+                                            <div class="form-group">
+                                                <label class="form-label" data-en="{{ e($exCrCopyLabel['en']) }}"
+                                                    data-ar="{{ e($exCrCopyLabel['ar']) }}">{{ $exCrCopyLabel['text'] }}</label>
+                                                <input type="file" name="cr_copy" class="form-input"
+                                                    accept="application/pdf,image/png,image/jpeg">
+                                                <span class="form-hint" data-en="{{ e($exCrCopyHint['en']) }}"
+                                                    data-ar="{{ e($exCrCopyHint['ar']) }}">{{ $exCrCopyHint['text'] }}</span>
+                                                @if ($sponsorFormActive && $errors->has('cr_copy'))
+                                                    <p class="mt-1 text-xs text-red-600">{{ $errors->first('cr_copy') }}
+                                                    </p>
+                                                @endif
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-label" data-en="{{ e($exLogoLabel['en']) }}"
+                                                    data-ar="{{ e($exLogoLabel['ar']) }}">{{ $exLogoLabel['text'] }}</label>
+                                                <input type="file" name="company_logo" class="form-input"
+                                                    accept="application/pdf">
+                                                <span class="form-hint" data-en="{{ e($exLogoHint['en']) }}"
+                                                    data-ar="{{ e($exLogoHint['ar']) }}">{{ $exLogoHint['text'] }}</span>
+                                                @if ($sponsorFormActive && $errors->has('company_logo'))
+                                                    <p class="mt-1 text-xs text-red-600">
+                                                        {{ $errors->first('company_logo') }}
+                                                    </p>
+                                                @endif
+                                            </div>
+                                        </div>
+                                        <div class="form-grid form-grid-2" style="margin-top: 1rem;">
+                                            <div class="form-group">
+                                                <label class="form-label" data-en="{{ e($exAddressLabel['en']) }}"
+                                                    data-ar="{{ e($exAddressLabel['ar']) }}">{{ $exAddressLabel['text'] }}</label>
+                                                <input type="file" name="national_address_document" class="form-input"
+                                                    accept="application/pdf,image/png,image/jpeg">
+                                                <span class="form-hint" data-en="{{ e($exAddressHint['en']) }}"
+                                                    data-ar="{{ e($exAddressHint['ar']) }}">{{ $exAddressHint['text'] }}</span>
+                                                @if ($sponsorFormActive && $errors->has('national_address_document'))
+                                                    <p class="mt-1 text-xs text-red-600">
+                                                        {{ $errors->first('national_address_document') }}
+                                                    </p>
+                                                @endif
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group" style="margin-top: 1rem;">
+                                            <label class="form-label"
+                                                style="flex-direction: row; align-items: center; gap: 0.5rem;">
+                                                <input type="checkbox" name="privacy_policy" value="1" required
+                                                    @checked($sponsorFormActive && old('privacy_policy'))>
+                                                <span data-en="I accept the privacy policy"
+                                                    data-ar="أوافق على شروط الخصوصية">I accept the privacy policy</span>
+                                                <a class="blue-url-style" href="{{ asset('pdf/privacy-policy.pdf') }}"
+                                                    target="_blank" rel="noopener" download data-en="Download from here"
+                                                    data-ar="يمكنك تحميل الملف من هنا">Download from here</a>
+                                            </label>
+                                            @if ($sponsorFormActive && $errors->has('privacy_policy'))
+                                                <p class="mt-1 text-xs text-red-600">
+                                                    {{ $errors->first('privacy_policy') }}
+                                                </p>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="form-buttons">
+                                        <button type="button" class="btn btn-outline" onclick="clearRole()">
+                                            <svg class="icon icon-sm" style="margin-right: 0.5rem;" viewBox="0 0 24 24">
+                                                <path d="M19 12H5M12 19l-7-7 7-7" />
+                                            </svg>
+                                            <span data-en="Back" data-ar="Back">{{ __('Back') }}</span>
+                                        </button>
+                                        <button type="submit" class="btn btn-primary"
+                                            data-en="{{ e($exhibitorSubmit['en']) }}"
+                                            data-ar="{{ e($exhibitorSubmit['ar']) }}">{{ $exhibitorSubmit['text'] }}</button>
+                                        <button type="button" class="btn btn-outline" onclick="scrollToContact()"
+                                            data-en="{{ e($guestContact['en']) }}"
+                                            data-ar="{{ e($guestContact['ar']) }}">{{ $guestContact['text'] }}</button>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div class="role-card" id="icon-card" onclick="selectRole('icon')">
+                                <div class="role-icon">
+                                    <svg class="icon icon-lg" viewBox="0 0 24 24">
+                                        <path
+                                            d="M12 2l2.4 4.9 5.4.8-3.9 3.8.9 5.4L12 14.9 7.3 16.9l.9-5.4L4.3 7.7l5.4-.8L12 2Z" />
+                                    </svg>
                                 </div>
-                            @endif
-                            @php
-                                $exFullNameLabel = $fieldCopy($exhibitorFieldsStepOneByName, 'full_name', 'label', [
-                                    'en' => 'Full Name *',
-                                    'ar' => 'الاسم الكامل *',
-                                ]);
-                                $exFullNamePlaceholder = $fieldCopy(
-                                    $exhibitorFieldsStepOneByName,
-                                    'full_name',
-                                    'placeholder',
-                                    ['en' => 'John Doe', 'ar' => 'جون دو'],
-                                );
-                                $exEmailLabel = $fieldCopy($exhibitorFieldsStepOneByName, 'email', 'label', [
-                                    'en' => 'Email *',
-                                    'ar' => 'البريد الإلكتروني *',
-                                ]);
-                                $exEmailPlaceholder = $fieldCopy(
-                                    $exhibitorFieldsStepOneByName,
-                                    'email',
-                                    'placeholder',
-                                    ['en' => 'john@company.com', 'ar' => 'john@company.com'],
-                                );
-                                $exPhoneLabel = $fieldCopy($exhibitorFieldsStepOneByName, 'phone', 'label', [
-                                    'en' => 'Phone *',
-                                    'ar' => 'الهاتف *',
-                                ]);
-                                $exPhonePlaceholder = $fieldCopy(
-                                    $exhibitorFieldsStepOneByName,
-                                    'phone',
-                                    'placeholder',
-                                    ['en' => '+966 50 000 0000', 'ar' => '+966 50 000 0000'],
-                                );
-                                $exJobLabel = $fieldCopy($exhibitorFieldsStepOneByName, 'job_title', 'label', [
-                                    'en' => 'Job Title *',
-                                    'ar' => 'المسمى الوظيفي *',
-                                ]);
-                                $exJobPlaceholder = $fieldCopy(
-                                    $exhibitorFieldsStepOneByName,
-                                    'job_title',
-                                    'placeholder',
-                                    ['en' => 'Marketing Manager', 'ar' => 'مدير التسويق'],
-                                );
-                                $exOrgLabel = $fieldCopy($exhibitorFieldsStepOneByName, 'organization', 'label', [
-                                    'en' => 'Company / Organization',
-                                    'ar' => 'الشركة / الجهة',
-                                ]);
-                                $exOrgPlaceholder = $fieldCopy(
-                                    $exhibitorFieldsStepOneByName,
-                                    'organization',
-                                    'placeholder',
-                                    ['en' => 'Umbrella Inc.', 'ar' => 'شركة أمبريلا'],
-                                );
-
-                                $exVatLabel = $fieldCopy($exhibitorFieldsStepTwoByName, 'vat_number', 'label', [
-                                    'en' => 'VAT (Value Added Tax)',
-                                    'ar' => 'ضريبة القيمة المضافة',
-                                ]);
-                                $exVatPlaceholder = $fieldCopy(
-                                    $exhibitorFieldsStepTwoByName,
-                                    'vat_number',
-                                    'placeholder',
-                                    ['en' => '300000000000003', 'ar' => '300000000000003'],
-                                );
-                                $exCrNumberLabel = $fieldCopy($exhibitorFieldsStepTwoByName, 'cr_number', 'label', [
-                                    'en' => 'CR Number',
-                                    'ar' => 'رقم السجل التجاري',
-                                ]);
-                                $exCrNumberPlaceholder = $fieldCopy(
-                                    $exhibitorFieldsStepTwoByName,
-                                    'cr_number',
-                                    'placeholder',
-                                    ['en' => '1010101010', 'ar' => '1010101010'],
-                                );
-
-                                $pdfHint = [
-                                    'en' => 'PDF files only (max 8MB)',
-                                    'ar' => 'ملفات PDF فقط (بحد أقصى 8 ميغابايت)',
-                                ];
-                                $exCrCopyLabel = $fieldCopy($exhibitorFieldsStepTwoByName, 'cr_copy', 'label', [
-                                    'en' => 'CR Copy (Commercial Registration)',
-                                    'ar' => 'نسخة السجل التجاري',
-                                ]);
-                                $exCrCopyHint = $fieldCopy($exhibitorFieldsStepTwoByName, 'cr_copy', 'hint', $pdfHint);
-                                $exLogoLabel = $fieldCopy($exhibitorFieldsStepTwoByName, 'company_logo', 'label', [
-                                    'en' => 'Company Logo',
-                                    'ar' => 'شعار الشركة',
-                                ]);
-                                $exLogoHint = $fieldCopy(
-                                    $exhibitorFieldsStepTwoByName,
-                                    'company_logo',
-                                    'hint',
-                                    $pdfHint,
-                                );
-                                $exAddressLabel = $fieldCopy(
-                                    $exhibitorFieldsStepTwoByName,
-                                    'national_address_document',
-                                    'label',
-                                    ['en' => 'National Address Document', 'ar' => 'مستند العنوان الوطني'],
-                                );
-                                $exAddressHint = $fieldCopy(
-                                    $exhibitorFieldsStepTwoByName,
-                                    'national_address_document',
-                                    'hint',
-                                    $pdfHint,
-                                );
-                            @endphp
-                            <h3 class="form-title" data-en="{{ e($exhibitorFormTitle['en']) }}"
-                                data-ar="{{ e($exhibitorFormTitle['ar']) }}">{{ $exhibitorFormTitle['text'] }}</h3>
-                            <form id="sponsor-registration-form" method="POST"
-                                action="{{ route('public.register.sponsor', ['locale' => $locale]) }}"
-                                enctype="multipart/form-data" novalidate
-                                data-success-title="{{ e(__('registration.sponsor.toast_title')) }}"
-                                data-success-message="{{ e(__('registration.sponsor.success')) }}">
-                                <div class="form-buttons"
-                                    style="justify-content: flex-start; margin-bottom: 0.75rem; width: 50%!important; margin: auto;">
-                                    <a class="btn btn-outline"
-                                        href="https://umbrella.sa/iec360/pdf/privacy-policy.pdf" target="_blank"
-                                        rel="noopener" data-en="Download SPONSOR Profile"
-                                        data-ar="Download SPONSOR Profile">Download SPONSOR Profile</a>
+                                <h3 class="role-title" data-en="{{ e($iconCardTitle['en']) }}"
+                                    data-ar="{{ e($iconCardTitle['ar']) }}">{{ $iconCardTitle['text'] }}</h3>
+                                <!-- <p class="role-desc" data-en="{{ e($iconCardDescription['en']) }}"
+                                data-ar="{{ e($iconCardDescription['ar']) }}">{{ $iconCardDescription['text'] }}</p> -->
+                                <div class="role-cta" id="icon-cta">
+                                    <span data-en="Click" data-ar="Click">Click</span>
+                                    <svg class="icon icon-sm" viewBox="0 0 24 24">
+                                        <path d="M5 12h14M12 5l7 7-7 7" />
+                                    </svg>
                                 </div>
-                                @csrf
-                                <input type="hidden" name="form_identifier" value="sponsor">
-                                <div>
+                            </div>
+
+                            <div class="form-card" id="icon-form">
+
+                                @if (session('icon_success'))
+                                    <div
+                                        class="mb-4 rounded-lg border border-emerald-100 bg-emerald-50 px-3 py-2 text-sm text-emerald-900">
+                                        {{ session('icon_success') }}
+                                    </div>
+                                @endif
+                                @php
+                                    $iconFullNameLabel = $fieldCopy($iconFieldsStepOneByName, 'full_name', 'label', [
+                                        'en' => 'Full Name *',
+                                        'ar' => 'الاسم الكامل *',
+                                    ]);
+                                    $iconFullNamePlaceholder = $fieldCopy(
+                                        $iconFieldsStepOneByName,
+                                        'full_name',
+                                        'placeholder',
+                                        ['en' => 'John Doe', 'ar' => 'جون دو'],
+                                    );
+                                    $iconEmailLabel = $fieldCopy($iconFieldsStepOneByName, 'email', 'label', [
+                                        'en' => 'Email *',
+                                        'ar' => 'البريد الإلكتروني *',
+                                    ]);
+                                    $iconEmailPlaceholder = $fieldCopy($iconFieldsStepOneByName, 'email', 'placeholder', [
+                                        'en' => 'john@company.com',
+                                        'ar' => 'john@company.com',
+                                    ]);
+                                    $iconPhoneLabel = $fieldCopy($iconFieldsStepOneByName, 'phone', 'label', [
+                                        'en' => 'Phone *',
+                                        'ar' => 'الهاتف *',
+                                    ]);
+                                    $iconPhonePlaceholder = $fieldCopy($iconFieldsStepOneByName, 'phone', 'placeholder', [
+                                        'en' => '+966 50 000 0000',
+                                        'ar' => '+966 50 000 0000',
+                                    ]);
+                                    $iconJobLabel = $fieldCopy($iconFieldsStepOneByName, 'job_title', 'label', [
+                                        'en' => 'Job Title *',
+                                        'ar' => 'المسمى الوظيفي *',
+                                    ]);
+                                    $iconJobPlaceholder = $fieldCopy($iconFieldsStepOneByName, 'job_title', 'placeholder', [
+                                        'en' => 'Marketing Manager',
+                                        'ar' => 'مدير التسويق',
+                                    ]);
+                                    $iconOrgLabel = $fieldCopy($iconFieldsStepOneByName, 'organization', 'label', [
+                                        'en' => 'Company / Organization',
+                                        'ar' => 'الشركة / الجهة',
+                                    ]);
+                                    $iconOrgPlaceholder = $fieldCopy(
+                                        $iconFieldsStepOneByName,
+                                        'organization',
+                                        'placeholder',
+                                        ['en' => 'Umbrella Inc.', 'ar' => 'شركة أمبريلا'],
+                                    );
+                                    $iconLocationLabel = $fieldCopy(
+                                        $iconFieldsStepOneByName,
+                                        'location_selection',
+                                        'label',
+                                        [
+                                            'en' => trans('registration.icon.book_location', [], 'en'),
+                                            'ar' => trans('registration.icon.book_location', [], 'ar'),
+                                        ],
+                                    );
+                                    $iconLocationPlaceholder = $fieldCopy(
+                                        $iconFieldsStepOneByName,
+                                        'location_selection',
+                                        'placeholder',
+                                        ['en' => 'Select on the hall map', 'ar' => 'حدد على خريطة المعرض'],
+                                    );
+
+                                    $iconVatLabel = $fieldCopy($iconFieldsStepTwoByName, 'vat_number', 'label', [
+                                        'en' => trans('registration.icon.vat_number', [], 'en'),
+                                        'ar' => trans('registration.icon.vat_number', [], 'ar'),
+                                    ]);
+                                    $iconVatPlaceholder = $fieldCopy(
+                                        $iconFieldsStepTwoByName,
+                                        'vat_number',
+                                        'placeholder',
+                                        ['en' => '300000000000003', 'ar' => '300000000000003'],
+                                    );
+                                    $iconCrLabel = $fieldCopy($iconFieldsStepTwoByName, 'cr_number', 'label', [
+                                        'en' => trans('registration.icon.cr_number', [], 'en'),
+                                        'ar' => trans('registration.icon.cr_number', [], 'ar'),
+                                    ]);
+                                    $iconCrPlaceholder = $fieldCopy($iconFieldsStepTwoByName, 'cr_number', 'placeholder', [
+                                        'en' => '1010101010',
+                                        'ar' => '1010101010',
+                                    ]);
+
+                                    $iconCrCopyLabel = $fieldCopy($iconFieldsStepTwoByName, 'cr_copy', 'label', [
+                                        'en' => trans('registration.icon.cr_copy', [], 'en'),
+                                        'ar' => trans('registration.icon.cr_copy', [], 'ar'),
+                                    ]);
+                                    $iconCrCopyHint = $fieldCopy($iconFieldsStepTwoByName, 'cr_copy', 'hint', $pdfHint);
+                                    $iconLogoLabel = $fieldCopy($iconFieldsStepTwoByName, 'company_logo', 'label', [
+                                        'en' => trans('registration.icon.company_logo', [], 'en'),
+                                        'ar' => trans('registration.icon.company_logo', [], 'ar'),
+                                    ]);
+                                    $iconLogoHint = $fieldCopy($iconFieldsStepTwoByName, 'company_logo', 'hint', $pdfHint);
+                                    $iconAddressLabel = $fieldCopy(
+                                        $iconFieldsStepTwoByName,
+                                        'national_address_document',
+                                        'label',
+                                        [
+                                            'en' => trans('registration.icon.national_address_document', [], 'en'),
+                                            'ar' => trans('registration.icon.national_address_document', [], 'ar'),
+                                        ],
+                                    );
+                                    $iconAddressHint = $fieldCopy(
+                                        $iconFieldsStepTwoByName,
+                                        'national_address_document',
+                                        'hint',
+                                        $pdfHint,
+                                    );
+                                @endphp
+                                <h3 class="form-title" data-en="{{ e($iconFormTitle['en']) }}"
+                                    data-ar="{{ e($iconFormTitle['ar']) }}">{{ $iconFormTitle['text'] }}</h3>
+                                <form id="icon-registration-form" method="POST"
+                                    action="{{ \Illuminate\Support\Facades\Route::has('public.register.icon') ? route('public.register.icon', ['locale' => $locale]) : '#' }}"
+                                    enctype="multipart/form-data" novalidate
+                                    data-success-title="{{ e(__('registration.icon.toast_title')) }}"
+                                    data-success-message="{{ e(__('registration.icon.success')) }}">
+                                    @csrf
+                                    <input type="hidden" name="form_identifier" value="icon">
+                                    <div class="form-buttons"
+                                        style="justify-content: flex-start; margin-bottom: 0.75rem; width: 50%!important; margin: auto;">
+                                        <a class="btn btn-outline"
+                                            href="https://umbrella.sa/iec360/pdf/privacy-policy.pdf" target="_blank"
+                                            rel="noopener" data-en="Download ICON Profile"
+                                            data-ar="Download ICON Profile">Download ICON Profile</a>
+                                    </div>
+                                    <div>
+                                        <div class="form-grid form-grid-2">
+                                            <div class="form-group">
+                                                <label class="form-label" data-en="{{ e($iconFullNameLabel['en']) }}"
+                                                    data-ar="{{ e($iconFullNameLabel['ar']) }}">{{ $iconFullNameLabel['text'] }}</label>
+                                                <input type="text" name="full_name" class="form-input" required
+                                                    placeholder="{{ $iconFullNamePlaceholder['text'] }}"
+                                                    value="{{ $iconFormActive ? old('full_name') : '' }}">
+                                                @if ($iconFormActive && $errors->has('full_name'))
+                                                    <p class="mt-1 text-xs text-red-600">
+                                                        {{ $errors->first('full_name') }}
+                                                    </p>
+                                                @endif
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-label" data-en="{{ e($iconEmailLabel['en']) }}"
+                                                    data-ar="{{ e($iconEmailLabel['ar']) }}">{{ $iconEmailLabel['text'] }}</label>
+                                                <input type="email" name="email" class="form-input" required
+                                                    placeholder="{{ $iconEmailPlaceholder['text'] }}"
+                                                    value="{{ $iconFormActive ? old('email') : '' }}">
+                                                @if ($iconFormActive && $errors->has('email'))
+                                                    <p class="mt-1 text-xs text-red-600">{{ $errors->first('email') }}
+                                                    </p>
+                                                @endif
+                                            </div>
+                                        </div>
+                                        <div class="form-grid form-grid-2" style="margin-top: 1rem;">
+                                            <div class="form-group">
+                                                <label class="form-label" data-en="{{ e($iconPhoneLabel['en']) }}"
+                                                    data-ar="{{ e($iconPhoneLabel['ar']) }}">{{ $iconPhoneLabel['text'] }}</label>
+                                                <input type="tel" name="phone" class="form-input" required
+                                                    placeholder="{{ $iconPhonePlaceholder['text'] }}"
+                                                    value="{{ $iconFormActive ? old('phone') : '' }}">
+                                                @if ($iconFormActive && $errors->has('phone'))
+                                                    <p class="mt-1 text-xs text-red-600">{{ $errors->first('phone') }}
+                                                    </p>
+                                                @endif
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-label" data-en="{{ e($iconJobLabel['en']) }}"
+                                                    data-ar="{{ e($iconJobLabel['ar']) }}">{{ $iconJobLabel['text'] }}</label>
+                                                <input type="text" name="job_title" class="form-input" required
+                                                    placeholder="{{ $iconJobPlaceholder['text'] }}"
+                                                    value="{{ $iconFormActive ? old('job_title') : '' }}">
+                                                @if ($iconFormActive && $errors->has('job_title'))
+                                                    <p class="mt-1 text-xs text-red-600">
+                                                        {{ $errors->first('job_title') }}
+                                                    </p>
+                                                @endif
+                                            </div>
+                                        </div>
+                                        <div class="form-grid" style="margin-top:1rem;">
+                                            <div class="form-group">
+                                                <label class="form-label" data-en="{{ e($iconOrgLabel['en']) }}"
+                                                    data-ar="{{ e($iconOrgLabel['ar']) }}">{{ $iconOrgLabel['text'] }}</label>
+                                                <input type="text" name="organization" class="form-input"
+                                                    placeholder="{{ $iconOrgPlaceholder['text'] }}"
+                                                    value="{{ $iconFormActive ? old('organization') : '' }}">
+                                                @if ($iconFormActive && $errors->has('organization'))
+                                                    <p class="mt-1 text-xs text-red-600">
+                                                        {{ $errors->first('organization') }}
+                                                    </p>
+                                                @endif
+                                            </div>
+                                        </div>
+                                        <div class="form-grid" style="margin-top:1rem;">
+                                            <div class="form-group">
+                                                <label class="form-label" data-en="{{ e($iconLocationLabel['en']) }}"
+                                                    data-ar="{{ e($iconLocationLabel['ar']) }}">
+                                                    {{ $iconLocationLabel['text'] }}
+                                                </label>
+                                                <div class="flex gap-3 flex-col sm:flex-row">
+                                                    <input type="text" id="icon-location-selection"
+                                                        name="location_selection" class="form-input flex-1" required
+                                                        readonly placeholder="{{ $iconLocationPlaceholder['text'] }}"
+                                                        value="{{ $iconFormActive ? old('location_selection') : '' }}">
+                                                    <button type="button" class="btn btn-outline flex-none"
+                                                        onclick="openHallDesign('icon-location-selection')">
+                                                        <span data-en="Open hall map" data-ar="فتح خريطة المعرض">Open
+                                                            hall
+                                                            map</span>
+                                                    </button>
+                                                </div>
+                                                @if ($iconFormActive && $errors->has('location_selection'))
+                                                    <p class="mt-1 text-xs text-red-600">
+                                                        {{ $errors->first('location_selection') }}
+                                                    </p>
+                                                @endif
+                                            </div>
+                                        </div>
+
+                                        <div class="form-grid form-grid-2">
+                                            <div class="form-group">
+                                                <label class="form-label" data-en="{{ e($iconVatLabel['en']) }}"
+                                                    data-ar="{{ e($iconVatLabel['ar']) }}">{{ $iconVatLabel['text'] }}</label>
+                                                <input type="text" name="vat_number" class="form-input"
+                                                    placeholder="{{ $iconVatPlaceholder['text'] }}"
+                                                    value="{{ $iconFormActive ? old('vat_number') : '' }}">
+                                                @if ($iconFormActive && $errors->has('vat_number'))
+                                                    <p class="mt-1 text-xs text-red-600">
+                                                        {{ $errors->first('vat_number') }}
+                                                    </p>
+                                                @endif
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-label" data-en="{{ e($iconCrLabel['en']) }}"
+                                                    data-ar="{{ e($iconCrLabel['ar']) }}">{{ $iconCrLabel['text'] }}</label>
+                                                <input type="text" name="cr_number" class="form-input"
+                                                    placeholder="{{ $iconCrPlaceholder['text'] }}"
+                                                    value="{{ $iconFormActive ? old('cr_number') : '' }}">
+                                                @if ($iconFormActive && $errors->has('cr_number'))
+                                                    <p class="mt-1 text-xs text-red-600">
+                                                        {{ $errors->first('cr_number') }}
+                                                    </p>
+                                                @endif
+                                            </div>
+                                        </div>
+                                        <div class="form-grid form-grid-2" style="margin-top: 1rem;">
+                                            <div class="form-group">
+                                                <label class="form-label" data-en="{{ e($iconCrCopyLabel['en']) }}"
+                                                    data-ar="{{ e($iconCrCopyLabel['ar']) }}">{{ $iconCrCopyLabel['text'] }}</label>
+                                                <input type="file" name="cr_copy" class="form-input"
+                                                    accept="application/pdf,image/png,image/jpeg">
+                                                <span class="form-hint" data-en="{{ e($iconCrCopyHint['en']) }}"
+                                                    data-ar="{{ e($iconCrCopyHint['ar']) }}">{{ $iconCrCopyHint['text'] }}</span>
+                                                @if ($iconFormActive && $errors->has('cr_copy'))
+                                                    <p class="mt-1 text-xs text-red-600">{{ $errors->first('cr_copy') }}
+                                                    </p>
+                                                @endif
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="form-label" data-en="{{ e($iconLogoLabel['en']) }}"
+                                                    data-ar="{{ e($iconLogoLabel['ar']) }}">{{ $iconLogoLabel['text'] }}</label>
+                                                <input type="file" name="company_logo" class="form-input"
+                                                    accept="application/pdf">
+                                                <span class="form-hint" data-en="{{ e($iconLogoHint['en']) }}"
+                                                    data-ar="{{ e($iconLogoHint['ar']) }}">{{ $iconLogoHint['text'] }}</span>
+                                                @if ($iconFormActive && $errors->has('company_logo'))
+                                                    <p class="mt-1 text-xs text-red-600">
+                                                        {{ $errors->first('company_logo') }}
+                                                    </p>
+                                                @endif
+                                            </div>
+                                        </div>
+                                        <div class="form-grid form-grid-2" style="margin-top: 1rem;">
+                                            <div class="form-group">
+                                                <label class="form-label" data-en="{{ e($iconAddressLabel['en']) }}"
+                                                    data-ar="{{ e($iconAddressLabel['ar']) }}">{{ $iconAddressLabel['text'] }}</label>
+                                                <input type="file" name="national_address_document" class="form-input"
+                                                    accept="application/pdf,image/png,image/jpeg">
+                                                <span class="form-hint" data-en="{{ e($iconAddressHint['en']) }}"
+                                                    data-ar="{{ e($iconAddressHint['ar']) }}">{{ $iconAddressHint['text'] }}</span>
+                                                @if ($iconFormActive && $errors->has('national_address_document'))
+                                                    <p class="mt-1 text-xs text-red-600">
+                                                        {{ $errors->first('national_address_document') }}
+                                                    </p>
+                                                @endif
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group" style="margin-top: 1rem;">
+                                            <label class="form-label"
+                                                style="flex-direction: row; align-items: center; gap: 0.5rem;">
+                                                <input type="checkbox" name="privacy_policy" value="1" required
+                                                    @checked($iconFormActive && old('privacy_policy'))>
+                                                <span data-en="I accept the privacy policy"
+                                                    data-ar="أوافق على شروط الخصوصية">I accept the privacy policy</span>
+                                                <a class="blue-url-style" href="{{ asset('pdf/privacy-policy.pdf') }}"
+                                                    target="_blank" rel="noopener" download data-en="Download from here"
+                                                    data-ar="يمكنك تحميل الملف من هنا">Download from here</a>
+                                                @if ($iconFormActive && $errors->has('privacy_policy'))
+                                                    <p class="mt-1 text-xs text-red-600">
+                                                        {{ $errors->first('privacy_policy') }}
+                                                    </p>
+                                                @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="form-buttons">
+                                        <button type="button" class="btn btn-outline" onclick="clearRole()">
+                                            <svg class="icon icon-sm" style="margin-right: 0.5rem;" viewBox="0 0 24 24">
+                                                <path d="M19 12H5M12 19l-7-7 7-7" />
+                                            </svg>
+                                            <span data-en="{{ e($iconBack['en']) }}"
+                                                data-ar="{{ e($iconBack['ar']) }}">{{ $iconBack['text'] }}</span>
+                                        </button>
+                                        <button type="submit" class="btn btn-primary"
+                                            data-en="{{ e($iconSubmit['en']) }}"
+                                            data-ar="{{ e($iconSubmit['ar']) }}">{{ $iconSubmit['text'] }}</button>
+                                        <button type="button" class="btn btn-outline" onclick="scrollToContact()"
+                                            data-en="{{ e($guestContact['en']) }}"
+                                            data-ar="{{ e($guestContact['ar']) }}">{{ $guestContact['text'] }}</button>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div class="row-logo" id="guest-row-logo">
+                                <img src="{{ asset('img/IEC-logo.png') }}" alt="IEC Logo" style="text-align:center">
+                            </div>
+
+                            <div class="role-card guest-card" id="visitor-card" onclick="selectRole('visitor')">
+                                <div class="role-icon">
+                                    <svg class="icon icon-lg" viewBox="0 0 24 24">
+                                        <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
+                                        <circle cx="12" cy="7" r="4" />
+                                    </svg>
+                                </div>
+                                <h3 class="role-title" data-en="{{ e($guestCardTitle['en']) }}"
+                                    data-ar="{{ e($guestCardTitle['ar']) }}">{{ $guestCardTitle['text'] }}</h3>
+                                <!-- <p class="role-desc" data-en="{{ e($guestCardDescription['en']) }}"
+                                data-ar="{{ e($guestCardDescription['ar']) }}">{{ $guestCardDescription['text'] }}</p> -->
+                                <div class="role-cta" id="visitor-cta">
+                                    <span data-en="Click" data-ar="Click">Click</span>
+                                    <svg class="icon icon-sm" viewBox="0 0 24 24">
+                                        <path d="M5 12h14M12 5l7 7-7 7" />
+                                    </svg>
+                                </div>
+                            </div>
+                            <div class="form-card guest-form" id="visitor-form">
+                                @if (session('visitor_success'))
+                                    <div
+                                        class="mb-4 rounded-lg border border-emerald-100 bg-emerald-50 px-3 py-2 text-sm text-emerald-900">
+                                        {{ session('visitor_success') }}
+                                    </div>
+                                @endif
+                                @php
+                                    $guestFullNameLabel = $fieldCopy($visitorFieldsByName, 'full_name', 'label', [
+                                        'en' => 'Full
+                                                                Name *',
+                                        'ar' => 'الاسم الكامل *',
+                                    ]);
+                                    $guestFullNamePlaceholder = $fieldCopy(
+                                        $visitorFieldsByName,
+                                        'full_name',
+                                        'placeholder',
+                                        ['en' => 'John Doe', 'ar' => 'جون دو'],
+                                    );
+                                    $guestEmailLabel = $fieldCopy($visitorFieldsByName, 'email', 'label', [
+                                        'en' => 'Email *',
+                                        'ar' => 'البريد الإلكتروني *',
+                                    ]);
+                                    $guestEmailPlaceholder = $fieldCopy($visitorFieldsByName, 'email', 'placeholder', [
+                                        'en' => 'john@example.com',
+                                        'ar' => 'john@example.com',
+                                    ]);
+                                    $guestPhoneLabel = $fieldCopy($visitorFieldsByName, 'phone', 'label', [
+                                        'en' => 'Phone',
+                                        'ar' => 'الهاتف',
+                                    ]);
+                                    $guestPhonePlaceholder = $fieldCopy($visitorFieldsByName, 'phone', 'placeholder', [
+                                        'en' => '+966 50 000 0000',
+                                        'ar' => '+966 50 000 0000',
+                                    ]);
+                                    $guestJobLabel = $fieldCopy($visitorFieldsByName, 'job_title', 'label', [
+                                        'en' => 'Job
+                                                                Title',
+                                        'ar' => 'المسمى الوظيفي',
+                                    ]);
+                                    $guestJobPlaceholder = $fieldCopy($visitorFieldsByName, 'job_title', 'placeholder', [
+                                        'en' => 'Marketing Manager',
+                                        'ar' => 'مدير التسويق',
+                                    ]);
+                                    $guestCompanyLabel = $fieldCopy($visitorFieldsByName, 'company_name', 'label', [
+                                        'en' => 'Company / Organization',
+                                        'ar' => 'الشركة / الجهة',
+                                    ]);
+                                    $guestCompanyPlaceholder = $fieldCopy(
+                                        $visitorFieldsByName,
+                                        'company_name',
+                                        'placeholder',
+                                        ['en' => 'Umbrella Inc.', 'ar' => 'شركة أمبريلا'],
+                                    );
+                                    $guestHeardLabel = $fieldCopy($visitorFieldsByName, 'heard_about', 'label', [
+                                        'en' => 'How
+                                                                did you hear about us?',
+                                        'ar' => 'كيف سمعت عنا؟',
+                                    ]);
+                                    $guestHeardOptions = $fieldOptions($visitorFieldsByName, 'heard_about', [
+                                        [
+                                            'value' => 'social_media',
+                                            'en' => 'Social Media',
+                                            'ar' => 'وسائل التواصل الاجتماعي',
+                                        ],
+                                        ['value' => 'ads', 'en' => 'Advertising', 'ar' => 'الإعلانات'],
+                                        [
+                                            'value' => 'friends',
+                                            'en' => 'Friends / Colleagues',
+                                            'ar' => 'الأصدقاء / الزملاء',
+                                        ],
+                                        ['value' => 'other', 'en' => 'Other', 'ar' => 'أخرى'],
+                                    ]);
+                                    $guestHeardOtherLabel = $fieldCopy(
+                                        $visitorFieldsByName,
+                                        'heard_about_other_text',
+                                        'label',
+                                        ['en' => 'Please specify', 'ar' => 'يرجى التحديد'],
+                                    );
+                                    $guestHeardOtherPlaceholder = $fieldCopy(
+                                        $visitorFieldsByName,
+                                        'heard_about_other_text',
+                                        'placeholder',
+                                        ['en' => 'Conference website', 'ar' => 'موقع المؤتمر'],
+                                    );
+                                @endphp
+                                <h3 class="form-title" data-en="{{ e($guestFormTitle['en']) }}"
+                                    data-ar="{{ e($guestFormTitle['ar']) }}">{{ $guestFormTitle['text'] }}</h3>
+                                <form id="visitor-registration-form" method="POST"
+                                    action="{{ route('public.register.visitor', ['locale' => $locale]) }}" novalidate
+                                    data-success-title="{{ e(__('registration.guest.toast_title')) }}"
+                                    data-success-message="{{ e(__('registration.guest.success')) }}">
+                                    @csrf
+                                    <input type="hidden" name="form_identifier" value="visitor">
                                     <div class="form-grid form-grid-2">
                                         <div class="form-group">
-                                            <label class="form-label" data-en="{{ e($exFullNameLabel['en']) }}"
-                                                data-ar="{{ e($exFullNameLabel['ar']) }}">{{ $exFullNameLabel['text'] }}</label>
+                                            <label class="form-label" data-en="{{ e($guestFullNameLabel['en']) }}"
+                                                data-ar="{{ e($guestFullNameLabel['ar']) }}">{{ $guestFullNameLabel['text'] }}</label>
                                             <input type="text" name="full_name" class="form-input" required
-                                                placeholder="{{ $exFullNamePlaceholder['text'] }}"
-                                                value="{{ $sponsorFormActive ? old('full_name') : '' }}">
-                                            @if ($sponsorFormActive && $errors->has('full_name'))
+                                                placeholder="{{ $guestFullNamePlaceholder['text'] }}"
+                                                value="{{ $visitorFormActive ? old('full_name') : '' }}">
+                                            @if ($visitorFormActive && $errors->has('full_name'))
                                                 <p class="mt-1 text-xs text-red-600">{{ $errors->first('full_name') }}
                                                 </p>
                                             @endif
                                         </div>
                                         <div class="form-group">
-                                            <label class="form-label" data-en="{{ e($exEmailLabel['en']) }}"
-                                                data-ar="{{ e($exEmailLabel['ar']) }}">{{ $exEmailLabel['text'] }}</label>
+                                            <label class="form-label" data-en="{{ e($guestEmailLabel['en']) }}"
+                                                data-ar="{{ e($guestEmailLabel['ar']) }}">{{ $guestEmailLabel['text'] }}</label>
                                             <input type="email" name="email" class="form-input" required
-                                                placeholder="{{ $exEmailPlaceholder['text'] }}"
-                                                value="{{ $sponsorFormActive ? old('email') : '' }}">
-                                            @if ($sponsorFormActive && $errors->has('email'))
+                                                placeholder="{{ $guestEmailPlaceholder['text'] }}"
+                                                value="{{ $visitorFormActive ? old('email') : '' }}">
+                                            @if ($visitorFormActive && $errors->has('email'))
                                                 <p class="mt-1 text-xs text-red-600">{{ $errors->first('email') }}</p>
                                             @endif
                                         </div>
                                     </div>
-                                    <div class="form-grid form-grid-2" style="margin-top: 1rem;">
+
+                                    <div class="form-grid form-grid-2" style="margin-top:1rem;">
                                         <div class="form-group">
-                                            <label class="form-label" data-en="{{ e($exPhoneLabel['en']) }}"
-                                                data-ar="{{ e($exPhoneLabel['ar']) }}">{{ $exPhoneLabel['text'] }}</label>
-                                            <input type="tel" name="phone" class="form-input" required
-                                                placeholder="{{ $exPhonePlaceholder['text'] }}"
-                                                value="{{ $sponsorFormActive ? old('phone') : '' }}">
-                                            @if ($sponsorFormActive && $errors->has('phone'))
+                                            <label class="form-label" data-en="{{ e($guestPhoneLabel['en']) }}"
+                                                data-ar="{{ e($guestPhoneLabel['ar']) }}">{{ $guestPhoneLabel['text'] }}</label>
+                                            <input type="tel" name="phone" class="form-input"
+                                                placeholder="{{ $guestPhonePlaceholder['text'] }}"
+                                                value="{{ $visitorFormActive ? old('phone') : '' }}">
+                                            @if ($visitorFormActive && $errors->has('phone'))
                                                 <p class="mt-1 text-xs text-red-600">{{ $errors->first('phone') }}</p>
                                             @endif
                                         </div>
                                         <div class="form-group">
-                                            <label class="form-label" data-en="{{ e($exJobLabel['en']) }}"
-                                                data-ar="{{ e($exJobLabel['ar']) }}">{{ $exJobLabel['text'] }}</label>
-                                            <input type="text" name="job_title" class="form-input" required
-                                                placeholder="{{ $exJobPlaceholder['text'] }}"
-                                                value="{{ $sponsorFormActive ? old('job_title') : '' }}">
-                                            @if ($sponsorFormActive && $errors->has('job_title'))
+                                            <label class="form-label" data-en="{{ e($guestJobLabel['en']) }}"
+                                                data-ar="{{ e($guestJobLabel['ar']) }}">{{ $guestJobLabel['text'] }}</label>
+                                            <input type="text" name="job_title" class="form-input"
+                                                placeholder="{{ $guestJobPlaceholder['text'] }}"
+                                                value="{{ $visitorFormActive ? old('job_title') : '' }}">
+                                            @if ($visitorFormActive && $errors->has('job_title'))
                                                 <p class="mt-1 text-xs text-red-600">{{ $errors->first('job_title') }}
                                                 </p>
                                             @endif
                                         </div>
                                     </div>
-                                    <div class="form-grid" style="margin-top:1rem;">
+
+                                    <div class="form-grid form-grid-2" style="margin-top:1rem;">
                                         <div class="form-group">
-                                            <label class="form-label" data-en="{{ e($exOrgLabel['en']) }}"
-                                                data-ar="{{ e($exOrgLabel['ar']) }}">{{ $exOrgLabel['text'] }}</label>
-                                            <input type="text" name="organization" class="form-input"
-                                                placeholder="{{ $exOrgPlaceholder['text'] }}"
-                                                value="{{ $sponsorFormActive ? old('organization') : '' }}">
-                                            @if ($sponsorFormActive && $errors->has('organization'))
-                                                <p class="mt-1 text-xs text-red-600">
-                                                    {{ $errors->first('organization') }}
+                                            <label class="form-label" data-en="{{ e($guestCompanyLabel['en']) }}"
+                                                data-ar="{{ e($guestCompanyLabel['ar']) }}">{{ $guestCompanyLabel['text'] }}</label>
+                                            <input type="text" name="company_name" class="form-input"
+                                                placeholder="{{ $guestCompanyPlaceholder['text'] }}"
+                                                value="{{ $visitorFormActive ? old('company_name') : '' }}">
+                                            @if ($visitorFormActive && $errors->has('company_name'))
+                                                <p class="mt-1 text-xs text-red-600">{{ $errors->first('company_name') }}
+                                                </p>
+                                            @endif
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label" data-en="{{ e($guestHeardLabel['en']) }}"
+                                                data-ar="{{ e($guestHeardLabel['ar']) }}">{{ $guestHeardLabel['text'] }}</label>
+                                            <select class="form-select" name="heard_about" data-heard-select
+                                                data-other-target="#visitor-heard-other">
+                                                <option value="">{{ __('Select option') }}</option>
+                                                @foreach ($guestHeardOptions as $option)
+                                                    @php
+                                                        $optionLabelEn = data_get($option, 'en', '');
+                                                        $optionLabelAr = data_get($option, 'ar', $optionLabelEn);
+                                                        $optionValue = data_get($option, 'value', $optionLabelEn);
+                                                        $optionLabel =
+                                                            $registrationLocale === 'ar' ? $optionLabelAr : $optionLabelEn;
+                                                    @endphp
+                                                    <option value="{{ $optionValue }}" @selected($visitorFormActive && old('heard_about') === $optionValue) data-en="{{ e($optionLabelEn) }}"
+                                                        data-ar="{{ e($optionLabelAr) }}">{{ $optionLabel }}</option>
+                                                @endforeach
+                                            </select>
+                                            @if ($visitorFormActive && $errors->has('heard_about'))
+                                                <p class="mt-1 text-xs text-red-600">{{ $errors->first('heard_about') }}
                                                 </p>
                                             @endif
                                         </div>
                                     </div>
 
-                                    <div class="form-grid form-grid-2">
-                                        <div class="form-group">
-                                            <label class="form-label" data-en="{{ e($exVatLabel['en']) }}"
-                                                data-ar="{{ e(value: $exVatLabel['ar']) }}">{{ $exVatLabel['text'] }}</label>
-                                            <input type="text" name="vat_number" class="form-input"
-                                                placeholder="{{ $exVatPlaceholder['text'] }}"
-                                                value="{{ $sponsorFormActive ? old('vat_number') : '' }}">
-                                            @if ($sponsorFormActive && $errors->has('vat_number'))
-                                                <p class="mt-1 text-xs text-red-600">
-                                                    {{ $errors->first('vat_number') }}</p>
-                                            @endif
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="form-label" data-en="{{ e($exCrNumberLabel['en']) }}"
-                                                data-ar="{{ e($exCrNumberLabel['ar']) }}">{{ $exCrNumberLabel['text'] }}</label>
-                                            <input type="text" name="cr_number" class="form-input"
-                                                placeholder="{{ $exCrNumberPlaceholder['text'] }}"
-                                                value="{{ $sponsorFormActive ? old('cr_number') : '' }}">
-                                            @if ($sponsorFormActive && $errors->has('cr_number'))
-                                                <p class="mt-1 text-xs text-red-600">{{ $errors->first('cr_number') }}
-                                                </p>
-                                            @endif
-                                        </div>
-                                    </div>
-                                    <div class="form-grid form-grid-2" style="margin-top: 1rem;">
-                                        <div class="form-group">
-                                            <label class="form-label" data-en="{{ e($exCrCopyLabel['en']) }}"
-                                                data-ar="{{ e($exCrCopyLabel['ar']) }}">{{ $exCrCopyLabel['text'] }}</label>
-                                            <input type="file" name="cr_copy" class="form-input"
-                                                accept="application/pdf,image/png,image/jpeg">
-                                            <span class="form-hint" data-en="{{ e($exCrCopyHint['en']) }}"
-                                                data-ar="{{ e($exCrCopyHint['ar']) }}">{{ $exCrCopyHint['text'] }}</span>
-                                            @if ($sponsorFormActive && $errors->has('cr_copy'))
-                                                <p class="mt-1 text-xs text-red-600">{{ $errors->first('cr_copy') }}
-                                                </p>
-                                            @endif
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="form-label" data-en="{{ e($exLogoLabel['en']) }}"
-                                                data-ar="{{ e($exLogoLabel['ar']) }}">{{ $exLogoLabel['text'] }}</label>
-                                            <input type="file" name="company_logo" class="form-input"
-                                                accept="application/pdf">
-                                            <span class="form-hint" data-en="{{ e($exLogoHint['en']) }}"
-                                                data-ar="{{ e($exLogoHint['ar']) }}">{{ $exLogoHint['text'] }}</span>
-                                            @if ($sponsorFormActive && $errors->has('company_logo'))
-                                                <p class="mt-1 text-xs text-red-600">
-                                                    {{ $errors->first('company_logo') }}
-                                                </p>
-                                            @endif
-                                        </div>
-                                    </div>
-                                    <div class="form-grid form-grid-2" style="margin-top: 1rem;">
-                                        <div class="form-group">
-                                            <label class="form-label" data-en="{{ e($exAddressLabel['en']) }}"
-                                                data-ar="{{ e($exAddressLabel['ar']) }}">{{ $exAddressLabel['text'] }}</label>
-                                            <input type="file" name="national_address_document" class="form-input"
-                                                accept="application/pdf,image/png,image/jpeg">
-                                            <span class="form-hint" data-en="{{ e($exAddressHint['en']) }}"
-                                                data-ar="{{ e($exAddressHint['ar']) }}">{{ $exAddressHint['text'] }}</span>
-                                            @if ($sponsorFormActive && $errors->has('national_address_document'))
-                                                <p class="mt-1 text-xs text-red-600">
-                                                    {{ $errors->first('national_address_document') }}</p>
-                                            @endif
-                                        </div>
+                                    <div class="form-group" id="visitor-heard-other"
+                                        style="{{ $visitorFormActive && old('heard_about') === 'other' ? '' : 'display:none;' }}; margin-top:1rem;">
+                                        <label class="form-label" data-en="{{ e($guestHeardOtherLabel['en']) }}"
+                                            data-ar="{{ e($guestHeardOtherLabel['ar']) }}">{{ $guestHeardOtherLabel['text'] }}</label>
+                                        <input type="text" name="heard_about_other_text" class="form-input"
+                                            placeholder="{{ $guestHeardOtherPlaceholder['text'] }}"
+                                            value="{{ $visitorFormActive ? old('heard_about_other_text') : '' }}">
+                                        @if ($visitorFormActive && $errors->has('heard_about_other_text'))
+                                            <p class="mt-1 text-xs text-red-600">
+                                                {{ $errors->first('heard_about_other_text') }}
+                                            </p>
+                                        @endif
                                     </div>
 
                                     <div class="form-group" style="margin-top: 1rem;">
                                         <label class="form-label"
                                             style="flex-direction: row; align-items: center; gap: 0.5rem;">
                                             <input type="checkbox" name="privacy_policy" value="1" required
-                                                @checked($sponsorFormActive && old('privacy_policy'))>
-                                            <span data-en="I accept the privacy policy"
-                                                data-ar="أوافق على شروط الخصوصية">I accept the privacy policy</span>
+                                                @checked($visitorFormActive && old('privacy_policy'))>
+                                            <span data-en="أوافق على شروط الخصوصية"
+                                                data-ar="I accept the privacy policy">I
+                                                accept the privacy policy</span>
                                             <a class="blue-url-style" href="{{ asset('pdf/privacy-policy.pdf') }}"
                                                 target="_blank" rel="noopener" download data-en="Download from here"
                                                 data-ar="يمكنك تحميل الملف من هنا">Download from here</a>
                                         </label>
-                                        @if ($sponsorFormActive && $errors->has('privacy_policy'))
-                                            <p class="mt-1 text-xs text-red-600">
-                                                {{ $errors->first('privacy_policy') }}</p>
-                                        @endif
-                                    </div>
-                                </div>
-
-                                <div class="form-buttons">
-                                    <button type="button" class="btn btn-outline" onclick="clearRole()">
-                                        <svg class="icon icon-sm" style="margin-right: 0.5rem;" viewBox="0 0 24 24">
-                                            <path d="M19 12H5M12 19l-7-7 7-7" />
-                                        </svg>
-                                        <span data-en="Back" data-ar="Back">{{ __('Back') }}</span>
-                                    </button>
-                                    <button type="submit" class="btn btn-primary"
-                                        data-en="{{ e($exhibitorSubmit['en']) }}"
-                                        data-ar="{{ e($exhibitorSubmit['ar']) }}">{{ $exhibitorSubmit['text'] }}</button>
-                                    <button type="button" class="btn btn-outline" onclick="scrollToContact()"
-                                        data-en="{{ e($guestContact['en']) }}"
-                                        data-ar="{{ e($guestContact['ar']) }}">{{ $guestContact['text'] }}</button>
-                                </div>
-                            </form>
-                        </div>
-
-                        <div class="role-card" id="icon-card" onclick="selectRole('icon')">
-                            <div class="role-icon">
-                                <svg class="icon icon-lg" viewBox="0 0 24 24">
-                                    <path
-                                        d="M12 2l2.4 4.9 5.4.8-3.9 3.8.9 5.4L12 14.9 7.3 16.9l.9-5.4L4.3 7.7l5.4-.8L12 2Z" />
-                                </svg>
-                            </div>
-                            <h3 class="role-title" data-en="{{ e($iconCardTitle['en']) }}"
-                                data-ar="{{ e($iconCardTitle['ar']) }}">{{ $iconCardTitle['text'] }}</h3>
-                            <!-- <p class="role-desc" data-en="{{ e($iconCardDescription['en']) }}"
-                                data-ar="{{ e($iconCardDescription['ar']) }}">{{ $iconCardDescription['text'] }}</p> -->
-                            <div class="role-cta" id="icon-cta">
-                                <span data-en="Click" data-ar="Click">Click</span>
-                                <svg class="icon icon-sm" viewBox="0 0 24 24">
-                                    <path d="M5 12h14M12 5l7 7-7 7" />
-                                </svg>
-                            </div>
-                        </div>
-
-                        <div class="form-card" id="icon-form">
-
-                            @if (session('icon_success'))
-                                <div
-                                    class="mb-4 rounded-lg border border-emerald-100 bg-emerald-50 px-3 py-2 text-sm text-emerald-900">
-                                    {{ session('icon_success') }}
-                                </div>
-                            @endif
-                            @php
-                                $iconFullNameLabel = $fieldCopy($iconFieldsStepOneByName, 'full_name', 'label', [
-                                    'en' => 'Full Name *',
-                                    'ar' => 'الاسم الكامل *',
-                                ]);
-                                $iconFullNamePlaceholder = $fieldCopy(
-                                    $iconFieldsStepOneByName,
-                                    'full_name',
-                                    'placeholder',
-                                    ['en' => 'John Doe', 'ar' => 'جون دو'],
-                                );
-                                $iconEmailLabel = $fieldCopy($iconFieldsStepOneByName, 'email', 'label', [
-                                    'en' => 'Email *',
-                                    'ar' => 'البريد الإلكتروني *',
-                                ]);
-                                $iconEmailPlaceholder = $fieldCopy($iconFieldsStepOneByName, 'email', 'placeholder', [
-                                    'en' => 'john@company.com',
-                                    'ar' => 'john@company.com',
-                                ]);
-                                $iconPhoneLabel = $fieldCopy($iconFieldsStepOneByName, 'phone', 'label', [
-                                    'en' => 'Phone *',
-                                    'ar' => 'الهاتف *',
-                                ]);
-                                $iconPhonePlaceholder = $fieldCopy($iconFieldsStepOneByName, 'phone', 'placeholder', [
-                                    'en' => '+966 50 000 0000',
-                                    'ar' => '+966 50 000 0000',
-                                ]);
-                                $iconJobLabel = $fieldCopy($iconFieldsStepOneByName, 'job_title', 'label', [
-                                    'en' => 'Job Title *',
-                                    'ar' => 'المسمى الوظيفي *',
-                                ]);
-                                $iconJobPlaceholder = $fieldCopy($iconFieldsStepOneByName, 'job_title', 'placeholder', [
-                                    'en' => 'Marketing Manager',
-                                    'ar' => 'مدير التسويق',
-                                ]);
-                                $iconOrgLabel = $fieldCopy($iconFieldsStepOneByName, 'organization', 'label', [
-                                    'en' => 'Company / Organization',
-                                    'ar' => 'الشركة / الجهة',
-                                ]);
-                                $iconOrgPlaceholder = $fieldCopy(
-                                    $iconFieldsStepOneByName,
-                                    'organization',
-                                    'placeholder',
-                                    ['en' => 'Umbrella Inc.', 'ar' => 'شركة أمبريلا'],
-                                );
-                                $iconLocationLabel = $fieldCopy(
-                                    $iconFieldsStepOneByName,
-                                    'location_selection',
-                                    'label',
-                                    [
-                                        'en' => trans('registration.icon.book_location', [], 'en'),
-                                        'ar' => trans('registration.icon.book_location', [], 'ar'),
-                                    ],
-                                );
-                                $iconLocationPlaceholder = $fieldCopy(
-                                    $iconFieldsStepOneByName,
-                                    'location_selection',
-                                    'placeholder',
-                                    ['en' => 'Select on the hall map', 'ar' => 'حدد على خريطة المعرض'],
-                                );
-
-                                $iconVatLabel = $fieldCopy($iconFieldsStepTwoByName, 'vat_number', 'label', [
-                                    'en' => trans('registration.icon.vat_number', [], 'en'),
-                                    'ar' => trans('registration.icon.vat_number', [], 'ar'),
-                                ]);
-                                $iconVatPlaceholder = $fieldCopy(
-                                    $iconFieldsStepTwoByName,
-                                    'vat_number',
-                                    'placeholder',
-                                    ['en' => '300000000000003', 'ar' => '300000000000003'],
-                                );
-                                $iconCrLabel = $fieldCopy($iconFieldsStepTwoByName, 'cr_number', 'label', [
-                                    'en' => trans('registration.icon.cr_number', [], 'en'),
-                                    'ar' => trans('registration.icon.cr_number', [], 'ar'),
-                                ]);
-                                $iconCrPlaceholder = $fieldCopy($iconFieldsStepTwoByName, 'cr_number', 'placeholder', [
-                                    'en' => '1010101010',
-                                    'ar' => '1010101010',
-                                ]);
-
-                                $iconCrCopyLabel = $fieldCopy($iconFieldsStepTwoByName, 'cr_copy', 'label', [
-                                    'en' => trans('registration.icon.cr_copy', [], 'en'),
-                                    'ar' => trans('registration.icon.cr_copy', [], 'ar'),
-                                ]);
-                                $iconCrCopyHint = $fieldCopy($iconFieldsStepTwoByName, 'cr_copy', 'hint', $pdfHint);
-                                $iconLogoLabel = $fieldCopy($iconFieldsStepTwoByName, 'company_logo', 'label', [
-                                    'en' => trans('registration.icon.company_logo', [], 'en'),
-                                    'ar' => trans('registration.icon.company_logo', [], 'ar'),
-                                ]);
-                                $iconLogoHint = $fieldCopy($iconFieldsStepTwoByName, 'company_logo', 'hint', $pdfHint);
-                                $iconAddressLabel = $fieldCopy(
-                                    $iconFieldsStepTwoByName,
-                                    'national_address_document',
-                                    'label',
-                                    [
-                                        'en' => trans('registration.icon.national_address_document', [], 'en'),
-                                        'ar' => trans('registration.icon.national_address_document', [], 'ar'),
-                                    ],
-                                );
-                                $iconAddressHint = $fieldCopy(
-                                    $iconFieldsStepTwoByName,
-                                    'national_address_document',
-                                    'hint',
-                                    $pdfHint,
-                                );
-                            @endphp
-                            <h3 class="form-title" data-en="{{ e($iconFormTitle['en']) }}"
-                                data-ar="{{ e($iconFormTitle['ar']) }}">{{ $iconFormTitle['text'] }}</h3>
-                            <form id="icon-registration-form" method="POST"
-                                action="{{ \Illuminate\Support\Facades\Route::has('public.register.icon') ? route('public.register.icon', ['locale' => $locale]) : '#' }}"
-                                enctype="multipart/form-data" novalidate
-                                data-success-title="{{ e(__('registration.icon.toast_title')) }}"
-                                data-success-message="{{ e(__('registration.icon.success')) }}">
-                                @csrf
-                                <input type="hidden" name="form_identifier" value="icon">
-                                <div class="form-buttons"
-                                    style="justify-content: flex-start; margin-bottom: 0.75rem; width: 50%!important; margin: auto;">
-                                    <a class="btn btn-outline"
-                                        href="https://umbrella.sa/iec360/pdf/privacy-policy.pdf" target="_blank"
-                                        rel="noopener" data-en="Download ICON Profile"
-                                        data-ar="Download ICON Profile">Download ICON Profile</a>
-                                </div>
-                                <div>
-                                    <div class="form-grid form-grid-2">
-                                        <div class="form-group">
-                                            <label class="form-label" data-en="{{ e($iconFullNameLabel['en']) }}"
-                                                data-ar="{{ e($iconFullNameLabel['ar']) }}">{{ $iconFullNameLabel['text'] }}</label>
-                                            <input type="text" name="full_name" class="form-input" required
-                                                placeholder="{{ $iconFullNamePlaceholder['text'] }}"
-                                                value="{{ $iconFormActive ? old('full_name') : '' }}">
-                                            @if ($iconFormActive && $errors->has('full_name'))
-                                                <p class="mt-1 text-xs text-red-600">
-                                                    {{ $errors->first('full_name') }}</p>
-                                            @endif
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="form-label" data-en="{{ e($iconEmailLabel['en']) }}"
-                                                data-ar="{{ e($iconEmailLabel['ar']) }}">{{ $iconEmailLabel['text'] }}</label>
-                                            <input type="email" name="email" class="form-input" required
-                                                placeholder="{{ $iconEmailPlaceholder['text'] }}"
-                                                value="{{ $iconFormActive ? old('email') : '' }}">
-                                            @if ($iconFormActive && $errors->has('email'))
-                                                <p class="mt-1 text-xs text-red-600">{{ $errors->first('email') }}
-                                                </p>
-                                            @endif
-                                        </div>
-                                    </div>
-                                    <div class="form-grid form-grid-2" style="margin-top: 1rem;">
-                                        <div class="form-group">
-                                            <label class="form-label" data-en="{{ e($iconPhoneLabel['en']) }}"
-                                                data-ar="{{ e($iconPhoneLabel['ar']) }}">{{ $iconPhoneLabel['text'] }}</label>
-                                            <input type="tel" name="phone" class="form-input" required
-                                                placeholder="{{ $iconPhonePlaceholder['text'] }}"
-                                                value="{{ $iconFormActive ? old('phone') : '' }}">
-                                            @if ($iconFormActive && $errors->has('phone'))
-                                                <p class="mt-1 text-xs text-red-600">{{ $errors->first('phone') }}
-                                                </p>
-                                            @endif
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="form-label" data-en="{{ e($iconJobLabel['en']) }}"
-                                                data-ar="{{ e($iconJobLabel['ar']) }}">{{ $iconJobLabel['text'] }}</label>
-                                            <input type="text" name="job_title" class="form-input" required
-                                                placeholder="{{ $iconJobPlaceholder['text'] }}"
-                                                value="{{ $iconFormActive ? old('job_title') : '' }}">
-                                            @if ($iconFormActive && $errors->has('job_title'))
-                                                <p class="mt-1 text-xs text-red-600">
-                                                    {{ $errors->first('job_title') }}</p>
-                                            @endif
-                                        </div>
-                                    </div>
-                                    <div class="form-grid" style="margin-top:1rem;">
-                                        <div class="form-group">
-                                            <label class="form-label" data-en="{{ e($iconOrgLabel['en']) }}"
-                                                data-ar="{{ e($iconOrgLabel['ar']) }}">{{ $iconOrgLabel['text'] }}</label>
-                                            <input type="text" name="organization" class="form-input"
-                                                placeholder="{{ $iconOrgPlaceholder['text'] }}"
-                                                value="{{ $iconFormActive ? old('organization') : '' }}">
-                                            @if ($iconFormActive && $errors->has('organization'))
-                                                <p class="mt-1 text-xs text-red-600">
-                                                    {{ $errors->first('organization') }}
-                                                </p>
-                                            @endif
-                                        </div>
-                                    </div>
-                                    <div class="form-grid" style="margin-top:1rem;">
-                                        <div class="form-group">
-                                            <label class="form-label" data-en="{{ e($iconLocationLabel['en']) }}"
-                                                data-ar="{{ e($iconLocationLabel['ar']) }}">
-                                                {{ $iconLocationLabel['text'] }}
-                                            </label>
-                                            <div class="flex gap-3 flex-col sm:flex-row">
-                                                <input type="text" id="icon-location-selection"
-                                                    name="location_selection" class="form-input flex-1" required
-                                                    readonly placeholder="{{ $iconLocationPlaceholder['text'] }}"
-                                                    value="{{ $iconFormActive ? old('location_selection') : '' }}">
-                                                <button type="button" class="btn btn-outline flex-none"
-                                                    onclick="openHallDesign('icon-location-selection')">
-                                                    <span data-en="Open hall map" data-ar="فتح خريطة المعرض">Open hall
-                                                        map</span>
-                                                </button>
-                                            </div>
-                                            @if ($iconFormActive && $errors->has('location_selection'))
-                                                <p class="mt-1 text-xs text-red-600">
-                                                    {{ $errors->first('location_selection') }}</p>
-                                            @endif
-                                        </div>
-                                    </div>
-
-                                    <div class="form-grid form-grid-2">
-                                        <div class="form-group">
-                                            <label class="form-label" data-en="{{ e($iconVatLabel['en']) }}"
-                                                data-ar="{{ e($iconVatLabel['ar']) }}">{{ $iconVatLabel['text'] }}</label>
-                                            <input type="text" name="vat_number" class="form-input"
-                                                placeholder="{{ $iconVatPlaceholder['text'] }}"
-                                                value="{{ $iconFormActive ? old('vat_number') : '' }}">
-                                            @if ($iconFormActive && $errors->has('vat_number'))
-                                                <p class="mt-1 text-xs text-red-600">
-                                                    {{ $errors->first('vat_number') }}</p>
-                                            @endif
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="form-label" data-en="{{ e($iconCrLabel['en']) }}"
-                                                data-ar="{{ e($iconCrLabel['ar']) }}">{{ $iconCrLabel['text'] }}</label>
-                                            <input type="text" name="cr_number" class="form-input"
-                                                placeholder="{{ $iconCrPlaceholder['text'] }}"
-                                                value="{{ $iconFormActive ? old('cr_number') : '' }}">
-                                            @if ($iconFormActive && $errors->has('cr_number'))
-                                                <p class="mt-1 text-xs text-red-600">
-                                                    {{ $errors->first('cr_number') }}</p>
-                                            @endif
-                                        </div>
-                                    </div>
-                                    <div class="form-grid form-grid-2" style="margin-top: 1rem;">
-                                        <div class="form-group">
-                                            <label class="form-label" data-en="{{ e($iconCrCopyLabel['en']) }}"
-                                                data-ar="{{ e($iconCrCopyLabel['ar']) }}">{{ $iconCrCopyLabel['text'] }}</label>
-                                            <input type="file" name="cr_copy" class="form-input"
-                                                accept="application/pdf,image/png,image/jpeg">
-                                            <span class="form-hint" data-en="{{ e($iconCrCopyHint['en']) }}"
-                                                data-ar="{{ e($iconCrCopyHint['ar']) }}">{{ $iconCrCopyHint['text'] }}</span>
-                                            @if ($iconFormActive && $errors->has('cr_copy'))
-                                                <p class="mt-1 text-xs text-red-600">{{ $errors->first('cr_copy') }}
-                                                </p>
-                                            @endif
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="form-label" data-en="{{ e($iconLogoLabel['en']) }}"
-                                                data-ar="{{ e($iconLogoLabel['ar']) }}">{{ $iconLogoLabel['text'] }}</label>
-                                            <input type="file" name="company_logo" class="form-input"
-                                                accept="application/pdf">
-                                            <span class="form-hint" data-en="{{ e($iconLogoHint['en']) }}"
-                                                data-ar="{{ e($iconLogoHint['ar']) }}">{{ $iconLogoHint['text'] }}</span>
-                                            @if ($iconFormActive && $errors->has('company_logo'))
-                                                <p class="mt-1 text-xs text-red-600">
-                                                    {{ $errors->first('company_logo') }}
-                                                </p>
-                                            @endif
-                                        </div>
-                                    </div>
-                                    <div class="form-grid form-grid-2" style="margin-top: 1rem;">
-                                        <div class="form-group">
-                                            <label class="form-label" data-en="{{ e($iconAddressLabel['en']) }}"
-                                                data-ar="{{ e($iconAddressLabel['ar']) }}">{{ $iconAddressLabel['text'] }}</label>
-                                            <input type="file" name="national_address_document" class="form-input"
-                                                accept="application/pdf,image/png,image/jpeg">
-                                            <span class="form-hint" data-en="{{ e($iconAddressHint['en']) }}"
-                                                data-ar="{{ e($iconAddressHint['ar']) }}">{{ $iconAddressHint['text'] }}</span>
-                                            @if ($iconFormActive && $errors->has('national_address_document'))
-                                                <p class="mt-1 text-xs text-red-600">
-                                                    {{ $errors->first('national_address_document') }}</p>
-                                            @endif
-                                        </div>
-                                    </div>
-
-                                    <div class="form-group" style="margin-top: 1rem;">
-                                        <label class="form-label"
-                                            style="flex-direction: row; align-items: center; gap: 0.5rem;">
-                                            <input type="checkbox" name="privacy_policy" value="1" required
-                                                @checked($iconFormActive && old('privacy_policy'))>
-                                            <span data-en="I accept the privacy policy"
-                                                data-ar="أوافق على شروط الخصوصية">I accept the privacy policy</span>
-                                            <a class="blue-url-style" href="{{ asset('pdf/privacy-policy.pdf') }}"
-                                                target="_blank" rel="noopener" download data-en="Download from here"
-                                                data-ar="يمكنك تحميل الملف من هنا">Download from here</a>
-                                            @if ($iconFormActive && $errors->has('privacy_policy'))
-                                                <p class="mt-1 text-xs text-red-600">
-                                                    {{ $errors->first('privacy_policy') }}
-                                                </p>
-                                            @endif
-                                    </div>
-                                </div>
-
-                                <div class="form-buttons">
-                                    <button type="button" class="btn btn-outline" onclick="clearRole()">
-                                        <svg class="icon icon-sm" style="margin-right: 0.5rem;" viewBox="0 0 24 24">
-                                            <path d="M19 12H5M12 19l-7-7 7-7" />
-                                        </svg>
-                                        <span data-en="{{ e($iconBack['en']) }}"
-                                            data-ar="{{ e($iconBack['ar']) }}">{{ $iconBack['text'] }}</span>
-                                    </button>
-                                    <button type="submit" class="btn btn-primary"
-                                        data-en="{{ e($iconSubmit['en']) }}"
-                                        data-ar="{{ e($iconSubmit['ar']) }}">{{ $iconSubmit['text'] }}</button>
-                                    <button type="button" class="btn btn-outline" onclick="scrollToContact()"
-                                        data-en="{{ e($guestContact['en']) }}"
-                                        data-ar="{{ e($guestContact['ar']) }}">{{ $guestContact['text'] }}</button>
-                                </div>
-                            </form>
-                        </div>
-
-                        <div class="row-logo" id="guest-row-logo">
-                            <img src="{{ asset('img/IEC-logo.png') }}" alt="IEC Logo" style="text-align:center">
-                        </div>
-
-                        <div class="role-card guest-card" id="visitor-card" onclick="selectRole('visitor')">
-                            <div class="role-icon">
-                                <svg class="icon icon-lg" viewBox="0 0 24 24">
-                                    <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2" />
-                                    <circle cx="12" cy="7" r="4" />
-                                </svg>
-                            </div>
-                            <h3 class="role-title" data-en="{{ e($guestCardTitle['en']) }}"
-                                data-ar="{{ e($guestCardTitle['ar']) }}">{{ $guestCardTitle['text'] }}</h3>
-                            <!-- <p class="role-desc" data-en="{{ e($guestCardDescription['en']) }}"
-                                data-ar="{{ e($guestCardDescription['ar']) }}">{{ $guestCardDescription['text'] }}</p> -->
-                            <div class="role-cta" id="visitor-cta">
-                                <span data-en="Click" data-ar="Click">Click</span>
-                                <svg class="icon icon-sm" viewBox="0 0 24 24">
-                                    <path d="M5 12h14M12 5l7 7-7 7" />
-                                </svg>
-                            </div>
-                        </div>
-                        <div class="form-card guest-form" id="visitor-form">
-                            @if (session('visitor_success'))
-                                <div
-                                    class="mb-4 rounded-lg border border-emerald-100 bg-emerald-50 px-3 py-2 text-sm text-emerald-900">
-                                    {{ session('visitor_success') }}
-                                </div>
-                            @endif
-                            @php
-                                $guestFullNameLabel = $fieldCopy($visitorFieldsByName, 'full_name', 'label', [
-                                    'en' => 'Full
-                            Name *',
-                                    'ar' => 'الاسم الكامل *',
-                                ]);
-                                $guestFullNamePlaceholder = $fieldCopy(
-                                    $visitorFieldsByName,
-                                    'full_name',
-                                    'placeholder',
-                                    ['en' => 'John Doe', 'ar' => 'جون دو'],
-                                );
-                                $guestEmailLabel = $fieldCopy($visitorFieldsByName, 'email', 'label', [
-                                    'en' => 'Email *',
-                                    'ar' => 'البريد الإلكتروني *',
-                                ]);
-                                $guestEmailPlaceholder = $fieldCopy($visitorFieldsByName, 'email', 'placeholder', [
-                                    'en' => 'john@example.com',
-                                    'ar' => 'john@example.com',
-                                ]);
-                                $guestPhoneLabel = $fieldCopy($visitorFieldsByName, 'phone', 'label', [
-                                    'en' => 'Phone',
-                                    'ar' => 'الهاتف',
-                                ]);
-                                $guestPhonePlaceholder = $fieldCopy($visitorFieldsByName, 'phone', 'placeholder', [
-                                    'en' => '+966 50 000 0000',
-                                    'ar' => '+966 50 000 0000',
-                                ]);
-                                $guestJobLabel = $fieldCopy($visitorFieldsByName, 'job_title', 'label', [
-                                    'en' => 'Job
-                            Title',
-                                    'ar' => 'المسمى الوظيفي',
-                                ]);
-                                $guestJobPlaceholder = $fieldCopy($visitorFieldsByName, 'job_title', 'placeholder', [
-                                    'en' => 'Marketing Manager',
-                                    'ar' => 'مدير التسويق',
-                                ]);
-                                $guestCompanyLabel = $fieldCopy($visitorFieldsByName, 'company_name', 'label', [
-                                    'en' => 'Company / Organization',
-                                    'ar' => 'الشركة / الجهة',
-                                ]);
-                                $guestCompanyPlaceholder = $fieldCopy(
-                                    $visitorFieldsByName,
-                                    'company_name',
-                                    'placeholder',
-                                    ['en' => 'Umbrella Inc.', 'ar' => 'شركة أمبريلا'],
-                                );
-                                $guestHeardLabel = $fieldCopy($visitorFieldsByName, 'heard_about', 'label', [
-                                    'en' => 'How
-                            did you hear about us?',
-                                    'ar' => 'كيف سمعت عنا؟',
-                                ]);
-                                $guestHeardOptions = $fieldOptions($visitorFieldsByName, 'heard_about', [
-                                    [
-                                        'value' => 'social_media',
-                                        'en' => 'Social Media',
-                                        'ar' => 'وسائل التواصل الاجتماعي',
-                                    ],
-                                    ['value' => 'ads', 'en' => 'Advertising', 'ar' => 'الإعلانات'],
-                                    [
-                                        'value' => 'friends',
-                                        'en' => 'Friends / Colleagues',
-                                        'ar' => 'الأصدقاء / الزملاء',
-                                    ],
-                                    ['value' => 'other', 'en' => 'Other', 'ar' => 'أخرى'],
-                                ]);
-                                $guestHeardOtherLabel = $fieldCopy(
-                                    $visitorFieldsByName,
-                                    'heard_about_other_text',
-                                    'label',
-                                    ['en' => 'Please specify', 'ar' => 'يرجى التحديد'],
-                                );
-                                $guestHeardOtherPlaceholder = $fieldCopy(
-                                    $visitorFieldsByName,
-                                    'heard_about_other_text',
-                                    'placeholder',
-                                    ['en' => 'Conference website', 'ar' => 'موقع المؤتمر'],
-                                );
-                            @endphp
-                            <h3 class="form-title" data-en="{{ e($guestFormTitle['en']) }}"
-                                data-ar="{{ e($guestFormTitle['ar']) }}">{{ $guestFormTitle['text'] }}</h3>
-                            <form id="visitor-registration-form" method="POST"
-                                action="{{ route('public.register.visitor', ['locale' => $locale]) }}" novalidate
-                                data-success-title="{{ e(__('registration.guest.toast_title')) }}"
-                                data-success-message="{{ e(__('registration.guest.success')) }}">
-                                @csrf
-                                <input type="hidden" name="form_identifier" value="visitor">
-                                <div class="form-grid form-grid-2">
-                                    <div class="form-group">
-                                        <label class="form-label" data-en="{{ e($guestFullNameLabel['en']) }}"
-                                            data-ar="{{ e($guestFullNameLabel['ar']) }}">{{ $guestFullNameLabel['text'] }}</label>
-                                        <input type="text" name="full_name" class="form-input" required
-                                            placeholder="{{ $guestFullNamePlaceholder['text'] }}"
-                                            value="{{ $visitorFormActive ? old('full_name') : '' }}">
-                                        @if ($visitorFormActive && $errors->has('full_name'))
-                                            <p class="mt-1 text-xs text-red-600">{{ $errors->first('full_name') }}
+                                        @if ($visitorFormActive && $errors->has('privacy_policy'))
+                                            <p class="mt-1 text-xs text-red-600">{{ $errors->first('privacy_policy') }}
                                             </p>
                                         @endif
                                     </div>
-                                    <div class="form-group">
-                                        <label class="form-label" data-en="{{ e($guestEmailLabel['en']) }}"
-                                            data-ar="{{ e($guestEmailLabel['ar']) }}">{{ $guestEmailLabel['text'] }}</label>
-                                        <input type="email" name="email" class="form-input" required
-                                            placeholder="{{ $guestEmailPlaceholder['text'] }}"
-                                            value="{{ $visitorFormActive ? old('email') : '' }}">
-                                        @if ($visitorFormActive && $errors->has('email'))
-                                            <p class="mt-1 text-xs text-red-600">{{ $errors->first('email') }}</p>
-                                        @endif
-                                    </div>
-                                </div>
 
-                                <div class="form-grid form-grid-2" style="margin-top:1rem;">
-                                    <div class="form-group">
-                                        <label class="form-label" data-en="{{ e($guestPhoneLabel['en']) }}"
-                                            data-ar="{{ e($guestPhoneLabel['ar']) }}">{{ $guestPhoneLabel['text'] }}</label>
-                                        <input type="tel" name="phone" class="form-input"
-                                            placeholder="{{ $guestPhonePlaceholder['text'] }}"
-                                            value="{{ $visitorFormActive ? old('phone') : '' }}">
-                                        @if ($visitorFormActive && $errors->has('phone'))
-                                            <p class="mt-1 text-xs text-red-600">{{ $errors->first('phone') }}</p>
-                                        @endif
+                                    <div class="form-buttons">
+                                        <button type="button" class="btn btn-outline" onclick="clearRole()">
+                                            <svg class="icon icon-sm" style="margin-right: 0.5rem;" viewBox="0 0 24 24">
+                                                <path d="M19 12H5M12 19l-7-7 7-7" />
+                                            </svg>
+                                            <span data-en="Back" data-ar="Back">{{ __('Back') }}</span>
+                                        </button>
+                                        <button type="submit" class="btn btn-primary"
+                                            data-en="{{ e($guestSubmit['en']) }}"
+                                            data-ar="{{ e($guestSubmit['ar']) }}">{{ $guestSubmit['text'] }}</button>
+                                        <button type="button" class="btn btn-outline" onclick="scrollToContact()"
+                                            data-en="{{ e($guestContact['en']) }}"
+                                            data-ar="{{ e($guestContact['ar']) }}">{{ $guestContact['text'] }}</button>
                                     </div>
-                                    <div class="form-group">
-                                        <label class="form-label" data-en="{{ e($guestJobLabel['en']) }}"
-                                            data-ar="{{ e($guestJobLabel['ar']) }}">{{ $guestJobLabel['text'] }}</label>
-                                        <input type="text" name="job_title" class="form-input"
-                                            placeholder="{{ $guestJobPlaceholder['text'] }}"
-                                            value="{{ $visitorFormActive ? old('job_title') : '' }}">
-                                        @if ($visitorFormActive && $errors->has('job_title'))
-                                            <p class="mt-1 text-xs text-red-600">{{ $errors->first('job_title') }}
-                                            </p>
-                                        @endif
-                                    </div>
-                                </div>
-
-                                <div class="form-grid form-grid-2" style="margin-top:1rem;">
-                                    <div class="form-group">
-                                        <label class="form-label" data-en="{{ e($guestCompanyLabel['en']) }}"
-                                            data-ar="{{ e($guestCompanyLabel['ar']) }}">{{ $guestCompanyLabel['text'] }}</label>
-                                        <input type="text" name="company_name" class="form-input"
-                                            placeholder="{{ $guestCompanyPlaceholder['text'] }}"
-                                            value="{{ $visitorFormActive ? old('company_name') : '' }}">
-                                        @if ($visitorFormActive && $errors->has('company_name'))
-                                            <p class="mt-1 text-xs text-red-600">{{ $errors->first('company_name') }}
-                                            </p>
-                                        @endif
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-label" data-en="{{ e($guestHeardLabel['en']) }}"
-                                            data-ar="{{ e($guestHeardLabel['ar']) }}">{{ $guestHeardLabel['text'] }}</label>
-                                        <select class="form-select" name="heard_about" data-heard-select
-                                            data-other-target="#visitor-heard-other">
-                                            <option value="">{{ __('Select option') }}</option>
-                                            @foreach ($guestHeardOptions as $option)
-                                                @php
-                                                    $optionLabelEn = data_get($option, 'en', '');
-                                                    $optionLabelAr = data_get($option, 'ar', $optionLabelEn);
-                                                    $optionValue = data_get($option, 'value', $optionLabelEn);
-                                                    $optionLabel =
-                                                        $registrationLocale === 'ar' ? $optionLabelAr : $optionLabelEn;
-                                                @endphp
-                                                <option value="{{ $optionValue }}" @selected($visitorFormActive && old('heard_about') === $optionValue)
-                                                    data-en="{{ e($optionLabelEn) }}"
-                                                    data-ar="{{ e($optionLabelAr) }}">{{ $optionLabel }}</option>
-                                            @endforeach
-                                        </select>
-                                        @if ($visitorFormActive && $errors->has('heard_about'))
-                                            <p class="mt-1 text-xs text-red-600">{{ $errors->first('heard_about') }}
-                                            </p>
-                                        @endif
-                                    </div>
-                                </div>
-
-                                <div class="form-group" id="visitor-heard-other"
-                                    style="{{ $visitorFormActive && old('heard_about') === 'other' ? '' : 'display:none;' }}; margin-top:1rem;">
-                                    <label class="form-label" data-en="{{ e($guestHeardOtherLabel['en']) }}"
-                                        data-ar="{{ e($guestHeardOtherLabel['ar']) }}">{{ $guestHeardOtherLabel['text'] }}</label>
-                                    <input type="text" name="heard_about_other_text" class="form-input"
-                                        placeholder="{{ $guestHeardOtherPlaceholder['text'] }}"
-                                        value="{{ $visitorFormActive ? old('heard_about_other_text') : '' }}">
-                                    @if ($visitorFormActive && $errors->has('heard_about_other_text'))
-                                        <p class="mt-1 text-xs text-red-600">
-                                            {{ $errors->first('heard_about_other_text') }}
-                                        </p>
-                                    @endif
-                                </div>
-
-                                <div class="form-group" style="margin-top: 1rem;">
-                                    <label class="form-label"
-                                        style="flex-direction: row; align-items: center; gap: 0.5rem;">
-                                        <input type="checkbox" name="privacy_policy" value="1" required
-                                            @checked($visitorFormActive && old('privacy_policy'))>
-                                        <span data-en="أوافق على شروط الخصوصية"
-                                            data-ar="I accept the privacy policy">I
-                                            accept the privacy policy</span>
-                                        <a class="blue-url-style" href="{{ asset('pdf/privacy-policy.pdf') }}"
-                                            target="_blank" rel="noopener" download data-en="Download from here"
-                                            data-ar="يمكنك تحميل الملف من هنا">Download from here</a>
-                                    </label>
-                                    @if ($visitorFormActive && $errors->has('privacy_policy'))
-                                        <p class="mt-1 text-xs text-red-600">{{ $errors->first('privacy_policy') }}
-                                        </p>
-                                    @endif
-                                </div>
-
-                                <div class="form-buttons">
-                                    <button type="button" class="btn btn-outline" onclick="clearRole()">
-                                        <svg class="icon icon-sm" style="margin-right: 0.5rem;" viewBox="0 0 24 24">
-                                            <path d="M19 12H5M12 19l-7-7 7-7" />
-                                        </svg>
-                                        <span data-en="Back" data-ar="Back">{{ __('Back') }}</span>
-                                    </button>
-                                    <button type="submit" class="btn btn-primary"
-                                        data-en="{{ e($guestSubmit['en']) }}"
-                                        data-ar="{{ e($guestSubmit['ar']) }}">{{ $guestSubmit['text'] }}</button>
-                                    <button type="button" class="btn btn-outline" onclick="scrollToContact()"
-                                        data-en="{{ e($guestContact['en']) }}"
-                                        data-ar="{{ e($guestContact['ar']) }}">{{ $guestContact['text'] }}</button>
-                                </div>
-                            </form>
+                                </form>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
 
-        <!-- Statistics Section -->
-        <div class="stats-section">
+            <!-- Statistics Section -->
+            <div class="stats-section">
+                @php
+                    $defaultStat = [
+                        'label' => ['en' => '', 'ar' => ''],
+                        'value' => 0,
+                        'suffix' => '',
+                        'icon' => 'fas
+                                fa-circle',
+                    ];
+                    $stats = array_pad($heroStats, 5, $defaultStat);
+                @endphp
+
+                <!-- Stat 1 -->
+                @php
+                    $stat = $stats[0];
+                    $labelEn = data_get($stat, 'label.en', '');
+                    $labelAr = data_get($stat, 'label.ar', $labelEn);
+                    $label = $activeLocale === 'ar' ? $labelAr : $labelEn;
+                    $value = $stat['value'] ?? 0;
+                    $suffix = $stat['suffix'] ?? '';
+                    $iconClass = $stat['icon'] ?? 'fas fa-circle';
+                @endphp
+                <div class="stat-item" data-aos="zoom-in" data-aos-delay="100">
+                    <div class="stat-icon-wrapper stat-icon-wrapper-1">
+                        <img src="{{ asset('img/icons/people.png') }}" alt="Stat Icon">
+                    </div>
+                    <div class="stat-number" data-count="{{ $value }}" data-suffix="{{ $suffix }}">
+                        {{ $value }}
+                    </div>
+                    <div class="stat-label" data-en="{{ e($labelEn) }}" data-ar="{{ e($labelAr) }}">
+                        {{ $label }}
+                    </div>
+                    <div class="stat-progress">
+                        <div class="progress-fill"></div>
+                    </div>
+                </div>
+
+                <!-- Stat 2 -->
+                @php
+                    $stat = $stats[1];
+                    $labelEn = data_get($stat, 'label.en', '');
+                    $labelAr = data_get($stat, 'label.ar', $labelEn);
+                    $label = $activeLocale === 'ar' ? $labelAr : $labelEn;
+                    $value = $stat['value'] ?? 0;
+                    $suffix = $stat['suffix'] ?? '';
+                    $iconClass = $stat['icon'] ?? 'fas fa-circle';
+                @endphp
+                <div class="stat-item" data-aos="zoom-in" data-aos-delay="200">
+                    <div class="stat-icon-wrapper stat-icon-wrapper-2">
+                        <img src="{{ asset('img/icons/organization.png') }}" alt="Stat Icon">
+                    </div>
+                    <div class="stat-number" data-count="{{ $value }}" data-suffix="{{ $suffix }}">
+                        {{ $value }}
+                    </div>
+                    <div class="stat-label" data-en="{{ e($labelEn) }}" data-ar="{{ e($labelAr) }}">
+                        {{ $label }}
+                    </div>
+                    <div class="stat-progress">
+                        <div class="progress-fill"></div>
+                    </div>
+                </div>
+
+                <!-- Stat 3 -->
+                @php
+                    $stat = $stats[2];
+                    $labelEn = data_get($stat, 'label.en', '');
+                    $labelAr = data_get($stat, 'label.ar', $labelEn);
+                    $label = $activeLocale === 'ar' ? $labelAr : $labelEn;
+                    $value = $stat['value'] ?? 0;
+                    $suffix = $stat['suffix'] ?? '';
+                    $iconClass = $stat['icon'] ?? 'fas fa-circle';
+                @endphp
+                <div class="stat-item" data-aos="zoom-in" data-aos-delay="300">
+                    <div class="stat-icon-wrapper stat-icon-wrapper-3">
+                        <img src="{{ asset('img/icons/sponsor.png') }}" alt="Stat Icon">
+                    </div>
+                    <div class="stat-number" data-count="{{ $value }}" data-suffix="{{ $suffix }}">
+                        {{ $value }}
+                    </div>
+                    <div class="stat-label" data-en="{{ e($labelEn) }}" data-ar="{{ e($labelAr) }}">
+                        {{ $label }}
+                    </div>
+                    <div class="stat-progress">
+                        <div class="progress-fill"></div>
+                    </div>
+                </div>
+
+                <!-- Stat 4 -->
+                @php
+                    $stat = $stats[3];
+                    $labelEn = data_get($stat, 'label.en', '');
+                    $labelAr = data_get($stat, 'label.ar', $labelEn);
+                    $label = $activeLocale === 'ar' ? $labelAr : $labelEn;
+                    $value = $stat['value'] ?? 0;
+                    $suffix = $stat['suffix'] ?? '';
+                    $iconClass = $stat['icon'] ?? 'fas fa-circle';
+                @endphp
+                <div class="stat-item" data-aos="zoom-in" data-aos-delay="400">
+                    <div class="stat-icon-wrapper stat-icon-wrapper-4">
+                        <img src="{{ asset('img/icons/workshop.png') }}" alt="Stat Icon">
+                    </div>
+                    <div class="stat-number" data-count="{{ $value }}" data-suffix="{{ $suffix }}">
+                        {{ $value }}
+                    </div>
+                    <div class="stat-label" data-en="{{ e($labelEn) }}" data-ar="{{ e($labelAr) }}">
+                        {{ $label }}
+                    </div>
+                    <div class="stat-progress">
+                        <div class="progress-fill"></div>
+                    </div>
+                </div>
+
+                <!-- Stat 5 -->
+                @php
+                    $stat = $stats[4];
+                    $labelEn = data_get($stat, 'label.en', '');
+                    $labelAr = data_get($stat, 'label.ar', $labelEn);
+                    $label = $activeLocale === 'ar' ? $labelAr : $labelEn;
+                    $value = $stat['value'] ?? 0;
+                    $suffix = $stat['suffix'] ?? '';
+                    $iconClass = $stat['icon'] ?? 'fas fa-circle';
+                @endphp
+                <div class="stat-item" data-aos="zoom-in" data-aos-delay="500">
+                    <div class="stat-icon-wrapper stat-icon-wrapper-5">
+                        <img src="{{ asset('img/icons/media.png') }}" alt="Stat Icon">
+                    </div>
+                    <div class="stat-number" data-count="{{ $value }}" data-suffix="{{ $suffix }}">
+                        {{ $value }}
+                    </div>
+                    <div class="stat-label" data-en="{{ e($labelEn) }}" data-ar="{{ e($labelAr) }}">
+                        {{ $label }}
+                    </div>
+                    <div class="stat-progress">
+                        <div class="progress-fill"></div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- About Section -->
             @php
-                $defaultStat = [
-                    'label' => ['en' => '', 'ar' => ''],
-                    'value' => 0,
-                    'suffix' => '',
-                    'icon' => 'fas
-            fa-circle',
-                ];
-                $stats = array_pad($heroStats, 5, $defaultStat);
+                $aboutLocale = app()->getLocale();
+                $aboutTranslate = function ($node, $fallback = '') use ($aboutLocale) {
+                    $en = data_get($node, 'en', $fallback);
+                    $ar = data_get($node, 'ar', $en);
+                    return [
+                        'en' => $en,
+                        'ar' => $ar,
+                        'text' => $aboutLocale === 'ar' ? $ar : $en,
+                    ];
+                };
+                $aboutTitle = $aboutTranslate(data_get($aboutSection, 'title'), __('About us'));
             @endphp
 
-            <!-- Stat 1 -->
-            @php
-                $stat = $stats[0];
-                $labelEn = data_get($stat, 'label.en', '');
-                $labelAr = data_get($stat, 'label.ar', $labelEn);
-                $label = $activeLocale === 'ar' ? $labelAr : $labelEn;
-                $value = $stat['value'] ?? 0;
-                $suffix = $stat['suffix'] ?? '';
-                $iconClass = $stat['icon'] ?? 'fas fa-circle';
-            @endphp
-            <div class="stat-item" data-aos="zoom-in" data-aos-delay="100">
-                <div class="stat-icon-wrapper stat-icon-wrapper-1">
-                    <img src="{{ asset('img/icons/people.png') }}" alt="Stat Icon">
-                </div>
-                <div class="stat-number" data-count="{{ $value }}" data-suffix="{{ $suffix }}">
-                    {{ $value }}</div>
-                <div class="stat-label" data-en="{{ e($labelEn) }}" data-ar="{{ e($labelAr) }}">
-                    {{ $label }}</div>
-                <div class="stat-progress">
-                    <div class="progress-fill"></div>
-                </div>
-            </div>
-
-            <!-- Stat 2 -->
-            @php
-                $stat = $stats[1];
-                $labelEn = data_get($stat, 'label.en', '');
-                $labelAr = data_get($stat, 'label.ar', $labelEn);
-                $label = $activeLocale === 'ar' ? $labelAr : $labelEn;
-                $value = $stat['value'] ?? 0;
-                $suffix = $stat['suffix'] ?? '';
-                $iconClass = $stat['icon'] ?? 'fas fa-circle';
-            @endphp
-            <div class="stat-item" data-aos="zoom-in" data-aos-delay="200">
-                <div class="stat-icon-wrapper stat-icon-wrapper-2">
-                    <img src="{{ asset('img/icons/organization.png') }}" alt="Stat Icon">
-                </div>
-                <div class="stat-number" data-count="{{ $value }}" data-suffix="{{ $suffix }}">
-                    {{ $value }}</div>
-                <div class="stat-label" data-en="{{ e($labelEn) }}" data-ar="{{ e($labelAr) }}">
-                    {{ $label }}</div>
-                <div class="stat-progress">
-                    <div class="progress-fill"></div>
-                </div>
-            </div>
-
-            <!-- Stat 3 -->
-            @php
-                $stat = $stats[2];
-                $labelEn = data_get($stat, 'label.en', '');
-                $labelAr = data_get($stat, 'label.ar', $labelEn);
-                $label = $activeLocale === 'ar' ? $labelAr : $labelEn;
-                $value = $stat['value'] ?? 0;
-                $suffix = $stat['suffix'] ?? '';
-                $iconClass = $stat['icon'] ?? 'fas fa-circle';
-            @endphp
-            <div class="stat-item" data-aos="zoom-in" data-aos-delay="300">
-                <div class="stat-icon-wrapper stat-icon-wrapper-3">
-                    <img src="{{ asset('img/icons/sponsor.png') }}" alt="Stat Icon">
-                </div>
-                <div class="stat-number" data-count="{{ $value }}" data-suffix="{{ $suffix }}">
-                    {{ $value }}</div>
-                <div class="stat-label" data-en="{{ e($labelEn) }}" data-ar="{{ e($labelAr) }}">
-                    {{ $label }}</div>
-                <div class="stat-progress">
-                    <div class="progress-fill"></div>
-                </div>
-            </div>
-
-            <!-- Stat 4 -->
-            @php
-                $stat = $stats[3];
-                $labelEn = data_get($stat, 'label.en', '');
-                $labelAr = data_get($stat, 'label.ar', $labelEn);
-                $label = $activeLocale === 'ar' ? $labelAr : $labelEn;
-                $value = $stat['value'] ?? 0;
-                $suffix = $stat['suffix'] ?? '';
-                $iconClass = $stat['icon'] ?? 'fas fa-circle';
-            @endphp
-            <div class="stat-item" data-aos="zoom-in" data-aos-delay="400">
-                <div class="stat-icon-wrapper stat-icon-wrapper-4">
-                    <img src="{{ asset('img/icons/workshop.png') }}" alt="Stat Icon">
-                </div>
-                <div class="stat-number" data-count="{{ $value }}" data-suffix="{{ $suffix }}">
-                    {{ $value }}</div>
-                <div class="stat-label" data-en="{{ e($labelEn) }}" data-ar="{{ e($labelAr) }}">
-                    {{ $label }}</div>
-                <div class="stat-progress">
-                    <div class="progress-fill"></div>
-                </div>
-            </div>
-
-            <!-- Stat 5 -->
-            @php
-                $stat = $stats[4];
-                $labelEn = data_get($stat, 'label.en', '');
-                $labelAr = data_get($stat, 'label.ar', $labelEn);
-                $label = $activeLocale === 'ar' ? $labelAr : $labelEn;
-                $value = $stat['value'] ?? 0;
-                $suffix = $stat['suffix'] ?? '';
-                $iconClass = $stat['icon'] ?? 'fas fa-circle';
-            @endphp
-            <div class="stat-item" data-aos="zoom-in" data-aos-delay="500">
-                <div class="stat-icon-wrapper stat-icon-wrapper-5">
-                    <img src="{{ asset('img/icons/media.png') }}" alt="Stat Icon">
-                </div>
-                <div class="stat-number" data-count="{{ $value }}" data-suffix="{{ $suffix }}">
-                    {{ $value }}</div>
-                <div class="stat-label" data-en="{{ e($labelEn) }}" data-ar="{{ e($labelAr) }}">
-                    {{ $label }}</div>
-                <div class="stat-progress">
-                    <div class="progress-fill"></div>
-                </div>
-            </div>
-        </div>
-
-
-        <!-- About Section -->
-        @php
-            $aboutLocale = app()->getLocale();
-            $aboutTranslate = function ($node, $fallback = '') use ($aboutLocale) {
-                $en = data_get($node, 'en', $fallback);
-                $ar = data_get($node, 'ar', $en);
-                return [
-                    'en' => $en,
-                    'ar' => $ar,
-                    'text' => $aboutLocale === 'ar' ? $ar : $en,
-                ];
-            };
-            $aboutTitle = $aboutTranslate(data_get($aboutSection, 'title'), __('About us'));
-        @endphp
-
-<section class="about" id="about">
-            <div class="container">
-                <!-- <h2 class="section-title" data-en="About IEC 360&deg;" data-ar="عن معرض IEC 360&deg;"
+            <section class="about" id="about">
+                <div class="container">
+                    <!-- <h2 class="section-title" data-en="About IEC 360&deg;" data-ar="عن معرض IEC 360&deg;"
                     style="margin-bottom:20px; color:#fff; text-align: center;">About IEC 360&deg;</h2> -->
-                <div class="row-logo about-img">
-                    <img src="{{ asset('img/about.png') }}" alt="About Us" style="text-align:center">
-                </div>
-                <div class="about-grid">
-                    <div class="about-col" data-animate>
-                        <div class="goals-list">
-                            <div class="goal-card" data-animate>
-                                <div>
-                                    <div class="goal-title-row">
-                                        <div class="goal-icon">
-                                            <img src="{{ asset('img/icons/intro.png') }}" alt="flag Icon"
-                                                style="height: 40px;">
+                    <div class="row-logo about-img">
+                        <img src="{{ asset('img/about.png') }}" alt="About Us" style="text-align:center">
+                    </div>
+                    <div class="about-grid">
+                        <div class="about-col" data-animate>
+                            <div class="goals-list">
+                                <div class="goal-card" data-animate>
+                                    <div>
+                                        <div class="goal-title-row">
+                                            <div class="goal-icon">
+                                                <img src="{{ asset('img/icons/intro.png') }}" alt="flag Icon"
+                                                    style="height: 40px;">
+                                            </div>
+                                            <h3 class="goal-title" data-en="Introduction" data-ar="المقدمة"
+                                                style="margin-left:10px;">Introduction</h3>
                                         </div>
-                                        <h3 class="goal-title" data-en="Introduction" data-ar="المقدمة" style="margin-left:10px;">Introduction</h3>
-                                    </div>
-                                    <p class="goal-desc"
-                                        data-en="With unmatched uniqueness and excellence, the IEC EXPO returns for its third edition
+                                        <p class="goal-desc" data-en="With unmatched uniqueness and excellence, the IEC EXPO returns for its third edition
 under the theme IEC 360°. It continues its journey as a comprehensive interactive
 platform that merges innovation, development, and networking—offering an exceptional
 experience that unites ambitious minds and industry leaders under one roof"
-                                        data-ar="بتميز وتفرّد، يعود معرض IEC التجاري في نسخته الثالثة تحت شعار IEC 360° ليواصل مسيرته كمنصة تفاعلية شاملة تجمع بين الابتكار والتطوير والتواصل في تجربة استثنائية توحّد العقول الطموحة وقادة القطاعات المختلفة تحت سقف واحد">
-                                    With unmatched uniqueness and excellence, the IEC EXPO returns for its third edition
-under the theme IEC 360°. It continues its journey as a comprehensive interactive
-platform that merges innovation, development, and networking—offering an exceptional
-experience that unites ambitious minds and industry leaders under one roof    </p>
-                                </div>
-                            </div>
-                            <div class="goal-card" data-animate>
-                                <div>
-                                    <div class="goal-title-row">
-                                        <div class="goal-icon">
-                                            <img src="{{ asset('img/icons/goal.png') }}" alt="flag Icon"
-                                                style="height: 40px;">
-                                        </div>
-                                        <h3 class="goal-title" data-en="Objectives" data-ar="الأهداف" style="margin-right:10px;">Objectives</h3>
+                                            data-ar="بتميز وتفرّد، يعود معرض IEC التجاري في نسخته الثالثة تحت شعار IEC 360° ليواصل مسيرته كمنصة تفاعلية شاملة تجمع بين الابتكار والتطوير والتواصل في تجربة استثنائية توحّد العقول الطموحة وقادة القطاعات المختلفة تحت سقف واحد">
+                                            With unmatched uniqueness and excellence, the IEC EXPO returns for its third
+                                            edition
+                                            under the theme IEC 360°. It continues its journey as a comprehensive
+                                            interactive
+                                            platform that merges innovation, development, and networking—offering an
+                                            exceptional
+                                            experience that unites ambitious minds and industry leaders under one roof
+                                        </p>
                                     </div>
-                                    <p class="goal-desc"
-                                        data-en="With distinction and uniqueness, the IEC Trade
+                                </div>
+                                <div class="goal-card" data-animate>
+                                    <div>
+                                        <div class="goal-title-row">
+                                            <div class="goal-icon">
+                                                <img src="{{ asset('img/icons/goal.png') }}" alt="flag Icon"
+                                                    style="height: 40px;">
+                                            </div>
+                                            <h3 class="goal-title" data-en="Objectives" data-ar="الأهداف"
+                                                style="margin-right:10px;">Objectives</h3>
+                                        </div>
+                                        <p class="goal-desc" data-en="With distinction and uniqueness, the IEC Trade
                 Exhibition returns in its third edition under the
                 theme IEC360°, continuing its journey as an
                 interactive platform that brings together
                 innovation, development, and connection in an
                 exceptional experience that unites ambitious
                 minds and leaders from various sectors under
-                one roof."
-                                        data-ar="يهـــدف المعـــرض إلى إبـــراز خبـــرات الأيكونـــز والتواصل مع
+                one roof." data-ar="يهـــدف المعـــرض إلى إبـــراز خبـــرات الأيكونـــز والتواصل مع
         جمهـــور متخصـــص لخلق فرص تعـــاون ومعرفـــة تدعم نمو
         ّ الأعمال، مع توفير مساحة تمكن الشركات الناشئة من بناء
         شراكات وعلاقات وتطوير مشاريعها">
-        With distinction and uniqueness, the IEC Trade
-        Exhibition returns in its third edition under the
-        theme IEC360°, continuing its journey as an
-        interactive platform that brings together
-        innovation, development, and connection in an
-        exceptional experience that unites ambitious
-        minds and leaders from various sectors under
-        one roof. </p>
+                                            With distinction and uniqueness, the IEC Trade
+                                            Exhibition returns in its third edition under the
+                                            theme IEC360°, continuing its journey as an
+                                            interactive platform that brings together
+                                            innovation, development, and connection in an
+                                            exceptional experience that unites ambitious
+                                            minds and leaders from various sectors under
+                                            one roof. </p>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="goal-card" data-animate>
-                                <div>
-                                    <div class="goal-title-row">
-                                        <div class="goal-icon">
-                                            <img src="{{ asset('img/icons/mission.png') }}" alt="mission Icon"
-                                                style="height: 40px;">
+                                <div class="goal-card" data-animate>
+                                    <div>
+                                        <div class="goal-title-row">
+                                            <div class="goal-icon">
+                                                <img src="{{ asset('img/icons/mission.png') }}" alt="mission Icon"
+                                                    style="height: 40px;">
+                                            </div>
+                                            <h3 class="goal-title" data-en="Mission" data-ar="الرسالة"
+                                                style="margin-right:50px;">Mission</h3>
                                         </div>
-                                        <h3 class="goal-title" data-en="Mission" data-ar="الرسالة" style="margin-right:50px;">Mission</h3>
+                                        <p class="goal-desc"
+                                            data-en="The exhibition aims to empower individuals and organizations, enhance innovation, and build strategic partnerships that contribute to developing business environments in alignment with Saudi Vision 2030"
+                                            data-ar="يهدف المعرض إلى تمكين الأفراد والمنظمات، وتعزيز الابتكار، وبناء شراكات استراتيجية تسهم في تطوير بيئات الأعمال بما يتوافق مع رؤية السعودية 2030">
+                                            The exhibition aims to empower individuals and organizations, enhance
+                                            innovation, and build strategic partnerships that contribute to developing
+                                            business environments in alignment with Saudi Vision 2030
+                                        </p>
                                     </div>
-                                    <p class="goal-desc"
-                                        data-en="The exhibition aims to empower individuals and organizations, enhance innovation, and build strategic partnerships that contribute to developing business environments in alignment with Saudi Vision 2030"
-                                        data-ar="يهدف المعرض إلى تمكين الأفراد والمنظمات، وتعزيز الابتكار، وبناء شراكات استراتيجية تسهم في تطوير بيئات الأعمال بما يتوافق مع رؤية السعودية 2030">The exhibition aims to empower individuals and organizations, enhance innovation, and build strategic partnerships that contribute to developing business environments in alignment with Saudi Vision 2030
-                                    </p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </section>
+            <div class="row-logo about-img">
+                <img src="{{ asset('img/after-about.PNG') }}" alt="About Us">
             </div>
-        </section>
-        <div class="row-logo about-img">
-            <img src="{{ asset('img/after-about.PNG') }}" alt="About Us">
-        </div>
 
 
 
-        <!-- Sponsors Section -->
-        <div class="row-logo" id="guest-row-logo" style="order: 5;">
-            <img src="{{ asset('img/IEC-logo.png') }}" alt="IEC Logo" style="text-align:center">
-        </div>
-        <section class="sponsors" id="sponsors">
-            <div class="container">
-                <div class="section-header" data-animate>
-                    <h2 class="section-title" data-en="SPONSOR" data-ar="الراعي"
-                        style="font: size 3rem !important;;">SPONSOR</h2>
-                </div>
-
-                <div class="sponsor-tiers">
-                    <!-- STRATEGIC -->
-                    <div class="sponsor-tier">
-                        <h2 class="sponsor-tier-title" data-en="Strategic" data-ar="الإستراتيجي">STRATEGIC</h2>
-                        <div class="sponsor-tier-grid tier-strategic">
-                            <article class="sponsor-card sponsor-strategic" data-animate>
-                                <div class="sponsor-logo">
-                                    <img src="{{ asset('img/placeholder.png') }}" alt="">
-                                </div>
-                            </article>
-                        </div>
-                    </div>
-                    <!-- DIAMOND -->
-                    <div class="sponsor-tier">
-                        <h2 class="sponsor-tier-title" data-en="Diamond" data-ar="الماسي">DIAMOND</h2>
-                        <div class="sponsor-tier-grid tier-business">
-                            <article class="sponsor-card sponsor-business" data-animate>
-                                <div class="sponsor-logo">
-                                    <img src="{{ asset('img/placeholder.png') }}" alt="">
-                                </div>
-                            </article>
-                        </div>
-                    </div>
-                    <!-- GOVERNMENT -->
-                    <div class="sponsor-tier">
-                        <h2 class="sponsor-tier-title" data-en="Government" data-ar="الحكومي">GOVERNMENT</h2>
-                        <div class="sponsor-tier-grid tier-marketing">
-                            <article class="sponsor-card sponsor-marketing" data-animate>
-                                <div class="sponsor-logo">
-                                    <img src="{{ asset('img/placeholder.png') }}" alt="">
-                                </div>
-                            </article>
-                        </div>
-                    </div>
-
-                    <!-- Marketing & Media -->
-                    <div class="sponsor-tier-pair">
-                        <div class="sponsor-tier">
-                            <h2 class="sponsor-tier-title" data-en="Marketing" data-ar="التسويقي">MARKETING</h2>
-                            <div class="sponsor-tier-grid tier-marketing single-sponsor-grid">
-                                <article class="sponsor-card sponsor-marketing" data-animate>
-                                    <div class="sponsor-logo">
-                                        <img src="{{ asset('img/placeholder.png') }}" alt="">
-                                    </div>
-                                </article>
-                            </div>
-                        </div>
-                        <div class="sponsor-tier">
-                            <h2 class="sponsor-tier-title" data-en="Media" data-ar="الإعلامي">MEDIA</h2>
-                            <div class="sponsor-tier-grid tier-marketing single-sponsor-grid">
-                                <article class="sponsor-card sponsor-marketing" data-animate>
-                                    <div class="sponsor-logo">
-                                        <img src="{{ asset('img/placeholder.png') }}" alt="">
-                                    </div>
-                                </article>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- TECH & SECURITY -->
-                    <div class="sponsor-tier-pair">
-                        <div class="sponsor-tier">
-                            <h2 class="sponsor-tier-title" data-en="TECHNOLOGY" data-ar="التكنولوجي">TECHNOLOGY</h2>
-                            <div class="sponsor-tier-grid tier-marketing single-sponsor-grid">
-                                <article class="sponsor-card sponsor-marketing" data-animate>
-                                    <div class="sponsor-logo">
-                                        <img src="{{ asset('img/placeholder.png') }}" alt="">
-                                    </div>
-                                </article>
-                            </div>
-                        </div>
-                        <div class="sponsor-tier">
-                            <h2 class="sponsor-tier-title" data-en="SAFETY AND SECURITY" data-ar="الأمني">SAFETY AND
-                                SECURITY</h2>
-                            <div class="sponsor-tier-grid tier-marketing single-sponsor-grid">
-                                <article class="sponsor-card sponsor-marketing" data-animate>
-                                    <div class="sponsor-logo">
-                                        <img src="{{ asset('img/placeholder.png') }}" alt="">
-                                    </div>
-                                </article>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- GOLD -->
-                    <div class="sponsor-tier">
-                        <h2 class="sponsor-tier-title" data-en="GOLD" data-ar="الذهبي">GOLD</h2>
-                        <div class="participants-grid gold-sponsors-grid">
-                            <article class="participant-card gold-sponsor-card" data-animate>
-                                <div class="participant-logo">
-                                    <img src="{{ asset('img/placeholder.png') }}" alt="">
-                                </div>
-                            </article>
-                            <article class="participant-card gold-sponsor-card" data-animate>
-                                <div class="participant-logo">
-                                    <img src="{{ asset('img/placeholder.png') }}" alt="">
-                                </div>
-                            </article>
-                            <article class="participant-card gold-sponsor-card" data-animate>
-                                <div class="participant-logo">
-                                    <img src="{{ asset('img/placeholder.png') }}" alt="">
-                                </div>
-                            </article>
-                            <article class="participant-card gold-sponsor-card" data-animate>
-                                <div class="participant-logo">
-                                    <img src="{{ asset('img/placeholder.png') }}" alt="">
-                                </div>
-                            </article>
-                            <article class="participant-card gold-sponsor-card" data-animate>
-                                <div class="participant-logo">
-                                    <img src="{{ asset('img/placeholder.png') }}" alt="">
-                                </div>
-                            </article>
-                        </div>
-                    </div>
-
-                    <!-- OTHER SPONSORS -->
-                    <div class="sponsor-tier">
-                        <h2 class="sponsor-tier-title" data-en="SPONORS" data-ar="الرعاة">SPONORS</h2>
-                        <div class="sponsor-tier-grid tier-main other-sponsors-grid">
-                            <article class="sponsor-card" data-animate>
-                                <div class="sponsor-logo">
-                                    <img src="{{ asset('img/placeholder.png') }}" alt="">
-                                </div>
-                            </article>
-                            <article class="sponsor-card" data-animate>
-                                <div class="sponsor-logo">
-                                    <img src="{{ asset('img/placeholder.png') }}" alt="">
-                                </div>
-                            </article>
-                            <article class="sponsor-card" data-animate>
-                                <div class="sponsor-logo">
-                                    <img src="{{ asset('img/placeholder.png') }}" alt="">
-                                </div>
-                            </article>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section class="participants" id="participants">
+            <!-- Sponsors Section -->
             <div class="row-logo" id="guest-row-logo" style="order: 5;">
                 <img src="{{ asset('img/IEC-logo.png') }}" alt="IEC Logo" style="text-align:center">
             </div>
-            <!-- Participants Section -->
-            <div class="container">
-                <div class="section-header" data-animate>
-                    <h2 class="section-title" data-en="ICONS" data-ar="الأيكونز">ICONS</h2>
-                </div>
+            <section class="sponsors" id="sponsors">
+                <div class="container">
+                    <div class="section-header" data-animate>
+                        <h2 class="section-title" data-en="SPONSOR" data-ar="الراعي"
+                            style="font: size 3rem !important;;">SPONSOR</h2>
+                    </div>
 
-                <div class="participants-grid">
-                    <a href="" class="participant-card" data-animate>
-                        <div class="participant-logo">
-                            <img src="{{ asset('img/placeholder.png') }}" alt="Icon">
+                    <div class="sponsor-tiers">
+                        <!-- STRATEGIC -->
+                        <div class="sponsor-tier">
+                            <h2 class="sponsor-tier-title" data-en="Strategic" data-ar="الإستراتيجي">STRATEGIC</h2>
+                            <div class="sponsor-tier-grid tier-strategic">
+                                <article class="sponsor-card sponsor-strategic" data-animate>
+                                    <div class="sponsor-logo">
+                                        <img src="{{ asset('img/placeholder.png') }}" alt="">
+                                    </div>
+                                </article>
+                            </div>
                         </div>
-                    </a>
-                    <a href="" class="participant-card" data-animate>
-                        <div class="participant-logo">
-                            <img src="{{ asset('img/placeholder.png') }}" alt="Icon">
+                        <!-- DIAMOND -->
+                        <div class="sponsor-tier">
+                            <h2 class="sponsor-tier-title" data-en="Diamond" data-ar="الماسي">DIAMOND</h2>
+                            <div class="sponsor-tier-grid tier-business">
+                                <article class="sponsor-card sponsor-business" data-animate>
+                                    <div class="sponsor-logo">
+                                        <img src="{{ asset('img/placeholder.png') }}" alt="">
+                                    </div>
+                                </article>
+                            </div>
                         </div>
-                    </a>
-                    <a href="" class="participant-card" data-animate>
-                        <div class="participant-logo">
-                            <img src="{{ asset('img/placeholder.png') }}" alt="Icon">
+                        <!-- GOVERNMENT -->
+                        <div class="sponsor-tier">
+                            <h2 class="sponsor-tier-title" data-en="Government" data-ar="الحكومي">GOVERNMENT</h2>
+                            <div class="sponsor-tier-grid tier-marketing">
+                                <article class="sponsor-card sponsor-marketing" data-animate>
+                                    <div class="sponsor-logo">
+                                        <img src="{{ asset('img/placeholder.png') }}" alt="">
+                                    </div>
+                                </article>
+                            </div>
                         </div>
-                    </a>
-                    <a href="" class="participant-card" data-animate>
-                        <div class="participant-logo">
-                            <img src="{{ asset('img/placeholder.png') }}" alt="Icon">
-                        </div>
-                    </a>
-                </div>
-            </div>
-        </section>
 
-        <div class="row-logo" id="guest-row-logo" style="order: 5;">
-            <img src="{{ asset('img/IEC-logo.png') }}" alt="IEC Logo" style="text-align:center">
-        </div>
-
-
-        <!-- Organizers Section -->
-        <section class="organizers" id="organizers">
-            <div class="container">
-                <div class="section-header" data-animate>
-                    <h2 class="section-title" data-en="OWNED BY" data-ar="الشركة المالكة">OWNED BY</h2>
-                </div>
-                @php
-                    $organizerFallbackDesc = [
-                        'en' => __('Driving the strategic vision for IEC Expo.'),
-                        'ar' => __('يقود الرؤية الاستراتيجية لمعرض IEC.'),
-                    ];
-                    $organizerVisitCopy = [
-                        'en' => __('Visit Website'),
-                        'ar' => __('زيارة الموقع'),
-                    ];
-                    $currentLocale = app()->getLocale();
-                @endphp
-
-                @if ($organizers->count())
-                    <div class="sponsor-featured-list">
-                        @foreach ($organizers as $organizer)
-                            @php
-                                $logoPath = $organizer->logo_path
-                                    ? asset('storage/' . $organizer->logo_path)
-                                    : asset('img/IEC-logo.png');
-                                $englishName = $organizer->name ?? '';
-                                $arabicName = $organizer->name_ar ?? $englishName;
-                                $displayName = $currentLocale === 'ar' ? $arabicName : $englishName;
-                                $descriptionEn = $organizer->description_en ?? $organizerFallbackDesc['en'];
-                                $descriptionAr = $organizer->description_ar ?? $organizerFallbackDesc['ar'];
-                                $description = $currentLocale === 'ar' ? $descriptionAr : $descriptionEn;
-                            @endphp
-                            <article class="sponsor-featured-card sponsor-strategic visible" data-animate>
-                                <div class="sponsor-featured-content">
-                                    <div class="sponsor-featured-media">
-                                        <div class="sponsor-featured-logo">
-                                            <img src="{{ $logoPath }}" alt="{{ $displayName }}">
+                        <!-- Marketing & Media -->
+                        <div class="sponsor-tier-pair">
+                            <div class="sponsor-tier">
+                                <h2 class="sponsor-tier-title" data-en="Marketing" data-ar="التسويقي">MARKETING</h2>
+                                <div class="sponsor-tier-grid tier-marketing single-sponsor-grid">
+                                    <article class="sponsor-card sponsor-marketing" data-animate>
+                                        <div class="sponsor-logo">
+                                            <img src="{{ asset('img/placeholder.png') }}" alt="">
                                         </div>
-                                        @if ($organizer->url)
-                                            <a href="{{ $organizer->url }}" class="sponsor-visit-btn"
-                                                target="_blank" rel="noopener">
-                                                <span data-en="{{ e($organizerVisitCopy['en']) }}"
-                                                    data-ar="{{ e($organizerVisitCopy['ar']) }}">{{ $organizerVisitCopy[$currentLocale] }}</span>
-                                                <svg class="icon icon-sm" viewBox="0 0 24 24">
-                                                    <path d="M5 12h14M12 5l7 7-7 7" />
-                                                </svg>
-                                            </a>
-                                        @endif
-                                    </div>
+                                    </article>
                                 </div>
-                            </article>
-                        @endforeach
-                    </div>
-                @else
-                    <p class="text-center text-gray-500 text-sm">{{ __('Organizers will be announced soon.') }}</p>
-                @endif
-            </div>
-        </section>
-
-        <div class="row-logo" id="guest-row-logo" style="order: 5;">
-            <img src="{{ asset('img/IEC-logo.png') }}" alt="IEC Logo" style="text-align:center">
-        </div>
-        <!-- Contact Section -->
-        @php
-            $contactLocale = app()->getLocale();
-            $contactTranslate = function ($node, $fallback = '') use ($contactLocale) {
-                $en = data_get($node, 'en', $fallback);
-                $ar = data_get($node, 'ar', $en);
-                return [
-                    'en' => $en,
-                    'ar' => $ar,
-                    'text' => $contactLocale === 'ar' ? $ar : $en,
-                ];
-            };
-            $contactTitleBlock = $contactTranslate(data_get($contactSection, 'title'), __('Contact Us'));
-            $contactDescriptionBlock = $contactTranslate(data_get($contactSection, 'description'), '');
-            $contactFormTitle = $contactTranslate(data_get($contactSection, 'form_title'), __('Send us a message'));
-            $contactFormButton = $contactTranslate(data_get($contactSection, 'form_button'), __('Send Message'));
-            $supportCards = data_get($contactSection, 'support_cards', []);
-            $locationTitleBlock = $contactTranslate(data_get($contactSection, 'location_title'), __('Event Location'));
-            $locationAddressBlock = $contactTranslate(data_get($contactSection, 'location_address'), '');
-            $mapEmbedUrl = data_get(
-                $contactSection,
-                'map_embed',
-                'https://www.google.com/maps/place/The+Arena+Riyadh+Venue+for+Exhibitions+%7C+%D9%85%D8%B1%D9%83%D8%B2+%D8%B0%D9%8A+%D8%A3%D8%B1%D9%8A%D9%86%D8%A7+%D8%A7%D9%84%D8%B1%D9%8A%D8%A7%D8%B6+%D9%84%D9%84%D9%85%D8%B9%D8%A7%D8%B1%D8%B6+%D9%88%D8%A7%D9%84%D9%81%D8%B9%D8%A7%D9%84%D9%8A%D8%A7%D8%AA%E2%80%AD/@24.7779833,46.7296192,17z/data=!4m14!1m7!3m6!1s0x3e2efde8f1cd0b5d:0x4992b4380d1f29e5!2zVGhlIEFyZW5hIFJpeWFkaCBWZW51ZSBmb3IgRXhoaWJpdGlvbnMgfCDZhdix2YPYsiDYsNmKINij2LHZitmG2Kcg2KfZhNix2YrYp9i2INmE2YTZhdi52KfYsdi2INmI2KfZhNmB2LnYp9mE2YrYp9iq!8m2!3d24.7779833!4d46.7321941!16s%2Fg%2F11rwj51wpq!3m5!1s0x3e2efde8f1cd0b5d:0x4992b4380d1f29e5!8m2!3d24.7779833!4d46.7321941!16s%2Fg%2F11rwj51wpq?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D',
-            );
-            $locationImageUrl = \App\Models\LandingSection::mediaUrl(data_get($contactSection, 'location_image'));
-        @endphp
-        <!-- Contact Section -->
-        <section class="contact" id="contact">
-            <div class="container">
-                <div class="section-header" data-animate>
-                    <h2 class="section-title" data-en="{{ e($contactTitleBlock['en']) }}"
-                        data-ar="{{ e($contactTitleBlock['ar']) }}">{{ $contactTitleBlock['text'] }}</h2>
-                </div>
-
-                <div class="contact-grid">
-                    <div class="contact-col" data-animate>
-                        <div class="contact-form-card">
-                            <form onsubmit="handleContactSubmit(event)">
-                                <div class="form-grid">
-                                    <div class="form-group">
-                                        <label class="form-label" data-en="Name *"
-                                            data-ar="الاسم الكامل *">{{ __('Name *') }}</label>
-                                        <input type="text" class="form-input" required
-                                            placeholder="{{ __('Your name') }}">
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-label" data-en="Email *"
-                                            data-ar="البريد الإلكتروني *">{{ __('Email *') }}</label>
-                                        <input type="email" class="form-input" required
-                                            placeholder="you@example.com">
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-label" data-en="Phone *"
-                                            data-ar="الهاتف *">{{ __('Phone *') }}</label>
-                                        <input type="tel" class="form-input" required
-                                            placeholder="+966 50 000 0000">
-                                    </div>
-                                    <div class="form-group">
-                                        <label class="form-label" data-en="Message *"
-                                            data-ar="Message *">{{ __('Message *') }}</label>
-                                        <textarea class="form-textarea" required rows="4" placeholder="{{ __('How can we help you?') }}"></textarea>
-                                    </div>
+                            </div>
+                            <div class="sponsor-tier">
+                                <h2 class="sponsor-tier-title" data-en="Media" data-ar="الإعلامي">MEDIA</h2>
+                                <div class="sponsor-tier-grid tier-marketing single-sponsor-grid">
+                                    <article class="sponsor-card sponsor-marketing" data-animate>
+                                        <div class="sponsor-logo">
+                                            <img src="{{ asset('img/placeholder.png') }}" alt="">
+                                        </div>
+                                    </article>
                                 </div>
-                                <button type="submit" class="btn btn-primary"
-                                    style="width: 100%; margin-top: 1rem;">
-                                    <svg class="icon icon-sm" style="margin-right: 0.5rem;" viewBox="0 0 24 24">
-                                        <path d="m22 2-7 20-4-9-9-4Z" />
-                                        <path d="M22 2 11 13" />
-                                    </svg>
-                                    <span data-en="{{ e($contactFormButton['en']) }}"
-                                        data-ar="{{ e($contactFormButton['ar']) }}">{{ $contactFormButton['text'] }}</span>
-                                </button>
-                            </form>
+                            </div>
+                        </div>
+
+                        <!-- TECH & SECURITY -->
+                        <div class="sponsor-tier-pair">
+                            <div class="sponsor-tier">
+                                <h2 class="sponsor-tier-title" data-en="TECHNOLOGY" data-ar="التكنولوجي">TECHNOLOGY</h2>
+                                <div class="sponsor-tier-grid tier-marketing single-sponsor-grid">
+                                    <article class="sponsor-card sponsor-marketing" data-animate>
+                                        <div class="sponsor-logo">
+                                            <img src="{{ asset('img/placeholder.png') }}" alt="">
+                                        </div>
+                                    </article>
+                                </div>
+                            </div>
+                            <div class="sponsor-tier">
+                                <h2 class="sponsor-tier-title" data-en="SAFETY AND SECURITY" data-ar="الأمني">SAFETY AND
+                                    SECURITY</h2>
+                                <div class="sponsor-tier-grid tier-marketing single-sponsor-grid">
+                                    <article class="sponsor-card sponsor-marketing" data-animate>
+                                        <div class="sponsor-logo">
+                                            <img src="{{ asset('img/placeholder.png') }}" alt="">
+                                        </div>
+                                    </article>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- GOLD -->
+                        <div class="sponsor-tier">
+                            <h2 class="sponsor-tier-title" data-en="GOLD" data-ar="الذهبي">GOLD</h2>
+                            <div class="participants-grid gold-sponsors-grid">
+                                <article class="participant-card gold-sponsor-card" data-animate>
+                                    <div class="participant-logo">
+                                        <img src="{{ asset('img/placeholder.png') }}" alt="">
+                                    </div>
+                                </article>
+                                <article class="participant-card gold-sponsor-card" data-animate>
+                                    <div class="participant-logo">
+                                        <img src="{{ asset('img/placeholder.png') }}" alt="">
+                                    </div>
+                                </article>
+                                <article class="participant-card gold-sponsor-card" data-animate>
+                                    <div class="participant-logo">
+                                        <img src="{{ asset('img/placeholder.png') }}" alt="">
+                                    </div>
+                                </article>
+                                <article class="participant-card gold-sponsor-card" data-animate>
+                                    <div class="participant-logo">
+                                        <img src="{{ asset('img/placeholder.png') }}" alt="">
+                                    </div>
+                                </article>
+                                <article class="participant-card gold-sponsor-card" data-animate>
+                                    <div class="participant-logo">
+                                        <img src="{{ asset('img/placeholder.png') }}" alt="">
+                                    </div>
+                                </article>
+                            </div>
+                        </div>
+
+                        <!-- OTHER SPONSORS -->
+                        <div class="sponsor-tier">
+                            <h2 class="sponsor-tier-title" data-en="SPONORS" data-ar="الرعاة">SPONORS</h2>
+                            <div class="sponsor-tier-grid tier-main other-sponsors-grid">
+                                <article class="sponsor-card" data-animate>
+                                    <div class="sponsor-logo">
+                                        <img src="{{ asset('img/placeholder.png') }}" alt="">
+                                    </div>
+                                </article>
+                                <article class="sponsor-card" data-animate>
+                                    <div class="sponsor-logo">
+                                        <img src="{{ asset('img/placeholder.png') }}" alt="">
+                                    </div>
+                                </article>
+                                <article class="sponsor-card" data-animate>
+                                    <div class="sponsor-logo">
+                                        <img src="{{ asset('img/placeholder.png') }}" alt="">
+                                    </div>
+                                </article>
+                            </div>
                         </div>
                     </div>
+                </div>
+            </section>
 
-                    <div class="contact-col" data-animate>
-                        <div class="contact-info-list"> 
-                            <div class="contact-info-card">  
-                            <!-- arabic support -->
-                                <div class="contact-info-header">   
-                                    <div style="flex: 1;">  
-                                        <div class="contact-info-links two-columns">  
-                                            <div class="contact-info-column">   
-                                                <a href="tel:+966566668892" class="contact-info-link"><img class="icon icon-lg" src="{{ asset('img/svg/telephone.svg') }}"> +966566668892
-                                                </a> 
-                                            </div>  
-                                            <div class="contact-info-column">  
-                                                <a href="tel:+966594650976" class="contact-info-link"><img class="icon icon-lg" src="{{ asset('img/svg/telephone.svg') }}"> +966594650976
+            <section class="participants" id="participants">
+                <div class="row-logo" id="guest-row-logo" style="order: 5;">
+                    <img src="{{ asset('img/IEC-logo.png') }}" alt="IEC Logo" style="text-align:center">
+                </div>
+                <!-- Participants Section -->
+                <div class="container">
+                    <div class="section-header" data-animate>
+                        <h2 class="section-title" data-en="ICONS" data-ar="الأيكونز">ICONS</h2>
+                    </div>
+
+                    <div class="participants-grid">
+                        <a href="" class="participant-card" data-animate>
+                            <div class="participant-logo">
+                                <img src="{{ asset('img/placeholder.png') }}" alt="Icon">
+                            </div>
+                        </a>
+                        <a href="" class="participant-card" data-animate>
+                            <div class="participant-logo">
+                                <img src="{{ asset('img/placeholder.png') }}" alt="Icon">
+                            </div>
+                        </a>
+                        <a href="" class="participant-card" data-animate>
+                            <div class="participant-logo">
+                                <img src="{{ asset('img/placeholder.png') }}" alt="Icon">
+                            </div>
+                        </a>
+                        <a href="" class="participant-card" data-animate>
+                            <div class="participant-logo">
+                                <img src="{{ asset('img/placeholder.png') }}" alt="Icon">
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <div class="row-logo" id="guest-row-logo" style="order: 5;">
+                <img src="{{ asset('img/IEC-logo.png') }}" alt="IEC Logo" style="text-align:center">
+            </div>
+
+
+            <!-- Organizers Section -->
+            <section class="organizers" id="organizers">
+                <div class="container">
+                    <div class="section-header" data-animate>
+                        <h2 class="section-title" data-en="OWNED BY" data-ar="الشركة المالكة">OWNED BY</h2>
+                    </div>
+                    @php
+                        $organizerFallbackDesc = [
+                            'en' => __('Driving the strategic vision for IEC Expo.'),
+                            'ar' => __('يقود الرؤية الاستراتيجية لمعرض IEC.'),
+                        ];
+                        $organizerVisitCopy = [
+                            'en' => __('Visit Website'),
+                            'ar' => __('زيارة الموقع'),
+                        ];
+                        $currentLocale = app()->getLocale();
+                    @endphp
+
+                    @if ($organizers->count())
+                        <div class="sponsor-featured-list">
+                            @foreach ($organizers as $organizer)
+                                @php
+                                    $logoPath = $organizer->logo_path
+                                        ? asset('storage/' . $organizer->logo_path)
+                                        : asset('img/IEC-logo.png');
+                                    $englishName = $organizer->name ?? '';
+                                    $arabicName = $organizer->name_ar ?? $englishName;
+                                    $displayName = $currentLocale === 'ar' ? $arabicName : $englishName;
+                                    $descriptionEn = $organizer->description_en ?? $organizerFallbackDesc['en'];
+                                    $descriptionAr = $organizer->description_ar ?? $organizerFallbackDesc['ar'];
+                                    $description = $currentLocale === 'ar' ? $descriptionAr : $descriptionEn;
+                                @endphp
+                                <article class="sponsor-featured-card sponsor-strategic visible" data-animate>
+                                    <div class="sponsor-featured-content">
+                                        <div class="sponsor-featured-media">
+                                            <div class="sponsor-featured-logo">
+                                                <img src="{{ $logoPath }}" alt="{{ $displayName }}">
+                                            </div>
+                                            @if ($organizer->url)
+                                                <a href="{{ $organizer->url }}" class="sponsor-visit-btn" target="_blank"
+                                                    rel="noopener">
+                                                    <span data-en="{{ e($organizerVisitCopy['en']) }}"
+                                                        data-ar="{{ e($organizerVisitCopy['ar']) }}">{{ $organizerVisitCopy[$currentLocale] }}</span>
+                                                    <svg class="icon icon-sm" viewBox="0 0 24 24">
+                                                        <path d="M5 12h14M12 5l7 7-7 7" />
+                                                    </svg>
                                                 </a>
-                                            </div>
+                                            @endif
                                         </div>
                                     </div>
-                                </div>
-                            <!-- website and email -->
-                                <div class="contact-info-header">   
-                                    <div style="flex: 1;">  
-                                        <div class="contact-info-links two-columns">  
-                                            <div class="contact-info-column">   
-                                                <a href="https://umbrella.sa/iec360/" class="contact-info-link"><img class="icon icon-lg" src="{{ asset('img/svg/internet.svg') }}">umbrella.sa/iec360 </a> 
-                                            </div>  
-                                            <div class="contact-info-column">  
-                                                <a href="mailto:iec360@umbrella.sa" class="contact-info-link"><img class="icon icon-lg" src="{{ asset('img/svg/email.svg') }}" alt="Email"> iec360@umbrella.sa </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                           
-                            <!-- social -->
-                                <div class="contact-info-header">   
-                                    <div style="flex: 1;">  
-                                        <div class="contact-info-links two-columns">  
-                                            <div class="contact-info-column">   
-                                                <a href="https://www.instagram.com/iec360expo" class="contact-info-link"><img class="icon icon-lg" src="{{ asset('img/svg/instagram.svg') }}">iec360expo </a> 
-                                            </div>  
-                                            <div class="contact-info-column">  
-                                                <a href="https://www.tiktok.com/@iec360expo" class="contact-info-link"><img class="icon icon-lg" src="{{ asset('img/svg/tiktok.svg') }}">iec360expo </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-        </div>
-                    </div>
+                                </article>
+                            @endforeach
+                        </div>
+                    @else
+                        <p class="text-center text-gray-500 text-sm">{{ __('Organizers will be announced soon.') }}</p>
+                    @endif
                 </div>
+            </section>
+
+            <div class="row-logo" id="guest-row-logo" style="order: 5;">
+                <img src="{{ asset('img/IEC-logo.png') }}" alt="IEC Logo" style="text-align:center">
+            </div>
+            <!-- Contact Section -->
+            @php
+                $contactLocale = app()->getLocale();
+                $contactTranslate = function ($node, $fallback = '') use ($contactLocale) {
+                    $en = data_get($node, 'en', $fallback);
+                    $ar = data_get($node, 'ar', $en);
+                    return [
+                        'en' => $en,
+                        'ar' => $ar,
+                        'text' => $contactLocale === 'ar' ? $ar : $en,
+                    ];
+                };
+                $contactTitleBlock = $contactTranslate(data_get($contactSection, 'title'), __('Contact Us'));
+                $contactDescriptionBlock = $contactTranslate(data_get($contactSection, 'description'), '');
+                $contactFormTitle = $contactTranslate(data_get($contactSection, 'form_title'), __('Send us a message'));
+                $contactFormButton = $contactTranslate(data_get($contactSection, 'form_button'), __('Send Message'));
+                $supportCards = data_get($contactSection, 'support_cards', []);
+                $locationTitleBlock = $contactTranslate(data_get($contactSection, 'location_title'), __('Event Location'));
+                $locationAddressBlock = $contactTranslate(data_get($contactSection, 'location_address'), '');
+                $mapEmbedUrl = data_get(
+                    $contactSection,
+                    'map_embed',
+                    'https://www.google.com/maps/place/The+Arena+Riyadh+Venue+for+Exhibitions+%7C+%D9%85%D8%B1%D9%83%D8%B2+%D8%B0%D9%8A+%D8%A3%D8%B1%D9%8A%D9%86%D8%A7+%D8%A7%D9%84%D8%B1%D9%8A%D8%A7%D8%B6+%D9%84%D9%84%D9%85%D8%B9%D8%A7%D8%B1%D8%B6+%D9%88%D8%A7%D9%84%D9%81%D8%B9%D8%A7%D9%84%D9%8A%D8%A7%D8%AA%E2%80%AD/@24.7779833,46.7296192,17z/data=!4m14!1m7!3m6!1s0x3e2efde8f1cd0b5d:0x4992b4380d1f29e5!2zVGhlIEFyZW5hIFJpeWFkaCBWZW51ZSBmb3IgRXhoaWJpdGlvbnMgfCDZhdix2YPYsiDYsNmKINij2LHZitmG2Kcg2KfZhNix2YrYp9i2INmE2YTZhdi52KfYsdi2INmI2KfZhNmB2LnYp9mE2YrYp9iq!8m2!3d24.7779833!4d46.7321941!16s%2Fg%2F11rwj51wpq!3m5!1s0x3e2efde8f1cd0b5d:0x4992b4380d1f29e5!8m2!3d24.7779833!4d46.7321941!16s%2Fg%2F11rwj51wpq?entry=ttu&g_ep=EgoyMDI1MTIwOS4wIKXMDSoASAFQAw%3D%3D',
+                );
+                $locationImageUrl = \App\Models\LandingSection::mediaUrl(data_get($contactSection, 'location_image'));
+            @endphp
+            <!-- Contact Section -->
+            <section class="contact" id="contact">
+                <div class="container">
+                    <div class="section-header" data-animate>
+                        <h2 class="section-title" data-en="{{ e($contactTitleBlock['en']) }}"
+                            data-ar="{{ e($contactTitleBlock['ar']) }}">{{ $contactTitleBlock['text'] }}</h2>
+                    </div>
+
+                    <div class="contact-grid">
+                        <div class="contact-col" data-animate>
+                            <div class="contact-form-card">
+                                <form onsubmit="handleContactSubmit(event)">
+                                    <div class="form-grid">
+                                        <div class="form-group">
+                                            <label class="form-label" data-en="Name *"
+                                                data-ar="الاسم الكامل *">{{ __('Name *') }}</label>
+                                            <input type="text" class="form-input" required
+                                                placeholder="{{ __('Your name') }}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label" data-en="Email *"
+                                                data-ar="البريد الإلكتروني *">{{ __('Email *') }}</label>
+                                            <input type="email" class="form-input" required
+                                                placeholder="you@example.com">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label" data-en="Phone *"
+                                                data-ar="الهاتف *">{{ __('Phone *') }}</label>
+                                            <input type="tel" class="form-input" required
+                                                placeholder="+966 50 000 0000">
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label" data-en="Message *"
+                                                data-ar="Message *">{{ __('Message *') }}</label>
+                                            <textarea class="form-textarea" required rows="4"
+                                                placeholder="{{ __('How can we help you?') }}"></textarea>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary"
+                                        style="width: 100%; margin-top: 1rem;">
+                                        <svg class="icon icon-sm" style="margin-right: 0.5rem;" viewBox="0 0 24 24">
+                                            <path d="m22 2-7 20-4-9-9-4Z" />
+                                            <path d="M22 2 11 13" />
+                                        </svg>
+                                        <span data-en="{{ e($contactFormButton['en']) }}"
+                                            data-ar="{{ e($contactFormButton['ar']) }}">{{ $contactFormButton['text'] }}</span>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <div class="contact-col" data-animate>
+                            <div class="contact-info-list">
+                                <div class="contact-info-card">
+                                    <!-- arabic support -->
+                                    <div class="contact-info-header">
+                                        <div style="flex: 1;">
+                                            <div class="contact-info-links two-columns">
+                                                <div class="contact-info-column">
+                                                    <a href="tel:+966566668892" class="contact-info-link"><img
+                                                            class="icon icon-lg"
+                                                            src="{{ asset('img/svg/telephone.svg') }}"> +966566668892
+                                                    </a>
+                                                </div>
+                                                <div class="contact-info-column">
+                                                    <a href="tel:+966594650976" class="contact-info-link"><img
+                                                            class="icon icon-lg"
+                                                            src="{{ asset('img/svg/telephone.svg') }}"> +966594650976
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- website and email -->
+                                    <div class="contact-info-header">
+                                        <div style="flex: 1;">
+                                            <div class="contact-info-links two-columns">
+                                                <div class="contact-info-column">
+                                                    <a href="https://umbrella.sa/iec360/" class="contact-info-link"><img
+                                                            class="icon icon-lg"
+                                                            src="{{ asset('img/svg/internet.svg') }}">umbrella.sa/iec360
+                                                    </a>
+                                                </div>
+                                                <div class="contact-info-column">
+                                                    <a href="mailto:iec360@umbrella.sa" class="contact-info-link"><img
+                                                            class="icon icon-lg" src="{{ asset('img/svg/email.svg') }}"
+                                                            alt="Email"> iec360@umbrella.sa </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- social -->
+                                    <div class="contact-info-header">
+                                        <div style="flex: 1;">
+                                            <div class="contact-info-links two-columns">
+                                                <div class="contact-info-column">
+                                                    <a href="https://www.instagram.com/iec360expo"
+                                                        class="contact-info-link"><img class="icon icon-lg"
+                                                            src="{{ asset('img/svg/instagram.svg') }}">iec360expo </a>
+                                                </div>
+                                                <div class="contact-info-column">
+                                                    <a href="https://www.tiktok.com/@iec360expo"
+                                                        class="contact-info-link"><img class="icon icon-lg"
+                                                            src="{{ asset('img/svg/tiktok.svg') }}">iec360expo </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
 
                         <div class="row-logo" id="guest-row-logo" style="order: 5;">
-            <img src="{{ asset('img/IEC-logo.png') }}" alt="IEC Logo" style="text-align:center">
-        </div>
-                </div>
+                            <img src="{{ asset('img/IEC-logo.png') }}" alt="IEC Logo" style="text-align:center">
+                        </div>
+                    </div>
                 </div>
                 <!-- map -->
                 <div class="location-card" id="location-card">
                     <div class="location-header">
                         <div>
-                            <div class="location-title"><img src="{{ asset('img/TheArena.png') }}"
-                                    alt="" style="text-align:center; height: 200px;" />
+                            <div class="location-title"><img src="{{ asset('img/TheArena.png') }}" alt=""
+                                    style="text-align:center; height: 200px;" />
                             </div>
                         </div>
                     </div>
                     @if ($locationImageUrl)
                         <!-- <div class="location-image" style="margin-top:1rem;">
-                            <img src="{{ $locationImageUrl }}" alt="{{ $locationTitleBlock['text'] }}"
-                                style="width:100%; border-radius:1rem;">
-                        </div> -->
+                                <img src="{{ $locationImageUrl }}" alt="{{ $locationTitleBlock['text'] }}"
+                                    style="width:100%; border-radius:1rem;">
+                            </div> -->
                     @endif
                     <div class="map-embed">
                         <iframe src="{{ $mapEmbedUrl }}" allowfullscreen loading="lazy"
                             referrerpolicy="no-referrer-when-downgrade"></iframe>
                     </div>
                 </div>
-        </section>
-    </main>
+            </section>
+        </main>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-inner">
-                <div class="footer-text"> <span data-en="IEC 360&deg; EXPO"
-                        data-ar="IEC 360&deg;
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-inner">
+                    <div class="footer-text"> <span data-en="IEC 360&deg; EXPO" data-ar="IEC 360&deg;
                         EXPO"> IEC 360&deg;
-                        EXPO</span></div>
-                <div class="footer-text" data-en="All rights reserved BU 2026 "
-                    data-ar="جميع الحقوق محفوظة BU 2026.">2026 All rights reserved BU</div>
+                            EXPO</span></div>
+                    <div class="footer-text" data-en="All rights reserved BU 2026 "
+                        data-ar="جميع الحقوق محفوظة BU 2026.">2026 All rights reserved BU</div>
+                </div>
             </div>
-        </div>
-    </footer>
+        </footer>
 
-    <!-- Toast Container -->
-    <div class="toast-container" id="toast-container"></div>
-    <button id="to-top-btn" class="to-top-button" type="button" aria-label="{{ __('Back to top') }}"
-        onclick="scrollToTop()">
-        <svg class="icon icon-sm" viewBox="0 0 24 24">
-            <path d="M12 19V5M5 12l7-7 7 7" />
-        </svg>
-    </button>
+        <!-- Toast Container -->
+        <div class="toast-container" id="toast-container"></div>
+        <button id="to-top-btn" class="to-top-button" type="button" aria-label="{{ __('Back to top') }}"
+            onclick="scrollToTop()">
+            <svg class="icon icon-sm" viewBox="0 0 24 24">
+                <path d="M12 19V5M5 12l7-7 7 7" />
+            </svg>
+        </button>
 
     </div>
     <script>
@@ -4551,7 +4612,7 @@ experience that unites ambitious minds and industry leaders under one roof    </
         });
 
         // About Section Video Reveal
-        (function() {
+        (function()  {
             const aboutSection = document.querySelector('.about');
             if (!aboutSection) return;
 
@@ -4650,7 +4711,7 @@ experience that unites ambitious minds and industry leaders under one roof    </
             }
 
             const roles = [{
-                    key: 'visitor',
+                  key: 'visitor',
                     card: 'visitor-card',
                     form: 'visitor-form',
                     cta: 'visitor-cta'
