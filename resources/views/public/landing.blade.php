@@ -2124,8 +2124,8 @@
         }
 
         .icon-lg {
-            width: 40px;
-            height: 40px;
+            width: 30px;
+            height: 30px;
         }
 
         /* Toast */
@@ -2290,6 +2290,7 @@
             flex-direction: column;
             gap: 0.5rem;
             align-items: center;
+            line-height: 5rem;
         }
 
         .contact-info-column-header {
@@ -4282,34 +4283,31 @@ experience that unites ambitious minds and industry leaders under one roof    </
 
                     <div class="contact-col" data-animate>
                         <div class="contact-info-list"> 
+                            <div class="contact-info-card">  
                             <!-- arabic support -->
-                        <div class="contact-info-card">  
                                 <div class="contact-info-header">   
                                     <div style="flex: 1;">  
                                         <div class="contact-info-links two-columns">  
                                             <div class="contact-info-column">   
-                                                <a href="tel:+966566668892" class="contact-info-link"> <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>  </svg> +966566668892
+                                                <a href="tel:+966566668892" class="contact-info-link"><img class="icon icon-lg" src="{{ asset('img/svg/telephone.svg') }}"> +966566668892
                                                 </a> 
                                             </div>  
                                             <div class="contact-info-column">  
-                                                <a href="tel:+966594650976" class="contact-info-link">    <svg class="icon icon-sm" viewBox="0 0 24 24">   <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>  </svg>    +966594650976
+                                                <a href="tel:+966594650976" class="contact-info-link"><img class="icon icon-lg" src="{{ asset('img/svg/telephone.svg') }}"> +966594650976
                                                 </a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
                             <!-- website and email -->
                                 <div class="contact-info-header">   
                                     <div style="flex: 1;">  
                                         <div class="contact-info-links two-columns">  
                                             <div class="contact-info-column">   
-                                                <a href="tel:+966566668892" class="contact-info-link"> <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>  </svg> +966566668892
-                                                </a> 
+                                                <a href="https://umbrella.sa/iec360/" class="contact-info-link"><img class="icon icon-lg" src="{{ asset('img/svg/internet.svg') }}">umbrella.sa/iec360 </a> 
                                             </div>  
                                             <div class="contact-info-column">  
-                                                <a href="tel:+966594650976" class="contact-info-link">    <svg class="icon icon-sm" viewBox="0 0 24 24">   <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>  </svg>    +966594650976
-                                                </a>
+                                                <a href="mailto:iec360@umbrella.sa" class="contact-info-link"><img class="icon icon-lg" src="{{ asset('img/svg/email.svg') }}" alt="Email"> iec360@umbrella.sa </a>
                                             </div>
                                         </div>
                                     </div>
@@ -4321,18 +4319,16 @@ experience that unites ambitious minds and industry leaders under one roof    </
                                     <div style="flex: 1;">  
                                         <div class="contact-info-links two-columns">  
                                             <div class="contact-info-column">   
-                                                <a href="tel:+966566668892" class="contact-info-link"> <svg class="icon icon-sm" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>  </svg> +966566668892
-                                                </a> 
+                                                <a href="tel:+966566668892" class="contact-info-link"><img class="icon icon-lg" src="{{ asset('img/svg/instagram.svg') }}">iec360expo </a> 
                                             </div>  
                                             <div class="contact-info-column">  
-                                                <a href="tel:+966594650976" class="contact-info-link">    <svg class="icon icon-sm" viewBox="0 0 24 24">   <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>  </svg>    +966594650976
-                                                </a>
+                                                <a href="tel:+966594650976" class="contact-info-link"><img class="icon icon-lg" src="{{ asset('img/svg/tiktok.svg') }}">iec360expo </a>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             
-                        </>
+        </div>
                     </div>
                 </div>
 
@@ -4348,14 +4344,13 @@ experience that unites ambitious minds and industry leaders under one roof    </
                             <div class="location-title"><img src="{{ asset('img/TheArena.png') }}"
                                     alt="" style="text-align:center; height: 200px;" />
                             </div>
-                            <!-- <p class="location-address" data-en="{{ e($locationAddressBlock['en']) }}" data-ar="{{ e($locationAddressBlock['ar']) }}">{{ $locationAddressBlock['text'] }}</p> -->
                         </div>
                     </div>
                     @if ($locationImageUrl)
-                        <div class="location-image" style="margin-top:1rem;">
+                        <!-- <div class="location-image" style="margin-top:1rem;">
                             <img src="{{ $locationImageUrl }}" alt="{{ $locationTitleBlock['text'] }}"
                                 style="width:100%; border-radius:1rem;">
-                        </div>
+                        </div> -->
                     @endif
                     <div class="map-embed">
                         <iframe src="{{ $mapEmbedUrl }}" allowfullscreen loading="lazy"
