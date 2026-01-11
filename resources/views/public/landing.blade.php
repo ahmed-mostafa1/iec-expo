@@ -2576,7 +2576,7 @@
         <!-- Hero Section -->
         @php
             $heroVideoUrl =
-                \App\Models\LandingSection::mediaUrl($heroSection['video_path'] ?? null) ?? asset('video/hero.mp4');
+                \App\Models\LandingSection::mediaUrl($heroSection['video_path'] ?? null) ?? asset('video/hero-video.mp4');
             $heroPoster = \App\Models\LandingSection::mediaUrl($heroSection['poster_image_path'] ?? null);
             $heroStats = $heroSection['stats'] ?? [];
             $activeLocale = app()->getLocale();
