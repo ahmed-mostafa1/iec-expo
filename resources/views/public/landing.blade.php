@@ -11,9 +11,36 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link href="https://fonts.cdnfonts.com/css/somar-sans" rel="stylesheet">
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <style>
+        @font-face {
+            font-family: 'Somar Sans';
+            font-style: normal;
+            font-weight: 400;
+            src: url('https://fonts.cdnfonts.com/s/90887/SomarSans-Regular.woff') format('woff');
+        }
+
+        @font-face {
+            font-family: 'Somar Sans';
+            font-style: normal;
+            font-weight: 500;
+            src: url('https://fonts.cdnfonts.com/s/90887/SomarSans-Medium.woff') format('woff');
+        }
+
+        @font-face {
+            font-family: 'Somar Sans';
+            font-style: normal;
+            font-weight: 600;
+            src: url('https://fonts.cdnfonts.com/s/90887/SomarSans-SemiBold.woff') format('woff');
+        }
+
+        @font-face {
+            font-family: 'Somar Sans';
+            font-style: normal;
+            font-weight: 700;
+            src: url('https://fonts.cdnfonts.com/s/90887/SomarSans-Bold.woff') format('woff');
+        }
+
         :root {
             --primary-color: rgba(96, 36, 193, 1);
             --secondary-color: #6024c1;
