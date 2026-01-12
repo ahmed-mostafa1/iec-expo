@@ -5180,7 +5180,27 @@ experience that unites ambitious minds and industry leaders under one roof"
 
         window.addEventListener('load', () => {
             document.body.classList.remove('is-loading');
+            equalizeGoalCards();
         });
+
+        window.addEventListener('resize', equalizeGoalCards);
+
+        function equalizeGoalCards() {
+            const cards = document.querySelectorAll('.goal-card');
+            if (!cards.length) return;
+            
+            // Reset height to auto to calculate correct scrollHeight
+            cards.forEach(card => card.style.minHeight = 'auto');
+            
+            let maxHeight = 0;
+            cards.forEach(card => {
+                if (card.offsetHeight > maxHeight) {
+                    maxHeight = card.offsetHeight;
+                }
+            });
+            
+            cards.forEach(card => card.style.minHeight = maxHeight + 'px');
+        }
 
         function scrollToTop() {
             window.scrollTo({
