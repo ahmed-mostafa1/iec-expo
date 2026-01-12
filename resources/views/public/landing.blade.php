@@ -836,7 +836,7 @@
         }
 
         @media (max-width: 768px) {
-            
+
             .event-info {
                 padding: 0px;
             }
@@ -1422,14 +1422,21 @@
         }
 
         .goals-list {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            max-width: 80%;
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            gap: 1.5rem;
+            width: 100%;
             margin: auto;
         }
 
+
+
         .goal-card {
+            margin: auto;
+            width: 80%;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
             transition: all 0.5s;
             opacity: 0;
             transform: translateY(1rem);
@@ -3534,7 +3541,7 @@
                                 @php
                                     $guestFullNameLabel = $fieldCopy($visitorFieldsByName, 'full_name', 'label', [
                                         'en' => 'Full
-                                                                                                                                        Name *',
+                                                                                                                                                                            Name *',
                                         'ar' => 'الاسم الكامل *',
                                     ]);
                                     $guestFullNamePlaceholder = $fieldCopy(
@@ -3561,7 +3568,7 @@
                                     ]);
                                     $guestJobLabel = $fieldCopy($visitorFieldsByName, 'job_title', 'label', [
                                         'en' => 'Job
-                                                                                                                                        Title',
+                                                                                                                                                                            Title',
                                         'ar' => 'المسمى الوظيفي',
                                     ]);
                                     $guestJobPlaceholder = $fieldCopy($visitorFieldsByName, 'job_title', 'placeholder', [
@@ -3580,7 +3587,7 @@
                                     );
                                     $guestHeardLabel = $fieldCopy($visitorFieldsByName, 'heard_about', 'label', [
                                         'en' => 'How
-                                                                                                                                        did you hear about us?',
+                                                                                                                                                                            did you hear about us?',
                                         'ar' => 'كيف سمعت عنا؟',
                                     ]);
                                     $guestHeardOptions = $fieldOptions($visitorFieldsByName, 'heard_about', [
@@ -3764,7 +3771,7 @@
                         'value' => 0,
                         'suffix' => '',
                         'icon' => 'fas
-                                                                        fa-circle',
+                                                                                            fa-circle',
                     ];
                     $stats = array_pad($heroStats, 5, $defaultStat);
                 @endphp
@@ -3928,8 +3935,8 @@
                                                 <img src="{{ asset('img/icons/intro.png') }}" alt="flag Icon"
                                                     style="height: 40px;">
                                             </div>
-                                            <h3 class="goal-title" data-en="Introduction" data-ar="المقدمة"
-                                                >Introduction</h3>
+                                            <h3 class="goal-title" data-en="Introduction" data-ar="المقدمة">Introduction
+                                            </h3>
                                         </div>
                                         <p class="goal-desc" data-en="With unmatched uniqueness and excellence, the IEC EXPO returns for its third edition
 under the theme IEC 360°. It continues its journey as a comprehensive interactive
@@ -3953,8 +3960,8 @@ experience that unites ambitious minds and industry leaders under one roof"
                                                 <img src="{{ asset('img/icons/goal.png') }}" alt="flag Icon"
                                                     style="height: 40px;">
                                             </div>
-                                            <h3 class="goal-title" data-en="Objectives" data-ar="الأهداف"
-                                                >Objectives</h3>
+                                            <h3 class="goal-title" data-en="Objectives" data-ar="الأهداف">Objectives
+                                            </h3>
                                         </div>
                                         <p class="goal-desc" data-en="With distinction and uniqueness, the IEC Trade
                 Exhibition returns in its third edition under the
@@ -3984,8 +3991,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                                                 <img src="{{ asset('img/icons/mission.png') }}" alt="mission Icon"
                                                     style="height: 40px;">
                                             </div>
-                                            <h3 class="goal-title" data-en="Mission" data-ar="الرسالة"
-                                                >Mission</h3>
+                                            <h3 class="goal-title" data-en="Mission" data-ar="الرسالة">Mission</h3>
                                         </div>
                                         <p class="goal-desc"
                                             data-en="The exhibition aims to empower individuals and organizations, enhance innovation, and build strategic partnerships that contribute to developing business environments in alignment with Saudi Vision 2030"
@@ -4002,7 +4008,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                 </div>
             </section>
             <div class="row-logo about-img">
-                <img src="{{ asset('img/post-about.png') }}" alt="About Us">
+                <img src="{{ asset('img/low-about.png') }}" alt="About Us">
             </div>
             <!-- Sponsors Section -->
             <section class="sponsors" id="sponsors">
@@ -4153,7 +4159,7 @@ experience that unites ambitious minds and industry leaders under one roof"
             </section>
 
             <section class="participants" id="participants">
-            
+
                 <!-- Participants Section -->
                 <div class="container">
                     <div class="section-header" data-animate>
@@ -4382,7 +4388,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                             </div>
                         </div>
 
-                        
+
                     </div>
                 </div>
                 <!-- map -->
@@ -4391,27 +4397,30 @@ experience that unites ambitious minds and industry leaders under one roof"
                         <div>
                             <div class="location-title">
                                 <!-- <img src="{{ asset('img/TheArena.png') }}" alt="" style="text-align:center; height: 200px;" /> -->
-                            <div class="event-info-copy" data-animate>
-                            <div class="event-badges" style="display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: nowrap;">
-                                <div class="event-badge event-badge-license" data-animate>
-                                    <img class="license-mark" src="{{ asset('img/authority.png') }}"
-                                        alt="Saudi Government License">
-                                    <div>
-                                        <div class="event-badge-title" data-en="License" data-ar="الترخيص">License
-                                            26/165</div>
+                                <div class="event-info-copy" data-animate>
+                                    <div class="event-badges"
+                                        style="display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: nowrap;">
+                                        <div class="event-badge event-badge-license" data-animate>
+                                            <img class="license-mark" src="{{ asset('img/authority.png') }}"
+                                                alt="Saudi Government License">
+                                            <div>
+                                                <div class="event-badge-title" data-en="License" data-ar="الترخيص">
+                                                    License
+                                                    26/165</div>
+                                            </div>
+                                        </div>
+                                        <div class="event-badge" data-animate>
+                                            <img src="{{ asset('img/TheArena.png') }}" alt="The Arena"
+                                                style="width: 70px; height: auto;">
+                                            <div class="hero-location" role="button" tabindex="0"
+                                                data-scroll-target="#location-card">
+                                                <div class="event-badge-title" data-en="Event Location"
+                                                    data-ar="موقع الحدث">Event
+                                                    Location</div>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="event-badge" data-animate>
-                                    <img src="{{ asset('img/TheArena.png') }}" alt="The Arena"
-                                        style="width: 70px; height: auto;">
-                                    <div class="hero-location" role="button" tabindex="0"
-                                        data-scroll-target="#location-card">
-                                        <div class="event-badge-title" data-en="Event Location" data-ar="موقع الحدث">Event
-                                            Location</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                             </div>
                         </div>
                     </div>
@@ -4433,7 +4442,8 @@ experience that unites ambitious minds and industry leaders under one roof"
                         EXPO"> IEC 360&deg;
                             EXPO</span></div>
                     <div class="footer-text" data-en="All rights reserved ©️ Business Umbrella Company "
-                        data-ar="جميع الحقوق محفوظة ©️ شركة مظلة الأعمال.">All rights reserved ©️ Business Umbrella Company</div>
+                        data-ar="جميع الحقوق محفوظة ©️ شركة مظلة الأعمال.">All rights reserved ©️ Business Umbrella
+                        Company</div>
                 </div>
             </div>
         </footer>
