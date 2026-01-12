@@ -973,9 +973,9 @@
         }
 
         .section-title {
-            font-size: 1.875rem;
+            font-size: 2rem;
             font-weight: 700;
-            margin-bottom: .75rem;
+            margin: .75rem;
             color: rgb(var(--primary-color));
         }
 
@@ -1460,12 +1460,12 @@
         .sponsor-tiers {
             display: flex;
             flex-direction: column;
-            gap: 2.5rem;
+            gap: 1rem;
         }
 
         .sponsor-tier-title {
             text-align: center;
-            font-size: 2rem;
+            font-size: 1.5rem;
             /* font-weight: 600; */
             margin-bottom: 1rem;
             color: var(--light-color);
@@ -1814,7 +1814,7 @@
 
         .participant-card {
             border-radius: var(--radius);
-            padding: 0.9rem;
+            /* padding: 0.9rem; */
             transition: all 0.5s;
             opacity: 0;
             transform: translateY(2rem);
@@ -1822,13 +1822,11 @@
             color: inherit;
             display: flex;
             flex-direction: column;
-            /* align-items: center; */
             text-align: center;
             will-change: transform;
             position: relative;
             overflow: hidden;
             margin: auto;
-            /* min-height: 260px; */
         }
 
         .participant-card.visible {
@@ -2015,7 +2013,7 @@
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            font-size: 0.875rem;
+            font-size: 1rem;
             color: rgb(var(--muted-foreground));
             text-decoration: none;
             transition: color 0.2s;
@@ -2352,10 +2350,6 @@
         @media (min-width: 768px) {
             .nav {
                 display: flex;
-            }
-
-            .section-title {
-                font-size: 2.25rem;
             }
 
             .role-cards {
