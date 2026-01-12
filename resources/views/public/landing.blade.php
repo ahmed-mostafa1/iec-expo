@@ -961,7 +961,7 @@
 
         .section-header {
             text-align: center;
-            margin-bottom: 3rem;
+            /* margin-bottom: 3rem; */
             opacity: 0;
             transform: translateY(2rem);
             transition: all 0.7s;
@@ -975,7 +975,7 @@
         .section-title {
             font-size: 1.875rem;
             font-weight: 700;
-            margin-bottom: 1rem;
+            margin-bottom: .75rem;
             color: rgb(var(--primary-color));
         }
 
@@ -1614,7 +1614,7 @@
             padding: 0.65rem 0.5rem;
             border-radius: 9999px;
             background: rgb(var(--primary));
-            color: rgb(var(--primary-foreground));
+            color: #fff;
             font-weight: 600;
             text-decoration: none;
             transition: background 0.3s ease, transform 0.3s ease;
@@ -1798,7 +1798,7 @@
         }
 
         .organizers {
-            padding: 5rem 0;
+            /* padding: 1rem 0; */
         }
 
         /* Participants Section */
@@ -1900,7 +1900,7 @@
 
         /* Contact Section */
         .contact {
-            padding: 5rem 0;
+            padding: 1rem 0;
             background: transparent;
         }
 
@@ -2806,7 +2806,7 @@
 
             <section class="registration" id="register">
                 <div class="container">
-                    <div class="section-header" data-animate style="margin-top: 1rem; margin-bottom: 0px !important;">
+                    <div class="section-header" data-animate>
                         <h2 class="section-title" data-en="{{ e($registrationTitle['en']) }}"
                             data-ar="{{ e($registrationTitle['ar']) }}">{{ $registrationTitle['text'] }}</h2>
                     </div>
@@ -3712,7 +3712,7 @@
                                             <svg class="icon icon-sm" style="margin-right: 0.5rem;" viewBox="0 0 24 24">
                                                 <path d="M19 12H5M12 19l-7-7 7-7" />
                                             </svg>
-                                            <span data-en="Back" data-ar="Back">{{ __('Back') }}</span>
+                                            <span data-en="Back" data-ar="رجوع">Back</span>
                                         </button>
                                         <button type="submit" class="btn btn-primary"
                                             data-en="{{ e($guestSubmit['en']) }}"
@@ -3974,7 +3974,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                 </div>
             </section>
             <div class="row-logo about-img">
-                <img src="{{ asset('img/after-about.PNG') }}" alt="About Us">
+                <img src="{{ asset('img/post-about.PNG') }}" alt="About Us">
             </div>
 
 
@@ -3983,8 +3983,7 @@ experience that unites ambitious minds and industry leaders under one roof"
             <section class="sponsors" id="sponsors">
                 <div class="container">
                     <div class="section-header" data-animate>
-                        <h2 class="section-title" data-en="SPONSOR" data-ar="الراعي"
-                            style="font: size 3rem !important;;">SPONSOR</h2>
+                        <h2 class="section-title" data-en="SPONSOR" data-ar="الراعي">SPONSOR</h2>
                     </div>
 
                     <div class="sponsor-tiers">
@@ -4133,7 +4132,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                 <!-- Participants Section -->
                 <div class="container">
                     <div class="section-header" data-animate>
-                        <h2 class="section-title" data-en="ICONS" data-ar="الأيكونز">ICONS</h2>
+                        <h2 class="section-title" data-en="ICON" data-ar="الأيكون">ICON</h2>
                     </div>
 
                     <div class="participants-grid">
