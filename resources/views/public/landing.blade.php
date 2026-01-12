@@ -4362,19 +4362,6 @@ experience that unites ambitious minds and industry leaders under one roof"
                                 <!-- <img src="{{ asset('img/TheArena.png') }}" alt="" style="text-align:center; height: 200px;" /> -->
                             <div class="event-info-copy" data-animate>
                             <div class="event-badges">
-                                <div class="event-badge" data-animate>
-                                    <img src="{{ asset('img/svg/calendar.svg') }}" alt="Calendar" style="width: 4rem;">
-                                    <div>
-                                        <div class="event-badge-meta">
-                                            <span class="meta-line" data-en="Start 24-9-2026" data-ar="يبدأ
-                                            24-9-2026">Start
-                                                24-9-2026</span>
-                                            <span class="meta-line" data-en="End 26-9-2026" data-ar="ينتهي
-                                            26-9-2026">End
-                                                26-9-2026</span>
-                                        </div>
-                                    </div>
-                                </div>
                                 <div class="event-badge event-badge-license" data-animate>
                                     <img class="license-mark" src="{{ asset('img/authority.png') }}"
                                         alt="Saudi Government License">
