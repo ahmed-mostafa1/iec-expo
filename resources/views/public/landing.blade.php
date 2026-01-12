@@ -610,11 +610,11 @@
             justify-content: center;
             text-align: center;
             padding: 0.9rem 1rem;
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 12px;
-            background: rgba(255, 255, 255, 0.02);
+            /* border: 1px solid rgba(255, 255, 255, 0.08); */
+            /* border-radius: 12px; */
+            /* background: rgba(255, 255, 255, 0.02); */
             backdrop-filter: blur(4px);
-            box-shadow: 0 12px 30px -14px rgba(0, 0, 0, 0.45);
+            /* box-shadow: 0 12px 30px -14px rgba(0, 0, 0, 0.45); */
             transition: transform 0.3s ease, border-color 0.3s ease;
         }
 
@@ -664,7 +664,7 @@
         }
 
         .event-badge-license .license-mark {
-            width: 100px;
+            width: 85px;
             height: auto;
         }
 
@@ -4361,7 +4361,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                             <div class="location-title">
                                 <!-- <img src="{{ asset('img/TheArena.png') }}" alt="" style="text-align:center; height: 200px;" /> -->
                             <div class="event-info-copy" data-animate>
-                            <div class="event-badges">
+                            <div class="event-badges" style="display: flex; justify-content: center; align-items: center; gap: 1rem; flex-wrap: nowrap;">
                                 <div class="event-badge event-badge-license" data-animate>
                                     <img class="license-mark" src="{{ asset('img/authority.png') }}"
                                         alt="Saudi Government License">
