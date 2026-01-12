@@ -10,9 +10,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Cairo:wght@400;500;600;700&family=Work+Sans:wght@400;500;600;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap"
-        rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.cdnfonts.com/css/somar-sans" rel="stylesheet">
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <style>
         :root {
@@ -48,8 +47,16 @@
             --button-hover-bg: rgba(96, 36, 193, 1);
             --button-text: #ffffff;
             --hover-accent: #ffffff;
-            --font-en: 'Poppins', 'Work Sans', sans-serif;
-            --font-ar: 'Cairo', 'Noto Sans Arabic', sans-serif;
+            --font-en: 'Poppins', sans-serif;
+            --font-ar: 'Somar Sans', sans-serif;
+        }
+
+        body.locale-en {
+            --font-base: var(--font-en);
+        }
+
+        body.locale-ar {
+            --font-base: var(--font-ar);
         }
 
 
