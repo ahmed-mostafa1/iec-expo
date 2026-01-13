@@ -3989,7 +3989,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                                         </div>
                                         <p class="goal-desc" data-en="With distinction and uniqueness, the IEC Trade
                 Exhibition returns in its third edition under the
-                theme IEC360°, continuing its journey as an
+                theme IEC 360°, continuing its journey as an
                 interactive platform that brings together
                 innovation, development, and connection in an
                 exceptional experience that unites ambitious
@@ -4000,7 +4000,7 @@ experience that unites ambitious minds and industry leaders under one roof"
         شراكات وعلاقات وتطوير مشاريعها">
                                             With distinction and uniqueness, the IEC Trade
                                             Exhibition returns in its third edition under the
-                                            theme IEC360°, continuing its journey as an
+                                            theme IEC 360°, continuing its journey as an
                                             interactive platform that brings together
                                             innovation, development, and connection in an
                                             exceptional experience that unites ambitious
