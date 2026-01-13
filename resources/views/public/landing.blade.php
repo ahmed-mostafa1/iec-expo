@@ -5,8 +5,32 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>IEC 360 EXPO</title>
-    <meta name="description"
-        content="Join industry leaders for the premier business conference. March 15-17, 2025 in Riyadh. Register now for networking, innovation, and growth." />
+    <title>@yield('title', 'IEC 360 EXPO')</title>
+<meta name="description" content="@yield('meta_description', 'With unmatched uniqueness and excellence, the IEC EXPO returns for its third edition
+under the theme IEC 360°. It continues its journey as a comprehensive interactive
+platform that merges innovation, development, and networking—offering an exceptional
+experience that unites ambitious minds and industry leaders under one roof')">
+
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="IEC 360 EXPO">
+<meta property="og:title" content="@yield('og_title', 'IEC 360 EXPO')">
+<meta property="og:description" content="@yield('og_description', 'With unmatched uniqueness and excellence, the IEC EXPO returns for its third edition
+under the theme IEC 360°. It continues its journey as a comprehensive interactive
+platform that merges innovation, development, and networking—offering an exceptional
+experience that unites ambitious minds and industry leaders under one roof')">
+<meta property="og:url" content="{{ url()->current() }}">
+<meta property="og:image" content="@yield('og_image', asset('img/IEC-logo-nav.png'))">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="@yield('twitter_title', trim($__env->yieldContent('title', config('app.name'))))">
+<meta name="twitter:description" content="@yield('twitter_description', trim($__env->yieldContent('meta_description', 'With unmatched uniqueness and excellence, the IEC EXPO returns for its third edition
+under the theme IEC 360°. It continues its journey as a comprehensive interactive
+platform that merges innovation, development, and networking—offering an exceptional
+experience that unites ambitious minds and industry leaders under one roof')))">
+<meta name="twitter:image" content="@yield('twitter_image', asset('img/IEC-logo-nav.png'))">
+    <!-- <meta name="description"
+        content="Join industry leaders for the premier business conference. March 15-17, 2025 in Riyadh. Register now for networking, innovation, and growth." /> -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -2992,7 +3016,7 @@
                                     <div class="form-buttons"
                                         style="justify-content: flex-start; margin-bottom: 0.75rem; width: 50%!important; margin: auto;">
                                         <a class="btn btn-outline"
-                                            href="https://umbrella.sa/iec360/pdf/privacy-policy.pdf" target="_blank"
+                                            href="https://umbrella.sa/iec360/pdf/IEC360-Profile-Icon.pdf" target="_blank"
                                             rel="noopener" data-en="Download SPONSOR Profile"
                                             data-ar="تنزيل ملف الراعي">Download SPONSOR Profile</a>
                                     </div>
@@ -3309,7 +3333,7 @@
                                     <div class="form-buttons"
                                         style="justify-content: flex-start; margin-bottom: 0.75rem; width: 50%!important; margin: auto;">
                                         <a class="btn btn-outline"
-                                            href="https://umbrella.sa/iec360/pdf/privacy-policy.pdf" target="_blank"
+                                            href="https://umbrella.sa/iec360/pdf/IEC360-Profile-Icon.pdf" target="_blank"
                                             rel="noopener" data-en="Download ICON Profile"
                                             data-ar="تنزيل ملف الأيكون">Download ICON Profile</a>
                                     </div>
