@@ -4083,7 +4083,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                                 <div class="sponsor-tier-grid tier-marketing single-sponsor-grid">
                                     <article class="sponsor-card sponsor-marketing" data-animate>
                                         <div class="sponsor-logo">
-                                            <img src="{{ asset('img/placeholder-img.png') }}" alt="">
+                                            <img src="{{ asset('img/sponsors/3rd-eye.jpeg') }}" alt="">
                                         </div>
                                     </article>
                                 </div>
