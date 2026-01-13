@@ -3016,7 +3016,7 @@ experience that unites ambitious minds and industry leaders under one roof')))">
                                     <div class="form-buttons"
                                         style="justify-content: flex-start; margin-bottom: 0.75rem; width: 50%!important; margin: auto;">
                                         <a class="btn btn-outline"
-                                            href="https://umbrella.sa/iec360/pdf/IEC360-Profile-Icon.pdf" target="_blank"
+                                            href="#" target="_blank"
                                             rel="noopener" data-en="Download SPONSOR Profile"
                                             data-ar="تنزيل ملف الراعي">Download SPONSOR Profile</a>
                                     </div>
