@@ -4032,7 +4032,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                 </div>
             </section>
             <div class="row-logo about-img">
-                <img src="{{ asset('img/low-about.png') }}" alt="About Us">
+                <img src="{{ asset('img/under-about.png') }}" alt="About Us">
             </div>
             <!-- Sponsors Section -->
             <section class="sponsors" id="sponsors">
