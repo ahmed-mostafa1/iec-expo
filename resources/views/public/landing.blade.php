@@ -3051,6 +3051,7 @@ experience that unites ambitious minds and industry leaders under one roof')))">
                                                 <label class="form-label" data-en="{{ e($exPhoneLabel['en']) }}"
                                                     data-ar="{{ e($exPhoneLabel['ar']) }}">{{ $exPhoneLabel['text'] }}</label>
                                                 <input type="tel" name="phone" class="form-input" required
+                                                    minlength="10" pattern="\d{10,}" inputmode="numeric"
                                                     placeholder="{{ $exPhonePlaceholder['text'] }}"
                                                     value="{{ $sponsorFormActive ? old('phone') : '' }}">
                                                 @if ($sponsorFormActive && $errors->has('phone'))
@@ -3100,7 +3101,8 @@ experience that unites ambitious minds and industry leaders under one roof')))">
                                             <div class="form-group">
                                                 <label class="form-label" data-en="{{ e($exCrNumberLabel['en']) }}"
                                                     data-ar="{{ e($exCrNumberLabel['ar']) }}">{{ $exCrNumberLabel['text'] }}</label>
-                                                <input type="text" name="cr_number" class="form-input"
+                                                <input type="text" name="cr_number" class="form-input" required
+                                                    minlength="10" pattern="\d{10,}" inputmode="numeric"
                                                     placeholder="{{ $exCrNumberPlaceholder['text'] }}"
                                                     value="{{ $sponsorFormActive ? old('cr_number') : '' }}">
                                                 @if ($sponsorFormActive && $errors->has('cr_number'))
@@ -3113,7 +3115,7 @@ experience that unites ambitious minds and industry leaders under one roof')))">
                                             <div class="form-group">
                                                 <label class="form-label" data-en="{{ e($exCrCopyLabel['en']) }}"
                                                     data-ar="{{ e($exCrCopyLabel['ar']) }}">{{ $exCrCopyLabel['text'] }}</label>
-                                                <input type="file" name="cr_copy" class="form-input"
+                                                <input type="file" name="cr_copy" class="form-input" required
                                                     accept="application/pdf">
                                                 <span class="form-hint" data-en="{{ e($exCrCopyHint['en']) }}"
                                                     data-ar="{{ e($exCrCopyHint['ar']) }}">{{ $exCrCopyHint['text'] }}</span>
@@ -3125,7 +3127,7 @@ experience that unites ambitious minds and industry leaders under one roof')))">
                                             <div class="form-group">
                                                 <label class="form-label" data-en="{{ e($exLogoLabel['en']) }}"
                                                     data-ar="{{ e($exLogoLabel['ar']) }}">{{ $exLogoLabel['text'] }}</label>
-                                                <input type="file" name="company_logo" class="form-input"
+                                                <input type="file" name="company_logo" class="form-input" required
                                                     accept="application/pdf">
                                                 <span class="form-hint" data-en="{{ e($exLogoHint['en']) }}"
                                                     data-ar="{{ e($exLogoHint['ar']) }}">{{ $exLogoHint['text'] }}</span>
@@ -3140,7 +3142,7 @@ experience that unites ambitious minds and industry leaders under one roof')))">
                                             <div class="form-group">
                                                 <label class="form-label" data-en="{{ e($exAddressLabel['en']) }}"
                                                     data-ar="{{ e($exAddressLabel['ar']) }}">{{ $exAddressLabel['text'] }}</label>
-                                                <input type="file" name="national_address_document" class="form-input"
+                                                <input type="file" name="national_address_document" class="form-input" required
                                                     accept="application/pdf">
                                                 <span class="form-hint" data-en="{{ e($exAddressHint['en']) }}"
                                                     data-ar="{{ e($exAddressHint['ar']) }}">{{ $exAddressHint['text'] }}</span>
@@ -3368,6 +3370,7 @@ experience that unites ambitious minds and industry leaders under one roof')))">
                                                 <label class="form-label" data-en="{{ e($iconPhoneLabel['en']) }}"
                                                     data-ar="{{ e($iconPhoneLabel['ar']) }}">{{ $iconPhoneLabel['text'] }}</label>
                                                 <input type="tel" name="phone" class="form-input" required
+                                                    minlength="10" pattern="\d{10,}" inputmode="numeric"
                                                     placeholder="{{ $iconPhonePlaceholder['text'] }}"
                                                     value="{{ $iconFormActive ? old('phone') : '' }}">
                                                 @if ($iconFormActive && $errors->has('phone'))
@@ -3444,7 +3447,8 @@ experience that unites ambitious minds and industry leaders under one roof')))">
                                             <div class="form-group">
                                                 <label class="form-label" data-en="{{ e($iconCrLabel['en']) }}"
                                                     data-ar="{{ e($iconCrLabel['ar']) }}">{{ $iconCrLabel['text'] }}</label>
-                                                <input type="text" name="cr_number" class="form-input"
+                                                <input type="text" name="cr_number" class="form-input" required
+                                                    minlength="10" pattern="\d{10,}" inputmode="numeric"
                                                     placeholder="{{ $iconCrPlaceholder['text'] }}"
                                                     value="{{ $iconFormActive ? old('cr_number') : '' }}">
                                                 @if ($iconFormActive && $errors->has('cr_number'))
@@ -3458,7 +3462,7 @@ experience that unites ambitious minds and industry leaders under one roof')))">
                                             <div class="form-group">
                                                 <label class="form-label" data-en="{{ e($iconCrCopyLabel['en']) }}"
                                                     data-ar="{{ e($iconCrCopyLabel['ar']) }}">{{ $iconCrCopyLabel['text'] }}</label>
-                                                <input type="file" name="cr_copy" class="form-input"
+                                                <input type="file" name="cr_copy" class="form-input" required
                                                     accept="application/pdf">
                                                 <span class="form-hint" data-en="{{ e($iconCrCopyHint['en']) }}"
                                                     data-ar="{{ e($iconCrCopyHint['ar']) }}">{{ $iconCrCopyHint['text'] }}</span>
@@ -3470,7 +3474,7 @@ experience that unites ambitious minds and industry leaders under one roof')))">
                                             <div class="form-group">
                                                 <label class="form-label" data-en="{{ e($iconLogoLabel['en']) }}"
                                                     data-ar="{{ e($iconLogoLabel['ar']) }}">{{ $iconLogoLabel['text'] }}</label>
-                                                <input type="file" name="company_logo" class="form-input"
+                                                <input type="file" name="company_logo" class="form-input" required
                                                     accept="application/pdf">
                                                 <span class="form-hint" data-en="{{ e($iconLogoHint['en']) }}"
                                                     data-ar="{{ e($iconLogoHint['ar']) }}">{{ $iconLogoHint['text'] }}</span>
@@ -3485,7 +3489,7 @@ experience that unites ambitious minds and industry leaders under one roof')))">
                                             <div class="form-group">
                                                 <label class="form-label" data-en="{{ e($iconAddressLabel['en']) }}"
                                                     data-ar="{{ e($iconAddressLabel['ar']) }}">{{ $iconAddressLabel['text'] }}</label>
-                                                <input type="file" name="national_address_document" class="form-input"
+                                                <input type="file" name="national_address_document" class="form-input" required
                                                     accept="application/pdf">
                                                 <span class="form-hint" data-en="{{ e($iconAddressHint['en']) }}"
                                                     data-ar="{{ e($iconAddressHint['ar']) }}">{{ $iconAddressHint['text'] }}</span>
