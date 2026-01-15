@@ -114,16 +114,30 @@ class RegistrationPdfService
         Settings::setDefaultAsianFontName('DejaVu Sans');
 
         $phpWord = IOFactory::load($docxPath);
+        
+        // Set document properties for RTL
+        $properties = $phpWord->getDocInfo();
+        $properties->setTitle('Contract');
+        $properties->setSubject('Contract Document');
+        
         $tempBase = tempnam(sys_get_temp_dir(), 'contract_pdf_');
 
         if ($tempBase === false) {
             throw new \RuntimeException('Unable to create a temporary PDF file.');
         }
 
-        $tempPdf = $tempBase . '.pdf';
-        @unlink($tempBase);
+        // Use HTML conversion for better RTL control
+        // PHPWord's native PDF writer doesn't properly respect RTL settings
+        $tempPdf = $this->convertViaHtml($phpWord, $tempBase);
 
+        return $tempPdf;
+    }
+    
+    private function convertViaHtml($phpWord, $tempBase): string
+    {
+        $tempPdf = $tempBase . '.pdf';
         $tempHtml = $tempBase . '.html';
+        
         $htmlWriter = IOFactory::createWriter($phpWord, 'HTML');
         $htmlWriter->save($tempHtml);
 
@@ -143,13 +157,19 @@ class RegistrationPdfService
             'format' => 'A4',
             'orientation' => 'P',
             'default_font' => 'dejavusans',
+            'directionality' => 'rtl',
+            'margin_left' => 20,
+            'margin_right' => 20,
+            'margin_top' => 20,
+            'margin_bottom' => 20,
+            'default_font_size' => 11,
         ]);
         $mpdf->autoScriptToLang = true;
         $mpdf->autoLangToFont = true;
         $mpdf->SetDirectionality('rtl');
         $mpdf->WriteHTML($this->injectRtlStyles($html));
         $mpdf->Output($tempPdf, MpdfDestination::FILE);
-
+        
         return $tempPdf;
     }
 
@@ -162,38 +182,68 @@ class RegistrationPdfService
             * { 
                 font-family: "DejaVu Sans", sans-serif !important; 
                 direction: rtl !important; 
-                unicode-bidi: embed;
+                unicode-bidi: embed !important;
+                text-align: right !important;
             }
-            html, body {
+            html {
                 direction: rtl !important;
                 text-align: right !important;
-                margin: 0;
-                padding: 0;
             }
             body {
                 direction: rtl !important;
                 text-align: right !important;
+                margin: 0;
+                padding: 0;
+                font-size: 11pt;
+                line-height: 1.5;
             }
-            p, div, span, td, th, li, h1, h2, h3, h4, h5, h6, section, article {
-                text-align: right !important;
+            p {
                 direction: rtl !important;
+                text-align: right !important;
+                text-align-last: right !important;
+                margin: 0.3em 0;
+                line-height: 1.5;
             }
+            div {
+                direction: rtl !important;
+                text-align: right !important;
+            }
+            span {
+                direction: rtl !important;
+                text-align: right !important;
+            }
+            h1, h2, h3, h4, h5, h6 {
+                direction: rtl !important;
+                text-align: right !important;
+                text-align-last: right !important;
+                font-weight: bold;
+                margin: 0.5em 0;
+            }
+            h1 { font-size: 16pt; }
+            h2 { font-size: 14pt; }
+            h3 { font-size: 13pt; }
+            h4 { font-size: 12pt; }
             table {
                 direction: rtl !important;
+                width: 100%;
             }
             table td, table th {
-                text-align: right !important;
-            }
-            /* Override any inline styles */
-            [style*="text-align"] {
-                text-align: right !important;
-            }
-            [style*="direction"] {
                 direction: rtl !important;
+                text-align: right !important;
+                padding: 5px;
             }
-            /* Preserve line breaks and spacing from original document */
-            p {
-                white-space: pre-wrap;
+            li {
+                direction: rtl !important;
+                text-align: right !important;
+            }
+            ul, ol {
+                direction: rtl !important;
+                text-align: right !important;
+            }
+            /* Force override any inline styles */
+            [style] {
+                direction: rtl !important;
+                text-align: right !important;
             }
             /* Ensure consistent formatting across all pages */
             div[style*="page-break"] {
@@ -229,20 +279,36 @@ class RegistrationPdfService
         // PHPWord's HTML writer outputs UTF-8, so we preserve it as-is
         // Do NOT use utf8_decode() as it converts to Latin-1 and breaks Arabic text
 
-        // Remove inline styles that conflict with RTL alignment
-        // Remove text-align: left, text-align: center, direction: ltr from inline styles
-        $html = preg_replace('/text-align:\s*(left|center)\s*;?/i', '', $html);
-        $html = preg_replace('/direction:\s*ltr\s*;?/i', '', $html);
+        // Remove ALL text-align and direction inline styles to let CSS take over
+        $html = preg_replace('/text-align:\s*[^;"\'>]+\s*;?/i', '', $html);
+        $html = preg_replace('/direction:\s*[^;"\'>]+\s*;?/i', '', $html);
+        
+        // Remove float styles that might interfere with RTL
+        $html = preg_replace('/float:\s*[^;"\'>]+\s*;?/i', '', $html);
         
         // Remove empty style attributes
         $html = preg_replace('/style="\s*"/i', '', $html);
         $html = preg_replace('/style=\'\s*\'/i', '', $html);
+        $html = preg_replace('/style="\s*;+\s*"/i', '', $html);
+
+        // Convert <br> tags to proper paragraph breaks for better structure
+        // This helps maintain the original document's paragraph structure
+        $html = preg_replace('/<br\s*\/?>/i', '</p><p>', $html);
+        
+        // Clean up any empty paragraphs that might have been created
+        $html = preg_replace('/<p>\s*<\/p>/i', '', $html);
+        
+        // Add RTL attributes to body and main containers
+        $html = preg_replace('/<body([^>]*)>/i', '<body$1 dir="rtl">', $html);
+        $html = preg_replace('/<div([^>]*)>/i', '<div$1 dir="rtl">', $html);
 
         // Prevent mPDF from exploding page count on Word page styles.
         $html = preg_replace('/@page\s+page\d+\s*\{[^}]*\}/i', '', $html);
         $html = preg_replace('/page:\s*page\d+;?/i', '', $html);
         $html = preg_replace('/body\s*>\s*div\s*\+\s*div\s*\{[^}]*\}/i', '', $html);
-        $html = preg_replace('/page-break-before:\s*always;?/i', '', $html);
+        
+        // Keep page breaks but ensure they don't interfere with RTL
+        // $html = preg_replace('/page-break-before:\s*always;?/i', '', $html);
 
         return $html;
     }
