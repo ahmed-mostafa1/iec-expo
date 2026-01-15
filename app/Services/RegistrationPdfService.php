@@ -154,11 +154,35 @@ class RegistrationPdfService
     private function injectRtlStyles(?string $html): string
     {
         $styleBlock = '<style>
-            body, * { 
+            * { 
                 font-family: "DejaVu Sans", sans-serif !important; 
-                direction: rtl; 
+                direction: rtl !important; 
                 unicode-bidi: embed;
-                text-align: right;
+            }
+            body {
+                direction: rtl !important;
+                text-align: right !important;
+            }
+            p, div, span, td, th, li, h1, h2, h3, h4, h5, h6 {
+                text-align: right !important;
+                direction: rtl !important;
+            }
+            table {
+                direction: rtl !important;
+            }
+            table td, table th {
+                text-align: right !important;
+            }
+            /* Override any inline styles */
+            [style*="text-align"] {
+                text-align: right !important;
+            }
+            [style*="direction"] {
+                direction: rtl !important;
+            }
+            /* Preserve line breaks and spacing from original document */
+            p {
+                white-space: pre-wrap;
             }
         </style>';
         $charset = '<meta charset="UTF-8">';
@@ -188,6 +212,15 @@ class RegistrationPdfService
         // Ensure the HTML is treated as UTF-8
         // PHPWord's HTML writer outputs UTF-8, so we preserve it as-is
         // Do NOT use utf8_decode() as it converts to Latin-1 and breaks Arabic text
+
+        // Remove inline styles that conflict with RTL alignment
+        // Remove text-align: left, text-align: center, direction: ltr from inline styles
+        $html = preg_replace('/text-align:\s*(left|center)\s*;?/i', '', $html);
+        $html = preg_replace('/direction:\s*ltr\s*;?/i', '', $html);
+        
+        // Remove empty style attributes
+        $html = preg_replace('/style="\s*"/i', '', $html);
+        $html = preg_replace('/style=\'\s*\'/i', '', $html);
 
         // Prevent mPDF from exploding page count on Word page styles.
         $html = preg_replace('/@page\s+page\d+\s*\{[^}]*\}/i', '', $html);
