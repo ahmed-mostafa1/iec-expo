@@ -4854,17 +4854,17 @@ experience that unites ambitious minds and industry leaders under one roof"
         let hallSelectionTargetId = null;
 
         // TODO: open hall design in a relative path after uploading to the server
-        // function openHallDesign(targetInputId) {
-        //     hallSelectionTargetId = targetInputId;
-        //     const localeSuffix = currentLocale ? `?locale=${encodeURIComponent(currentLocale)}` : '';
-        //     window.open((window.APP_BASE_PATH || '') + '/iec360/hall-design' + localeSuffix, '_blank');
-        // }
-        // TODO: uncomment this after uploading
         function openHallDesign(targetInputId) {
-          hallSelectionTargetId = targetInputId;
-          const localeSuffix = currentLocale ? `?locale=${encodeURIComponent(currentLocale)}` : '';
-          window.open('/hall-design' + localeSuffix, '_blank');
+            hallSelectionTargetId = targetInputId;
+            const localeSuffix = currentLocale ? `?locale=${encodeURIComponent(currentLocale)}` : '';
+            window.open((window.APP_BASE_PATH || '') + '/iec360/hall-design' + localeSuffix, '_blank');
         }
+        // TODO: uncomment this after uploading
+        // function openHallDesign(targetInputId) {
+        //   hallSelectionTargetId = targetInputId;
+        //   const localeSuffix = currentLocale ? `?locale=${encodeURIComponent(currentLocale)}` : '';
+        //   window.open('/hall-design' + localeSuffix, '_blank');
+        // }
 
 
 
