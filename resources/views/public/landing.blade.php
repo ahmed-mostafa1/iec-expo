@@ -4863,7 +4863,7 @@ experience that unites ambitious minds and industry leaders under one roof"
         function openHallDesign(targetInputId) {
           hallSelectionTargetId = targetInputId;
           const localeSuffix = currentLocale ? `?locale=${encodeURIComponent(currentLocale)}` : '';
-          window.open('/iec360/hall-design' + localeSuffix, '_blank');
+          window.open('/hall-design' + localeSuffix, '_blank');
         }
 
 

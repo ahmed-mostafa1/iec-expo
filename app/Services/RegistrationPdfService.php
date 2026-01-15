@@ -6,6 +6,8 @@ use App\Models\SponsorRegistration;
 use App\Models\VisitorRegistration;
 use App\Models\IconRegistration;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 use Illuminate\Support\Facades\Storage;
 use PhpOffice\PhpWord\IOFactory;
 use PhpOffice\PhpWord\Settings;
@@ -108,8 +110,6 @@ class RegistrationPdfService
         Settings::setDefaultRtl(true);
         Settings::setDefaultFontName('DejaVu Sans');
         Settings::setDefaultAsianFontName('DejaVu Sans');
-        Settings::setPdfRendererName(Settings::PDF_RENDERER_DOMPDF);
-        Settings::setPdfRendererPath(base_path('vendor/dompdf/dompdf'));
 
         $phpWord = IOFactory::load($docxPath);
         $tempBase = tempnam(sys_get_temp_dir(), 'contract_pdf_');
@@ -121,10 +121,46 @@ class RegistrationPdfService
         $tempPdf = $tempBase . '.pdf';
         @unlink($tempBase);
 
-        $writer = IOFactory::createWriter($phpWord, 'PDF');
-        $writer->save($tempPdf);
+        $tempHtml = $tempBase . '.html';
+        $htmlWriter = IOFactory::createWriter($phpWord, 'HTML');
+        $htmlWriter->save($tempHtml);
+
+        $html = file_get_contents($tempHtml);
+        @unlink($tempHtml);
+
+        $options = new Options();
+        $options->set('defaultFont', 'DejaVu Sans');
+        $options->set('isHtml5ParserEnabled', true);
+
+        $dompdf = new Dompdf($options);
+        $dompdf->setPaper('A4', 'portrait');
+        $dompdf->loadHtml($this->injectRtlStyles($html), 'UTF-8');
+        $dompdf->render();
+
+        file_put_contents($tempPdf, $dompdf->output());
 
         return $tempPdf;
+    }
+
+    private function injectRtlStyles(?string $html): string
+    {
+        $styleBlock = '<style>body, * { font-family: "DejaVu Sans" !important; direction: rtl; unicode-bidi: embed; }</style>';
+        $charset = '<meta charset="UTF-8">';
+
+        if (! $html) {
+            return '<html><head>' . $charset . $styleBlock . '</head><body></body></html>';
+        }
+
+        if (stripos($html, '<head>') !== false) {
+            return preg_replace(
+                '/<head>/i',
+                '<head>' . $charset . $styleBlock,
+                $html,
+                1
+            );
+        }
+
+        return $charset . $styleBlock . $html;
     }
 
     private function getContractXmlParts(\ZipArchive $zip): array
