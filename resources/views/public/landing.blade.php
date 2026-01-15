@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="{{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}">
 
 <head>
@@ -3114,7 +3114,7 @@ experience that unites ambitious minds and industry leaders under one roof')))">
                                                 <label class="form-label" data-en="{{ e($exCrCopyLabel['en']) }}"
                                                     data-ar="{{ e($exCrCopyLabel['ar']) }}">{{ $exCrCopyLabel['text'] }}</label>
                                                 <input type="file" name="cr_copy" class="form-input"
-                                                    accept="application/pdf,image/png,image/jpeg">
+                                                    accept="application/pdf">
                                                 <span class="form-hint" data-en="{{ e($exCrCopyHint['en']) }}"
                                                     data-ar="{{ e($exCrCopyHint['ar']) }}">{{ $exCrCopyHint['text'] }}</span>
                                                 @if ($sponsorFormActive && $errors->has('cr_copy'))
@@ -3141,7 +3141,7 @@ experience that unites ambitious minds and industry leaders under one roof')))">
                                                 <label class="form-label" data-en="{{ e($exAddressLabel['en']) }}"
                                                     data-ar="{{ e($exAddressLabel['ar']) }}">{{ $exAddressLabel['text'] }}</label>
                                                 <input type="file" name="national_address_document" class="form-input"
-                                                    accept="application/pdf,image/png,image/jpeg">
+                                                    accept="application/pdf">
                                                 <span class="form-hint" data-en="{{ e($exAddressHint['en']) }}"
                                                     data-ar="{{ e($exAddressHint['ar']) }}">{{ $exAddressHint['text'] }}</span>
                                                 @if ($sponsorFormActive && $errors->has('national_address_document'))
@@ -3459,7 +3459,7 @@ experience that unites ambitious minds and industry leaders under one roof')))">
                                                 <label class="form-label" data-en="{{ e($iconCrCopyLabel['en']) }}"
                                                     data-ar="{{ e($iconCrCopyLabel['ar']) }}">{{ $iconCrCopyLabel['text'] }}</label>
                                                 <input type="file" name="cr_copy" class="form-input"
-                                                    accept="application/pdf,image/png,image/jpeg">
+                                                    accept="application/pdf">
                                                 <span class="form-hint" data-en="{{ e($iconCrCopyHint['en']) }}"
                                                     data-ar="{{ e($iconCrCopyHint['ar']) }}">{{ $iconCrCopyHint['text'] }}</span>
                                                 @if ($iconFormActive && $errors->has('cr_copy'))
@@ -3486,7 +3486,7 @@ experience that unites ambitious minds and industry leaders under one roof')))">
                                                 <label class="form-label" data-en="{{ e($iconAddressLabel['en']) }}"
                                                     data-ar="{{ e($iconAddressLabel['ar']) }}">{{ $iconAddressLabel['text'] }}</label>
                                                 <input type="file" name="national_address_document" class="form-input"
-                                                    accept="application/pdf,image/png,image/jpeg">
+                                                    accept="application/pdf">
                                                 <span class="form-hint" data-en="{{ e($iconAddressHint['en']) }}"
                                                     data-ar="{{ e($iconAddressHint['ar']) }}">{{ $iconAddressHint['text'] }}</span>
                                                 @if ($iconFormActive && $errors->has('national_address_document'))
