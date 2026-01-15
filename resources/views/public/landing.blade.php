@@ -4854,17 +4854,17 @@ experience that unites ambitious minds and industry leaders under one roof"
         let hallSelectionTargetId = null;
 
         // TODO: open hall design in a relative path after uploading to the server
-        function openHallDesign(targetInputId) {
-            hallSelectionTargetId = targetInputId;
-            const localeSuffix = currentLocale ? `?locale=${encodeURIComponent(currentLocale)}` : '';
-            window.open((window.APP_BASE_PATH || '') + '/iec360/hall-design' + localeSuffix, '_blank');
-        }
-        // TODO: uncomment this after uploading
         // function openHallDesign(targetInputId) {
-        //   hallSelectionTargetId = targetInputId;
-        //   const localeSuffix = currentLocale ? `?locale=${encodeURIComponent(currentLocale)}` : '';
-        //   window.open('/iec360/hall-design' + localeSuffix, '_blank');
+        //     hallSelectionTargetId = targetInputId;
+        //     const localeSuffix = currentLocale ? `?locale=${encodeURIComponent(currentLocale)}` : '';
+        //     window.open((window.APP_BASE_PATH || '') + '/iec360/hall-design' + localeSuffix, '_blank');
         // }
+        // TODO: uncomment this after uploading
+        function openHallDesign(targetInputId) {
+          hallSelectionTargetId = targetInputId;
+          const localeSuffix = currentLocale ? `?locale=${encodeURIComponent(currentLocale)}` : '';
+          window.open('/iec360/hall-design' + localeSuffix, '_blank');
+        }
 
 
 
@@ -4966,6 +4966,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                         const title = (payload && payload.toast_title) || sponsorForm.dataset.successTitle;
                         const message = (payload && payload.message) || sponsorForm.dataset.successMessage;
                         showToast(title, message);
+                        triggerPdfDownload(payload && payload.pdf_url, payload && payload.pdf_name);
                     },
                 });
             }
@@ -4982,6 +4983,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                             const title = (payload && payload.toast_title) || iconForm.dataset.successTitle;
                             const message = (payload && payload.message) || iconForm.dataset.successMessage;
                             showToast(title, message);
+                            triggerPdfDownload(payload && payload.pdf_url, payload && payload.pdf_name);
                         },
                     });
                 }
@@ -5030,6 +5032,22 @@ experience that unites ambitious minds and industry leaders under one roof"
                     toggleSubmitting(submitter, false);
                 }
             });
+        }
+
+        function triggerPdfDownload(url, filename) {
+            if (!url) {
+                return;
+            }
+
+            const link = document.createElement('a');
+            link.href = url;
+            link.rel = 'noopener';
+            if (filename) {
+                link.download = filename;
+            }
+            document.body.appendChild(link);
+            link.click();
+            link.remove();
         }
 
         function toggleSubmitting(button, isSubmitting) {

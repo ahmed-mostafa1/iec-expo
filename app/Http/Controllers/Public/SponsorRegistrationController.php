@@ -8,6 +8,8 @@ use App\Mail\NewSponsorRegistrationMail;
 use App\Models\SponsorRegistration;
 use App\Services\RegistrationPdfService;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\URL;
 
 class SponsorRegistrationController extends Controller
 {
@@ -72,13 +74,41 @@ class SponsorRegistrationController extends Controller
         $toastTitle = __('registration.sponsor.toast_title');
 
         if ($request->expectsJson()) {
+            $downloadUrl = URL::temporarySignedRoute(
+                'public.register.sponsor.pdf',
+                now()->addMinutes(10),
+                ['locale' => $locale, 'registration' => $registration->id]
+            );
+
             return response()->json([
                 'message' => $message,
                 'toast_title' => $toastTitle,
                 'registration_id' => $registration->id,
+                'pdf_url' => $downloadUrl,
+                'pdf_name' => "sponsor-registration-{$registration->id}.pdf",
             ], 201);
         }
 
         return back()->with('sponsor_success', $message);
+    }
+
+    public function download(string $locale, SponsorRegistration $registration)
+    {
+        if (! $registration->pdf_path) {
+            $pdfPath = $this->pdfService->generateSponsorPdf($registration);
+            $registration->update(['pdf_path' => $pdfPath]);
+        }
+
+        if (! $registration->pdf_path) {
+            abort(404);
+        }
+
+        $fullPath = Storage::disk('public')->path($registration->pdf_path);
+
+        if (! file_exists($fullPath)) {
+            abort(404);
+        }
+
+        return response()->download($fullPath, "sponsor-registration-{$registration->id}.pdf");
     }
 }

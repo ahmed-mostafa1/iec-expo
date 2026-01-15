@@ -73,8 +73,16 @@ Route::prefix('{locale}')
         Route::post('/register/sponsor', [SponsorRegistrationController::class, 'store'])
             ->name('public.register.sponsor');
 
+        Route::get('/register/sponsor/{registration}/pdf', [SponsorRegistrationController::class, 'download'])
+            ->name('public.register.sponsor.pdf')
+            ->middleware('signed');
+
         Route::post('/register/icon', [IconRegistrationController::class, 'store'])
             ->name('public.register.icon');
+
+        Route::get('/register/icon/{registration}/pdf', [IconRegistrationController::class, 'download'])
+            ->name('public.register.icon.pdf')
+            ->middleware('signed');
 
         Route::post('/contact', [ContactController::class, 'submit'])
             ->name('public.contact');
