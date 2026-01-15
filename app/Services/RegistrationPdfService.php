@@ -22,6 +22,7 @@ class RegistrationPdfService
             'organization' => (string) ($registration->organization ?? ''),
             'cr_number' => (string) ($registration->cr_number ?? ''),
             'full_name' => (string) ($registration->full_name ?? ''),
+            'icon-location-selection' => (string) ($registration->location_selection ?? ''),
         ], $path);
     }
 
@@ -46,6 +47,7 @@ class RegistrationPdfService
             'organization' => (string) ($registration->organization ?? ''),
             'cr_number' => (string) ($registration->cr_number ?? ''),
             'full_name' => (string) ($registration->full_name ?? ''),
+            'icon-location-selection' => (string) ($registration->location_selection ?? ''),
         ], $path);
     }
 
@@ -154,16 +156,25 @@ class RegistrationPdfService
     private function injectRtlStyles(?string $html): string
     {
         $styleBlock = '<style>
+            @page {
+                margin: 2cm;
+            }
             * { 
                 font-family: "DejaVu Sans", sans-serif !important; 
                 direction: rtl !important; 
                 unicode-bidi: embed;
             }
+            html, body {
+                direction: rtl !important;
+                text-align: right !important;
+                margin: 0;
+                padding: 0;
+            }
             body {
                 direction: rtl !important;
                 text-align: right !important;
             }
-            p, div, span, td, th, li, h1, h2, h3, h4, h5, h6 {
+            p, div, span, td, th, li, h1, h2, h3, h4, h5, h6, section, article {
                 text-align: right !important;
                 direction: rtl !important;
             }
@@ -183,6 +194,11 @@ class RegistrationPdfService
             /* Preserve line breaks and spacing from original document */
             p {
                 white-space: pre-wrap;
+            }
+            /* Ensure consistent formatting across all pages */
+            div[style*="page-break"] {
+                direction: rtl !important;
+                text-align: right !important;
             }
         </style>';
         $charset = '<meta charset="UTF-8">';
