@@ -6,9 +6,9 @@ use App\Models\SponsorRegistration;
 use App\Models\VisitorRegistration;
 use App\Models\IconRegistration;
 use Barryvdh\DomPDF\Facade\Pdf;
-use Dompdf\Dompdf;
-use Dompdf\Options;
 use Illuminate\Support\Facades\Storage;
+use Mpdf\Mpdf;
+use Mpdf\Output\Destination as MpdfDestination;
 use PhpOffice\PhpWord\IOFactory;
 use PhpOffice\PhpWord\Settings;
 
@@ -125,26 +125,42 @@ class RegistrationPdfService
         $htmlWriter = IOFactory::createWriter($phpWord, 'HTML');
         $htmlWriter->save($tempHtml);
 
+        // Read the HTML file with explicit UTF-8 encoding
         $html = file_get_contents($tempHtml);
         @unlink($tempHtml);
 
-        $options = new Options();
-        $options->set('defaultFont', 'DejaVu Sans');
-        $options->set('isHtml5ParserEnabled', true);
+        // Ensure the HTML string is properly UTF-8 encoded
+        if (!mb_check_encoding($html, 'UTF-8')) {
+            $html = mb_convert_encoding($html, 'UTF-8', mb_detect_encoding($html, ['UTF-8', 'ISO-8859-1', 'Windows-1252'], true));
+        }
 
-        $dompdf = new Dompdf($options);
-        $dompdf->setPaper('A4', 'portrait');
-        $dompdf->loadHtml($this->injectRtlStyles($html), 'UTF-8');
-        $dompdf->render();
+        $html = $this->normalizeContractHtml($html);
 
-        file_put_contents($tempPdf, $dompdf->output());
+        $mpdf = new Mpdf([
+            'mode' => 'utf-8',
+            'format' => 'A4',
+            'orientation' => 'P',
+            'default_font' => 'dejavusans',
+        ]);
+        $mpdf->autoScriptToLang = true;
+        $mpdf->autoLangToFont = true;
+        $mpdf->SetDirectionality('rtl');
+        $mpdf->WriteHTML($this->injectRtlStyles($html));
+        $mpdf->Output($tempPdf, MpdfDestination::FILE);
 
         return $tempPdf;
     }
 
     private function injectRtlStyles(?string $html): string
     {
-        $styleBlock = '<style>body, * { font-family: "DejaVu Sans" !important; direction: rtl; unicode-bidi: embed; }</style>';
+        $styleBlock = '<style>
+            body, * { 
+                font-family: "DejaVu Sans", sans-serif !important; 
+                direction: rtl; 
+                unicode-bidi: embed;
+                text-align: right;
+            }
+        </style>';
         $charset = '<meta charset="UTF-8">';
 
         if (! $html) {
@@ -161,6 +177,25 @@ class RegistrationPdfService
         }
 
         return $charset . $styleBlock . $html;
+    }
+
+    private function normalizeContractHtml(?string $html): string
+    {
+        if (! $html) {
+            return '';
+        }
+
+        // Ensure the HTML is treated as UTF-8
+        // PHPWord's HTML writer outputs UTF-8, so we preserve it as-is
+        // Do NOT use utf8_decode() as it converts to Latin-1 and breaks Arabic text
+
+        // Prevent mPDF from exploding page count on Word page styles.
+        $html = preg_replace('/@page\s+page\d+\s*\{[^}]*\}/i', '', $html);
+        $html = preg_replace('/page:\s*page\d+;?/i', '', $html);
+        $html = preg_replace('/body\s*>\s*div\s*\+\s*div\s*\{[^}]*\}/i', '', $html);
+        $html = preg_replace('/page-break-before:\s*always;?/i', '', $html);
+
+        return $html;
     }
 
     private function getContractXmlParts(\ZipArchive $zip): array
