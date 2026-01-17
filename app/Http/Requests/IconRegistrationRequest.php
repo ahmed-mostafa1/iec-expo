@@ -18,15 +18,15 @@ class IconRegistrationRequest extends FormRequest
         return [
             'full_name'       => ['required', 'string', 'max:255'],
             'email'           => ['required', 'email', 'max:255'],
-            'phone'           => ['required', 'string', 'max:50'],
+            'phone'           => ['required', 'string', 'min:10', 'max:50', 'regex:/^\d+$/'],
             'job_title'       => ['required', 'string', 'max:255'],
-            'organization'    => ['nullable', 'string', 'max:255'],
+            'organization'    => ['required', 'string', 'max:255'],
             'location_selection' => ['required', 'string', 'max:255'],
-            'vat_number'      => ['nullable', 'digits:15', new UniqueIconVatCr],
-            'cr_number'       => ['nullable', 'string', 'max:255', new UniqueIconVatCr],
-            'cr_copy'                   => ['nullable', 'file', 'mimes:pdf', 'max:8192'],
-            'national_address_document' => ['nullable', 'file', 'mimes:pdf', 'max:8192'],
-            'company_logo'              => ['nullable', 'file', 'mimes:pdf', 'max:8192'],
+            'vat_number'      => ['required', 'digits:15', new UniqueIconVatCr],
+            'cr_number'       => ['required', 'string', 'min:10', 'max:255', 'regex:/^\d+$/', new UniqueIconVatCr],
+            'cr_copy'                   => ['required', 'file', 'mimes:pdf', 'max:8192'],
+            'national_address_document' => ['required', 'file', 'mimes:pdf', 'max:8192'],
+            'company_logo'              => ['required', 'file', 'mimes:pdf', 'max:8192'],
             'privacy_policy'            => ['accepted'],
         ];
     }

@@ -3052,6 +3052,7 @@ experience that unites ambitious minds and industry leaders under one roof')))">
                                                     data-ar="{{ e($exPhoneLabel['ar']) }}">{{ $exPhoneLabel['text'] }}</label>
                                                 <input type="tel" name="phone" class="form-input" required
                                                     minlength="10" pattern="\d{10,}" inputmode="numeric"
+                                                    data-min-digits="10"
                                                     placeholder="{{ $exPhonePlaceholder['text'] }}"
                                                     value="{{ $sponsorFormActive ? old('phone') : '' }}">
                                                 @if ($sponsorFormActive && $errors->has('phone'))
@@ -3074,7 +3075,7 @@ experience that unites ambitious minds and industry leaders under one roof')))">
                                             <div class="form-group">
                                                 <label class="form-label" data-en="{{ e($exOrgLabel['en']) }}"
                                                     data-ar="{{ e($exOrgLabel['ar']) }}">{{ $exOrgLabel['text'] }}</label>
-                                                <input type="text" name="organization" class="form-input"
+                                                <input type="text" name="organization" class="form-input" required
                                                     placeholder="{{ $exOrgPlaceholder['text'] }}"
                                                     value="{{ $sponsorFormActive ? old('organization') : '' }}">
                                                 @if ($sponsorFormActive && $errors->has('organization'))
@@ -3089,7 +3090,7 @@ experience that unites ambitious minds and industry leaders under one roof')))">
                                             <div class="form-group">
                                                 <label class="form-label" data-en="{{ e($exVatLabel['en']) }}"
                                                     data-ar="{{ e(value: $exVatLabel['ar']) }}">{{ $exVatLabel['text'] }}</label>
-                                                <input type="text" name="vat_number" class="form-input"
+                                                <input type="text" name="vat_number" class="form-input" required
                                                     placeholder="{{ $exVatPlaceholder['text'] }}"
                                                     value="{{ $sponsorFormActive ? old('vat_number') : '' }}">
                                                 @if ($sponsorFormActive && $errors->has('vat_number'))
@@ -3103,6 +3104,7 @@ experience that unites ambitious minds and industry leaders under one roof')))">
                                                     data-ar="{{ e($exCrNumberLabel['ar']) }}">{{ $exCrNumberLabel['text'] }}</label>
                                                 <input type="text" name="cr_number" class="form-input" required
                                                     minlength="10" pattern="\d{10,}" inputmode="numeric"
+                                                    data-min-digits="10"
                                                     placeholder="{{ $exCrNumberPlaceholder['text'] }}"
                                                     value="{{ $sponsorFormActive ? old('cr_number') : '' }}">
                                                 @if ($sponsorFormActive && $errors->has('cr_number'))
@@ -3371,6 +3373,7 @@ experience that unites ambitious minds and industry leaders under one roof')))">
                                                     data-ar="{{ e($iconPhoneLabel['ar']) }}">{{ $iconPhoneLabel['text'] }}</label>
                                                 <input type="tel" name="phone" class="form-input" required
                                                     minlength="10" pattern="\d{10,}" inputmode="numeric"
+                                                    data-min-digits="10"
                                                     placeholder="{{ $iconPhonePlaceholder['text'] }}"
                                                     value="{{ $iconFormActive ? old('phone') : '' }}">
                                                 @if ($iconFormActive && $errors->has('phone'))
@@ -3395,7 +3398,7 @@ experience that unites ambitious minds and industry leaders under one roof')))">
                                             <div class="form-group">
                                                 <label class="form-label" data-en="{{ e($iconOrgLabel['en']) }}"
                                                     data-ar="{{ e($iconOrgLabel['ar']) }}">{{ $iconOrgLabel['text'] }}</label>
-                                                <input type="text" name="organization" class="form-input"
+                                                <input type="text" name="organization" class="form-input" required
                                                     placeholder="{{ $iconOrgPlaceholder['text'] }}"
                                                     value="{{ $iconFormActive ? old('organization') : '' }}">
                                                 @if ($iconFormActive && $errors->has('organization'))
@@ -3435,7 +3438,7 @@ experience that unites ambitious minds and industry leaders under one roof')))">
                                             <div class="form-group">
                                                 <label class="form-label" data-en="{{ e($iconVatLabel['en']) }}"
                                                     data-ar="{{ e($iconVatLabel['ar']) }}">{{ $iconVatLabel['text'] }}</label>
-                                                <input type="text" name="vat_number" class="form-input"
+                                                <input type="text" name="vat_number" class="form-input" required
                                                     placeholder="{{ $iconVatPlaceholder['text'] }}"
                                                     value="{{ $iconFormActive ? old('vat_number') : '' }}">
                                                 @if ($iconFormActive && $errors->has('vat_number'))
@@ -3449,6 +3452,7 @@ experience that unites ambitious minds and industry leaders under one roof')))">
                                                     data-ar="{{ e($iconCrLabel['ar']) }}">{{ $iconCrLabel['text'] }}</label>
                                                 <input type="text" name="cr_number" class="form-input" required
                                                     minlength="10" pattern="\d{10,}" inputmode="numeric"
+                                                    data-min-digits="10"
                                                     placeholder="{{ $iconCrPlaceholder['text'] }}"
                                                     value="{{ $iconFormActive ? old('cr_number') : '' }}">
                                                 @if ($iconFormActive && $errors->has('cr_number'))
@@ -4998,6 +5002,10 @@ experience that unites ambitious minds and industry leaders under one roof"
                 const submitter = event.submitter || form.querySelector('button[type="submit"]');
                 toggleSubmitting(submitter, true);
                 clearFormErrors(form);
+                if (!validateRegistrationForm(form)) {
+                    toggleSubmitting(submitter, false);
+                    return;
+                }
 
                 try {
                     const response = await fetch(form.action, {
@@ -5067,6 +5075,126 @@ experience that unites ambitious minds and industry leaders under one roof"
             form.querySelectorAll('.form-error-inline').forEach(error => error.remove());
             form.querySelectorAll('.form-control-error').forEach(field => field.classList.remove('form-control-error'));
             form.querySelectorAll('.form-group.has-error').forEach(group => group.classList.remove('has-error'));
+        }
+
+        const validationTemplates = {
+            en: {
+                required: @json(__('validation.required', [], 'en')),
+                accepted: @json(__('validation.accepted', [], 'en')),
+                numeric: @json(__('validation.numeric', [], 'en')),
+                minDigits: @json(__('validation.min_digits', [], 'en')),
+            },
+            ar: {
+                required: @json(__('validation.required', [], 'ar')),
+                accepted: @json(__('validation.accepted', [], 'ar')),
+                numeric: @json(__('validation.numeric', [], 'ar')),
+                minDigits: @json(__('validation.min_digits', [], 'ar')),
+            }
+        };
+
+        function getValidationTemplatesForLocale() {
+            return validationTemplates[currentLocale] || validationTemplates.en;
+        }
+
+        function formatValidationMessage(template, replacements = {}) {
+            let message = template || '';
+            Object.entries(replacements).forEach(([key, value]) => {
+                message = message.replace(new RegExp(`:${key}`, 'g'), value);
+            });
+            return message;
+        }
+
+        function getFieldLabel(field) {
+            const group = field.closest('.form-group');
+            const label = group ? group.querySelector('.form-label') : null;
+            if (label) {
+                const labelSpan = label.querySelector('span');
+                const rawText = (labelSpan ? labelSpan.textContent : label.textContent) || '';
+                const cleaned = rawText.replace(/\s*\*+$/, '').trim();
+                if (cleaned) {
+                    return cleaned;
+                }
+            }
+            return field.name || (currentLocale === 'ar' ? 'الحقل' : 'Field');
+        }
+
+        function isFieldEmpty(field) {
+            if (field.type === 'checkbox') {
+                return !field.checked;
+            }
+            if (field.type === 'file') {
+                return !(field.files && field.files.length);
+            }
+            return !String(field.value || '').trim();
+        }
+
+        function validateRegistrationForm(form) {
+            const templates = getValidationTemplatesForLocale();
+            let firstInvalid = null;
+            let isValid = true;
+
+            form.querySelectorAll('[required]').forEach(field => {
+                if (field.disabled) {
+                    return;
+                }
+                if (!isFieldEmpty(field)) {
+                    return;
+                }
+                const label = getFieldLabel(field);
+                const template = field.type === 'checkbox' ? templates.accepted : templates.required;
+                const message = formatValidationMessage(template, {
+                    attribute: label
+                });
+                markFieldError(field, message);
+                if (!firstInvalid) {
+                    firstInvalid = field;
+                }
+                isValid = false;
+            });
+
+            form.querySelectorAll('[data-min-digits]').forEach(field => {
+                if (field.disabled || field.classList.contains('form-control-error')) {
+                    return;
+                }
+                if (isFieldEmpty(field)) {
+                    return;
+                }
+                const rawValue = String(field.value || '').trim();
+                const label = getFieldLabel(field);
+
+                if (!/^\d+$/.test(rawValue)) {
+                    const message = formatValidationMessage(templates.numeric, {
+                        attribute: label
+                    });
+                    markFieldError(field, message);
+                    if (!firstInvalid) {
+                        firstInvalid = field;
+                    }
+                    isValid = false;
+                    return;
+                }
+
+                const minDigits = parseInt(field.dataset.minDigits, 10);
+                if (Number.isFinite(minDigits) && rawValue.length < minDigits) {
+                    const message = formatValidationMessage(templates.minDigits, {
+                        attribute: label,
+                        min: String(minDigits)
+                    });
+                    markFieldError(field, message);
+                    if (!firstInvalid) {
+                        firstInvalid = field;
+                    }
+                    isValid = false;
+                }
+            });
+
+            if (firstInvalid) {
+                try {
+                    firstInvalid.focus();
+                } catch (e) { }
+            }
+
+            return isValid;
         }
 
         function markFieldError(field, message) {
