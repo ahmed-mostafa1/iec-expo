@@ -4367,15 +4367,9 @@ experience that unites ambitious minds and industry leaders under one roof"
                                         <div style="flex: 1;">
                                             <div class="contact-info-links two-columns">
                                                 <div class="contact-info-column">
-                                                    <a href="tel:+966566668892" class="contact-info-link"><img
+                                                    <a href="tel:+966546608557" class="contact-info-link"><img
                                                             class="icon icon-lg"
-                                                            src="{{ asset('img/svg/telephone.svg') }}"> +966566668892
-                                                    </a>
-                                                </div>
-                                                <div class="contact-info-column">
-                                                    <a href="tel:+966594650976" class="contact-info-link"><img
-                                                            class="icon icon-lg"
-                                                            src="{{ asset('img/svg/telephone.svg') }}"> +966594650976
+                                                            src="{{ asset('img/svg/telephone.svg') }}"> +966546608557
                                                     </a>
                                                 </div>
                                             </div>
