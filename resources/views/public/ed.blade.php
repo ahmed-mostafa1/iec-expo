@@ -489,7 +489,7 @@
                         </h2>
                         <div class="video-wrapper">
                             <iframe 
-                                src="https://www.youtube.com/embed/TDbbOndBMHI" 
+                                src="https://www.youtube.com/watch?v=viNQUdsQdHc&list=PL-CMva54bKaHWAKjyPnRTbrC6Fski3_B8&index=2" 
                                 title="IEC-1 Video"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
                                 allowfullscreen>
@@ -504,7 +504,7 @@
                         </h2>
                         <div class="video-wrapper">
                             <iframe 
-                                src="https://www.youtube.com/embed/iJvfzoYREYA" 
+                                src="https://www.youtube.com/watch?v=ZmpZq2n_C3M&list=PL-CMva54bKaFlD3JWQq8cgfyRmE6mjhSq&index=1" 
                                 title="IEC-2 Video"
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
                                 allowfullscreen>
