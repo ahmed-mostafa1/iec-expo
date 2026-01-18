@@ -4052,7 +4052,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                     <div class="sponsor-tiers">
                         <!-- STRATEGIC -->
                         <div class="sponsor-tier">
-                            <h2 class="sponsor-tier-title" data-en="Strategic" data-ar="الإستراتيجي">STRATEGIC</h2>
+                            <h2 class="sponsor-tier-title" data-en="Strategic" data-ar="الاستراتيجي">STRATEGIC</h2>
                             <div class="sponsor-tier-grid tier-strategic">
                                 <article class="sponsor-card sponsor-strategic" data-animate>
                                     <div class="sponsor-logo">
