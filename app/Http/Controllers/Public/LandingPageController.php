@@ -21,6 +21,11 @@ class LandingPageController extends Controller
         $sponsors = PublicSponsor::where('is_active', true)
             ->orderBy('display_order')
             ->get();
+        $sponsorGroups = $this->buildSponsorGroups($sponsors);
+        $sponsorPairs = [
+            ['left' => 'marketing', 'right' => 'media'],
+            ['left' => 'technology', 'right' => 'safety-security'],
+        ];
         $participants = Participant::where('is_active', true)
             ->orderBy('display_order')
             ->get();
@@ -36,6 +41,8 @@ class LandingPageController extends Controller
             'aboutSection',
             'contactSection',
             'sponsors',
+            'sponsorGroups',
+            'sponsorPairs',
             'participants',
             'organizers',
             'locale',
@@ -79,5 +86,30 @@ class LandingPageController extends Controller
             })
             ->values()
             ->all();
+    }
+
+    private function buildSponsorGroups($sponsors): array
+    {
+        $tiers = [
+            'strategic' => ['en' => 'Strategic', 'ar' => 'الاستراتيجي'],
+            'diamond' => ['en' => 'Diamond', 'ar' => 'الماسي'],
+            'government' => ['en' => 'Government', 'ar' => 'الحكومي'],
+            'marketing' => ['en' => 'Marketing', 'ar' => 'التسويقي'],
+            'media' => ['en' => 'Media', 'ar' => 'الإعلامي'],
+            'technology' => ['en' => 'Technology', 'ar' => 'التكنولوجي'],
+            'safety-security' => ['en' => 'Safety and Security', 'ar' => 'الأمني'],
+            'gold' => ['en' => 'Gold', 'ar' => 'الذهبي'],
+            'other' => ['en' => 'Sponsors', 'ar' => 'الرعاة'],
+        ];
+
+        $groups = [];
+        foreach ($tiers as $tier => $title) {
+            $groups[$tier] = [
+                'title' => $title,
+                'sponsors' => $sponsors->where('tier', $tier)->values(),
+            ];
+        }
+
+        return $groups;
     }
 }

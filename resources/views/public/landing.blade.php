@@ -3091,7 +3091,7 @@ experience that unites ambitious minds and industry leaders under one roof')))">
                                                 @endif
                                             </div>
                                         </div>
-                                        <div class="form-grid" style="margin-top:1rem;">
+                                        <div class="form-grid form-grid-2" style="margin-top:1rem;">
                                             <div class="form-group">
                                                 <label class="form-label" data-en="{{ e($exOrgLabel['en']) }}"
                                                     data-ar="{{ e($exOrgLabel['ar']) }}">{{ $exOrgLabel['text'] }}</label>
@@ -3104,9 +3104,6 @@ experience that unites ambitious minds and industry leaders under one roof')))">
                                                     </p>
                                                 @endif
                                             </div>
-                                        </div>
-
-                                        <div class="form-grid" style="margin-top:1rem;">
                                             <div class="form-group">
                                                 <label class="form-label" data-en="{{ e($sponsorTierLabel['en']) }}"
                                                     data-ar="{{ e($sponsorTierLabel['ar']) }}">{{ $sponsorTierLabel['text'] }}</label>
@@ -4098,28 +4095,6 @@ experience that unites ambitious minds and industry leaders under one roof"
             <section class="sponsors" id="sponsors">
                 @php
                     $sponsorLogoFallback = asset('img/placeholder-img.png');
-                    $sponsorsByTier = $sponsors->groupBy('tier');
-                    $sponsorName = function ($sponsor) use ($locale) {
-                        return method_exists($sponsor, 'getLocalizedName')
-                            ? $sponsor->getLocalizedName($locale)
-                            : ($sponsor->name_en ?? $sponsor->name);
-                    };
-                    $sponsorLogo = function ($sponsor) use ($sponsorLogoFallback) {
-                        return $sponsor->logo_path
-                            ? asset('storage/' . $sponsor->logo_path)
-                            : $sponsorLogoFallback;
-                    };
-                    $tierTitles = [
-                        'strategic' => ['en' => 'Strategic', 'ar' => 'الاستراتيجي'],
-                        'diamond' => ['en' => 'Diamond', 'ar' => 'الماسي'],
-                        'government' => ['en' => 'Government', 'ar' => 'الحكومي'],
-                        'marketing' => ['en' => 'Marketing', 'ar' => 'التسويقي'],
-                        'media' => ['en' => 'Media', 'ar' => 'الإعلامي'],
-                        'technology' => ['en' => 'Technology', 'ar' => 'التكنولوجي'],
-                        'safety-security' => ['en' => 'Safety and Security', 'ar' => 'الأمني'],
-                        'gold' => ['en' => 'Gold', 'ar' => 'الذهبي'],
-                        'other' => ['en' => 'Sponsors', 'ar' => 'الرعاة'],
-                    ];
                 @endphp
                 <div class="container">
                     <div class="section-header" data-animate>
@@ -4128,19 +4103,19 @@ experience that unites ambitious minds and industry leaders under one roof"
 
                     <div class="sponsor-tiers">
                         <!-- STRATEGIC -->
-                        @php($strategicSponsors = $sponsorsByTier->get('strategic', collect()))
-                        @if($strategicSponsors->isNotEmpty())
+                        @if(!empty($sponsorGroups['strategic']) && $sponsorGroups['strategic']['sponsors']->isNotEmpty())
                             <div class="sponsor-tier">
                                 <h2 class="sponsor-tier-title"
-                                    data-en="{{ $tierTitles['strategic']['en'] }}"
-                                    data-ar="{{ $tierTitles['strategic']['ar'] }}">
-                                    {{ strtoupper($tierTitles['strategic']['en']) }}
+                                    data-en="{{ $sponsorGroups['strategic']['title']['en'] }}"
+                                    data-ar="{{ $sponsorGroups['strategic']['title']['ar'] }}">
+                                    {{ strtoupper($sponsorGroups['strategic']['title']['en']) }}
                                 </h2>
                                 <div class="sponsor-tier-grid tier-strategic">
-                                    @foreach($strategicSponsors as $sponsor)
+                                    @foreach($sponsorGroups['strategic']['sponsors'] as $sponsor)
                                         <article class="sponsor-card sponsor-strategic" data-animate>
                                             <div class="sponsor-logo">
-                                                <img src="{{ $sponsorLogo($sponsor) }}" alt="{{ $sponsorName($sponsor) }}">
+                                                <img src="{{ $sponsor->logo_path ? asset('storage/' . $sponsor->logo_path) : asset('img/placeholder-img.png') }}"
+                                                    alt="{{ $sponsor->getLocalizedName($locale) }}">
                                             </div>
                                         </article>
                                     @endforeach
@@ -4148,19 +4123,19 @@ experience that unites ambitious minds and industry leaders under one roof"
                             </div>
                         @endif
                         <!-- DIAMOND -->
-                        @php($diamondSponsors = $sponsorsByTier->get('diamond', collect()))
-                        @if($diamondSponsors->isNotEmpty())
+                        @if(!empty($sponsorGroups['diamond']) && $sponsorGroups['diamond']['sponsors']->isNotEmpty())
                             <div class="sponsor-tier">
                                 <h2 class="sponsor-tier-title"
-                                    data-en="{{ $tierTitles['diamond']['en'] }}"
-                                    data-ar="{{ $tierTitles['diamond']['ar'] }}">
-                                    {{ strtoupper($tierTitles['diamond']['en']) }}
+                                    data-en="{{ $sponsorGroups['diamond']['title']['en'] }}"
+                                    data-ar="{{ $sponsorGroups['diamond']['title']['ar'] }}">
+                                    {{ strtoupper($sponsorGroups['diamond']['title']['en']) }}
                                 </h2>
                                 <div class="sponsor-tier-grid tier-business">
-                                    @foreach($diamondSponsors as $sponsor)
+                                    @foreach($sponsorGroups['diamond']['sponsors'] as $sponsor)
                                         <article class="sponsor-card sponsor-business" data-animate>
                                             <div class="sponsor-logo">
-                                                <img src="{{ $sponsorLogo($sponsor) }}" alt="{{ $sponsorName($sponsor) }}">
+                                                <img src="{{ $sponsor->logo_path ? asset('storage/' . $sponsor->logo_path) : asset('img/placeholder-img.png') }}"
+                                                    alt="{{ $sponsor->getLocalizedName($locale) }}">
                                             </div>
                                         </article>
                                     @endforeach
@@ -4168,19 +4143,19 @@ experience that unites ambitious minds and industry leaders under one roof"
                             </div>
                         @endif
                         <!-- GOVERNMENT -->
-                        @php($governmentSponsors = $sponsorsByTier->get('government', collect()))
-                        @if($governmentSponsors->isNotEmpty())
+                        @if(!empty($sponsorGroups['government']) && $sponsorGroups['government']['sponsors']->isNotEmpty())
                             <div class="sponsor-tier">
                                 <h2 class="sponsor-tier-title"
-                                    data-en="{{ $tierTitles['government']['en'] }}"
-                                    data-ar="{{ $tierTitles['government']['ar'] }}">
-                                    {{ strtoupper($tierTitles['government']['en']) }}
+                                    data-en="{{ $sponsorGroups['government']['title']['en'] }}"
+                                    data-ar="{{ $sponsorGroups['government']['title']['ar'] }}">
+                                    {{ strtoupper($sponsorGroups['government']['title']['en']) }}
                                 </h2>
                                 <div class="sponsor-tier-grid tier-marketing">
-                                    @foreach($governmentSponsors as $sponsor)
+                                    @foreach($sponsorGroups['government']['sponsors'] as $sponsor)
                                         <article class="sponsor-card sponsor-marketing" data-animate>
                                             <div class="sponsor-logo">
-                                                <img src="{{ $sponsorLogo($sponsor) }}" alt="{{ $sponsorName($sponsor) }}">
+                                                <img src="{{ $sponsor->logo_path ? asset('storage/' . $sponsor->logo_path) : asset('img/placeholder-img.png') }}"
+                                                    alt="{{ $sponsor->getLocalizedName($locale) }}">
                                             </div>
                                         </article>
                                     @endforeach
@@ -4189,84 +4164,46 @@ experience that unites ambitious minds and industry leaders under one roof"
                         @endif
 
                         <!-- Marketing & Media -->
-                        @php($marketingSponsors = $sponsorsByTier->get('marketing', collect()))
-                        @php($mediaSponsors = $sponsorsByTier->get('media', collect()))
-                        @if($marketingSponsors->isNotEmpty() || $mediaSponsors->isNotEmpty())
-                            <div class="sponsor-tier-pair">
-                                @if($marketingSponsors->isNotEmpty())
+                        @if(!empty($sponsorPairs))
+                            @foreach($sponsorPairs as $pair)
+                                @php
+                                    $leftGroup = $sponsorGroups[$pair['left']] ?? null;
+                                    $rightGroup = $sponsorGroups[$pair['right']] ?? null;
+                                @endphp
+                                @if(($leftGroup && $leftGroup['sponsors']->isNotEmpty()) || ($rightGroup && $rightGroup['sponsors']->isNotEmpty()))
+                                    <div class="sponsor-tier-pair">
+                                        @if($leftGroup && $leftGroup['sponsors']->isNotEmpty())
                                     <div class="sponsor-tier">
                                         <h2 class="sponsor-tier-title"
-                                            data-en="{{ $tierTitles['marketing']['en'] }}"
-                                            data-ar="{{ $tierTitles['marketing']['ar'] }}">
-                                            {{ strtoupper($tierTitles['marketing']['en']) }}
+                                            data-en="{{ $leftGroup['title']['en'] }}"
+                                            data-ar="{{ $leftGroup['title']['ar'] }}">
+                                            {{ strtoupper($leftGroup['title']['en']) }}
                                         </h2>
-                                        <div class="sponsor-tier-grid tier-marketing {{ $marketingSponsors->count() === 1 ? 'single-sponsor-grid' : '' }}">
-                                            @foreach($marketingSponsors as $sponsor)
+                                        <div class="sponsor-tier-grid tier-marketing {{ $leftGroup['sponsors']->count() === 1 ? 'single-sponsor-grid' : '' }}">
+                                            @foreach($leftGroup['sponsors'] as $sponsor)
                                                 <article class="sponsor-card sponsor-marketing" data-animate>
                                                     <div class="sponsor-logo">
-                                                        <img src="{{ $sponsorLogo($sponsor) }}" alt="{{ $sponsorName($sponsor) }}">
+                                                        <img src="{{ $sponsor->logo_path ? asset('storage/' . $sponsor->logo_path) : asset('img/placeholder-img.png') }}"
+                                                            alt="{{ $sponsor->getLocalizedName($locale) }}">
                                                     </div>
                                                 </article>
                                             @endforeach
                                         </div>
                                     </div>
                                 @endif
-                                @if($mediaSponsors->isNotEmpty())
+                                @if($rightGroup && $rightGroup['sponsors']->isNotEmpty())
                                     <div class="sponsor-tier">
                                         <h2 class="sponsor-tier-title"
-                                            data-en="{{ $tierTitles['media']['en'] }}"
-                                            data-ar="{{ $tierTitles['media']['ar'] }}">
-                                            {{ strtoupper($tierTitles['media']['en']) }}
+                                            data-en="{{ $rightGroup['title']['en'] }}"
+                                            data-ar="{{ $rightGroup['title']['ar'] }}">
+                                            {{ strtoupper($rightGroup['title']['en']) }}
                                         </h2>
-                                        <div class="sponsor-tier-grid tier-marketing {{ $mediaSponsors->count() === 1 ? 'single-sponsor-grid' : '' }}">
-                                            @foreach($mediaSponsors as $sponsor)
+                                        <div class="sponsor-tier-grid tier-marketing {{ $rightGroup['sponsors']->count() === 1 ? 'single-sponsor-grid' : '' }}">
+                                            @foreach($rightGroup['sponsors'] as $sponsor)
                                                 <article class="sponsor-card sponsor-marketing" data-animate>
                                                     <div class="sponsor-logo">
-                                                        <img src="{{ $sponsorLogo($sponsor) }}" alt="{{ $sponsorName($sponsor) }}">
-                                                    </div>
-                                                </article>
-                                            @endforeach
-                                        </div>
-                                    </div>
-                                @endif
-                            </div>
-                        @endif
-
-                        <!-- TECH & SECURITY -->
-                        @php($technologySponsors = $sponsorsByTier->get('technology', collect()))
-                        @php($safetySponsors = $sponsorsByTier->get('safety-security', collect()))
-                        @if($technologySponsors->isNotEmpty() || $safetySponsors->isNotEmpty())
-                            <div class="sponsor-tier-pair">
-                                @if($technologySponsors->isNotEmpty())
-                                    <div class="sponsor-tier">
-                                        <h2 class="sponsor-tier-title"
-                                            data-en="{{ $tierTitles['technology']['en'] }}"
-                                            data-ar="{{ $tierTitles['technology']['ar'] }}">
-                                            {{ strtoupper($tierTitles['technology']['en']) }}
-                                        </h2>
-                                        <div class="sponsor-tier-grid tier-marketing {{ $technologySponsors->count() === 1 ? 'single-sponsor-grid' : '' }}">
-                                            @foreach($technologySponsors as $sponsor)
-                                                <article class="sponsor-card sponsor-marketing" data-animate>
-                                                    <div class="sponsor-logo">
-                                                        <img src="{{ $sponsorLogo($sponsor) }}" alt="{{ $sponsorName($sponsor) }}">
-                                                    </div>
-                                                </article>
-                                            @endforeach
-                                        </div>
-                                    </div>
-                                @endif
-                                @if($safetySponsors->isNotEmpty())
-                                    <div class="sponsor-tier">
-                                        <h2 class="sponsor-tier-title"
-                                            data-en="{{ $tierTitles['safety-security']['en'] }}"
-                                            data-ar="{{ $tierTitles['safety-security']['ar'] }}">
-                                            {{ strtoupper($tierTitles['safety-security']['en']) }}
-                                        </h2>
-                                        <div class="sponsor-tier-grid tier-marketing {{ $safetySponsors->count() === 1 ? 'single-sponsor-grid' : '' }}">
-                                            @foreach($safetySponsors as $sponsor)
-                                                <article class="sponsor-card sponsor-marketing" data-animate>
-                                                    <div class="sponsor-logo">
-                                                        <img src="{{ $sponsorLogo($sponsor) }}" alt="{{ $sponsorName($sponsor) }}">
+                                                        <img src="{{ $sponsor->logo_path ? asset('storage/' . $sponsor->logo_path) : asset('img/placeholder-img.png') }}"
+                                                            alt="{{ $sponsor->getLocalizedName($locale) }}">
                                                     </div>
                                                 </article>
                                             @endforeach
@@ -4274,22 +4211,24 @@ experience that unites ambitious minds and industry leaders under one roof"
                                     </div>
                                 @endif
                             </div>
+                                @endif
+                            @endforeach
                         @endif
 
                         <!-- GOLD -->
-                        @php($goldSponsors = $sponsorsByTier->get('gold', collect()))
-                        @if($goldSponsors->isNotEmpty())
+                        @if(!empty($sponsorGroups['gold']) && $sponsorGroups['gold']['sponsors']->isNotEmpty())
                             <div class="sponsor-tier">
                                 <h2 class="sponsor-tier-title"
-                                    data-en="{{ $tierTitles['gold']['en'] }}"
-                                    data-ar="{{ $tierTitles['gold']['ar'] }}">
-                                    {{ strtoupper($tierTitles['gold']['en']) }}
+                                    data-en="{{ $sponsorGroups['gold']['title']['en'] }}"
+                                    data-ar="{{ $sponsorGroups['gold']['title']['ar'] }}">
+                                    {{ strtoupper($sponsorGroups['gold']['title']['en']) }}
                                 </h2>
                                 <div class="participants-grid gold-sponsors-grid">
-                                    @foreach($goldSponsors as $sponsor)
+                                    @foreach($sponsorGroups['gold']['sponsors'] as $sponsor)
                                         <article class="participant-card gold-sponsor-card" data-animate>
                                             <div class="participant-logo">
-                                                <img src="{{ $sponsorLogo($sponsor) }}" alt="{{ $sponsorName($sponsor) }}">
+                                                <img src="{{ $sponsor->logo_path ? asset('storage/' . $sponsor->logo_path) : asset('img/placeholder-img.png') }}"
+                                                    alt="{{ $sponsor->getLocalizedName($locale) }}">
                                             </div>
                                         </article>
                                     @endforeach
@@ -4298,19 +4237,19 @@ experience that unites ambitious minds and industry leaders under one roof"
                         @endif
 
                         <!-- OTHER SPONSORS -->
-                        @php($otherSponsors = $sponsorsByTier->get('other', collect()))
-                        @if($otherSponsors->isNotEmpty())
+                        @if(!empty($sponsorGroups['other']) && $sponsorGroups['other']['sponsors']->isNotEmpty())
                             <div class="sponsor-tier">
                                 <h2 class="sponsor-tier-title"
-                                    data-en="{{ $tierTitles['other']['en'] }}"
-                                    data-ar="{{ $tierTitles['other']['ar'] }}">
-                                    {{ strtoupper($tierTitles['other']['en']) }}
+                                    data-en="{{ $sponsorGroups['other']['title']['en'] }}"
+                                    data-ar="{{ $sponsorGroups['other']['title']['ar'] }}">
+                                    {{ strtoupper($sponsorGroups['other']['title']['en']) }}
                                 </h2>
                                 <div class="sponsor-tier-grid tier-main other-sponsors-grid">
-                                    @foreach($otherSponsors as $sponsor)
+                                    @foreach($sponsorGroups['other']['sponsors'] as $sponsor)
                                         <article class="sponsor-card" data-animate>
                                             <div class="sponsor-logo">
-                                                <img src="{{ $sponsorLogo($sponsor) }}" alt="{{ $sponsorName($sponsor) }}">
+                                                <img src="{{ $sponsor->logo_path ? asset('storage/' . $sponsor->logo_path) : asset('img/placeholder-img.png') }}"
+                                                    alt="{{ $sponsor->getLocalizedName($locale) }}">
                                             </div>
                                         </article>
                                     @endforeach
