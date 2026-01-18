@@ -3210,11 +3210,11 @@ experience that unites ambitious minds and industry leaders under one roof')))">
                                                 style="flex-direction: row; align-items: center; gap: 0.5rem;">
                                                 <input type="checkbox" name="privacy_policy" value="1" required
                                                     @checked($sponsorFormActive && old('privacy_policy'))>
-                                                <span data-en="I accept the privacy policy"
-                                                    data-ar="أوافق على شروط الخصوصية">I accept the privacy policy</span>
-                                                <a class="blue-url-style" href="{{ asset('pdf/privacy-policy.pdf') }}"
-                                                    target="_blank" rel="noopener" download data-en="Download from here"
-                                                    data-ar="يمكنك تحميل الملف من هنا">Download from here</a>
+                                                <span data-en="I have read and accept "
+                                                    data-ar="">I have read and accept</span>
+                                                <a class="blue-url-style" href="{{ asset('pdf/sponsor-profile.pdf') }}"
+                                                    target="_blank" rel="noopener" download data-en="the SPONSOR profile terms"
+                                                    data-ar="قرأت وأوافق على شروط بروفايل الراعي">the SPONSOR profile terms</a>
                                             </label>
                                             @if ($sponsorFormActive && $errors->has('privacy_policy'))
                                                 <p class="mt-1 text-xs text-red-600">
@@ -3559,11 +3559,12 @@ experience that unites ambitious minds and industry leaders under one roof')))">
                                                 style="flex-direction: row; align-items: center; gap: 0.5rem;">
                                                 <input type="checkbox" name="privacy_policy" value="1" required
                                                     @checked($iconFormActive && old('privacy_policy'))>
-                                                <span data-en="I accept the privacy policy"
-                                                    data-ar="أوافق على شروط الخصوصية">I accept the privacy policy</span>
-                                                <a class="blue-url-style" href="{{ asset('pdf/privacy-policy.pdf') }}"
-                                                    target="_blank" rel="noopener" download data-en="Download from here"
-                                                    data-ar="يمكنك تحميل الملف من هنا">Download from here</a>
+
+                                                <span data-en="I have read and accept"
+                                                    data-ar="">I have read and accept</span>
+                                                <a class="blue-url-style" href="{{ asset('pdf/icon-profile.pdf') }}"
+                                                    target="_blank" rel="noopener" download data-en="the ICON profile terms"
+                                                    data-ar="قرأت وأوافق على شروط بروفايل الآيكون">the ICON profile terms</a>
                                                 @if ($iconFormActive && $errors->has('privacy_policy'))
                                                     <p class="mt-1 text-xs text-red-600">
                                                         {{ $errors->first('privacy_policy') }}
