@@ -3213,7 +3213,7 @@ experience that unites ambitious minds and industry leaders under one roof')))">
                                                 <span data-en="I have read and accept "
                                                     data-ar="">I have read and accept</span>
                                                 <a class="blue-url-style" href="{{ asset('pdf/sponsor-profile.pdf') }}"
-                                                    target="_blank" rel="noopener" download data-en="the SPONSOR profile terms"
+                                                    target="_blank" rel="noopener" data-en="the SPONSOR profile terms"
                                                     data-ar="قرأت وأوافق على شروط بروفايل الراعي">the SPONSOR profile terms</a>
                                             </label>
                                             @if ($sponsorFormActive && $errors->has('privacy_policy'))
@@ -3563,7 +3563,7 @@ experience that unites ambitious minds and industry leaders under one roof')))">
                                                 <span data-en="I have read and accept"
                                                     data-ar="">I have read and accept</span>
                                                 <a class="blue-url-style" href="{{ asset('pdf/icon-profile.pdf') }}"
-                                                    target="_blank" rel="noopener" download data-en="the ICON profile terms"
+                                                    target="_blank" rel="noopener" data-en="the ICON profile terms"
                                                     data-ar="قرأت وأوافق على شروط بروفايل الآيكون">the ICON profile terms</a>
                                                 @if ($iconFormActive && $errors->has('privacy_policy'))
                                                     <p class="mt-1 text-xs text-red-600">
