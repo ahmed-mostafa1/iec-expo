@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
+use Illuminate\Validation\Rule;
 use App\Rules\UniqueSponsorVatCr;
 
 class SponsorRegistrationRequest extends FormRequest
@@ -21,6 +22,7 @@ class SponsorRegistrationRequest extends FormRequest
             'phone'           => ['required', 'string', 'min:10', 'max:50', 'regex:/^\d+$/'],
             'job_title'       => ['required', 'string', 'max:255'],
             'organization'    => ['required', 'string', 'max:255'],
+            'sponsor_tier'    => ['required', 'string', 'max:50', Rule::in($this->sponsorTierOptions())],
             'location_selection' => ['nullable', 'string', 'max:255'],
             'vat_number'      => ['required', 'digits:15', new UniqueSponsorVatCr],
             'cr_number'       => ['required', 'string', 'min:10', 'max:255', 'regex:/^\d+$/', new UniqueSponsorVatCr],
@@ -35,6 +37,7 @@ class SponsorRegistrationRequest extends FormRequest
     {
         return [
             'organization' => __('Company / Organization'),
+            'sponsor_tier' => __('Sponsor tier'),
             'vat_number' => __('registration.sponsor.vat_number'),
             'cr_number'  => __('registration.sponsor.cr_number'),
             'privacy_policy' => __('Privacy Policy'),
@@ -51,5 +54,20 @@ class SponsorRegistrationRequest extends FormRequest
         }
 
         parent::failedValidation($validator);
+    }
+
+    private function sponsorTierOptions(): array
+    {
+        return [
+            'strategic',
+            'diamond',
+            'government',
+            'marketing',
+            'media',
+            'technology',
+            'safety-security',
+            'gold',
+            'other',
+        ];
     }
 }

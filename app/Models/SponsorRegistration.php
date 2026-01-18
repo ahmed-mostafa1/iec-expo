@@ -12,6 +12,7 @@ class SponsorRegistration extends Model
         'phone',
         'job_title',
         'organization',
+        'sponsor_tier',
         'location_selection',
         'vat_number',
         'cr_number',

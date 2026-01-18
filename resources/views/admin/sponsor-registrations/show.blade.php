@@ -43,6 +43,10 @@
                         <div class="text-gray-900">{{ $registration->organization }}</div>
                     </div>
                     <div>
+                        <div class="text-[10px] text-gray-500">{{ __('Sponsor tier') }}</div>
+                        <div class="text-gray-900">{{ $registration->sponsor_tier }}</div>
+                    </div>
+                    <div>
                         <div class="text-[10px] text-gray-500">{{ __('Booked location') }}</div>
                         <div class="text-gray-900">{{ $registration->location_selection }}</div>
                     </div>

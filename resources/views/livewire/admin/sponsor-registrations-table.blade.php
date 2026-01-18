@@ -57,6 +57,7 @@
                     <th class="px-3 py-2 text-start">#</th>
                     <th class="px-3 py-2 text-start">{{ __('Name') }}</th>
                     <th class="px-3 py-2 text-start">{{ __('Organization') }}</th>
+                    <th class="px-3 py-2 text-start">{{ __('Sponsor tier') }}</th>
                     <th class="px-3 py-2 text-start">{{ __('Booked location') }}</th>
                     <th class="px-3 py-2 text-start">{{ __('VAT') }}</th>
                     <th class="px-3 py-2 text-start">{{ __('CR') }}</th>
@@ -75,6 +76,9 @@
                         </td>
                         <td class="px-3 py-2 align-top text-gray-700">
                             {{ $registration->organization }}
+                        </td>
+                        <td class="px-3 py-2 align-top text-gray-700">
+                            {{ $registration->sponsor_tier }}
                         </td>
                         <td class="px-3 py-2 align-top text-gray-700">
                             {{ $registration->location_selection }}
@@ -108,7 +112,7 @@
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="8" class="px-3 py-4 text-center text-s text-gray-500">
+                        <td colspan="10" class="px-3 py-4 text-center text-s text-gray-500">
                             {{ __('No registrations found.') }}
                         </td>
                     </tr>

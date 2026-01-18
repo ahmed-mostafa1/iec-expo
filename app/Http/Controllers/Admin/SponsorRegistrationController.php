@@ -74,6 +74,7 @@ class SponsorRegistrationController extends Controller
                 $q->where('full_name', 'like', "%{$search}%")
                     ->orWhere('email', 'like', "%{$search}%")
                     ->orWhere('organization', 'like', "%{$search}%")
+                    ->orWhere('sponsor_tier', 'like', "%{$search}%")
                     ->orWhere('vat_number', 'like', "%{$search}%")
                     ->orWhere('cr_number', 'like', "%{$search}%");
             });
@@ -90,7 +91,7 @@ class SponsorRegistrationController extends Controller
             $handle = fopen('php://output', 'w');
 
             fputcsv($handle, [
-                'ID', 'Full Name', 'Email', 'Phone', 'Organization', 'Booked Location',
+                'ID', 'Full Name', 'Email', 'Phone', 'Organization', 'Sponsor Tier', 'Booked Location',
                 'VAT', 'CR', 'Status', 'Created At',
             ]);
 
@@ -102,6 +103,7 @@ class SponsorRegistrationController extends Controller
                         $row->email,
                         $row->phone,
                         $row->organization,
+                        $row->sponsor_tier,
                         $row->location_selection,
                         $row->vat_number,
                         $row->cr_number,

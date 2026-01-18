@@ -11,8 +11,13 @@ class PublicSponsorController extends Controller
 {
     protected array $availableTiers = [
         'strategic' => 'Strategic Sponsor',
-        'business' => 'Business Sponsor',
+        'diamond' => 'Diamond Sponsor',
+        'government' => 'Government Sponsor',
         'marketing' => 'Marketing Sponsor',
+        'media' => 'Media Sponsor',
+        'technology' => 'Technology Sponsor',
+        'safety-security' => 'Safety and Security Sponsor',
+        'gold' => 'Gold Sponsor',
         'other' => 'Other Sponsor',
     ];
 
