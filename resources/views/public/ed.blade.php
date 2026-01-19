@@ -395,7 +395,7 @@
             display: grid;
             place-items: center;
             width: 200px;
-            height: 110px;
+            /* height: 110px; */
             border-radius: 14px;
             background: rgba(255, 255, 255, 0.04);
             border: 1px solid rgba(255, 255, 255, 0.08);
@@ -406,7 +406,7 @@
             max-width: 70%;
             max-height: 70%;
             object-fit: contain;
-            filter: grayscale(1) brightness(1.05);
+            /* filter: grayscale(1) brightness(1.05); */
             transition: transform 0.3s ease, filter 0.3s ease;
         }
 
@@ -417,7 +417,7 @@
         }
 
         .sponsor-item:hover img {
-            filter: grayscale(0) brightness(1.1);
+            /* filter: grayscale(0) brightness(1.1); */
             transform: scale(1.06);
         }
 
@@ -496,7 +496,7 @@
 
             .sponsor-item {
                 width: 160px;
-                height: 90px;
+                /* height: 90px; */
             }
 
             .sponsor-track {
@@ -637,42 +637,58 @@
                     <div class="sponsor-track">
                         <div class="sponsor-set">
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/IEC-logo-nav.png') }}" alt="IEC 360 Expo">
+                                <img src="{{ asset('img/exsponsor/1.jpeg') }}" alt="IEC 360 Expo">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/IEC-logo.png') }}" alt="IEC Logo">
+                                <img src="{{ asset('img/exsponsor/2.jpeg') }}" alt="IEC Logo">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/bu_logo.png') }}" alt="Business Umbrella">
+                                <img src="{{ asset('img/exsponsor/3.jpeg') }}" alt="Business Umbrella">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/authority.png') }}" alt="Authority">
+                                <img src="{{ asset('img/exsponsor/4.png') }}" alt="Authority">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/theArena.png') }}" alt="The Arena">
+                                <img src="{{ asset('img/exsponsor/5.png') }}" alt="The Arena">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/placeholder-img.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                        </div>
-                        <div class="sponsor-set" aria-hidden="true">
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/IEC-logo-nav.png') }}" alt="IEC 360 Expo">
+                                <img src="{{ asset('img/exsponsor/6.png') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/IEC-logo.png') }}" alt="IEC Logo">
+                                <img src="{{ asset('img/exsponsor/7.png') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/bu_logo.png') }}" alt="Business Umbrella">
+                                <img src="{{ asset('img/exsponsor/8.png') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/authority.png') }}" alt="Authority">
+                                <img src="{{ asset('img/exsponsor/9.png') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/theArena.png') }}" alt="The Arena">
+                                <img src="{{ asset('img/exsponsor/10.png') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/placeholder-img.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exsponsor/11.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/12.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/13.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/14.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/15.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/16.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/17.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/18.png') }}" alt="Sponsor Placeholder">
                             </div>
                         </div>
                     </div>
