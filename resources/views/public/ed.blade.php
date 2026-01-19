@@ -351,8 +351,10 @@
             border: 1px solid rgba(152, 3, 189, 0.3);
             background: linear-gradient(120deg, rgba(12, 12, 24, 0.85), rgba(18, 6, 34, 0.85));
             box-shadow: 0 25px 60px -40px rgba(152, 3, 189, 0.5);
+            /* --sponsor-item-height: 110px; */
+            /* min-height: calc(var(--sponsor-item-height) + 3.5rem); */
         }
-
+/* 
         .sponsor-carousel::before,
         .sponsor-carousel::after {
             content: "";
@@ -372,12 +374,21 @@
         .sponsor-carousel::after {
             right: 0;
             background: linear-gradient(270deg, rgba(8, 8, 16, 0.9), rgba(8, 8, 16, 0));
-        }
+        } */
 
         .sponsor-track {
             display: flex;
+            align-items: center;
             width: max-content;
             animation: sponsorScroll 28s linear infinite;
+        }
+
+        body.locale-ar .sponsor-track {
+            animation-direction: reverse;
+        }
+
+        body.locale-ar .sponsor-carousel {
+            direction: ltr;
         }
 
         .sponsor-carousel:hover .sponsor-track {
@@ -395,7 +406,7 @@
             display: grid;
             place-items: center;
             width: 200px;
-            /* height: 110px; */
+            height: var(--sponsor-item-height);
             border-radius: 14px;
             background: rgba(255, 255, 255, 0.04);
             border: 1px solid rgba(255, 255, 255, 0.08);
@@ -403,9 +414,10 @@
         }
 
         .sponsor-item img {
-            max-width: 70%;
-            max-height: 70%;
+            width: 100%;
+            height: 100%;
             object-fit: contain;
+            border-radius: 8px;
             /* filter: grayscale(1) brightness(1.05); */
             transition: transform 0.3s ease, filter 0.3s ease;
         }
@@ -456,7 +468,7 @@
         .icon {
             width: 20px;
             height: 20px;
-            stroke: currentColor;
+            stroke: #fff;
             stroke-width: 2;
             stroke-linecap: round;
             stroke-linejoin: round;
@@ -494,9 +506,14 @@
                 font-size: 1.6rem;
             }
 
+            .sponsor-carousel {
+                /* --sponsor-item-height: 90px; */
+                min-height: calc(var(--sponsor-item-height) + 3rem);
+            }
+
             .sponsor-item {
                 width: 160px;
-                /* height: 90px; */
+                height: var(--sponsor-item-height);
             }
 
             .sponsor-track {
@@ -630,8 +647,8 @@
             </section>
 
             <section class="sponsors-section" aria-labelledby="sponsors-title">
-                <h2 class="section-title" id="sponsors-title" data-en="Our Sponsors" data-ar="Our Sponsors">
-                    {{ $locale === 'ar' ? 'Our Sponsors' : 'Our Sponsors' }}
+                <h2 class="section-title" id="sponsors-title" data-en="Sponsors" data-ar="الرعاة">
+                    {{ $locale === 'ar' ? 'Sponsors' : 'Sponsors' }}
                 </h2>
                 <div class="sponsor-carousel">
                     <div class="sponsor-track">
@@ -666,7 +683,21 @@
                             <div class="sponsor-item">
                                 <img src="{{ asset('img/exsponsor/10.png') }}" alt="Sponsor Placeholder">
                             </div>
-                            <div class="sponsor-item">
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
+              <section class="sponsors-section" aria-labelledby="sponsors-title">
+                <h2 class="section-title" id="sponsors-title" data-en="ICONS" data-ar="الأيكونز">
+                    {{ $locale === 'ar' ? 'ICONS' : 'ICONS' }}
+                </h2>
+                <div class="sponsor-carousel">
+                    <div class="sponsor-track">
+                        <div class="sponsor-set">
+                           
+<div class="sponsor-item">
                                 <img src="{{ asset('img/exsponsor/11.png') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
