@@ -2086,6 +2086,11 @@ experience that unites ambitious minds and industry leaders under one roof')))">
             color: var(--hover-accent);
         }
 
+        .ltr-text {
+            direction: ltr;
+            unicode-bidi: bidi-override;
+        }
+
         .location-card {
             margin: auto;
             margin-top: 2rem;
@@ -4440,7 +4445,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                                                 <div class="contact-info-column">
                                                     <a href="tel:+966546608557" class="contact-info-link"><img
                                                             class="icon icon-lg"
-                                                            src="{{ asset('img/svg/telephone.svg') }}"> +966546608557
+                                                            src="{{ asset('img/svg/telephone.svg') }}"> <span class="ltr-text">&#x200E;+966546608557</span>
                                                     </a>
                                                 </div>
                                             </div>
