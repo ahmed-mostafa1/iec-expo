@@ -328,6 +328,109 @@
             border: none;
         }
 
+        .sponsors-section {
+            padding: 0 0 5rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 2rem;
+            background: linear-gradient(135deg, #ffffff, #b187ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .sponsor-carousel {
+            position: relative;
+            overflow: hidden;
+            padding: 1.75rem 0;
+            border-radius: calc(var(--radius) + 4px);
+            border: 1px solid rgba(152, 3, 189, 0.3);
+            background: linear-gradient(120deg, rgba(12, 12, 24, 0.85), rgba(18, 6, 34, 0.85));
+            box-shadow: 0 25px 60px -40px rgba(152, 3, 189, 0.5);
+        }
+
+        .sponsor-carousel::before,
+        .sponsor-carousel::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            width: 15%;
+            height: 100%;
+            z-index: 2;
+            pointer-events: none;
+        }
+
+        .sponsor-carousel::before {
+            left: 0;
+            background: linear-gradient(90deg, rgba(8, 8, 16, 0.9), rgba(8, 8, 16, 0));
+        }
+
+        .sponsor-carousel::after {
+            right: 0;
+            background: linear-gradient(270deg, rgba(8, 8, 16, 0.9), rgba(8, 8, 16, 0));
+        }
+
+        .sponsor-track {
+            display: flex;
+            width: max-content;
+            animation: sponsorScroll 28s linear infinite;
+        }
+
+        .sponsor-carousel:hover .sponsor-track {
+            animation-play-state: paused;
+        }
+
+        .sponsor-set {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            padding-right: 1.5rem;
+        }
+
+        .sponsor-item {
+            display: grid;
+            place-items: center;
+            width: 200px;
+            height: 110px;
+            border-radius: 14px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .sponsor-item img {
+            max-width: 70%;
+            max-height: 70%;
+            object-fit: contain;
+            filter: grayscale(1) brightness(1.05);
+            transition: transform 0.3s ease, filter 0.3s ease;
+        }
+
+        .sponsor-item:hover {
+            transform: translateY(-6px);
+            border-color: rgba(152, 3, 189, 0.55);
+            box-shadow: 0 18px 35px -22px rgba(152, 3, 189, 0.6);
+        }
+
+        .sponsor-item:hover img {
+            filter: grayscale(0) brightness(1.1);
+            transform: scale(1.06);
+        }
+
+        @keyframes sponsorScroll {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
         /* Footer */
         .footer {
             padding: 2rem 0;
@@ -386,6 +489,19 @@
             .page-subtitle {
                 font-size: 1rem;
             }
+
+            .section-title {
+                font-size: 1.6rem;
+            }
+
+            .sponsor-item {
+                width: 160px;
+                height: 90px;
+            }
+
+            .sponsor-track {
+                animation-duration: 22s;
+            }
         }
 
         @media (min-width: 768px) {
@@ -419,7 +535,9 @@
     <header class="header">
         <div class="container">
             <div class="header-inner">
-                <img src="{{ asset('./img/IEC-logo-nav.png') }}" alt="IEC Logo" class="nav-logo" />
+                <a href="{{ route('public.landing', ['locale' => $locale]) }}#hero">
+                    <img src="{{ asset('./img/IEC-logo-nav.png') }}" alt="IEC Logo" class="nav-logo" />
+                </a>
                 <nav class="nav">
                     <a href="{{ route('public.landing', ['locale' => $locale]) }}#hero" class="nav-link" 
                        data-en="Home" data-ar="الرئيسية">{{ $locale === 'ar' ? 'الرئيسية' : 'Home' }}</a>
@@ -476,16 +594,13 @@
             <h1 class="page-title" data-en="Previous Editions of IEC" data-ar="النسخ السابقة من المعرض">
                 {{ $locale === 'ar' ? 'النسخ السابقة من المعرض' : 'Previous Editions of IEC' }}
             </h1>
-            <p class="page-subtitle" data-en="Relive the highlights from our previous exhibitions" data-ar="استعد أبرز لحظات معارضنا السابقة">
-                {{ $locale === 'ar' ? 'استعد أبرز لحظات معارضنا السابقة' : 'Relive the highlights from our previous exhibitions' }}
-            </p>
 
             <section class="videos-section">
                 <div class="videos-grid">
                     <!-- IEC-1 Video -->
                     <div class="video-card">
-                        <h2 class="video-title" data-en="IEC-1 Highlights" data-ar="أبرز لحظات IEC-1">
-                            {{ $locale === 'ar' ? 'أبرز لحظات IEC-1' : 'IEC-1 Highlights' }}
+                        <h2 class="video-title" data-en="IEC-1" data-ar="IEC-1">
+                            {{ $locale === 'ar' ? 'IEC-1' : 'IEC-1' }}
                         </h2>
                         <div class="video-wrapper">
                             <iframe 
@@ -499,8 +614,8 @@
 
                     <!-- IEC-2 Video -->
                     <div class="video-card">
-                        <h2 class="video-title" data-en="IEC-2 Highlights" data-ar="أبرز لحظات IEC-2">
-                            {{ $locale === 'ar' ? 'أبرز لحظات IEC-2' : 'IEC-2 Highlights' }}
+                        <h2 class="video-title" data-en="IEC-2" data-ar="IEC-2">
+                            {{ $locale === 'ar' ? 'IEC-2' : 'IEC-2' }}
                         </h2>
                         <div class="video-wrapper">
                             <iframe 
@@ -509,6 +624,56 @@
                                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
                                 allowfullscreen>
                             </iframe>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="sponsors-section" aria-labelledby="sponsors-title">
+                <h2 class="section-title" id="sponsors-title" data-en="Our Sponsors" data-ar="Our Sponsors">
+                    {{ $locale === 'ar' ? 'Our Sponsors' : 'Our Sponsors' }}
+                </h2>
+                <div class="sponsor-carousel">
+                    <div class="sponsor-track">
+                        <div class="sponsor-set">
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/IEC-logo-nav.png') }}" alt="IEC 360 Expo">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/IEC-logo.png') }}" alt="IEC Logo">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/bu_logo.png') }}" alt="Business Umbrella">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/authority.png') }}" alt="Authority">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/theArena.png') }}" alt="The Arena">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/placeholder-img.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                        </div>
+                        <div class="sponsor-set" aria-hidden="true">
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/IEC-logo-nav.png') }}" alt="IEC 360 Expo">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/IEC-logo.png') }}" alt="IEC Logo">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/bu_logo.png') }}" alt="Business Umbrella">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/authority.png') }}" alt="Authority">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/theArena.png') }}" alt="The Arena">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/placeholder-img.png') }}" alt="Sponsor Placeholder">
+                            </div>
                         </div>
                     </div>
                 </div>
