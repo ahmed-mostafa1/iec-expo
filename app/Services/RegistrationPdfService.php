@@ -6,11 +6,8 @@ use App\Models\SponsorRegistration;
 use App\Models\VisitorRegistration;
 use App\Models\IconRegistration;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
-use Mpdf\Mpdf;
-use Mpdf\Output\Destination as MpdfDestination;
-use PhpOffice\PhpWord\IOFactory;
-use PhpOffice\PhpWord\Settings;
 
 class RegistrationPdfService
 {
@@ -20,9 +17,8 @@ class RegistrationPdfService
 
         return $this->generateContractPdf([
             'organization' => (string) ($registration->organization ?? ''),
-            'cr_number' => (string) ($registration->cr_number ?? ''),
-            'full_name' => (string) ($registration->full_name ?? ''),
-            'icon-location-selection' => (string) ($registration->location_selection ?? ''),
+            'name' => (string) ($registration->full_name ?? ''),
+            'cr_copy' => (string) ($registration->cr_number ?? ''),
         ], $path);
     }
 
@@ -45,9 +41,8 @@ class RegistrationPdfService
 
         return $this->generateContractPdf([
             'organization' => (string) ($registration->organization ?? ''),
-            'cr_number' => (string) ($registration->cr_number ?? ''),
-            'full_name' => (string) ($registration->full_name ?? ''),
-            'icon-location-selection' => (string) ($registration->location_selection ?? ''),
+            'name' => (string) ($registration->full_name ?? ''),
+            'cr_copy' => (string) ($registration->cr_number ?? ''),
         ], $path);
     }
 
@@ -109,208 +104,31 @@ class RegistrationPdfService
 
     private function convertDocxToPdf(string $docxPath): string
     {
-        Settings::setDefaultRtl(true);
-        Settings::setDefaultFontName('DejaVu Sans');
-        Settings::setDefaultAsianFontName('DejaVu Sans');
-
-        $phpWord = IOFactory::load($docxPath);
-        
-        // Set document properties for RTL
-        $properties = $phpWord->getDocInfo();
-        $properties->setTitle('Contract');
-        $properties->setSubject('Contract Document');
-        
         $tempBase = tempnam(sys_get_temp_dir(), 'contract_pdf_');
 
         if ($tempBase === false) {
             throw new \RuntimeException('Unable to create a temporary PDF file.');
         }
 
-        // Use HTML conversion for better RTL control
-        // PHPWord's native PDF writer doesn't properly respect RTL settings
-        $tempPdf = $this->convertViaHtml($phpWord, $tempBase);
+        $gotenbergUrl = rtrim((string) config('services.gotenberg.url'), '/');
+        if ($gotenbergUrl === '') {
+            throw new \RuntimeException('Gotenberg URL is not configured.');
+        }
 
-        return $tempPdf;
-    }
-    
-    private function convertViaHtml($phpWord, $tempBase): string
-    {
+        $response = Http::timeout(60)
+            ->attach('files', file_get_contents($docxPath), basename($docxPath))
+            ->post($gotenbergUrl . '/forms/libreoffice/convert', [
+                'convertTo' => 'pdf',
+            ]);
+
+        if (! $response->successful()) {
+            throw new \RuntimeException('Unable to convert contract to PDF via Gotenberg.');
+        }
+
         $tempPdf = $tempBase . '.pdf';
-        $tempHtml = $tempBase . '.html';
-        
-        $htmlWriter = IOFactory::createWriter($phpWord, 'HTML');
-        $htmlWriter->save($tempHtml);
+        file_put_contents($tempPdf, $response->body());
 
-        // Read the HTML file with explicit UTF-8 encoding
-        $html = file_get_contents($tempHtml);
-        @unlink($tempHtml);
-
-        // Ensure the HTML string is properly UTF-8 encoded
-        if (!mb_check_encoding($html, 'UTF-8')) {
-            $html = mb_convert_encoding($html, 'UTF-8', mb_detect_encoding($html, ['UTF-8', 'ISO-8859-1', 'Windows-1252'], true));
-        }
-
-        $html = $this->normalizeContractHtml($html);
-
-        $mpdf = new Mpdf([
-            'mode' => 'utf-8',
-            'format' => 'A4',
-            'orientation' => 'P',
-            'default_font' => 'dejavusans',
-            'directionality' => 'rtl',
-            'margin_left' => 20,
-            'margin_right' => 20,
-            'margin_top' => 20,
-            'margin_bottom' => 20,
-            'default_font_size' => 11,
-        ]);
-        $mpdf->autoScriptToLang = true;
-        $mpdf->autoLangToFont = true;
-        $mpdf->SetDirectionality('rtl');
-        $mpdf->WriteHTML($this->injectRtlStyles($html));
-        $mpdf->Output($tempPdf, MpdfDestination::FILE);
-        
         return $tempPdf;
-    }
-
-    private function injectRtlStyles(?string $html): string
-    {
-        $styleBlock = '<style>
-            @page {
-                margin: 2cm;
-            }
-            * { 
-                font-family: "DejaVu Sans", sans-serif !important; 
-                direction: rtl !important; 
-                unicode-bidi: embed !important;
-                text-align: right !important;
-            }
-            html {
-                direction: rtl !important;
-                text-align: right !important;
-            }
-            body {
-                direction: rtl !important;
-                text-align: right !important;
-                margin: 0;
-                padding: 0;
-                font-size: 11pt;
-                line-height: 1.5;
-            }
-            p {
-                direction: rtl !important;
-                text-align: right !important;
-                text-align-last: right !important;
-                margin: 0.3em 0;
-                line-height: 1.5;
-            }
-            div {
-                direction: rtl !important;
-                text-align: right !important;
-            }
-            span {
-                direction: rtl !important;
-                text-align: right !important;
-            }
-            h1, h2, h3, h4, h5, h6 {
-                direction: rtl !important;
-                text-align: right !important;
-                text-align-last: right !important;
-                font-weight: bold;
-                margin: 0.5em 0;
-            }
-            h1 { font-size: 16pt; }
-            h2 { font-size: 14pt; }
-            h3 { font-size: 13pt; }
-            h4 { font-size: 12pt; }
-            table {
-                direction: rtl !important;
-                width: 100%;
-            }
-            table td, table th {
-                direction: rtl !important;
-                text-align: right !important;
-                padding: 5px;
-            }
-            li {
-                direction: rtl !important;
-                text-align: right !important;
-            }
-            ul, ol {
-                direction: rtl !important;
-                text-align: right !important;
-            }
-            /* Force override any inline styles */
-            [style] {
-                direction: rtl !important;
-                text-align: right !important;
-            }
-            /* Ensure consistent formatting across all pages */
-            div[style*="page-break"] {
-                direction: rtl !important;
-                text-align: right !important;
-            }
-        </style>';
-        $charset = '<meta charset="UTF-8">';
-
-        if (! $html) {
-            return '<html><head>' . $charset . $styleBlock . '</head><body></body></html>';
-        }
-
-        if (stripos($html, '<head>') !== false) {
-            return preg_replace(
-                '/<head>/i',
-                '<head>' . $charset . $styleBlock,
-                $html,
-                1
-            );
-        }
-
-        return $charset . $styleBlock . $html;
-    }
-
-    private function normalizeContractHtml(?string $html): string
-    {
-        if (! $html) {
-            return '';
-        }
-
-        // Ensure the HTML is treated as UTF-8
-        // PHPWord's HTML writer outputs UTF-8, so we preserve it as-is
-        // Do NOT use utf8_decode() as it converts to Latin-1 and breaks Arabic text
-
-        // Remove ALL text-align and direction inline styles to let CSS take over
-        $html = preg_replace('/text-align:\s*[^;"\'>]+\s*;?/i', '', $html);
-        $html = preg_replace('/direction:\s*[^;"\'>]+\s*;?/i', '', $html);
-        
-        // Remove float styles that might interfere with RTL
-        $html = preg_replace('/float:\s*[^;"\'>]+\s*;?/i', '', $html);
-        
-        // Remove empty style attributes
-        $html = preg_replace('/style="\s*"/i', '', $html);
-        $html = preg_replace('/style=\'\s*\'/i', '', $html);
-        $html = preg_replace('/style="\s*;+\s*"/i', '', $html);
-
-        // Convert <br> tags to proper paragraph breaks for better structure
-        // This helps maintain the original document's paragraph structure
-        $html = preg_replace('/<br\s*\/?>/i', '</p><p>', $html);
-        
-        // Clean up any empty paragraphs that might have been created
-        $html = preg_replace('/<p>\s*<\/p>/i', '', $html);
-        
-        // Add RTL attributes to body and main containers
-        $html = preg_replace('/<body([^>]*)>/i', '<body$1 dir="rtl">', $html);
-        $html = preg_replace('/<div([^>]*)>/i', '<div$1 dir="rtl">', $html);
-
-        // Prevent mPDF from exploding page count on Word page styles.
-        $html = preg_replace('/@page\s+page\d+\s*\{[^}]*\}/i', '', $html);
-        $html = preg_replace('/page:\s*page\d+;?/i', '', $html);
-        $html = preg_replace('/body\s*>\s*div\s*\+\s*div\s*\{[^}]*\}/i', '', $html);
-        
-        // Keep page breaks but ensure they don't interfere with RTL
-        // $html = preg_replace('/page-break-before:\s*always;?/i', '', $html);
-
-        return $html;
     }
 
     private function getContractXmlParts(\ZipArchive $zip): array
