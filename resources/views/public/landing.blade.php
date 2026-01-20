@@ -3597,7 +3597,7 @@ experience that unites ambitious minds and industry leaders under one roof')))">
                             </div>
 
                             <div class="row-logo" id="guest-row-logo">
-                                <img src="{{ asset('img/IEC-logo.png') }}" alt="IEC Logo" style="text-align:center">
+                                <img src="{{ asset('img/white-logo.png') }}" alt="IEC Logo" style="text-align:center">
                             </div>
 
                             <div class="role-card guest-card" id="visitor-card" onclick="selectRole('visitor')">
