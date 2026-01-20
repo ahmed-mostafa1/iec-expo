@@ -354,6 +354,43 @@
             /* --sponsor-item-height: 110px; */
             /* min-height: calc(var(--sponsor-item-height) + 3.5rem); */
         }
+
+        .carousel-control {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(152, 3, 189, 0.8);
+            border: 1px solid rgba(152, 3, 189, 0.6);
+            color: #fff;
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 10;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(8px);
+        }
+
+        .carousel-control:hover {
+            background: rgba(152, 3, 189, 1);
+            transform: translateY(-50%) scale(1.1);
+            box-shadow: 0 8px 20px rgba(152, 3, 189, 0.6);
+        }
+
+        .carousel-control-prev {
+            left: 15px;
+        }
+
+        .carousel-control-next {
+            right: 15px;
+        }
+
+        .carousel-control i {
+            font-size: 1.2rem;
+        }
 /* 
         .sponsor-carousel::before,
         .sponsor-carousel::after {
@@ -380,7 +417,7 @@
             display: flex;
             align-items: center;
             width: max-content;
-            animation: sponsorScroll 28s linear infinite;
+            animation: sponsorScroll 10s linear infinite;
         }
 
         body.locale-ar .sponsor-track {
@@ -517,7 +554,7 @@
             }
 
             .sponsor-track {
-                animation-duration: 22s;
+                animation-duration: 8s;
             }
         }
 
@@ -650,7 +687,10 @@
                 <h2 class="section-title" id="sponsors-title" data-en="Sponsors" data-ar="الرعاة">
                     {{ $locale === 'ar' ? 'Sponsors' : 'Sponsors' }}
                 </h2>
-                <div class="sponsor-carousel">
+                <div class="sponsor-carousel" id="sponsors-carousel">
+                    <button class="carousel-control carousel-control-prev" onclick="scrollCarousel('sponsors-carousel', 'left')">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
                     <div class="sponsor-track">
                         <div class="sponsor-set">
                             <div class="sponsor-item">
@@ -684,7 +724,43 @@
                                 <img src="{{ asset('img/exsponsor/10.png') }}" alt="Sponsor Placeholder">
                             </div>
                         </div>
+                        <!-- Duplicate set for seamless scrolling -->
+                        <div class="sponsor-set">
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/1.jpeg') }}" alt="IEC 360 Expo">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/2.jpeg') }}" alt="IEC Logo">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/3.jpeg') }}" alt="Business Umbrella">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/4.png') }}" alt="Authority">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/5.png') }}" alt="The Arena">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/6.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/7.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/8.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/9.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/10.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                        </div>
                     </div>
+                    <button class="carousel-control carousel-control-next" onclick="scrollCarousel('sponsors-carousel', 'right')">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
                 </div>
             </section>
 
@@ -693,11 +769,41 @@
                 <h2 class="section-title" id="sponsors-title" data-en="ICONS" data-ar="الأيكونز">
                     {{ $locale === 'ar' ? 'ICONS' : 'ICONS' }}
                 </h2>
-                <div class="sponsor-carousel">
+                <div class="sponsor-carousel" id="icons-carousel">
+                    <button class="carousel-control carousel-control-prev" onclick="scrollCarousel('icons-carousel', 'left')">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
                     <div class="sponsor-track">
                         <div class="sponsor-set">
                            
-<div class="sponsor-item">
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/11.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/12.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/13.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/14.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/15.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/16.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/17.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/18.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                        </div>
+                        <!-- Duplicate set for seamless scrolling -->
+                        <div class="sponsor-set">
+                            <div class="sponsor-item">
                                 <img src="{{ asset('img/exsponsor/11.png') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
@@ -723,6 +829,9 @@
                             </div>
                         </div>
                     </div>
+                    <button class="carousel-control carousel-control-next" onclick="scrollCarousel('icons-carousel', 'right')">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
                 </div>
             </section>
         </div>
@@ -769,6 +878,46 @@
                     }
                 }
             });
+        }
+
+        // Carousel scroll function
+        function scrollCarousel(carouselId, direction) {
+            const carousel = document.getElementById(carouselId);
+            const track = carousel.querySelector('.sponsor-track');
+            const scrollAmount = 250; // pixels to scroll
+            
+            // Get current transform value
+            const currentTransform = window.getComputedStyle(track).transform;
+            let currentX = 0;
+            
+            if (currentTransform !== 'none') {
+                const matrix = currentTransform.match(/matrix.*\((.+)\)/);
+                if (matrix) {
+                    currentX = parseFloat(matrix[1].split(', ')[4]);
+                }
+            } else {
+                // Compatibility for browsers that might return translateX directly in some states
+                const style = window.getComputedStyle(track);
+                const transform = style.getPropertyValue('transform');
+                if (transform && transform !== 'none') {
+                    const matrix = transform.match(/matrix.*\((.+)\)/);
+                    if (matrix) {
+                        currentX = parseFloat(matrix[1].split(', ')[4]);
+                    }
+                }
+            }
+            
+            // Calculate new position
+            let newX = direction === 'left' ? currentX + scrollAmount : currentX - scrollAmount;
+            
+            // Pause animation, apply transform, then resume
+            track.style.animationPlayState = 'paused';
+            track.style.transform = `translateX(${newX}px)`;
+            
+            // Resume animation after a short delay
+            setTimeout(() => {
+                track.style.animationPlayState = 'running';
+            }, 300);
         }
 
         // Initialize on page load
