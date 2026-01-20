@@ -847,78 +847,6 @@
                                 <img src="{{ asset('img/exsponsor/33.png') }}" alt="Sponsor Placeholder">
                             </div>
                         </div>
-                        <!-- Duplicate set for seamless scrolling -->
-                        <div class="sponsor-set">
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/11.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/12.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/13.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/14.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/15.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/16.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/17.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/18.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/19.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/20.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/21.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/22.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/23.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/24.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/25.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/26.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/27.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/28.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/29.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/30.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/31.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/32.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/33.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                        </div>
                     </div>
                     <button class="carousel-control carousel-control-next" onclick="scrollCarousel('icons-carousel', 'right')">
                         <i class="fas fa-chevron-right"></i>
@@ -975,22 +903,34 @@
         function scrollCarousel(carouselId, direction) {
             const carousel = document.getElementById(carouselId);
             const track = carousel.querySelector('.sponsor-track');
-            const scrollAmount = 300; // pixels to scroll
+            const item = track.querySelector('.sponsor-item');
+            
+            if (!item) return;
+
+            // Calculate one step (item width + gap)
+            // The gap is 1.5rem (24px)
+            const style = window.getComputedStyle(track.querySelector('.sponsor-set'));
+            const gap = parseFloat(style.gap) || 24;
+            const scrollAmount = item.offsetWidth + gap;
             
             // Get current offset from CSS variable
             let currentOffset = parseFloat(getComputedStyle(track).getPropertyValue('--offset')) || 0;
             
             // Calculate new offset
+            // In LTR, 'left' means moving content to the right (positive offset)
+            // 'right' means moving content to the left (negative offset)
             let newOffset = direction === 'left' ? currentOffset + scrollAmount : currentOffset - scrollAmount;
             
             // Apply new offset to CSS variable
             track.style.setProperty('--offset', newOffset + 'px');
             
-            // Optional: visual feedback (brief pause then resume)
-            track.style.animationPlayState = 'paused';
-            setTimeout(() => {
-                track.style.animationPlayState = 'running';
-            }, 50);
+            // Brief visual feedback if not hovering
+            if (!carousel.matches(':hover')) {
+                track.style.animationPlayState = 'paused';
+                setTimeout(() => {
+                    track.style.animationPlayState = 'running';
+                }, 50);
+            }
         }
 
         // Initialize on page load
