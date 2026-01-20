@@ -418,6 +418,7 @@
             align-items: center;
             width: max-content;
             animation: sponsorScroll 10s linear infinite;
+            --offset: 0px;
         }
 
         body.locale-ar .sponsor-track {
@@ -472,11 +473,11 @@
 
         @keyframes sponsorScroll {
             0% {
-                transform: translateX(0);
+                transform: translateX(var(--offset, 0px));
             }
 
             100% {
-                transform: translateX(-50%);
+                transform: translateX(calc(var(--offset, 0px) - 50%));
             }
         }
 
@@ -800,6 +801,51 @@
                             <div class="sponsor-item">
                                 <img src="{{ asset('img/exsponsor/18.png') }}" alt="Sponsor Placeholder">
                             </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/19.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/20.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/21.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/22.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/23.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/24.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/25.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/26.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/27.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/28.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/29.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/30.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/31.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/32.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/33.png') }}" alt="Sponsor Placeholder">
+                            </div>
                         </div>
                         <!-- Duplicate set for seamless scrolling -->
                         <div class="sponsor-set">
@@ -826,6 +872,51 @@
                             </div>
                             <div class="sponsor-item">
                                 <img src="{{ asset('img/exsponsor/18.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/19.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/20.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/21.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/22.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/23.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/24.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/25.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/26.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/27.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/28.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/29.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/30.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/31.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/32.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/33.png') }}" alt="Sponsor Placeholder">
                             </div>
                         </div>
                     </div>
@@ -884,40 +975,22 @@
         function scrollCarousel(carouselId, direction) {
             const carousel = document.getElementById(carouselId);
             const track = carousel.querySelector('.sponsor-track');
-            const scrollAmount = 250; // pixels to scroll
+            const scrollAmount = 300; // pixels to scroll
             
-            // Get current transform value
-            const currentTransform = window.getComputedStyle(track).transform;
-            let currentX = 0;
+            // Get current offset from CSS variable
+            let currentOffset = parseFloat(getComputedStyle(track).getPropertyValue('--offset')) || 0;
             
-            if (currentTransform !== 'none') {
-                const matrix = currentTransform.match(/matrix.*\((.+)\)/);
-                if (matrix) {
-                    currentX = parseFloat(matrix[1].split(', ')[4]);
-                }
-            } else {
-                // Compatibility for browsers that might return translateX directly in some states
-                const style = window.getComputedStyle(track);
-                const transform = style.getPropertyValue('transform');
-                if (transform && transform !== 'none') {
-                    const matrix = transform.match(/matrix.*\((.+)\)/);
-                    if (matrix) {
-                        currentX = parseFloat(matrix[1].split(', ')[4]);
-                    }
-                }
-            }
+            // Calculate new offset
+            let newOffset = direction === 'left' ? currentOffset + scrollAmount : currentOffset - scrollAmount;
             
-            // Calculate new position
-            let newX = direction === 'left' ? currentX + scrollAmount : currentX - scrollAmount;
+            // Apply new offset to CSS variable
+            track.style.setProperty('--offset', newOffset + 'px');
             
-            // Pause animation, apply transform, then resume
+            // Optional: visual feedback (brief pause then resume)
             track.style.animationPlayState = 'paused';
-            track.style.transform = `translateX(${newX}px)`;
-            
-            // Resume animation after a short delay
             setTimeout(() => {
                 track.style.animationPlayState = 'running';
-            }, 300);
+            }, 50);
         }
 
         // Initialize on page load
