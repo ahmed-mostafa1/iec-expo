@@ -426,6 +426,10 @@
             --offset: 0px;
         }
 
+        #icons-carousel .sponsor-track {
+            animation-duration: 20s;
+        }
+
         body.locale-ar .sponsor-track {
             animation-direction: reverse;
         }
@@ -561,6 +565,10 @@
 
             .sponsor-track {
                 animation-duration: 8s;
+            }
+
+            #icons-carousel .sponsor-track {
+                animation-duration: 16s;
             }
         }
 
@@ -780,7 +788,7 @@
                                 <img src="{{ asset('img/exsponsor/2.png') }}" alt="IEC Logo">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/3.jpeg') }}" alt="Business Umbrella">
+                                <img src="{{ asset('img/exsponsor/3.png') }}" alt="Business Umbrella">
                             </div>
                             <div class="sponsor-item">
                                 <img src="{{ asset('img/exsponsor/4.png') }}" alt="Authority">
@@ -980,30 +988,6 @@
                             </div>
                             <div class="sponsor-item">
                                 <img src="{{ asset('img/exicons/32.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/33.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/33.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/33.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/33.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/33.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/33.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/33.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/33.png') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
                                 <img src="{{ asset('img/exicons/33.png') }}" alt="Sponsor Placeholder">
