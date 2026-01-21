@@ -6,29 +6,30 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>IEC 360 EXPO</title>
     <title>@yield('title', 'IEC 360 EXPO')</title>
-<meta name="description" content="@yield('meta_description', 'With unmatched uniqueness and excellence, the IEC EXPO returns for its third edition
-under the theme IEC 360°. It continues its journey as a comprehensive interactive
-platform that merges innovation, development, and networking—offering an exceptional
-experience that unites ambitious minds and industry leaders under one roof')">
+    <meta name="description" content="@yield('meta_description', 'With unmatched uniqueness and excellence, the IEC EXPO returns for its third edition
+        under the theme IEC 360°. It continues its journey as a comprehensive interactive
+        platform that merges innovation, development, and networking—offering an exceptional
+    experience that unites ambitious minds and industry leaders under one roof')">
 
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="IEC 360 EXPO">
-<meta property="og:title" content="@yield('og_title', 'IEC 360 EXPO')">
-<meta property="og:description" content="@yield('og_description', 'With unmatched uniqueness and excellence, the IEC EXPO returns for its third edition
-under the theme IEC 360°. It continues its journey as a comprehensive interactive
-platform that merges innovation, development, and networking—offering an exceptional
-experience that unites ambitious minds and industry leaders under one roof')">
-<meta property="og:url" content="{{ url()->current() }}">
-<meta property="og:image" content="@yield('og_image', asset('img/IEC-logo-nav.png'))">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="@yield('twitter_title', trim($__env->yieldContent('title', config('app.name'))))">
-<meta name="twitter:description" content="@yield('twitter_description', trim($__env->yieldContent('meta_description', 'With unmatched uniqueness and excellence, the IEC EXPO returns for its third edition
-under the theme IEC 360°. It continues its journey as a comprehensive interactive
-platform that merges innovation, development, and networking—offering an exceptional
-experience that unites ambitious minds and industry leaders under one roof')))">
-<meta name="twitter:image" content="@yield('twitter_image', asset('img/IEC-logo-nav.png'))">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="IEC 360 EXPO">
+    <meta property="og:title" content="@yield('og_title', 'IEC 360 EXPO')">
+    <meta property="og:description" content="@yield('og_description', 'With unmatched uniqueness and excellence, the IEC EXPO returns for its third edition
+        under the theme IEC 360°. It continues its journey as a comprehensive interactive
+        platform that merges innovation, development, and networking—offering an exceptional
+    experience that unites ambitious minds and industry leaders under one roof')">
+    <meta property="og:url" content="{{ url()->current() }}">
+    <meta property="og:image" content="@yield('og_image', asset('img/IEC-logo-nav.png'))">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title"
+        content="@yield('twitter_title', trim($__env->yieldContent('title', config('app.name'))))">
+    <meta name="twitter:description" content="@yield('twitter_description', trim($__env->yieldContent('meta_description', 'With unmatched uniqueness and excellence, the IEC EXPO returns for its third edition
+        under the theme IEC 360°. It continues its journey as a comprehensive interactive
+        platform that merges innovation, development, and networking—offering an exceptional
+    experience that unites ambitious minds and industry leaders under one roof')))">
+    <meta name="twitter:image" content="@yield('twitter_image', asset('img/IEC-logo-nav.png'))">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -2608,74 +2609,76 @@ experience that unites ambitious minds and industry leaders under one roof')))">
         </div>
         <div class="loader-text">Loading</div>
     </div>
-    <div class="page-content">
-        @php
-            $organizers = \App\Models\Organizer::query()->where('is_active', true)->orderBy('display_order')->get();
-            if ($organizers->isEmpty()) {
-                $organizers = collect(config('demo.organizers'))->map(function ($data, $id) {
-                    $model = new \App\Models\Organizer($data);
-                    $model->id = $id;
-                    $model->exists = false;
-                    return $model;
-                });
-            }
-        @endphp
-        <!-- Header -->
-        <header class="header">
-            <div class="container">
-                <div class="header-inner">
-                    <a href="{{ route('public.landing', ['locale' => app()->getLocale()]) }}#hero">
-                        <img src="{{ asset('./img/IEC-logo-nav.png') }}" alt="IEC Logo" class="nav-logo" />
-                    </a>
-                    <nav class="nav">
-                        <a href="#" class="btn-primary nav-link" data-en="Home" data-ar="الرئيسية">Home</a>
-                        <a href="{{ route('public.ed', ['locale' => app()->getLocale()]) }}" class="nav-link"
-                            data-en="Previous Editions of IEC" data-ar="النسخ السابقة من المعرض">Previous Editions of
-                            IEC</a>
-                        <a href="#register" class="btn-primary nav-link" data-en="Register"
-                            data-ar="التسجيل">Register</a>
-                        <a href="#about" class="nav-link" data-en="About" data-ar="عن المعرض">About</a>
-                        <a href="#sponsors" class="nav-link" data-en="Sponsor" data-ar="الراعي">Sponsor</a>
-                        <a href="#participants" class="nav-link" data-en="Icons" data-ar="الأيكون">Icon</a>
-                        <a href="#organizers" class="nav-link" data-en="Owned by" data-ar="الشركة المالكة">Owned by</a>
-                        <a href="#contact" class="nav-link" data-en="Contact" data-ar="تواصل معنا">Contact</a>
-                    </nav>
-                    <div class="header-right">
-                        <div class="header-actions">
-                            <button class="lang-switch" onclick="toggleLocale()">
-                                <svg class="icon icon-sm" viewBox="0 0 24 24">
-                                    <circle cx="12" cy="12" r="10" />
-                                    <path
-                                        d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-                                </svg>
-                                <span id="lang-text">العربية</span>
-                            </button>
-                            <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
-                                <svg class="icon" viewBox="0 0 24 24" id="menu-icon">
-                                    <path d="M3 12h18M3 6h18M3 18h18" />
-                                </svg>
-                            </button>
-                        </div>
-                        <a href="https://umbrella.sa" />
-                        <img class="nav-logo-bu" src="{{ asset('./img/bu_logo.png') }}" alt="BU Logo" />
-                        </a>
-                    </div>
-                </div>
-                <nav class="mobile-nav" id="mobile-nav">
-                    <a href="#" class="mobile-nav-link" data-en="Home" data-ar="الرئيسية">Home</a>
-                    <a href="{{ route('public.ed', ['locale' => app()->getLocale()]) }}" class="mobile-nav-link"
+
+    @php
+        $organizers = \App\Models\Organizer::query()->where('is_active', true)->orderBy('display_order')->get();
+        if ($organizers->isEmpty()) {
+            $organizers = collect(config('demo.organizers'))->map(function ($data, $id) {
+                $model = new \App\Models\Organizer($data);
+                $model->id = $id;
+                $model->exists = false;
+                return $model;
+            });
+        }
+    @endphp
+
+    <!-- Header -->
+    <header class="header">
+        <div class="container">
+            <div class="header-inner">
+                <a href="{{ route('public.landing', ['locale' => app()->getLocale()]) }}#hero">
+                    <img src="{{ asset('./img/IEC-logo-nav.png') }}" alt="IEC Logo" class="nav-logo" />
+                </a>
+                <nav class="nav">
+                    <a href="#" class="btn-primary nav-link" data-en="Home" data-ar="الرئيسية">Home</a>
+                    <a href="{{ route('public.ed', ['locale' => app()->getLocale()]) }}" class="nav-link"
                         data-en="Previous Editions of IEC" data-ar="النسخ السابقة من المعرض">Previous Editions of
                         IEC</a>
-                    <a href="#register" class="mobile-nav-link" data-en="Register" data-ar="التسجيل">Register</a>
-                    <a href="#about" class="mobile-nav-link" data-en="About" data-ar="عن المعرض">About</a>
-                    <a href="#sponsors" class="mobile-nav-link" data-en="Sponsor" data-ar="الراعي">Sponsor</a>
-                    <a href="#participants" class="mobile-nav-link" data-en="Icon" data-ar="الأيكون">Icon</a>
-                    <a href="#organizers" class="mobile-nav-link" data-en="Owned by" data-ar="الشركة المالكة">Owned
-                        by</a>
-                    <a href="#contact" class="mobile-nav-link" data-en="Contact" data-ar="تواصل معنا">Contact</a>
+                    <a href="#register" class="btn-primary nav-link" data-en="Register" data-ar="التسجيل">Register</a>
+                    <a href="#about" class="nav-link" data-en="About" data-ar="عن المعرض">About</a>
+                    <a href="#sponsors" class="nav-link" data-en="Sponsor" data-ar="الراعي">Sponsor</a>
+                    <a href="#participants" class="nav-link" data-en="Icons" data-ar="الأيكون">Icon</a>
+                    <a href="#organizers" class="nav-link" data-en="Owned by" data-ar="الشركة المالكة">Owned by</a>
+                    <a href="#contact" class="nav-link" data-en="Contact" data-ar="تواصل معنا">Contact</a>
                 </nav>
+                <div class="header-right">
+                    <div class="header-actions">
+                        <button class="lang-switch" onclick="toggleLocale()">
+                            <svg class="icon icon-sm" viewBox="0 0 24 24">
+                                <circle cx="12" cy="12" r="10" />
+                                <path
+                                    d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                            </svg>
+                            <span id="lang-text">العربية</span>
+                        </button>
+                        <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
+                            <svg class="icon" viewBox="0 0 24 24" id="menu-icon">
+                                <path d="M3 12h18M3 6h18M3 18h18" />
+                            </svg>
+                        </button>
+                    </div>
+                    <a href="https://umbrella.sa" />
+                    <img class="nav-logo-bu" src="{{ asset('./img/bu_logo.png') }}" alt="BU Logo" />
+                    </a>
+                </div>
             </div>
-        </header>
+            <nav class="mobile-nav" id="mobile-nav">
+                <a href="#" class="mobile-nav-link" data-en="Home" data-ar="الرئيسية">Home</a>
+                <a href="{{ route('public.ed', ['locale' => app()->getLocale()]) }}" class="mobile-nav-link"
+                    data-en="Previous Editions of IEC" data-ar="النسخ السابقة من المعرض">Previous Editions of
+                    IEC</a>
+                <a href="#register" class="mobile-nav-link" data-en="Register" data-ar="التسجيل">Register</a>
+                <a href="#about" class="mobile-nav-link" data-en="About" data-ar="عن المعرض">About</a>
+                <a href="#sponsors" class="mobile-nav-link" data-en="Sponsor" data-ar="الراعي">Sponsor</a>
+                <a href="#participants" class="mobile-nav-link" data-en="Icon" data-ar="الأيكون">Icon</a>
+                <a href="#organizers" class="mobile-nav-link" data-en="Owned by" data-ar="الشركة المالكة">Owned
+                    by</a>
+                <a href="#contact" class="mobile-nav-link" data-en="Contact" data-ar="تواصل معنا">Contact</a>
+            </nav>
+        </div>
+    </header>
+
+    <div class="page-content">
         <main>
             <!-- Hero Section -->
             @php
@@ -3040,10 +3043,9 @@ experience that unites ambitious minds and industry leaders under one roof')))">
                                     data-success-message="{{ e(__('registration.sponsor.success')) }}">
                                     <div class="form-buttons"
                                         style="justify-content: flex-start; margin-bottom: 0.75rem; width: 50%!important; margin: auto;">
-                                        <a class="btn btn-outline"
-                                            href="#"
-                                            rel="noopener" data-en="Download SPONSOR Profile"
-                                            data-ar="تنزيل ملف الراعي">Download SPONSOR Profile</a>
+                                        <a class="btn btn-outline" href="#" rel="noopener"
+                                            data-en="Download SPONSOR Profile" data-ar="تنزيل ملف الراعي">Download
+                                            SPONSOR Profile</a>
                                     </div>
                                     @csrf
                                     <input type="hidden" name="form_identifier" value="sponsor">
@@ -3077,8 +3079,7 @@ experience that unites ambitious minds and industry leaders under one roof')))">
                                                     data-ar="{{ e($exPhoneLabel['ar']) }}">{{ $exPhoneLabel['text'] }}</label>
                                                 <input type="tel" name="phone" class="form-input" required
                                                     minlength="10" pattern="\d{10,}" inputmode="numeric"
-                                                    data-min-digits="10"
-                                                    placeholder="{{ $exPhonePlaceholder['text'] }}"
+                                                    data-min-digits="10" placeholder="{{ $exPhonePlaceholder['text'] }}"
                                                     value="{{ $sponsorFormActive ? old('phone') : '' }}">
                                                 @if ($sponsorFormActive && $errors->has('phone'))
                                                     <p class="mt-1 text-xs text-red-600">{{ $errors->first('phone') }}</p>
@@ -3124,8 +3125,7 @@ experience that unites ambitious minds and industry leaders under one roof')))">
                                                             $optionLabel =
                                                                 $registrationLocale === 'ar' ? $optionLabelAr : $optionLabelEn;
                                                         @endphp
-                                                        <option value="{{ $optionValue }}"
-                                                            @selected($sponsorFormActive && old('sponsor_tier') === $optionValue)
+                                                        <option value="{{ $optionValue }}" @selected($sponsorFormActive && old('sponsor_tier') === $optionValue)
                                                             data-en="{{ e($optionLabelEn) }}"
                                                             data-ar="{{ e($optionLabelAr) }}">
                                                             {{ $optionLabel }}
@@ -3198,8 +3198,8 @@ experience that unites ambitious minds and industry leaders under one roof')))">
                                             <div class="form-group">
                                                 <label class="form-label" data-en="{{ e($exAddressLabel['en']) }}"
                                                     data-ar="{{ e($exAddressLabel['ar']) }}">{{ $exAddressLabel['text'] }}</label>
-                                                <input type="file" name="national_address_document" class="form-input" required
-                                                    accept="application/pdf">
+                                                <input type="file" name="national_address_document" class="form-input"
+                                                    required accept="application/pdf">
                                                 <span class="form-hint" data-en="{{ e($exAddressHint['en']) }}"
                                                     data-ar="{{ e($exAddressHint['ar']) }}">{{ $exAddressHint['text'] }}</span>
                                                 @if ($sponsorFormActive && $errors->has('national_address_document'))
@@ -3215,11 +3215,12 @@ experience that unites ambitious minds and industry leaders under one roof')))">
                                                 style="flex-direction: row; align-items: center; gap: 0.5rem;">
                                                 <input type="checkbox" name="privacy_policy" value="1" required
                                                     @checked($sponsorFormActive && old('privacy_policy'))>
-                                                <span data-en="I have read and accept "
-                                                    data-ar="">I have read and accept</span>
+                                                <span data-en="I have read and accept " data-ar="">I have read and
+                                                    accept</span>
                                                 <a class="blue-url-style" href="{{ asset('pdf/sponsor-profile.pdf') }}"
                                                     target="_blank" rel="noopener" data-en="the SPONSOR profile terms"
-                                                    data-ar="قرأت وأوافق على شروط بروفايل الراعي">the SPONSOR profile terms</a>
+                                                    data-ar="قرأت وأوافق على شروط بروفايل الراعي">the SPONSOR profile
+                                                    terms</a>
                                             </label>
                                             @if ($sponsorFormActive && $errors->has('privacy_policy'))
                                                 <p class="mt-1 text-xs text-red-600">
@@ -3391,8 +3392,8 @@ experience that unites ambitious minds and industry leaders under one roof')))">
                                     <div class="form-buttons"
                                         style="justify-content: flex-start; margin-bottom: 0.75rem; width: 50%!important; margin: auto;">
                                         <a class="btn btn-outline"
-                                            href="https://umbrella.sa/iec360/pdf/IEC360-Profile-Icon.pdf" target="_blank"
-                                            rel="noopener" data-en="Download ICON Profile"
+                                            href="https://umbrella.sa/iec360/pdf/IEC360-Profile-Icon.pdf"
+                                            target="_blank" rel="noopener" data-en="Download ICON Profile"
                                             data-ar="تنزيل ملف الأيكون">Download ICON Profile</a>
                                     </div>
                                     <div>
@@ -3506,8 +3507,7 @@ experience that unites ambitious minds and industry leaders under one roof')))">
                                                     data-ar="{{ e($iconCrLabel['ar']) }}">{{ $iconCrLabel['text'] }}</label>
                                                 <input type="text" name="cr_number" class="form-input" required
                                                     minlength="10" pattern="\d{10,}" inputmode="numeric"
-                                                    data-min-digits="10"
-                                                    placeholder="{{ $iconCrPlaceholder['text'] }}"
+                                                    data-min-digits="10" placeholder="{{ $iconCrPlaceholder['text'] }}"
                                                     value="{{ $iconFormActive ? old('cr_number') : '' }}">
                                                 @if ($iconFormActive && $errors->has('cr_number'))
                                                     <p class="mt-1 text-xs text-red-600">
@@ -3547,8 +3547,8 @@ experience that unites ambitious minds and industry leaders under one roof')))">
                                             <div class="form-group">
                                                 <label class="form-label" data-en="{{ e($iconAddressLabel['en']) }}"
                                                     data-ar="{{ e($iconAddressLabel['ar']) }}">{{ $iconAddressLabel['text'] }}</label>
-                                                <input type="file" name="national_address_document" class="form-input" required
-                                                    accept="application/pdf">
+                                                <input type="file" name="national_address_document" class="form-input"
+                                                    required accept="application/pdf">
                                                 <span class="form-hint" data-en="{{ e($iconAddressHint['en']) }}"
                                                     data-ar="{{ e($iconAddressHint['ar']) }}">{{ $iconAddressHint['text'] }}</span>
                                                 @if ($iconFormActive && $errors->has('national_address_document'))
@@ -3565,11 +3565,12 @@ experience that unites ambitious minds and industry leaders under one roof')))">
                                                 <input type="checkbox" name="privacy_policy" value="1" required
                                                     @checked($iconFormActive && old('privacy_policy'))>
 
-                                                <span data-en="I have read and accept"
-                                                    data-ar="">I have read and accept</span>
+                                                <span data-en="I have read and accept" data-ar="">I have read and
+                                                    accept</span>
                                                 <a class="blue-url-style" href="{{ asset('pdf/icon-profile.pdf') }}"
                                                     target="_blank" rel="noopener" data-en="the ICON profile terms"
-                                                    data-ar="قرأت وأوافق على شروط بروفايل الآيكون">the ICON profile terms</a>
+                                                    data-ar="قرأت وأوافق على شروط بروفايل الآيكون">the ICON profile
+                                                    terms</a>
                                                 @if ($iconFormActive && $errors->has('privacy_policy'))
                                                     <p class="mt-1 text-xs text-red-600">
                                                         {{ $errors->first('privacy_policy') }}
@@ -3628,7 +3629,7 @@ experience that unites ambitious minds and industry leaders under one roof')))">
                                 @php
                                     $guestFullNameLabel = $fieldCopy($visitorFieldsByName, 'full_name', 'label', [
                                         'en' => 'Full
-                                                                                                                                                                            Name *',
+                                                                                                                                                                                                                                                                                        Name *',
                                         'ar' => 'الاسم الكامل *',
                                     ]);
                                     $guestFullNamePlaceholder = $fieldCopy(
@@ -3655,7 +3656,7 @@ experience that unites ambitious minds and industry leaders under one roof')))">
                                     ]);
                                     $guestJobLabel = $fieldCopy($visitorFieldsByName, 'job_title', 'label', [
                                         'en' => 'Job
-                                                                                                                                                                            Title',
+                                                                                                                                                                                                                                                                                        Title',
                                         'ar' => 'المسمى الوظيفي',
                                     ]);
                                     $guestJobPlaceholder = $fieldCopy($visitorFieldsByName, 'job_title', 'placeholder', [
@@ -3674,7 +3675,7 @@ experience that unites ambitious minds and industry leaders under one roof')))">
                                     );
                                     $guestHeardLabel = $fieldCopy($visitorFieldsByName, 'heard_about', 'label', [
                                         'en' => 'How
-                                                                                                                                                                            did you hear about us?',
+                                                                                                                                                                                                                                                                                        did you hear about us?',
                                         'ar' => 'كيف سمعت عنا؟',
                                     ]);
                                     $guestHeardOptions = $fieldOptions($visitorFieldsByName, 'heard_about', [
@@ -3858,7 +3859,7 @@ experience that unites ambitious minds and industry leaders under one roof')))">
                         'value' => 0,
                         'suffix' => '',
                         'icon' => 'fas
-                                                                                            fa-circle',
+                                                                                                                                                        fa-circle',
                     ];
                     $stats = array_pad($heroStats, 5, $defaultStat);
                 @endphp
@@ -4111,8 +4112,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                         <!-- STRATEGIC -->
                         @if(!empty($sponsorGroups['strategic']) && $sponsorGroups['strategic']['sponsors']->isNotEmpty())
                             <div class="sponsor-tier">
-                                <h2 class="sponsor-tier-title"
-                                    data-en="{{ $sponsorGroups['strategic']['title']['en'] }}"
+                                <h2 class="sponsor-tier-title" data-en="{{ $sponsorGroups['strategic']['title']['en'] }}"
                                     data-ar="{{ $sponsorGroups['strategic']['title']['ar'] }}">
                                     {{ strtoupper($sponsorGroups['strategic']['title']['en']) }}
                                 </h2>
@@ -4131,8 +4131,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                         <!-- DIAMOND -->
                         @if(!empty($sponsorGroups['diamond']) && $sponsorGroups['diamond']['sponsors']->isNotEmpty())
                             <div class="sponsor-tier">
-                                <h2 class="sponsor-tier-title"
-                                    data-en="{{ $sponsorGroups['diamond']['title']['en'] }}"
+                                <h2 class="sponsor-tier-title" data-en="{{ $sponsorGroups['diamond']['title']['en'] }}"
                                     data-ar="{{ $sponsorGroups['diamond']['title']['ar'] }}">
                                     {{ strtoupper($sponsorGroups['diamond']['title']['en']) }}
                                 </h2>
@@ -4151,8 +4150,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                         <!-- GOVERNMENT -->
                         @if(!empty($sponsorGroups['government']) && $sponsorGroups['government']['sponsors']->isNotEmpty())
                             <div class="sponsor-tier">
-                                <h2 class="sponsor-tier-title"
-                                    data-en="{{ $sponsorGroups['government']['title']['en'] }}"
+                                <h2 class="sponsor-tier-title" data-en="{{ $sponsorGroups['government']['title']['en'] }}"
                                     data-ar="{{ $sponsorGroups['government']['title']['ar'] }}">
                                     {{ strtoupper($sponsorGroups['government']['title']['en']) }}
                                 </h2>
@@ -4182,12 +4180,12 @@ experience that unites ambitious minds and industry leaders under one roof"
                                     <div class="sponsor-tier-pair">
                                         @if($hasLeft)
                                             <div class="sponsor-tier">
-                                                <h2 class="sponsor-tier-title"
-                                                    data-en="{{ $leftGroup['title']['en'] }}"
+                                                <h2 class="sponsor-tier-title" data-en="{{ $leftGroup['title']['en'] }}"
                                                     data-ar="{{ $leftGroup['title']['ar'] }}">
                                                     {{ strtoupper($leftGroup['title']['en']) }}
                                                 </h2>
-                                                <div class="sponsor-tier-grid tier-marketing {{ $leftGroup['sponsors']->count() === 1 ? 'single-sponsor-grid' : '' }}">
+                                                <div
+                                                    class="sponsor-tier-grid tier-marketing {{ $leftGroup['sponsors']->count() === 1 ? 'single-sponsor-grid' : '' }}">
                                                     @foreach($leftGroup['sponsors'] as $sponsor)
                                                         <article class="sponsor-card sponsor-marketing" data-animate>
                                                             <div class="sponsor-logo">
@@ -4201,12 +4199,12 @@ experience that unites ambitious minds and industry leaders under one roof"
                                         @endif
                                         @if($hasRight)
                                             <div class="sponsor-tier">
-                                                <h2 class="sponsor-tier-title"
-                                                    data-en="{{ $rightGroup['title']['en'] }}"
+                                                <h2 class="sponsor-tier-title" data-en="{{ $rightGroup['title']['en'] }}"
                                                     data-ar="{{ $rightGroup['title']['ar'] }}">
                                                     {{ strtoupper($rightGroup['title']['en']) }}
                                                 </h2>
-                                                <div class="sponsor-tier-grid tier-marketing {{ $rightGroup['sponsors']->count() === 1 ? 'single-sponsor-grid' : '' }}">
+                                                <div
+                                                    class="sponsor-tier-grid tier-marketing {{ $rightGroup['sponsors']->count() === 1 ? 'single-sponsor-grid' : '' }}">
                                                     @foreach($rightGroup['sponsors'] as $sponsor)
                                                         <article class="sponsor-card sponsor-marketing" data-animate>
                                                             <div class="sponsor-logo">
@@ -4226,8 +4224,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                         <!-- GOLD -->
                         @if(!empty($sponsorGroups['gold']) && $sponsorGroups['gold']['sponsors']->isNotEmpty())
                             <div class="sponsor-tier">
-                                <h2 class="sponsor-tier-title"
-                                    data-en="{{ $sponsorGroups['gold']['title']['en'] }}"
+                                <h2 class="sponsor-tier-title" data-en="{{ $sponsorGroups['gold']['title']['en'] }}"
                                     data-ar="{{ $sponsorGroups['gold']['title']['ar'] }}">
                                     {{ strtoupper($sponsorGroups['gold']['title']['en']) }}
                                 </h2>
@@ -4247,8 +4244,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                         <!-- OTHER SPONSORS -->
                         @if(!empty($sponsorGroups['other']) && $sponsorGroups['other']['sponsors']->isNotEmpty())
                             <div class="sponsor-tier">
-                                <h2 class="sponsor-tier-title"
-                                    data-en="{{ $sponsorGroups['other']['title']['en'] }}"
+                                <h2 class="sponsor-tier-title" data-en="{{ $sponsorGroups['other']['title']['en'] }}"
                                     data-ar="{{ $sponsorGroups['other']['title']['ar'] }}">
                                     {{ strtoupper($sponsorGroups['other']['title']['en']) }}
                                 </h2>
@@ -4445,7 +4441,8 @@ experience that unites ambitious minds and industry leaders under one roof"
                                                 <div class="contact-info-column">
                                                     <a href="tel:+966546608557" class="contact-info-link"><img
                                                             class="icon icon-lg"
-                                                            src="{{ asset('img/svg/telephone.svg') }}"> <span class="ltr-text">&#x200E;+966546608557</span>
+                                                            src="{{ asset('img/svg/telephone.svg') }}"> <span
+                                                            class="ltr-text">&#x200E;+966546608557</span>
                                                     </a>
                                                 </div>
                                             </div>
@@ -5432,17 +5429,17 @@ experience that unites ambitious minds and industry leaders under one roof"
         function equalizeGoalCards() {
             const cards = document.querySelectorAll('.goal-card');
             if (!cards.length) return;
-            
+
             // Reset height to auto to calculate correct scrollHeight
             cards.forEach(card => card.style.minHeight = 'auto');
-            
+
             let maxHeight = 0;
             cards.forEach(card => {
                 if (card.offsetHeight > maxHeight) {
                     maxHeight = card.offsetHeight;
                 }
             });
-            
+
             cards.forEach(card => card.style.minHeight = maxHeight + 'px');
         }
 

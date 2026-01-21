@@ -4,12 +4,15 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{{ app()->getLocale() === 'ar' ? 'النسخ السابقة من المعرض' : 'Previous Editions of IEC' }} - IEC 360 EXPO</title>
-    <meta name="description" content="{{ app()->getLocale() === 'ar' ? 'شاهد النسخ السابقة من معرض IEC' : 'Watch previous editions of IEC Expo' }}">
+    <title>{{ app()->getLocale() === 'ar' ? 'النسخ السابقة من المعرض' : 'Previous Editions of IEC' }} - IEC 360 EXPO
+    </title>
+    <meta name="description"
+        content="{{ app()->getLocale() === 'ar' ? 'شاهد النسخ السابقة من معرض IEC' : 'Watch previous editions of IEC Expo' }}">
 
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="IEC 360 EXPO">
-    <meta property="og:title" content="{{ app()->getLocale() === 'ar' ? 'النسخ السابقة من المعرض' : 'Previous Editions of IEC' }}">
+    <meta property="og:title"
+        content="{{ app()->getLocale() === 'ar' ? 'النسخ السابقة من المعرض' : 'Previous Editions of IEC' }}">
     <meta property="og:url" content="{{ url()->current() }}">
     <meta property="og:image" content="{{ asset('img/IEC-logo-nav.png') }}">
 
@@ -312,7 +315,8 @@
 
         .video-wrapper {
             position: relative;
-            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            padding-bottom: 56.25%;
+            /* 16:9 aspect ratio */
             height: 0;
             overflow: hidden;
             border-radius: calc(var(--radius) - 4px);
@@ -391,7 +395,8 @@
         .carousel-control i {
             font-size: 1.2rem;
         }
-/* 
+
+        /* 
         .sponsor-carousel::before,
         .sponsor-carousel::after {
             content: "";
@@ -594,29 +599,32 @@
                     <img src="{{ asset('./img/IEC-logo-nav.png') }}" alt="IEC Logo" class="nav-logo" />
                 </a>
                 <nav class="nav">
-                    <a href="{{ route('public.landing', ['locale' => $locale]) }}#hero" class="nav-link" 
-                       data-en="Home" data-ar="الرئيسية">{{ $locale === 'ar' ? 'الرئيسية' : 'Home' }}</a>
+                    <a href="{{ route('public.landing', ['locale' => $locale]) }}#hero" class="nav-link" data-en="Home"
+                        data-ar="الرئيسية">{{ $locale === 'ar' ? 'الرئيسية' : 'Home' }}</a>
                     <a href="{{ route('public.ed', ['locale' => $locale]) }}" class="btn-primary nav-link"
-                       data-en="Previous Editions of IEC" data-ar="النسخ السابقة من المعرض">{{ $locale === 'ar' ? 'النسخ السابقة من المعرض' : 'Previous Editions of IEC' }}</a>
+                        data-en="Previous Editions of IEC"
+                        data-ar="النسخ السابقة من المعرض">{{ $locale === 'ar' ? 'النسخ السابقة من المعرض' : 'Previous Editions of IEC' }}</a>
                     <a href="{{ route('public.landing', ['locale' => $locale]) }}#register" class="nav-link"
-                       data-en="Register" data-ar="التسجيل">{{ $locale === 'ar' ? 'التسجيل' : 'Register' }}</a>
-                    <a href="{{ route('public.landing', ['locale' => $locale]) }}#about" class="nav-link" 
-                       data-en="About" data-ar="عن المعرض">{{ $locale === 'ar' ? 'عن المعرض' : 'About' }}</a>
-                    <a href="{{ route('public.landing', ['locale' => $locale]) }}#sponsors" class="nav-link" 
-                       data-en="Sponsor" data-ar="الراعي">{{ $locale === 'ar' ? 'الراعي' : 'Sponsor' }}</a>
-                    <a href="{{ route('public.landing', ['locale' => $locale]) }}#participants" class="nav-link" 
-                       data-en="Icons" data-ar="الأيكون">{{ $locale === 'ar' ? 'الأيكون' : 'Icon' }}</a>
-                    <a href="{{ route('public.landing', ['locale' => $locale]) }}#organizers" class="nav-link" 
-                       data-en="Owned by" data-ar="الشركة المالكة">{{ $locale === 'ar' ? 'الشركة المالكة' : 'Owned by' }}</a>
-                    <a href="{{ route('public.landing', ['locale' => $locale]) }}#contact" class="nav-link" 
-                       data-en="Contact" data-ar="تواصل معنا">{{ $locale === 'ar' ? 'تواصل معنا' : 'Contact' }}</a>
+                        data-en="Register" data-ar="التسجيل">{{ $locale === 'ar' ? 'التسجيل' : 'Register' }}</a>
+                    <a href="{{ route('public.landing', ['locale' => $locale]) }}#about" class="nav-link"
+                        data-en="About" data-ar="عن المعرض">{{ $locale === 'ar' ? 'عن المعرض' : 'About' }}</a>
+                    <a href="{{ route('public.landing', ['locale' => $locale]) }}#sponsors" class="nav-link"
+                        data-en="Sponsor" data-ar="الراعي">{{ $locale === 'ar' ? 'الراعي' : 'Sponsor' }}</a>
+                    <a href="{{ route('public.landing', ['locale' => $locale]) }}#participants" class="nav-link"
+                        data-en="Icons" data-ar="الأيكون">{{ $locale === 'ar' ? 'الأيكون' : 'Icon' }}</a>
+                    <a href="{{ route('public.landing', ['locale' => $locale]) }}#organizers" class="nav-link"
+                        data-en="Owned by"
+                        data-ar="الشركة المالكة">{{ $locale === 'ar' ? 'الشركة المالكة' : 'Owned by' }}</a>
+                    <a href="{{ route('public.landing', ['locale' => $locale]) }}#contact" class="nav-link"
+                        data-en="Contact" data-ar="تواصل معنا">{{ $locale === 'ar' ? 'تواصل معنا' : 'Contact' }}</a>
                 </nav>
                 <div class="header-right">
                     <div class="header-actions">
                         <button class="lang-switch" onclick="toggleLocale()">
                             <svg class="icon icon-sm" viewBox="0 0 24 24">
                                 <circle cx="12" cy="12" r="10" />
-                                <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
+                                <path
+                                    d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
                             </svg>
                             <span id="lang-text">{{ $locale === 'ar' ? 'English' : 'العربية' }}</span>
                         </button>
@@ -632,14 +640,22 @@
                 </div>
             </div>
             <nav class="mobile-nav" id="mobile-nav">
-                <a href="{{ route('public.landing', ['locale' => $locale]) }}#hero" class="mobile-nav-link">{{ $locale === 'ar' ? 'الرئيسية' : 'Home' }}</a>
-                <a href="{{ route('public.ed', ['locale' => $locale]) }}" class="mobile-nav-link">{{ $locale === 'ar' ? 'النسخ السابقة من المعرض' : 'Previous Editions of IEC' }}</a>
-                <a href="{{ route('public.landing', ['locale' => $locale]) }}#register" class="mobile-nav-link">{{ $locale === 'ar' ? 'التسجيل' : 'Register' }}</a>
-                <a href="{{ route('public.landing', ['locale' => $locale]) }}#about" class="mobile-nav-link">{{ $locale === 'ar' ? 'عن المعرض' : 'About' }}</a>
-                <a href="{{ route('public.landing', ['locale' => $locale]) }}#sponsors" class="mobile-nav-link">{{ $locale === 'ar' ? 'الراعي' : 'Sponsor' }}</a>
-                <a href="{{ route('public.landing', ['locale' => $locale]) }}#participants" class="mobile-nav-link">{{ $locale === 'ar' ? 'الأيكون' : 'Icon' }}</a>
-                <a href="{{ route('public.landing', ['locale' => $locale]) }}#organizers" class="mobile-nav-link">{{ $locale === 'ar' ? 'الشركة المالكة' : 'Owned by' }}</a>
-                <a href="{{ route('public.landing', ['locale' => $locale]) }}#contact" class="mobile-nav-link">{{ $locale === 'ar' ? 'تواصل معنا' : 'Contact' }}</a>
+                <a href="{{ route('public.landing', ['locale' => $locale]) }}#hero"
+                    class="mobile-nav-link">{{ $locale === 'ar' ? 'الرئيسية' : 'Home' }}</a>
+                <a href="{{ route('public.ed', ['locale' => $locale]) }}"
+                    class="mobile-nav-link">{{ $locale === 'ar' ? 'النسخ السابقة من المعرض' : 'Previous Editions of IEC' }}</a>
+                <a href="{{ route('public.landing', ['locale' => $locale]) }}#register"
+                    class="mobile-nav-link">{{ $locale === 'ar' ? 'التسجيل' : 'Register' }}</a>
+                <a href="{{ route('public.landing', ['locale' => $locale]) }}#about"
+                    class="mobile-nav-link">{{ $locale === 'ar' ? 'عن المعرض' : 'About' }}</a>
+                <a href="{{ route('public.landing', ['locale' => $locale]) }}#sponsors"
+                    class="mobile-nav-link">{{ $locale === 'ar' ? 'الراعي' : 'Sponsor' }}</a>
+                <a href="{{ route('public.landing', ['locale' => $locale]) }}#participants"
+                    class="mobile-nav-link">{{ $locale === 'ar' ? 'الأيكون' : 'Icon' }}</a>
+                <a href="{{ route('public.landing', ['locale' => $locale]) }}#organizers"
+                    class="mobile-nav-link">{{ $locale === 'ar' ? 'الشركة المالكة' : 'Owned by' }}</a>
+                <a href="{{ route('public.landing', ['locale' => $locale]) }}#contact"
+                    class="mobile-nav-link">{{ $locale === 'ar' ? 'تواصل معنا' : 'Contact' }}</a>
             </nav>
         </div>
     </header>
@@ -649,7 +665,7 @@
             <h1 class="page-title" data-en="Previous Editions of IEC" data-ar="النسخ السابقة من المعرض">
                 {{ $locale === 'ar' ? 'النسخ السابقة من المعرض' : 'Previous Editions of IEC' }}
             </h1>
-
+            <!-- Videos -->
             <section class="videos-section">
                 <div class="videos-grid">
                     <!-- IEC-1 Video -->
@@ -658,10 +674,10 @@
                             {{ $locale === 'ar' ? 'IEC-1' : 'IEC-1' }}
                         </h2>
                         <div class="video-wrapper">
-                            <iframe 
-                                src="https://www.youtube.com/embed/viNQUdsQdHc?list=PL-CMva54bKaHWAKjyPnRTbrC6Fski3_B8&index=2" 
+                            <iframe
+                                src="https://www.youtube.com/embed/viNQUdsQdHc?list=PL-CMva54bKaHWAKjyPnRTbrC6Fski3_B8&index=2"
                                 title="IEC-1 Video"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                 allowfullscreen>
                             </iframe>
                         </div>
@@ -673,10 +689,10 @@
                             {{ $locale === 'ar' ? 'IEC-2' : 'IEC-2' }}
                         </h2>
                         <div class="video-wrapper">
-                            <iframe 
-                                src="https://www.youtube.com/embed/ZmpZq2n_C3M?list=PL-CMva54bKaFlD3JWQq8cgfyRmE6mjhSq&index=1" 
+                            <iframe
+                                src="https://www.youtube.com/embed/ZmpZq2n_C3M?list=PL-CMva54bKaFlD3JWQq8cgfyRmE6mjhSq&index=1"
                                 title="IEC-2 Video"
-                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                 allowfullscreen>
                             </iframe>
                         </div>
@@ -689,7 +705,8 @@
                     {{ $locale === 'ar' ? 'Sponsors' : 'Sponsors' }}
                 </h2>
                 <div class="sponsor-carousel" id="sponsors-carousel">
-                    <button class="carousel-control carousel-control-prev" onclick="scrollCarousel('sponsors-carousel', 'left')">
+                    <button class="carousel-control carousel-control-prev"
+                        onclick="scrollCarousel('sponsors-carousel', 'left')">
                         <i class="fas fa-chevron-left"></i>
                     </button>
                     <div class="sponsor-track">
@@ -724,9 +741,6 @@
                             <div class="sponsor-item">
                                 <img src="{{ asset('img/exsponsor/10.png') }}" alt="Sponsor Placeholder">
                             </div>
-                        </div>
-                        <!-- Duplicate set for seamless scrolling -->
-                        <div class="sponsor-set">
                             <div class="sponsor-item">
                                 <img src="{{ asset('img/exsponsor/1.jpeg') }}" alt="IEC 360 Expo">
                             </div>
@@ -759,96 +773,99 @@
                             </div>
                         </div>
                     </div>
-                    <button class="carousel-control carousel-control-next" onclick="scrollCarousel('sponsors-carousel', 'right')">
+                    <button class="carousel-control carousel-control-next"
+                        onclick="scrollCarousel('sponsors-carousel', 'right')">
                         <i class="fas fa-chevron-right"></i>
                     </button>
                 </div>
             </section>
 
 
-              <section class="sponsors-section" aria-labelledby="sponsors-title">
+            <section class="sponsors-section" aria-labelledby="sponsors-title">
                 <h2 class="section-title" id="sponsors-title" data-en="ICONS" data-ar="الأيكونز">
                     {{ $locale === 'ar' ? 'ICONS' : 'ICONS' }}
                 </h2>
                 <div class="sponsor-carousel" id="icons-carousel">
-                    <button class="carousel-control carousel-control-prev" onclick="scrollCarousel('icons-carousel', 'left')">
+                    <button class="carousel-control carousel-control-prev"
+                        onclick="scrollCarousel('icons-carousel', 'left')">
                         <i class="fas fa-chevron-left"></i>
                     </button>
                     <div class="sponsor-track">
                         <div class="sponsor-set">
-                           
+
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/11.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/11.png') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/12.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/12.png') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/13.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/13.png') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/14.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/14.png') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/15.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/15.png') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/16.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/16.png') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/17.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/17.png') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/18.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/18.png') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/19.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/19.png') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/20.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/20.png') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/21.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/21.png') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/22.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/22.png') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/23.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/23.png') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/24.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/24.png') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/25.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/25.png') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/26.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/26.png') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/27.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/27.png') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/28.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/28.png') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/29.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/29.png') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/30.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/30.png') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/31.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/31.png') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/32.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/32.png') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/33.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/33.png') }}" alt="Sponsor Placeholder">
                             </div>
                         </div>
                     </div>
-                    <button class="carousel-control carousel-control-next" onclick="scrollCarousel('icons-carousel', 'right')">
+                    <button class="carousel-control carousel-control-next"
+                        onclick="scrollCarousel('icons-carousel', 'right')">
                         <i class="fas fa-chevron-right"></i>
                     </button>
                 </div>
@@ -863,7 +880,8 @@
                 <div class="footer-text">
                     <span data-en="IEC 360&deg; EXPO" data-ar="IEC 360&deg; EXPO">IEC 360&deg; EXPO</span>
                 </div>
-                <div class="footer-text" data-en="All rights reserved ©️ Business Umbrella Company" data-ar="جميع الحقوق محفوظة ©️ شركة مظلة الأعمال.">
+                <div class="footer-text" data-en="All rights reserved ©️ Business Umbrella Company"
+                    data-ar="جميع الحقوق محفوظة ©️ شركة مظلة الأعمال.">
                     {{ $locale === 'ar' ? 'جميع الحقوق محفوظة ©️ شركة مظلة الأعمال.' : 'All rights reserved ©️ Business Umbrella Company' }}
                 </div>
             </div>
@@ -904,7 +922,7 @@
             const carousel = document.getElementById(carouselId);
             const track = carousel.querySelector('.sponsor-track');
             const item = track.querySelector('.sponsor-item');
-            
+
             if (!item) return;
 
             // Calculate one step (item width + gap)
@@ -912,18 +930,18 @@
             const style = window.getComputedStyle(track.querySelector('.sponsor-set'));
             const gap = parseFloat(style.gap) || 24;
             const scrollAmount = item.offsetWidth + gap;
-            
+
             // Get current offset from CSS variable
             let currentOffset = parseFloat(getComputedStyle(track).getPropertyValue('--offset')) || 0;
-            
+
             // Calculate new offset
             // In LTR, 'left' means moving content to the right (positive offset)
             // 'right' means moving content to the left (negative offset)
             let newOffset = direction === 'left' ? currentOffset + scrollAmount : currentOffset - scrollAmount;
-            
+
             // Apply new offset to CSS variable
             track.style.setProperty('--offset', newOffset + 'px');
-            
+
             // Brief visual feedback if not hovering
             if (!carousel.matches(':hover')) {
                 track.style.animationPlayState = 'paused';
