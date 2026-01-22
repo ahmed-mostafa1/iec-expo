@@ -787,9 +787,6 @@
                     </button>
                     <div class="sponsor-track">
                         <div class="sponsor-set">
-                            <!-- <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/1.png') }}" alt="IEC 360 Expo">
-                            </div> -->
                             <div class="sponsor-item">
                                 <img src="{{ asset('img/exsponsor/2.png') }}" alt="IEC Logo">
                             </div>
