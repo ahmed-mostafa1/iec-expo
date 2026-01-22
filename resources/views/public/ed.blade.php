@@ -793,39 +793,18 @@
                             <div class="sponsor-item">
                                 <img src="{{ asset('img/exsponsor/2.png') }}" alt="IEC Logo">
                             </div>
-                            <!-- <div class="sponsor-item"> 
-                                <img src="{{ asset('img/exsponsor/3.png') }}" alt="Business Umbrella">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/4.png') }}" alt="Authority">
-                            </div> -->
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/5.png') }}" alt="The Arena">
-                            </div>
                             <div class="sponsor-item">
                                 <img src="{{ asset('img/exsponsor/6.png') }}" alt="Sponsor Placeholder">
                             </div>
-                            <!-- <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/7.png') }}" alt="Sponsor Placeholder">
-                            </div> -->
                             <div class="sponsor-item">
                                 <img src="{{ asset('img/exsponsor/8.png') }}" alt="Sponsor Placeholder">
                             </div>
-                            <!-- <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/9.png') }}" alt="Sponsor Placeholder">
-                            </div> -->
                             <div class="sponsor-item">
                                 <img src="{{ asset('img/exsponsor/10.png') }}" alt="Sponsor Placeholder">
                             </div>
-                            <!-- <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/11.png') }}" alt="IEC 360 Expo">
-                            </div> -->
                             <div class="sponsor-item">
                                 <img src="{{ asset('img/exsponsor/12.png') }}" alt="IEC Logo">
                             </div>
-                            <!-- <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/13.png') }}" alt="Business Umbrella">
-                            </div> -->
                             <div class="sponsor-item">
                                 <img src="{{ asset('img/exsponsor/15.png') }}" alt="The Arena">
                             </div>
@@ -849,12 +828,6 @@
                             </div>
                             <div class="sponsor-item">
                                 <img src="{{ asset('img/exsponsor/21.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <!-- <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/22.png') }}" alt="Sponsor Placeholder">
-                            </div> -->
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/23.png') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
                                 <img src="{{ asset('img/exsponsor/24.png') }}" alt="Sponsor Placeholder">
@@ -878,45 +851,21 @@
                                 <img src="{{ asset('img/exsponsor/30.png') }}" alt="Sponsor Placeholder">
                             </div>
                             <!-- Duplicate Slider Items -->
-                              <!-- <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/1.png') }}" alt="IEC 360 Expo">
-                            </div> -->
                             <div class="sponsor-item">
                                 <img src="{{ asset('img/exsponsor/2.png') }}" alt="IEC Logo">
-                            </div>
-                            <!-- <div class="sponsor-item"> 
-                                <img src="{{ asset('img/exsponsor/3.png') }}" alt="Business Umbrella">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/4.png') }}" alt="Authority">
-                            </div> -->
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/5.png') }}" alt="The Arena">
                             </div>
                             <div class="sponsor-item">
                                 <img src="{{ asset('img/exsponsor/6.png') }}" alt="Sponsor Placeholder">
                             </div>
-                            <!-- <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/7.png') }}" alt="Sponsor Placeholder">
-                            </div> -->
                             <div class="sponsor-item">
                                 <img src="{{ asset('img/exsponsor/8.png') }}" alt="Sponsor Placeholder">
                             </div>
-                            <!-- <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/9.png') }}" alt="Sponsor Placeholder">
-                            </div> -->
                             <div class="sponsor-item">
                                 <img src="{{ asset('img/exsponsor/10.png') }}" alt="Sponsor Placeholder">
                             </div>
-                            <!-- <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/11.png') }}" alt="IEC 360 Expo">
-                            </div> -->
                             <div class="sponsor-item">
                                 <img src="{{ asset('img/exsponsor/12.png') }}" alt="IEC Logo">
                             </div>
-                            <!-- <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/13.png') }}" alt="Business Umbrella">
-                            </div> -->
                             <div class="sponsor-item">
                                 <img src="{{ asset('img/exsponsor/15.png') }}" alt="The Arena">
                             </div>
@@ -926,48 +875,6 @@
                             <div class="sponsor-item">
                                 <img src="{{ asset('img/exsponsor/17.png') }}" alt="Sponsor Placeholder">
                              </div>
-                            <!-- <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/14.png') }}" alt="Authority">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/18.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/19.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/20.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/21.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/22.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/23.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/24.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/25.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/26.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/27.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/28.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/29.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/30.png') }}" alt="Sponsor Placeholder">
-                            </div> -->
                             <!-- end of duplicate -->
                         </div>
                     </div>
