@@ -22,381 +22,381 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 
     <style>
-        @font-face {
-            font-family: 'Somar Sans';
-            font-style: normal;
-            font-weight: 400;
-            src: url('https://fonts.cdnfonts.com/s/90887/SomarSans-Regular.woff') format('woff');
-        }
+    @font-face {
+        font-family: 'Somar Sans';
+        font-style: normal;
+        font-weight: 400;
+        src: url('https://fonts.cdnfonts.com/s/90887/SomarSans-Regular.woff') format('woff');
+    }
 
-        @font-face {
-            font-family: 'Somar Sans';
-            font-style: normal;
-            font-weight: 500;
-            src: url('https://fonts.cdnfonts.com/s/90887/SomarSans-Medium.woff') format('woff');
-        }
+    @font-face {
+        font-family: 'Somar Sans';
+        font-style: normal;
+        font-weight: 500;
+        src: url('https://fonts.cdnfonts.com/s/90887/SomarSans-Medium.woff') format('woff');
+    }
 
-        @font-face {
-            font-family: 'Somar Sans';
-            font-style: normal;
-            font-weight: 600;
-            src: url('https://fonts.cdnfonts.com/s/90887/SomarSans-SemiBold.woff') format('woff');
-        }
+    @font-face {
+        font-family: 'Somar Sans';
+        font-style: normal;
+        font-weight: 600;
+        src: url('https://fonts.cdnfonts.com/s/90887/SomarSans-SemiBold.woff') format('woff');
+    }
 
-        @font-face {
-            font-family: 'Somar Sans';
-            font-style: normal;
-            font-weight: 700;
-            src: url('https://fonts.cdnfonts.com/s/90887/SomarSans-Bold.woff') format('woff');
-        }
+    @font-face {
+        font-family: 'Somar Sans';
+        font-style: normal;
+        font-weight: 700;
+        src: url('https://fonts.cdnfonts.com/s/90887/SomarSans-Bold.woff') format('woff');
+    }
 
-        :root {
-            --primary-color: rgba(96, 36, 193, 1);
-            --secondary-color: #6024c1;
-            --accent-color: #6024c1;
-            --dark-color: #1a1a1a;
-            --light-color: #f8f9fa;
-            --text-color: #333;
-            --text-light: #666;
-            --border-radius: 12px;
-            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            --background: 0 0 0;
-            --foreground: 248 248 248;
-            --card: 18 18 18;
-            --card-foreground: 248 248 248;
-            --primary: 152, 3, 189, 1;
-            --primary-foreground: 251 251 248;
-            --secondary: 226 233 226;
-            --secondary-foreground: 69 84 69;
-            --muted: 20 20 20;
-            --muted-foreground: 248 248 248;
-            --accent: 28 28 28;
-            --accent-foreground: 248 248 248;
-            --border: 152, 3, 189, 1;
-            --ring: 51 153 88;
-            --radius: 0.75rem;
-            --chart-1: #9803bd;
-            --button-bg: #9803bd;
-            --button-hover-bg: rgba(96, 36, 193, 1);
-            --button-text: #ffffff;
-            --hover-accent: #ffffff;
-            --font-en: 'Poppins', sans-serif;
-            --font-ar: 'Somar Sans', sans-serif;
-        }
+    :root {
+        --primary-color: rgba(96, 36, 193, 1);
+        --secondary-color: #6024c1;
+        --accent-color: #6024c1;
+        --dark-color: #1a1a1a;
+        --light-color: #f8f9fa;
+        --text-color: #333;
+        --text-light: #666;
+        --border-radius: 12px;
+        --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        --background: 0 0 0;
+        --foreground: 248 248 248;
+        --card: 18 18 18;
+        --card-foreground: 248 248 248;
+        --primary: 152, 3, 189, 1;
+        --primary-foreground: 251 251 248;
+        --secondary: 226 233 226;
+        --secondary-foreground: 69 84 69;
+        --muted: 20 20 20;
+        --muted-foreground: 248 248 248;
+        --accent: 28 28 28;
+        --accent-foreground: 248 248 248;
+        --border: 152, 3, 189, 1;
+        --ring: 51 153 88;
+        --radius: 0.75rem;
+        --chart-1: #9803bd;
+        --button-bg: #9803bd;
+        --button-hover-bg: rgba(96, 36, 193, 1);
+        --button-text: #ffffff;
+        --hover-accent: #ffffff;
+        --font-en: 'Poppins', sans-serif;
+        --font-ar: 'Somar Sans', sans-serif;
+    }
 
-        body.locale-en {
-            --font-base: var(--font-en);
-        }
+    body.locale-en {
+        --font-base: var(--font-en);
+    }
 
-        body.locale-ar {
-            --font-base: var(--font-ar);
-        }
+    body.locale-ar {
+        --font-base: var(--font-ar);
+    }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
 
-        body {
-            --font-base: var(--font-en);
-            font-family: var(--font-base);
-            background: linear-gradient(to bottom, #000000 0%, #0f0520 50%, #1a0a2e 100%);
-            background-attachment: fixed;
-            color: rgb(var(--foreground));
-            line-height: 1.6;
-            padding-top: 64px;
-        }
+    body {
+        --font-base: var(--font-en);
+        font-family: var(--font-base);
+        background: linear-gradient(to bottom, #000000 0%, #0f0520 50%, #1a0a2e 100%);
+        background-attachment: fixed;
+        color: rgb(var(--foreground));
+        line-height: 1.6;
+        padding-top: 64px;
+    }
 
-        body.locale-ar {
-            --font-base: var(--font-ar);
-        }
+    body.locale-ar {
+        --font-base: var(--font-ar);
+    }
 
-        html {
-            scroll-behavior: smooth;
-        }
+    html {
+        scroll-behavior: smooth;
+    }
 
-        .container {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 0 1rem;
-        }
+    .container {
+        max-width: 1280px;
+        margin: 0 auto;
+        padding: 0 1rem;
+    }
 
-        /* Header */
-        .header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 9999;
-            background: #000;
-            backdrop-filter: blur(12px);
-        }
+    /* Header */
+    .header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 9999;
+        background: #000;
+        backdrop-filter: blur(12px);
+    }
 
-        .header-inner {
-            display: grid;
-            grid-template-columns: auto 1fr auto;
-            align-items: center;
-            height: 64px;
-            gap: 1rem;
-        }
+    .header-inner {
+        display: grid;
+        grid-template-columns: auto 1fr auto;
+        align-items: center;
+        height: 64px;
+        gap: 1rem;
+    }
 
-        .nav {
-            display: none;
-            align-items: center;
-            gap: 1rem;
-            justify-self: center;
-        }
+    .nav {
+        display: none;
+        align-items: center;
+        gap: 1rem;
+        justify-self: center;
+    }
 
-        .nav-link {
-            text-decoration: none;
-            position: relative;
-            transition: color 0.4s ease;
-            color: #fff;
-            font-weight: 600;
-            text-transform: uppercase;
-            display: inline-flex;
-            align-items: center;
+    .nav-link {
+        text-decoration: none;
+        position: relative;
+        transition: color 0.4s ease;
+        color: #fff;
+        font-weight: 600;
+        text-transform: uppercase;
+        display: inline-flex;
+        align-items: center;
+        opacity: 0;
+        transform: translateY(-12px);
+        animation: navLinkFade 0.6s ease forwards;
+    }
+
+    .nav-link:hover {
+        color: #9803bde1;
+    }
+
+    .nav-link::before {
+        content: "";
+        position: absolute;
+        width: 0;
+        height: 4px;
+        bottom: 0;
+        left: 50%;
+        background-color: #9803bde1;
+        transition: all 0.4s;
+    }
+
+    .nav-link:hover::before {
+        width: 100%;
+        left: 0;
+    }
+
+    @keyframes navLinkFade {
+        from {
             opacity: 0;
             transform: translateY(-12px);
-            animation: navLinkFade 0.6s ease forwards;
         }
 
-        .nav-link:hover {
-            color: #9803bde1;
+        to {
+            opacity: 1;
+            transform: translateY(0);
         }
+    }
 
-        .nav-link::before {
-            content: "";
-            position: absolute;
-            width: 0;
-            height: 4px;
-            bottom: 0;
-            left: 50%;
-            background-color: #9803bde1;
-            transition: all 0.4s;
-        }
+    .nav-logo {
+        height: 80px;
+    }
 
-        .nav-link:hover::before {
-            width: 100%;
-            left: 0;
-        }
+    .nav-logo-bu {
+        height: 60px;
+    }
 
-        @keyframes navLinkFade {
-            from {
-                opacity: 0;
-                transform: translateY(-12px);
-            }
+    .header-right {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        justify-content: flex-end;
+    }
 
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
+    .header-actions {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
 
-        .nav-logo {
-            height: 80px;
-        }
+    .lang-switch {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.875rem;
+        font-weight: 500;
+        color: #fff;
+        background: none;
+        border: none;
+        cursor: pointer;
+        transition: color 0.2s;
+        font-family: var(--font-base);
+    }
 
-        .nav-logo-bu {
-            height: 60px;
-        }
+    .lang-switch:hover {
+        color: #9873AC;
+    }
 
-        .header-right {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            justify-content: flex-end;
-        }
+    .mobile-menu-btn {
+        display: none;
+        padding: 0.5rem;
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
 
-        .header-actions {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
+    .mobile-nav {
+        display: none;
+        padding: 1rem 0;
+        border-top: 1px solid rgb(var(--border));
+    }
 
-        .lang-switch {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-            font-size: 0.875rem;
-            font-weight: 500;
-            color: #fff;
-            background: none;
-            border: none;
-            cursor: pointer;
-            transition: color 0.2s;
-            font-family: var(--font-base);
-        }
+    .mobile-nav.active {
+        display: block;
+    }
 
-        .lang-switch:hover {
-            color: #9873AC;
-        }
+    .mobile-nav-link {
+        display: block;
+        padding: 0.75rem 0;
+        color: rgb(var(--foreground) / 0.8);
+        text-decoration: none;
+        font-weight: 500;
+    }
 
-        .mobile-menu-btn {
-            display: none;
-            padding: 0.5rem;
-            background: none;
-            border: none;
-            cursor: pointer;
-        }
+    /* Main Content */
+    .page-title {
+        text-align: center;
+        font-size: 2.5rem;
+        font-weight: 800;
+        margin: 3rem 0 1rem;
+        background: linear-gradient(135deg, #9803bd, #6024c1);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
 
-        .mobile-nav {
-            display: none;
-            padding: 1rem 0;
-            border-top: 1px solid rgb(var(--border));
-        }
+    .page-subtitle {
+        text-align: center;
+        color: rgb(var(--muted-foreground));
+        margin-bottom: 3rem;
+        font-size: 1.1rem;
+    }
 
-        .mobile-nav.active {
-            display: block;
-        }
+    .videos-section {
+        padding: 2rem 0 4rem;
+    }
 
-        .mobile-nav-link {
-            display: block;
-            padding: 0.75rem 0;
-            color: rgb(var(--foreground) / 0.8);
-            text-decoration: none;
-            font-weight: 500;
-        }
+    .videos-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 3rem;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
 
-        /* Main Content */
-        .page-title {
-            text-align: center;
-            font-size: 2.5rem;
-            font-weight: 800;
-            margin: 3rem 0 1rem;
-            background: linear-gradient(135deg, #9803bd, #6024c1);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
+    .video-card {
+        background: rgb(var(--card));
+        border: 1px solid rgba(152, 3, 189, 0.3);
+        border-radius: var(--radius);
+        padding: 1.5rem;
+        transition: all 0.3s ease;
+        box-shadow: 0 20px 50px -28px rgba(0, 0, 0, 0.75);
+    }
 
-        .page-subtitle {
-            text-align: center;
-            color: rgb(var(--muted-foreground));
-            margin-bottom: 3rem;
-            font-size: 1.1rem;
-        }
+    .video-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 30px 60px -28px rgba(152, 3, 189, 0.4);
+        border-color: rgba(152, 3, 189, 0.6);
+    }
 
-        .videos-section {
-            padding: 2rem 0 4rem;
-        }
+    .video-title {
+        font-size: 1.5rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        color: #fff;
+        text-align: center;
+    }
 
-        .videos-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 3rem;
-            max-width: 1200px;
-            margin: 0 auto;
-        }
+    .video-wrapper {
+        position: relative;
+        padding-bottom: 56.25%;
+        /* 16:9 aspect ratio */
+        height: 0;
+        overflow: hidden;
+        border-radius: calc(var(--radius) - 4px);
+        background: #000;
+    }
 
-        .video-card {
-            background: rgb(var(--card));
-            border: 1px solid rgba(152, 3, 189, 0.3);
-            border-radius: var(--radius);
-            padding: 1.5rem;
-            transition: all 0.3s ease;
-            box-shadow: 0 20px 50px -28px rgba(0, 0, 0, 0.75);
-        }
+    .video-wrapper iframe {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border: none;
+    }
 
-        .video-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 30px 60px -28px rgba(152, 3, 189, 0.4);
-            border-color: rgba(152, 3, 189, 0.6);
-        }
+    .sponsors-section {
+        padding: 0 0 5rem;
+    }
 
-        .video-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            color: #fff;
-            text-align: center;
-        }
+    .section-title {
+        text-align: center;
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 2rem;
+        background: linear-gradient(135deg, #ffffff, #b187ff);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+    }
 
-        .video-wrapper {
-            position: relative;
-            padding-bottom: 56.25%;
-            /* 16:9 aspect ratio */
-            height: 0;
-            overflow: hidden;
-            border-radius: calc(var(--radius) - 4px);
-            background: #000;
-        }
+    .sponsor-carousel {
+        position: relative;
+        overflow: hidden;
+        padding: 1.75rem 0;
+        border-radius: calc(var(--radius) + 4px);
+        border: 1px solid rgba(152, 3, 189, 0.3);
+        background: linear-gradient(120deg, rgba(12, 12, 24, 0.85), rgba(18, 6, 34, 0.85));
+        box-shadow: 0 25px 60px -40px rgba(152, 3, 189, 0.5);
+        /* --sponsor-item-height: 110px; */
+        /* min-height: calc(var(--sponsor-item-height) + 3.5rem); */
+    }
 
-        .video-wrapper iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
+    .carousel-control {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        background: rgba(152, 3, 189, 0.8);
+        border: 1px solid rgba(152, 3, 189, 0.6);
+        color: #fff;
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        z-index: 10;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(8px);
+    }
 
-        .sponsors-section {
-            padding: 0 0 5rem;
-        }
+    .carousel-control:hover {
+        background: rgba(152, 3, 189, 1);
+        transform: translateY(-50%) scale(1.1);
+        box-shadow: 0 8px 20px rgba(152, 3, 189, 0.6);
+    }
 
-        .section-title {
-            text-align: center;
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 2rem;
-            background: linear-gradient(135deg, #ffffff, #b187ff);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
+    .carousel-control-prev {
+        left: 15px;
+    }
 
-        .sponsor-carousel {
-            position: relative;
-            overflow: hidden;
-            padding: 1.75rem 0;
-            border-radius: calc(var(--radius) + 4px);
-            border: 1px solid rgba(152, 3, 189, 0.3);
-            background: linear-gradient(120deg, rgba(12, 12, 24, 0.85), rgba(18, 6, 34, 0.85));
-            box-shadow: 0 25px 60px -40px rgba(152, 3, 189, 0.5);
-            /* --sponsor-item-height: 110px; */
-            /* min-height: calc(var(--sponsor-item-height) + 3.5rem); */
-        }
+    .carousel-control-next {
+        right: 15px;
+    }
 
-        .carousel-control {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: rgba(152, 3, 189, 0.8);
-            border: 1px solid rgba(152, 3, 189, 0.6);
-            color: #fff;
-            width: 45px;
-            height: 45px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            z-index: 10;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(8px);
-        }
+    .carousel-control i {
+        font-size: 1.2rem;
+    }
 
-        .carousel-control:hover {
-            background: rgba(152, 3, 189, 1);
-            transform: translateY(-50%) scale(1.1);
-            box-shadow: 0 8px 20px rgba(152, 3, 189, 0.6);
-        }
-
-        .carousel-control-prev {
-            left: 15px;
-        }
-
-        .carousel-control-next {
-            right: 15px;
-        }
-
-        .carousel-control i {
-            font-size: 1.2rem;
-        }
-
-        /* 
+    /* 
         .sponsor-carousel::before,
         .sponsor-carousel::after {
             content: "";
@@ -418,247 +418,247 @@
             background: linear-gradient(270deg, rgba(8, 8, 16, 0.9), rgba(8, 8, 16, 0));
         } */
 
-        .sponsor-track {
-            display: flex;
-            align-items: center;
-            width: max-content;
-            animation: sponsorScroll 10s linear infinite;
-            --offset: 0px;
+    .sponsor-track {
+        display: flex;
+        align-items: center;
+        width: max-content;
+        animation: sponsorScroll 10s linear infinite;
+        --offset: 0px;
+    }
+
+    #icons-carousel .sponsor-track {
+        animation-duration: 40s;
+    }
+
+    body.locale-ar .sponsor-track {
+        animation-direction: reverse;
+    }
+
+    body.locale-ar .sponsor-carousel {
+        direction: ltr;
+    }
+
+    .sponsor-carousel:hover .sponsor-track {
+        animation-play-state: paused;
+    }
+
+    .sponsor-set {
+        display: flex;
+        align-items: center;
+        gap: 1.5rem;
+        padding-right: 1.5rem;
+    }
+
+    .sponsor-item {
+        display: grid;
+        place-items: center;
+        width: 200px;
+        height: var(--sponsor-item-height);
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.04);
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .sponsor-item img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        border-radius: 8px;
+        /* filter: grayscale(1) brightness(1.05); */
+        transition: transform 0.3s ease, filter 0.3s ease;
+    }
+
+    .sponsor-item:hover {
+        transform: translateY(-6px);
+        border-color: rgba(152, 3, 189, 0.55);
+        box-shadow: 0 18px 35px -22px rgba(152, 3, 189, 0.6);
+    }
+
+    .sponsor-item:hover img {
+        /* filter: grayscale(0) brightness(1.1); */
+        transform: scale(1.06);
+    }
+
+    @keyframes sponsorScroll {
+        0% {
+            transform: translateX(var(--offset, 0px));
         }
 
-        #icons-carousel .sponsor-track {
-            animation-duration: 20s;
+        100% {
+            transform: translateX(calc(var(--offset, 0px) - 50%));
+        }
+    }
+
+    /* Footer */
+    .footer {
+        padding: 2rem 0;
+        border-top: 1px solid rgb(var(--border));
+        background: rgb(var(--card));
+    }
+
+    .footer-inner {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        text-align: center;
+    }
+
+    .footer-text {
+        font-size: 0.875rem;
+        color: rgb(var(--muted-foreground));
+    }
+
+    /* Icons */
+    .icon {
+        width: 20px;
+        height: 20px;
+        stroke: #fff;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+        fill: none;
+    }
+
+    .icon-sm {
+        width: 16px;
+        height: 16px;
+    }
+
+    /* Responsive */
+    @media (max-width: 767px) {
+        .mobile-menu-btn {
+            display: block;
         }
 
-        body.locale-ar .sponsor-track {
-            animation-direction: reverse;
+        .nav-logo {
+            height: 60px;
         }
 
-        body.locale-ar .sponsor-carousel {
-            direction: ltr;
+        .nav-logo-bu {
+            height: 40px;
         }
 
-        .sponsor-carousel:hover .sponsor-track {
-            animation-play-state: paused;
+        .page-title {
+            font-size: 1.8rem;
         }
 
-        .sponsor-set {
-            display: flex;
-            align-items: center;
-            gap: 1.5rem;
-            padding-right: 1.5rem;
+        .page-subtitle {
+            font-size: 1rem;
+        }
+
+        .section-title {
+            font-size: 1.6rem;
+        }
+
+        .sponsor-carousel {
+            /* --sponsor-item-height: 90px; */
+            min-height: calc(var(--sponsor-item-height) + 3rem);
         }
 
         .sponsor-item {
-            display: grid;
-            place-items: center;
-            width: 200px;
+            width: 160px;
             height: var(--sponsor-item-height);
-            border-radius: 14px;
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .sponsor-item img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-            border-radius: 8px;
-            /* filter: grayscale(1) brightness(1.05); */
-            transition: transform 0.3s ease, filter 0.3s ease;
+        .sponsor-track {
+            animation-duration: 8s;
         }
 
-        .sponsor-item:hover {
-            transform: translateY(-6px);
-            border-color: rgba(152, 3, 189, 0.55);
-            box-shadow: 0 18px 35px -22px rgba(152, 3, 189, 0.6);
+        #icons-carousel .sponsor-track {
+            animation-duration: 32s;
         }
+    }
 
-        .sponsor-item:hover img {
-            /* filter: grayscale(0) brightness(1.1); */
-            transform: scale(1.06);
-        }
-
-        @keyframes sponsorScroll {
-            0% {
-                transform: translateX(var(--offset, 0px));
-            }
-
-            100% {
-                transform: translateX(calc(var(--offset, 0px) - 50%));
-            }
-        }
-
-        /* Footer */
-        .footer {
-            padding: 2rem 0;
-            border-top: 1px solid rgb(var(--border));
-            background: rgb(var(--card));
-        }
-
-        .footer-inner {
+    @media (min-width: 768px) {
+        .nav {
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            text-align: center;
         }
 
-        .footer-text {
-            font-size: 0.875rem;
-            color: rgb(var(--muted-foreground));
+        .videos-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (min-width: 1024px) {
+        .nav-logo {
+            height: 80px;
         }
 
-        /* Icons */
-        .icon {
-            width: 20px;
-            height: 20px;
-            stroke: #fff;
-            stroke-width: 2;
-            stroke-linecap: round;
-            stroke-linejoin: round;
-            fill: none;
+        .nav-logo-bu {
+            height: 60px;
         }
+    }
 
-        .icon-sm {
-            width: 16px;
-            height: 16px;
-        }
+    /* To Top Button */
+    .to-top-button {
+        position: fixed !important;
+        bottom: 2rem !important;
+        left: 2rem !important;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        background: #9803bd;
+        border: none;
+        color: #fff;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        box-shadow: 0 4px 12px rgba(152, 3, 189, 0.4);
+        transition: all 0.3s ease;
+        z-index: 10000 !important;
+        opacity: 0;
+        visibility: hidden;
+        transform: translateY(100px);
+        animation: pulse 2s infinite;
+    }
 
-        /* Responsive */
-        @media (max-width: 767px) {
-            .mobile-menu-btn {
-                display: block;
-            }
+    .to-top-button.show {
+        opacity: 1 !important;
+        visibility: visible !important;
+        transform: translateY(0) !important;
+    }
 
-            .nav-logo {
-                height: 60px;
-            }
+    .to-top-button:hover {
+        background: rgba(96, 36, 193, 1);
+        box-shadow: 0 6px 20px rgba(152, 3, 189, 0.6);
+        transform: translateY(-3px);
+        animation: none;
+    }
 
-            .nav-logo-bu {
-                height: 40px;
-            }
+    .to-top-button:active {
+        transform: translateY(-1px);
+    }
 
-            .page-title {
-                font-size: 1.8rem;
-            }
+    @keyframes pulse {
 
-            .page-subtitle {
-                font-size: 1rem;
-            }
-
-            .section-title {
-                font-size: 1.6rem;
-            }
-
-            .sponsor-carousel {
-                /* --sponsor-item-height: 90px; */
-                min-height: calc(var(--sponsor-item-height) + 3rem);
-            }
-
-            .sponsor-item {
-                width: 160px;
-                height: var(--sponsor-item-height);
-            }
-
-            .sponsor-track {
-                animation-duration: 8s;
-            }
-
-            #icons-carousel .sponsor-track {
-                animation-duration: 16s;
-            }
-        }
-
-        @media (min-width: 768px) {
-            .nav {
-                display: flex;
-            }
-
-            .videos-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (min-width: 1024px) {
-            .nav-logo {
-                height: 80px;
-            }
-
-            .nav-logo-bu {
-                height: 60px;
-            }
-        }
-
-        /* To Top Button */
-        .to-top-button {
-            position: fixed !important;
-            bottom: 2rem !important;
-            left: 2rem !important;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: #9803bd;
-            border: none;
-            color: #fff;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        0%,
+        100% {
             box-shadow: 0 4px 12px rgba(152, 3, 189, 0.4);
-            transition: all 0.3s ease;
-            z-index: 10000 !important;
-            opacity: 0;
-            visibility: hidden;
-            transform: translateY(100px);
-            animation: pulse 2s infinite;
         }
 
-        .to-top-button.show {
-            opacity: 1 !important;
-            visibility: visible !important;
-            transform: translateY(0) !important;
+        50% {
+            box-shadow: 0 4px 20px rgba(152, 3, 189, 0.7), 0 0 0 10px rgba(152, 3, 189, 0.1);
         }
+    }
 
-        .to-top-button:hover {
-            background: rgba(96, 36, 193, 1);
-            box-shadow: 0 6px 20px rgba(152, 3, 189, 0.6);
-            transform: translateY(-3px);
-            animation: none;
+    @media (max-width: 768px) {
+        .to-top-button {
+            bottom: 1.5rem;
+            left: 1.5rem;
+            width: 45px;
+            height: 45px;
         }
-
-        .to-top-button:active {
-            transform: translateY(-1px);
-        }
-
-        @keyframes pulse {
-
-            0%,
-            100% {
-                box-shadow: 0 4px 12px rgba(152, 3, 189, 0.4);
-            }
-
-            50% {
-                box-shadow: 0 4px 20px rgba(152, 3, 189, 0.7), 0 0 0 10px rgba(152, 3, 189, 0.1);
-            }
-        }
-
-        @media (max-width: 768px) {
-            .to-top-button {
-                bottom: 1.5rem;
-                left: 1.5rem;
-                width: 45px;
-                height: 45px;
-            }
-        }
+    }
     </style>
 </head>
 
 <body class="locale-{{ app()->getLocale() }}">
     @php
-        $locale = app()->getLocale();
+    $locale = app()->getLocale();
     @endphp
 
     <!-- Header -->
@@ -781,48 +781,45 @@
                     </button>
                     <div class="sponsor-track">
                         <div class="sponsor-set">
-                            <div class="sponsor-item">
+                            <!-- <div class="sponsor-item">
                                 <img src="{{ asset('img/exsponsor/1.png') }}" alt="IEC 360 Expo">
-                            </div>
+                            </div> -->
                             <div class="sponsor-item">
                                 <img src="{{ asset('img/exsponsor/2.png') }}" alt="IEC Logo">
                             </div>
-                            <div class="sponsor-item">
+                            <!-- <div class="sponsor-item"> 
                                 <img src="{{ asset('img/exsponsor/3.png') }}" alt="Business Umbrella">
                             </div>
                             <div class="sponsor-item">
                                 <img src="{{ asset('img/exsponsor/4.png') }}" alt="Authority">
-                            </div>
+                            </div> -->
                             <div class="sponsor-item">
                                 <img src="{{ asset('img/exsponsor/5.png') }}" alt="The Arena">
                             </div>
                             <div class="sponsor-item">
                                 <img src="{{ asset('img/exsponsor/6.png') }}" alt="Sponsor Placeholder">
                             </div>
-                            <div class="sponsor-item">
+                            <!-- <div class="sponsor-item">
                                 <img src="{{ asset('img/exsponsor/7.png') }}" alt="Sponsor Placeholder">
-                            </div>
+                            </div> -->
                             <div class="sponsor-item">
                                 <img src="{{ asset('img/exsponsor/8.png') }}" alt="Sponsor Placeholder">
                             </div>
-                            <div class="sponsor-item">
+                            <!-- <div class="sponsor-item">
                                 <img src="{{ asset('img/exsponsor/9.png') }}" alt="Sponsor Placeholder">
-                            </div>
+                            </div> -->
                             <div class="sponsor-item">
                                 <img src="{{ asset('img/exsponsor/10.png') }}" alt="Sponsor Placeholder">
                             </div>
-                            <div class="sponsor-item">
+                            <!-- <div class="sponsor-item">
                                 <img src="{{ asset('img/exsponsor/11.png') }}" alt="IEC 360 Expo">
-                            </div>
+                            </div> -->
                             <div class="sponsor-item">
                                 <img src="{{ asset('img/exsponsor/12.png') }}" alt="IEC Logo">
                             </div>
-                            <div class="sponsor-item">
+                            <!-- <div class="sponsor-item">
                                 <img src="{{ asset('img/exsponsor/13.png') }}" alt="Business Umbrella">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/14.png') }}" alt="Authority">
-                            </div>
+                            </div> -->
                             <div class="sponsor-item">
                                 <img src="{{ asset('img/exsponsor/15.png') }}" alt="The Arena">
                             </div>
@@ -831,6 +828,9 @@
                             </div>
                             <div class="sponsor-item">
                                 <img src="{{ asset('img/exsponsor/17.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/14.png') }}" alt="Authority">
                             </div>
                             <div class="sponsor-item">
                                 <img src="{{ asset('img/exsponsor/18.png') }}" alt="Sponsor Placeholder">
@@ -844,7 +844,98 @@
                             <div class="sponsor-item">
                                 <img src="{{ asset('img/exsponsor/21.png') }}" alt="Sponsor Placeholder">
                             </div>
+                            <!-- <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/22.png') }}" alt="Sponsor Placeholder">
+                            </div> -->
                             <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/23.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/24.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/25.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/26.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/27.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/28.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/29.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/30.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                            <!-- Duplicate Slider Items -->
+                              <!-- <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/1.png') }}" alt="IEC 360 Expo">
+                            </div> -->
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/2.png') }}" alt="IEC Logo">
+                            </div>
+                            <!-- <div class="sponsor-item"> 
+                                <img src="{{ asset('img/exsponsor/3.png') }}" alt="Business Umbrella">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/4.png') }}" alt="Authority">
+                            </div> -->
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/5.png') }}" alt="The Arena">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/6.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                            <!-- <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/7.png') }}" alt="Sponsor Placeholder">
+                            </div> -->
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/8.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                            <!-- <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/9.png') }}" alt="Sponsor Placeholder">
+                            </div> -->
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/10.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                            <!-- <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/11.png') }}" alt="IEC 360 Expo">
+                            </div> -->
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/12.png') }}" alt="IEC Logo">
+                            </div>
+                            <!-- <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/13.png') }}" alt="Business Umbrella">
+                            </div> -->
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/15.png') }}" alt="The Arena">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/16.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/17.png') }}" alt="Sponsor Placeholder">
+                            <!-- </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/14.png') }}" alt="Authority">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/18.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/19.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/20.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/21.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                             <div class="sponsor-item">
                                 <img src="{{ asset('img/exsponsor/22.png') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
@@ -870,7 +961,8 @@
                             </div>
                             <div class="sponsor-item">
                                 <img src="{{ asset('img/exsponsor/30.png') }}" alt="Sponsor Placeholder">
-                            </div>
+                            </div> -->
+                            <!-- end of duplicate -->
                         </div>
                     </div>
                     <button class="carousel-control carousel-control-next"
@@ -1003,12 +1095,6 @@
                             </div>
                             <div class="sponsor-item">
                                 <img src="{{ asset('img/exicons/37.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/38.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/39.png') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
                                 <img src="{{ asset('img/exicons/40.png') }}" alt="Sponsor Placeholder">
@@ -1277,90 +1363,90 @@
     </footer>
 
     <script>
-        let currentLocale = @json($locale);
+    let currentLocale = @json($locale);
 
-        function toggleLocale() {
-            const newLocale = currentLocale === 'en' ? 'ar' : 'en';
-            const currentPath = window.location.pathname;
-            const newPath = currentPath.replace(`/${currentLocale}`, `/${newLocale}`);
-            window.location.href = newPath;
-        }
+    function toggleLocale() {
+        const newLocale = currentLocale === 'en' ? 'ar' : 'en';
+        const currentPath = window.location.pathname;
+        const newPath = currentPath.replace(`/${currentLocale}`, `/${newLocale}`);
+        window.location.href = newPath;
+    }
 
-        function toggleMobileMenu() {
-            const mobileNav = document.getElementById('mobile-nav');
-            mobileNav.classList.toggle('active');
-        }
+    function toggleMobileMenu() {
+        const mobileNav = document.getElementById('mobile-nav');
+        mobileNav.classList.toggle('active');
+    }
 
-        // Update text based on locale
-        function updateLocaleText() {
-            document.querySelectorAll('[data-en][data-ar]').forEach(el => {
-                if (el.hasAttribute('data-en') && el.hasAttribute('data-ar')) {
-                    const text = currentLocale === 'ar' ? el.getAttribute('data-ar') : el.getAttribute('data-en');
-                    if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
-                        el.placeholder = text;
-                    } else {
-                        el.textContent = text;
-                    }
+    // Update text based on locale
+    function updateLocaleText() {
+        document.querySelectorAll('[data-en][data-ar]').forEach(el => {
+            if (el.hasAttribute('data-en') && el.hasAttribute('data-ar')) {
+                const text = currentLocale === 'ar' ? el.getAttribute('data-ar') : el.getAttribute('data-en');
+                if (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') {
+                    el.placeholder = text;
+                } else {
+                    el.textContent = text;
                 }
-            });
-        }
-
-        // Carousel scroll function
-        function scrollCarousel(carouselId, direction) {
-            const carousel = document.getElementById(carouselId);
-            const track = carousel.querySelector('.sponsor-track');
-            const item = track.querySelector('.sponsor-item');
-
-            if (!item) return;
-
-            // Calculate one step (item width + gap)
-            // The gap is 1.5rem (24px)
-            const style = window.getComputedStyle(track.querySelector('.sponsor-set'));
-            const gap = parseFloat(style.gap) || 24;
-            const scrollAmount = item.offsetWidth + gap;
-
-            // Get current offset from CSS variable
-            let currentOffset = parseFloat(getComputedStyle(track).getPropertyValue('--offset')) || 0;
-
-            // Calculate new offset
-            // In LTR, 'left' means moving content to the right (positive offset)
-            // 'right' means moving content to the left (negative offset)
-            let newOffset = direction === 'left' ? currentOffset + scrollAmount : currentOffset - scrollAmount;
-
-            // Apply new offset to CSS variable
-            track.style.setProperty('--offset', newOffset + 'px');
-
-            // Brief visual feedback if not hovering
-            if (!carousel.matches(':hover')) {
-                track.style.animationPlayState = 'paused';
-                setTimeout(() => {
-                    track.style.animationPlayState = 'running';
-                }, 50);
-            }
-        }
-
-        // Initialize on page load
-        document.addEventListener('DOMContentLoaded', () => {
-            updateLocaleText();
-        });
-
-        // To Top Button functionality
-        const toTopBtn = document.getElementById('to-top-btn');
-
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 300) {
-                toTopBtn.classList.add('show');
-            } else {
-                toTopBtn.classList.remove('show');
             }
         });
+    }
 
-        function scrollToTop() {
-            window.scrollTo({
-                top: 0,
-                behavior: 'smooth'
-            });
+    // Carousel scroll function
+    function scrollCarousel(carouselId, direction) {
+        const carousel = document.getElementById(carouselId);
+        const track = carousel.querySelector('.sponsor-track');
+        const item = track.querySelector('.sponsor-item');
+
+        if (!item) return;
+
+        // Calculate one step (item width + gap)
+        // The gap is 1.5rem (24px)
+        const style = window.getComputedStyle(track.querySelector('.sponsor-set'));
+        const gap = parseFloat(style.gap) || 24;
+        const scrollAmount = item.offsetWidth + gap;
+
+        // Get current offset from CSS variable
+        let currentOffset = parseFloat(getComputedStyle(track).getPropertyValue('--offset')) || 0;
+
+        // Calculate new offset
+        // In LTR, 'left' means moving content to the right (positive offset)
+        // 'right' means moving content to the left (negative offset)
+        let newOffset = direction === 'left' ? currentOffset + scrollAmount : currentOffset - scrollAmount;
+
+        // Apply new offset to CSS variable
+        track.style.setProperty('--offset', newOffset + 'px');
+
+        // Brief visual feedback if not hovering
+        if (!carousel.matches(':hover')) {
+            track.style.animationPlayState = 'paused';
+            setTimeout(() => {
+                track.style.animationPlayState = 'running';
+            }, 50);
         }
+    }
+
+    // Initialize on page load
+    document.addEventListener('DOMContentLoaded', () => {
+        updateLocaleText();
+    });
+
+    // To Top Button functionality
+    const toTopBtn = document.getElementById('to-top-btn');
+
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 300) {
+            toTopBtn.classList.add('show');
+        } else {
+            toTopBtn.classList.remove('show');
+        }
+    });
+
+    function scrollToTop() {
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    }
     </script>
 
     <!-- To Top Button -->
