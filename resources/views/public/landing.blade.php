@@ -168,6 +168,10 @@
             overflow: hidden;
         }
 
+        body.is-form-loading {
+            overflow: hidden;
+        }
+
         .page-loader {
             position: fixed;
             inset: 0;
@@ -239,6 +243,89 @@
             text-transform: uppercase;
             font-size: 0.8rem;
             color: rgba(255, 255, 255, 0.8);
+        }
+
+        .form-loader {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1.25rem;
+            background: rgba(0, 0, 0, 0.88);
+            z-index: 10000;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
+
+        .form-loader.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+        .form-loader .loader-ring {
+            position: relative;
+            width: 96px;
+            height: 96px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .form-loader .loader-ring::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 50%;
+            border: 3px solid rgba(255, 255, 255, 0.18);
+            border-top-color: #9803bd;
+            border-right-color: rgba(152, 3, 189, 0.6);
+            animation: loaderSpin 1s linear infinite;
+            box-shadow: 0 0 24px rgba(152, 3, 189, 0.35);
+        }
+
+        .form-loader .loader-ring img {
+            width: 56px;
+            height: 56px;
+            object-fit: contain;
+            z-index: 1;
+        }
+
+        .form-loader .loader-dots {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .form-loader .loader-dots span {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #fff;
+            opacity: 0.7;
+            animation: loaderBounce 0.9s ease-in-out infinite;
+        }
+
+        .form-loader .loader-dots span:nth-child(2) {
+            animation-delay: 0.2s;
+        }
+
+        .form-loader .loader-dots span:nth-child(3) {
+            animation-delay: 0.4s;
+        }
+
+        .form-loader .loader-message {
+            font-weight: 600;
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.9);
+            text-align: center;
+            max-width: 32rem;
+            padding: 0 1.5rem;
+            direction: rtl;
+            font-family: var(--font-base);
         }
 
         body:not(.is-loading) .page-loader {
@@ -2608,6 +2695,17 @@
             <span></span>
         </div>
         <div class="loader-text">Loading</div>
+    </div>
+    <div class="form-loader" id="contract-loader" aria-hidden="true" role="status" aria-live="polite">
+        <div class="loader-ring">
+            <img src="{{ asset('img/IEC-logo.png') }}" alt="IEC Logo">
+        </div>
+        <div class="loader-dots">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="loader-message">يرجى الإنتظار .. جاري تحضير العقد الخاص بكم</div>
     </div>
 
     @php
@@ -5039,6 +5137,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                         showToast(title, message);
                         triggerPdfDownload(payload && payload.pdf_url, payload && payload.pdf_name);
                     },
+                    showContractLoader: true,
                 });
             }
 
@@ -5056,13 +5155,15 @@ experience that unites ambitious minds and industry leaders under one roof"
                             showToast(title, message);
                             triggerPdfDownload(payload && payload.pdf_url, payload && payload.pdf_name);
                         },
+                        showContractLoader: true,
                     });
                 }
             }
         }
 
         function bindAjaxRegistrationForm(form, {
-            onSuccess
+            onSuccess,
+            showContractLoader: shouldShowContractLoader = false,
         } = {}) {
             form.addEventListener('submit', async (event) => {
                 event.preventDefault();
@@ -5072,6 +5173,10 @@ experience that unites ambitious minds and industry leaders under one roof"
                 if (!validateRegistrationForm(form)) {
                     toggleSubmitting(submitter, false);
                     return;
+                }
+
+                if (shouldShowContractLoader) {
+                    showContractLoader(5000);
                 }
 
                 try {
@@ -5123,6 +5228,34 @@ experience that unites ambitious minds and industry leaders under one roof"
             document.body.appendChild(link);
             link.click();
             link.remove();
+        }
+
+        let contractLoaderTimeout = null;
+
+        function showContractLoader(durationMs = 5000) {
+            const loader = document.getElementById('contract-loader');
+            if (!loader) {
+                return;
+            }
+            loader.classList.add('active');
+            loader.setAttribute('aria-hidden', 'false');
+            document.body.classList.add('is-form-loading');
+            if (contractLoaderTimeout) {
+                clearTimeout(contractLoaderTimeout);
+            }
+            contractLoaderTimeout = setTimeout(() => {
+                hideContractLoader();
+            }, durationMs);
+        }
+
+        function hideContractLoader() {
+            const loader = document.getElementById('contract-loader');
+            if (!loader) {
+                return;
+            }
+            loader.classList.remove('active');
+            loader.setAttribute('aria-hidden', 'true');
+            document.body.classList.remove('is-form-loading');
         }
 
         function toggleSubmitting(button, isSubmitting) {
