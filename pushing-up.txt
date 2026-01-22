@@ -10,3 +10,13 @@ git fetch origin
 git reset --hard origin/main
 
 php artisan optimize:clear
+
+
+great
+lets fill this data from sponsor and icon registeration forms.
+in sponsor and icon registeration forms when user click submit:
+all data is stored in database to appear in admin dashboard as is now (no changes)
+ but we will take required specific data from the submitted request 
+ to replace placeholders in the contract.docx file then go on pdf generation 
+ and download generated pdf file.
+now before any coding tell me your plan to implement this update

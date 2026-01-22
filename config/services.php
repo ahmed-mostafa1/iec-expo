@@ -39,4 +39,8 @@ return [
         'url' => env('GOTENBERG_URL'),
     ],
 
+    'cloudconvert' => [
+        'key' => env('CLOUDCONVERT_API_KEY'),
+    ],
+
 ];

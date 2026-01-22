@@ -19,6 +19,7 @@ use App\Http\Controllers\Admin\SponsorRegistrationController as AdminSponsorCont
 use App\Http\Controllers\Admin\IconRegistrationController as AdminIconController;
 use App\Http\Controllers\Admin\VisitorRegistrationController as AdminVisitorController;
 use App\Http\Controllers\Admin\HallSpaceBookingController;
+use App\Http\Controllers\DocumentController;
 use App\Models\SponsorRegistration;
 use App\Models\IconRegistration;
 use App\Models\HallSpaceBooking;
@@ -29,6 +30,10 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return redirect('/en');
 });
+
+Route::view('/contract-form', 'contract-form');
+Route::post('/generate-pdf', [DocumentController::class, 'generate'])
+    ->name('contract.generate-pdf');
 
  Route::get('/hall-design', function () {
             $occupiedSpaces = SponsorRegistration::whereNotNull('location_selection')
