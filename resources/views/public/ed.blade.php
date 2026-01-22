@@ -195,11 +195,17 @@
     }
 
     .nav-logo {
-        height: 80px;
+        height: 48px;
+        max-height: 100%;
+        width: auto;
+        display: block;
     }
 
     .nav-logo-bu {
-        height: 60px;
+        height: 40px;
+        max-height: 100%;
+        width: auto;
+        display: block;
     }
 
     .header-right {
@@ -534,11 +540,11 @@
         }
 
         .nav-logo {
-            height: 60px;
+            height: 44px;
         }
 
         .nav-logo-bu {
-            height: 40px;
+            height: 32px;
         }
 
         .page-title {
@@ -584,11 +590,11 @@
 
     @media (min-width: 1024px) {
         .nav-logo {
-            height: 80px;
+            height: 56px;
         }
 
         .nav-logo-bu {
-            height: 60px;
+            height: 48px;
         }
     }
 
