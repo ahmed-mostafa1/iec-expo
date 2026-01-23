@@ -2687,7 +2687,7 @@
 <body class="{{ app()->getLocale() === 'ar' ? 'locale-ar' : 'locale-en' }} is-loading">
     <div class="page-loader" aria-hidden="true">
         <div class="loader-ring">
-            <img src="{{ asset('img/IEC-logo.png') }}" alt="IEC Logo">
+            <img src="{{ asset('img/IEC-logo-v2.png') }}" alt="IEC Logo">
         </div>
         <div class="loader-dots">
             <span></span>
@@ -2698,7 +2698,7 @@
     </div>
     <div class="form-loader" id="contract-loader" aria-hidden="true" role="status" aria-live="polite">
         <div class="loader-ring">
-            <img src="{{ asset('img/IEC-logo.png') }}" alt="IEC Logo">
+            <img src="{{ asset('img/IEC-logo-v2.png') }}" alt="IEC Logo">
         </div>
         <div class="loader-dots">
             <span></span>
@@ -3696,7 +3696,7 @@
                             </div>
 
                             <div class="row-logo" id="guest-row-logo">
-                                <img src="{{ asset('img/iec-logo.png') }}" alt="IEC Logo" style="text-align:center">
+                                <img src="{{ asset('img/iec-logo-v2.png') }}" alt="IEC Logo" style="text-align:center">
                             </div>
 
                             <div class="role-card guest-card" id="visitor-card" onclick="selectRole('visitor')">
@@ -4416,7 +4416,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                                 @php
                                     $logoPath = $organizer->logo_path
                                         ? asset('storage/' . $organizer->logo_path)
-                                        : asset('img/IEC-logo.png');
+                                        : asset('img/IEC-logo-v2.png');
                                     $englishName = $organizer->name ?? '';
                                     $arabicName = $organizer->name_ar ?? $englishName;
                                     $displayName = $currentLocale === 'ar' ? $arabicName : $englishName;
