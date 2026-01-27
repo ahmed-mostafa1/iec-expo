@@ -25,9 +25,9 @@ class DocumentController extends Controller
             return response('CloudConvert API key is not configured.', 500);
         }
 
-        $templatePath = public_path('contract.docx');
+        $templatePath = public_path('contract-v2.docx');
         if (!file_exists($templatePath)) {
-            return response('Template file not found: contract.docx', 500);
+            return response('Template file not found: contract-v2.docx', 500);
         }
 
         Storage::disk('local')->makeDirectory('tmp_docs');

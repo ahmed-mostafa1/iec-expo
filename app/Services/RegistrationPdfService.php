@@ -53,13 +53,13 @@ class RegistrationPdfService
     private function generateContractPdf(array $values, string $destinationPath): string
     {
         $apiKey = config('services.cloudconvert.key');
-        if (! $apiKey) {
+        if (!$apiKey) {
             throw new \RuntimeException('CloudConvert API key is not configured.');
         }
 
-        $templatePath = public_path('contract.docx');
+        $templatePath = public_path('contract-v2.docx');
 
-        if (! is_file($templatePath)) {
+        if (!is_file($templatePath)) {
             throw new \RuntimeException('Contract template not found.');
         }
 
@@ -106,7 +106,7 @@ class RegistrationPdfService
                 ],
             ]);
 
-        if (! $jobResponse->successful()) {
+        if (!$jobResponse->successful()) {
             throw new \RuntimeException('CloudConvert job creation failed.');
         }
 
@@ -116,7 +116,7 @@ class RegistrationPdfService
         $importTask = $this->findTaskByName($tasks, 'import-docx');
         $uploadForm = $importTask['result']['form'] ?? null;
 
-        if (! $jobId || ! $uploadForm || empty($uploadForm['url']) || empty($uploadForm['parameters'])) {
+        if (!$jobId || !$uploadForm || empty($uploadForm['url']) || empty($uploadForm['parameters'])) {
             throw new \RuntimeException('CloudConvert upload form missing from job response.');
         }
 
@@ -127,7 +127,7 @@ class RegistrationPdfService
             fclose($fileHandle);
         }
 
-        if (! $uploadResponse->successful()) {
+        if (!$uploadResponse->successful()) {
             throw new \RuntimeException('CloudConvert upload failed.');
         }
 
@@ -139,7 +139,7 @@ class RegistrationPdfService
                 ->acceptJson()
                 ->get("https://api.cloudconvert.com/v2/jobs/{$jobId}");
 
-            if (! $statusResponse->successful()) {
+            if (!$statusResponse->successful()) {
                 throw new \RuntimeException('Failed to check CloudConvert job status.');
             }
 
@@ -159,17 +159,17 @@ class RegistrationPdfService
             sleep($delaySeconds);
         }
 
-        if (! $exportTask || ($exportTask['status'] ?? null) !== 'finished') {
+        if (!$exportTask || ($exportTask['status'] ?? null) !== 'finished') {
             throw new \RuntimeException('CloudConvert conversion timed out before export was ready.');
         }
 
         $pdfUrl = $exportTask['result']['files'][0]['url'] ?? null;
-        if (! $pdfUrl) {
+        if (!$pdfUrl) {
             throw new \RuntimeException('CloudConvert export URL missing.');
         }
 
         $pdfResponse = Http::get($pdfUrl);
-        if (! $pdfResponse->successful()) {
+        if (!$pdfResponse->successful()) {
             throw new \RuntimeException('Failed to download generated PDF.');
         }
 
