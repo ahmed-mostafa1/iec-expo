@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Public;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SponsorRegistrationRequest;
+use App\Mail\ContractConfirmationMail;
 use App\Mail\NewSponsorRegistrationMail;
 use App\Models\SponsorRegistration;
 use App\Services\RegistrationPdfService;
@@ -15,7 +16,8 @@ class SponsorRegistrationController extends Controller
 {
     public function __construct(
         protected RegistrationPdfService $pdfService
-    ) {}
+    ) {
+    }
 
     public function store(SponsorRegistrationRequest $request, string $locale)
     {
@@ -43,33 +45,40 @@ class SponsorRegistrationController extends Controller
             : null;
 
         $registration = SponsorRegistration::create([
-            'full_name'        => $data['full_name'],
-            'email'            => $data['email'],
-            'phone'            => $data['phone'],
-            'job_title'        => $data['job_title'],
-            'organization'     => $data['organization'] ?? '',
-            'sponsor_tier'     => $data['sponsor_tier'],
+            'full_name' => $data['full_name'],
+            'email' => $data['email'],
+            'phone' => $data['phone'],
+            'job_title' => $data['job_title'],
+            'organization' => $data['organization'] ?? '',
+            'sponsor_tier' => $data['sponsor_tier'],
             'location_selection' => $data['location_selection'] ?? null,
-            'vat_number'       => $data['vat_number'] ?? '',
-            'cr_number'        => $data['cr_number'] ?? '',
+            'vat_number' => $data['vat_number'] ?? '',
+            'cr_number' => $data['cr_number'] ?? '',
             'national_address' => $data['national_address'] ?? '',
-            'document_path'    => null,
-            'cr_copy_path'     => $crCopyPath,
+            'document_path' => null,
+            'cr_copy_path' => $crCopyPath,
             'national_address_doc_path' => $nationalAddressDocPath,
-            'company_logo_path'=> $companyLogoPath,
-            'status'           => 'pending',
+            'company_logo_path' => $companyLogoPath,
+            'status' => 'pending',
         ]);
 
         // Generate and save PDF
         $pdfPath = $this->pdfService->generateSponsorPdf($registration);
         $registration->update(['pdf_path' => $pdfPath]);
 
-        // Send email to admin(s)
-        foreach (config('admin.emails', []) as $adminEmail) {
-            Mail::to($adminEmail)->send(
-                new NewSponsorRegistrationMail($registration, $pdfPath)
-            );
-        }
+        // Send contract confirmation to customer
+        Mail::to($registration->email)->send(
+            new ContractConfirmationMail(
+                $registration->full_name,
+                $registration->location_selection ?? '',
+                $pdfPath
+            )
+        );
+
+        // Send notification to official IEC email
+        Mail::to('iec360@umbrella.sa')->send(
+            new NewSponsorRegistrationMail($registration, $pdfPath)
+        );
 
         $message = __('registration.sponsor.success');
         $toastTitle = __('registration.sponsor.toast_title');
@@ -85,8 +94,6 @@ class SponsorRegistrationController extends Controller
                 'message' => $message,
                 'toast_title' => $toastTitle,
                 'registration_id' => $registration->id,
-                'pdf_url' => $downloadUrl,
-                'pdf_name' => "sponsor-registration-{$registration->id}.pdf",
             ], 201);
         }
 
@@ -95,18 +102,18 @@ class SponsorRegistrationController extends Controller
 
     public function download(string $locale, SponsorRegistration $registration)
     {
-        if (! $registration->pdf_path) {
+        if (!$registration->pdf_path) {
             $pdfPath = $this->pdfService->generateSponsorPdf($registration);
             $registration->update(['pdf_path' => $pdfPath]);
         }
 
-        if (! $registration->pdf_path) {
+        if (!$registration->pdf_path) {
             abort(404);
         }
 
         $fullPath = Storage::disk('public')->path($registration->pdf_path);
 
-        if (! file_exists($fullPath)) {
+        if (!file_exists($fullPath)) {
             abort(404);
         }
 

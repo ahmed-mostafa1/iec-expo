@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Public;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\IconRegistrationRequest;
+use App\Mail\ContractConfirmationMail;
 use App\Mail\NewIconRegistrationMail;
 use App\Models\IconRegistration;
 use App\Services\RegistrationPdfService;
@@ -15,7 +16,8 @@ class IconRegistrationController extends Controller
 {
     public function __construct(
         protected RegistrationPdfService $pdfService
-    ) {}
+    ) {
+    }
 
     public function store(IconRegistrationRequest $request, string $locale)
     {
@@ -43,30 +45,38 @@ class IconRegistrationController extends Controller
             : null;
 
         $registration = IconRegistration::create([
-            'full_name'        => $data['full_name'],
-            'email'            => $data['email'],
-            'phone'            => $data['phone'],
-            'job_title'        => $data['job_title'],
-            'organization'     => $data['organization'] ?? '',
+            'full_name' => $data['full_name'],
+            'email' => $data['email'],
+            'phone' => $data['phone'],
+            'job_title' => $data['job_title'],
+            'organization' => $data['organization'] ?? '',
             'location_selection' => $data['location_selection'],
-            'vat_number'       => $data['vat_number'] ?? '',
-            'cr_number'        => $data['cr_number'] ?? '',
+            'vat_number' => $data['vat_number'] ?? '',
+            'cr_number' => $data['cr_number'] ?? '',
             'national_address' => $data['national_address'] ?? '',
-            'document_path'    => null,
-            'cr_copy_path'     => $crCopyPath,
+            'document_path' => null,
+            'cr_copy_path' => $crCopyPath,
             'national_address_doc_path' => $nationalAddressDocPath,
-            'company_logo_path'=> $companyLogoPath,
-            'status'           => 'pending',
+            'company_logo_path' => $companyLogoPath,
+            'status' => 'pending',
         ]);
 
         $pdfPath = $this->pdfService->generateIconPdf($registration);
         $registration->update(['pdf_path' => $pdfPath]);
 
-        foreach (config('admin.emails', []) as $adminEmail) {
-            Mail::to($adminEmail)->send(
-                new NewIconRegistrationMail($registration, $pdfPath)
-            );
-        }
+        // Send contract confirmation to customer
+        Mail::to($registration->email)->send(
+            new ContractConfirmationMail(
+                $registration->full_name,
+                $registration->location_selection ?? '',
+                $pdfPath
+            )
+        );
+
+        // Send notification to official IEC email
+        Mail::to('iec360@umbrella.sa')->send(
+            new NewIconRegistrationMail($registration, $pdfPath)
+        );
 
         $message = __('registration.icon.success');
         $toastTitle = __('registration.icon.toast_title');
@@ -82,8 +92,6 @@ class IconRegistrationController extends Controller
                 'message' => $message,
                 'toast_title' => $toastTitle,
                 'registration_id' => $registration->id,
-                'pdf_url' => $downloadUrl,
-                'pdf_name' => "icon-registration-{$registration->id}.pdf",
             ], 201);
         }
 
@@ -92,18 +100,18 @@ class IconRegistrationController extends Controller
 
     public function download(string $locale, IconRegistration $registration)
     {
-        if (! $registration->pdf_path) {
+        if (!$registration->pdf_path) {
             $pdfPath = $this->pdfService->generateIconPdf($registration);
             $registration->update(['pdf_path' => $pdfPath]);
         }
 
-        if (! $registration->pdf_path) {
+        if (!$registration->pdf_path) {
             abort(404);
         }
 
         $fullPath = Storage::disk('public')->path($registration->pdf_path);
 
-        if (! file_exists($fullPath)) {
+        if (!file_exists($fullPath)) {
             abort(404);
         }
 
