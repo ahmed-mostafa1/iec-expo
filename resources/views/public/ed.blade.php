@@ -428,12 +428,12 @@
         display: flex;
         align-items: center;
         width: max-content;
-        animation: sponsorScroll 10s linear infinite;
+        animation: sponsorScroll 20s linear infinite;
         --offset: 0px;
     }
 
     #icons-carousel .sponsor-track {
-        animation-duration: 40s;
+        animation-duration: 60s;
     }
 
     body.locale-ar .sponsor-track {
@@ -570,11 +570,11 @@
         }
 
         .sponsor-track {
-            animation-duration: 8s;
+            animation-duration: 16s;
         }
 
         #icons-carousel .sponsor-track {
-            animation-duration: 32s;
+            animation-duration: 48s;
         }
     }
 
@@ -847,7 +847,7 @@
                             <div class="sponsor-item">
                                 <img src="{{ asset('img/exsponsor/30.png') }}" alt="Sponsor Placeholder">
                             </div>
-                            <!-- Duplicate Slider Items -->
+                            <!-- Duplicate Slider Items for Infinite Loop -->
                             <div class="sponsor-item">
                                 <img src="{{ asset('img/exsponsor/2.png') }}" alt="IEC Logo">
                             </div>
@@ -871,7 +871,43 @@
                             </div>
                             <div class="sponsor-item">
                                 <img src="{{ asset('img/exsponsor/17.png') }}" alt="Sponsor Placeholder">
-                             </div>
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/14.png') }}" alt="Authority">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/18.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/19.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/20.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/21.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/24.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/25.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/26.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/27.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/28.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/29.png') }}" alt="Sponsor Placeholder">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/30.png') }}" alt="Sponsor Placeholder">
+                            </div>
                             <!-- end of duplicate -->
                         </div>
                     </div>
@@ -1305,13 +1341,13 @@
     function scrollCarousel(carouselId, direction) {
         const carousel = document.getElementById(carouselId);
         const track = carousel.querySelector('.sponsor-track');
+        const sponsorSet = track.querySelector('.sponsor-set');
         const item = track.querySelector('.sponsor-item');
 
         if (!item) return;
 
         // Calculate one step (item width + gap)
-        // The gap is 1.5rem (24px)
-        const style = window.getComputedStyle(track.querySelector('.sponsor-set'));
+        const style = window.getComputedStyle(sponsorSet);
         const gap = parseFloat(style.gap) || 24;
         const scrollAmount = item.offsetWidth + gap;
 
@@ -1322,6 +1358,21 @@
         // In LTR, 'left' means moving content to the right (positive offset)
         // 'right' means moving content to the left (negative offset)
         let newOffset = direction === 'left' ? currentOffset + scrollAmount : currentOffset - scrollAmount;
+
+        // Calculate the width of half the content (one complete set)
+        // The sponsor-set contains all items (original + duplicate)
+        const totalWidth = sponsorSet.scrollWidth;
+        const halfWidth = totalWidth / 2;
+
+        // Infinite loop logic: reset position when reaching boundaries
+        // When scrolling right (negative offset) and we've gone past halfway
+        if (newOffset <= -halfWidth) {
+            newOffset = newOffset + halfWidth;
+        }
+        // When scrolling left (positive offset) and we've gone past the start
+        else if (newOffset > 0) {
+            newOffset = newOffset - halfWidth;
+        }
 
         // Apply new offset to CSS variable
         track.style.setProperty('--offset', newOffset + 'px');
