@@ -65,7 +65,7 @@ class RegistrationPdfService
 
         Storage::disk('local')->makeDirectory('tmp_docs');
         $tempFileName = 'contract_' . Str::uuid()->toString() . '.docx';
-        $tempDocxPath = storage_path('app/tmp_docs/' . $tempFileName);
+        $tempDocxPath = Storage::disk('local')->path('tmp_docs/' . $tempFileName);
 
         try {
             $template = new TemplateProcessor($templatePath);

@@ -775,7 +775,7 @@
                     </div>
                 </div>
             </section>
-
+            <!-- Sponsors Section -->
             <section class="sponsors-section" aria-labelledby="sponsors-title">
                 <h2 class="section-title" id="sponsors-title" data-en="Sponsors" data-ar="الرعاة">
                     {{ $locale === 'ar' ? 'Sponsors' : 'Sponsors' }}
@@ -788,125 +788,59 @@
                     <div class="sponsor-track">
                         <div class="sponsor-set">
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/2.png') }}" alt="IEC Logo">
+                                <img src="{{ asset('img/exsponsor/1.jpg') }}" alt="IEC Logo">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/6.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exsponsor/2.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/8.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exsponsor/3.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/10.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exsponsor/4.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/12.png') }}" alt="IEC Logo">
+                                <img src="{{ asset('img/exsponsor/5.jpg') }}" alt="IEC Logo">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/15.png') }}" alt="The Arena">
+                                <img src="{{ asset('img/exsponsor/6.jpg') }}" alt="The Arena">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/16.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exsponsor/7.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/17.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exsponsor/8.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/14.png') }}" alt="Authority">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/18.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/19.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/20.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/21.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/24.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/25.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/26.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/27.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/28.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/29.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/30.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exsponsor/9.jpg') }}" alt="Authority">
                             </div>
                             <!-- Duplicate Slider Items for Infinite Loop -->
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/2.png') }}" alt="IEC Logo">
+                           <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/1.jpg') }}" alt="IEC Logo">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/6.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exsponsor/2.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/8.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exsponsor/3.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/10.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exsponsor/4.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/12.png') }}" alt="IEC Logo">
+                                <img src="{{ asset('img/exsponsor/5.jpg') }}" alt="IEC Logo">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/15.png') }}" alt="The Arena">
+                                <img src="{{ asset('img/exsponsor/6.jpg') }}" alt="The Arena">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/16.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exsponsor/7.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/17.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exsponsor/8.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/14.png') }}" alt="Authority">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/18.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/19.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/20.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/21.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/24.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/25.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/26.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/27.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/28.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/29.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/30.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exsponsor/9.jpg') }}" alt="Authority">
                             </div>
                             <!-- end of duplicate -->
                         </div>
@@ -918,7 +852,7 @@
                 </div>
             </section>
 
-
+            <!-- Icons Section -->
             <section class="sponsors-section" aria-labelledby="sponsors-title">
                 <h2 class="section-title" id="sponsors-title" data-en="ICONS" data-ar="الأيكونز">
                     {{ $locale === 'ar' ? 'ICONS' : 'ICONS' }}
@@ -932,355 +866,208 @@
                         <div class="sponsor-set">
 
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/1.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/1.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/2.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/2.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/3.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/3.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/4.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/4.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/5.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/5.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/6.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/6.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/7.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/7.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/8.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/8.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/9.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/9.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/10.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/10.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/11.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/11.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/12.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/12.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/13.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/13.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/14.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/14.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/15.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/15.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/16.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/16.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/17.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/17.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/18.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/18.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/19.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/19.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/20.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/20.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/21.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/21.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/22.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/22.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/23.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/23.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/24.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/24.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/25.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/25.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/26.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/26.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/27.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/27.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/28.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/28.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/29.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/29.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/30.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/30.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/31.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/31.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/32.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/32.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/33.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/33.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/34.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/34.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/35.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/35.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/36.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/36.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/37.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/37.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/40.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/40.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/41.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/41.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/42.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/42.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/43.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/43.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/44.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/44.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/45.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/45.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/46.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/46.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/47.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/47.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/48.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/48.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/49.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/49.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/50.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/50.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/51.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/51.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/52.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/52.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/53.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/53.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/54.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/54.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/55.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/55.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/56.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/56.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/57.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/57.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/58.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/58.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/59.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/59.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/60.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/60.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/61.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/61.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/62.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/62.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/63.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/63.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/64.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/64.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/65.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/65.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/66.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/66.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/67.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/67.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/68.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/68.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/69.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/69.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/70.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/71.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/72.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/73.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/74.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/75.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/76.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/77.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/78.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/79.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/80.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/81.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/82.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/83.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/84.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/85.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/86.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/87.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/88.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/89.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/90.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/91.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/92.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/93.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/94.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/95.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/96.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/97.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/98.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/99.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/100.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/101.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/102.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/103.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/104.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/105.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/106.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/107.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/108.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/109.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/110.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/111.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/112.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/113.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/114.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/115.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/116.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/117.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/118.png') }}" alt="Sponsor Placeholder">
-                            </div>
-                            <div class="sponsor-item">
-                                <img src="{{ asset('img/exicons/119.png') }}" alt="Sponsor Placeholder">
+                                <img src="{{ asset('img/exicons/70.jpg') }}" alt="Sponsor Placeholder">
                             </div>
                         </div>
                     </div>

@@ -2696,16 +2696,24 @@
         </div>
         <div class="loader-text">Loading</div>
     </div>
-    <div class="form-loader" id="contract-loader" aria-hidden="true" role="status" aria-live="polite">
-        <div class="loader-ring">
-            <img src="{{ asset('img/IEC-logo-v2.png') }}" alt="IEC Logo">
+    <div class="form-loader" id="success-popup" aria-hidden="true" role="status" aria-live="polite">
+        <div class="popup-card"
+            style="background: rgb(var(--card)); border: 1px solid rgb(var(--border) / 0.5); padding: 3rem 2rem; border-radius: var(--radius); text-align: center; max-width: 600px; margin: 1rem; position: relative; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);">
+            <img src="{{ asset('img/IEC-logo-v2.png') }}" alt="IEC Logo"
+                style="height: 80px; margin-bottom: 2rem; display: inline-block;">
+            <p style="margin-bottom: 1.5rem; font-size: 1.25rem; font-weight: 600; line-height: 1.6; color: #fff;">
+                تم استلام طلبكم وسيتم إرسال نسخة من العقد إلى البريد الإلكتروني الذي قمت بتسجيله.
+            </p>
+            <p
+                style="margin-bottom: 2.5rem; font-size: 1.1rem; line-height: 1.6; color: rgba(255,255,255,0.9); font-weight: 500;">
+                لتأكيد الحجز يرجى سداد كامل المبلغ الإجمالي شاملاً ضريبة القيمة المضافة خلال ساعة واحدة فقط،
+                <br>
+                وإرسال صورة الحوالة على الإيميل: iec360@umbrella.sa
+            </p>
+            <button onclick="window.location.reload()" class="btn btn-primary btn-lg" style="min-width: 200px;">
+                موافق
+            </button>
         </div>
-        <div class="loader-dots">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-        <div class="loader-message">يرجى الإنتظار .. جاري تحضير العقد الخاص بكم</div>
     </div>
 
     @php
@@ -5136,8 +5144,8 @@ experience that unites ambitious minds and industry leaders under one roof"
                         const message = (payload && payload.message) || sponsorForm.dataset.successMessage;
                         showToast(title, message);
                         triggerPdfDownload(payload && payload.pdf_url, payload && payload.pdf_name);
+                        showSuccessPopup();
                     },
-                    showContractLoader: true,
                 });
             }
 
@@ -5154,8 +5162,8 @@ experience that unites ambitious minds and industry leaders under one roof"
                             const message = (payload && payload.message) || iconForm.dataset.successMessage;
                             showToast(title, message);
                             triggerPdfDownload(payload && payload.pdf_url, payload && payload.pdf_name);
+                            showSuccessPopup();
                         },
-                        showContractLoader: true,
                     });
                 }
             }
@@ -5175,9 +5183,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                     return;
                 }
 
-                if (shouldShowContractLoader) {
-                    showContractLoader(5000);
-                }
+
 
                 try {
                     const response = await fetch(form.action, {
@@ -5230,32 +5236,14 @@ experience that unites ambitious minds and industry leaders under one roof"
             link.remove();
         }
 
-        let contractLoaderTimeout = null;
-
-        function showContractLoader(durationMs = 5000) {
-            const loader = document.getElementById('contract-loader');
-            if (!loader) {
+        function showSuccessPopup() {
+            const popup = document.getElementById('success-popup');
+            if (!popup) {
                 return;
             }
-            loader.classList.add('active');
-            loader.setAttribute('aria-hidden', 'false');
+            popup.classList.add('active');
+            popup.setAttribute('aria-hidden', 'false');
             document.body.classList.add('is-form-loading');
-            if (contractLoaderTimeout) {
-                clearTimeout(contractLoaderTimeout);
-            }
-            contractLoaderTimeout = setTimeout(() => {
-                hideContractLoader();
-            }, durationMs);
-        }
-
-        function hideContractLoader() {
-            const loader = document.getElementById('contract-loader');
-            if (!loader) {
-                return;
-            }
-            loader.classList.remove('active');
-            loader.setAttribute('aria-hidden', 'true');
-            document.body.classList.remove('is-form-loading');
         }
 
         function toggleSubmitting(button, isSubmitting) {

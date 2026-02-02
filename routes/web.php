@@ -36,14 +36,8 @@ Route::post('/generate-pdf', [DocumentController::class, 'generate'])
     ->name('contract.generate-pdf');
 
  Route::get('/hall-design', function () {
-            $occupiedSpaces = SponsorRegistration::whereNotNull('location_selection')
-                ->pluck('location_selection')
-                ->merge(
-                    IconRegistration::whereNotNull('location_selection')->pluck('location_selection')
-                )
-                ->merge(
-                    HallSpaceBooking::pluck('space')
-                )
+            // Only show spaces explicitly booked by admin (HallSpaceBooking) as occupied.
+            $occupiedSpaces = HallSpaceBooking::pluck('space')
                 ->filter()
                 ->map(fn ($space) => strtoupper($space))
                 ->unique()
