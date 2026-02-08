@@ -3087,6 +3087,11 @@
                                         'other' => ['en' => 'Other', 'ar' => 'أخرى'],
                                     ];
 
+                                    $pdfHint = [
+                                        'en' => 'PDF files only (max 8MB)',
+                                        'ar' => 'ملفات PDF فقط (بحد أقصى 8 ميغابايت)',
+                                    ];
+
                                     $exVatLabel = $fieldCopy($exhibitorFieldsStepTwoByName, 'vat_number', 'label', [
                                         'en' => 'VAT Certificate (Value Added Tax)',
                                         'ar' => 'شهادة ضريبة القيمة المضافة',
@@ -3097,11 +3102,6 @@
                                         'hint',
                                         $pdfHint,
                                     );
-
-                                    $pdfHint = [
-                                        'en' => 'PDF files only (max 8MB)',
-                                        'ar' => 'ملفات PDF فقط (بحد أقصى 8 ميغابايت)',
-                                    ];
                                     $exCrCopyLabel = $fieldCopy($exhibitorFieldsStepTwoByName, 'cr_copy', 'label', [
                                         'en' => 'CR Copy (Commercial Registration)',
                                         'ar' => 'نسخة السجل التجاري',
