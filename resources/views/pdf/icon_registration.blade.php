@@ -51,12 +51,8 @@
     <h2>Company details</h2>
     <table>
         <tr>
-            <td class="label">VAT number</td>
-            <td>{{ $registration->vat_number }}</td>
-        </tr>
-        <tr>
-            <td class="label">CR number</td>
-            <td>{{ $registration->cr_number }}</td>
+            <td class="label">VAT certificate</td>
+            <td>{{ $registration->vat_certificate_path ? 'Included in PDF' : 'Not provided' }}</td>
         </tr>
         <tr>
             <td class="label">Status</td>

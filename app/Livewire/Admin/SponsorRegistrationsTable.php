@@ -45,9 +45,7 @@ class SponsorRegistrationsTable extends Component
                     ->orWhere('email', 'like', "%{$search}%")
                     ->orWhere('organization', 'like', "%{$search}%")
                     ->orWhere('sponsor_tier', 'like', "%{$search}%")
-                    ->orWhere('location_selection', 'like', "%{$search}%")
-                    ->orWhere('vat_number', 'like', "%{$search}%")
-                    ->orWhere('cr_number', 'like', "%{$search}%");
+                    ->orWhere('location_selection', 'like', "%{$search}%");
             });
         }
 

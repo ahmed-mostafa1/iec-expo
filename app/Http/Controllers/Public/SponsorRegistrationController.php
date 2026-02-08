@@ -44,6 +44,13 @@ class SponsorRegistrationController extends Controller
             )
             : null;
 
+        $vatCertificatePath = $request->hasFile('vat_number')
+            ? $request->file('vat_number')->store(
+                'registrations/sponsors/vat-certificate/' . now()->year,
+                'public'
+            )
+            : null;
+
         $registration = SponsorRegistration::create([
             'full_name' => $data['full_name'],
             'email' => $data['email'],
@@ -52,8 +59,8 @@ class SponsorRegistrationController extends Controller
             'organization' => $data['organization'] ?? '',
             'sponsor_tier' => $data['sponsor_tier'],
             'location_selection' => $data['location_selection'] ?? null,
-            'vat_number' => $data['vat_number'] ?? '',
-            'cr_number' => $data['cr_number'] ?? '',
+            'vat_number' => null,
+            'vat_certificate_path' => $vatCertificatePath,
             'national_address' => $data['national_address'] ?? '',
             'document_path' => null,
             'cr_copy_path' => $crCopyPath,

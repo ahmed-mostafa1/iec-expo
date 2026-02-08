@@ -74,8 +74,7 @@ class IconRegistrationController extends Controller
                 $q->where('full_name', 'like', "%{$search}%")
                     ->orWhere('email', 'like', "%{$search}%")
                     ->orWhere('organization', 'like', "%{$search}%")
-                    ->orWhere('vat_number', 'like', "%{$search}%")
-                    ->orWhere('cr_number', 'like', "%{$search}%");
+                    ->orWhere('vat_number', 'like', "%{$search}%");
             });
         }
 
@@ -91,7 +90,7 @@ class IconRegistrationController extends Controller
 
             fputcsv($handle, [
                 'ID', 'Full Name', 'Email', 'Phone', 'Organization', 'Booked Location',
-                'VAT', 'CR', 'Status', 'Created At',
+                'Status', 'Created At',
             ]);
 
             $query->orderBy('created_at', 'desc')->chunk(200, function ($rows) use ($handle) {
@@ -103,8 +102,6 @@ class IconRegistrationController extends Controller
                         $row->phone,
                         $row->organization,
                         $row->location_selection,
-                        $row->vat_number,
-                        $row->cr_number,
                         $row->status,
                         $row->created_at,
                     ]);

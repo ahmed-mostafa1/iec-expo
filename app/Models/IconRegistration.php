@@ -14,7 +14,7 @@ class IconRegistration extends Model
         'organization',
         'location_selection',
         'vat_number',
-        'cr_number',
+        'vat_certificate_path',
         'national_address',
         'document_path',
         'cr_copy_path',

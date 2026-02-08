@@ -44,6 +44,13 @@ class IconRegistrationController extends Controller
             )
             : null;
 
+        $vatCertificatePath = $request->hasFile('vat_number')
+            ? $request->file('vat_number')->store(
+                'registrations/icons/vat-certificate/' . now()->year,
+                'public'
+            )
+            : null;
+
         $registration = IconRegistration::create([
             'full_name' => $data['full_name'],
             'email' => $data['email'],
@@ -51,8 +58,8 @@ class IconRegistrationController extends Controller
             'job_title' => $data['job_title'],
             'organization' => $data['organization'] ?? '',
             'location_selection' => $data['location_selection'],
-            'vat_number' => $data['vat_number'] ?? '',
-            'cr_number' => $data['cr_number'] ?? '',
+            'vat_number' => null,
+            'vat_certificate_path' => $vatCertificatePath,
             'national_address' => $data['national_address'] ?? '',
             'document_path' => null,
             'cr_copy_path' => $crCopyPath,

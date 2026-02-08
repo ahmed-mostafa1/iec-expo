@@ -3088,24 +3088,14 @@
                                     ];
 
                                     $exVatLabel = $fieldCopy($exhibitorFieldsStepTwoByName, 'vat_number', 'label', [
-                                        'en' => 'VAT (Value Added Tax)',
-                                        'ar' => 'ضريبة القيمة المضافة',
+                                        'en' => 'VAT Certificate (Value Added Tax)',
+                                        'ar' => 'شهادة ضريبة القيمة المضافة',
                                     ]);
-                                    $exVatPlaceholder = $fieldCopy(
+                                    $exVatHint = $fieldCopy(
                                         $exhibitorFieldsStepTwoByName,
                                         'vat_number',
-                                        'placeholder',
-                                        ['en' => '300000000000003', 'ar' => '300000000000003'],
-                                    );
-                                    $exCrNumberLabel = $fieldCopy($exhibitorFieldsStepTwoByName, 'cr_number', 'label', [
-                                        'en' => 'CR Number',
-                                        'ar' => 'رقم السجل التجاري',
-                                    ]);
-                                    $exCrNumberPlaceholder = $fieldCopy(
-                                        $exhibitorFieldsStepTwoByName,
-                                        'cr_number',
-                                        'placeholder',
-                                        ['en' => '1010101010', 'ar' => '1010101010'],
+                                        'hint',
+                                        $pdfHint,
                                     );
 
                                     $pdfHint = [
@@ -3250,25 +3240,13 @@
                                             <div class="form-group">
                                                 <label class="form-label" data-en="{{ e($exVatLabel['en']) }}"
                                                     data-ar="{{ e(value: $exVatLabel['ar']) }}">{{ $exVatLabel['text'] }}</label>
-                                                <input type="text" name="vat_number" class="form-input" required
-                                                    placeholder="{{ $exVatPlaceholder['text'] }}"
-                                                    value="{{ $sponsorFormActive ? old('vat_number') : '' }}">
+                                                <input type="file" name="vat_number" class="form-input" required
+                                                    accept="application/pdf">
+                                                <span class="form-hint" data-en="{{ e($exVatHint['en']) }}"
+                                                    data-ar="{{ e($exVatHint['ar']) }}">{{ $exVatHint['text'] }}</span>
                                                 @if ($sponsorFormActive && $errors->has('vat_number'))
                                                     <p class="mt-1 text-xs text-red-600">
                                                         {{ $errors->first('vat_number') }}
-                                                    </p>
-                                                @endif
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="form-label" data-en="{{ e($exCrNumberLabel['en']) }}"
-                                                    data-ar="{{ e($exCrNumberLabel['ar']) }}">{{ $exCrNumberLabel['text'] }}</label>
-                                                <input type="text" name="cr_number" class="form-input" required
-                                                    minlength="10" pattern="\d{10,}" inputmode="numeric"
-                                                    data-min-digits="10"
-                                                    placeholder="{{ $exCrNumberPlaceholder['text'] }}"
-                                                    value="{{ $sponsorFormActive ? old('cr_number') : '' }}">
-                                                @if ($sponsorFormActive && $errors->has('cr_number'))
-                                                    <p class="mt-1 text-xs text-red-600">{{ $errors->first('cr_number') }}
                                                     </p>
                                                 @endif
                                             </div>
@@ -3442,23 +3420,15 @@
                                     );
 
                                     $iconVatLabel = $fieldCopy($iconFieldsStepTwoByName, 'vat_number', 'label', [
-                                        'en' => trans('registration.icon.vat_number', [], 'en'),
-                                        'ar' => trans('registration.icon.vat_number', [], 'ar'),
+                                        'en' => 'VAT Certificate (Value Added Tax)',
+                                        'ar' => 'شهادة ضريبة القيمة المضافة',
                                     ]);
-                                    $iconVatPlaceholder = $fieldCopy(
+                                    $iconVatHint = $fieldCopy(
                                         $iconFieldsStepTwoByName,
                                         'vat_number',
-                                        'placeholder',
-                                        ['en' => '300000000000003', 'ar' => '300000000000003'],
+                                        'hint',
+                                        $pdfHint,
                                     );
-                                    $iconCrLabel = $fieldCopy($iconFieldsStepTwoByName, 'cr_number', 'label', [
-                                        'en' => trans('registration.icon.cr_number', [], 'en'),
-                                        'ar' => trans('registration.icon.cr_number', [], 'ar'),
-                                    ]);
-                                    $iconCrPlaceholder = $fieldCopy($iconFieldsStepTwoByName, 'cr_number', 'placeholder', [
-                                        'en' => '1010101010',
-                                        'ar' => '1010101010',
-                                    ]);
 
                                     $iconCrCopyLabel = $fieldCopy($iconFieldsStepTwoByName, 'cr_copy', 'label', [
                                         'en' => trans('registration.icon.cr_copy', [], 'en'),
@@ -3599,25 +3569,13 @@
                                             <div class="form-group">
                                                 <label class="form-label" data-en="{{ e($iconVatLabel['en']) }}"
                                                     data-ar="{{ e($iconVatLabel['ar']) }}">{{ $iconVatLabel['text'] }}</label>
-                                                <input type="text" name="vat_number" class="form-input" required
-                                                    placeholder="{{ $iconVatPlaceholder['text'] }}"
-                                                    value="{{ $iconFormActive ? old('vat_number') : '' }}">
+                                                <input type="file" name="vat_number" class="form-input" required
+                                                    accept="application/pdf">
+                                                <span class="form-hint" data-en="{{ e($iconVatHint['en']) }}"
+                                                    data-ar="{{ e($iconVatHint['ar']) }}">{{ $iconVatHint['text'] }}</span>
                                                 @if ($iconFormActive && $errors->has('vat_number'))
                                                     <p class="mt-1 text-xs text-red-600">
                                                         {{ $errors->first('vat_number') }}
-                                                    </p>
-                                                @endif
-                                            </div>
-                                            <div class="form-group">
-                                                <label class="form-label" data-en="{{ e($iconCrLabel['en']) }}"
-                                                    data-ar="{{ e($iconCrLabel['ar']) }}">{{ $iconCrLabel['text'] }}</label>
-                                                <input type="text" name="cr_number" class="form-input" required
-                                                    minlength="10" pattern="\d{10,}" inputmode="numeric"
-                                                    data-min-digits="10" placeholder="{{ $iconCrPlaceholder['text'] }}"
-                                                    value="{{ $iconFormActive ? old('cr_number') : '' }}">
-                                                @if ($iconFormActive && $errors->has('cr_number'))
-                                                    <p class="mt-1 text-xs text-red-600">
-                                                        {{ $errors->first('cr_number') }}
                                                     </p>
                                                 @endif
                                             </div>

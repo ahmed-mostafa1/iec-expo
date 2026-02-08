@@ -50,14 +50,6 @@
                         <div class="text-[10px] text-gray-500">{{ __('Booked location') }}</div>
                         <div class="text-gray-900">{{ $registration->location_selection }}</div>
                     </div>
-                    <div>
-                        <div class="text-[10px] text-gray-500">{{ __('VAT number') }}</div>
-                        <div class="text-gray-900">{{ $registration->vat_number }}</div>
-                    </div>
-                    <div>
-                        <div class="text-[10px] text-gray-500">{{ __('CR number') }}</div>
-                        <div class="text-gray-900">{{ $registration->cr_number }}</div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -106,6 +98,17 @@
                         <div>
                             <div class="text-[10px] text-gray-500 mb-1">{{ __('Corporate profile') }}</div>
                             <a href="{{ asset('storage/'.$registration->document_path) }}"
+                               target="_blank"
+                               class="text-[11px] text-emerald-700 hover:text-emerald-900">
+                                {{ __('View file') }}
+                            </a>
+                        </div>
+                    @endif
+
+                    @if($registration->vat_certificate_path)
+                        <div>
+                            <div class="text-[10px] text-gray-500 mb-1">{{ __('VAT certificate') }}</div>
+                            <a href="{{ asset('storage/'.$registration->vat_certificate_path) }}"
                                target="_blank"
                                class="text-[11px] text-emerald-700 hover:text-emerald-900">
                                 {{ __('View file') }}
