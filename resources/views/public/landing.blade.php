@@ -3139,7 +3139,8 @@
                                     data-success-message="{{ e(__('registration.sponsor.success')) }}">
                                     <div class="form-buttons"
                                         style="justify-content: flex-start; margin-bottom: 0.75rem; width: 50%!important; margin: auto;">
-                                        <a class="btn btn-outline" href="#" rel="noopener"
+                                        <a class="btn btn-outline"
+                                            href="{{ asset('pdf/iec-sponsor-profile.pdf') }}" rel="noopener"
                                             data-en="Download SPONSOR Profile" data-ar="تنزيل ملف الراعي">Download
                                             SPONSOR Profile</a>
                                     </div>
