@@ -2627,7 +2627,7 @@
 
             .participant-logo {
                 width: 100%;
-                /* max-width: 300px; */
+                max-width: 300px;
                 aspect-ratio: 1 / 1;
             }
         }
