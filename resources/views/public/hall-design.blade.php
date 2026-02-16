@@ -5,6 +5,7 @@ if (!in_array($locale, ['en', 'ar'], true)) {
 }
 app()->setLocale($locale);
 $isAr = app()->getLocale() === 'ar';
+$hasCalibrationFile = file_exists(public_path('hall-calibration.json'));
 
 $copy = [
     'title' => ['en' => 'Hall Map', 'ar' => 'خريطة القاعة'],
@@ -207,7 +208,7 @@ $t = fn(string $key) => $copy[$key][$isAr ? 'ar' : 'en'];
       </div>
 
       <div id="plan" class="plan">
-        <img src="{{ asset('img/hall-design.png') }}" alt="Hall Layout">
+        <img src="{{ asset('img/hall-design.png') }}" alt="Hall Layout" width="3490" height="6294" decoding="async">
         <svg id="overlay" class="overlay" viewBox="0 0 3490 6294" preserveAspectRatio="xMidYMid meet"></svg>
       </div>
     </div>
@@ -229,6 +230,7 @@ $t = fn(string $key) => $copy[$key][$isAr ? 'ar' : 'en'];
     const overlay = document.getElementById("overlay");
     const mapImage = document.querySelector("#plan img");
     const CALIBRATION_URL = "{{ asset('hall-calibration.json') }}";
+    const HAS_CALIBRATION_FILE = @json($hasCalibrationFile);
     const BASE_HEIGHT = 2339;
     let MAP_WIDTH = 3490;
     let MAP_HEIGHT = 6294;
@@ -248,6 +250,8 @@ $t = fn(string $key) => $copy[$key][$isAr ? 'ar' : 'en'];
 
     let selectedEl = null;
     let pendingSpace = null;
+    let isOverlayInitialized = false;
+    let overlayBatch = null;
     hideConfirmModal();
 
     function selectSpace(name, el) {
@@ -302,10 +306,10 @@ $t = fn(string $key) => $copy[$key][$isAr ? 'ar' : 'en'];
 
     cancelConfirmBtn.addEventListener('click', () => hideConfirmModal());
 
-    function svgEl(tag, attrs = {}, parent = overlay) {
+    function svgEl(tag, attrs = {}, parent = null) {
       const el = document.createElementNS("http://www.w3.org/2000/svg", tag);
       for (const [k, v] of Object.entries(attrs)) el.setAttribute(k, v);
-      parent.appendChild(el);
+      (parent || overlayBatch || overlay).appendChild(el);
       return el;
     }
 
@@ -372,8 +376,12 @@ $t = fn(string $key) => $copy[$key][$isAr ? 'ar' : 'en'];
     }
 
     async function fetchCalibrationRects() {
+      if (!HAS_CALIBRATION_FILE) {
+        return [];
+      }
+
       try {
-        const response = await fetch(CALIBRATION_URL, { cache: 'no-store' });
+        const response = await fetch(CALIBRATION_URL);
         if (!response.ok) return [];
         const data = await response.json();
         if (!Array.isArray(data)) return [];
@@ -422,27 +430,42 @@ $t = fn(string $key) => $copy[$key][$isAr ? 'ar' : 'en'];
     }
 
     async function initOverlay() {
+      if (isOverlayInitialized) {
+        return;
+      }
+      isOverlayInitialized = true;
+
       if (mapImage && mapImage.complete && mapImage.naturalWidth) {
         MAP_WIDTH = mapImage.naturalWidth;
         MAP_HEIGHT = mapImage.naturalHeight;
       }
+
       SCALE_Y = MAP_HEIGHT / BASE_HEIGHT;
       overlay.setAttribute("viewBox", `0 0 ${MAP_WIDTH} ${MAP_HEIGHT}`);
+      overlay.replaceChildren();
+      overlayBatch = document.createDocumentFragment();
+
       const calibrationRects = await fetchCalibrationRects();
       if (calibrationRects.length) {
         useCalibrationCoords = true;
-        SCALE_X = 1;
         SCALE_Y = 1;
         calibrationRects.forEach(rect => addHitbox(rect));
       } else {
         useCalibrationCoords = false;
         renderProceduralGrid();
       }
+
+      overlay.appendChild(overlayBatch);
+      overlayBatch = null;
     }
 
-    window.addEventListener("load", initOverlay);
+    window.addEventListener("load", initOverlay, { once: true });
     if (mapImage) {
-      mapImage.addEventListener("load", initOverlay, { once: true });
+      if (mapImage.complete) {
+        initOverlay();
+      } else {
+        mapImage.addEventListener("load", initOverlay, { once: true });
+      }
     }
 
     window.addEventListener("keydown", (e) => {
