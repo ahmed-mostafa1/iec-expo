@@ -2015,7 +2015,6 @@
             align-items: center;
             justify-content: center;
             font-size: 2rem;
-            margin-bottom: 1rem;
             transition: background 0.3s;
         }
 
@@ -2628,7 +2627,7 @@
 
             .participant-logo {
                 width: 100%;
-                max-width: 260px;
+                /* max-width: 300px; */
                 aspect-ratio: 1 / 1;
             }
         }
