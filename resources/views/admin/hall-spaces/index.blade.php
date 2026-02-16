@@ -23,17 +23,13 @@
             </div>
         @endif
 
-        <div class="grid gap-4 sm:grid-cols-3">
+        <div class="grid gap-4 sm:grid-cols-2">
             <div class="rounded-xl bg-white border border-gray-200 p-4">
-                <div class="text-s text-gray-500">{{ __('Total booked (all sources)') }}</div>
+                <div class="text-s text-gray-500">{{ __('Total booked spaces') }}</div>
                 <div class="mt-2 text-2xl font-semibold text-gray-900">{{ count($bookedSpaces) }}</div>
             </div>
             <div class="rounded-xl bg-white border border-gray-200 p-4">
-                <div class="text-s text-gray-500">{{ __('Booked by registrations') }}</div>
-                <div class="mt-2 text-2xl font-semibold text-gray-900">{{ count($registrationSpaces) }}</div>
-            </div>
-            <div class="rounded-xl bg-white border border-gray-200 p-4">
-                <div class="text-s text-gray-500">{{ __('Manual holds') }}</div>
+                <div class="text-s text-gray-500">{{ __('Admin manual holds (source of truth)') }}</div>
                 <div class="mt-2 text-2xl font-semibold text-gray-900">{{ $manualBookings->count() }}</div>
             </div>
         </div>
@@ -75,7 +71,7 @@
         <section class="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm space-y-3">
             <div class="flex flex-col gap-1">
                 <h2 class="text-lg font-semibold text-gray-900">{{ __('Currently booked spaces') }}</h2>
-                <p class="text-sm text-gray-500">{{ __('Includes registrations and manual holds. This list is what visitors see as unavailable.') }}</p>
+                <p class="text-sm text-gray-500">{{ __('This list is controlled only by admin manual bookings and shown as unavailable to visitors.') }}</p>
             </div>
             @if (count($bookedSpaces))
                 <div class="flex flex-wrap gap-2">
