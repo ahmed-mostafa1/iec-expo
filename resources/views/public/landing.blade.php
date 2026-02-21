@@ -2016,6 +2016,7 @@
             justify-content: center;
             font-size: 2rem;
             transition: background 0.3s;
+            max-width: 300px;
         }
 
         .participant-logo img {
