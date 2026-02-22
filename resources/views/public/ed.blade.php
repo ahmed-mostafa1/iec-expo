@@ -830,13 +830,13 @@
                                 <img src="{{ asset('img/exsponsor/11.jpg') }}" alt="Authority">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/12.jpg') }}" alt="Authority">
+                                <img src="{{ asset('img/exsponsor/12.jpg') }}" style="background-color: #fff;" alt="Authority">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/13.jpg') }}" alt="Authority">
+                                <img src="{{ asset('img/exsponsor/13.jpg') }}" style="background-color: #fff;" alt="Authority">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/14.jpg') }}" alt="Authority">
+                                <img src="{{ asset('img/exsponsor/14.jpg') }}" style="background-color: #fff;" alt="Authority">
                             </div>
                             </div>
                             <!-- Duplicate Slider Items for Infinite Loop -->
@@ -874,13 +874,13 @@
                                 <img src="{{ asset('img/exsponsor/11.jpg') }}" alt="Authority">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/12.jpg') }}" alt="Authority">
+                                <img src="{{ asset('img/exsponsor/12.jpg') }}" style="background-color: #fff;" alt="Authority">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/13.jpg') }}" alt="Authority">
+                                <img src="{{ asset('img/exsponsor/13.jpg') }}" style="background-color: #fff;" alt="Authority">
                             </div>
                             <div class="sponsor-item">
-                                <img src="{{ asset('img/exsponsor/14.jpg') }}" alt="Authority">
+                                <img src="{{ asset('img/exsponsor/14.jpg') }}" style="background-color: #fff;" alt="Authority">
                             </div>
                             <!-- end of duplicate -->
                         </div>
