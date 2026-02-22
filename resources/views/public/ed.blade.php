@@ -365,6 +365,15 @@
         /* min-height: calc(var(--sponsor-item-height) + 3.5rem); */
     }
 
+    /* Increase the value to make the carousel slower, decrease to make it faster */
+    #sponsors-carousel {
+        --carousel-speed: 36s;
+    }
+
+    #icons-carousel {
+        --carousel-speed: 80s;
+    }
+
     .carousel-control {
         position: absolute;
         top: 50%;
@@ -428,12 +437,8 @@
         display: flex;
         align-items: center;
         width: max-content;
-        animation: sponsorScroll 20s linear infinite;
+        animation: sponsorScroll var(--carousel-speed, 20s) linear infinite;
         --offset: 0px;
-    }
-
-    #icons-carousel .sponsor-track {
-        animation-duration: 60s;
     }
 
     body.locale-ar .sponsor-track {
@@ -570,11 +575,15 @@
         }
 
         .sponsor-track {
-            animation-duration: 16s;
+            animation-duration: var(--carousel-speed-mobile, var(--carousel-speed, 16s));
         }
 
-        #icons-carousel .sponsor-track {
-            animation-duration: 48s;
+        #sponsors-carousel {
+            --carousel-speed-mobile: 28s;
+        }
+
+        #icons-carousel {
+            --carousel-speed-mobile: 64s;
         }
     }
 
