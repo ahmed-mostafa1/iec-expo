@@ -838,7 +838,7 @@
                             <div class="sponsor-item">
                                 <img src="{{ asset('img/exsponsor/14.jpg') }}" style="background-color: #fff;" alt="Authority">
                             </div>
-                            </div>
+                            
                             <!-- Duplicate Slider Items for Infinite Loop -->
                            <div class="sponsor-item">
                                 <img src="{{ asset('img/exsponsor/1.jpg') }}" alt="IEC Logo">
