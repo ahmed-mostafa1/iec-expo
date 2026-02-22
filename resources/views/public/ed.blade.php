@@ -813,6 +813,21 @@
                             </div>
                             <div class="sponsor-item">
                                 <img src="{{ asset('img/exsponsor/9.jpg') }}" alt="Authority">
+                                <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/10.jpg') }}" alt="Authority">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/11.jpg') }}" alt="Authority">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/12.jpg') }}" alt="Authority">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/13.jpg') }}" alt="Authority">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/14.jpg') }}" alt="Authority">
+                            </div>
                             </div>
                             <!-- Duplicate Slider Items for Infinite Loop -->
                            <div class="sponsor-item">
@@ -841,6 +856,21 @@
                             </div>
                             <div class="sponsor-item">
                                 <img src="{{ asset('img/exsponsor/9.jpg') }}" alt="Authority">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/10.jpg') }}" alt="Authority">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/11.jpg') }}" alt="Authority">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/12.jpg') }}" alt="Authority">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/13.jpg') }}" alt="Authority">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/14.jpg') }}" alt="Authority">
                             </div>
                             <!-- end of duplicate -->
                         </div>
