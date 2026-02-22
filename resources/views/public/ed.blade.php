@@ -822,6 +822,7 @@
                             </div>
                             <div class="sponsor-item">
                                 <img src="{{ asset('img/exsponsor/9.jpg') }}" alt="Authority">
+</div>
                                 <div class="sponsor-item">
                                 <img src="{{ asset('img/exsponsor/10.jpg') }}" alt="Authority">
                             </div>
