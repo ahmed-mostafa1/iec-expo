@@ -1793,7 +1793,8 @@
             flex-direction: column;
             gap: 1rem;
             text-decoration: none;
-            min-height: 260px;
+            height: 260px;
+            width: 260px;
             will-change: transform;
         }
 
@@ -1965,7 +1966,6 @@
 
         .participant-card {
             border-radius: var(--radius);
-            /* padding: 0.9rem; */
             transition: all 0.5s;
             opacity: 0;
             transform: translateY(2rem);
@@ -1978,6 +1978,8 @@
             position: relative;
             overflow: hidden;
             margin: auto;
+            height: 260px;
+            width: 260px;
         }
 
         .participant-card.visible {
@@ -1995,6 +1997,8 @@
 
         .gold-sponsor-card {
             padding: 0.35rem;
+            height: 200px !important;
+            width: 200px !important;
         }
 
         .gold-sponsor-card .participant-logo {
