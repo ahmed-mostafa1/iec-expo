@@ -3879,8 +3879,8 @@
                                             style="flex-direction: row; align-items: center; gap: 0.5rem;">
                                             <input type="checkbox" name="privacy_policy" value="1" required
                                                 @checked($visitorFormActive && old('privacy_policy'))>
-                                            <span data-en="أوافق على شروط الخصوصية"
-                                                data-ar="I accept the privacy policy">I
+                                            <span data-en="I accept the privacy policy"
+                                                data-ar="أوافق على شروط الخصوصية">I
                                                 accept the privacy policy</span>
                                             <a class="blue-url-style" href="{{ asset('pdf/privacy-policy.pdf') }}"
                                                 target="_blank" rel="noopener" download data-en="Download from here"
