@@ -168,7 +168,7 @@ return [
                 'exhibitor_form' => [
                     'title' => [
                         'en' => 'Sponsor Application',
-                        'ar' => 'طلب العرض',
+                        'ar' => 'تسجيل الراعي',
                     ],
                     'step_one' => [
                         'en' => 'Contact',
@@ -260,11 +260,11 @@ return [
                 'icon_card' => [
                     'title' => [
                         'en' => 'Icons',
-                        'ar' => 'الأيقونات',
+                        'ar' => 'الأيكونز',
                     ],
                     'description' => [
                         'en' => 'Apply to be an Icon partner.',
-                        'ar' => 'تقدم لتكون شريك الأيقونات.',
+                        'ar' => 'تقدم لتكون شريك الأيكونز.',
                     ],
                     'cta_label' => [
                         'en' => 'Select',
@@ -274,7 +274,7 @@ return [
                 'icon_form' => [
                     'title' => [
                         'en' => 'ICON Registration',
-                        'ar' => 'تسجيل الأيقونات',
+                        'ar' => 'تسجيل الأيكونز',
                     ],
                     'step_one' => [
                         'en' => 'Company Details',

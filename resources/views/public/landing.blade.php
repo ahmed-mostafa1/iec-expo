@@ -3001,9 +3001,6 @@
                                 </div>
                                 <h3 class="role-title" data-en="{{ e($exhibitorCardTitle['en']) }}"
                                     data-ar="{{ e($exhibitorCardTitle['ar']) }}">{{ $exhibitorCardTitle['text'] }}</h3>
-                                <!-- <p class="role-desc" data-en="{{ e($exhibitorCardDescription['en']) }}"
-                                data-ar="{{ e($exhibitorCardDescription['ar']) }}">
-                                {{ $exhibitorCardDescription['text'] }}</p> -->
                                 <div class="role-cta" id="exhibitor-cta">
                                     <span data-en="Click" data-ar="إضغط">Click</span>
                                     <svg class="icon icon-sm" viewBox="0 0 24 24">
