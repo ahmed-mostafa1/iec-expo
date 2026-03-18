@@ -2910,7 +2910,7 @@
                 $exhibitorCardTitle = $translate(data_get($exhibitorCard, 'title'), '');
                 $exhibitorCardDescription = $translate(data_get($exhibitorCard, 'description'), '');
                 $exhibitorCta = $translate(data_get($exhibitorCard, 'cta_label'), __('Select'));
-                $exhibitorForm = data_get($registrationSection, 'exhibitor_form', []);
+                $exhibitorForm = data_get($registrationSection, 'sponsor_form', []);
                 $exhibitorFormTitle = $translate(data_get($exhibitorForm, 'title'), '');
                 $exhibitorSubmit = $translate(data_get($exhibitorForm, 'cta_submit'), __('Submit Application'));
                 $exhibitorFieldsStepOne = data_get($exhibitorForm, 'fields_step_one', []);
@@ -3131,8 +3131,8 @@
                                         $pdfHint,
                                     );
                                 @endphp
-                                <h3 class="form-title" data-en="{{ e($exhibitorFormTitle['en']) }}"
-                                    data-ar="{{ e($exhibitorFormTitle['ar']) }}">{{ $exhibitorFormTitle['ar'] }}</h3>
+                                <!-- <h3 class="form-title" data-en="{{ e($exhibitorFormTitle['en']) }}"
+                                    data-ar="{{ e($exhibitorFormTitle['ar']) }}">{{ $exhibitorFormTitle['text'] }}</h3> -->
                                 <form id="sponsor-registration-form" method="POST"
                                     action="{{ route('public.register.sponsor', ['locale' => $locale]) }}"
                                     enctype="multipart/form-data" novalidate
@@ -3301,11 +3301,11 @@
                                                 style="flex-direction: row; align-items: center; gap: 0.5rem;">
                                                 <input type="checkbox" name="privacy_policy" value="1" required
                                                     @checked($sponsorFormActive && old('privacy_policy'))>
-                                                <span data-en="I have read and accept " data-ar="">I have read and
+                                                <span data-en="I have read and accept " data-ar="قرأت وأوافق على">I have read and
                                                     accept</span>
-                                                <a class="blue-url-style" href="{{ asset('pdf/sponsor-profile.pdf') }}"
+                                                <a class="blue-url-style" href="{{ asset('pdf/iec-sponsor-profile.pdf') }}"
                                                     target="_blank" rel="noopener" data-en="the SPONSOR profile terms"
-                                                    data-ar="قرأت وأوافق على شروط بروفايل الراعي">the SPONSOR profile
+                                                    data-ar=" شروط بروفايل الراعي">the SPONSOR profile
                                                     terms</a>
                                             </label>
                                             @if ($sponsorFormActive && $errors->has('privacy_policy'))
@@ -3342,8 +3342,6 @@
                                 </div>
                                 <h3 class="role-title" data-en="{{ e($iconCardTitle['en']) }}"
                                     data-ar="{{ e($iconCardTitle['ar']) }}">{{ $iconCardTitle['text'] }}</h3>
-                                <!-- <p class="role-desc" data-en="{{ e($iconCardDescription['en']) }}"
-                                data-ar="{{ e($iconCardDescription['ar']) }}">{{ $iconCardDescription['text'] }}</p> -->
                                 <div class="role-cta" id="icon-cta">
                                     <span data-en="Click" data-ar="اضغط">Click</span>
                                     <svg class="icon icon-sm" viewBox="0 0 24 24">
@@ -3458,8 +3456,8 @@
                                         $pdfHint,
                                     );
                                 @endphp
-                                <h3 class="form-title" data-en="{{ e($iconFormTitle['en']) }}"
-                                    data-ar="{{ e($iconFormTitle['ar']) }}">{{ $iconFormTitle['text'] }}</h3>
+                                <!-- <h3 class="form-title" data-en="{{ e($iconFormTitle['en']) }}"
+                                    data-ar="{{ e($iconFormTitle['ar']) }}">{{ $iconFormTitle['text'] }}</h3> -->
                                 <form id="icon-registration-form" method="POST"
                                     action="{{ \Illuminate\Support\Facades\Route::has('public.register.icon') ? route('public.register.icon', ['locale' => $locale]) : '#' }}"
                                     enctype="multipart/form-data" novalidate
@@ -3633,7 +3631,7 @@
 
                                                 <span data-en="I have read and accept" data-ar="">I have read and
                                                     accept</span>
-                                                <a class="blue-url-style" href="{{ asset('pdf/icon-profile.pdf') }}"
+                                                <a class="blue-url-style" href="{{ asset('pdf/IEC360-Profile-Icon.pdf') }}"
                                                     target="_blank" rel="noopener" data-en="the ICON profile terms"
                                                     data-ar="قرأت وأوافق على شروط بروفايل الآيكون">the ICON profile
                                                     terms</a>
@@ -3676,8 +3674,6 @@
                                 </div>
                                 <h3 class="role-title" data-en="{{ e($guestCardTitle['en']) }}"
                                     data-ar="{{ e($guestCardTitle['ar']) }}">{{ $guestCardTitle['text'] }}</h3>
-                                <!-- <p class="role-desc" data-en="{{ e($guestCardDescription['en']) }}"
-                                data-ar="{{ e($guestCardDescription['ar']) }}">{{ $guestCardDescription['text'] }}</p> -->
                                 <div class="role-cta" id="visitor-cta">
                                     <span data-en="Click" data-ar="إضغط">Click</span>
                                     <svg class="icon icon-sm" viewBox="0 0 24 24">
