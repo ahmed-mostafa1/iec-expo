@@ -3633,7 +3633,7 @@
                                                     accept</span>
                                                 <a class="blue-url-style" href="{{ asset('pdf/IEC360-Profile-Icon.pdf') }}"
                                                     target="_blank" rel="noopener" data-en="the ICON profile terms"
-                                                    data-ar=" شروط تسجيل الآيكون">the ICON profile
+                                                    data-ar=" شروط تسجيل الأيكون">the ICON profile
                                                     terms</a>
                                                 @if ($iconFormActive && $errors->has('privacy_policy'))
                                                     <p class="mt-1 text-xs text-red-600">
