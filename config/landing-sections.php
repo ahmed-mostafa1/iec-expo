@@ -264,7 +264,7 @@ return [
                     ],
                     'description' => [
                         'en' => 'Apply to be an Icon partner.',
-                        'ar' => 'تقدم لتكون شريك الأيكونز.',
+                        'ar' => 'تقدم لتكون من الأيكونز.',
                     ],
                     'cta_label' => [
                         'en' => 'Select',
@@ -273,7 +273,7 @@ return [
                 ],
                 'icon_form' => [
                     'title' => [
-                        'en' => 'ICON Registration',
+                        'en' => 'ICONS Registration',
                         'ar' => 'تسجيل الأيكونز',
                     ],
                     'step_one' => [

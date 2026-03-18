@@ -3035,7 +3035,7 @@
                                         $exhibitorFieldsStepOneByName,
                                         'email',
                                         'placeholder',
-                                        ['en' => 'john@company.com', 'ar' => 'john@company.com'],
+                                        ['en' => 'saleh@company.com', 'ar' => 'saleh@company.com'],
                                     );
                                     $exPhoneLabel = $fieldCopy($exhibitorFieldsStepOneByName, 'phone', 'label', [
                                         'en' => 'Phone *',
@@ -3132,7 +3132,7 @@
                                     );
                                 @endphp
                                 <h3 class="form-title" data-en="{{ e($exhibitorFormTitle['en']) }}"
-                                    data-ar="{{ e($exhibitorFormTitle['ar']) }}">{{ $exhibitorFormTitle['text'] }}</h3>
+                                    data-ar="{{ e($exhibitorFormTitle['ar']) }}">{{ $exhibitorFormTitle['ar'] }}</h3>
                                 <form id="sponsor-registration-form" method="POST"
                                     action="{{ route('public.register.sponsor', ['locale' => $locale]) }}"
                                     enctype="multipart/form-data" novalidate
