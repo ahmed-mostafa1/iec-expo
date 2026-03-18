@@ -3305,7 +3305,7 @@
                                                     accept</span>
                                                 <a class="blue-url-style" href="{{ asset('pdf/iec-sponsor-profile.pdf') }}"
                                                     target="_blank" rel="noopener" data-en="the SPONSOR profile terms"
-                                                    data-ar=" شروط بروفايل الراعي">the SPONSOR profile
+                                                    data-ar=" شروط تسجيل الراعي">the SPONSOR profile
                                                     terms</a>
                                             </label>
                                             @if ($sponsorFormActive && $errors->has('privacy_policy'))
@@ -3629,11 +3629,11 @@
                                                 <input type="checkbox" name="privacy_policy" value="1" required
                                                     @checked($iconFormActive && old('privacy_policy'))>
 
-                                                <span data-en="I have read and accept" data-ar="">I have read and
+                                                <span data-en="I have read and accept" data-ar="قرأت وأوافق على">I have read and
                                                     accept</span>
                                                 <a class="blue-url-style" href="{{ asset('pdf/IEC360-Profile-Icon.pdf') }}"
                                                     target="_blank" rel="noopener" data-en="the ICON profile terms"
-                                                    data-ar="قرأت وأوافق على شروط بروفايل الآيكون">the ICON profile
+                                                    data-ar=" شروط تسجيل الآيكون">the ICON profile
                                                     terms</a>
                                                 @if ($iconFormActive && $errors->has('privacy_policy'))
                                                     <p class="mt-1 text-xs text-red-600">
