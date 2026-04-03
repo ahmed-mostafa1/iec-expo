@@ -1586,11 +1586,6 @@
             justify-content: flex-start;
         }
 
-        /* .goal-card:hover .goal-icon {
-      background: rgb(var(--primary));
-      color: rgb(var(--primary-foreground));
-    } */
-
         .goal-title {
             font-size: 1.5rem;
             font-weight: 700;
@@ -4290,9 +4285,9 @@ experience that unites ambitious minds and industry leaders under one roof"
                                     data-ar="{{ $sponsorGroups['gold']['title']['ar'] }}">
                                     {{ strtoupper($sponsorGroups['gold']['title']['en']) }}
                                 </h2>
-                                <div class="participants-grid gold-sponsors-grid">
+                                <div class="participants-grid">
                                     @foreach($sponsorGroups['gold']['sponsors'] as $sponsor)
-                                        <article class="participant-card gold-sponsor-card" data-animate>
+                                        <article class="participant-card" data-animate>
                                             <div class="participant-logo">
                                                 <img src="{{ $sponsor->logo_path ? asset('storage/' . $sponsor->logo_path) : asset('img/placeholder-img.png') }}"
                                                     alt="{{ $sponsor->getLocalizedName($locale) }}">
@@ -4303,25 +4298,6 @@ experience that unites ambitious minds and industry leaders under one roof"
                             </div>
                         @endif
 
-                        <!-- OTHER SPONSORS -->
-                        @if(!empty($sponsorGroups['other']) && $sponsorGroups['other']['sponsors']->isNotEmpty())
-                            <div class="sponsor-tier">
-                                <h2 class="sponsor-tier-title" data-en="{{ $sponsorGroups['other']['title']['en'] }}"
-                                    data-ar="{{ $sponsorGroups['other']['title']['ar'] }}">
-                                    {{ strtoupper($sponsorGroups['other']['title']['en']) }}
-                                </h2>
-                                <div class="sponsor-tier-grid tier-main other-sponsors-grid">
-                                    @foreach($sponsorGroups['other']['sponsors'] as $sponsor)
-                                        <article class="sponsor-card" data-animate>
-                                            <div class="sponsor-logo">
-                                                <img src="{{ $sponsor->logo_path ? asset('storage/' . $sponsor->logo_path) : asset('img/placeholder-img.png') }}"
-                                                    alt="{{ $sponsor->getLocalizedName($locale) }}">
-                                            </div>
-                                        </article>
-                                    @endforeach
-                                </div>
-                            </div>
-                        @endif
                     </div>
                 </div>
             </section>
