@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="{{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}">
 
 <head>
@@ -1634,6 +1634,13 @@
             margin: 0 auto;
         }
 
+        .sponsor-pairs-row {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            width: 100%;
+        }
+
         .sponsor-tier-grid.single-sponsor-grid {
             grid-template-columns: 1fr;
             max-width: 360px;
@@ -2571,6 +2578,19 @@
 
             .contact-grid {
                 grid-template-columns: 1fr 1fr;
+            }
+
+            .sponsor-pairs-row {
+                flex-direction: row;
+                align-items: flex-start;
+                max-width: 1200px;
+                margin: 0 auto;
+            }
+
+            .sponsor-pairs-row .sponsor-tier-pair {
+                flex: 1;
+                max-width: none;
+                margin: 0;
             }
         }
 
@@ -4226,6 +4246,7 @@ experience that unites ambitious minds and industry leaders under one roof"
 
                         <!-- Marketing & Media -->
                         @if(!empty($sponsorPairs))
+                            <div class="sponsor-pairs-row">
                             @foreach($sponsorPairs as $pair)
                                 @php
                                     $leftGroup = $sponsorGroups[$pair['left']] ?? null;
@@ -4276,6 +4297,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                                     </div>
                                 @endif
                             @endforeach
+                            </div><!-- /.sponsor-pairs-row -->
                         @endif
 
                         <!-- GOLD -->
