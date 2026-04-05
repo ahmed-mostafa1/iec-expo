@@ -97,7 +97,7 @@ class LandingPageController extends Controller
             'marketing' => ['en' => 'Marketing', 'ar' => 'التسويقي'],
             'media' => ['en' => 'Media', 'ar' => 'الإعلامي'],
             'technology' => ['en' => 'Technology', 'ar' => 'التكنولوجي'],
-            'safety-security' => ['en' => 'Safety and Security', 'ar' => 'الأمني'],
+            'safety-security' => ['en' => 'Security', 'ar' => 'الأمني'],
             'gold' => ['en' => 'Gold', 'ar' => 'الذهبي'],
             'other' => ['en' => 'Sponsors', 'ar' => 'الرعاة'],
         ];
