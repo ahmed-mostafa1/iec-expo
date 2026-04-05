@@ -1654,6 +1654,24 @@
             margin: 0 auto;
         }
 
+        .sponsor-paired-groups {
+            display: grid;
+            gap: 1.5rem;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            align-items: start;
+        }
+
+        .sponsor-paired-tier {
+            width: 100%;
+        }
+
+        .sponsor-paired-tier .participants-grid {
+            grid-template-columns: 1fr;
+            justify-items: center;
+        }
+
         .sponsor-tier-grid.tier-main,
         .sponsor-tier-grid.tier-strategic {
             grid-template-columns: repeat(auto-fit, minmax(300px, 250px));
@@ -2502,6 +2520,10 @@
                 grid-template-columns: repeat(2, 1fr);
             }
 
+            .sponsor-paired-groups {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
             .nav-logo {
                 height: 60px;
             }
@@ -2576,6 +2598,10 @@
 
             .participants-grid {
                 grid-template-columns: repeat(3, 1fr);
+            }
+
+            .sponsor-paired-groups {
+                grid-template-columns: repeat(4, minmax(0, 1fr));
             }
 
             .contact-grid {
@@ -4240,52 +4266,32 @@ experience that unites ambitious minds and industry leaders under one roof"
 
                         <!-- Marketing & Media -->
                         @if(!empty($sponsorPairs))
-                            <div class="sponsor-pairs-row">
-                                @foreach($sponsorPairs as $pair)
+                            @php
+                                $pairedSponsorKeys = collect($sponsorPairs)
+                                    ->flatMap(fn ($pair) => [$pair['left'], $pair['right']])
+                                    ->all();
+                            @endphp
+                            <div class="sponsor-paired-groups">
+                                @foreach($pairedSponsorKeys as $groupKey)
                                     @php
-                                        $leftGroup = $sponsorGroups[$pair['left']] ?? null;
-                                        $rightGroup = $sponsorGroups[$pair['right']] ?? null;
-                                        $hasLeft = $leftGroup && $leftGroup['sponsors']->isNotEmpty();
-                                        $hasRight = $rightGroup && $rightGroup['sponsors']->isNotEmpty();
+                                        $group = $sponsorGroups[$groupKey] ?? null;
                                     @endphp
-                                    @if($hasLeft || $hasRight)
-                                        <div class="sponsor-tier-pair">
-                                            @if($hasLeft)
-                                                <div class="sponsor-tier">
-                                                    <h2 class="sponsor-tier-title" data-en="{{ $leftGroup['title']['en'] }}"
-                                                        data-ar="{{ $leftGroup['title']['ar'] }}">
-                                                        {{ strtoupper($leftGroup['title']['en']) }}
-                                                    </h2>
-                                                    <div class="participants-grid">
-                                                        @foreach($leftGroup['sponsors'] as $sponsor)
-                                                            <article class="participant-card" data-animate>
-                                                                <div class="participant-logo">
-                                                                    <img src="{{ $sponsor->logo_path ? asset('storage/' . $sponsor->logo_path) : asset('img/placeholder-img.png') }}"
-                                                                        alt="{{ $sponsor->getLocalizedName($locale) }}">
-                                                                </div>
-                                                            </article>
-                                                        @endforeach
-                                                    </div>
-                                                </div>
-                                            @endif
-                                            @if($hasRight)
-                                                <div class="sponsor-tier">
-                                                    <h2 class="sponsor-tier-title" data-en="{{ $rightGroup['title']['en'] }}"
-                                                        data-ar="{{ $rightGroup['title']['ar'] }}">
-                                                        {{ strtoupper($rightGroup['title']['en']) }}
-                                                    </h2>
-                                                    <div class="participants-grid">
-                                                        @foreach($rightGroup['sponsors'] as $sponsor)
-                                                            <article class="participant-card" data-animate>
-                                                                <div class="participant-logo">
-                                                                    <img src="{{ $sponsor->logo_path ? asset('storage/' . $sponsor->logo_path) : asset('img/placeholder-img.png') }}"
-                                                                        alt="{{ $sponsor->getLocalizedName($locale) }}">
-                                                                </div>
-                                                            </article>
-                                                        @endforeach
-                                                    </div>
-                                                </div>
-                                            @endif
+                                    @if($group && $group['sponsors']->isNotEmpty())
+                                        <div class="sponsor-tier sponsor-paired-tier">
+                                            <h2 class="sponsor-tier-title" data-en="{{ $group['title']['en'] }}"
+                                                data-ar="{{ $group['title']['ar'] }}">
+                                                {{ strtoupper($group['title']['en']) }}
+                                            </h2>
+                                            <div class="participants-grid">
+                                                @foreach($group['sponsors'] as $sponsor)
+                                                    <article class="participant-card" data-animate>
+                                                        <div class="participant-logo">
+                                                            <img src="{{ $sponsor->logo_path ? asset('storage/' . $sponsor->logo_path) : asset('img/placeholder-img.png') }}"
+                                                                alt="{{ $sponsor->getLocalizedName($locale) }}">
+                                                        </div>
+                                                    </article>
+                                                @endforeach
+                                            </div>
                                         </div>
                                     @endif
                                 @endforeach
