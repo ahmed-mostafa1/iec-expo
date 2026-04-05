@@ -1819,7 +1819,7 @@
             height: 100%;
             aspect-ratio: 1 / 1;
             border-radius: 1rem;
-            overflow: hidden;
+            overflow: hidden !important;
             background: rgb(var(--muted));
             box-shadow: inset 0 0 0 1px rgb(var(--border) / 1);
         }
