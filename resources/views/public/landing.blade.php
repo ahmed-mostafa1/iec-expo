@@ -1534,7 +1534,7 @@
         .goals-list {
             display: grid;
             grid-template-columns: repeat(1, 1fr);
-            gap: 1.5rem;
+            gap: 3rem;
             width: 100%;
             margin: auto;
         }
@@ -1586,11 +1586,6 @@
             justify-content: flex-start;
         }
 
-        /* .goal-card:hover .goal-icon {
-      background: rgb(var(--primary));
-      color: rgb(var(--primary-foreground));
-    } */
-
         .goal-title {
             font-size: 1.5rem;
             font-weight: 700;
@@ -1600,6 +1595,9 @@
         .goal-desc {
             color: rgb(var(--muted-foreground));
             text-align: center;
+            line-height: 2.6;
+            align-items: center;        
+            justify-content: center;  
         }
 
         /* Sponsors Section */
@@ -1616,8 +1614,7 @@
 
         .sponsor-tier-title {
             text-align: center;
-            font-size: 1.5rem;
-            /* font-weight: 600; */
+            font-size: 2rem;
             margin-bottom: 1rem;
             color: var(--light-color);
         }
@@ -4085,16 +4082,8 @@
                     <div class="about-grid">
                         <div class="about-col" data-animate>
                             <div class="goals-list">
-                                <div class="goal-card" data-animate>
+                                <div class="goal-card" style="font-size: 1.1rem; font-weight: 500;" data-animate>
                                     <div>
-                                        <div class="goal-title-row">
-                                            <div class="goal-icon">
-                                                <img src="{{ asset('img/icons/intro.png') }}" alt="flag Icon"
-                                                    style="height: 40px;">
-                                            </div>
-                                            <h3 class="goal-title" data-en="Introduction" data-ar="المقدمة">Introduction
-                                            </h3>
-                                        </div>
                                         <p class="goal-desc" data-en="With unmatched uniqueness and excellence, the IEC EXPO returns for its third edition
 under the theme IEC 360°. It continues its journey as a comprehensive interactive
 platform that merges innovation, development, and networking—offering an exceptional
