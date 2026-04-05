@@ -1640,15 +1640,16 @@
         }
 
         .sponsor-tier-items {
-            max-width: 1200px;
-            margin: 0 auto;
-            align-items: start;
+            width: 100%;
         }
 
         .sponsor-tier-card {
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-self: center;
+            width: 260px;
+            max-width: 100%;
         }
 
         .sponsor-tier-grid.tier-main,
@@ -2499,10 +2500,6 @@
                 grid-template-columns: repeat(2, 1fr);
             }
 
-            .sponsor-tier-items {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-            }
-
             .nav-logo {
                 height: 60px;
             }
@@ -2573,10 +2570,6 @@
 
             .participants-grid {
                 grid-template-columns: repeat(3, 1fr);
-            }
-
-            .sponsor-tier-items {
-                grid-template-columns: repeat(4, minmax(0, 1fr));
             }
 
             .contact-grid {
