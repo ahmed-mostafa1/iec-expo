@@ -1628,21 +1628,6 @@
             margin: 0 auto;
         }
 
-        .sponsor-tier-pair {
-            display: grid;
-            gap: 1.5rem;
-            grid-template-columns: 1fr;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        .sponsor-pairs-row {
-            display: flex;
-            flex-direction: column;
-            gap: 1.5rem;
-            width: 100%;
-        }
-
         .sponsor-tier-grid.single-sponsor-grid {
             grid-template-columns: 1fr;
             max-width: 360px;
@@ -1654,22 +1639,16 @@
             margin: 0 auto;
         }
 
-        .sponsor-paired-groups {
-            display: grid;
-            gap: 1.5rem;
-            width: 100%;
+        .sponsor-tier-items {
             max-width: 1200px;
             margin: 0 auto;
             align-items: start;
         }
 
-        .sponsor-paired-tier {
-            width: 100%;
-        }
-
-        .sponsor-paired-tier .participants-grid {
-            grid-template-columns: 1fr;
-            justify-items: center;
+        .sponsor-tier-card {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .sponsor-tier-grid.tier-main,
@@ -2520,7 +2499,7 @@
                 grid-template-columns: repeat(2, 1fr);
             }
 
-            .sponsor-paired-groups {
+            .sponsor-tier-items {
                 grid-template-columns: repeat(2, minmax(0, 1fr));
             }
 
@@ -2578,10 +2557,6 @@
                 height: 40px;
             }
 
-            .sponsor-tier-pair {
-                grid-template-columns: repeat(2, minmax(0, 1fr));
-            }
-
             .sponsor-tier-grid.single-sponsor-grid {
                 max-width: 100%;
             }
@@ -2600,25 +2575,12 @@
                 grid-template-columns: repeat(3, 1fr);
             }
 
-            .sponsor-paired-groups {
+            .sponsor-tier-items {
                 grid-template-columns: repeat(4, minmax(0, 1fr));
             }
 
             .contact-grid {
                 grid-template-columns: 1fr 1fr;
-            }
-
-            .sponsor-pairs-row {
-                flex-direction: row;
-                align-items: flex-start;
-                max-width: 1200px;
-                margin: 0 auto;
-            }
-
-            .sponsor-pairs-row .sponsor-tier-pair {
-                flex: 1;
-                max-width: none;
-                margin: 0;
             }
         }
 
@@ -4265,33 +4227,35 @@ experience that unites ambitious minds and industry leaders under one roof"
                         @endif
 
                         <!-- Marketing & Media -->
-                        @if(!empty($sponsorPairs))
-                            @php
-                                $pairedSponsorKeys = collect($sponsorPairs)
-                                    ->flatMap(fn ($pair) => [$pair['left'], $pair['right']])
-                                    ->all();
-                            @endphp
-                            <div class="sponsor-paired-groups">
-                                @foreach($pairedSponsorKeys as $groupKey)
+                        @php
+                            $marketingTierKeys = ['marketing', 'media', 'technology', 'safety-security'];
+                            $marketingTiers = collect($marketingTierKeys)
+                                ->map(function ($groupKey) use ($sponsorGroups) {
+                                    return $sponsorGroups[$groupKey] ?? null;
+                                })
+                                ->filter(function ($group) {
+                                    return $group && $group['sponsors']->isNotEmpty();
+                                })
+                                ->values();
+                        @endphp
+                        @if($marketingTiers->isNotEmpty())
+                            <div class="participants-grid sponsor-tier-items">
+                                @foreach($marketingTiers as $group)
                                     @php
-                                        $group = $sponsorGroups[$groupKey] ?? null;
+                                        $sponsor = $group['sponsors']->first();
                                     @endphp
-                                    @if($group && $group['sponsors']->isNotEmpty())
-                                        <div class="sponsor-tier sponsor-paired-tier">
+                                    @if($sponsor)
+                                        <div class="sponsor-tier-card">
                                             <h2 class="sponsor-tier-title" data-en="{{ $group['title']['en'] }}"
                                                 data-ar="{{ $group['title']['ar'] }}">
                                                 {{ strtoupper($group['title']['en']) }}
                                             </h2>
-                                            <div class="participants-grid">
-                                                @foreach($group['sponsors'] as $sponsor)
-                                                    <article class="participant-card" data-animate>
-                                                        <div class="participant-logo">
-                                                            <img src="{{ $sponsor->logo_path ? asset('storage/' . $sponsor->logo_path) : asset('img/placeholder-img.png') }}"
-                                                                alt="{{ $sponsor->getLocalizedName($locale) }}">
-                                                        </div>
-                                                    </article>
-                                                @endforeach
-                                            </div>
+                                            <article class="participant-card" data-animate>
+                                                <div class="participant-logo">
+                                                    <img src="{{ $sponsor->logo_path ? asset('storage/' . $sponsor->logo_path) : asset('img/placeholder-img.png') }}"
+                                                        alt="{{ $sponsor->getLocalizedName($locale) }}">
+                                                </div>
+                                            </article>
                                         </div>
                                     @endif
                                 @endforeach
