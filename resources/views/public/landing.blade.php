@@ -2022,7 +2022,8 @@
             justify-content: center;
             font-size: 2rem;
             transition: background 0.3s;
-            max-width: 300px;
+            min-height: 260px;
+            min-width: 260px;
         }
 
         .participant-logo img {
@@ -2030,7 +2031,7 @@
             height: 100%;
             object-fit: fill;
             border-radius: 10px;
-            min-height: 260px;
+
         }
 
         .participant-card:hover .participant-logo {
