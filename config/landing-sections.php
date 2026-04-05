@@ -106,13 +106,13 @@ return [
                             'name' => 'full_name',
                             'type' => 'text',
                             'label' => ['en' => 'Full Name *', 'ar' => 'الاسم الكامل *'],
-                            'placeholder' => ['en' => 'John Doe', 'ar' => 'جون دو'],
+                            'placeholder' => ['en' => 'Saleh Ahmed', 'ar' => 'صالح أحمد'],
                         ],
                         [
                             'name' => 'email',
                             'type' => 'email',
                             'label' => ['en' => 'Email *', 'ar' => 'البريد الإلكتروني *'],
-                            'placeholder' => ['en' => 'john@example.com', 'ar' => 'john@example.com'],
+                            'placeholder' => ['en' => 'Saleh@example.com', 'ar' => 'Saleh@example.com'],
                         ],
                         [
                             'name' => 'phone',
@@ -165,10 +165,10 @@ return [
                         'ar' => 'اختر',
                     ],
                 ],
-                'exhibitor_form' => [
+                'sponsor_form' => [
                     'title' => [
                         'en' => 'Sponsor Application',
-                        'ar' => 'طلب العرض',
+                        'ar' => 'تسجيل الراعي',
                     ],
                     'step_one' => [
                         'en' => 'Contact',
@@ -191,13 +191,13 @@ return [
                             'name' => 'exhibitor_full_name',
                             'type' => 'text',
                             'label' => ['en' => 'Full Name *', 'ar' => 'الاسم الكامل *'],
-                            'placeholder' => ['en' => 'John Doe', 'ar' => 'جون دو'],
+                            'placeholder' => ['en' => 'Saleh Ahmed', 'ar' => 'صالح أحمد'],
                         ],
                         [
                             'name' => 'exhibitor_email',
                             'type' => 'email',
                             'label' => ['en' => 'Email *', 'ar' => 'البريد الإلكتروني *'],
-                            'placeholder' => ['en' => 'john@company.com', 'ar' => 'john@company.com'],
+                            'placeholder' => ['en' => 'saleh@company.com', 'ar' => 'saleh@company.com'],
                         ],
                         [
                             'name' => 'exhibitor_phone',
@@ -259,12 +259,12 @@ return [
                 ],
                 'icon_card' => [
                     'title' => [
-                        'en' => 'Icons',
-                        'ar' => 'الأيقونات',
+                        'en' => 'Icon',
+                        'ar' => 'أيكون',
                     ],
                     'description' => [
                         'en' => 'Apply to be an Icon partner.',
-                        'ar' => 'تقدم لتكون شريك الأيقونات.',
+                        'ar' => 'تقدم لتكون من الأيكونز.',
                     ],
                     'cta_label' => [
                         'en' => 'Select',
@@ -273,8 +273,8 @@ return [
                 ],
                 'icon_form' => [
                     'title' => [
-                        'en' => 'ICON Registration',
-                        'ar' => 'تسجيل الأيقونات',
+                        'en' => 'ICONS Registration',
+                        'ar' => 'تسجيل الأيكونز',
                     ],
                     'step_one' => [
                         'en' => 'Company Details',
@@ -301,13 +301,13 @@ return [
                             'name' => 'full_name',
                             'type' => 'text',
                             'label' => ['en' => 'Full Name *', 'ar' => 'الاسم الكامل *'],
-                            'placeholder' => ['en' => 'John Doe', 'ar' => 'جون دو'],
+                            'placeholder' => ['en' => 'Saleh Ahmed', 'ar' => 'صالح أحمد'],
                         ],
                         [
                             'name' => 'email',
                             'type' => 'email',
                             'label' => ['en' => 'Email *', 'ar' => 'البريد الإلكتروني *'],
-                            'placeholder' => ['en' => 'john@company.com', 'ar' => 'john@company.com'],
+                            'placeholder' => ['en' => 'Saleh@company.com', 'ar' => 'Saleh@company.com'],
                         ],
                         [
                             'name' => 'phone',

@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="{{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}">
 
 <head>
@@ -1636,6 +1636,13 @@
             margin: 0 auto;
         }
 
+        .sponsor-pairs-row {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            width: 100%;
+        }
+
         .sponsor-tier-grid.single-sponsor-grid {
             grid-template-columns: 1fr;
             max-width: 360px;
@@ -2574,6 +2581,19 @@
             .contact-grid {
                 grid-template-columns: 1fr 1fr;
             }
+
+            .sponsor-pairs-row {
+                flex-direction: row;
+                align-items: flex-start;
+                max-width: 1200px;
+                margin: 0 auto;
+            }
+
+            .sponsor-pairs-row .sponsor-tier-pair {
+                flex: 1;
+                max-width: none;
+                margin: 0;
+            }
         }
 
         @media (min-width: 1280px) {
@@ -2907,7 +2927,7 @@
                 $exhibitorCardTitle = $translate(data_get($exhibitorCard, 'title'), '');
                 $exhibitorCardDescription = $translate(data_get($exhibitorCard, 'description'), '');
                 $exhibitorCta = $translate(data_get($exhibitorCard, 'cta_label'), __('Select'));
-                $exhibitorForm = data_get($registrationSection, 'exhibitor_form', []);
+                $exhibitorForm = data_get($registrationSection, 'sponsor_form', []);
                 $exhibitorFormTitle = $translate(data_get($exhibitorForm, 'title'), '');
                 $exhibitorSubmit = $translate(data_get($exhibitorForm, 'cta_submit'), __('Submit Application'));
                 $exhibitorFieldsStepOne = data_get($exhibitorForm, 'fields_step_one', []);
@@ -2998,9 +3018,6 @@
                                 </div>
                                 <h3 class="role-title" data-en="{{ e($exhibitorCardTitle['en']) }}"
                                     data-ar="{{ e($exhibitorCardTitle['ar']) }}">{{ $exhibitorCardTitle['text'] }}</h3>
-                                <!-- <p class="role-desc" data-en="{{ e($exhibitorCardDescription['en']) }}"
-                                data-ar="{{ e($exhibitorCardDescription['ar']) }}">
-                                {{ $exhibitorCardDescription['text'] }}</p> -->
                                 <div class="role-cta" id="exhibitor-cta">
                                     <span data-en="Click" data-ar="إضغط">Click</span>
                                     <svg class="icon icon-sm" viewBox="0 0 24 24">
@@ -3035,7 +3052,7 @@
                                         $exhibitorFieldsStepOneByName,
                                         'email',
                                         'placeholder',
-                                        ['en' => 'john@company.com', 'ar' => 'john@company.com'],
+                                        ['en' => 'saleh@company.com', 'ar' => 'saleh@company.com'],
                                     );
                                     $exPhoneLabel = $fieldCopy($exhibitorFieldsStepOneByName, 'phone', 'label', [
                                         'en' => 'Phone *',
@@ -3131,8 +3148,8 @@
                                         $pdfHint,
                                     );
                                 @endphp
-                                <h3 class="form-title" data-en="{{ e($exhibitorFormTitle['en']) }}"
-                                    data-ar="{{ e($exhibitorFormTitle['ar']) }}">{{ $exhibitorFormTitle['text'] }}</h3>
+                                <!-- <h3 class="form-title" data-en="{{ e($exhibitorFormTitle['en']) }}"
+                                    data-ar="{{ e($exhibitorFormTitle['ar']) }}">{{ $exhibitorFormTitle['text'] }}</h3> -->
                                 <form id="sponsor-registration-form" method="POST"
                                     action="{{ route('public.register.sponsor', ['locale' => $locale]) }}"
                                     enctype="multipart/form-data" novalidate
@@ -3301,11 +3318,11 @@
                                                 style="flex-direction: row; align-items: center; gap: 0.5rem;">
                                                 <input type="checkbox" name="privacy_policy" value="1" required
                                                     @checked($sponsorFormActive && old('privacy_policy'))>
-                                                <span data-en="I have read and accept " data-ar="">I have read and
+                                                <span data-en="I have read and accept " data-ar="قرأت وأوافق على">I have read and
                                                     accept</span>
-                                                <a class="blue-url-style" href="{{ asset('pdf/sponsor-profile.pdf') }}"
+                                                <a class="blue-url-style" href="{{ asset('pdf/iec-sponsor-profile.pdf') }}"
                                                     target="_blank" rel="noopener" data-en="the SPONSOR profile terms"
-                                                    data-ar="قرأت وأوافق على شروط بروفايل الراعي">the SPONSOR profile
+                                                    data-ar=" شروط تسجيل الراعي">the SPONSOR profile
                                                     terms</a>
                                             </label>
                                             @if ($sponsorFormActive && $errors->has('privacy_policy'))
@@ -3342,8 +3359,6 @@
                                 </div>
                                 <h3 class="role-title" data-en="{{ e($iconCardTitle['en']) }}"
                                     data-ar="{{ e($iconCardTitle['ar']) }}">{{ $iconCardTitle['text'] }}</h3>
-                                <!-- <p class="role-desc" data-en="{{ e($iconCardDescription['en']) }}"
-                                data-ar="{{ e($iconCardDescription['ar']) }}">{{ $iconCardDescription['text'] }}</p> -->
                                 <div class="role-cta" id="icon-cta">
                                     <span data-en="Click" data-ar="اضغط">Click</span>
                                     <svg class="icon icon-sm" viewBox="0 0 24 24">
@@ -3458,8 +3473,8 @@
                                         $pdfHint,
                                     );
                                 @endphp
-                                <h3 class="form-title" data-en="{{ e($iconFormTitle['en']) }}"
-                                    data-ar="{{ e($iconFormTitle['ar']) }}">{{ $iconFormTitle['text'] }}</h3>
+                                <!-- <h3 class="form-title" data-en="{{ e($iconFormTitle['en']) }}"
+                                    data-ar="{{ e($iconFormTitle['ar']) }}">{{ $iconFormTitle['text'] }}</h3> -->
                                 <form id="icon-registration-form" method="POST"
                                     action="{{ \Illuminate\Support\Facades\Route::has('public.register.icon') ? route('public.register.icon', ['locale' => $locale]) : '#' }}"
                                     enctype="multipart/form-data" novalidate
@@ -3631,11 +3646,11 @@
                                                 <input type="checkbox" name="privacy_policy" value="1" required
                                                     @checked($iconFormActive && old('privacy_policy'))>
 
-                                                <span data-en="I have read and accept" data-ar="">I have read and
+                                                <span data-en="I have read and accept" data-ar="قرأت وأوافق على">I have read and
                                                     accept</span>
-                                                <a class="blue-url-style" href="{{ asset('pdf/icon-profile.pdf') }}"
+                                                <a class="blue-url-style" href="{{ asset('pdf/IEC360-Profile-Icon.pdf') }}"
                                                     target="_blank" rel="noopener" data-en="the ICON profile terms"
-                                                    data-ar="قرأت وأوافق على شروط بروفايل الآيكون">the ICON profile
+                                                    data-ar=" شروط تسجيل الأيكون">the ICON profile
                                                     terms</a>
                                                 @if ($iconFormActive && $errors->has('privacy_policy'))
                                                     <p class="mt-1 text-xs text-red-600">
@@ -3676,8 +3691,6 @@
                                 </div>
                                 <h3 class="role-title" data-en="{{ e($guestCardTitle['en']) }}"
                                     data-ar="{{ e($guestCardTitle['ar']) }}">{{ $guestCardTitle['text'] }}</h3>
-                                <!-- <p class="role-desc" data-en="{{ e($guestCardDescription['en']) }}"
-                                data-ar="{{ e($guestCardDescription['ar']) }}">{{ $guestCardDescription['text'] }}</p> -->
                                 <div class="role-cta" id="visitor-cta">
                                     <span data-en="Click" data-ar="إضغط">Click</span>
                                     <svg class="icon icon-sm" viewBox="0 0 24 24">
@@ -3883,8 +3896,8 @@
                                             style="flex-direction: row; align-items: center; gap: 0.5rem;">
                                             <input type="checkbox" name="privacy_policy" value="1" required
                                                 @checked($visitorFormActive && old('privacy_policy'))>
-                                            <span data-en="أوافق على شروط الخصوصية"
-                                                data-ar="I accept the privacy policy">I
+                                            <span data-en="I accept the privacy policy"
+                                                data-ar="أوافق على شروط الخصوصية">I
                                                 accept the privacy policy</span>
                                             <a class="blue-url-style" href="{{ asset('pdf/privacy-policy.pdf') }}"
                                                 target="_blank" rel="noopener" download data-en="Download from here"
@@ -4227,6 +4240,7 @@ experience that unites ambitious minds and industry leaders under one roof"
 
                         <!-- Marketing & Media -->
                         @if(!empty($sponsorPairs))
+                            <div class="sponsor-pairs-row">
                             @foreach($sponsorPairs as $pair)
                                 @php
                                     $leftGroup = $sponsorGroups[$pair['left']] ?? null;
@@ -4277,6 +4291,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                                     </div>
                                 @endif
                             @endforeach
+                            </div><!-- /.sponsor-pairs-row -->
                         @endif
 
                         <!-- GOLD -->
@@ -4286,9 +4301,9 @@ experience that unites ambitious minds and industry leaders under one roof"
                                     data-ar="{{ $sponsorGroups['gold']['title']['ar'] }}">
                                     {{ strtoupper($sponsorGroups['gold']['title']['en']) }}
                                 </h2>
-                                <div class="participants-grid gold-sponsors-grid">
+                                <div class="participants-grid">
                                     @foreach($sponsorGroups['gold']['sponsors'] as $sponsor)
-                                        <article class="participant-card gold-sponsor-card" data-animate>
+                                        <article class="participant-card" data-animate>
                                             <div class="participant-logo">
                                                 <img src="{{ $sponsor->logo_path ? asset('storage/' . $sponsor->logo_path) : asset('img/placeholder-img.png') }}"
                                                     alt="{{ $sponsor->getLocalizedName($locale) }}">
@@ -4299,25 +4314,6 @@ experience that unites ambitious minds and industry leaders under one roof"
                             </div>
                         @endif
 
-                        <!-- OTHER SPONSORS -->
-                        @if(!empty($sponsorGroups['other']) && $sponsorGroups['other']['sponsors']->isNotEmpty())
-                            <div class="sponsor-tier">
-                                <h2 class="sponsor-tier-title" data-en="{{ $sponsorGroups['other']['title']['en'] }}"
-                                    data-ar="{{ $sponsorGroups['other']['title']['ar'] }}">
-                                    {{ strtoupper($sponsorGroups['other']['title']['en']) }}
-                                </h2>
-                                <div class="sponsor-tier-grid tier-main other-sponsors-grid">
-                                    @foreach($sponsorGroups['other']['sponsors'] as $sponsor)
-                                        <article class="sponsor-card" data-animate>
-                                            <div class="sponsor-logo">
-                                                <img src="{{ $sponsor->logo_path ? asset('storage/' . $sponsor->logo_path) : asset('img/placeholder-img.png') }}"
-                                                    alt="{{ $sponsor->getLocalizedName($locale) }}">
-                                            </div>
-                                        </article>
-                                    @endforeach
-                                </div>
-                            </div>
-                        @endif
                     </div>
                 </div>
             </section>
