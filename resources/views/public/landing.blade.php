@@ -4247,40 +4247,44 @@ experience that unites ambitious minds and industry leaders under one roof"
                                     $hasLeft = $leftGroup && $leftGroup['sponsors']->isNotEmpty();
                                     $hasRight = $rightGroup && $rightGroup['sponsors']->isNotEmpty();
                                 @endphp
-                                @if($hasLeft)
-                                    <div class="sponsor-tier">
-                                        <h2 class="sponsor-tier-title" data-en="{{ $leftGroup['title']['en'] }}"
-                                            data-ar="{{ $leftGroup['title']['ar'] }}">
-                                            {{ strtoupper($leftGroup['title']['en']) }}
-                                        </h2>
-                                        <div class="participants-grid">
-                                            @foreach($leftGroup['sponsors'] as $sponsor)
-                                                <article class="participant-card" data-animate>
-                                                    <div class="participant-logo">
-                                                        <img src="{{ $sponsor->logo_path ? asset('storage/' . $sponsor->logo_path) : asset('img/placeholder-img.png') }}"
-                                                            alt="{{ $sponsor->getLocalizedName($locale) }}">
-                                                    </div>
-                                                </article>
-                                            @endforeach
-                                        </div>
-                                    </div>
-                                @endif
-                                @if($hasRight)
-                                    <div class="sponsor-tier">
-                                        <h2 class="sponsor-tier-title" data-en="{{ $rightGroup['title']['en'] }}"
-                                            data-ar="{{ $rightGroup['title']['ar'] }}">
-                                            {{ strtoupper($rightGroup['title']['en']) }}
-                                        </h2>
-                                        <div class="participants-grid">
-                                            @foreach($rightGroup['sponsors'] as $sponsor)
-                                                <article class="participant-card" data-animate>
-                                                    <div class="participant-logo">
-                                                        <img src="{{ $sponsor->logo_path ? asset('storage/' . $sponsor->logo_path) : asset('img/placeholder-img.png') }}"
-                                                            alt="{{ $sponsor->getLocalizedName($locale) }}">
-                                                    </div>
-                                                </article>
-                                            @endforeach
-                                        </div>
+                                @if($hasLeft || $hasRight)
+                                    <div class="sponsor-tier-pair">
+                                        @if($hasLeft)
+                                            <div class="sponsor-tier">
+                                                <h2 class="sponsor-tier-title" data-en="{{ $leftGroup['title']['en'] }}"
+                                                    data-ar="{{ $leftGroup['title']['ar'] }}">
+                                                    {{ strtoupper($leftGroup['title']['en']) }}
+                                                </h2>
+                                                <div class="participants-grid">
+                                                    @foreach($leftGroup['sponsors'] as $sponsor)
+                                                        <article class="participant-card" data-animate>
+                                                            <div class="participant-logo">
+                                                                <img src="{{ $sponsor->logo_path ? asset('storage/' . $sponsor->logo_path) : asset('img/placeholder-img.png') }}"
+                                                                    alt="{{ $sponsor->getLocalizedName($locale) }}">
+                                                            </div>
+                                                        </article>
+                                                    @endforeach
+                                                </div>
+                                            </div>
+                                        @endif
+                                        @if($hasRight)
+                                            <div class="sponsor-tier">
+                                                <h2 class="sponsor-tier-title" data-en="{{ $rightGroup['title']['en'] }}"
+                                                    data-ar="{{ $rightGroup['title']['ar'] }}">
+                                                    {{ strtoupper($rightGroup['title']['en']) }}
+                                                </h2>
+                                                <div class="participants-grid">
+                                                    @foreach($rightGroup['sponsors'] as $sponsor)
+                                                        <article class="participant-card" data-animate>
+                                                            <div class="participant-logo">
+                                                                <img src="{{ $sponsor->logo_path ? asset('storage/' . $sponsor->logo_path) : asset('img/placeholder-img.png') }}"
+                                                                    alt="{{ $sponsor->getLocalizedName($locale) }}">
+                                                            </div>
+                                                        </article>
+                                                    @endforeach
+                                                </div>
+                                            </div>
+                                        @endif
                                     </div>
                                 @endif
                             @endforeach
