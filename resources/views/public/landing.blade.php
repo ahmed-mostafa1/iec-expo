@@ -2030,6 +2030,7 @@
             height: 100%;
             object-fit: fill;
             border-radius: 10px;
+            min-height: 260px;
         }
 
         .participant-card:hover .participant-logo {
