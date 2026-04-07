@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="{{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}">
 
 <head>
@@ -2845,7 +2845,9 @@
                                         data-ar="Seconds">Seconds</span>
                                 </div>
                             </div>
-                                                                    <p class="goal-desc" style="padding-top: 2rem;" data-en="With unmatched uniqueness and excellence, the IEC EXPO returns for its third edition
+                           
+                        </div> 
+                                                                 <p class="goal-desc" style="padding: 2rem;" data-en="With unmatched uniqueness and excellence, the IEC EXPO returns for its third edition
 under the theme IEC 360°. It continues its journey as a comprehensive interactive
 platform that merges innovation, development, and networking—offering an exceptional
 experience that unites ambitious minds and industry leaders under one roof"
@@ -2857,8 +2859,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                                             platform that merges innovation, development, and networking—offering an
                                             exceptional
                                             experience that unites ambitious minds and industry leaders under one roof
-                                        </p>
-                        </div>          
+                                        </p>         
                     </div>
                 </div>
             </section>
