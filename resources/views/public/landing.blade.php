@@ -2845,7 +2845,20 @@
                                         data-ar="Seconds">Seconds</span>
                                 </div>
                             </div>
-                        </div>
+                                                                    <p class="goal-desc" style="padding-top: 2rem;" data-en="With unmatched uniqueness and excellence, the IEC EXPO returns for its third edition
+under the theme IEC 360°. It continues its journey as a comprehensive interactive
+platform that merges innovation, development, and networking—offering an exceptional
+experience that unites ambitious minds and industry leaders under one roof"
+                                            data-ar="بتميز وتفرّد، يعود معرض IEC التجاري في نسخته الثالثة تحت شعار IEC 360° ليواصل مسيرته كمنصة تفاعلية شاملة تجمع بين الابتكار والتطوير والتواصل في تجربة استثنائية توحّد العقول الطموحة والقطاعات المختلفة تحت سقف واحد">
+                                            With unmatched uniqueness and excellence, the IEC EXPO returns for its third
+                                            edition
+                                            under the theme IEC 360°. It continues its journey as a comprehensive
+                                            interactive
+                                            platform that merges innovation, development, and networking—offering an
+                                            exceptional
+                                            experience that unites ambitious minds and industry leaders under one roof
+                                        </p>
+                        </div>          
                     </div>
                 </div>
             </section>
@@ -4078,23 +4091,6 @@
                     <div class="about-grid">
                         <div class="about-col" data-animate>
                             <div class="goals-list">
-                                <div class="goal-card" style="font-size: 1.1rem; font-weight: 500;" data-animate>
-                                    <div>
-                                        <p class="goal-desc" data-en="With unmatched uniqueness and excellence, the IEC EXPO returns for its third edition
-under the theme IEC 360°. It continues its journey as a comprehensive interactive
-platform that merges innovation, development, and networking—offering an exceptional
-experience that unites ambitious minds and industry leaders under one roof"
-                                            data-ar="بتميز وتفرّد، يعود معرض IEC التجاري في نسخته الثالثة تحت شعار IEC 360° ليواصل مسيرته كمنصة تفاعلية شاملة تجمع بين الابتكار والتطوير والتواصل في تجربة استثنائية توحّد العقول الطموحة وقادة القطاعات المختلفة تحت سقف واحد">
-                                            With unmatched uniqueness and excellence, the IEC EXPO returns for its third
-                                            edition
-                                            under the theme IEC 360°. It continues its journey as a comprehensive
-                                            interactive
-                                            platform that merges innovation, development, and networking—offering an
-                                            exceptional
-                                            experience that unites ambitious minds and industry leaders under one roof
-                                        </p>
-                                    </div>
-                                </div>
                                 <div class="goal-card" data-animate>
                                     <div>
                                         <div class="goal-title-row">
