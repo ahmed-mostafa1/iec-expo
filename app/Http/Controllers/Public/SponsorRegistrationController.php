@@ -82,10 +82,11 @@ class SponsorRegistrationController extends Controller
             )
         );
 
-        // Send notification to official IEC email
-        Mail::to('iec360@umbrella.sa')->send(
-            new NewSponsorRegistrationMail($registration, $pdfPath)
-        );
+        foreach (config('admin.emails', []) as $adminEmail) {
+            Mail::to($adminEmail)->send(
+                new NewSponsorRegistrationMail($registration, $pdfPath)
+            );
+        }
 
         $message = __('registration.sponsor.success');
         $toastTitle = __('registration.sponsor.toast_title');

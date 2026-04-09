@@ -80,10 +80,11 @@ class IconRegistrationController extends Controller
             )
         );
 
-        // Send notification to official IEC email
-        Mail::to('iec360@umbrella.sa')->send(
-            new NewIconRegistrationMail($registration, $pdfPath)
-        );
+        foreach (config('admin.emails', []) as $adminEmail) {
+            Mail::to($adminEmail)->send(
+                new NewIconRegistrationMail($registration, $pdfPath)
+            );
+        }
 
         $message = __('registration.icon.success');
         $toastTitle = __('registration.icon.toast_title');

@@ -11,12 +11,14 @@ return new class extends Migration
         Schema::table('sponsor_registrations', function (Blueprint $table) {
             $table->string('vat_certificate_path')->nullable()->after('vat_number');
             $table->string('vat_number')->nullable()->change();
+            $table->dropIndex(['cr_number']);
             $table->dropColumn('cr_number');
         });
 
         Schema::table('icon_registrations', function (Blueprint $table) {
             $table->string('vat_certificate_path')->nullable()->after('vat_number');
             $table->string('vat_number')->nullable()->change();
+            $table->dropIndex(['cr_number']);
             $table->dropColumn('cr_number');
         });
     }

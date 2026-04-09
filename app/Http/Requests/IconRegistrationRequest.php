@@ -2,11 +2,14 @@
 
 namespace App\Http\Requests;
 
+use App\Http\Requests\Concerns\HasSaudiPhoneValidation;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 
 class IconRegistrationRequest extends FormRequest
 {
+    use HasSaudiPhoneValidation;
+
     public function authorize(): bool
     {
         return true;
@@ -17,7 +20,7 @@ class IconRegistrationRequest extends FormRequest
         return [
             'full_name'       => ['required', 'string', 'max:255'],
             'email'           => ['required', 'email', 'max:255'],
-            'phone'           => ['required', 'string', 'min:10', 'max:50', 'regex:/^\d+$/'],
+            'phone'           => ['required', 'string', 'max:50', $this->saudiPhoneRule()],
             'job_title'       => ['required', 'string', 'max:255'],
             'organization'    => ['required', 'string', 'max:255'],
             'location_selection' => ['required', 'string', 'max:255'],
@@ -36,6 +39,13 @@ class IconRegistrationRequest extends FormRequest
             'vat_number' => __('registration.icon.vat_number'),
 
             'privacy_policy' => __('Privacy Policy'),
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'phone.regex' => $this->saudiPhoneMessage(),
         ];
     }
 

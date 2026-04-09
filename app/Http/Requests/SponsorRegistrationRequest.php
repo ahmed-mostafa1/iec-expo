@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests;
 
+use App\Http\Requests\Concerns\HasSaudiPhoneValidation;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Validation\Rule;
@@ -9,6 +10,8 @@ use Illuminate\Validation\Rule;
 
 class SponsorRegistrationRequest extends FormRequest
 {
+    use HasSaudiPhoneValidation;
+
     public function authorize(): bool
     {
         return true; // public form
@@ -19,7 +22,7 @@ class SponsorRegistrationRequest extends FormRequest
         return [
             'full_name'       => ['required', 'string', 'max:255'],
             'email'           => ['required', 'email', 'max:255'],
-            'phone'           => ['required', 'string', 'min:10', 'max:50', 'regex:/^\d+$/'],
+            'phone'           => ['required', 'string', 'max:50', $this->saudiPhoneRule()],
             'job_title'       => ['required', 'string', 'max:255'],
             'organization'    => ['required', 'string', 'max:255'],
             'sponsor_tier'    => ['required', 'string', 'max:50', Rule::in($this->sponsorTierOptions())],
@@ -40,6 +43,13 @@ class SponsorRegistrationRequest extends FormRequest
             'vat_number' => __('registration.sponsor.vat_number'),
 
             'privacy_policy' => __('Privacy Policy'),
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'phone.regex' => $this->saudiPhoneMessage(),
         ];
     }
 

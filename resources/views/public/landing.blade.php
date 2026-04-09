@@ -3190,8 +3190,8 @@ experience that unites ambitious minds and industry leaders under one roof"
                                                 <label class="form-label" data-en="{{ e($exPhoneLabel['en']) }}"
                                                     data-ar="{{ e($exPhoneLabel['ar']) }}">{{ $exPhoneLabel['text'] }}</label>
                                                 <input type="tel" name="phone" class="form-input" required
-                                                    minlength="10" pattern="\d{10,}" inputmode="numeric"
-                                                    data-min-digits="10" placeholder="{{ $exPhonePlaceholder['text'] }}"
+                                                    inputmode="tel" data-phone-sa="true"
+                                                    placeholder="{{ $exPhonePlaceholder['text'] }}"
                                                     value="{{ $sponsorFormActive ? old('phone') : '' }}">
                                                 @if ($sponsorFormActive && $errors->has('phone'))
                                                     <p class="mt-1 text-xs text-red-600">{{ $errors->first('phone') }}</p>
@@ -3517,8 +3517,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                                                 <label class="form-label" data-en="{{ e($iconPhoneLabel['en']) }}"
                                                     data-ar="{{ e($iconPhoneLabel['ar']) }}">{{ $iconPhoneLabel['text'] }}</label>
                                                 <input type="tel" name="phone" class="form-input" required
-                                                    minlength="10" pattern="\d{10,}" inputmode="numeric"
-                                                    data-min-digits="10"
+                                                    inputmode="tel" data-phone-sa="true"
                                                     placeholder="{{ $iconPhonePlaceholder['text'] }}"
                                                     value="{{ $iconFormActive ? old('phone') : '' }}">
                                                 @if ($iconFormActive && $errors->has('phone'))
@@ -3817,7 +3816,8 @@ experience that unites ambitious minds and industry leaders under one roof"
                                         <div class="form-group">
                                             <label class="form-label" data-en="{{ e($guestPhoneLabel['en']) }}"
                                                 data-ar="{{ e($guestPhoneLabel['ar']) }}">{{ $guestPhoneLabel['text'] }}</label>
-                                            <input type="tel" name="phone" class="form-input"
+                                            <input type="tel" name="phone" class="form-input" inputmode="tel"
+                                                data-phone-sa="true"
                                                 placeholder="{{ $guestPhonePlaceholder['text'] }}"
                                                 value="{{ $visitorFormActive ? old('phone') : '' }}">
                                             @if ($visitorFormActive && $errors->has('phone'))
@@ -5179,12 +5179,14 @@ experience that unites ambitious minds and industry leaders under one roof"
                 accepted: @json(__('validation.accepted', [], 'en')),
                 numeric: @json(__('validation.numeric', [], 'en')),
                 minDigits: @json(__('validation.min_digits', [], 'en')),
+                saudiPhone: 'يرجى إدخال رقم سعودي صحيح',
             },
             ar: {
                 required: @json(__('validation.required', [], 'ar')),
                 accepted: @json(__('validation.accepted', [], 'ar')),
                 numeric: @json(__('validation.numeric', [], 'ar')),
                 minDigits: @json(__('validation.min_digits', [], 'ar')),
+                saudiPhone: 'يرجى إدخال رقم سعودي صحيح',
             }
         };
 
@@ -5248,7 +5250,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                 isValid = false;
             });
 
-            form.querySelectorAll('[data-min-digits]').forEach(field => {
+            form.querySelectorAll('[data-phone-sa]').forEach(field => {
                 if (field.disabled || field.classList.contains('form-control-error')) {
                     return;
                 }
@@ -5256,26 +5258,8 @@ experience that unites ambitious minds and industry leaders under one roof"
                     return;
                 }
                 const rawValue = String(field.value || '').trim();
-                const label = getFieldLabel(field);
-
-                if (!/^\d+$/.test(rawValue)) {
-                    const message = formatValidationMessage(templates.numeric, {
-                        attribute: label
-                    });
-                    markFieldError(field, message);
-                    if (!firstInvalid) {
-                        firstInvalid = field;
-                    }
-                    isValid = false;
-                    return;
-                }
-
-                const minDigits = parseInt(field.dataset.minDigits, 10);
-                if (Number.isFinite(minDigits) && rawValue.length < minDigits) {
-                    const message = formatValidationMessage(templates.minDigits, {
-                        attribute: label,
-                        min: String(minDigits)
-                    });
+                if (!/^(?:\+9665\d{8}|05\d{8}|9665\d{8})$/.test(rawValue)) {
+                    const message = templates.saudiPhone;
                     markFieldError(field, message);
                     if (!firstInvalid) {
                         firstInvalid = field;
