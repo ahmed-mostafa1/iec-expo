@@ -1,6 +1,11 @@
 <?php
 
 return [
+    'common' => [
+        'submitting' => 'Submitting your request...',
+        'submitting_button' => 'Submitting...',
+        'popup_button' => 'OK',
+    ],
     'visitor' => [
         'success' => 'Thank you for registering as a visitor. We will contact you shortly.',
         'toast_title' => 'Registration received',
@@ -18,6 +23,7 @@ return [
     'sponsor' => [
         'success' => 'Thank you for your sponsorship application. Our team will follow up soon.',
         'toast_title' => 'Application submitted',
+        'popup_note' => 'A copy of the agreement will be sent to the email address you registered with. To confirm your booking, please settle the full amount including VAT within one hour and send the transfer receipt to iec360@umbrella.sa.',
         'book_location' => 'Book Location *',
         'vat_number' => 'VAT Certificate',
         'company_logo' => 'Company Logo',
@@ -36,6 +42,7 @@ return [
         'cta_submit' => 'Submit Application',
         'toast_title' => 'Application submitted',
         'success' => 'Thank you for your Icon application. Our team will follow up soon.',
+        'popup_note' => 'A copy of the agreement will be sent to the email address you registered with. To confirm your booking, please settle the full amount including VAT within one hour and send the transfer receipt to iec360@umbrella.sa.',
         'full_name' => 'Full Name *',
         'email' => 'Email *',
         'phone' => 'Phone *',

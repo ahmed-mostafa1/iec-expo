@@ -328,6 +328,81 @@
             font-family: var(--font-base);
         }
 
+        .success-popup {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            background: rgba(0, 0, 0, 0.82);
+            z-index: 10001;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            transition: opacity 0.35s ease, visibility 0.35s ease;
+        }
+
+        .success-popup.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+        .success-popup-card {
+            width: min(100%, 640px);
+            background: linear-gradient(180deg, rgba(14, 16, 26, 0.98), rgba(9, 12, 20, 0.96));
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 1.5rem;
+            box-shadow: 0 24px 80px rgba(0, 0, 0, 0.45);
+            padding: 2.5rem 2rem;
+            text-align: center;
+        }
+
+        .success-popup-logo {
+            height: 72px;
+            width: auto;
+            display: inline-block;
+            margin-bottom: 1.5rem;
+        }
+
+        .success-popup-title {
+            margin: 0 0 1rem;
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .success-popup-message {
+            margin: 0;
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.92);
+        }
+
+        .success-popup-note {
+            margin: 1.5rem auto 0;
+            max-width: 34rem;
+            font-size: 1rem;
+            line-height: 1.9;
+            color: rgba(255, 255, 255, 0.78);
+        }
+
+        .success-popup-note[hidden] {
+            display: none;
+        }
+
+        .success-popup-actions {
+            margin-top: 2rem;
+            display: flex;
+            justify-content: center;
+        }
+
+        .btn[aria-busy="true"] {
+            opacity: 0.8;
+            cursor: wait;
+        }
+
         body:not(.is-loading) .page-loader {
             opacity: 0;
             visibility: hidden;
@@ -2700,23 +2775,29 @@
         </div>
         <div class="loader-text">Loading</div>
     </div>
-    <div class="form-loader" id="success-popup" aria-hidden="true" role="status" aria-live="polite">
-        <div class="popup-card"
-            style="background: rgb(var(--card)); border: 1px solid rgb(var(--border) / 0.5); padding: 3rem 2rem; border-radius: var(--radius); text-align: center; max-width: 600px; margin: 1rem; position: relative; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);">
-            <img src="{{ asset('img/IEC-logo-v2.png') }}" alt="IEC Logo"
-                style="height: 80px; margin-bottom: 2rem; display: inline-block;">
-            <p style="margin-bottom: 1.5rem; font-size: 1.25rem; font-weight: 600; line-height: 1.6; color: #fff;">
-                تم استلام طلبكم وسيتم إرسال نسخة من العقد إلى البريد الإلكتروني الذي قمت بتسجيله.
-            </p>
-            <p
-                style="margin-bottom: 2.5rem; font-size: 1.1rem; line-height: 1.6; color: rgba(255,255,255,0.9); font-weight: 500;">
-                لتأكيد الحجز يرجى سداد كامل المبلغ الإجمالي شاملاً ضريبة القيمة المضافة خلال ساعة واحدة فقط،
-                <br>
-                وإرسال صورة الحوالة على الإيميل: iec360@umbrella.sa
-            </p>
-            <button onclick="window.location.reload()" class="btn btn-primary btn-lg" style="min-width: 200px;">
-                موافق
-            </button>
+    <div class="form-loader" id="form-processing-overlay" aria-hidden="true" role="status" aria-live="polite">
+        <div class="loader-ring">
+            <img src="{{ asset('img/IEC-logo-v2.png') }}" alt="IEC Logo">
+        </div>
+        <div class="loader-dots">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <div class="loader-message" id="form-processing-message">{{ __('registration.common.submitting') }}</div>
+    </div>
+    <div class="success-popup" id="success-popup" aria-hidden="true" role="dialog" aria-modal="true"
+        aria-labelledby="success-popup-title" aria-describedby="success-popup-message">
+        <div class="success-popup-card">
+            <img src="{{ asset('img/IEC-logo-v2.png') }}" alt="IEC Logo" class="success-popup-logo">
+            <h3 class="success-popup-title" id="success-popup-title">{{ __('registration.visitor.toast_title') }}</h3>
+            <p class="success-popup-message" id="success-popup-message">{{ __('registration.visitor.success') }}</p>
+            <p class="success-popup-note" id="success-popup-note" hidden></p>
+            <div class="success-popup-actions">
+                <button type="button" id="success-popup-close" class="btn btn-primary btn-lg" style="min-width: 200px;">
+                    {{ __('registration.common.popup_button') }}
+                </button>
+            </div>
         </div>
     </div>
 
@@ -3151,7 +3232,10 @@ experience that unites ambitious minds and industry leaders under one roof"
                                     action="{{ route('public.register.sponsor', ['locale' => $locale]) }}"
                                     enctype="multipart/form-data" novalidate
                                     data-success-title="{{ e(__('registration.sponsor.toast_title')) }}"
-                                    data-success-message="{{ e(__('registration.sponsor.success')) }}">
+                                    data-success-message="{{ e(__('registration.sponsor.success')) }}"
+                                    data-loading-message="{{ e(__('registration.common.submitting')) }}"
+                                    data-loading-button-label="{{ e(__('registration.common.submitting_button')) }}"
+                                    data-popup-note="{{ e(__('registration.sponsor.popup_note')) }}">
                                     <div class="form-buttons"
                                         style="justify-content: flex-start; margin-bottom: 0.75rem; width: 50%!important; margin: auto;">
                                         <a class="btn btn-outline"
@@ -3476,7 +3560,10 @@ experience that unites ambitious minds and industry leaders under one roof"
                                     action="{{ \Illuminate\Support\Facades\Route::has('public.register.icon') ? route('public.register.icon', ['locale' => $locale]) : '#' }}"
                                     enctype="multipart/form-data" novalidate
                                     data-success-title="{{ e(__('registration.icon.toast_title')) }}"
-                                    data-success-message="{{ e(__('registration.icon.success')) }}">
+                                    data-success-message="{{ e(__('registration.icon.success')) }}"
+                                    data-loading-message="{{ e(__('registration.common.submitting')) }}"
+                                    data-loading-button-label="{{ e(__('registration.common.submitting_button')) }}"
+                                    data-popup-note="{{ e(__('registration.icon.popup_note')) }}">
                                     @csrf
                                     <input type="hidden" name="form_identifier" value="icon">
                                     <div class="form-buttons"
@@ -3785,7 +3872,10 @@ experience that unites ambitious minds and industry leaders under one roof"
                                 <form id="visitor-registration-form" method="POST"
                                     action="{{ route('public.register.visitor', ['locale' => $locale]) }}" novalidate
                                     data-success-title="{{ e(__('registration.guest.toast_title')) }}"
-                                    data-success-message="{{ e(__('registration.guest.success')) }}">
+                                    data-success-message="{{ e(__('registration.guest.success')) }}"
+                                    data-loading-message="{{ e(__('registration.common.submitting')) }}"
+                                    data-loading-button-label="{{ e(__('registration.common.submitting_button')) }}"
+                                    data-popup-note="">
                                     @csrf
                                     <input type="hidden" name="form_identifier" value="visitor">
                                     <div class="form-grid form-grid-2">
@@ -5035,9 +5125,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                         visitorForm.reset();
                         resetHeardAboutSelectsWithin(visitorForm);
                         clearRole();
-                        const title = (payload && payload.toast_title) || visitorForm.dataset.successTitle;
-                        const message = (payload && payload.message) || visitorForm.dataset.successMessage;
-                        showToast(title, message);
+                        showSuccessPopup(getSuccessPopupContent(visitorForm, payload));
                     },
                 });
             }
@@ -5048,11 +5136,8 @@ experience that unites ambitious minds and industry leaders under one roof"
                     onSuccess: (payload) => {
                         sponsorForm.reset();
                         clearRole();
-                        const title = (payload && payload.toast_title) || sponsorForm.dataset.successTitle;
-                        const message = (payload && payload.message) || sponsorForm.dataset.successMessage;
-                        showToast(title, message);
                         triggerPdfDownload(payload && payload.pdf_url, payload && payload.pdf_name);
-                        showSuccessPopup();
+                        showSuccessPopup(getSuccessPopupContent(sponsorForm, payload));
                     },
                 });
             }
@@ -5066,11 +5151,8 @@ experience that unites ambitious minds and industry leaders under one roof"
                         onSuccess: (payload) => {
                             iconForm.reset();
                             clearRole();
-                            const title = (payload && payload.toast_title) || iconForm.dataset.successTitle;
-                            const message = (payload && payload.message) || iconForm.dataset.successMessage;
-                            showToast(title, message);
                             triggerPdfDownload(payload && payload.pdf_url, payload && payload.pdf_name);
-                            showSuccessPopup();
+                            showSuccessPopup(getSuccessPopupContent(iconForm, payload));
                         },
                     });
                 }
@@ -5084,12 +5166,13 @@ experience that unites ambitious minds and industry leaders under one roof"
             form.addEventListener('submit', async (event) => {
                 event.preventDefault();
                 const submitter = event.submitter || form.querySelector('button[type="submit"]');
-                toggleSubmitting(submitter, true);
                 clearFormErrors(form);
                 if (!validateRegistrationForm(form)) {
-                    toggleSubmitting(submitter, false);
+                    toggleSubmitting(form, submitter, false);
                     return;
                 }
+                toggleSubmitting(form, submitter, true);
+                showFormProcessing(form);
 
 
 
@@ -5105,6 +5188,7 @@ experience that unites ambitious minds and industry leaders under one roof"
 
                     if (response.ok) {
                         const data = await response.json().catch(() => ({}));
+                        hideFormProcessing();
                         if (typeof onSuccess === 'function') {
                             onSuccess(data);
                         }
@@ -5113,17 +5197,20 @@ experience that unites ambitious minds and industry leaders under one roof"
 
                     if (response.status === 422) {
                         const data = await response.json().catch(() => ({}));
+                        hideFormProcessing();
                         showFormErrors(form, data.errors || {});
                         return;
                     }
 
+                    hideFormProcessing();
                     const fallback = getRegistrationErrorMessages();
                     showToast(fallback.errorTitle, fallback.errorMessage);
                 } catch (error) {
+                    hideFormProcessing();
                     const fallback = getRegistrationErrorMessages();
                     showToast(fallback.errorTitle, fallback.errorMessage);
                 } finally {
-                    toggleSubmitting(submitter, false);
+                    toggleSubmitting(form, submitter, false);
                 }
             });
         }
@@ -5144,26 +5231,90 @@ experience that unites ambitious minds and industry leaders under one roof"
             link.remove();
         }
 
-        function showSuccessPopup() {
+        function getSuccessPopupContent(form, payload = {}) {
+            return {
+                title: (payload && payload.toast_title) || form.dataset.successTitle || '',
+                message: (payload && payload.message) || form.dataset.successMessage || '',
+                note: form.dataset.popupNote || '',
+            };
+        }
+
+        function syncFormBlockingState() {
+            const processingOverlay = document.getElementById('form-processing-overlay');
+            const popup = document.getElementById('success-popup');
+            const isBlocking = Boolean(
+                (processingOverlay && processingOverlay.classList.contains('active')) ||
+                (popup && popup.classList.contains('active'))
+            );
+            document.body.classList.toggle('is-form-loading', isBlocking);
+        }
+
+        function showFormProcessing(form) {
+            const overlay = document.getElementById('form-processing-overlay');
+            const message = document.getElementById('form-processing-message');
+            if (!overlay || !message) {
+                return;
+            }
+            message.textContent = form.dataset.loadingMessage || '{{ __('registration.common.submitting') }}';
+            overlay.classList.add('active');
+            overlay.setAttribute('aria-hidden', 'false');
+            syncFormBlockingState();
+        }
+
+        function hideFormProcessing() {
+            const overlay = document.getElementById('form-processing-overlay');
+            if (!overlay) {
+                return;
+            }
+            overlay.classList.remove('active');
+            overlay.setAttribute('aria-hidden', 'true');
+            syncFormBlockingState();
+        }
+
+        function showSuccessPopup(content = {}) {
+            const popup = document.getElementById('success-popup');
+            const title = document.getElementById('success-popup-title');
+            const message = document.getElementById('success-popup-message');
+            const note = document.getElementById('success-popup-note');
+            if (!popup || !title || !message || !note) {
+                return;
+            }
+            title.textContent = content.title || '';
+            message.textContent = content.message || '';
+            note.textContent = content.note || '';
+            note.hidden = !content.note;
+            popup.classList.add('active');
+            popup.setAttribute('aria-hidden', 'false');
+            syncFormBlockingState();
+        }
+
+        function hideSuccessPopup() {
             const popup = document.getElementById('success-popup');
             if (!popup) {
                 return;
             }
-            popup.classList.add('active');
-            popup.setAttribute('aria-hidden', 'false');
-            document.body.classList.add('is-form-loading');
+            popup.classList.remove('active');
+            popup.setAttribute('aria-hidden', 'true');
+            syncFormBlockingState();
         }
 
-        function toggleSubmitting(button, isSubmitting) {
+        function toggleSubmitting(form, button, isSubmitting) {
             if (!button) {
                 return;
+            }
+            if (!button.dataset.originalHtml) {
+                button.dataset.originalHtml = button.innerHTML;
             }
             if (isSubmitting) {
                 button.disabled = true;
                 button.setAttribute('aria-busy', 'true');
+                button.innerHTML = `<span>${form.dataset.loadingButtonLabel || '{{ __('registration.common.submitting_button') }}'}</span>`;
             } else {
                 button.disabled = false;
                 button.removeAttribute('aria-busy');
+                if (button.dataset.originalHtml) {
+                    button.innerHTML = button.dataset.originalHtml;
+                }
             }
         }
 
@@ -5435,6 +5586,24 @@ experience that unites ambitious minds and industry leaders under one roof"
         window.addEventListener('load', () => {
             document.body.classList.remove('is-loading');
             equalizeGoalCards();
+        });
+
+        const successPopup = document.getElementById('success-popup');
+        const successPopupClose = document.getElementById('success-popup-close');
+        if (successPopupClose) {
+            successPopupClose.addEventListener('click', hideSuccessPopup);
+        }
+        if (successPopup) {
+            successPopup.addEventListener('click', (event) => {
+                if (event.target === successPopup) {
+                    hideSuccessPopup();
+                }
+            });
+        }
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'Escape' && successPopup && successPopup.classList.contains('active')) {
+                hideSuccessPopup();
+            }
         });
 
         window.addEventListener('resize', equalizeGoalCards);
