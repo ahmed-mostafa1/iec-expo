@@ -1671,8 +1671,8 @@
             color: rgb(var(--muted-foreground));
             text-align: center;
             line-height: 2.6;
-            align-items: center;        
-            justify-content: center;  
+            align-items: center;
+            justify-content: center;
         }
 
         /* Sponsors Section */
@@ -2926,21 +2926,21 @@
                                         data-ar="Seconds">Seconds</span>
                                 </div>
                             </div>
-                           
-                        </div> 
-                                                                 <p class="goal-desc" style="padding: 2rem;" data-en="With unmatched uniqueness and excellence, the IEC EXPO returns for its third edition
+
+                        </div>
+                        <p class="goal-desc" style="padding: 2rem;" data-en="With unmatched uniqueness and excellence, the IEC EXPO returns for its third edition
 under the theme IEC 360°. It continues its journey as a comprehensive interactive
 platform that merges innovation, development, and networking—offering an exceptional
 experience that unites ambitious minds and industry leaders under one roof"
-                                            data-ar="بتميز وتفرّد، يعود معرض IEC التجاري في نسخته الثالثة تحت شعار IEC 360° ليواصل مسيرته كمنصة تفاعلية شاملة تجمع بين الابتكار والتطوير والتواصل في تجربة استثنائية توحّد العقول الطموحة والقطاعات المختلفة تحت سقف واحد">
-                                            With unmatched uniqueness and excellence, the IEC EXPO returns for its third
-                                            edition
-                                            under the theme IEC 360°. It continues its journey as a comprehensive
-                                            interactive
-                                            platform that merges innovation, development, and networking—offering an
-                                            exceptional
-                                            experience that unites ambitious minds and industry leaders under one roof
-                                        </p>         
+                            data-ar="بتميز وتفرّد، يعود معرض IEC التجاري في نسخته الثالثة تحت شعار IEC 360° ليواصل مسيرته كمنصة تفاعلية شاملة تجمع بين الابتكار والتطوير والتواصل في تجربة استثنائية توحّد العقول الطموحة والقطاعات المختلفة تحت سقف واحد">
+                            With unmatched uniqueness and excellence, the IEC EXPO returns for its third
+                            edition
+                            under the theme IEC 360°. It continues its journey as a comprehensive
+                            interactive
+                            platform that merges innovation, development, and networking—offering an
+                            exceptional
+                            experience that unites ambitious minds and industry leaders under one roof
+                        </p>
                     </div>
                 </div>
             </section>
@@ -3238,9 +3238,9 @@ experience that unites ambitious minds and industry leaders under one roof"
                                     data-popup-note="{{ e(__('registration.sponsor.popup_note')) }}">
                                     <div class="form-buttons"
                                         style="justify-content: flex-start; margin-bottom: 0.75rem; width: 50%!important; margin: auto;">
-                                        <a class="btn btn-outline"
-                                            href="{{ asset('pdf/iec-sponsor-profile.pdf') }}" rel="noopener"
-                                            data-en="Download SPONSOR Profile" data-ar="تنزيل ملف الراعي">Download
+                                        <a class="btn btn-outline" href="{{ asset('pdf/iec-sponsor-profile-v2.pdf') }}"
+                                            rel="noopener" data-en="Download SPONSOR Profile"
+                                            data-ar="تنزيل ملف الراعي">Download
                                             SPONSOR Profile</a>
                                     </div>
                                     @csrf
@@ -3399,10 +3399,12 @@ experience that unites ambitious minds and industry leaders under one roof"
                                                 style="flex-direction: row; align-items: center; gap: 0.5rem;">
                                                 <input type="checkbox" name="privacy_policy" value="1" required
                                                     @checked($sponsorFormActive && old('privacy_policy'))>
-                                                <span data-en="I have read and accept " data-ar="قرأت وأوافق على">I have read and
+                                                <span data-en="I have read and accept " data-ar="قرأت وأوافق على">I have
+                                                    read and
                                                     accept</span>
-                                                <a class="blue-url-style" href="{{ asset('pdf/iec-sponsor-profile.pdf') }}"
-                                                    target="_blank" rel="noopener" data-en="the SPONSOR profile terms"
+                                                <a class="blue-url-style"
+                                                    href="{{ asset('pdf/iec-sponsor-profile-v2.pdf') }}" target="_blank"
+                                                    rel="noopener" data-en="the SPONSOR profile terms"
                                                     data-ar=" شروط تسجيل الراعي">the SPONSOR profile
                                                     terms</a>
                                             </label>
@@ -3569,7 +3571,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                                     <div class="form-buttons"
                                         style="justify-content: flex-start; margin-bottom: 0.75rem; width: 50%!important; margin: auto;">
                                         <a class="btn btn-outline"
-                                            href="https://umbrella.sa/iec360/pdf/IEC360-Profile-Icon.pdf"
+                                            href="https://umbrella.sa/iec360/pdf/IEC360-Profile-Icon-v2.pdf"
                                             target="_blank" rel="noopener" data-en="Download ICON Profile"
                                             data-ar="تنزيل ملف الأيكون">Download ICON Profile</a>
                                     </div>
@@ -3729,10 +3731,12 @@ experience that unites ambitious minds and industry leaders under one roof"
                                                 <input type="checkbox" name="privacy_policy" value="1" required
                                                     @checked($iconFormActive && old('privacy_policy'))>
 
-                                                <span data-en="I have read and accept" data-ar="قرأت وأوافق على">I have read and
+                                                <span data-en="I have read and accept" data-ar="قرأت وأوافق على">I have
+                                                    read and
                                                     accept</span>
-                                                <a class="blue-url-style" href="{{ asset('pdf/IEC360-Profile-Icon.pdf') }}"
-                                                    target="_blank" rel="noopener" data-en="the ICON profile terms"
+                                                <a class="blue-url-style"
+                                                    href="{{ asset('pdf/IEC360-Profile-Icon-v2.pdf') }}" target="_blank"
+                                                    rel="noopener" data-en="the ICON profile terms"
                                                     data-ar=" شروط تسجيل الأيكون">the ICON profile
                                                     terms</a>
                                                 @if ($iconFormActive && $errors->has('privacy_policy'))
@@ -3791,7 +3795,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                                 @php
                                     $guestFullNameLabel = $fieldCopy($visitorFieldsByName, 'full_name', 'label', [
                                         'en' => 'Full
-                                                                                                                                                                                                                                                                                        Name *',
+                                                                                                                                                                                                                                                                                                                                                                                                    Name *',
                                         'ar' => 'الاسم الكامل *',
                                     ]);
                                     $guestFullNamePlaceholder = $fieldCopy(
@@ -3818,7 +3822,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                                     ]);
                                     $guestJobLabel = $fieldCopy($visitorFieldsByName, 'job_title', 'label', [
                                         'en' => 'Job
-                                                                                                                                                                                                                                                                                        Title',
+                                                                                                                                                                                                                                                                                                                                                                                                    Title',
                                         'ar' => 'المسمى الوظيفي',
                                     ]);
                                     $guestJobPlaceholder = $fieldCopy($visitorFieldsByName, 'job_title', 'placeholder', [
@@ -3837,7 +3841,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                                     );
                                     $guestHeardLabel = $fieldCopy($visitorFieldsByName, 'heard_about', 'label', [
                                         'en' => 'How
-                                                                                                                                                                                                                                                                                        did you hear about us?',
+                                                                                                                                                                                                                                                                                                                                                                                                    did you hear about us?',
                                         'ar' => 'كيف سمعت عنا؟',
                                     ]);
                                     $guestHeardOptions = $fieldOptions($visitorFieldsByName, 'heard_about', [
@@ -3907,8 +3911,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                                             <label class="form-label" data-en="{{ e($guestPhoneLabel['en']) }}"
                                                 data-ar="{{ e($guestPhoneLabel['ar']) }}">{{ $guestPhoneLabel['text'] }}</label>
                                             <input type="tel" name="phone" class="form-input" inputmode="tel"
-                                                data-phone-sa="true"
-                                                placeholder="{{ $guestPhonePlaceholder['text'] }}"
+                                                data-phone-sa="true" placeholder="{{ $guestPhonePlaceholder['text'] }}"
                                                 value="{{ $visitorFormActive ? old('phone') : '' }}">
                                             @if ($visitorFormActive && $errors->has('phone'))
                                                 <p class="mt-1 text-xs text-red-600">{{ $errors->first('phone') }}</p>
@@ -4025,7 +4028,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                         'value' => 0,
                         'suffix' => '',
                         'icon' => 'fas
-                                                                                                                                                        fa-circle',
+                                                                                                                                                                                                                    fa-circle',
                     ];
                     $stats = array_pad($heroStats, 5, $defaultStat);
                 @endphp
