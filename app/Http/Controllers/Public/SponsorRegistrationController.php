@@ -16,8 +16,7 @@ class SponsorRegistrationController extends Controller
 {
     public function __construct(
         protected RegistrationPdfService $pdfService
-    ) {
-    }
+    ) {}
 
     public function store(SponsorRegistrationRequest $request, string $locale)
     {
@@ -25,28 +24,28 @@ class SponsorRegistrationController extends Controller
 
         $crCopyPath = $request->hasFile('cr_copy')
             ? $request->file('cr_copy')->store(
-                'registrations/sponsors/cr-copy/' . now()->year,
+                'registrations/sponsors/cr-copy/'.now()->year,
                 'public'
             )
             : null;
 
         $nationalAddressDocPath = $request->hasFile('national_address_document')
             ? $request->file('national_address_document')->store(
-                'registrations/sponsors/national-address/' . now()->year,
+                'registrations/sponsors/national-address/'.now()->year,
                 'public'
             )
             : null;
 
         $companyLogoPath = $request->hasFile('company_logo')
             ? $request->file('company_logo')->store(
-                'registrations/sponsors/company-logo/' . now()->year,
+                'registrations/sponsors/company-logo/'.now()->year,
                 'public'
             )
             : null;
 
         $vatCertificatePath = $request->hasFile('vat_number')
             ? $request->file('vat_number')->store(
-                'registrations/sponsors/vat-certificate/' . now()->year,
+                'registrations/sponsors/vat-certificate/'.now()->year,
                 'public'
             )
             : null;
@@ -102,6 +101,8 @@ class SponsorRegistrationController extends Controller
                 'message' => $message,
                 'toast_title' => $toastTitle,
                 'registration_id' => $registration->id,
+                'pdf_url' => $downloadUrl,
+                'pdf_name' => "sponsor-registration-{$registration->id}.pdf",
             ], 201);
         }
 
@@ -110,18 +111,18 @@ class SponsorRegistrationController extends Controller
 
     public function download(string $locale, SponsorRegistration $registration)
     {
-        if (!$registration->pdf_path) {
+        if (! $registration->pdf_path) {
             $pdfPath = $this->pdfService->generateSponsorPdf($registration);
             $registration->update(['pdf_path' => $pdfPath]);
         }
 
-        if (!$registration->pdf_path) {
+        if (! $registration->pdf_path) {
             abort(404);
         }
 
         $fullPath = Storage::disk('public')->path($registration->pdf_path);
 
-        if (!file_exists($fullPath)) {
+        if (! file_exists($fullPath)) {
             abort(404);
         }
 

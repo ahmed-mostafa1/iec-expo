@@ -105,7 +105,15 @@ class PublicRegistrationNotificationTest extends TestCase
             ['Accept' => 'application/json']
         );
 
-        $response->assertCreated();
+        $response->assertCreated()
+            ->assertJsonStructure([
+                'message',
+                'toast_title',
+                'registration_id',
+                'pdf_url',
+                'pdf_name',
+            ])
+            ->assertJsonPath('pdf_name', 'sponsor-registration-1.pdf');
 
         Mail::assertSent(ContractConfirmationMail::class, fn (ContractConfirmationMail $mail) => $mail->hasTo('sponsor@example.com'));
         Mail::assertSent(NewSponsorRegistrationMail::class, count($this->adminEmails));
