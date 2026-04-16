@@ -172,4 +172,48 @@ class SponsorPdfLifecycleTest extends TestCase
             }
         }
     }
+
+    public function test_sponsor_pdf_generation_falls_back_to_shared_contract_template_when_sponsor_template_is_missing(): void
+    {
+        $registration = new SponsorRegistration([
+            'full_name' => 'Sponsor User',
+            'organization' => 'Sponsor Co',
+            'sponsor_tier' => 'gold',
+            'location_selection' => 'B12',
+        ]);
+        $registration->id = 7;
+        $service = new class extends RegistrationPdfService
+        {
+            public string $usedTemplatePath = '';
+
+            public array $usedValues = [];
+
+            protected function sponsorTemplatePaths(): array
+            {
+                return [
+                    public_path('missing-sponsor-contract.docx'),
+                    public_path('contract-v2.docx'),
+                ];
+            }
+
+            protected function generateContractPdf(string $templatePath, array $values, string $destinationPath): string
+            {
+                $this->usedTemplatePath = $templatePath;
+                $this->usedValues = $values;
+
+                return $destinationPath;
+            }
+        };
+
+        $generatedPath = $service->generateSponsorPdf($registration);
+
+        $this->assertSame('registrations/sponsors/7.pdf', $generatedPath);
+        $this->assertSame(public_path('contract-v2.docx'), $service->usedTemplatePath);
+        $this->assertSame([
+            'organization' => 'Sponsor Co',
+            'name' => 'Sponsor User',
+            'cr_copy' => 'مرفق نسخة السجل التجاري',
+            'hall' => 'B12',
+        ], $service->usedValues);
+    }
 }

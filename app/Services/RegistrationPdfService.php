@@ -16,13 +16,13 @@ class RegistrationPdfService
     public function generateSponsorPdf(SponsorRegistration $registration): string
     {
         $path = "registrations/sponsors/{$registration->id}.pdf";
+        $templatePath = $this->resolveTemplatePath($this->sponsorTemplatePaths());
 
-        return $this->generateContractPdf(public_path('sponsor-contract.docx'), [
-            'organization' => (string) ($registration->organization ?? ''),
-            'full_name' => (string) ($registration->full_name ?? ''),
-            'sponsor_tier' => $this->sponsorTierContractValue((string) ($registration->sponsor_tier ?? '')),
-            'cr_copy' => 'مرفق نسخة السجل التجاري',
-        ], $path);
+        return $this->generateContractPdf(
+            $templatePath,
+            $this->sponsorContractValues($registration, $templatePath),
+            $path,
+        );
     }
 
     public function generateVisitorPdf(VisitorRegistration $registration): string
@@ -50,15 +50,11 @@ class RegistrationPdfService
         ], $path);
     }
 
-    private function generateContractPdf(string $templatePath, array $values, string $destinationPath): string
+    protected function generateContractPdf(string $templatePath, array $values, string $destinationPath): string
     {
         $apiKey = config('services.cloudconvert.key');
         if (! $apiKey) {
             throw new \RuntimeException('CloudConvert API key is not configured.');
-        }
-
-        if (! is_file($templatePath)) {
-            throw new \RuntimeException('Contract template not found.');
         }
 
         Storage::disk('local')->makeDirectory('tmp_docs');
@@ -244,5 +240,45 @@ class RegistrationPdfService
             'other' => 'أخرى',
             default => $tier,
         };
+    }
+
+    protected function sponsorTemplatePaths(): array
+    {
+        return [
+            public_path('sponsor-contract.docx'),
+            public_path('contract-v2.docx'),
+        ];
+    }
+
+    protected function sponsorContractValues(SponsorRegistration $registration, string $templatePath): array
+    {
+        if (basename($templatePath) === 'sponsor-contract.docx') {
+            return [
+                'organization' => (string) ($registration->organization ?? ''),
+                'full_name' => (string) ($registration->full_name ?? ''),
+                'sponsor_tier' => $this->sponsorTierContractValue((string) ($registration->sponsor_tier ?? '')),
+                'cr_copy' => 'مرفق نسخة السجل التجاري',
+            ];
+        }
+
+        return [
+            'organization' => (string) ($registration->organization ?? ''),
+            'name' => (string) ($registration->full_name ?? ''),
+            'cr_copy' => 'مرفق نسخة السجل التجاري',
+            'hall' => (string) ($registration->location_selection ?? ''),
+        ];
+    }
+
+    protected function resolveTemplatePath(array $candidatePaths): string
+    {
+        foreach ($candidatePaths as $candidatePath) {
+            if (is_file($candidatePath)) {
+                return $candidatePath;
+            }
+        }
+
+        $checkedTemplates = implode(', ', array_map(static fn (string $candidatePath): string => basename($candidatePath), $candidatePaths));
+
+        throw new \RuntimeException("Contract template not found. Checked: {$checkedTemplates}");
     }
 }
