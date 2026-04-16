@@ -7,6 +7,7 @@ use App\Models\SponsorRegistration;
 use App\Services\RegistrationPdfService;
 use Illuminate\Http\Request;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+use Throwable;
 
 class SponsorRegistrationController extends Controller
 {
@@ -43,7 +44,7 @@ class SponsorRegistrationController extends Controller
             abort(404);
         }
 
-        $fullPath = storage_path('app/public/' . $registration->pdf_path);
+        $fullPath = storage_path('app/public/'.$registration->pdf_path);
 
         if (! file_exists($fullPath)) {
             abort(404);
@@ -54,10 +55,27 @@ class SponsorRegistrationController extends Controller
 
     public function regeneratePdf(SponsorRegistration $registration)
     {
-        $pdfPath = $this->pdfService->generateSponsorPdf($registration);
-        $registration->update(['pdf_path' => $pdfPath]);
+        try {
+            $pdfPath = $this->pdfService->generateSponsorPdf($registration);
+            $registration->update([
+                'pdf_path' => $pdfPath,
+                'pdf_status' => 'generated',
+                'pdf_error' => null,
+                'pdf_generated_at' => now(),
+            ]);
 
-        return back()->with('success', __('PDF regenerated.'));
+            return back()->with('success', __('PDF regenerated.'));
+        } catch (Throwable $exception) {
+            report($exception);
+
+            $registration->update([
+                'pdf_status' => 'failed',
+                'pdf_error' => $exception->getMessage(),
+                'pdf_generated_at' => null,
+            ]);
+
+            return back()->with('error', __('PDF regeneration failed. The team can review the error details below.'));
+        }
     }
 
     public function export(Request $request): StreamedResponse
@@ -79,10 +97,10 @@ class SponsorRegistrationController extends Controller
             });
         }
 
-        $fileName = 'sponsor_registrations_' . now()->format('Ymd_His') . '.csv';
+        $fileName = 'sponsor_registrations_'.now()->format('Ymd_His').'.csv';
 
         $headers = [
-            'Content-Type'        => 'text/csv',
+            'Content-Type' => 'text/csv',
             'Content-Disposition' => "attachment; filename=\"$fileName\"",
         ];
 

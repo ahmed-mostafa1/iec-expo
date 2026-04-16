@@ -10,4 +10,8 @@
     <li><strong>National address:</strong> {{ $registration->national_address }}</li>
 </ul>
 
-<p>A PDF copy of the registration is attached. You can review uploaded documents inside the admin portal.</p>
+@if($pdfPath)
+    <p>A PDF copy of the registration is attached. You can review uploaded documents inside the admin portal.</p>
+@else
+    <p>The contract PDF could not be generated automatically and will need manual follow-up. You can review uploaded documents inside the admin portal.</p>
+@endif

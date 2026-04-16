@@ -17,24 +17,11 @@ class RegistrationPdfService
     {
         $path = "registrations/sponsors/{$registration->id}.pdf";
 
-        $sponsorTier = match ((string) ($registration->sponsor_tier ?? '')) {
-            'strategic' => 'Strategic',
-            'diamond' => 'Diamond',
-            'government' => 'Government',
-            'marketing' => 'Marketing',
-            'media' => 'Media',
-            'technology' => 'Technology',
-            'safety-security' => 'Safety & Security',
-            'gold' => 'Gold',
-            'other' => 'Other',
-            default => Str::headline((string) ($registration->sponsor_tier ?? '')),
-        };
-
         return $this->generateContractPdf(public_path('sponsor-contract.docx'), [
             'organization' => (string) ($registration->organization ?? ''),
             'full_name' => (string) ($registration->full_name ?? ''),
-            'sponsor_tier' => $sponsorTier,
-            'cr_copy' => 'See attached file',
+            'sponsor_tier' => $this->sponsorTierContractValue((string) ($registration->sponsor_tier ?? '')),
+            'cr_copy' => 'مرفق نسخة السجل التجاري',
         ], $path);
     }
 
@@ -241,5 +228,21 @@ class RegistrationPdfService
         }
 
         return 'Unknown CloudConvert error.';
+    }
+
+    private function sponsorTierContractValue(string $tier): string
+    {
+        return match ($tier) {
+            'strategic' => 'الاستراتيجي',
+            'diamond' => 'الماسي',
+            'government' => 'الحكومي',
+            'marketing' => 'التسويقي',
+            'media' => 'الإعلامي',
+            'technology' => 'التقني',
+            'safety-security' => 'السلامة والأمن',
+            'gold' => 'الذهبي',
+            'other' => 'أخرى',
+            default => $tier,
+        };
     }
 }

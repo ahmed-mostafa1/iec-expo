@@ -11,6 +11,12 @@
         </div>
     @endif
 
+    @if(session('error'))
+        <div class="mb-3 rounded-lg border border-red-200 bg-red-50 px-3 py-2 text-s text-red-800">
+            {{ session('error') }}
+        </div>
+    @endif
+
     <div class="grid gap-4 lg:grid-cols-[minmax(0,2fr)_minmax(0,1.2fr)]">
         <div class="space-y-4">
             <div class="rounded-xl bg-white border border-gray-200 p-4 text-s">
@@ -48,7 +54,7 @@
                     </div>
                     <div>
                         <div class="text-[10px] text-gray-500">{{ __('Booked location') }}</div>
-                        <div class="text-gray-900">{{ $registration->location_selection }}</div>
+                        <div class="text-gray-900">{{ $registration->location_selection ?: ' - ' }}</div>
                     </div>
                 </div>
             </div>
@@ -69,6 +75,37 @@
                     ">
                         {{ ucfirst($registration->status) }}
                     </span>
+                </div>
+
+                <div class="mb-3 space-y-2">
+                    <div>
+                        <div class="text-[10px] text-gray-500 mb-1">{{ __('PDF status') }}</div>
+                        <span class="inline-flex items-center rounded-full px-2 py-0.5 text-[10px] font-medium
+                            @class([
+                                'bg-yellow-50 text-yellow-700 border border-yellow-200' => $registration->pdf_status === 'pending',
+                                'bg-emerald-50 text-emerald-700 border border-emerald-200' => $registration->pdf_status === 'generated',
+                                'bg-red-50 text-red-700 border border-red-200' => $registration->pdf_status === 'failed',
+                            ])
+                        ">
+                            {{ ucfirst($registration->pdf_status ?? 'pending') }}
+                        </span>
+                    </div>
+
+                    @if($registration->pdf_generated_at)
+                        <div>
+                            <div class="text-[10px] text-gray-500 mb-1">{{ __('PDF generated at') }}</div>
+                            <div class="text-[11px] text-gray-700">{{ $registration->pdf_generated_at->format('Y-m-d H:i') }}</div>
+                        </div>
+                    @endif
+
+                    @if($registration->pdf_error)
+                        <div>
+                            <div class="text-[10px] text-gray-500 mb-1">{{ __('Last PDF error') }}</div>
+                            <div class="rounded-lg border border-red-100 bg-red-50 px-2 py-1 text-[11px] text-red-700">
+                                {{ $registration->pdf_error }}
+                            </div>
+                        </div>
+                    @endif
                 </div>
 
                 <form method="POST" action="{{ route('admin.sponsors.update-status', $registration) }}" class="space-y-2">

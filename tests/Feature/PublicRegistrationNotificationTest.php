@@ -115,6 +115,13 @@ class PublicRegistrationNotificationTest extends TestCase
             ])
             ->assertJsonPath('pdf_name', 'sponsor-registration-1.pdf');
 
+        $registration = SponsorRegistration::query()->sole();
+
+        $this->assertSame('generated', $registration->pdf_status);
+        $this->assertNull($registration->pdf_error);
+        $this->assertNotNull($registration->pdf_generated_at);
+        $this->assertSame('registrations/sponsors/1.pdf', $registration->pdf_path);
+
         Mail::assertSent(ContractConfirmationMail::class, fn (ContractConfirmationMail $mail) => $mail->hasTo('sponsor@example.com'));
         Mail::assertSent(NewSponsorRegistrationMail::class, count($this->adminEmails));
 

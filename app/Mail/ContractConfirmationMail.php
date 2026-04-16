@@ -14,15 +14,16 @@ class ContractConfirmationMail extends Mailable
         public string $name,
         public string $hall,
         public string $pdfPath,
-    ) {
-    }
+    ) {}
 
     public function build(): self
     {
-        $subject = "طلب حجز مساحة رقم {$this->hall} في معرض IEC 360° {$this->name}";
+        $subject = $this->hall !== ''
+            ? "طلب حجز مساحة رقم {$this->hall} في معرض IEC 360° {$this->name}"
+            : "طلب حجز مساحة في معرض IEC 360° {$this->name}";
 
         return $this->subject($subject)
             ->view('emails.contract_confirmation')
-            ->attach(storage_path('app/public/' . $this->pdfPath));
+            ->attach(storage_path('app/public/'.$this->pdfPath));
     }
 }

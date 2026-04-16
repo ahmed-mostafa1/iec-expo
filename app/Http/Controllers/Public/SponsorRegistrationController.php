@@ -11,6 +11,7 @@ use App\Services\RegistrationPdfService;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\URL;
+use Throwable;
 
 class SponsorRegistrationController extends Controller
 {
@@ -65,21 +66,43 @@ class SponsorRegistrationController extends Controller
             'cr_copy_path' => $crCopyPath,
             'national_address_doc_path' => $nationalAddressDocPath,
             'company_logo_path' => $companyLogoPath,
+            'pdf_status' => 'pending',
+            'pdf_error' => null,
+            'pdf_generated_at' => null,
             'status' => 'pending',
         ]);
 
-        // Generate and save PDF
-        $pdfPath = $this->pdfService->generateSponsorPdf($registration);
-        $registration->update(['pdf_path' => $pdfPath]);
+        $pdfPath = null;
+        $message = __('registration.sponsor.success');
+        $toastTitle = __('registration.sponsor.toast_title');
 
-        // Send contract confirmation to customer
-        Mail::to($registration->email)->send(
-            new ContractConfirmationMail(
-                $registration->full_name,
-                $registration->location_selection ?? '',
-                $pdfPath
-            )
-        );
+        try {
+            $pdfPath = $this->pdfService->generateSponsorPdf($registration);
+            $registration->update([
+                'pdf_path' => $pdfPath,
+                'pdf_status' => 'generated',
+                'pdf_error' => null,
+                'pdf_generated_at' => now(),
+            ]);
+
+            Mail::to($registration->email)->send(
+                new ContractConfirmationMail(
+                    $registration->full_name,
+                    $registration->location_selection ?? '',
+                    $pdfPath
+                )
+            );
+        } catch (Throwable $exception) {
+            report($exception);
+
+            $registration->update([
+                'pdf_status' => 'failed',
+                'pdf_error' => $exception->getMessage(),
+                'pdf_generated_at' => null,
+            ]);
+
+            $message = __('registration.sponsor.success_pdf_pending');
+        }
 
         foreach (config('admin.emails', []) as $adminEmail) {
             Mail::to($adminEmail)->send(
@@ -87,22 +110,21 @@ class SponsorRegistrationController extends Controller
             );
         }
 
-        $message = __('registration.sponsor.success');
-        $toastTitle = __('registration.sponsor.toast_title');
-
         if ($request->expectsJson()) {
-            $downloadUrl = URL::temporarySignedRoute(
-                'public.register.sponsor.pdf',
-                now()->addMinutes(10),
-                ['locale' => $locale, 'registration' => $registration->id]
-            );
+            $downloadUrl = $pdfPath
+                ? URL::temporarySignedRoute(
+                    'public.register.sponsor.pdf',
+                    now()->addMinutes(10),
+                    ['locale' => $locale, 'registration' => $registration->id]
+                )
+                : null;
 
             return response()->json([
                 'message' => $message,
                 'toast_title' => $toastTitle,
                 'registration_id' => $registration->id,
                 'pdf_url' => $downloadUrl,
-                'pdf_name' => "sponsor-registration-{$registration->id}.pdf",
+                'pdf_name' => $pdfPath ? "sponsor-registration-{$registration->id}.pdf" : null,
             ], 201);
         }
 

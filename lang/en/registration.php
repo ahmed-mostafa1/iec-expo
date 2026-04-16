@@ -22,6 +22,7 @@ return [
     ],
     'sponsor' => [
         'success' => 'Thank you for your sponsorship application. Our team will follow up soon.',
+        'success_pdf_pending' => 'Thank you for your sponsorship application. The contract PDF will be sent later by our team.',
         'toast_title' => 'Application submitted',
         'popup_note' => 'A copy of the agreement will be sent to the email address you registered with. To confirm your booking, please settle the full amount including VAT within one hour and send the transfer receipt to iec360@umbrella.sa.',
         'book_location' => 'Book Location *',
