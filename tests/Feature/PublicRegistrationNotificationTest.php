@@ -122,7 +122,12 @@ class PublicRegistrationNotificationTest extends TestCase
         $this->assertNotNull($registration->pdf_generated_at);
         $this->assertSame('registrations/sponsors/1.pdf', $registration->pdf_path);
 
-        Mail::assertSent(ContractConfirmationMail::class, fn (ContractConfirmationMail $mail) => $mail->hasTo('sponsor@example.com'));
+        Mail::assertSent(ContractConfirmationMail::class, function (ContractConfirmationMail $mail): bool {
+            $mail->build();
+
+            return $mail->hasTo('sponsor@example.com')
+                && $mail->subject === 'طلب رعاية وحجز مساحة';
+        });
         Mail::assertSent(NewSponsorRegistrationMail::class, count($this->adminEmails));
 
         foreach ($this->adminEmails as $adminEmail) {

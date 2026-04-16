@@ -89,7 +89,8 @@ class SponsorRegistrationController extends Controller
                 new ContractConfirmationMail(
                     $registration->full_name,
                     $registration->location_selection ?? '',
-                    $pdfPath
+                    $pdfPath,
+                    'طلب رعاية وحجز مساحة'
                 )
             );
         } catch (Throwable $exception) {

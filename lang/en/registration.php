@@ -9,6 +9,8 @@ return [
     'visitor' => [
         'success' => 'Thank you for registering as a visitor. We will contact you shortly.',
         'toast_title' => 'Registration received',
+        'loading_message' => 'Submitting your visitor registration...',
+        'loading_button' => 'Submitting visitor registration...',
     ],
     'guest' => [
         'title' => 'Guests',
@@ -24,6 +26,8 @@ return [
         'success' => 'Thank you for your sponsorship application. Our team will follow up soon.',
         'success_pdf_pending' => 'Thank you for your sponsorship application. The contract PDF will be sent later by our team.',
         'toast_title' => 'Application submitted',
+        'loading_message' => 'Submitting your sponsorship application...',
+        'loading_button' => 'Submitting sponsorship application...',
         'popup_note' => 'A copy of the agreement will be sent to the email address you registered with. To confirm your booking, please settle the full amount including VAT within one hour and send the transfer receipt to iec360@umbrella.sa.',
         'book_location' => 'Book Location *',
         'vat_number' => 'VAT Certificate',
@@ -43,6 +47,8 @@ return [
         'cta_submit' => 'Submit Application',
         'toast_title' => 'Application submitted',
         'success' => 'Thank you for your Icon application. Our team will follow up soon.',
+        'loading_message' => 'Submitting your Icon application...',
+        'loading_button' => 'Submitting Icon application...',
         'popup_note' => 'A copy of the agreement will be sent to the email address you registered with. To confirm your booking, please settle the full amount including VAT within one hour and send the transfer receipt to iec360@umbrella.sa.',
         'full_name' => 'Full Name *',
         'email' => 'Email *',

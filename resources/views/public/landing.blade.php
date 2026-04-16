@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="{{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}">
 
 <head>
@@ -3233,8 +3233,8 @@ experience that unites ambitious minds and industry leaders under one roof"
                                     enctype="multipart/form-data" novalidate
                                     data-success-title="{{ e(__('registration.sponsor.toast_title')) }}"
                                     data-success-message="{{ e(__('registration.sponsor.success')) }}"
-                                    data-loading-message="{{ e(__('registration.common.submitting')) }}"
-                                    data-loading-button-label="{{ e(__('registration.common.submitting_button')) }}"
+                                    data-loading-message="{{ e(__('registration.sponsor.loading_message')) }}"
+                                    data-loading-button-label="{{ e(__('registration.sponsor.loading_button')) }}"
                                     data-popup-note="{{ e(__('registration.sponsor.popup_note')) }}">
                                     <div class="form-buttons"
                                         style="justify-content: flex-start; margin-bottom: 0.75rem; width: 50%!important; margin: auto;">
@@ -3563,8 +3563,8 @@ experience that unites ambitious minds and industry leaders under one roof"
                                     enctype="multipart/form-data" novalidate
                                     data-success-title="{{ e(__('registration.icon.toast_title')) }}"
                                     data-success-message="{{ e(__('registration.icon.success')) }}"
-                                    data-loading-message="{{ e(__('registration.common.submitting')) }}"
-                                    data-loading-button-label="{{ e(__('registration.common.submitting_button')) }}"
+                                    data-loading-message="{{ e(__('registration.icon.loading_message')) }}"
+                                    data-loading-button-label="{{ e(__('registration.icon.loading_button')) }}"
                                     data-popup-note="{{ e(__('registration.icon.popup_note')) }}">
                                     @csrf
                                     <input type="hidden" name="form_identifier" value="icon">
@@ -3875,10 +3875,10 @@ experience that unites ambitious minds and industry leaders under one roof"
                                     data-ar="{{ e($guestFormTitle['ar']) }}">{{ $guestFormTitle['text'] }}</h3>
                                 <form id="visitor-registration-form" method="POST"
                                     action="{{ route('public.register.visitor', ['locale' => $locale]) }}" novalidate
-                                    data-success-title="{{ e(__('registration.guest.toast_title')) }}"
-                                    data-success-message="{{ e(__('registration.guest.success')) }}"
-                                    data-loading-message="{{ e(__('registration.common.submitting')) }}"
-                                    data-loading-button-label="{{ e(__('registration.common.submitting_button')) }}"
+                                    data-success-title="{{ e(__('registration.visitor.toast_title')) }}"
+                                    data-success-message="{{ e(__('registration.visitor.success')) }}"
+                                    data-loading-message="{{ e(__('registration.visitor.loading_message')) }}"
+                                    data-loading-button-label="{{ e(__('registration.visitor.loading_button')) }}"
                                     data-popup-note="">
                                     @csrf
                                     <input type="hidden" name="form_identifier" value="visitor">
