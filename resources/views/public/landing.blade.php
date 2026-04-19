@@ -5139,7 +5139,6 @@ experience that unites ambitious minds and industry leaders under one roof"
                     onSuccess: (payload) => {
                         sponsorForm.reset();
                         clearRole();
-                        triggerPdfDownload(payload && payload.pdf_url, payload && payload.pdf_name);
                         showSuccessPopup(getSuccessPopupContent(sponsorForm, payload));
                     },
                 });
@@ -5154,7 +5153,6 @@ experience that unites ambitious minds and industry leaders under one roof"
                         onSuccess: (payload) => {
                             iconForm.reset();
                             clearRole();
-                            triggerPdfDownload(payload && payload.pdf_url, payload && payload.pdf_name);
                             showSuccessPopup(getSuccessPopupContent(iconForm, payload));
                         },
                     });
@@ -5216,22 +5214,6 @@ experience that unites ambitious minds and industry leaders under one roof"
                     toggleSubmitting(form, submitter, false);
                 }
             });
-        }
-
-        function triggerPdfDownload(url, filename) {
-            if (!url) {
-                return;
-            }
-
-            const link = document.createElement('a');
-            link.href = url;
-            link.rel = 'noopener';
-            if (filename) {
-                link.download = filename;
-            }
-            document.body.appendChild(link);
-            link.click();
-            link.remove();
         }
 
         function getSuccessPopupContent(form, payload = {}) {
