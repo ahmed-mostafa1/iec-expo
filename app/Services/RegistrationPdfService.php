@@ -261,6 +261,7 @@ class RegistrationPdfService
                 'sponsor_tier' => $this->sponsorTierContractValue((string) ($registration->sponsor_tier ?? '')),
                 'space' => $pricing['space'],
                 'price' => $this->formatSaudiRiyalAmount($pricing['price']),
+                'final_price_vat' => $this->formatSaudiRiyalAmount($pricing['final_price']),
                 'final_price' => $this->arabicSaudiRiyalWords($pricing['final_price']),
             ];
         }
@@ -306,7 +307,7 @@ class RegistrationPdfService
 
     protected function arabicSaudiRiyalWords(int $amount): string
     {
-        return $this->arabicNumberToWords($amount).' ريال سعودي';
+        return $this->arabicNumberToWords($amount).' ريال';
     }
 
     protected function arabicNumberToWords(int $amount): string
