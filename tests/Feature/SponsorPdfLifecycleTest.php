@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use PhpOffice\PhpWord\TemplateProcessor;
+use PHPUnit\Framework\Attributes\DataProvider;
 use RuntimeException;
 use Tests\TestCase;
 use ZipArchive;
@@ -149,7 +150,9 @@ class SponsorPdfLifecycleTest extends TestCase
             $template->setValue('organization', 'شركة الراعي');
             $template->setValue('full_name', 'اسم المسؤول');
             $template->setValue('sponsor_tier', 'الذهبي');
-            $template->setValue('cr_copy', 'مرفق نسخة السجل التجاري');
+            $template->setValue('space', '8×5 متر مربع');
+            $template->setValue('price', '200,000 ريال');
+            $template->setValue('final_price', 'مئتان وثلاثون ألف ريال سعودي');
             $template->saveAs($tempFilePath);
 
             $zipArchive = new ZipArchive;
@@ -164,7 +167,9 @@ class SponsorPdfLifecycleTest extends TestCase
             $this->assertStringContainsString('شركة الراعي', $documentXml);
             $this->assertStringContainsString('اسم المسؤول', $documentXml);
             $this->assertStringContainsString('الذهبي', $documentXml);
-            $this->assertStringContainsString('مرفق نسخة السجل التجاري', $documentXml);
+            $this->assertStringContainsString('8×5 متر مربع', $documentXml);
+            $this->assertStringContainsString('200,000 ريال', $documentXml);
+            $this->assertStringContainsString('مئتان وثلاثون ألف ريال سعودي', $documentXml);
             $this->assertSame(0, preg_match_all('/\$\{[^}]+\}/', $documentXml));
         } finally {
             if (is_file($tempFilePath)) {
@@ -215,5 +220,129 @@ class SponsorPdfLifecycleTest extends TestCase
             'cr_copy' => 'مرفق نسخة السجل التجاري',
             'hall' => 'B12',
         ], $service->usedValues);
+    }
+
+    #[DataProvider('sponsorTierContractValuesProvider')]
+    public function test_sponsor_contract_values_include_space_price_and_final_price(string $tier, array $expectedValues): void
+    {
+        $registration = new SponsorRegistration([
+            'full_name' => 'Sponsor User',
+            'organization' => 'Sponsor Co',
+            'sponsor_tier' => $tier,
+        ]);
+        $service = new class extends RegistrationPdfService
+        {
+            public function inspectSponsorContractValues(SponsorRegistration $registration): array
+            {
+                return $this->sponsorContractValues($registration, public_path('sponsor-contract.docx'));
+            }
+        };
+
+        $this->assertSame($expectedValues, $service->inspectSponsorContractValues($registration));
+    }
+
+    public static function sponsorTierContractValuesProvider(): array
+    {
+        return [
+            'strategic' => [
+                'tier' => 'strategic',
+                'expectedValues' => [
+                    'organization' => 'Sponsor Co',
+                    'full_name' => 'Sponsor User',
+                    'sponsor_tier' => 'الاستراتيجي',
+                    'space' => '8×12 متر مربع',
+                    'price' => '900,000 ريال',
+                    'final_price' => 'مليون وخمسة وثلاثون ألف ريال سعودي',
+                ],
+            ],
+            'government' => [
+                'tier' => 'government',
+                'expectedValues' => [
+                    'organization' => 'Sponsor Co',
+                    'full_name' => 'Sponsor User',
+                    'sponsor_tier' => 'الحكومي',
+                    'space' => '8×5 متر مربع',
+                    'price' => '0 ريال',
+                    'final_price' => 'صفر ريال سعودي',
+                ],
+            ],
+            'diamond' => [
+                'tier' => 'diamond',
+                'expectedValues' => [
+                    'organization' => 'Sponsor Co',
+                    'full_name' => 'Sponsor User',
+                    'sponsor_tier' => 'الماسي',
+                    'space' => '8×8 متر مربع',
+                    'price' => '450,000 ريال',
+                    'final_price' => 'خمسمئة وسبعة عشر ألف وخمسمئة ريال سعودي',
+                ],
+            ],
+            'gold' => [
+                'tier' => 'gold',
+                'expectedValues' => [
+                    'organization' => 'Sponsor Co',
+                    'full_name' => 'Sponsor User',
+                    'sponsor_tier' => 'الذهبي',
+                    'space' => '8×5 متر مربع',
+                    'price' => '200,000 ريال',
+                    'final_price' => 'مئتان وثلاثون ألف ريال سعودي',
+                ],
+            ],
+            'media' => [
+                'tier' => 'media',
+                'expectedValues' => [
+                    'organization' => 'Sponsor Co',
+                    'full_name' => 'Sponsor User',
+                    'sponsor_tier' => 'الإعلامي',
+                    'space' => '-',
+                    'price' => '0 ريال',
+                    'final_price' => 'صفر ريال سعودي',
+                ],
+            ],
+            'safety-security' => [
+                'tier' => 'safety-security',
+                'expectedValues' => [
+                    'organization' => 'Sponsor Co',
+                    'full_name' => 'Sponsor User',
+                    'sponsor_tier' => 'السلامة والأمن',
+                    'space' => '0 متر مربع',
+                    'price' => '200,000 ريال',
+                    'final_price' => 'مئتان وثلاثون ألف ريال سعودي',
+                ],
+            ],
+            'marketing' => [
+                'tier' => 'marketing',
+                'expectedValues' => [
+                    'organization' => 'Sponsor Co',
+                    'full_name' => 'Sponsor User',
+                    'sponsor_tier' => 'التسويقي',
+                    'space' => '0 متر مربع',
+                    'price' => '200,000 ريال',
+                    'final_price' => 'مئتان وثلاثون ألف ريال سعودي',
+                ],
+            ],
+            'technology' => [
+                'tier' => 'technology',
+                'expectedValues' => [
+                    'organization' => 'Sponsor Co',
+                    'full_name' => 'Sponsor User',
+                    'sponsor_tier' => 'التقني',
+                    'space' => '0 متر مربع',
+                    'price' => '200,000 ريال',
+                    'final_price' => 'مئتان وثلاثون ألف ريال سعودي',
+                ],
+            ],
+            'other' => [
+                'tier' => 'other',
+                'expectedValues' => [
+                    'organization' => 'Sponsor Co',
+                    'full_name' => 'Sponsor User',
+                    'sponsor_tier' => 'أخرى',
+                    'space' => '0 متر مربع',
+                    'price' => '200,000 ريال',
+                    'final_price' => 'مئتان وثلاثون ألف ريال سعودي',
+                ],
+            ],
+        ];
     }
 }

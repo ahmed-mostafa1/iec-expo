@@ -253,11 +253,15 @@ class RegistrationPdfService
     protected function sponsorContractValues(SponsorRegistration $registration, string $templatePath): array
     {
         if (basename($templatePath) === 'sponsor-contract.docx') {
+            $pricing = $this->sponsorContractPricing((string) ($registration->sponsor_tier ?? ''));
+
             return [
                 'organization' => (string) ($registration->organization ?? ''),
                 'full_name' => (string) ($registration->full_name ?? ''),
                 'sponsor_tier' => $this->sponsorTierContractValue((string) ($registration->sponsor_tier ?? '')),
-                'cr_copy' => 'مرفق نسخة السجل التجاري',
+                'space' => $pricing['space'],
+                'price' => $this->formatSaudiRiyalAmount($pricing['price']),
+                'final_price' => $this->arabicSaudiRiyalWords($pricing['final_price']),
             ];
         }
 
@@ -280,5 +284,142 @@ class RegistrationPdfService
         $checkedTemplates = implode(', ', array_map(static fn (string $candidatePath): string => basename($candidatePath), $candidatePaths));
 
         throw new \RuntimeException("Contract template not found. Checked: {$checkedTemplates}");
+    }
+
+    protected function sponsorContractPricing(string $tier): array
+    {
+        return match ($tier) {
+            'strategic' => ['space' => '8×12 متر مربع', 'price' => 900000, 'final_price' => 1035000],
+            'government' => ['space' => '8×5 متر مربع', 'price' => 0, 'final_price' => 0],
+            'diamond' => ['space' => '8×8 متر مربع', 'price' => 450000, 'final_price' => 517500],
+            'gold' => ['space' => '8×5 متر مربع', 'price' => 200000, 'final_price' => 230000],
+            'media' => ['space' => '-', 'price' => 0, 'final_price' => 0],
+            'safety-security', 'marketing', 'technology', 'other' => ['space' => '0 متر مربع', 'price' => 200000, 'final_price' => 230000],
+            default => ['space' => '0 متر مربع', 'price' => 200000, 'final_price' => 230000],
+        };
+    }
+
+    protected function formatSaudiRiyalAmount(int $amount): string
+    {
+        return number_format($amount).' ريال';
+    }
+
+    protected function arabicSaudiRiyalWords(int $amount): string
+    {
+        return $this->arabicNumberToWords($amount).' ريال سعودي';
+    }
+
+    protected function arabicNumberToWords(int $amount): string
+    {
+        if ($amount === 0) {
+            return 'صفر';
+        }
+
+        $parts = [];
+        $millions = intdiv($amount, 1000000);
+        $remainder = $amount % 1000000;
+
+        if ($millions > 0) {
+            $parts[] = match ($millions) {
+                1 => 'مليون',
+                2 => 'مليونان',
+                default => $this->arabicNumberToWords($millions).' مليون',
+            };
+        }
+
+        $thousands = intdiv($remainder, 1000);
+        $remainder = $remainder % 1000;
+
+        if ($thousands > 0) {
+            $parts[] = match ($thousands) {
+                1 => 'ألف',
+                2 => 'ألفان',
+                default => $this->arabicNumberToWords($thousands).' ألف',
+            };
+        }
+
+        if ($remainder > 0) {
+            $parts[] = $this->arabicNumberBelowOneThousandToWords($remainder);
+        }
+
+        return implode(' و', $parts);
+    }
+
+    protected function arabicNumberBelowOneThousandToWords(int $amount): string
+    {
+        $hundredsMap = [
+            1 => 'مئة',
+            2 => 'مئتان',
+            3 => 'ثلاثمئة',
+            4 => 'أربعمئة',
+            5 => 'خمسمئة',
+            6 => 'ستمئة',
+            7 => 'سبعمئة',
+            8 => 'ثمانمئة',
+            9 => 'تسعمئة',
+        ];
+
+        $parts = [];
+        $hundreds = intdiv($amount, 100);
+        $remainder = $amount % 100;
+
+        if ($hundreds > 0) {
+            $parts[] = $hundredsMap[$hundreds];
+        }
+
+        if ($remainder > 0) {
+            $parts[] = $this->arabicNumberBelowOneHundredToWords($remainder);
+        }
+
+        return implode(' و', $parts);
+    }
+
+    protected function arabicNumberBelowOneHundredToWords(int $amount): string
+    {
+        $unitsMap = [
+            1 => 'واحد',
+            2 => 'اثنان',
+            3 => 'ثلاثة',
+            4 => 'أربعة',
+            5 => 'خمسة',
+            6 => 'ستة',
+            7 => 'سبعة',
+            8 => 'ثمانية',
+            9 => 'تسعة',
+            10 => 'عشرة',
+            11 => 'أحد عشر',
+            12 => 'اثنا عشر',
+            13 => 'ثلاثة عشر',
+            14 => 'أربعة عشر',
+            15 => 'خمسة عشر',
+            16 => 'ستة عشر',
+            17 => 'سبعة عشر',
+            18 => 'ثمانية عشر',
+            19 => 'تسعة عشر',
+        ];
+
+        $tensMap = [
+            20 => 'عشرون',
+            30 => 'ثلاثون',
+            40 => 'أربعون',
+            50 => 'خمسون',
+            60 => 'ستون',
+            70 => 'سبعون',
+            80 => 'ثمانون',
+            90 => 'تسعون',
+        ];
+
+        if ($amount < 20) {
+            return $unitsMap[$amount];
+        }
+
+        $tens = intdiv($amount, 10) * 10;
+        $units = $amount % 10;
+
+        if ($units === 0) {
+            return $tensMap[$tens];
+        }
+
+        return $unitsMap[$units].' و'.$tensMap[$tens];
     }
 }
