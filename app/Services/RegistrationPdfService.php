@@ -307,7 +307,7 @@ class RegistrationPdfService
 
     protected function arabicSaudiRiyalWords(int $amount): string
     {
-        return $this->arabicNumberToWords($amount).' ريال';
+        return $this->arabicNumberToWords($amount).' ريالاً سعودياً فقط لا غير';
     }
 
     protected function arabicNumberToWords(int $amount): string

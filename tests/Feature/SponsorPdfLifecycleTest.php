@@ -153,7 +153,7 @@ class SponsorPdfLifecycleTest extends TestCase
             $template->setValue('space', '8×5 متر مربع');
             $template->setValue('price', '200,000 ريال');
             $template->setValue('final_price_vat', '230,000 ريال');
-            $template->setValue('final_price', 'مئتان وثلاثون ألف ريال');
+            $template->setValue('final_price', 'مئتان وثلاثون ألف ريالاً سعودياً فقط لا غير');
             $template->saveAs($tempFilePath);
 
             $zipArchive = new ZipArchive;
@@ -171,7 +171,7 @@ class SponsorPdfLifecycleTest extends TestCase
             $this->assertStringContainsString('8×5 متر مربع', $documentXml);
             $this->assertStringContainsString('200,000 ريال', $documentXml);
             $this->assertStringContainsString('230,000 ريال', $documentXml);
-            $this->assertStringContainsString('مئتان وثلاثون ألف ريال', $documentXml);
+            $this->assertStringContainsString('مئتان وثلاثون ألف ريالاً سعودياً فقط لا غير', $documentXml);
             $this->assertSame(0, preg_match_all('/\$\{[^}]+\}/', $documentXml));
         } finally {
             if (is_file($tempFilePath)) {
@@ -255,7 +255,7 @@ class SponsorPdfLifecycleTest extends TestCase
                     'space' => '8×12 متر مربع',
                     'price' => '900,000 ريال',
                     'final_price_vat' => '1,035,000 ريال',
-                    'final_price' => 'مليون وخمسة وثلاثون ألف ريال',
+                    'final_price' => 'مليون وخمسة وثلاثون ألف ريالاً سعودياً فقط لا غير',
                 ],
             ],
             'government' => [
@@ -267,7 +267,7 @@ class SponsorPdfLifecycleTest extends TestCase
                     'space' => '8×5 متر مربع',
                     'price' => '0 ريال',
                     'final_price_vat' => '0 ريال',
-                    'final_price' => 'صفر ريال',
+                    'final_price' => 'صفر ريالاً سعودياً فقط لا غير',
                 ],
             ],
             'diamond' => [
@@ -279,7 +279,7 @@ class SponsorPdfLifecycleTest extends TestCase
                     'space' => '8×8 متر مربع',
                     'price' => '450,000 ريال',
                     'final_price_vat' => '517,500 ريال',
-                    'final_price' => 'خمسمئة وسبعة عشر ألف وخمسمئة ريال',
+                    'final_price' => 'خمسمئة وسبعة عشر ألف وخمسمئة ريالاً سعودياً فقط لا غير',
                 ],
             ],
             'gold' => [
@@ -291,7 +291,7 @@ class SponsorPdfLifecycleTest extends TestCase
                     'space' => '8×5 متر مربع',
                     'price' => '200,000 ريال',
                     'final_price_vat' => '230,000 ريال',
-                    'final_price' => 'مئتان وثلاثون ألف ريال',
+                    'final_price' => 'مئتان وثلاثون ألف ريالاً سعودياً فقط لا غير',
                 ],
             ],
             'media' => [
@@ -303,7 +303,7 @@ class SponsorPdfLifecycleTest extends TestCase
                     'space' => '-',
                     'price' => '0 ريال',
                     'final_price_vat' => '0 ريال',
-                    'final_price' => 'صفر ريال',
+                    'final_price' => 'صفر ريالاً سعودياً فقط لا غير',
                 ],
             ],
             'safety-security' => [
@@ -315,7 +315,7 @@ class SponsorPdfLifecycleTest extends TestCase
                     'space' => '0 متر مربع',
                     'price' => '200,000 ريال',
                     'final_price_vat' => '230,000 ريال',
-                    'final_price' => 'مئتان وثلاثون ألف ريال',
+                    'final_price' => 'مئتان وثلاثون ألف ريالاً سعودياً فقط لا غير',
                 ],
             ],
             'marketing' => [
@@ -327,7 +327,7 @@ class SponsorPdfLifecycleTest extends TestCase
                     'space' => '0 متر مربع',
                     'price' => '200,000 ريال',
                     'final_price_vat' => '230,000 ريال',
-                    'final_price' => 'مئتان وثلاثون ألف ريال',
+                    'final_price' => 'مئتان وثلاثون ألف ريالاً سعودياً فقط لا غير',
                 ],
             ],
             'technology' => [
@@ -339,7 +339,7 @@ class SponsorPdfLifecycleTest extends TestCase
                     'space' => '0 متر مربع',
                     'price' => '200,000 ريال',
                     'final_price_vat' => '230,000 ريال',
-                    'final_price' => 'مئتان وثلاثون ألف ريال',
+                    'final_price' => 'مئتان وثلاثون ألف ريالاً سعودياً فقط لا غير',
                 ],
             ],
             'other' => [
@@ -351,7 +351,7 @@ class SponsorPdfLifecycleTest extends TestCase
                     'space' => '0 متر مربع',
                     'price' => '200,000 ريال',
                     'final_price_vat' => '230,000 ريال',
-                    'final_price' => 'مئتان وثلاثون ألف ريال',
+                    'final_price' => 'مئتان وثلاثون ألف ريالاً سعودياً فقط لا غير',
                 ],
             ],
         ];
