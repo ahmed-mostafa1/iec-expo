@@ -2762,17 +2762,14 @@
     }
     </style>
     <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WFCV966DWS"></script>
-    <script>
-    window.dataLayer = window.dataLayer || [];
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-HED35JNVSW"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
-    function gtag() {
-        dataLayer.push(arguments);
-    }
-
-    gtag('js', new Date());
-    gtag('config', 'G-WFCV966DWS');
-    </script>
+  gtag('config', 'G-HED35JNVSW');
+</script>
 </head>
 
 <body class="{{ app()->getLocale() === 'ar' ? 'locale-ar' : 'locale-en' }} is-loading">
