@@ -22,6 +22,8 @@ class RegistrationFormLocalizationTest extends TestCase
         $response->assertSee('data-loading-button-label="Submitting sponsorship application..."', false);
         $response->assertSee('data-loading-message="Submitting your Icon application..."', false);
         $response->assertSee('data-loading-button-label="Submitting Icon application..."', false);
+        $response->assertSee('message.textContent = form.dataset.loadingMessage || "Submitting your request...";', false);
+        $response->assertSee('form.dataset.loadingButtonLabel || "Submitting..."', false);
         $response->assertDontSee('triggerPdfDownload(payload && payload.pdf_url, payload && payload.pdf_name);', false);
         $response->assertDontSee('function triggerPdfDownload', false);
     }

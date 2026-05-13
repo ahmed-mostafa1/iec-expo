@@ -5253,8 +5253,7 @@ experience that unites ambitious minds and industry leaders under one roof"
         if (!overlay || !message) {
             return;
         }
-        message.textContent = form.dataset.loadingMessage || '{{ __('
-        registration.common.submitting ') }}';
+        message.textContent = form.dataset.loadingMessage || @json(__('registration.common.submitting'));
         overlay.classList.add('active');
         overlay.setAttribute('aria-hidden', 'false');
         syncFormBlockingState();
@@ -5308,7 +5307,7 @@ experience that unites ambitious minds and industry leaders under one roof"
             button.disabled = true;
             button.setAttribute('aria-busy', 'true');
             button.innerHTML =
-                `<span>${form.dataset.loadingButtonLabel || '{{ __('registration.common.submitting_button') }}'}</span>`;
+                `<span>${form.dataset.loadingButtonLabel || @json(__('registration.common.submitting_button'))}</span>`;
         } else {
             button.disabled = false;
             button.removeAttribute('aria-busy');
@@ -5530,8 +5529,7 @@ experience that unites ambitious minds and industry leaders under one roof"
         event.target.reset();
     }
 
-    const initialForm = @json($visitorShouldOpen ? 'visitor' : ($sponsorShouldOpen ? 'sponsor' : ($iconShouldOpen ?
-        'icon' : '')));
+    const initialForm = @json($visitorShouldOpen ? 'visitor' : ($sponsorShouldOpen ? 'sponsor' : ($iconShouldOpen ? 'icon' : '')));
     document.addEventListener('DOMContentLoaded', () => {
         initHeardAboutSelects();
         initAjaxRegistrationForms();
