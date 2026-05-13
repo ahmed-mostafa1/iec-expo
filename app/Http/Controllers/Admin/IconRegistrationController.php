@@ -59,7 +59,7 @@ class IconRegistrationController extends Controller
     {
         try {
             $pdfPath = $this->pdfService->generateIconPdf($registration);
-            $registration->update([
+            $registration->updatePersistableAttributes([
                 'pdf_path' => $pdfPath,
                 'pdf_status' => 'generated',
                 'pdf_error' => null,
@@ -70,7 +70,7 @@ class IconRegistrationController extends Controller
         } catch (Throwable $exception) {
             report($exception);
 
-            $registration->update([
+            $registration->updatePersistableAttributes([
                 'pdf_path' => null,
                 'pdf_status' => 'failed',
                 'pdf_error' => $exception->getMessage(),

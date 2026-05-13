@@ -13,6 +13,7 @@ use App\Services\RegistrationPdfService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Storage;
 use Tests\TestCase;
 
@@ -124,11 +125,11 @@ class PublicRegistrationNotificationTest extends TestCase
         $this->assertNotNull($registration->pdf_generated_at);
         $this->assertSame('registrations/sponsors/1.pdf', $registration->pdf_path);
 
-        Mail::assertQueued(ContractConfirmationMail::class, fn (ContractConfirmationMail $mail) => $mail->hasTo('sponsor@example.com'));
-        Mail::assertQueued(NewSponsorRegistrationMail::class, count($this->adminEmails));
+        Mail::assertSent(ContractConfirmationMail::class, fn (ContractConfirmationMail $mail) => $mail->hasTo('sponsor@example.com'));
+        Mail::assertSent(NewSponsorRegistrationMail::class, count($this->adminEmails));
 
         foreach ($this->adminEmails as $adminEmail) {
-            Mail::assertQueued(NewSponsorRegistrationMail::class, fn (NewSponsorRegistrationMail $mail) => $mail->hasTo($adminEmail));
+            Mail::assertSent(NewSponsorRegistrationMail::class, fn (NewSponsorRegistrationMail $mail) => $mail->hasTo($adminEmail));
         }
     }
 
@@ -164,11 +165,57 @@ class PublicRegistrationNotificationTest extends TestCase
         $this->assertNotNull($registration->pdf_generated_at);
         $this->assertSame('registrations/icons/1.pdf', $registration->pdf_path);
 
-        Mail::assertQueued(ContractConfirmationMail::class, fn (ContractConfirmationMail $mail) => $mail->hasTo('icon@example.com'));
-        Mail::assertQueued(NewIconRegistrationMail::class, count($this->adminEmails));
+        Mail::assertSent(ContractConfirmationMail::class, fn (ContractConfirmationMail $mail) => $mail->hasTo('icon@example.com'));
+        Mail::assertSent(NewIconRegistrationMail::class, count($this->adminEmails));
 
         foreach ($this->adminEmails as $adminEmail) {
-            Mail::assertQueued(NewIconRegistrationMail::class, fn (NewIconRegistrationMail $mail) => $mail->hasTo($adminEmail));
+            Mail::assertSent(NewIconRegistrationMail::class, fn (NewIconRegistrationMail $mail) => $mail->hasTo($adminEmail));
+        }
+    }
+
+    public function test_icon_registration_still_succeeds_when_pdf_lifecycle_columns_are_missing(): void
+    {
+        Mail::fake();
+
+        Schema::table('icon_registrations', function ($table) {
+            $table->dropColumn([
+                'pdf_status',
+                'pdf_error',
+                'pdf_generated_at',
+            ]);
+        });
+
+        $response = $this->post(
+            route('public.register.icon', ['locale' => 'en']),
+            [
+                'full_name' => 'Icon User',
+                'email' => 'icon@example.com',
+                'phone' => '966512345678',
+                'job_title' => 'Lead',
+                'organization' => 'Icon Co',
+                'location_selection' => 'A01',
+                'vat_number' => UploadedFile::fake()->create('vat.pdf', 100, 'application/pdf'),
+                'cr_copy' => UploadedFile::fake()->create('cr.pdf', 100, 'application/pdf'),
+                'national_address_document' => UploadedFile::fake()->create('address.pdf', 100, 'application/pdf'),
+                'company_logo' => UploadedFile::fake()->create('logo.pdf', 100, 'application/pdf'),
+                'privacy_policy' => '1',
+            ],
+            ['Accept' => 'application/json']
+        );
+
+        $response->assertCreated()
+            ->assertJsonPath('message', __('registration.icon.success_pdf_pending'));
+
+        $this->assertDatabaseHas('icon_registrations', [
+            'email' => 'icon@example.com',
+            'pdf_path' => 'registrations/icons/1.pdf',
+        ]);
+
+        Mail::assertSent(ContractConfirmationMail::class, fn (ContractConfirmationMail $mail) => $mail->hasTo('icon@example.com'));
+        Mail::assertSent(NewIconRegistrationMail::class, count($this->adminEmails));
+
+        foreach ($this->adminEmails as $adminEmail) {
+            Mail::assertSent(NewIconRegistrationMail::class, fn (NewIconRegistrationMail $mail) => $mail->hasTo($adminEmail));
         }
     }
 

@@ -45,27 +45,29 @@ class IconRegistrationController extends Controller
             )
             : null;
 
-        $registration = IconRegistration::create([
-            'full_name' => $data['full_name'],
-            'email' => $data['email'],
-            'phone' => $data['phone'],
-            'job_title' => $data['job_title'],
-            'organization' => $data['organization'] ?? '',
-            'location_selection' => $data['location_selection'],
-            'vat_number' => null,
-            'vat_certificate_path' => $vatCertificatePath,
-            'national_address' => $data['national_address'] ?? '',
-            'document_path' => null,
-            'cr_copy_path' => $crCopyPath,
-            'national_address_doc_path' => $nationalAddressDocPath,
-            'company_logo_path' => $companyLogoPath,
-            'pdf_status' => 'pending',
-            'pdf_error' => null,
-            'pdf_generated_at' => null,
-            'status' => 'pending',
-        ]);
+        $registration = IconRegistration::create(
+            IconRegistration::filterPersistableAttributes([
+                'full_name' => $data['full_name'],
+                'email' => $data['email'],
+                'phone' => $data['phone'],
+                'job_title' => $data['job_title'],
+                'organization' => $data['organization'] ?? '',
+                'location_selection' => $data['location_selection'],
+                'vat_number' => null,
+                'vat_certificate_path' => $vatCertificatePath,
+                'national_address' => $data['national_address'] ?? '',
+                'document_path' => null,
+                'cr_copy_path' => $crCopyPath,
+                'national_address_doc_path' => $nationalAddressDocPath,
+                'company_logo_path' => $companyLogoPath,
+                'pdf_status' => 'pending',
+                'pdf_error' => null,
+                'pdf_generated_at' => null,
+                'status' => 'pending',
+            ])
+        );
 
-        ProcessIconRegistrationSubmission::dispatch($registration)->afterCommit();
+        ProcessIconRegistrationSubmission::dispatchSync($registration);
 
         $message = __('registration.icon.success_pdf_pending');
         $toastTitle = __('registration.icon.toast_title');

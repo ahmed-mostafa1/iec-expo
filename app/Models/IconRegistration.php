@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Schema;
 
 class IconRegistration extends Model
 {
@@ -32,5 +33,20 @@ class IconRegistration extends Model
         return [
             'pdf_generated_at' => 'datetime',
         ];
+    }
+
+    public static function filterPersistableAttributes(array $attributes): array
+    {
+        $model = new static;
+
+        return array_intersect_key(
+            $attributes,
+            array_flip(Schema::getColumnListing($model->getTable()))
+        );
+    }
+
+    public function updatePersistableAttributes(array $attributes): bool
+    {
+        return $this->update(static::filterPersistableAttributes($attributes));
     }
 }

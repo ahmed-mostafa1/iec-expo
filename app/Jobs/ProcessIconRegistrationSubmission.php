@@ -36,14 +36,14 @@ class ProcessIconRegistrationSubmission implements ShouldQueue
         try {
             $pdfPath = $pdfService->generateIconPdf($registration);
 
-            $registration->update([
+            $registration->updatePersistableAttributes([
                 'pdf_path' => $pdfPath,
                 'pdf_status' => 'generated',
                 'pdf_error' => null,
                 'pdf_generated_at' => now(),
             ]);
 
-            Mail::to($registration->email)->queue(
+            Mail::to($registration->email)->send(
                 new ContractConfirmationMail(
                     $registration->full_name,
                     $registration->location_selection ?? '',
@@ -53,7 +53,7 @@ class ProcessIconRegistrationSubmission implements ShouldQueue
         } catch (Throwable $exception) {
             report($exception);
 
-            $registration->update([
+            $registration->updatePersistableAttributes([
                 'pdf_path' => null,
                 'pdf_status' => 'failed',
                 'pdf_error' => $exception->getMessage(),
@@ -64,7 +64,7 @@ class ProcessIconRegistrationSubmission implements ShouldQueue
         $registration->refresh();
 
         foreach (config('admin.emails', []) as $adminEmail) {
-            Mail::to($adminEmail)->queue(
+            Mail::to($adminEmail)->send(
                 new NewIconRegistrationMail($registration, $pdfPath)
             );
         }

@@ -43,7 +43,7 @@ class ProcessSponsorRegistrationSubmission implements ShouldQueue
                 'pdf_generated_at' => now(),
             ]);
 
-            Mail::to($registration->email)->queue(
+            Mail::to($registration->email)->send(
                 new ContractConfirmationMail(
                     $registration->full_name,
                     $registration->location_selection ?? '',
@@ -65,7 +65,7 @@ class ProcessSponsorRegistrationSubmission implements ShouldQueue
         $registration->refresh();
 
         foreach (config('admin.emails', []) as $adminEmail) {
-            Mail::to($adminEmail)->queue(
+            Mail::to($adminEmail)->send(
                 new NewSponsorRegistrationMail($registration, $pdfPath)
             );
         }

@@ -66,7 +66,7 @@ class SponsorRegistrationController extends Controller
             'status' => 'pending',
         ]);
 
-        ProcessSponsorRegistrationSubmission::dispatch($registration)->afterCommit();
+        ProcessSponsorRegistrationSubmission::dispatchSync($registration);
 
         $message = __('registration.sponsor.success_pdf_pending');
         $toastTitle = __('registration.sponsor.toast_title');

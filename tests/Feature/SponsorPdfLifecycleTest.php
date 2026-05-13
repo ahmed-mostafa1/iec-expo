@@ -78,11 +78,11 @@ class SponsorPdfLifecycleTest extends TestCase
         $this->assertNull($registration->pdf_generated_at);
         $this->assertNull($registration->pdf_path);
 
-        Mail::assertNotQueued(ContractConfirmationMail::class);
-        Mail::assertQueued(NewSponsorRegistrationMail::class, count($this->adminEmails));
+        Mail::assertNotSent(ContractConfirmationMail::class);
+        Mail::assertSent(NewSponsorRegistrationMail::class, count($this->adminEmails));
 
         foreach ($this->adminEmails as $adminEmail) {
-            Mail::assertQueued(NewSponsorRegistrationMail::class, fn (NewSponsorRegistrationMail $mail) => $mail->hasTo($adminEmail) && $mail->pdfPath === null);
+            Mail::assertSent(NewSponsorRegistrationMail::class, fn (NewSponsorRegistrationMail $mail) => $mail->hasTo($adminEmail) && $mail->pdfPath === null);
         }
     }
 
@@ -175,11 +175,11 @@ class SponsorPdfLifecycleTest extends TestCase
         $this->assertNull($registration->pdf_generated_at);
         $this->assertNull($registration->pdf_path);
 
-        Mail::assertNotQueued(ContractConfirmationMail::class);
-        Mail::assertQueued(NewIconRegistrationMail::class, count($this->adminEmails));
+        Mail::assertNotSent(ContractConfirmationMail::class);
+        Mail::assertSent(NewIconRegistrationMail::class, count($this->adminEmails));
 
         foreach ($this->adminEmails as $adminEmail) {
-            Mail::assertQueued(NewIconRegistrationMail::class, fn (NewIconRegistrationMail $mail) => $mail->hasTo($adminEmail) && $mail->pdfPath === null);
+            Mail::assertSent(NewIconRegistrationMail::class, fn (NewIconRegistrationMail $mail) => $mail->hasTo($adminEmail) && $mail->pdfPath === null);
         }
     }
 
