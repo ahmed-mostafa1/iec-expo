@@ -43,4 +43,9 @@ return [
         'key' => env('CLOUDCONVERT_API_KEY'),
     ],
 
+    'contract_templates' => [
+        'sponsor' => array_values(array_filter(explode(PATH_SEPARATOR, env('SPONSOR_CONTRACT_TEMPLATE_PATHS', '')))),
+        'shared' => array_values(array_filter(explode(PATH_SEPARATOR, env('CONTRACT_TEMPLATE_PATHS', '')))),
+    ],
+
 ];

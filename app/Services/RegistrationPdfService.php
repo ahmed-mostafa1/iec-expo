@@ -41,8 +41,9 @@ class RegistrationPdfService
     public function generateIconPdf(IconRegistration $registration): string
     {
         $path = "registrations/icons/{$registration->id}.pdf";
+        $templatePath = $this->resolveTemplatePath($this->sharedTemplatePaths());
 
-        return $this->generateContractPdf(public_path('contract-v2.docx'), [
+        return $this->generateContractPdf($templatePath, [
             'organization' => (string) ($registration->organization ?? ''),
             'name' => (string) ($registration->full_name ?? ''),
             'cr_copy' => 'See attached file',
@@ -245,8 +246,17 @@ class RegistrationPdfService
     protected function sponsorTemplatePaths(): array
     {
         return [
-            public_path('sponsor-contract.docx'),
-            public_path('contract-v2.docx'),
+            ...$this->configuredTemplatePaths('sponsor'),
+            ...$this->templatePathsFor('sponsor-contract.docx'),
+            ...$this->sharedTemplatePaths(),
+        ];
+    }
+
+    protected function sharedTemplatePaths(): array
+    {
+        return [
+            ...$this->configuredTemplatePaths('shared'),
+            ...$this->templatePathsFor('contract-v2.docx'),
         ];
     }
 
@@ -276,15 +286,65 @@ class RegistrationPdfService
 
     protected function resolveTemplatePath(array $candidatePaths): string
     {
+        $candidatePaths = $this->uniqueExistingPathCandidates($candidatePaths);
+
         foreach ($candidatePaths as $candidatePath) {
             if (is_file($candidatePath)) {
                 return $candidatePath;
             }
         }
 
-        $checkedTemplates = implode(', ', array_map(static fn (string $candidatePath): string => basename($candidatePath), $candidatePaths));
+        $checkedTemplates = implode(', ', $candidatePaths);
 
         throw new \RuntimeException("Contract template not found. Checked: {$checkedTemplates}");
+    }
+
+    protected function templatePathsFor(string $filename): array
+    {
+        $paths = [
+            public_path($filename),
+            base_path("public/{$filename}"),
+            resource_path("contracts/{$filename}"),
+        ];
+
+        $documentRoot = $_SERVER['DOCUMENT_ROOT'] ?? null;
+        if (is_string($documentRoot) && $documentRoot !== '') {
+            $paths[] = rtrim($documentRoot, "\\/").DIRECTORY_SEPARATOR.$filename;
+        }
+
+        $paths[] = base_path("../public_html/{$filename}");
+
+        return $this->uniqueExistingPathCandidates($paths);
+    }
+
+    protected function configuredTemplatePaths(string $template): array
+    {
+        $paths = config("services.contract_templates.{$template}", []);
+
+        if (is_string($paths)) {
+            $paths = [$paths];
+        }
+
+        if (! is_array($paths)) {
+            return [];
+        }
+
+        return $this->uniqueExistingPathCandidates($paths);
+    }
+
+    protected function uniqueExistingPathCandidates(array $paths): array
+    {
+        $normalizedPaths = [];
+
+        foreach ($paths as $path) {
+            if (! is_string($path) || $path === '') {
+                continue;
+            }
+
+            $normalizedPaths[] = $path;
+        }
+
+        return array_values(array_unique($normalizedPaths));
     }
 
     protected function sponsorContractPricing(string $tier): array

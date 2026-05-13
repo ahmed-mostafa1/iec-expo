@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Mail\ContractConfirmationMail;
 use App\Mail\NewSponsorRegistrationMail;
 use App\Models\Admin;
+use App\Models\IconRegistration;
 use App\Models\SponsorRegistration;
 use App\Services\RegistrationPdfService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -221,6 +222,88 @@ class SponsorPdfLifecycleTest extends TestCase
             'name' => 'Sponsor User',
             'cr_copy' => 'مرفق نسخة السجل التجاري',
             'hall' => 'B12',
+        ], $service->usedValues);
+    }
+
+    public function test_contract_template_resolution_checks_document_root_for_shared_hosting_public_files(): void
+    {
+        $documentRoot = storage_path('framework/testing/document-root-'.uniqid());
+        $templatePath = $documentRoot.DIRECTORY_SEPARATOR.'hosted-contract.docx';
+        $hadDocumentRoot = array_key_exists('DOCUMENT_ROOT', $_SERVER);
+        $previousDocumentRoot = $_SERVER['DOCUMENT_ROOT'] ?? null;
+
+        mkdir($documentRoot, 0777, true);
+        touch($templatePath);
+        $_SERVER['DOCUMENT_ROOT'] = $documentRoot;
+
+        try {
+            $service = new class extends RegistrationPdfService
+            {
+                public function resolveSharedHostingTemplate(string $filename): string
+                {
+                    return $this->resolveTemplatePath($this->templatePathsFor($filename));
+                }
+            };
+
+            $this->assertSame($templatePath, $service->resolveSharedHostingTemplate('hosted-contract.docx'));
+        } finally {
+            if ($hadDocumentRoot) {
+                $_SERVER['DOCUMENT_ROOT'] = $previousDocumentRoot;
+            } else {
+                unset($_SERVER['DOCUMENT_ROOT']);
+            }
+
+            if (is_file($templatePath)) {
+                @unlink($templatePath);
+            }
+
+            if (is_dir($documentRoot)) {
+                @rmdir($documentRoot);
+            }
+        }
+    }
+
+    public function test_icon_pdf_generation_uses_shared_contract_template_resolution(): void
+    {
+        $registration = new IconRegistration([
+            'full_name' => 'Icon User',
+            'organization' => 'Icon Co',
+            'location_selection' => 'A10',
+        ]);
+        $registration->id = 11;
+
+        $service = new class extends RegistrationPdfService
+        {
+            public string $usedTemplatePath = '';
+
+            public array $usedValues = [];
+
+            protected function sharedTemplatePaths(): array
+            {
+                return [
+                    public_path('missing-contract-v2.docx'),
+                    public_path('contract-v2.docx'),
+                ];
+            }
+
+            protected function generateContractPdf(string $templatePath, array $values, string $destinationPath): string
+            {
+                $this->usedTemplatePath = $templatePath;
+                $this->usedValues = $values;
+
+                return $destinationPath;
+            }
+        };
+
+        $generatedPath = $service->generateIconPdf($registration);
+
+        $this->assertSame('registrations/icons/11.pdf', $generatedPath);
+        $this->assertSame(public_path('contract-v2.docx'), $service->usedTemplatePath);
+        $this->assertSame([
+            'organization' => 'Icon Co',
+            'name' => 'Icon User',
+            'cr_copy' => 'See attached file',
+            'hall' => 'A10',
         ], $service->usedValues);
     }
 
