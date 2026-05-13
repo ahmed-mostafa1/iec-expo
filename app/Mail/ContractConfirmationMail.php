@@ -13,7 +13,7 @@ class ContractConfirmationMail extends Mailable
     public function __construct(
         public string $name,
         public string $hall,
-        public string $pdfPath,
+        public ?string $pdfPath,
         public ?string $subjectLine = null,
     ) {}
 
@@ -24,8 +24,13 @@ class ContractConfirmationMail extends Mailable
                 ? "طلب حجز مساحة رقم {$this->hall} في معرض IEC 360° {$this->name}"
                 : "طلب حجز مساحة في معرض IEC 360° {$this->name}");
 
-        return $this->subject($subject)
-            ->view('emails.contract_confirmation')
-            ->attach(storage_path('app/public/'.$this->pdfPath));
+        $mail = $this->subject($subject)
+            ->view('emails.contract_confirmation');
+
+        if ($this->pdfPath) {
+            $mail->attach(storage_path('app/public/'.$this->pdfPath));
+        }
+
+        return $mail;
     }
 }

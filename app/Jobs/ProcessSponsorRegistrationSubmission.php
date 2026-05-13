@@ -59,6 +59,14 @@ class ProcessSponsorRegistrationSubmission implements ShouldQueue
                 'pdf_error' => $exception->getMessage(),
                 'pdf_generated_at' => null,
             ]);
+
+            Mail::to($registration->email)->send(
+                new ContractConfirmationMail(
+                    $registration->full_name,
+                    $registration->location_selection ?? '',
+                    null
+                )
+            );
         }
 
         $registration->refresh();

@@ -39,7 +39,7 @@ class SponsorPdfLifecycleTest extends TestCase
         Storage::fake('public');
     }
 
-    public function test_sponsor_registration_marks_pdf_as_failed_and_notifies_admins_without_customer_contract(): void
+    public function test_sponsor_registration_marks_pdf_as_failed_and_notifies_admins_and_customer_without_contract_attachment(): void
     {
         Mail::fake();
 
@@ -78,7 +78,19 @@ class SponsorPdfLifecycleTest extends TestCase
         $this->assertNull($registration->pdf_generated_at);
         $this->assertNull($registration->pdf_path);
 
-        Mail::assertNotSent(ContractConfirmationMail::class);
+        Mail::assertSent(
+            ContractConfirmationMail::class,
+            function (ContractConfirmationMail $mail): bool {
+                $this->assertStringContainsString(
+                    'PDF contract generation had a problem. Please contact the sales team to receive your contract copy.',
+                    $mail->render()
+                );
+
+                return $mail->hasTo('sponsor@example.com')
+                    && $mail->pdfPath === null
+                    && $mail->build()->attachments === [];
+            }
+        );
         Mail::assertSent(NewSponsorRegistrationMail::class, count($this->adminEmails));
 
         foreach ($this->adminEmails as $adminEmail) {
