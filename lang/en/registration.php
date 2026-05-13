@@ -47,6 +47,7 @@ return [
         'cta_submit' => 'Submit Application',
         'toast_title' => 'Application submitted',
         'success' => 'Thank you for your Icon application. Our team will follow up soon.',
+        'success_pdf_pending' => 'Thank you for your Icon application. The contract PDF will be sent later by our team.',
         'loading_message' => 'Submitting your Icon application...',
         'loading_button' => 'Submitting Icon application...',
         'popup_note' => 'A copy of the agreement will be sent to the email address you registered with. To confirm your booking, please settle the full amount including VAT within one hour and send the transfer receipt to iec360@umbrella.sa.',

@@ -5,8 +5,11 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\IconRegistration;
 use App\Services\RegistrationPdfService;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\StreamedResponse;
+use Throwable;
 
 class IconRegistrationController extends Controller
 {
@@ -14,17 +17,17 @@ class IconRegistrationController extends Controller
         protected RegistrationPdfService $pdfService
     ) {}
 
-    public function index()
+    public function index(): View
     {
         return view('admin.icon-registrations.index');
     }
 
-    public function show(IconRegistration $registration)
+    public function show(IconRegistration $registration): View
     {
         return view('admin.icon-registrations.show', compact('registration'));
     }
 
-    public function updateStatus(Request $request, IconRegistration $registration)
+    public function updateStatus(Request $request, IconRegistration $registration): RedirectResponse
     {
         $validated = $request->validate([
             'status' => ['required', 'string', 'in:pending,approved,rejected'],
@@ -37,13 +40,13 @@ class IconRegistrationController extends Controller
         return back()->with('success', __('Status updated.'));
     }
 
-    public function downloadPdf(IconRegistration $registration)
+    public function downloadPdf(IconRegistration $registration): \Symfony\Component\HttpFoundation\BinaryFileResponse
     {
         if (! $registration->pdf_path) {
             abort(404);
         }
 
-        $fullPath = storage_path('app/public/' . $registration->pdf_path);
+        $fullPath = storage_path('app/public/'.$registration->pdf_path);
 
         if (! file_exists($fullPath)) {
             abort(404);
@@ -52,12 +55,30 @@ class IconRegistrationController extends Controller
         return response()->download($fullPath, "icon-registration-{$registration->id}.pdf");
     }
 
-    public function regeneratePdf(IconRegistration $registration)
+    public function regeneratePdf(IconRegistration $registration): RedirectResponse
     {
-        $pdfPath = $this->pdfService->generateIconPdf($registration);
-        $registration->update(['pdf_path' => $pdfPath]);
+        try {
+            $pdfPath = $this->pdfService->generateIconPdf($registration);
+            $registration->update([
+                'pdf_path' => $pdfPath,
+                'pdf_status' => 'generated',
+                'pdf_error' => null,
+                'pdf_generated_at' => now(),
+            ]);
 
-        return back()->with('success', __('PDF regenerated.'));
+            return back()->with('success', __('PDF regenerated.'));
+        } catch (Throwable $exception) {
+            report($exception);
+
+            $registration->update([
+                'pdf_path' => null,
+                'pdf_status' => 'failed',
+                'pdf_error' => $exception->getMessage(),
+                'pdf_generated_at' => null,
+            ]);
+
+            return back()->with('error', __('PDF regeneration failed. The team can review the error details below.'));
+        }
     }
 
     public function export(Request $request): StreamedResponse
@@ -78,10 +99,10 @@ class IconRegistrationController extends Controller
             });
         }
 
-        $fileName = 'icon_registrations_' . now()->format('Ymd_His') . '.csv';
+        $fileName = 'icon_registrations_'.now()->format('Ymd_His').'.csv';
 
         $headers = [
-            'Content-Type'        => 'text/csv',
+            'Content-Type' => 'text/csv',
             'Content-Disposition' => "attachment; filename=\"$fileName\"",
         ];
 

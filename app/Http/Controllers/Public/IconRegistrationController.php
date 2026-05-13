@@ -4,49 +4,43 @@ namespace App\Http\Controllers\Public;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\IconRegistrationRequest;
-use App\Mail\ContractConfirmationMail;
-use App\Mail\NewIconRegistrationMail;
+use App\Jobs\ProcessIconRegistrationSubmission;
 use App\Models\IconRegistration;
-use App\Services\RegistrationPdfService;
-use Illuminate\Support\Facades\Mail;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\URL;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class IconRegistrationController extends Controller
 {
-    public function __construct(
-        protected RegistrationPdfService $pdfService
-    ) {
-    }
-
-    public function store(IconRegistrationRequest $request, string $locale)
+    public function store(IconRegistrationRequest $request, string $locale): JsonResponse|RedirectResponse
     {
         $data = $request->validated();
 
         $crCopyPath = $request->hasFile('cr_copy')
             ? $request->file('cr_copy')->store(
-                'registrations/icons/cr-copy/' . now()->year,
+                'registrations/icons/cr-copy/'.now()->year,
                 'public'
             )
             : null;
 
         $nationalAddressDocPath = $request->hasFile('national_address_document')
             ? $request->file('national_address_document')->store(
-                'registrations/icons/national-address/' . now()->year,
+                'registrations/icons/national-address/'.now()->year,
                 'public'
             )
             : null;
 
         $companyLogoPath = $request->hasFile('company_logo')
             ? $request->file('company_logo')->store(
-                'registrations/icons/company-logo/' . now()->year,
+                'registrations/icons/company-logo/'.now()->year,
                 'public'
             )
             : null;
 
         $vatCertificatePath = $request->hasFile('vat_number')
             ? $request->file('vat_number')->store(
-                'registrations/icons/vat-certificate/' . now()->year,
+                'registrations/icons/vat-certificate/'.now()->year,
                 'public'
             )
             : null;
@@ -65,37 +59,18 @@ class IconRegistrationController extends Controller
             'cr_copy_path' => $crCopyPath,
             'national_address_doc_path' => $nationalAddressDocPath,
             'company_logo_path' => $companyLogoPath,
+            'pdf_status' => 'pending',
+            'pdf_error' => null,
+            'pdf_generated_at' => null,
             'status' => 'pending',
         ]);
 
-        $pdfPath = $this->pdfService->generateIconPdf($registration);
-        $registration->update(['pdf_path' => $pdfPath]);
+        ProcessIconRegistrationSubmission::dispatch($registration)->afterCommit();
 
-        // Send contract confirmation to customer
-        Mail::to($registration->email)->send(
-            new ContractConfirmationMail(
-                $registration->full_name,
-                $registration->location_selection ?? '',
-                $pdfPath
-            )
-        );
-
-        foreach (config('admin.emails', []) as $adminEmail) {
-            Mail::to($adminEmail)->send(
-                new NewIconRegistrationMail($registration, $pdfPath)
-            );
-        }
-
-        $message = __('registration.icon.success');
+        $message = __('registration.icon.success_pdf_pending');
         $toastTitle = __('registration.icon.toast_title');
 
         if ($request->expectsJson()) {
-            $downloadUrl = URL::temporarySignedRoute(
-                'public.register.icon.pdf',
-                now()->addMinutes(10),
-                ['locale' => $locale, 'registration' => $registration->id]
-            );
-
             return response()->json([
                 'message' => $message,
                 'toast_title' => $toastTitle,
@@ -106,20 +81,15 @@ class IconRegistrationController extends Controller
         return back()->with('icon_success', $message);
     }
 
-    public function download(string $locale, IconRegistration $registration)
+    public function download(string $locale, IconRegistration $registration): BinaryFileResponse
     {
-        if (!$registration->pdf_path) {
-            $pdfPath = $this->pdfService->generateIconPdf($registration);
-            $registration->update(['pdf_path' => $pdfPath]);
-        }
-
-        if (!$registration->pdf_path) {
+        if (! $registration->pdf_path) {
             abort(404);
         }
 
         $fullPath = Storage::disk('public')->path($registration->pdf_path);
 
-        if (!file_exists($fullPath)) {
+        if (! file_exists($fullPath)) {
             abort(404);
         }
 

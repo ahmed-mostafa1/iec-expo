@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Mail\ContractConfirmationMail;
+use App\Mail\NewIconRegistrationMail;
 use App\Mail\NewSponsorRegistrationMail;
 use App\Models\Admin;
 use App\Models\IconRegistration;
@@ -77,11 +78,11 @@ class SponsorPdfLifecycleTest extends TestCase
         $this->assertNull($registration->pdf_generated_at);
         $this->assertNull($registration->pdf_path);
 
-        Mail::assertNotSent(ContractConfirmationMail::class);
-        Mail::assertSent(NewSponsorRegistrationMail::class, count($this->adminEmails));
+        Mail::assertNotQueued(ContractConfirmationMail::class);
+        Mail::assertQueued(NewSponsorRegistrationMail::class, count($this->adminEmails));
 
         foreach ($this->adminEmails as $adminEmail) {
-            Mail::assertSent(NewSponsorRegistrationMail::class, fn (NewSponsorRegistrationMail $mail) => $mail->hasTo($adminEmail) && $mail->pdfPath === null);
+            Mail::assertQueued(NewSponsorRegistrationMail::class, fn (NewSponsorRegistrationMail $mail) => $mail->hasTo($adminEmail) && $mail->pdfPath === null);
         }
     }
 
@@ -128,6 +129,102 @@ class SponsorPdfLifecycleTest extends TestCase
             ->post(route('admin.sponsors.regenerate-pdf', $registration));
 
         $response->assertRedirect(route('admin.sponsors.show', $registration));
+        $response->assertSessionHas('error', __('PDF regeneration failed. The team can review the error details below.'));
+
+        $registration->refresh();
+
+        $this->assertSame('failed', $registration->pdf_status);
+        $this->assertSame('CloudConvert job creation failed.', $registration->pdf_error);
+        $this->assertNull($registration->pdf_generated_at);
+        $this->assertNull($registration->pdf_path);
+    }
+
+    public function test_icon_registration_marks_pdf_as_failed_and_notifies_admins_without_customer_contract(): void
+    {
+        Mail::fake();
+
+        $this->app->instance(RegistrationPdfService::class, new class extends RegistrationPdfService
+        {
+            public function generateIconPdf(IconRegistration $registration): string
+            {
+                throw new RuntimeException('CloudConvert conversion timed out before export was ready.');
+            }
+        });
+
+        $response = $this->post(route('public.register.icon', ['locale' => 'en']), [
+            'full_name' => 'Icon User',
+            'email' => 'icon@example.com',
+            'phone' => '+966512345678',
+            'job_title' => 'Lead',
+            'organization' => 'Icon Co',
+            'location_selection' => 'A01',
+            'vat_number' => UploadedFile::fake()->create('vat.pdf', 100, 'application/pdf'),
+            'cr_copy' => UploadedFile::fake()->create('cr.pdf', 100, 'application/pdf'),
+            'national_address_document' => UploadedFile::fake()->create('address.pdf', 100, 'application/pdf'),
+            'company_logo' => UploadedFile::fake()->create('logo.pdf', 100, 'application/pdf'),
+            'privacy_policy' => '1',
+        ], ['Accept' => 'application/json']);
+
+        $response->assertCreated()
+            ->assertJsonPath('message', __('registration.icon.success_pdf_pending'));
+
+        $registration = IconRegistration::query()->sole();
+
+        $this->assertSame('failed', $registration->pdf_status);
+        $this->assertSame('CloudConvert conversion timed out before export was ready.', $registration->pdf_error);
+        $this->assertNull($registration->pdf_generated_at);
+        $this->assertNull($registration->pdf_path);
+
+        Mail::assertNotQueued(ContractConfirmationMail::class);
+        Mail::assertQueued(NewIconRegistrationMail::class, count($this->adminEmails));
+
+        foreach ($this->adminEmails as $adminEmail) {
+            Mail::assertQueued(NewIconRegistrationMail::class, fn (NewIconRegistrationMail $mail) => $mail->hasTo($adminEmail) && $mail->pdfPath === null);
+        }
+    }
+
+    public function test_admin_regenerate_icon_pdf_marks_registration_as_failed_when_generation_fails(): void
+    {
+        $admin = Admin::query()->create([
+            'name' => 'Admin User',
+            'email' => 'admin@example.com',
+            'password' => Hash::make('password'),
+        ]);
+
+        $registration = IconRegistration::query()->create([
+            'full_name' => 'Icon User',
+            'email' => 'icon@example.com',
+            'phone' => '+966512345678',
+            'job_title' => 'Lead',
+            'organization' => 'Icon Co',
+            'location_selection' => 'A01',
+            'vat_number' => null,
+            'vat_certificate_path' => 'registrations/icons/vat-certificate/2026/vat.pdf',
+            'national_address' => '',
+            'document_path' => null,
+            'cr_copy_path' => 'registrations/icons/cr-copy/2026/cr.pdf',
+            'national_address_doc_path' => 'registrations/icons/national-address/2026/address.pdf',
+            'company_logo_path' => 'registrations/icons/company-logo/2026/logo.pdf',
+            'pdf_path' => null,
+            'pdf_status' => 'pending',
+            'pdf_error' => null,
+            'pdf_generated_at' => null,
+            'status' => 'pending',
+        ]);
+
+        $this->app->instance(RegistrationPdfService::class, new class extends RegistrationPdfService
+        {
+            public function generateIconPdf(IconRegistration $registration): string
+            {
+                throw new RuntimeException('CloudConvert job creation failed.');
+            }
+        });
+
+        $response = $this->actingAs($admin, 'admin')
+            ->from(route('admin.icons.show', $registration))
+            ->post(route('admin.icons.regenerate-pdf', $registration));
+
+        $response->assertRedirect(route('admin.icons.show', $registration));
         $response->assertSessionHas('error', __('PDF regeneration failed. The team can review the error details below.'));
 
         $registration->refresh();

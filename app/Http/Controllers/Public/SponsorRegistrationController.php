@@ -4,22 +4,16 @@ namespace App\Http\Controllers\Public;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\SponsorRegistrationRequest;
-use App\Mail\ContractConfirmationMail;
-use App\Mail\NewSponsorRegistrationMail;
+use App\Jobs\ProcessSponsorRegistrationSubmission;
 use App\Models\SponsorRegistration;
-use App\Services\RegistrationPdfService;
-use Illuminate\Support\Facades\Mail;
+use Illuminate\Http\JsonResponse;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\URL;
-use Throwable;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class SponsorRegistrationController extends Controller
 {
-    public function __construct(
-        protected RegistrationPdfService $pdfService
-    ) {}
-
-    public function store(SponsorRegistrationRequest $request, string $locale)
+    public function store(SponsorRegistrationRequest $request, string $locale): JsonResponse|RedirectResponse
     {
         $data = $request->validated();
 
@@ -72,73 +66,26 @@ class SponsorRegistrationController extends Controller
             'status' => 'pending',
         ]);
 
-        $pdfPath = null;
-        $message = __('registration.sponsor.success');
+        ProcessSponsorRegistrationSubmission::dispatch($registration)->afterCommit();
+
+        $message = __('registration.sponsor.success_pdf_pending');
         $toastTitle = __('registration.sponsor.toast_title');
 
-        try {
-            $pdfPath = $this->pdfService->generateSponsorPdf($registration);
-            $registration->update([
-                'pdf_path' => $pdfPath,
-                'pdf_status' => 'generated',
-                'pdf_error' => null,
-                'pdf_generated_at' => now(),
-            ]);
-
-            Mail::to($registration->email)->send(
-                new ContractConfirmationMail(
-                    $registration->full_name,
-                    $registration->location_selection ?? '',
-                    $pdfPath,
-                    'طلب رعاية وحجز مساحة'
-                )
-            );
-        } catch (Throwable $exception) {
-            report($exception);
-
-            $registration->update([
-                'pdf_status' => 'failed',
-                'pdf_error' => $exception->getMessage(),
-                'pdf_generated_at' => null,
-            ]);
-
-            $message = __('registration.sponsor.success_pdf_pending');
-        }
-
-        foreach (config('admin.emails', []) as $adminEmail) {
-            Mail::to($adminEmail)->send(
-                new NewSponsorRegistrationMail($registration, $pdfPath)
-            );
-        }
-
         if ($request->expectsJson()) {
-            $downloadUrl = $pdfPath
-                ? URL::temporarySignedRoute(
-                    'public.register.sponsor.pdf',
-                    now()->addMinutes(10),
-                    ['locale' => $locale, 'registration' => $registration->id]
-                )
-                : null;
-
             return response()->json([
                 'message' => $message,
                 'toast_title' => $toastTitle,
                 'registration_id' => $registration->id,
-                'pdf_url' => $downloadUrl,
-                'pdf_name' => $pdfPath ? "sponsor-registration-{$registration->id}.pdf" : null,
+                'pdf_url' => null,
+                'pdf_name' => null,
             ], 201);
         }
 
         return back()->with('sponsor_success', $message);
     }
 
-    public function download(string $locale, SponsorRegistration $registration)
+    public function download(string $locale, SponsorRegistration $registration): BinaryFileResponse
     {
-        if (! $registration->pdf_path) {
-            $pdfPath = $this->pdfService->generateSponsorPdf($registration);
-            $registration->update(['pdf_path' => $pdfPath]);
-        }
-
         if (! $registration->pdf_path) {
             abort(404);
         }

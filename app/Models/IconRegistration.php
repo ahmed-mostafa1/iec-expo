@@ -21,6 +21,16 @@ class IconRegistration extends Model
         'national_address_doc_path',
         'company_logo_path',
         'pdf_path',
+        'pdf_status',
+        'pdf_error',
+        'pdf_generated_at',
         'status',
     ];
+
+    protected function casts(): array
+    {
+        return [
+            'pdf_generated_at' => 'datetime',
+        ];
+    }
 }
