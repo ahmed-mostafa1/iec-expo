@@ -133,6 +133,44 @@ class PublicRegistrationNotificationTest extends TestCase
         }
     }
 
+    public function test_sponsor_registration_sends_confirmation_email_without_queue_worker(): void
+    {
+        Mail::fake();
+
+        $response = $this->post(
+            route('public.register.sponsor', ['locale' => 'en']),
+            [
+                'full_name' => 'Sponsor User',
+                'email' => 'sponsor@example.com',
+                'phone' => '+966512345678',
+                'job_title' => 'Director',
+                'organization' => 'Sponsor Co',
+                'sponsor_tier' => 'gold',
+                'location_selection' => 'B12',
+                'vat_number' => UploadedFile::fake()->create('vat.pdf', 100, 'application/pdf'),
+                'cr_copy' => UploadedFile::fake()->create('cr.pdf', 100, 'application/pdf'),
+                'national_address_document' => UploadedFile::fake()->create('address.pdf', 100, 'application/pdf'),
+                'company_logo' => UploadedFile::fake()->create('logo.pdf', 100, 'application/pdf'),
+                'privacy_policy' => '1',
+            ],
+            ['Accept' => 'application/json']
+        );
+
+        $response->assertCreated()
+            ->assertJsonPath('message', __('registration.sponsor.success_pdf_pending'));
+
+        $registration = SponsorRegistration::query()->sole();
+
+        $this->assertSame('generated', $registration->pdf_status);
+        $this->assertSame('registrations/sponsors/1.pdf', $registration->pdf_path);
+
+        Mail::assertSent(
+            ContractConfirmationMail::class,
+            fn (ContractConfirmationMail $mail): bool => $mail->hasTo('sponsor@example.com')
+                && $mail->subjectLine === null
+        );
+    }
+
     public function test_icon_registration_notifies_all_admin_recipients_and_confirms_customer(): void
     {
         Mail::fake();

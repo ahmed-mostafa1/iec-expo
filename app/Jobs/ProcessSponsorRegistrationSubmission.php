@@ -47,8 +47,7 @@ class ProcessSponsorRegistrationSubmission implements ShouldQueue
                 new ContractConfirmationMail(
                     $registration->full_name,
                     $registration->location_selection ?? '',
-                    $pdfPath,
-                    'طلب رعاية وحجز مساحة'
+                    $pdfPath
                 )
             );
         } catch (Throwable $exception) {

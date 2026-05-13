@@ -67,7 +67,7 @@ class IconRegistrationController extends Controller
             ])
         );
 
-        ProcessIconRegistrationSubmission::dispatchSync($registration);
+        ProcessIconRegistrationSubmission::dispatchAfterResponse($registration);
 
         $message = __('registration.icon.success_pdf_pending');
         $toastTitle = __('registration.icon.toast_title');
