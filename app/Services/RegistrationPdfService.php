@@ -6,6 +6,7 @@ use App\Models\IconRegistration;
 use App\Models\SponsorRegistration;
 use App\Models\VisitorRegistration;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Http\Client\Response;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -13,6 +14,8 @@ use PhpOffice\PhpWord\TemplateProcessor;
 
 class RegistrationPdfService
 {
+    private const CLOUDCONVERT_ERROR_DETAIL_LIMIT = 1000;
+
     public function generateSponsorPdf(SponsorRegistration $registration): string
     {
         $path = "registrations/sponsors/{$registration->id}.pdf";
@@ -84,25 +87,13 @@ class RegistrationPdfService
     {
         $jobResponse = Http::withToken($apiKey)
             ->acceptJson()
-            ->post('https://api.cloudconvert.com/v2/jobs', [
-                'tasks' => [
-                    'import-docx' => [
-                        'operation' => 'import/upload',
-                    ],
-                    'convert-docx-to-pdf' => [
-                        'operation' => 'convert',
-                        'input' => ['import-docx'],
-                        'output_format' => 'pdf',
-                    ],
-                    'export-pdf' => [
-                        'operation' => 'export/url',
-                        'input' => ['convert-docx-to-pdf'],
-                    ],
-                ],
-            ]);
+            ->post('https://api.cloudconvert.com/v2/jobs', $this->cloudConvertDocxToPdfJobPayload($docxPath));
 
         if (! $jobResponse->successful()) {
-            throw new \RuntimeException('CloudConvert job creation failed.');
+            throw new \RuntimeException($this->cloudConvertResponseError(
+                'CloudConvert job creation failed',
+                $jobResponse
+            ));
         }
 
         $jobData = $jobResponse->json('data');
@@ -123,7 +114,10 @@ class RegistrationPdfService
         }
 
         if (! $uploadResponse->successful()) {
-            throw new \RuntimeException('CloudConvert upload failed.');
+            throw new \RuntimeException($this->cloudConvertResponseError(
+                'CloudConvert upload failed',
+                $uploadResponse
+            ));
         }
 
         $exportTask = null;
@@ -135,7 +129,10 @@ class RegistrationPdfService
                 ->get("https://api.cloudconvert.com/v2/jobs/{$jobId}");
 
             if (! $statusResponse->successful()) {
-                throw new \RuntimeException('Failed to check CloudConvert job status.');
+                throw new \RuntimeException($this->cloudConvertResponseError(
+                    'Failed to check CloudConvert job status',
+                    $statusResponse
+                ));
             }
 
             $statusData = $statusResponse->json('data');
@@ -165,10 +162,114 @@ class RegistrationPdfService
 
         $pdfResponse = Http::get($pdfUrl);
         if (! $pdfResponse->successful()) {
-            throw new \RuntimeException('Failed to download generated PDF.');
+            throw new \RuntimeException($this->cloudConvertResponseError(
+                'Failed to download generated PDF',
+                $pdfResponse
+            ));
         }
 
         return $pdfResponse->body();
+    }
+
+    private function cloudConvertDocxToPdfJobPayload(string $docxPath): array
+    {
+        $pdfFilename = pathinfo($docxPath, PATHINFO_FILENAME).'.pdf';
+
+        return [
+            'tasks' => [
+                'import-docx' => [
+                    'operation' => 'import/upload',
+                ],
+                'convert-docx-to-pdf' => [
+                    'operation' => 'convert',
+                    'input' => 'import-docx',
+                    'input_format' => 'docx',
+                    'output_format' => 'pdf',
+                    'filename' => $pdfFilename,
+                ],
+                'export-pdf' => [
+                    'operation' => 'export/url',
+                    'input' => 'convert-docx-to-pdf',
+                ],
+            ],
+        ];
+    }
+
+    private function cloudConvertResponseError(string $prefix, Response $response): string
+    {
+        return sprintf(
+            '%s (%s): %s',
+            $prefix,
+            $response->status(),
+            $this->cloudConvertResponseDetail($response),
+        );
+    }
+
+    private function cloudConvertResponseDetail(Response $response): string
+    {
+        $json = $response->json();
+        $details = [];
+
+        if (is_array($json)) {
+            $message = $json['message'] ?? $json['error'] ?? null;
+            if (is_string($message) && $message !== '') {
+                $details[] = $message;
+            }
+
+            $details = [
+                ...$details,
+                ...$this->flattenCloudConvertErrors($json['errors'] ?? []),
+            ];
+        }
+
+        if ($details !== []) {
+            return Str::limit(implode(' ', array_unique($details)), self::CLOUDCONVERT_ERROR_DETAIL_LIMIT);
+        }
+
+        $body = trim((string) $response->body());
+        if ($body !== '') {
+            return Str::limit(preg_replace('/\s+/', ' ', $body) ?? $body, self::CLOUDCONVERT_ERROR_DETAIL_LIMIT);
+        }
+
+        return 'No response body.';
+    }
+
+    private function flattenCloudConvertErrors(mixed $errors): array
+    {
+        if (is_string($errors) && $errors !== '') {
+            return [$errors];
+        }
+
+        if (! is_array($errors)) {
+            return [];
+        }
+
+        $messages = [];
+        foreach ($errors as $error) {
+            if (is_string($error) && $error !== '') {
+                $messages[] = $error;
+
+                continue;
+            }
+
+            if (! is_array($error)) {
+                continue;
+            }
+
+            $message = $error['message'] ?? null;
+            if (is_string($message) && $message !== '') {
+                $messages[] = $message;
+
+                continue;
+            }
+
+            $messages = [
+                ...$messages,
+                ...$this->flattenCloudConvertErrors($error),
+            ];
+        }
+
+        return $messages;
     }
 
     private function normalizeTasks(array $tasks): array

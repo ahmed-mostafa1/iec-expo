@@ -10,6 +10,7 @@ use App\Models\IconRegistration;
 use App\Models\SponsorRegistration;
 use App\Services\RegistrationPdfService;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
@@ -414,6 +415,111 @@ class SponsorPdfLifecycleTest extends TestCase
             'cr_copy' => 'See attached file',
             'hall' => 'A10',
         ], $service->usedValues);
+    }
+
+    public function test_contract_pdf_generation_creates_explicit_cloudconvert_docx_to_pdf_job(): void
+    {
+        config(['services.cloudconvert.key' => 'test-cloudconvert-token']);
+
+        Http::fake([
+            'https://api.cloudconvert.com/v2/jobs' => Http::response([
+                'data' => [
+                    'id' => 'job-1',
+                    'tasks' => [
+                        [
+                            'name' => 'import-docx',
+                            'result' => [
+                                'form' => [
+                                    'url' => 'https://upload.example.test/contract',
+                                    'parameters' => [
+                                        'key' => 'upload-key',
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ]),
+            'https://upload.example.test/contract' => Http::response('', 204),
+            'https://api.cloudconvert.com/v2/jobs/job-1' => Http::response([
+                'data' => [
+                    'tasks' => [
+                        [
+                            'name' => 'export-pdf',
+                            'status' => 'finished',
+                            'result' => [
+                                'files' => [
+                                    [
+                                        'url' => 'https://download.example.test/generated.pdf',
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ]),
+            'https://download.example.test/generated.pdf' => Http::response('%PDF-1.4 generated', 200),
+        ]);
+
+        $registration = new SponsorRegistration([
+            'full_name' => 'Sponsor User',
+            'organization' => 'Sponsor Co',
+            'sponsor_tier' => 'gold',
+            'location_selection' => 'B12',
+        ]);
+        $registration->id = 42;
+
+        $generatedPath = (new RegistrationPdfService)->generateSponsorPdf($registration);
+
+        $this->assertSame('registrations/sponsors/42.pdf', $generatedPath);
+        Storage::disk('public')->assertExists($generatedPath);
+        $this->assertSame('%PDF-1.4 generated', Storage::disk('public')->get($generatedPath));
+
+        Http::assertSent(function ($request): bool {
+            $tasks = $request['tasks'] ?? [];
+            $convertTask = $tasks['convert-docx-to-pdf'] ?? [];
+
+            return $request->method() === 'POST'
+                && $request->url() === 'https://api.cloudconvert.com/v2/jobs'
+                && ($tasks['import-docx']['operation'] ?? null) === 'import/upload'
+                && ($convertTask['operation'] ?? null) === 'convert'
+                && ($convertTask['input'] ?? null) === 'import-docx'
+                && ($convertTask['input_format'] ?? null) === 'docx'
+                && ($convertTask['output_format'] ?? null) === 'pdf'
+                && str_ends_with((string) ($convertTask['filename'] ?? ''), '.pdf')
+                && ($tasks['export-pdf']['input'] ?? null) === 'convert-docx-to-pdf';
+        });
+    }
+
+    public function test_cloudconvert_job_creation_failure_includes_response_details(): void
+    {
+        config(['services.cloudconvert.key' => 'test-cloudconvert-token']);
+
+        Http::fake([
+            'https://api.cloudconvert.com/v2/jobs' => Http::response([
+                'message' => 'The given data was invalid.',
+                'errors' => [
+                    'tasks.convert-docx-to-pdf.input_format' => [
+                        'The input format field is required.',
+                    ],
+                ],
+            ], 422),
+        ]);
+
+        $registration = new SponsorRegistration([
+            'full_name' => 'Sponsor User',
+            'organization' => 'Sponsor Co',
+            'sponsor_tier' => 'gold',
+            'location_selection' => 'B12',
+        ]);
+        $registration->id = 43;
+
+        $this->expectException(RuntimeException::class);
+        $this->expectExceptionMessage(
+            'CloudConvert job creation failed (422): The given data was invalid. The input format field is required.'
+        );
+
+        (new RegistrationPdfService)->generateSponsorPdf($registration);
     }
 
     #[DataProvider('sponsorTierContractValuesProvider')]
