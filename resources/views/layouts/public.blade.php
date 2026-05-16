@@ -334,10 +334,10 @@
         @yield('content')
     </main>
 
-    <footer class="border-t border-gray-200 py-4 text-s text-gray-500">
+    <footer class="border-t border-gray-200 py-4 text-sm text-gray-500">
         <div class="mx-auto max-w-6xl px-4 flex items-center justify-between">
-            <div>© {{ date('Y') }} {{ config('app.name') }}</div>
-            <div>{{ __('All rights reserved.') }}</div>
+            <div>&copy; {{ date('Y') }} {{ config('app.name') }}</div>
+            <div>{{ $currentLocale === 'ar' ? 'جميع الحقوق محفوظة.' : 'All rights reserved.' }}</div>
         </div>
     </footer>
 

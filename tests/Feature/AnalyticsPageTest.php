@@ -24,7 +24,7 @@ class AnalyticsPageTest extends TestCase
 
         $this->get('/en/analytics?date_from=2026-01-01&date_to=2026-01-02')
             ->assertOk()
-            ->assertSee('Google Analytics Workspace')
+            ->assertSee('Visitor analytics dashboard')
             ->assertSee('Search / Organic')
             ->assertSee('IEC-logo-nav.png')
             ->assertSee(e(route('public.analytics', [
@@ -35,7 +35,8 @@ class AnalyticsPageTest extends TestCase
 
         $this->get('/ar/analytics?date_from=2026-01-01&date_to=2026-01-02')
             ->assertOk()
-            ->assertSee('Google Analytics Workspace')
+            ->assertSee('لوحة تحليلات زوار المعرض')
+            ->assertSee('المستخدمون النشطون')
             ->assertSee(e(route('public.analytics', [
                 'locale' => 'en',
                 'date_from' => '2026-01-01',

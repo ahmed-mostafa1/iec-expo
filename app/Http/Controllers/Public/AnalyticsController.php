@@ -24,12 +24,12 @@ class AnalyticsController extends Controller
             'availableRange' => $dashboardQuery->availableRange(),
             'dashboard' => $dashboardQuery->dashboard($dateFrom, $dateTo),
             'reports' => [
-                'daily' => __('Daily totals'),
-                'acquisition' => __('Acquisition'),
-                'content' => __('Content'),
-                'geography' => __('Geography'),
-                'technology' => __('Technology'),
-                'events' => __('Events'),
+                'daily' => __('analytics.reports.daily'),
+                'acquisition' => __('analytics.reports.acquisition'),
+                'content' => __('analytics.reports.content'),
+                'geography' => __('analytics.reports.geography'),
+                'technology' => __('analytics.reports.technology'),
+                'events' => __('analytics.reports.events'),
             ],
         ]);
     }
