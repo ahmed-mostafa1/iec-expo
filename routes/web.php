@@ -28,7 +28,9 @@ Route::get('/', function () {
     return redirect('/en');
 });
 
-Route::redirect('/analytics', '/ar/analytics');
+Route::get('/analytics', function () {
+    return redirect()->route('public.analytics', ['locale' => 'ar'] + request()->query());
+});
 
 Route::view('/contract-form', 'contract-form');
 Route::post('/generate-pdf', [DocumentController::class, 'generate'])

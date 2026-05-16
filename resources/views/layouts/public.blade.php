@@ -248,7 +248,7 @@
 </script>
 </head>
 <body
-    class="locale-{{ $currentLocale }} min-h-screen antialiased bg-gray-50 text-gray-900"
+    class="locale-{{ $currentLocale }} min-h-screen bg-[#050208] text-white antialiased"
     @if(session('scroll_to_contact') ?? false) data-scroll-contact="1" @endif
 >
     {{-- Navbar --}}
@@ -334,7 +334,7 @@
         @yield('content')
     </main>
 
-    <footer class="border-t border-gray-200 py-4 text-sm text-gray-500">
+    <footer class="border-t border-white/10 bg-[#050208] py-4 text-sm text-white/[0.55]">
         <div class="mx-auto max-w-6xl px-4 flex items-center justify-between">
             <div>&copy; {{ date('Y') }} {{ config('app.name') }}</div>
             <div>{{ $currentLocale === 'ar' ? 'جميع الحقوق محفوظة.' : 'All rights reserved.' }}</div>

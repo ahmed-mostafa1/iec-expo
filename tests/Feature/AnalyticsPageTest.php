@@ -27,6 +27,7 @@ class AnalyticsPageTest extends TestCase
             ->assertSee('Visitor analytics dashboard')
             ->assertSee('Search / Organic')
             ->assertSee('IEC-logo-nav.png')
+            ->assertDontSee('Registration mix')
             ->assertSee(e(route('public.analytics', [
                 'locale' => 'ar',
                 'date_from' => '2026-01-01',
@@ -37,6 +38,7 @@ class AnalyticsPageTest extends TestCase
             ->assertOk()
             ->assertSee('لوحة تحليلات زوار المعرض')
             ->assertSee('المستخدمون النشطون')
+            ->assertDontSee('توزيع التسجيلات')
             ->assertSee(e(route('public.analytics', [
                 'locale' => 'en',
                 'date_from' => '2026-01-01',
@@ -48,6 +50,9 @@ class AnalyticsPageTest extends TestCase
     {
         $this->get('/analytics')
             ->assertRedirect('/ar/analytics');
+
+        $this->get('/analytics?date_from=2026-01-01&date_to=2026-01-02')
+            ->assertRedirect('/ar/analytics?date_from=2026-01-01&date_to=2026-01-02');
     }
 
     public function test_public_analytics_export_returns_aggregate_csv(): void
