@@ -25,11 +25,28 @@ class AnalyticsPageTest extends TestCase
         $this->get('/en/analytics?date_from=2026-01-01&date_to=2026-01-02')
             ->assertOk()
             ->assertSee('Google Analytics Workspace')
-            ->assertSee('Search / Organic');
+            ->assertSee('Search / Organic')
+            ->assertSee('IEC-logo-nav.png')
+            ->assertSee(e(route('public.analytics', [
+                'locale' => 'ar',
+                'date_from' => '2026-01-01',
+                'date_to' => '2026-01-02',
+            ])), false);
 
         $this->get('/ar/analytics?date_from=2026-01-01&date_to=2026-01-02')
             ->assertOk()
-            ->assertSee('Google Analytics Workspace');
+            ->assertSee('Google Analytics Workspace')
+            ->assertSee(e(route('public.analytics', [
+                'locale' => 'en',
+                'date_from' => '2026-01-01',
+                'date_to' => '2026-01-02',
+            ])), false);
+    }
+
+    public function test_public_analytics_defaults_to_arabic(): void
+    {
+        $this->get('/analytics')
+            ->assertRedirect('/ar/analytics');
     }
 
     public function test_public_analytics_export_returns_aggregate_csv(): void

@@ -28,6 +28,8 @@ Route::get('/', function () {
     return redirect('/en');
 });
 
+Route::redirect('/analytics', '/ar/analytics');
+
 Route::view('/contract-form', 'contract-form');
 Route::post('/generate-pdf', [DocumentController::class, 'generate'])
     ->name('contract.generate-pdf');
