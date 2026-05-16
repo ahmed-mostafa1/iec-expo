@@ -43,6 +43,15 @@
             font-family: Cairo, sans-serif;
         }
 
+        html,
+        body {
+            min-height: 100%;
+            background:
+                radial-gradient(circle at 18% 0%, rgba(152, 115, 172, 0.22), transparent 34rem),
+                radial-gradient(circle at 82% 12%, rgba(75, 23, 101, 0.24), transparent 30rem),
+                #050208;
+        }
+
         .header {
             position: fixed;
             top: 0;
