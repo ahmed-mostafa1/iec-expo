@@ -1,31 +1,28 @@
 <?php
 
-use App\Http\Controllers\Public\ContactController;
-use App\Http\Controllers\Public\LandingPageController;
-use App\Http\Controllers\Public\SponsorRegistrationController;
-use App\Http\Controllers\Public\IconRegistrationController;
-use App\Http\Controllers\Public\SponsorShowController as PublicSponsorShowController;
-use App\Http\Controllers\Public\VisitorRegistrationController;
-use App\Http\Controllers\Public\ParticipantShowController as PublicParticipantShowController;
-use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\LandingSectionController;
-use App\Http\Controllers\Admin\PublicSponsorController;
-use App\Http\Controllers\Admin\ParticipantController;
-use App\Http\Controllers\Admin\OrganizerController;
 use App\Http\Controllers\Admin\AboutContentController;
 use App\Http\Controllers\Admin\ContactInfoController;
-use App\Http\Controllers\Admin\HeroMediaController;
-use App\Http\Controllers\Admin\SponsorRegistrationController as AdminSponsorController;
-use App\Http\Controllers\Admin\IconRegistrationController as AdminIconController;
-use App\Http\Controllers\Admin\VisitorRegistrationController as AdminVisitorController;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\HallSpaceBookingController;
+use App\Http\Controllers\Admin\HeroMediaController;
+use App\Http\Controllers\Admin\IconRegistrationController as AdminIconController;
+use App\Http\Controllers\Admin\LandingSectionController;
+use App\Http\Controllers\Admin\OrganizerController;
+use App\Http\Controllers\Admin\ParticipantController;
+use App\Http\Controllers\Admin\PublicSponsorController;
+use App\Http\Controllers\Admin\SponsorRegistrationController as AdminSponsorController;
+use App\Http\Controllers\Admin\VisitorRegistrationController as AdminVisitorController;
 use App\Http\Controllers\DocumentController;
-use App\Models\SponsorRegistration;
-use App\Models\IconRegistration;
+use App\Http\Controllers\Public\AnalyticsController;
+use App\Http\Controllers\Public\ContactController;
+use App\Http\Controllers\Public\IconRegistrationController;
+use App\Http\Controllers\Public\LandingPageController;
+use App\Http\Controllers\Public\ParticipantShowController as PublicParticipantShowController;
+use App\Http\Controllers\Public\SponsorRegistrationController;
+use App\Http\Controllers\Public\SponsorShowController as PublicSponsorShowController;
+use App\Http\Controllers\Public\VisitorRegistrationController;
 use App\Models\HallSpaceBooking;
 use Illuminate\Support\Facades\Route;
-
-
 
 Route::get('/', function () {
     return redirect('/en');
@@ -35,18 +32,17 @@ Route::view('/contract-form', 'contract-form');
 Route::post('/generate-pdf', [DocumentController::class, 'generate'])
     ->name('contract.generate-pdf');
 
- Route::get('/hall-design', function () {
-            // Only show spaces explicitly booked by admin (HallSpaceBooking) as occupied.
-            $occupiedSpaces = HallSpaceBooking::pluck('space')
-                ->filter()
-                ->map(fn ($space) => strtoupper($space))
-                ->unique()
-                ->values()
-                ->all();
+Route::get('/hall-design', function () {
+    // Only show spaces explicitly booked by admin (HallSpaceBooking) as occupied.
+    $occupiedSpaces = HallSpaceBooking::pluck('space')
+        ->filter()
+        ->map(fn ($space) => strtoupper($space))
+        ->unique()
+        ->values()
+        ->all();
 
-            return view('public.hall-design', compact('occupiedSpaces'));
-        });
-
+    return view('public.hall-design', compact('occupiedSpaces'));
+});
 
 Route::redirect('/login', '/admin/login')->name('login');
 
@@ -65,6 +61,14 @@ Route::prefix('{locale}')
 
         Route::view('/ed', 'public.ed')
             ->name('public.ed');
+
+        Route::get('/analytics', [AnalyticsController::class, 'index'])
+            ->middleware('throttle:analytics')
+            ->name('public.analytics');
+
+        Route::get('/analytics/export', [AnalyticsController::class, 'export'])
+            ->middleware('throttle:analytics-export')
+            ->name('public.analytics.export');
 
         Route::post('/register/visitor', [VisitorRegistrationController::class, 'store'])
             ->name('public.register.visitor');
@@ -188,10 +192,7 @@ Route::prefix('admin')
         Route::resource('hero-media', HeroMediaController::class)->except(['show']);
     });
 
-
-
 // ...
-
 
 // Route::view('dashboard', 'dashboard')
 //     ->middleware(['auth', 'verified'])
@@ -201,11 +202,4 @@ Route::view('profile', 'profile')
     ->middleware(['auth'])
     ->name('profile');
 
-
-
-
-
-
-
-
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';

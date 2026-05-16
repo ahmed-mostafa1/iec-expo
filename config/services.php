@@ -43,6 +43,13 @@ return [
         'key' => env('CLOUDCONVERT_API_KEY'),
     ],
 
+    'google_analytics' => [
+        'property_id' => env('GA4_PROPERTY_ID'),
+        'credentials_path' => env('GA4_CREDENTIALS_PATH', storage_path('app/private/google-analytics/service-account.json')),
+        'import_start_date' => env('GA4_IMPORT_START_DATE', '2020-01-01'),
+        'sync_chunk_days' => (int) env('GA4_SYNC_CHUNK_DAYS', 31),
+    ],
+
     'contract_templates' => [
         'sponsor' => array_values(array_filter(explode(PATH_SEPARATOR, env('SPONSOR_CONTRACT_TEMPLATE_PATHS', '')))),
         'shared' => array_values(array_filter(explode(PATH_SEPARATOR, env('CONTRACT_TEMPLATE_PATHS', '')))),
