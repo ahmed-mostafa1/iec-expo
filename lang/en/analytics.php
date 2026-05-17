@@ -62,6 +62,7 @@ return [
         'traffic' => 'Traffic trend',
         'traffic_hint' => 'Daily users, sessions, and page views.',
         'legend' => 'Chart legend',
+        'date_points' => 'Chart date points',
         'loading' => 'Preparing chart...',
         'no_data' => 'No traffic data is available for this date range.',
         'error' => 'The chart could not be rendered. Check the browser console for details.',

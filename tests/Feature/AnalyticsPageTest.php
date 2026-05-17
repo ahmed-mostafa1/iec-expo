@@ -33,6 +33,8 @@ class AnalyticsPageTest extends TestCase
             ->assertSee('data-chart-status', false)
             ->assertSee('Preparing chart...')
             ->assertSee('analytics-chart-legend')
+            ->assertSee('analytics-chart-dates')
+            ->assertSee('Chart date points')
             ->assertSee('renderCanvasFallback')
             ->assertSee('Open reports workspace')
             ->assertSee('Search / Organic')

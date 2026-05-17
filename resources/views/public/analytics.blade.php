@@ -88,6 +88,8 @@
         }
 
         .analytics-main {
+            width: 100%;
+            min-width: 0;
             max-width: 80rem !important;
         }
 
@@ -112,8 +114,11 @@
             color: var(--ink);
             display: grid;
             gap: 1.25rem;
-            margin: -0.75rem -1rem 0;
+            width: 100%;
+            max-width: 100%;
+            margin: 0;
             padding: 1rem;
+            overflow-x: clip;
             background: var(--shell-bg);
             border-radius: 1.25rem;
         }
@@ -142,11 +147,47 @@
             box-sizing: border-box;
         }
 
+        @supports not (overflow: clip) {
+            .analytics-dashboard {
+                overflow-x: hidden;
+            }
+        }
+
+        .analytics-dashboard,
+        .analytics-panel,
+        .analytics-hero-top,
+        .analytics-status-grid,
+        .analytics-actions,
+        .analytics-filter,
+        .analytics-toolbar-actions,
+        .analytics-nav,
+        .analytics-report-tabs,
+        .analytics-metrics,
+        .analytics-section-head,
+        .analytics-report-head,
+        .analytics-chart-wrap,
+        .analytics-report-table-wrap {
+            min-width: 0;
+            max-width: 100%;
+        }
+
         .analytics-panel {
             background: var(--panel);
             border: 1px solid var(--line);
             border-radius: 1rem;
             box-shadow: 0 18px 55px var(--shadow);
+        }
+
+        .analytics-status-card,
+        .analytics-action,
+        .analytics-metric,
+        .analytics-link,
+        .analytics-report-tab,
+        .analytics-export-link,
+        .analytics-button,
+        .analytics-theme-toggle,
+        .analytics-range-chip {
+            min-width: 0;
         }
 
         .analytics-hero {
@@ -314,6 +355,7 @@
         }
 
         .analytics-input {
+            min-width: 0;
             width: 100%;
             margin-top: 0.35rem;
             padding: 0.62rem 0.75rem;
@@ -376,6 +418,8 @@
             border: 1px solid color-mix(in srgb, var(--teal) 32%, var(--line));
             border-radius: 0.75rem;
             background: color-mix(in srgb, var(--teal) 12%, var(--panel));
+            overflow-wrap: anywhere;
+            text-align: center;
         }
 
         .analytics-dashboard[data-theme="dark"] .analytics-range-chip {
@@ -444,6 +488,7 @@
             border-radius: 999px;
             background: var(--panel);
             cursor: pointer;
+            white-space: nowrap;
         }
 
         .analytics-link:hover,
@@ -457,6 +502,7 @@
 
         .analytics-report-tabs {
             display: flex;
+            flex: 0 0 auto;
             gap: 0.5rem;
         }
 
@@ -641,6 +687,30 @@
             flex: 0 0 auto;
             border-radius: 999px;
             background: var(--legend-color);
+        }
+
+        .analytics-chart-dates {
+            display: flex;
+            gap: 0.45rem;
+            max-width: 100%;
+            margin-top: 0.75rem;
+            padding: 0.05rem 0.05rem 0.35rem;
+            overflow-x: auto;
+            scrollbar-width: thin;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .analytics-chart-date {
+            flex: 0 0 auto;
+            padding: 0.34rem 0.55rem;
+            color: var(--muted);
+            font-size: 0.72rem;
+            font-weight: 850;
+            line-height: 1;
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            background: var(--panel);
+            white-space: nowrap;
         }
 
         .analytics-chart-status {
@@ -850,7 +920,7 @@
         /* Mobile-first final layout pass. Keep this after the legacy breakpoints. */
         .analytics-dashboard {
             gap: 0.85rem;
-            margin: -0.75rem -1rem 0;
+            margin: 0;
             padding: 0.75rem;
             border-radius: 0;
         }
@@ -911,13 +981,14 @@
         }
 
         .analytics-toolbar-actions > * {
-            flex: 1 1 12rem;
+            flex: 1 1 100%;
+            min-width: 0;
         }
 
         .analytics-nav {
             gap: 0.4rem;
-            margin: 0.75rem -0.15rem 0;
-            padding: 0 0.15rem 0.35rem;
+            margin: 0.75rem 0 0;
+            padding: 0 0 0.35rem;
         }
 
         .analytics-link,
@@ -940,7 +1011,7 @@
             align-items: stretch;
         }
 
-            .analytics-chart-wrap {
+        .analytics-chart-wrap {
             height: 16.5rem;
             padding: 0.55rem;
         }
@@ -1031,6 +1102,11 @@
             .analytics-chart-wrap {
                 height: 24rem;
                 padding: 0.85rem;
+            }
+
+            .analytics-chart-dates {
+                flex-wrap: wrap;
+                overflow-x: visible;
             }
 
             .analytics-report-head {
@@ -1172,6 +1248,13 @@
                     {{ __('analytics.charts.loading') }}
                 </div>
             </div>
+            @if ($dashboard['series']['labels'] !== [])
+                <div class="analytics-chart-dates" aria-label="{{ __('analytics.charts.date_points') }}">
+                    @foreach ($dashboard['series']['labels'] as $label)
+                        <span class="analytics-chart-date">{{ $label }}</span>
+                    @endforeach
+                </div>
+            @endif
         </section>
 
         <div class="analytics-panel analytics-toolbar">
@@ -1454,7 +1537,7 @@
                 const padding = {
                     top: 28,
                     right: 18,
-                    bottom: 34,
+                    bottom: 18,
                     left: 46,
                 };
                 const labels = series.labels;
@@ -1539,12 +1622,6 @@
                         context.fill();
                     });
                 });
-
-                context.fillStyle = palette.muted;
-                context.textAlign = 'start';
-                context.fillText(labels[0] || '', padding.left, height - 18);
-                context.textAlign = 'end';
-                context.fillText(labels[labels.length - 1] || '', width - padding.right, height - 18);
 
                 fallbackChartRendered = true;
                 fallbackChartSeries = series;
@@ -1720,6 +1797,7 @@
                             scales: {
                                 x: {
                                     ticks: {
+                                        display: false,
                                         color: palette.muted,
                                         maxRotation: 0,
                                         autoSkip: true,
