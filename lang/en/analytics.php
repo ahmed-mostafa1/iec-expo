@@ -17,6 +17,7 @@ return [
         'succeeded' => 'succeeded',
         'failed' => 'failed',
         'running' => 'running',
+        'not_available' => 'Not available',
     ],
     'filters' => [
         'from' => 'From',
@@ -26,8 +27,24 @@ return [
     'sections' => [
         'overview' => 'Overview',
         'traffic' => 'Traffic',
+        'command_center' => 'Analytics command center',
+        'quick_action' => 'Quick action',
+        'view_traffic' => 'View traffic trend',
+        'view_reports' => 'Open reports workspace',
+        'active_range' => 'Active range',
+        'ranked_by' => 'Ranked by',
         'navigation' => 'Analytics sections',
         'report_tabs' => 'Report tabs',
+    ],
+    'metric_groups' => [
+        'audience' => 'Audience',
+        'traffic' => 'Traffic',
+        'content' => 'Content',
+        'conversions' => 'Conversions',
+        'activity' => 'Activity',
+        'quality' => 'Quality',
+        'engagement' => 'Engagement',
+        'duration' => 'Duration',
     ],
     'metrics' => [
         'active_users' => 'Active users',
@@ -54,11 +71,13 @@ return [
         'events' => 'Events',
     ],
     'table' => [
+        'rank' => 'Rank',
         'dimension' => 'Dimension',
         'users' => 'Users',
         'sessions' => 'Sessions',
         'views' => 'Views',
         'events' => 'Events',
+        'top_result' => 'Top result',
     ],
     'registrations' => [
         'sponsor' => 'Sponsor registrations',

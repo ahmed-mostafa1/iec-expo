@@ -17,6 +17,7 @@ return [
         'succeeded' => 'ناجحة',
         'failed' => 'فشلت',
         'running' => 'قيد التشغيل',
+        'not_available' => 'غير متاح',
     ],
     'filters' => [
         'from' => 'من',
@@ -26,8 +27,24 @@ return [
     'sections' => [
         'overview' => 'نظرة عامة',
         'traffic' => 'الزيارات',
+        'command_center' => 'مركز قيادة التحليلات',
+        'quick_action' => 'إجراء سريع',
+        'view_traffic' => 'عرض اتجاه الزيارات',
+        'view_reports' => 'فتح مساحة التقارير',
+        'active_range' => 'النطاق النشط',
+        'ranked_by' => 'مرتب حسب',
         'navigation' => 'أقسام التحليلات',
         'report_tabs' => 'تبويبات التقارير',
+    ],
+    'metric_groups' => [
+        'audience' => 'الجمهور',
+        'traffic' => 'الزيارات',
+        'content' => 'المحتوى',
+        'conversions' => 'التحويلات',
+        'activity' => 'النشاط',
+        'quality' => 'الجودة',
+        'engagement' => 'التفاعل',
+        'duration' => 'المدة',
     ],
     'metrics' => [
         'active_users' => 'المستخدمون النشطون',
@@ -54,11 +71,13 @@ return [
         'events' => 'الأحداث',
     ],
     'table' => [
+        'rank' => 'الترتيب',
         'dimension' => 'البعد',
         'users' => 'المستخدمون',
         'sessions' => 'الجلسات',
         'views' => 'المشاهدات',
         'events' => 'الأحداث',
+        'top_result' => 'الأعلى',
     ],
     'registrations' => [
         'sponsor' => 'تسجيلات الرعاة',
