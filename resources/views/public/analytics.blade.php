@@ -285,20 +285,11 @@
         }
 
         .analytics-toolbar {
-            position: sticky;
-            top: 5.25rem;
-            z-index: 30;
+            position: relative;
+            z-index: 10;
             padding: 1rem;
             backdrop-filter: blur(16px);
             background: color-mix(in srgb, var(--panel) 94%, transparent);
-            transition: transform 0.22s ease, opacity 0.22s ease, box-shadow 0.22s ease;
-            will-change: transform;
-        }
-
-        .analytics-toolbar.is-scroll-hidden {
-            opacity: 0;
-            pointer-events: none;
-            transform: translateY(calc(-100% - 1rem));
         }
 
         .analytics-filter {
@@ -624,6 +615,34 @@
             height: 100%;
         }
 
+        .analytics-chart-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin: 1rem 0 0.75rem;
+        }
+
+        .analytics-chart-legend-item {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+            padding: 0.4rem 0.6rem;
+            color: var(--ink);
+            font-size: 0.78rem;
+            font-weight: 850;
+            border: 1px solid var(--line);
+            border-radius: 999px;
+            background: var(--card-soft);
+        }
+
+        .analytics-chart-legend-dot {
+            width: 0.62rem;
+            height: 0.62rem;
+            flex: 0 0 auto;
+            border-radius: 999px;
+            background: var(--legend-color);
+        }
+
         .analytics-chart-status {
             position: absolute;
             inset: 0.85rem;
@@ -821,10 +840,6 @@
                 grid-template-columns: 1fr;
             }
 
-            .analytics-toolbar {
-                top: 4.75rem;
-            }
-
             .analytics-section-head,
             .analytics-report-head {
                 flex-direction: column;
@@ -881,7 +896,6 @@
         }
 
         .analytics-toolbar {
-            top: 4.75rem;
             padding: 0.75rem;
         }
 
@@ -926,8 +940,8 @@
             align-items: stretch;
         }
 
-        .analytics-chart-wrap {
-            height: 18rem;
+            .analytics-chart-wrap {
+            height: 16.5rem;
             padding: 0.55rem;
         }
 
@@ -991,7 +1005,6 @@
             }
 
             .analytics-toolbar {
-                top: 5.25rem;
                 padding: 1rem;
             }
 
@@ -1187,6 +1200,20 @@
                     {{ __('analytics.export') }}
                 </a>
             </div>
+            <div class="analytics-chart-legend" aria-label="{{ __('analytics.charts.legend') }}">
+                <span class="analytics-chart-legend-item">
+                    <span class="analytics-chart-legend-dot" style="--legend-color: #6d3bbd"></span>
+                    {{ __('analytics.metrics.active_users') }}
+                </span>
+                <span class="analytics-chart-legend-item">
+                    <span class="analytics-chart-legend-dot" style="--legend-color: #0891b2"></span>
+                    {{ __('analytics.metrics.sessions') }}
+                </span>
+                <span class="analytics-chart-legend-item">
+                    <span class="analytics-chart-legend-dot" style="--legend-color: #b7791f"></span>
+                    {{ __('analytics.metrics.views') }}
+                </span>
+            </div>
             <div class="analytics-chart-wrap">
                 <canvas id="trafficChart"></canvas>
                 <div class="analytics-chart-status" data-chart-status aria-live="polite">
@@ -1282,7 +1309,6 @@
             const themeLabel = document.querySelector('[data-theme-label]');
             const lightIcon = document.querySelector('[data-theme-icon-light]');
             const darkIcon = document.querySelector('[data-theme-icon-dark]');
-            const toolbar = document.querySelector('.analytics-toolbar');
             const chartStatus = document.querySelector('[data-chart-status]');
             const chartWrap = document.querySelector('.analytics-chart-wrap');
             const reportTabs = Array.from(document.querySelectorAll('[data-report-tab]'));
@@ -1301,7 +1327,6 @@
             let chartLoadAttempts = 0;
             let fallbackChartRendered = false;
             let fallbackChartSeries = null;
-            let lastScrollY = window.scrollY;
 
             const preferredTheme = () => {
                 let storedTheme = null;
@@ -1342,7 +1367,6 @@
                 }
 
                 const palette = chartPalette();
-                trafficChart.options.plugins.legend.labels.color = palette.text;
                 trafficChart.options.plugins.tooltip.backgroundColor = palette.tooltip;
                 trafficChart.options.scales.x.ticks.color = palette.muted;
                 trafficChart.options.scales.x.grid.color = palette.grid;
@@ -1429,7 +1453,7 @@
                 const padding = {
                     top: 28,
                     right: 18,
-                    bottom: 54,
+                    bottom: 34,
                     left: 46,
                 };
                 const labels = series.labels;
@@ -1521,17 +1545,6 @@
                 context.textAlign = 'end';
                 context.fillText(labels[labels.length - 1] || '', width - padding.right, height - 18);
 
-                let legendX = padding.left;
-                const legendY = height - 38;
-                datasets.forEach((dataset) => {
-                    context.fillStyle = dataset.color;
-                    context.fillRect(legendX, legendY - 8, 10, 10);
-                    context.fillStyle = palette.text;
-                    context.textAlign = 'start';
-                    context.fillText(dataset.label, legendX + 16, legendY + 1);
-                    legendX += Math.min(160, Math.max(108, dataset.label.length * 8 + 36));
-                });
-
                 fallbackChartRendered = true;
                 fallbackChartSeries = series;
                 setChartStatus('', false);
@@ -1539,31 +1552,12 @@
                 return true;
             };
 
-            const updateToolbarVisibility = () => {
-                if (!toolbar) {
-                    return;
-                }
-
-                const currentScrollY = window.scrollY;
-                const isScrollingDown = currentScrollY > lastScrollY;
-                const isPastIntro = currentScrollY > 220;
-                const isInteracting = toolbar.matches(':hover') || toolbar.contains(document.activeElement);
-
-                toolbar.classList.toggle('is-scroll-hidden', isScrollingDown && isPastIntro && !isInteracting);
-                lastScrollY = Math.max(currentScrollY, 0);
-            };
-
-            window.addEventListener('scroll', updateToolbarVisibility, { passive: true });
             window.addEventListener('resize', () => {
-                updateToolbarVisibility();
-
                 if (fallbackChartRendered && fallbackChartSeries && !trafficChart) {
                     const chartElement = document.getElementById('trafficChart');
                     renderCanvasFallback(chartElement, fallbackChartSeries);
                 }
             });
-            toolbar?.addEventListener('focusin', () => toolbar.classList.remove('is-scroll-hidden'));
-            toolbar?.addEventListener('mouseenter', () => toolbar.classList.remove('is-scroll-hidden'));
 
             const reportFromHash = () => {
                 const hash = window.location.hash || '';
@@ -1706,20 +1700,7 @@
                             },
                             plugins: {
                                 legend: {
-                                    position: 'bottom',
-                                    rtl: isRtl,
-                                    textDirection: isRtl ? 'rtl' : 'ltr',
-                                    labels: {
-                                        color: palette.text,
-                                        boxWidth: 12,
-                                        boxHeight: 12,
-                                        usePointStyle: true,
-                                        padding: 24,
-                                        font: {
-                                            size: 13,
-                                            family: 'inherit'
-                                        }
-                                    },
+                                    display: false,
                                 },
                                 tooltip: {
                                     rtl: isRtl,

@@ -32,7 +32,7 @@ class AnalyticsPageTest extends TestCase
             ->assertSee('data-analytics-theme-toggle', false)
             ->assertSee('data-chart-status', false)
             ->assertSee('Preparing chart...')
-            ->assertSee('is-scroll-hidden')
+            ->assertSee('analytics-chart-legend')
             ->assertSee('renderCanvasFallback')
             ->assertSee('Open reports workspace')
             ->assertSee('Search / Organic')
