@@ -23,6 +23,12 @@ return [
         'to' => 'To',
         'apply' => 'Apply filters',
     ],
+    'sections' => [
+        'overview' => 'Overview',
+        'traffic' => 'Traffic',
+        'navigation' => 'Analytics sections',
+        'report_tabs' => 'Report tabs',
+    ],
     'metrics' => [
         'active_users' => 'Active users',
         'sessions' => 'Sessions',

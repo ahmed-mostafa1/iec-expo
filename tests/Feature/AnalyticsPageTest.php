@@ -25,9 +25,22 @@ class AnalyticsPageTest extends TestCase
         $this->get('/en/analytics?date_from=2026-01-01&date_to=2026-01-02')
             ->assertOk()
             ->assertSee('Visitor analytics dashboard')
+            ->assertSee('Overview')
+            ->assertSee('Traffic')
             ->assertSee('Search / Organic')
             ->assertSee('IEC-logo-nav.png')
+            ->assertSee('role="tablist"', false)
+            ->assertSee('id="tab-acquisition"', false)
+            ->assertSee('aria-selected="true"', false)
+            ->assertSee('id="report-content"', false)
+            ->assertSee('data-report-panel="content"', false)
             ->assertDontSee('Registration mix')
+            ->assertSee(e(route('public.analytics.export', [
+                'locale' => 'en',
+                'date_from' => '2026-01-01',
+                'date_to' => '2026-01-02',
+                'report' => 'content',
+            ])), false)
             ->assertSee(e(route('public.analytics', [
                 'locale' => 'ar',
                 'date_from' => '2026-01-01',
@@ -37,7 +50,12 @@ class AnalyticsPageTest extends TestCase
         $this->get('/ar/analytics?date_from=2026-01-01&date_to=2026-01-02')
             ->assertOk()
             ->assertSee('لوحة تحليلات زوار المعرض')
+            ->assertSee('نظرة عامة')
+            ->assertSee('الزيارات')
             ->assertSee('المستخدمون النشطون')
+            ->assertSee('role="tablist"', false)
+            ->assertSee('id="tab-acquisition"', false)
+            ->assertSee('aria-controls="panel-content"', false)
             ->assertDontSee('توزيع التسجيلات')
             ->assertSee(e(route('public.analytics', [
                 'locale' => 'en',

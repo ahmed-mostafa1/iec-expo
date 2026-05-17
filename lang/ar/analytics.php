@@ -23,6 +23,12 @@ return [
         'to' => 'إلى',
         'apply' => 'تطبيق الفلاتر',
     ],
+    'sections' => [
+        'overview' => 'نظرة عامة',
+        'traffic' => 'الزيارات',
+        'navigation' => 'أقسام التحليلات',
+        'report_tabs' => 'تبويبات التقارير',
+    ],
     'metrics' => [
         'active_users' => 'المستخدمون النشطون',
         'sessions' => 'الجلسات',
