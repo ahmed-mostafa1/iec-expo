@@ -291,6 +291,14 @@
             padding: 1rem;
             backdrop-filter: blur(16px);
             background: color-mix(in srgb, var(--panel) 94%, transparent);
+            transition: transform 0.22s ease, opacity 0.22s ease, box-shadow 0.22s ease;
+            will-change: transform;
+        }
+
+        .analytics-toolbar.is-scroll-hidden {
+            opacity: 0;
+            pointer-events: none;
+            transform: translateY(calc(-100% - 1rem));
         }
 
         .analytics-filter {
@@ -602,11 +610,35 @@
         }
 
         .analytics-chart-wrap {
+            position: relative;
             height: 24rem;
             padding: 0.85rem;
             border: 1px solid var(--line);
             border-radius: 1rem;
             background: var(--card-soft);
+        }
+
+        .analytics-chart-status {
+            position: absolute;
+            inset: 0.85rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 1.5rem;
+            color: var(--muted);
+            font-weight: 800;
+            text-align: center;
+            border: 1px dashed color-mix(in srgb, var(--muted) 24%, transparent);
+            border-radius: 0.8rem;
+            background: color-mix(in srgb, var(--panel) 72%, transparent);
+        }
+
+        .analytics-chart-status[hidden] {
+            display: none;
+        }
+
+        .analytics-chart-wrap.is-chart-empty canvas {
+            opacity: 0.08;
         }
 
         .analytics-report-head {
@@ -936,6 +968,9 @@
             </div>
             <div class="analytics-chart-wrap">
                 <canvas id="trafficChart"></canvas>
+                <div class="analytics-chart-status" data-chart-status aria-live="polite">
+                    {{ __('analytics.charts.loading') }}
+                </div>
             </div>
         </section>
 
@@ -1026,6 +1061,9 @@
             const themeLabel = document.querySelector('[data-theme-label]');
             const lightIcon = document.querySelector('[data-theme-icon-light]');
             const darkIcon = document.querySelector('[data-theme-icon-dark]');
+            const toolbar = document.querySelector('.analytics-toolbar');
+            const chartStatus = document.querySelector('[data-chart-status]');
+            const chartWrap = document.querySelector('.analytics-chart-wrap');
             const reportTabs = Array.from(document.querySelectorAll('[data-report-tab]'));
             const reportPanels = Array.from(document.querySelectorAll('[data-report-panel]'));
             const reportsSection = document.getElementById('reports');
@@ -1033,7 +1071,15 @@
                 dark: @json(__('analytics.sections.dark_mode')),
                 light: @json(__('analytics.sections.light_mode')),
             };
+            const chartMessages = {
+                loading: @json(__('analytics.charts.loading')),
+                noData: @json(__('analytics.charts.no_data')),
+                unavailable: @json(__('analytics.charts.unavailable')),
+                error: @json(__('analytics.charts.error')),
+            };
             let trafficChart = null;
+            let chartLoadAttempts = 0;
+            let lastScrollY = window.scrollY;
 
             const preferredTheme = () => {
                 let storedTheme = null;
@@ -1119,6 +1165,35 @@
                 applyTheme(dashboard?.dataset.theme === 'dark' ? 'light' : 'dark', true);
             });
 
+            const setChartStatus = (message = '', visible = false) => {
+                if (!chartStatus || !chartWrap) {
+                    return;
+                }
+
+                chartStatus.textContent = message;
+                chartStatus.hidden = !visible;
+                chartWrap.classList.toggle('is-chart-empty', visible);
+            };
+
+            const updateToolbarVisibility = () => {
+                if (!toolbar) {
+                    return;
+                }
+
+                const currentScrollY = window.scrollY;
+                const isScrollingDown = currentScrollY > lastScrollY;
+                const isPastIntro = currentScrollY > 220;
+                const isInteracting = toolbar.matches(':hover') || toolbar.contains(document.activeElement);
+
+                toolbar.classList.toggle('is-scroll-hidden', isScrollingDown && isPastIntro && !isInteracting);
+                lastScrollY = Math.max(currentScrollY, 0);
+            };
+
+            window.addEventListener('scroll', updateToolbarVisibility, { passive: true });
+            window.addEventListener('resize', updateToolbarVisibility);
+            toolbar?.addEventListener('focusin', () => toolbar.classList.remove('is-scroll-hidden'));
+            toolbar?.addEventListener('mouseenter', () => toolbar.classList.remove('is-scroll-hidden'));
+
             const reportFromHash = () => {
                 const hash = window.location.hash || '';
 
@@ -1173,7 +1248,14 @@
 
             const renderCharts = () => {
                 if (!window.Chart) {
-                    window.setTimeout(renderCharts, 80);
+                    chartLoadAttempts++;
+
+                    if (chartLoadAttempts > 50) {
+                        setChartStatus(chartMessages.unavailable, true);
+                        return;
+                    }
+
+                    window.setTimeout(renderCharts, 100);
                     return;
                 }
 
@@ -1186,116 +1268,132 @@
                 const series = @json($dashboard['series']);
                 const isRtl = @json($isRtl);
                 const palette = chartPalette();
+                const hasTrafficData = Array.isArray(series.labels) &&
+                    series.labels.length > 0 &&
+                    [series.active_users, series.sessions, series.screen_page_views].some((dataset) => {
+                        return Array.isArray(dataset) && dataset.some((value) => Number(value) > 0);
+                    });
 
-                trafficChart = new window.Chart(chartElement, {
-                    type: 'line',
-                    data: {
-                        labels: series.labels,
-                        datasets: [{
-                                label: @json(__('analytics.metrics.active_users')),
-                                data: series.active_users,
-                                borderColor: '#6d3bbd',
-                                backgroundColor: 'rgba(109, 59, 189, 0.12)',
-                                pointBackgroundColor: '#6d3bbd',
-                                pointBorderColor: palette.pointBorder,
-                                pointRadius: 4,
-                                pointHoverRadius: 6,
-                                fill: true,
-                                tension: 0.4,
-                            },
-                            {
-                                label: @json(__('analytics.metrics.sessions')),
-                                data: series.sessions,
-                                borderColor: '#0891b2',
-                                backgroundColor: 'rgba(8, 145, 178, 0.08)',
-                                pointBackgroundColor: '#0891b2',
-                                pointBorderColor: palette.pointBorder,
-                                pointRadius: 4,
-                                pointHoverRadius: 6,
-                                tension: 0.4,
-                            },
-                            {
-                                label: @json(__('analytics.metrics.views')),
-                                data: series.screen_page_views,
-                                borderColor: '#b7791f',
-                                backgroundColor: 'rgba(183, 121, 31, 0.08)',
-                                pointBackgroundColor: '#b7791f',
-                                pointBorderColor: palette.pointBorder,
-                                pointRadius: 4,
-                                pointHoverRadius: 6,
-                                tension: 0.4,
-                            },
-                        ],
-                    },
-                    options: {
-                        responsive: true,
-                        maintainAspectRatio: false,
-                        interaction: {
-                            mode: 'index',
-                            intersect: false
+                if (!hasTrafficData) {
+                    setChartStatus(chartMessages.noData, true);
+                    return;
+                }
+
+                try {
+                    trafficChart = new window.Chart(chartElement, {
+                        type: 'line',
+                        data: {
+                            labels: series.labels,
+                            datasets: [{
+                                    label: @json(__('analytics.metrics.active_users')),
+                                    data: series.active_users,
+                                    borderColor: '#6d3bbd',
+                                    backgroundColor: 'rgba(109, 59, 189, 0.12)',
+                                    pointBackgroundColor: '#6d3bbd',
+                                    pointBorderColor: palette.pointBorder,
+                                    pointRadius: 4,
+                                    pointHoverRadius: 6,
+                                    fill: true,
+                                    tension: 0.4,
+                                },
+                                {
+                                    label: @json(__('analytics.metrics.sessions')),
+                                    data: series.sessions,
+                                    borderColor: '#0891b2',
+                                    backgroundColor: 'rgba(8, 145, 178, 0.08)',
+                                    pointBackgroundColor: '#0891b2',
+                                    pointBorderColor: palette.pointBorder,
+                                    pointRadius: 4,
+                                    pointHoverRadius: 6,
+                                    tension: 0.4,
+                                },
+                                {
+                                    label: @json(__('analytics.metrics.views')),
+                                    data: series.screen_page_views,
+                                    borderColor: '#b7791f',
+                                    backgroundColor: 'rgba(183, 121, 31, 0.08)',
+                                    pointBackgroundColor: '#b7791f',
+                                    pointBorderColor: palette.pointBorder,
+                                    pointRadius: 4,
+                                    pointHoverRadius: 6,
+                                    tension: 0.4,
+                                },
+                            ],
                         },
-                        plugins: {
-                            legend: {
-                                position: 'bottom',
-                                rtl: isRtl,
-                                textDirection: isRtl ? 'rtl' : 'ltr',
-                                labels: {
-                                    color: palette.text,
-                                    boxWidth: 12,
-                                    boxHeight: 12,
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            interaction: {
+                                mode: 'index',
+                                intersect: false
+                            },
+                            plugins: {
+                                legend: {
+                                    position: 'bottom',
+                                    rtl: isRtl,
+                                    textDirection: isRtl ? 'rtl' : 'ltr',
+                                    labels: {
+                                        color: palette.text,
+                                        boxWidth: 12,
+                                        boxHeight: 12,
+                                        usePointStyle: true,
+                                        padding: 24,
+                                        font: {
+                                            size: 13,
+                                            family: 'inherit'
+                                        }
+                                    },
+                                },
+                                tooltip: {
+                                    rtl: isRtl,
+                                    textDirection: isRtl ? 'rtl' : 'ltr',
+                                    backgroundColor: palette.tooltip,
+                                    titleColor: '#ffffff',
+                                    bodyColor: '#ffffff',
+                                    borderColor: 'rgba(109, 59, 189, 0.22)',
+                                    borderWidth: 1,
+                                    padding: 12,
+                                    boxPadding: 6,
                                     usePointStyle: true,
-                                    padding: 24,
-                                    font: {
-                                        size: 13,
-                                        family: 'inherit'
-                                    }
+                                    cornerRadius: 10,
                                 },
                             },
-                            tooltip: {
-                                rtl: isRtl,
-                                textDirection: isRtl ? 'rtl' : 'ltr',
-                                backgroundColor: palette.tooltip,
-                                titleColor: '#ffffff',
-                                bodyColor: '#ffffff',
-                                borderColor: 'rgba(109, 59, 189, 0.22)',
-                                borderWidth: 1,
-                                padding: 12,
-                                boxPadding: 6,
-                                usePointStyle: true,
-                                cornerRadius: 10,
-                            },
-                        },
-                        scales: {
-                            x: {
-                                ticks: {
-                                    color: palette.muted,
-                                    maxRotation: 0,
-                                    autoSkip: true,
-                                    font: { family: 'inherit' }
+                            scales: {
+                                x: {
+                                    ticks: {
+                                        color: palette.muted,
+                                        maxRotation: 0,
+                                        autoSkip: true,
+                                        font: { family: 'inherit' }
+                                    },
+                                    grid: {
+                                        color: palette.grid,
+                                        drawBorder: false,
+                                    },
                                 },
-                                grid: {
-                                    color: palette.grid,
-                                    drawBorder: false,
-                                },
-                            },
-                            y: {
-                                beginAtZero: true,
-                                ticks: {
-                                    color: palette.muted,
-                                    precision: 0,
-                                    font: { family: 'inherit' }
-                                },
-                                border: {
-                                    dash: [4, 4],
-                                    display: false
-                                },
-                                grid: {
-                                    color: palette.grid,
+                                y: {
+                                    beginAtZero: true,
+                                    ticks: {
+                                        color: palette.muted,
+                                        precision: 0,
+                                        font: { family: 'inherit' }
+                                    },
+                                    border: {
+                                        dash: [4, 4],
+                                        display: false
+                                    },
+                                    grid: {
+                                        color: palette.grid,
+                                    },
                                 },
                             },
                         },
-                    },
-                });
+                    });
+                    setChartStatus('', false);
+                } catch (error) {
+                    console.error(error);
+                    setChartStatus(chartMessages.error, true);
+                }
             };
 
             renderCharts();
