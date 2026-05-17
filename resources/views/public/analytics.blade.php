@@ -649,7 +649,7 @@
         .analytics-chart-wrap {
             position: relative;
             height: 24rem;
-            padding: 0.85rem;
+            padding: 0.85rem 0.85rem 3.2rem;
             border: 1px solid var(--line);
             border-radius: 1rem;
             background: var(--card-soft);
@@ -690,26 +690,38 @@
         }
 
         .analytics-chart-dates {
-            display: flex;
-            gap: 0.45rem;
-            max-width: 100%;
-            margin-top: 0.75rem;
-            padding: 0.05rem 0.05rem 0.35rem;
-            overflow-x: auto;
-            scrollbar-width: thin;
-            -webkit-overflow-scrolling: touch;
+            position: absolute;
+            inset-inline: 0;
+            bottom: 0.65rem;
+            height: 2rem;
+            overflow: visible;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.16s ease;
+        }
+
+        .analytics-chart-dates.is-ready {
+            opacity: 1;
         }
 
         .analytics-chart-date {
-            flex: 0 0 auto;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            max-width: 6.75rem;
             padding: 0.34rem 0.55rem;
+            overflow: hidden;
             color: var(--muted);
             font-size: 0.72rem;
             font-weight: 850;
             line-height: 1;
+            text-overflow: ellipsis;
             border: 1px solid var(--line);
             border-radius: 999px;
             background: var(--panel);
+            direction: ltr;
+            transform: translate(-50%, -50%);
+            unicode-bidi: isolate;
             white-space: nowrap;
         }
 
@@ -1013,7 +1025,13 @@
 
         .analytics-chart-wrap {
             height: 16.5rem;
-            padding: 0.55rem;
+            padding: 0.55rem 0.55rem 2.85rem;
+        }
+
+        .analytics-chart-date {
+            max-width: 5.65rem;
+            padding: 0.3rem 0.45rem;
+            font-size: 0.66rem;
         }
 
         .analytics-report-head {
@@ -1101,12 +1119,13 @@
 
             .analytics-chart-wrap {
                 height: 24rem;
-                padding: 0.85rem;
+                padding: 0.85rem 0.85rem 3.2rem;
             }
 
-            .analytics-chart-dates {
-                flex-wrap: wrap;
-                overflow-x: visible;
+            .analytics-chart-date {
+                max-width: 6.75rem;
+                padding: 0.34rem 0.55rem;
+                font-size: 0.72rem;
             }
 
             .analytics-report-head {
@@ -1247,14 +1266,14 @@
                 <div class="analytics-chart-status" data-chart-status aria-live="polite">
                     {{ __('analytics.charts.loading') }}
                 </div>
+                @if ($dashboard['series']['labels'] !== [])
+                    <div class="analytics-chart-dates" data-chart-date-axis aria-label="{{ __('analytics.charts.date_points') }}">
+                        @foreach ($dashboard['series']['labels'] as $label)
+                            <span class="analytics-chart-date" data-chart-date-label data-chart-date-index="{{ $loop->index }}">{{ $label }}</span>
+                        @endforeach
+                    </div>
+                @endif
             </div>
-            @if ($dashboard['series']['labels'] !== [])
-                <div class="analytics-chart-dates" aria-label="{{ __('analytics.charts.date_points') }}">
-                    @foreach ($dashboard['series']['labels'] as $label)
-                        <span class="analytics-chart-date">{{ $label }}</span>
-                    @endforeach
-                </div>
-            @endif
         </section>
 
         <div class="analytics-panel analytics-toolbar">
@@ -1398,6 +1417,8 @@
             const reportTabs = Array.from(document.querySelectorAll('[data-report-tab]'));
             const reportPanels = Array.from(document.querySelectorAll('[data-report-panel]'));
             const reportsSection = document.getElementById('reports');
+            const dateAxis = document.querySelector('[data-chart-date-axis]');
+            const dateLabels = Array.from(document.querySelectorAll('[data-chart-date-label]'));
             const themeText = {
                 dark: @json(__('analytics.sections.dark_mode')),
                 light: @json(__('analytics.sections.light_mode')),
@@ -1440,6 +1461,61 @@
                 };
             };
 
+            const syncDateAxisFromPoints = (canvas, labels, xForIndex) => {
+                if (!dateAxis || !canvas || !Array.isArray(labels) || labels.length === 0) {
+                    return;
+                }
+
+                dateLabels.forEach((dateLabel, index) => {
+                    const pointPixel = Number(xForIndex(index));
+
+                    if (index >= labels.length || !Number.isFinite(pointPixel)) {
+                        dateLabel.hidden = true;
+                        return;
+                    }
+
+                    dateLabel.hidden = false;
+                    dateLabel.style.left = `${canvas.offsetLeft + pointPixel}px`;
+                });
+
+                dateAxis.classList.add('is-ready');
+            };
+
+            const chartPointPixelForIndex = (chart, index) => {
+                if (!dateAxis || !chart?.canvas || !chart?.scales?.x) {
+                    return NaN;
+                }
+
+                for (let datasetIndex = 0; datasetIndex < chart.data.datasets.length; datasetIndex++) {
+                    const point = chart.getDatasetMeta(datasetIndex)?.data?.[index];
+
+                    if (Number.isFinite(point?.x)) {
+                        return point.x;
+                    }
+                }
+
+                const xScale = chart.scales.x;
+                let tickPixel = typeof xScale.getPixelForTick === 'function'
+                    ? xScale.getPixelForTick(index)
+                    : NaN;
+
+                if (!Number.isFinite(tickPixel) && typeof xScale.getPixelForValue === 'function') {
+                    const labelValue = chart.data.labels[index] ?? index;
+
+                    tickPixel = xScale.getPixelForValue(labelValue, index);
+                }
+
+                return tickPixel;
+            };
+
+            const syncDateAxis = (chart = trafficChart) => {
+                if (!chart?.canvas) {
+                    return;
+                }
+
+                syncDateAxisFromPoints(chart.canvas, chart.data.labels, (index) => chartPointPixelForIndex(chart, index));
+            };
+
             const syncChartTheme = () => {
                 if (!trafficChart) {
                     if (fallbackChartRendered && fallbackChartSeries) {
@@ -1460,6 +1536,7 @@
                     dataset.pointBorderColor = palette.pointBorder;
                 });
                 trafficChart.update();
+                window.requestAnimationFrame(() => syncDateAxis(trafficChart));
             };
 
             const applyTheme = (theme, persist = false) => {
@@ -1623,6 +1700,7 @@
                     });
                 });
 
+                syncDateAxisFromPoints(canvas, labels, xForIndex);
                 fallbackChartRendered = true;
                 fallbackChartSeries = series;
                 setChartStatus('', false);
@@ -1634,6 +1712,10 @@
                 if (fallbackChartRendered && fallbackChartSeries && !trafficChart) {
                     const chartElement = document.getElementById('trafficChart');
                     renderCanvasFallback(chartElement, fallbackChartSeries);
+                }
+
+                if (trafficChart) {
+                    window.requestAnimationFrame(() => syncDateAxis(trafficChart));
                 }
             });
 
@@ -1772,6 +1854,12 @@
                         options: {
                             responsive: true,
                             maintainAspectRatio: false,
+                            animation: {
+                                onComplete: ({ chart }) => syncDateAxis(chart),
+                            },
+                            onResize: (chart) => {
+                                window.requestAnimationFrame(() => syncDateAxis(chart));
+                            },
                             interaction: {
                                 mode: 'index',
                                 intersect: false
@@ -1800,7 +1888,7 @@
                                         display: false,
                                         color: palette.muted,
                                         maxRotation: 0,
-                                        autoSkip: true,
+                                        autoSkip: false,
                                         font: { family: 'inherit' }
                                     },
                                     grid: {
@@ -1827,6 +1915,7 @@
                         },
                     });
                     setChartStatus('', false);
+                    window.requestAnimationFrame(() => syncDateAxis(trafficChart));
                 } catch (error) {
                     console.error(error);
                     setChartStatus(chartMessages.error, true);
