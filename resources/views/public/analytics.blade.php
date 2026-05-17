@@ -83,6 +83,10 @@
             background: #f6f2fb !important;
         }
 
+        body.analytics-theme-dark {
+            background: #10091a !important;
+        }
+
         .analytics-main {
             max-width: 80rem !important;
         }
@@ -97,15 +101,41 @@
             --purple-2: #6d3bbd;
             --teal: #0891b2;
             --gold: #b7791f;
+            --hero-bg: linear-gradient(135deg, #ffffff 0%, #f3eaff 55%, #e9fbf7 100%);
+            --shell-bg: radial-gradient(circle at 0 0, rgba(109, 59, 189, 0.12), transparent 28rem), linear-gradient(180deg, #faf7ff 0%, #f6f2fb 100%);
+            --card-soft: #fbfaff;
+            --card-hover: #f4edff;
+            --table-alt: #fbfaff;
+            --table-hover: #eefcff;
+            --table-top: #f3edff;
+            --shadow: rgba(42, 24, 61, 0.08);
             color: var(--ink);
             display: grid;
             gap: 1.25rem;
             margin: -0.75rem -1rem 0;
             padding: 1rem;
-            background:
-                radial-gradient(circle at 0 0, rgba(109, 59, 189, 0.12), transparent 28rem),
-                linear-gradient(180deg, #faf7ff 0%, #f6f2fb 100%);
+            background: var(--shell-bg);
             border-radius: 1.25rem;
+        }
+
+        .analytics-dashboard[data-theme="dark"] {
+            --ink: #f8f3ff;
+            --muted: #b9a8c9;
+            --soft: #10091a;
+            --panel: #1a1026;
+            --line: #352243;
+            --purple: #b991ff;
+            --purple-2: #c7a2ff;
+            --teal: #36d6c1;
+            --gold: #f1bd62;
+            --hero-bg: linear-gradient(135deg, #251535 0%, #1a1026 58%, #102622 100%);
+            --shell-bg: radial-gradient(circle at 0 0, rgba(185, 145, 255, 0.18), transparent 30rem), linear-gradient(180deg, #10091a 0%, #160d22 100%);
+            --card-soft: #211431;
+            --card-hover: #2a193d;
+            --table-alt: #1f132e;
+            --table-hover: #122c31;
+            --table-top: #2c1b44;
+            --shadow: rgba(0, 0, 0, 0.28);
         }
 
         .analytics-dashboard * {
@@ -116,7 +146,7 @@
             background: var(--panel);
             border: 1px solid var(--line);
             border-radius: 1rem;
-            box-shadow: 0 18px 55px rgba(42, 24, 61, 0.08);
+            box-shadow: 0 18px 55px var(--shadow);
         }
 
         .analytics-hero {
@@ -129,7 +159,7 @@
             gap: 1.5rem;
             align-items: end;
             padding: 1.5rem;
-            background: linear-gradient(135deg, #ffffff 0%, #f3eaff 55%, #e9fbf7 100%);
+            background: var(--hero-bg);
         }
 
         .analytics-eyebrow,
@@ -172,9 +202,9 @@
         .analytics-status-card {
             min-height: 4.5rem;
             padding: 0.95rem 1rem;
-            border: 1px solid rgba(109, 59, 189, 0.14);
+            border: 1px solid var(--line);
             border-radius: 0.85rem;
-            background: rgba(255, 255, 255, 0.82);
+            background: color-mix(in srgb, var(--panel) 82%, transparent);
         }
 
         .analytics-status-card strong {
@@ -195,7 +225,7 @@
             gap: 0.75rem;
             padding: 1rem;
             border-top: 1px solid var(--line);
-            background: #ffffff;
+            background: var(--panel);
         }
 
         .analytics-action {
@@ -205,18 +235,18 @@
             justify-content: space-between;
             gap: 1rem;
             padding: 0.9rem 1rem;
-            color: #352445;
+            color: var(--ink);
             text-decoration: none;
-            border: 1px solid #e4dce9;
+            border: 1px solid var(--line);
             border-radius: 0.85rem;
-            background: #fbfaff;
+            background: var(--card-soft);
             transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
         }
 
         .analytics-action:hover,
         .analytics-action:focus-visible {
             border-color: rgba(109, 59, 189, 0.35);
-            box-shadow: 0 12px 28px rgba(42, 24, 61, 0.09);
+            box-shadow: 0 12px 28px var(--shadow);
             transform: translateY(-1px);
             outline: none;
         }
@@ -249,7 +279,7 @@
             align-items: center;
             justify-content: center;
             border-radius: 999px;
-            background: #efe7fb;
+            background: color-mix(in srgb, var(--purple-2) 14%, var(--panel));
             color: var(--purple);
             font-weight: 900;
         }
@@ -260,12 +290,12 @@
             z-index: 30;
             padding: 1rem;
             backdrop-filter: blur(16px);
-            background: rgba(255, 255, 255, 0.94);
+            background: color-mix(in srgb, var(--panel) 94%, transparent);
         }
 
         .analytics-filter {
             display: grid;
-            grid-template-columns: minmax(0, 12rem) minmax(0, 12rem) auto 1fr;
+            grid-template-columns: minmax(0, 12rem) minmax(0, 12rem) auto minmax(16rem, 1fr);
             gap: 0.75rem;
             align-items: end;
         }
@@ -292,9 +322,9 @@
             font: inherit;
             font-size: 0.9rem;
             font-weight: 700;
-            border: 1px solid #d7ccdf;
+            border: 1px solid var(--line);
             border-radius: 0.75rem;
-            background: #ffffff;
+            background: var(--panel);
         }
 
         .analytics-input:focus {
@@ -326,9 +356,16 @@
             outline: none;
         }
 
-        .analytics-range-chip {
+        .analytics-toolbar-actions {
             justify-self: end;
             align-self: end;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            justify-content: flex-end;
+        }
+
+        .analytics-range-chip {
             display: inline-flex;
             align-items: center;
             gap: 0.5rem;
@@ -337,9 +374,41 @@
             color: #0f766e;
             font-size: 0.78rem;
             font-weight: 800;
-            border: 1px solid #bde8df;
+            border: 1px solid color-mix(in srgb, var(--teal) 32%, var(--line));
             border-radius: 0.75rem;
-            background: #ecfdf8;
+            background: color-mix(in srgb, var(--teal) 12%, var(--panel));
+        }
+
+        .analytics-dashboard[data-theme="dark"] .analytics-range-chip {
+            color: var(--teal);
+        }
+
+        .analytics-theme-toggle {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            min-height: 2.65rem;
+            padding: 0.65rem 0.85rem;
+            color: var(--purple);
+            font: inherit;
+            font-size: 0.78rem;
+            font-weight: 900;
+            border: 1px solid var(--line);
+            border-radius: 0.75rem;
+            background: color-mix(in srgb, var(--purple-2) 10%, var(--panel));
+            cursor: pointer;
+        }
+
+        .analytics-theme-toggle:hover,
+        .analytics-theme-toggle:focus-visible {
+            background: var(--card-hover);
+            outline: none;
+        }
+
+        .analytics-theme-toggle svg {
+            width: 1rem;
+            height: 1rem;
+            flex: 0 0 auto;
         }
 
         .analytics-range-chip::before {
@@ -367,14 +436,14 @@
         .analytics-report-tab {
             flex: 0 0 auto;
             padding: 0.58rem 0.8rem;
-            color: #493b58;
+            color: var(--ink);
             font: inherit;
             font-size: 0.86rem;
             font-weight: 800;
             text-decoration: none;
-            border: 1px solid #e0d7e8;
+            border: 1px solid var(--line);
             border-radius: 999px;
-            background: #ffffff;
+            background: var(--panel);
             cursor: pointer;
         }
 
@@ -383,7 +452,7 @@
         .analytics-report-tab:hover,
         .analytics-report-tab:focus-visible {
             border-color: rgba(109, 59, 189, 0.38);
-            background: #f4edff;
+            background: var(--card-hover);
             outline: none;
         }
 
@@ -408,7 +477,12 @@
             font-weight: 800;
             border: 1px solid #f1d28a;
             border-radius: 1rem;
-            background: #fff8e7;
+            background: color-mix(in srgb, var(--gold) 15%, var(--panel));
+        }
+
+        .analytics-dashboard[data-theme="dark"] .analytics-empty {
+            color: var(--gold);
+            border-color: color-mix(in srgb, var(--gold) 35%, var(--line));
         }
 
         .analytics-metrics {
@@ -457,7 +531,7 @@
 
         .analytics-metric-label {
             margin: 0.45rem 0 0;
-            color: #493b58;
+            color: var(--ink);
             font-size: 0.9rem;
             font-weight: 800;
         }
@@ -481,7 +555,7 @@
             font-size: 0.85rem;
             font-weight: 900;
             border-radius: 0.75rem;
-            background: color-mix(in srgb, var(--metric-accent) 10%, #ffffff);
+            background: color-mix(in srgb, var(--metric-accent) 12%, var(--panel));
         }
 
         .analytics-section-head {
@@ -515,24 +589,24 @@
             color: var(--purple);
             font-weight: 800;
             text-decoration: none;
-            border: 1px solid #d9cce8;
+            border: 1px solid var(--line);
             border-radius: 0.75rem;
-            background: #f8f4ff;
+            background: color-mix(in srgb, var(--purple-2) 10%, var(--panel));
         }
 
         .analytics-export-link:hover,
         .analytics-export-link:focus-visible {
             border-color: rgba(109, 59, 189, 0.4);
-            background: #f0e8fb;
+            background: var(--card-hover);
             outline: none;
         }
 
         .analytics-chart-wrap {
             height: 24rem;
             padding: 0.85rem;
-            border: 1px solid #ece5f2;
+            border: 1px solid var(--line);
             border-radius: 1rem;
-            background: #fbfaff;
+            background: var(--card-soft);
         }
 
         .analytics-report-head {
@@ -541,8 +615,8 @@
             justify-content: space-between;
             gap: 1rem;
             padding: 1.25rem;
-            border-bottom: 1px solid #ece5f2;
-            background: #fbfaff;
+            border-bottom: 1px solid var(--line);
+            background: var(--card-soft);
         }
 
         .analytics-report-table-wrap {
@@ -563,7 +637,7 @@
             font-weight: 800;
             letter-spacing: 0.1em;
             text-transform: uppercase;
-            background: #ffffff;
+            background: var(--panel);
         }
 
         .locale-ar .analytics-report-table thead {
@@ -574,7 +648,7 @@
         .analytics-report-table th,
         .analytics-report-table td {
             padding: 0.95rem 1.25rem;
-            border-bottom: 1px solid #f0ebf5;
+            border-bottom: 1px solid var(--line);
             text-align: start;
             vertical-align: middle;
         }
@@ -585,15 +659,15 @@
         }
 
         .analytics-report-table tbody tr:nth-child(even) {
-            background: #fbfaff;
+            background: var(--table-alt);
         }
 
         .analytics-report-table tbody tr:hover {
-            background: #eefcff;
+            background: var(--table-hover);
         }
 
         .analytics-report-table tbody tr.analytics-top-row {
-            background: #f3edff;
+            background: var(--table-top);
         }
 
         .analytics-rank {
@@ -603,11 +677,11 @@
             align-items: center;
             justify-content: center;
             padding: 0 0.45rem;
-            color: #493b58;
+            color: var(--ink);
             font-size: 0.78rem;
             font-weight: 900;
             border-radius: 999px;
-            background: #f0edf3;
+            background: color-mix(in srgb, var(--muted) 16%, var(--panel));
         }
 
         .analytics-top-row .analytics-rank {
@@ -645,7 +719,11 @@
             letter-spacing: 0.08em;
             text-transform: uppercase;
             border-radius: 999px;
-            background: #fff1be;
+            background: color-mix(in srgb, var(--gold) 22%, var(--panel));
+        }
+
+        .analytics-dashboard[data-theme="dark"] .analytics-top-badge {
+            color: #f9d889;
         }
 
         .locale-ar .analytics-top-badge {
@@ -658,7 +736,7 @@
             margin-top: 0.65rem;
             overflow: hidden;
             border-radius: 999px;
-            background: #eee8f4;
+            background: color-mix(in srgb, var(--muted) 18%, var(--panel));
         }
 
         .analytics-bar-fill {
@@ -672,11 +750,11 @@
             min-width: 2.6rem;
             justify-content: center;
             padding: 0.32rem 0.48rem;
-            color: #493b58;
+            color: var(--ink);
             font-size: 0.78rem;
             font-weight: 900;
             border-radius: 0.65rem;
-            background: #f1edf6;
+            background: color-mix(in srgb, var(--muted) 14%, var(--panel));
         }
 
         @media (max-width: 1024px) {
@@ -687,8 +765,9 @@
                 grid-template-columns: 1fr 1fr;
             }
 
-            .analytics-range-chip {
+            .analytics-toolbar-actions {
                 justify-self: start;
+                justify-content: flex-start;
             }
         }
 
@@ -780,7 +859,18 @@
                     <input id="date_to" name="date_to" type="date" value="{{ $dateTo->toDateString() }}" class="analytics-input">
                 </div>
                 <button type="submit" class="analytics-button">{{ __('analytics.filters.apply') }}</button>
-                <div class="analytics-range-chip">{{ __('analytics.sections.active_range') }}: {{ $dateRangeLabel }}</div>
+                <div class="analytics-toolbar-actions">
+                    <div class="analytics-range-chip">{{ __('analytics.sections.active_range') }}: {{ $dateRangeLabel }}</div>
+                    <button type="button" class="analytics-theme-toggle" data-analytics-theme-toggle aria-pressed="false">
+                        <svg data-theme-icon-light viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                            <path d="M12 4V2m0 20v-2m8-8h2M2 12h2m14.95-6.95 1.41-1.41M3.64 20.36l1.41-1.41m0-13.9L3.64 3.64m16.72 16.72-1.41-1.41M12 17a5 5 0 1 0 0-10 5 5 0 0 0 0 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                        <svg data-theme-icon-dark viewBox="0 0 24 24" fill="none" aria-hidden="true" hidden>
+                            <path d="M21 14.5A8.5 8.5 0 0 1 9.5 3 7 7 0 1 0 21 14.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        <span data-theme-label>{{ __('analytics.sections.dark_mode') }}</span>
+                    </button>
+                </div>
             </form>
 
             <nav class="analytics-nav" aria-label="{{ __('analytics.sections.navigation') }}">
@@ -931,9 +1021,103 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            const dashboard = document.querySelector('.analytics-dashboard');
+            const themeToggle = document.querySelector('[data-analytics-theme-toggle]');
+            const themeLabel = document.querySelector('[data-theme-label]');
+            const lightIcon = document.querySelector('[data-theme-icon-light]');
+            const darkIcon = document.querySelector('[data-theme-icon-dark]');
             const reportTabs = Array.from(document.querySelectorAll('[data-report-tab]'));
             const reportPanels = Array.from(document.querySelectorAll('[data-report-panel]'));
             const reportsSection = document.getElementById('reports');
+            const themeText = {
+                dark: @json(__('analytics.sections.dark_mode')),
+                light: @json(__('analytics.sections.light_mode')),
+            };
+            let trafficChart = null;
+
+            const preferredTheme = () => {
+                let storedTheme = null;
+
+                try {
+                    storedTheme = window.localStorage.getItem('analytics-theme');
+                } catch (error) {
+                    storedTheme = null;
+                }
+
+                if (storedTheme === 'dark' || storedTheme === 'light') {
+                    return storedTheme;
+                }
+
+                return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+            };
+
+            const chartPalette = () => {
+                const isDark = dashboard?.dataset.theme === 'dark';
+
+                return {
+                    text: isDark ? '#f8f3ff' : '#20142d',
+                    muted: isDark ? '#b9a8c9' : '#6d6078',
+                    grid: isDark ? 'rgba(199, 162, 255, 0.14)' : 'rgba(109, 59, 189, 0.10)',
+                    tooltip: isDark ? 'rgba(13, 8, 20, 0.96)' : 'rgba(32, 20, 45, 0.94)',
+                    pointBorder: isDark ? '#1a1026' : '#ffffff',
+                };
+            };
+
+            const syncChartTheme = () => {
+                if (!trafficChart) {
+                    return;
+                }
+
+                const palette = chartPalette();
+                trafficChart.options.plugins.legend.labels.color = palette.text;
+                trafficChart.options.plugins.tooltip.backgroundColor = palette.tooltip;
+                trafficChart.options.scales.x.ticks.color = palette.muted;
+                trafficChart.options.scales.x.grid.color = palette.grid;
+                trafficChart.options.scales.y.ticks.color = palette.muted;
+                trafficChart.options.scales.y.grid.color = palette.grid;
+                trafficChart.data.datasets.forEach((dataset) => {
+                    dataset.pointBorderColor = palette.pointBorder;
+                });
+                trafficChart.update();
+            };
+
+            const applyTheme = (theme, persist = false) => {
+                if (!dashboard) {
+                    return;
+                }
+
+                dashboard.dataset.theme = theme;
+                document.body.classList.toggle('analytics-theme-dark', theme === 'dark');
+
+                if (themeToggle) {
+                    themeToggle.setAttribute('aria-pressed', theme === 'dark' ? 'true' : 'false');
+                }
+
+                if (themeLabel) {
+                    themeLabel.textContent = theme === 'dark' ? themeText.light : themeText.dark;
+                }
+
+                if (lightIcon && darkIcon) {
+                    lightIcon.hidden = theme === 'dark';
+                    darkIcon.hidden = theme !== 'dark';
+                }
+
+                if (persist) {
+                    try {
+                        window.localStorage.setItem('analytics-theme', theme);
+                    } catch (error) {
+                        // Ignore storage failures; the current page still updates.
+                    }
+                }
+
+                syncChartTheme();
+            };
+
+            applyTheme(preferredTheme());
+
+            themeToggle?.addEventListener('click', () => {
+                applyTheme(dashboard?.dataset.theme === 'dark' ? 'light' : 'dark', true);
+            });
 
             const reportFromHash = () => {
                 const hash = window.location.hash || '';
@@ -1001,11 +1185,9 @@
 
                 const series = @json($dashboard['series']);
                 const isRtl = @json($isRtl);
-                const chartText = '#20142d';
-                const mutedText = '#6d6078';
-                const grid = 'rgba(109, 59, 189, 0.10)';
+                const palette = chartPalette();
 
-                new window.Chart(chartElement, {
+                trafficChart = new window.Chart(chartElement, {
                     type: 'line',
                     data: {
                         labels: series.labels,
@@ -1015,7 +1197,7 @@
                                 borderColor: '#6d3bbd',
                                 backgroundColor: 'rgba(109, 59, 189, 0.12)',
                                 pointBackgroundColor: '#6d3bbd',
-                                pointBorderColor: '#ffffff',
+                                pointBorderColor: palette.pointBorder,
                                 pointRadius: 4,
                                 pointHoverRadius: 6,
                                 fill: true,
@@ -1027,7 +1209,7 @@
                                 borderColor: '#0891b2',
                                 backgroundColor: 'rgba(8, 145, 178, 0.08)',
                                 pointBackgroundColor: '#0891b2',
-                                pointBorderColor: '#ffffff',
+                                pointBorderColor: palette.pointBorder,
                                 pointRadius: 4,
                                 pointHoverRadius: 6,
                                 tension: 0.4,
@@ -1038,7 +1220,7 @@
                                 borderColor: '#b7791f',
                                 backgroundColor: 'rgba(183, 121, 31, 0.08)',
                                 pointBackgroundColor: '#b7791f',
-                                pointBorderColor: '#ffffff',
+                                pointBorderColor: palette.pointBorder,
                                 pointRadius: 4,
                                 pointHoverRadius: 6,
                                 tension: 0.4,
@@ -1058,7 +1240,7 @@
                                 rtl: isRtl,
                                 textDirection: isRtl ? 'rtl' : 'ltr',
                                 labels: {
-                                    color: chartText,
+                                    color: palette.text,
                                     boxWidth: 12,
                                     boxHeight: 12,
                                     usePointStyle: true,
@@ -1072,7 +1254,7 @@
                             tooltip: {
                                 rtl: isRtl,
                                 textDirection: isRtl ? 'rtl' : 'ltr',
-                                backgroundColor: 'rgba(32, 20, 45, 0.94)',
+                                backgroundColor: palette.tooltip,
                                 titleColor: '#ffffff',
                                 bodyColor: '#ffffff',
                                 borderColor: 'rgba(109, 59, 189, 0.22)',
@@ -1086,20 +1268,20 @@
                         scales: {
                             x: {
                                 ticks: {
-                                    color: mutedText,
+                                    color: palette.muted,
                                     maxRotation: 0,
                                     autoSkip: true,
                                     font: { family: 'inherit' }
                                 },
                                 grid: {
-                                    color: grid,
+                                    color: palette.grid,
                                     drawBorder: false,
                                 },
                             },
                             y: {
                                 beginAtZero: true,
                                 ticks: {
-                                    color: mutedText,
+                                    color: palette.muted,
                                     precision: 0,
                                     font: { family: 'inherit' }
                                 },
@@ -1108,7 +1290,7 @@
                                     display: false
                                 },
                                 grid: {
-                                    color: grid,
+                                    color: palette.grid,
                                 },
                             },
                         },

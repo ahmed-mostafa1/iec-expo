@@ -33,6 +33,8 @@ return [
         'view_reports' => 'Open reports workspace',
         'active_range' => 'Active range',
         'ranked_by' => 'Ranked by',
+        'dark_mode' => 'Dark mode',
+        'light_mode' => 'Light mode',
         'navigation' => 'Analytics sections',
         'report_tabs' => 'Report tabs',
     ],

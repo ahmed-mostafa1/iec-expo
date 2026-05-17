@@ -33,6 +33,8 @@ return [
         'view_reports' => 'فتح مساحة التقارير',
         'active_range' => 'النطاق النشط',
         'ranked_by' => 'مرتب حسب',
+        'dark_mode' => 'الوضع الداكن',
+        'light_mode' => 'الوضع الفاتح',
         'navigation' => 'أقسام التحليلات',
         'report_tabs' => 'تبويبات التقارير',
     ],
