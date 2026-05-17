@@ -10,6 +10,13 @@
             'date_from' => $dateFrom->toDateString(),
             'date_to' => $dateTo->toDateString(),
         ];
+        $labelClass = $isRtl
+            ? 'text-xs font-bold text-white/50'
+            : 'text-xs font-bold uppercase tracking-[0.2em] text-white/50';
+        $smallLabelClass = $isRtl
+            ? 'text-xs font-semibold text-white/[0.58]'
+            : 'text-xs font-semibold uppercase tracking-[0.18em] text-white/[0.58]';
+        $reportOrder = ['acquisition', 'content', 'geography', 'technology', 'events'];
 
         $metricCards = [
             [
@@ -56,11 +63,11 @@
     @endphp
 
     <section class="space-y-8">
-        <div class="overflow-hidden rounded-[1.75rem] bg-[#08050d] text-white shadow-2xl shadow-purple-950/30">
-            <div class="grid gap-8 border border-white/10 bg-[radial-gradient(circle_at_top,#4b1765_0%,#160720_46%,#08050d_100%)] p-5 sm:p-7 lg:grid-cols-[1fr_420px] lg:p-9">
+        <div class="overflow-hidden rounded-[1.75rem] bg-[#08050d] text-white shadow-2xl shadow-purple-950/30 ring-1 ring-white/10">
+            <div class="grid gap-8 bg-[linear-gradient(145deg,rgba(75,23,101,0.55)_0%,rgba(22,7,32,0.96)_44%,rgba(8,5,13,1)_100%)] p-5 sm:p-7 lg:grid-cols-[1fr_420px] lg:p-9">
                 <div class="flex min-h-64 flex-col justify-between gap-8">
                     <div>
-                        <p class="text-sm font-semibold uppercase tracking-[0.28em] text-[#c69be4]">
+                        <p class="{{ $isRtl ? 'text-sm font-semibold text-[#c69be4]' : 'text-sm font-semibold uppercase tracking-[0.28em] text-[#c69be4]' }}">
                             {{ __('analytics.eyebrow') }}
                         </p>
                         <h1 class="mt-4 max-w-3xl text-3xl font-semibold leading-tight tracking-normal sm:text-4xl lg:text-5xl">
@@ -72,12 +79,12 @@
                     </div>
 
                     <div class="flex flex-wrap gap-3 text-sm text-white/[0.76]">
-                        <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.08] px-4 py-2">
+                        <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.08] px-4 py-2 shadow-sm shadow-black/20">
                             <span class="h-2 w-2 rounded-full bg-emerald-300"></span>
                             {{ __('analytics.range') }}: {{ $dateRangeLabel }}
                         </span>
                         @if ($dashboard['lastSync'])
-                            <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.08] px-4 py-2">
+                            <span class="inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.08] px-4 py-2 shadow-sm shadow-black/20">
                                 <span class="h-2 w-2 rounded-full bg-[#c69be4]"></span>
                                 {{ __('analytics.last_sync') }}:
                                 {{ $dashboard['lastSync']->started_at->format('Y-m-d H:i') }}
@@ -88,27 +95,33 @@
                 </div>
 
                 <form method="GET" action="{{ route('public.analytics', ['locale' => $locale]) }}"
-                    class="self-end rounded-3xl border border-white/[0.14] bg-white/[0.08] p-4 shadow-2xl shadow-black/30 backdrop-blur">
+                    class="self-end rounded-3xl border border-white/[0.14] bg-[#0d0713]/85 p-4 shadow-2xl shadow-black/30 backdrop-blur">
                     <div class="grid gap-3 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
                         <label class="block">
-                            <span class="text-xs font-semibold uppercase tracking-[0.18em] text-white/[0.58]">{{ __('analytics.filters.from') }}</span>
+                            <span class="{{ $smallLabelClass }}">{{ __('analytics.filters.from') }}</span>
                             <input id="date_from" name="date_from" type="date" value="{{ $dateFrom->toDateString() }}"
-                                class="mt-2 w-full rounded-2xl border-white/10 bg-[#0d0713] text-sm font-semibold text-white shadow-sm [color-scheme:dark] focus:border-[#c69be4] focus:ring-[#c69be4]">
+                                class="mt-2 w-full rounded-2xl border-white/10 bg-[#050208] text-sm font-semibold text-white shadow-sm [color-scheme:dark] focus:border-[#c69be4] focus:ring-[#c69be4]">
                         </label>
                         <label class="block">
-                            <span class="text-xs font-semibold uppercase tracking-[0.18em] text-white/[0.58]">{{ __('analytics.filters.to') }}</span>
+                            <span class="{{ $smallLabelClass }}">{{ __('analytics.filters.to') }}</span>
                             <input id="date_to" name="date_to" type="date" value="{{ $dateTo->toDateString() }}"
-                                class="mt-2 w-full rounded-2xl border-white/10 bg-[#0d0713] text-sm font-semibold text-white shadow-sm [color-scheme:dark] focus:border-[#c69be4] focus:ring-[#c69be4]">
+                                class="mt-2 w-full rounded-2xl border-white/10 bg-[#050208] text-sm font-semibold text-white shadow-sm [color-scheme:dark] focus:border-[#c69be4] focus:ring-[#c69be4]">
                         </label>
                     </div>
 
                     <div class="mt-4 grid gap-3 sm:grid-cols-2">
                         <button type="submit"
                             class="inline-flex items-center justify-center rounded-2xl bg-[linear-gradient(135deg,#b56ad8_0%,#7c2ea4_48%,#4f126b_100%)] px-4 py-3 text-sm font-bold text-white shadow-lg shadow-purple-950/50 ring-1 ring-white/15 transition hover:-translate-y-0.5 hover:shadow-xl hover:shadow-purple-900/40 focus:outline-none focus:ring-2 focus:ring-[#e2b7ff] focus:ring-offset-2 focus:ring-offset-[#08050d]">
+                            <svg class="{{ $isRtl ? 'ms-2' : 'me-2' }} h-4 w-4" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <path d="M4 7h16M7 12h10M10 17h4" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                            </svg>
                             {{ __('analytics.filters.apply') }}
                         </button>
                         <a href="{{ route('public.analytics.export', $exportParams + ['report' => 'daily']) }}"
                             class="inline-flex items-center justify-center rounded-2xl border border-[#c69be4]/40 bg-[#150c20] px-4 py-3 text-sm font-bold text-[#f4dcff] shadow-lg shadow-black/20 transition hover:-translate-y-0.5 hover:border-[#e2b7ff] hover:bg-[#24102f] focus:outline-none focus:ring-2 focus:ring-[#e2b7ff] focus:ring-offset-2 focus:ring-offset-[#08050d]">
+                            <svg class="{{ $isRtl ? 'ms-2' : 'me-2' }} h-4 w-4" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <path d="M12 3v11m0 0 4-4m-4 4-4-4M5 19h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
                             {{ __('analytics.export_csv') }}
                         </a>
                     </div>
@@ -124,13 +137,16 @@
 
         <div class="grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
             @foreach ($metricCards as $card)
-                <div class="group overflow-hidden rounded-3xl border border-white/10 bg-[#100817] p-5 shadow-xl shadow-black/20 transition hover:-translate-y-0.5 hover:border-[#9873AC]/60 hover:bg-[#160b21] hover:shadow-purple-950/30">
-                    <div class="flex items-start justify-between gap-4">
+                <div class="group overflow-hidden rounded-3xl border border-white/10 bg-[linear-gradient(180deg,#12091a_0%,#0b0610_100%)] p-5 shadow-xl shadow-black/20 transition hover:-translate-y-0.5 hover:border-[#9873AC]/60 hover:shadow-purple-950/30">
+                    <div class="mb-5 h-1 w-16 rounded-full bg-gradient-to-r {{ $card['accent'] }}"></div>
+                    <div class="flex items-end justify-between gap-4">
                         <div>
-                            <p class="text-xs font-bold uppercase tracking-[0.2em] text-white/50">{{ $card['label'] }}</p>
+                            <p class="{{ $labelClass }}">{{ $card['label'] }}</p>
                             <p class="mt-3 text-3xl font-semibold tracking-normal text-white">{{ $card['value'] }}</p>
                         </div>
-                        <span class="h-11 w-1.5 rounded-full bg-gradient-to-b {{ $card['accent'] }}"></span>
+                        <span class="flex h-10 w-10 items-center justify-center rounded-2xl border border-white/10 bg-white/[0.04] text-sm font-bold text-white/60">
+                            {{ str_pad((string) $loop->iteration, 2, '0', STR_PAD_LEFT) }}
+                        </span>
                     </div>
                 </div>
             @endforeach
@@ -151,13 +167,27 @@
             </section>
         </div>
 
+        <nav class="sticky top-24 z-20 rounded-3xl border border-white/10 bg-[#0b0610]/90 p-2 shadow-xl shadow-black/30 backdrop-blur">
+            <div class="flex gap-2 overflow-x-auto">
+                @foreach ($reportOrder as $report)
+                    <a href="#report-{{ $report }}"
+                        class="whitespace-nowrap rounded-2xl border border-white/10 px-4 py-2 text-sm font-bold text-white/70 transition hover:border-[#c69be4]/60 hover:bg-[#1b0d26] hover:text-white">
+                        {{ $reports[$report] }}
+                    </a>
+                @endforeach
+            </div>
+        </nav>
+
         <div class="grid gap-5 xl:grid-cols-2">
-            @foreach (['acquisition', 'content', 'geography', 'technology', 'events'] as $report)
-                <section class="overflow-hidden rounded-3xl border border-white/10 bg-[#100817] shadow-xl shadow-black/20">
+            @foreach ($reportOrder as $report)
+                <section id="report-{{ $report }}" class="scroll-mt-36 overflow-hidden rounded-3xl border border-white/10 bg-[#100817] shadow-xl shadow-black/20">
                     <div class="flex items-center justify-between gap-4 border-b border-white/10 bg-white/[0.04] px-5 py-4">
                         <h2 class="text-lg font-semibold tracking-normal text-white">{{ $reports[$report] }}</h2>
                         <a href="{{ route('public.analytics.export', $exportParams + ['report' => $report]) }}"
                             class="rounded-full border border-[#c69be4]/[0.35] bg-[#1b0d26] px-3 py-1.5 text-xs font-bold text-[#f4dcff] shadow-sm shadow-black/20 transition hover:-translate-y-0.5 hover:border-[#e2b7ff] hover:bg-[#2a1238]">
+                            <svg class="{{ $isRtl ? 'ms-1.5' : 'me-1.5' }} inline h-3.5 w-3.5 align-[-2px]" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                <path d="M12 4v10m0 0 3-3m-3 3-3-3M5 20h14" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                            </svg>
                             {{ __('analytics.export') }}
                         </a>
                     </div>
