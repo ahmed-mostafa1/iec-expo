@@ -1114,54 +1114,6 @@
             </div>
         </section>
 
-        <div class="analytics-panel analytics-toolbar">
-            <form method="GET" action="{{ route('public.analytics', ['locale' => $locale]) }}" class="analytics-filter">
-                <div class="analytics-field">
-                    <label for="date_from">{{ __('analytics.filters.from') }}</label>
-                    <input id="date_from" name="date_from" type="date" value="{{ $dateFrom->toDateString() }}" class="analytics-input">
-                </div>
-                <div class="analytics-field">
-                    <label for="date_to">{{ __('analytics.filters.to') }}</label>
-                    <input id="date_to" name="date_to" type="date" value="{{ $dateTo->toDateString() }}" class="analytics-input">
-                </div>
-                <button type="submit" class="analytics-button">{{ __('analytics.filters.apply') }}</button>
-                <div class="analytics-toolbar-actions">
-                    <div class="analytics-range-chip">{{ __('analytics.sections.active_range') }}: {{ $dateRangeLabel }}</div>
-                    <button type="button" class="analytics-theme-toggle" data-analytics-theme-toggle aria-pressed="false">
-                        <svg data-theme-icon-light viewBox="0 0 24 24" fill="none" aria-hidden="true">
-                            <path d="M12 4V2m0 20v-2m8-8h2M2 12h2m14.95-6.95 1.41-1.41M3.64 20.36l1.41-1.41m0-13.9L3.64 3.64m16.72 16.72-1.41-1.41M12 17a5 5 0 1 0 0-10 5 5 0 0 0 0 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-                        </svg>
-                        <svg data-theme-icon-dark viewBox="0 0 24 24" fill="none" aria-hidden="true" hidden>
-                            <path d="M21 14.5A8.5 8.5 0 0 1 9.5 3 7 7 0 1 0 21 14.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-                        </svg>
-                        <span data-theme-label>{{ __('analytics.sections.dark_mode') }}</span>
-                    </button>
-                </div>
-            </form>
-
-            <nav class="analytics-nav" aria-label="{{ __('analytics.sections.navigation') }}">
-                <a href="#overview" class="analytics-link">{{ __('analytics.sections.overview') }}</a>
-                <a href="#traffic" class="analytics-link">{{ __('analytics.sections.traffic') }}</a>
-
-                <div class="analytics-report-tabs" role="tablist" aria-label="{{ __('analytics.sections.report_tabs') }}">
-                    @foreach ($reportOrder as $report)
-                        @php
-                            $isDefaultReport = $report === 'acquisition';
-                        @endphp
-                        <button type="button"
-                            id="tab-{{ $report }}"
-                            class="analytics-report-tab"
-                            role="tab"
-                            aria-selected="{{ $isDefaultReport ? 'true' : 'false' }}"
-                            aria-controls="panel-{{ $report }}"
-                            data-report-tab="{{ $report }}">
-                            {{ $reports[$report] }}
-                        </button>
-                    @endforeach
-                </div>
-            </nav>
-        </div>
-
         @if ($dashboard['series']['labels'] === [])
             <div class="analytics-empty">
                 <svg width="20" height="20" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
@@ -1221,6 +1173,55 @@
                 </div>
             </div>
         </section>
+
+        <div class="analytics-panel analytics-toolbar">
+            <form method="GET" action="{{ route('public.analytics', ['locale' => $locale]) }}" class="analytics-filter">
+                <div class="analytics-field">
+                    <label for="date_from">{{ __('analytics.filters.from') }}</label>
+                    <input id="date_from" name="date_from" type="date" value="{{ $dateFrom->toDateString() }}" class="analytics-input">
+                </div>
+                <div class="analytics-field">
+                    <label for="date_to">{{ __('analytics.filters.to') }}</label>
+                    <input id="date_to" name="date_to" type="date" value="{{ $dateTo->toDateString() }}" class="analytics-input">
+                </div>
+                <button type="submit" class="analytics-button">{{ __('analytics.filters.apply') }}</button>
+                <div class="analytics-toolbar-actions">
+                    <div class="analytics-range-chip">{{ __('analytics.sections.active_range') }}: {{ $dateRangeLabel }}</div>
+                    <button type="button" class="analytics-theme-toggle" data-analytics-theme-toggle aria-pressed="false">
+                        <svg data-theme-icon-light viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                            <path d="M12 4V2m0 20v-2m8-8h2M2 12h2m14.95-6.95 1.41-1.41M3.64 20.36l1.41-1.41m0-13.9L3.64 3.64m16.72 16.72-1.41-1.41M12 17a5 5 0 1 0 0-10 5 5 0 0 0 0 10Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
+                        </svg>
+                        <svg data-theme-icon-dark viewBox="0 0 24 24" fill="none" aria-hidden="true" hidden>
+                            <path d="M21 14.5A8.5 8.5 0 0 1 9.5 3 7 7 0 1 0 21 14.5Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+                        </svg>
+                        <span data-theme-label>{{ __('analytics.sections.dark_mode') }}</span>
+                    </button>
+                </div>
+            </form>
+
+            <nav class="analytics-nav" aria-label="{{ __('analytics.sections.navigation') }}">
+                <a href="#overview" class="analytics-link">{{ __('analytics.sections.overview') }}</a>
+                <a href="#traffic" class="analytics-link">{{ __('analytics.sections.traffic') }}</a>
+
+                <div class="analytics-report-tabs" role="tablist" aria-label="{{ __('analytics.sections.report_tabs') }}">
+                    @foreach ($reportOrder as $report)
+                        @php
+                            $isDefaultReport = $report === 'acquisition';
+                        @endphp
+                        <button type="button"
+                            id="tab-{{ $report }}"
+                            class="analytics-report-tab"
+                            role="tab"
+                            aria-selected="{{ $isDefaultReport ? 'true' : 'false' }}"
+                            aria-controls="panel-{{ $report }}"
+                            data-report-tab="{{ $report }}">
+                            {{ $reports[$report] }}
+                        </button>
+                    @endforeach
+                </div>
+            </nav>
+        </div>
+
 
         <section id="reports" class="analytics-panel" style="overflow: hidden;">
             @foreach ($reportOrder as $report)
