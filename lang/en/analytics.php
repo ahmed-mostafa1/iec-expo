@@ -63,7 +63,6 @@ return [
         'traffic_hint' => 'Daily users, sessions, and page views.',
         'loading' => 'Preparing chart...',
         'no_data' => 'No traffic data is available for this date range.',
-        'unavailable' => 'The chart library did not load. Rebuild and deploy the Vite assets, then refresh this page.',
         'error' => 'The chart could not be rendered. Check the browser console for details.',
         'registrations' => 'Registration mix',
         'registrations_hint' => 'Sponsor, Icon, and visitor conversions.',

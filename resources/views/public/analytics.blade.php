@@ -618,6 +618,12 @@
             background: var(--card-soft);
         }
 
+        .analytics-chart-wrap canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
         .analytics-chart-status {
             position: absolute;
             inset: 0.85rem;
@@ -823,6 +829,221 @@
             .analytics-report-head {
                 flex-direction: column;
                 align-items: stretch;
+            }
+        }
+
+        /* Mobile-first final layout pass. Keep this after the legacy breakpoints. */
+        .analytics-dashboard {
+            gap: 0.85rem;
+            margin: -0.75rem -1rem 0;
+            padding: 0.75rem;
+            border-radius: 0;
+        }
+
+        .analytics-panel {
+            border-radius: 0.9rem;
+        }
+
+        .analytics-hero-top,
+        .analytics-actions,
+        .analytics-filter,
+        .analytics-metrics {
+            grid-template-columns: 1fr;
+        }
+
+        .analytics-hero-top {
+            gap: 1rem;
+            padding: 1rem;
+        }
+
+        .analytics-title {
+            font-size: clamp(1.55rem, 7.4vw, 2.25rem);
+        }
+
+        .analytics-copy {
+            font-size: 0.92rem;
+            line-height: 1.65;
+        }
+
+        .analytics-status-card,
+        .analytics-action,
+        .analytics-metric {
+            padding: 0.85rem;
+        }
+
+        .analytics-actions {
+            gap: 0.6rem;
+            padding: 0.75rem;
+        }
+
+        .analytics-action {
+            min-height: 4rem;
+        }
+
+        .analytics-toolbar {
+            top: 4.75rem;
+            padding: 0.75rem;
+        }
+
+        .analytics-button,
+        .analytics-theme-toggle,
+        .analytics-range-chip {
+            width: 100%;
+        }
+
+        .analytics-toolbar-actions {
+            justify-self: stretch;
+            justify-content: stretch;
+        }
+
+        .analytics-toolbar-actions > * {
+            flex: 1 1 12rem;
+        }
+
+        .analytics-nav {
+            gap: 0.4rem;
+            margin: 0.75rem -0.15rem 0;
+            padding: 0 0.15rem 0.35rem;
+        }
+
+        .analytics-link,
+        .analytics-report-tab {
+            padding: 0.52rem 0.72rem;
+            font-size: 0.8rem;
+        }
+
+        .analytics-metric {
+            min-height: auto;
+        }
+
+        .analytics-metric-value {
+            font-size: 1.75rem;
+        }
+
+        .analytics-section-head,
+        .analytics-report-head {
+            flex-direction: column;
+            align-items: stretch;
+        }
+
+        .analytics-chart-wrap {
+            height: 18rem;
+            padding: 0.55rem;
+        }
+
+        .analytics-report-head {
+            padding: 1rem;
+        }
+
+        .analytics-report-table {
+            min-width: 43rem;
+            font-size: 0.82rem;
+        }
+
+        .analytics-report-table th,
+        .analytics-report-table td {
+            padding: 0.75rem 0.85rem;
+        }
+
+        .analytics-dimension {
+            min-width: 15rem;
+            max-width: 20rem;
+        }
+
+        @media (min-width: 640px) {
+            .analytics-dashboard {
+                gap: 1rem;
+                padding: 1rem;
+                border-radius: 1.25rem;
+            }
+
+            .analytics-hero-top,
+            .analytics-actions,
+            .analytics-filter,
+            .analytics-metrics {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            .analytics-dashboard {
+                gap: 1.25rem;
+            }
+
+            .analytics-panel {
+                border-radius: 1rem;
+            }
+
+            .analytics-hero-top {
+                grid-template-columns: minmax(0, 1fr) minmax(20rem, 27rem);
+                gap: 1.5rem;
+                padding: 1.5rem;
+            }
+
+            .analytics-actions {
+                grid-template-columns: repeat(3, minmax(0, 1fr));
+                gap: 0.75rem;
+                padding: 1rem;
+            }
+
+            .analytics-filter {
+                grid-template-columns: minmax(0, 12rem) minmax(0, 12rem) auto minmax(16rem, 1fr);
+            }
+
+            .analytics-toolbar {
+                top: 5.25rem;
+                padding: 1rem;
+            }
+
+            .analytics-toolbar-actions {
+                justify-self: end;
+                justify-content: flex-end;
+            }
+
+            .analytics-button,
+            .analytics-theme-toggle,
+            .analytics-range-chip {
+                width: auto;
+            }
+
+            .analytics-metrics {
+                grid-template-columns: repeat(4, minmax(0, 1fr));
+            }
+
+            .analytics-metric {
+                min-height: 9rem;
+                padding: 1rem;
+            }
+
+            .analytics-chart-wrap {
+                height: 24rem;
+                padding: 0.85rem;
+            }
+
+            .analytics-report-head {
+                flex-direction: row;
+                align-items: center;
+                padding: 1.25rem;
+            }
+
+            .analytics-section-head {
+                flex-direction: row;
+                align-items: flex-start;
+            }
+
+            .analytics-report-table {
+                min-width: 58rem;
+                font-size: 0.9rem;
+            }
+
+            .analytics-report-table th,
+            .analytics-report-table td {
+                padding: 0.95rem 1.25rem;
+            }
+
+            .analytics-dimension {
+                min-width: 18rem;
+                max-width: 30rem;
             }
         }
     </style>
@@ -1074,11 +1295,12 @@
             const chartMessages = {
                 loading: @json(__('analytics.charts.loading')),
                 noData: @json(__('analytics.charts.no_data')),
-                unavailable: @json(__('analytics.charts.unavailable')),
                 error: @json(__('analytics.charts.error')),
             };
             let trafficChart = null;
             let chartLoadAttempts = 0;
+            let fallbackChartRendered = false;
+            let fallbackChartSeries = null;
             let lastScrollY = window.scrollY;
 
             const preferredTheme = () => {
@@ -1111,6 +1333,11 @@
 
             const syncChartTheme = () => {
                 if (!trafficChart) {
+                    if (fallbackChartRendered && fallbackChartSeries) {
+                        const chartElement = document.getElementById('trafficChart');
+                        renderCanvasFallback(chartElement, fallbackChartSeries);
+                    }
+
                     return;
                 }
 
@@ -1175,6 +1402,143 @@
                 chartWrap.classList.toggle('is-chart-empty', visible);
             };
 
+            const hasUsableTrafficData = (series) => {
+                return Array.isArray(series.labels) &&
+                    series.labels.length > 0 &&
+                    [series.active_users, series.sessions, series.screen_page_views].some((dataset) => {
+                        return Array.isArray(dataset) && dataset.some((value) => Number(value) > 0);
+                    });
+            };
+
+            const renderCanvasFallback = (canvas, series) => {
+                if (!canvas || !hasUsableTrafficData(series)) {
+                    return false;
+                }
+
+                const context = canvas.getContext('2d');
+
+                if (!context) {
+                    return false;
+                }
+
+                const palette = chartPalette();
+                const parent = canvas.parentElement;
+                const pixelRatio = window.devicePixelRatio || 1;
+                const width = Math.max(canvas.clientWidth || parent?.clientWidth || 640, 320);
+                const height = Math.max(canvas.clientHeight || parent?.clientHeight || 288, 220);
+                const padding = {
+                    top: 28,
+                    right: 18,
+                    bottom: 54,
+                    left: 46,
+                };
+                const labels = series.labels;
+                const datasets = [
+                    {
+                        label: @json(__('analytics.metrics.active_users')),
+                        values: series.active_users || [],
+                        color: '#6d3bbd',
+                    },
+                    {
+                        label: @json(__('analytics.metrics.sessions')),
+                        values: series.sessions || [],
+                        color: '#0891b2',
+                    },
+                    {
+                        label: @json(__('analytics.metrics.views')),
+                        values: series.screen_page_views || [],
+                        color: '#b7791f',
+                    },
+                ];
+                const maxValue = Math.max(
+                    1,
+                    ...datasets.flatMap((dataset) => dataset.values.map((value) => Number(value) || 0))
+                );
+                const plotWidth = width - padding.left - padding.right;
+                const plotHeight = height - padding.top - padding.bottom;
+                const xForIndex = (index) => {
+                    if (labels.length <= 1) {
+                        return padding.left + plotWidth / 2;
+                    }
+
+                    return padding.left + (index / (labels.length - 1)) * plotWidth;
+                };
+                const yForValue = (value) => padding.top + plotHeight - ((Number(value) || 0) / maxValue) * plotHeight;
+
+                canvas.width = Math.floor(width * pixelRatio);
+                canvas.height = Math.floor(height * pixelRatio);
+                context.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+                context.clearRect(0, 0, width, height);
+                context.font = '12px Arial, sans-serif';
+                context.lineCap = 'round';
+                context.lineJoin = 'round';
+
+                for (let tick = 0; tick <= 4; tick++) {
+                    const y = padding.top + (plotHeight / 4) * tick;
+                    const value = Math.round(maxValue - (maxValue / 4) * tick);
+                    context.strokeStyle = palette.grid;
+                    context.lineWidth = 1;
+                    context.beginPath();
+                    context.moveTo(padding.left, y);
+                    context.lineTo(width - padding.right, y);
+                    context.stroke();
+                    context.fillStyle = palette.muted;
+                    context.textAlign = 'right';
+                    context.fillText(String(value), padding.left - 8, y + 4);
+                }
+
+                datasets.forEach((dataset) => {
+                    context.strokeStyle = dataset.color;
+                    context.lineWidth = 2.5;
+                    context.beginPath();
+
+                    dataset.values.forEach((value, index) => {
+                        const x = xForIndex(index);
+                        const y = yForValue(value);
+
+                        if (index === 0) {
+                            context.moveTo(x, y);
+                        } else {
+                            context.lineTo(x, y);
+                        }
+                    });
+
+                    context.stroke();
+
+                    dataset.values.forEach((value, index) => {
+                        const x = xForIndex(index);
+                        const y = yForValue(value);
+                        context.fillStyle = dataset.color;
+                        context.beginPath();
+                        context.arc(x, y, 3.5, 0, Math.PI * 2);
+                        context.fill();
+                    });
+                });
+
+                context.fillStyle = palette.muted;
+                context.textAlign = 'start';
+                context.fillText(labels[0] || '', padding.left, height - 18);
+                context.textAlign = 'end';
+                context.fillText(labels[labels.length - 1] || '', width - padding.right, height - 18);
+
+                let legendX = padding.left;
+                const legendY = height - 38;
+                datasets.forEach((dataset) => {
+                    context.fillStyle = dataset.color;
+                    context.fillRect(legendX, legendY - 8, 10, 10);
+                    context.fillStyle = palette.text;
+                    context.textAlign = 'start';
+                    context.fillText(dataset.label, legendX + 16, legendY + 1);
+                    legendX += Math.min(160, Math.max(108, dataset.label.length * 8 + 36));
+                });
+
+                fallbackChartRendered = true;
+                fallbackChartSeries = series;
+                setChartStatus('', false);
+
+                return true;
+            };
+
             const updateToolbarVisibility = () => {
                 if (!toolbar) {
                     return;
@@ -1190,7 +1554,14 @@
             };
 
             window.addEventListener('scroll', updateToolbarVisibility, { passive: true });
-            window.addEventListener('resize', updateToolbarVisibility);
+            window.addEventListener('resize', () => {
+                updateToolbarVisibility();
+
+                if (fallbackChartRendered && fallbackChartSeries && !trafficChart) {
+                    const chartElement = document.getElementById('trafficChart');
+                    renderCanvasFallback(chartElement, fallbackChartSeries);
+                }
+            });
             toolbar?.addEventListener('focusin', () => toolbar.classList.remove('is-scroll-hidden'));
             toolbar?.addEventListener('mouseenter', () => toolbar.classList.remove('is-scroll-hidden'));
 
@@ -1250,8 +1621,19 @@
                 if (!window.Chart) {
                     chartLoadAttempts++;
 
-                    if (chartLoadAttempts > 50) {
-                        setChartStatus(chartMessages.unavailable, true);
+                    if (chartLoadAttempts > 8) {
+                        const chartElement = document.getElementById('trafficChart');
+                        const series = @json($dashboard['series']);
+
+                        if (!hasUsableTrafficData(series)) {
+                            setChartStatus(chartMessages.noData, true);
+                            return;
+                        }
+
+                        if (!renderCanvasFallback(chartElement, series)) {
+                            setChartStatus(chartMessages.error, true);
+                        }
+
                         return;
                     }
 
@@ -1268,13 +1650,8 @@
                 const series = @json($dashboard['series']);
                 const isRtl = @json($isRtl);
                 const palette = chartPalette();
-                const hasTrafficData = Array.isArray(series.labels) &&
-                    series.labels.length > 0 &&
-                    [series.active_users, series.sessions, series.screen_page_views].some((dataset) => {
-                        return Array.isArray(dataset) && dataset.some((value) => Number(value) > 0);
-                    });
 
-                if (!hasTrafficData) {
+                if (!hasUsableTrafficData(series)) {
                     setChartStatus(chartMessages.noData, true);
                     return;
                 }
