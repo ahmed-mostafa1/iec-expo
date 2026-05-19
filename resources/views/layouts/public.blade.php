@@ -13,6 +13,21 @@
     $languageSwitchUrl = $routeName
         ? route($routeName, array_merge($switchParameters, $switchQuery))
         : route('public.analytics', ['locale' => $switchLocale]);
+    $seoPageKey = trim($__env->yieldContent('seo_page', 'analytics')) ?: 'analytics';
+    $seoPage = config("seo.pages.$seoPageKey.$currentLocale", config("seo.pages.$seoPageKey.en", config('seo.pages.analytics.en')));
+    $seoTitle = trim($__env->yieldContent('title', $seoPage['title'])) ?: $seoPage['title'];
+    $seoDescription = trim($__env->yieldContent('meta_description', $seoPage['description'])) ?: $seoPage['description'];
+    $seoKeywords = implode(', ', config("seo.keywords.$currentLocale", []));
+    $seoCanonical = $routeName
+        ? route($routeName, array_merge($routeParameters, ['locale' => $currentLocale]))
+        : url()->current();
+    $seoAlternateEn = $routeName
+        ? route($routeName, array_merge($routeParameters, ['locale' => 'en']))
+        : $seoCanonical;
+    $seoAlternateAr = $routeName
+        ? route($routeName, array_merge($routeParameters, ['locale' => 'ar']))
+        : $seoCanonical;
+    $seoImage = asset(config('seo.image'));
 @endphp
 
 <!DOCTYPE html>
@@ -21,7 +36,25 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>{{ config('app.name', 'Event Portal') }}</title>
+    <title>{{ $seoTitle }}</title>
+    <meta name="description" content="{{ $seoDescription }}">
+    <meta name="keywords" content="{{ $seoKeywords }}">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <link rel="canonical" href="{{ $seoCanonical }}">
+    <link rel="alternate" hreflang="en" href="{{ $seoAlternateEn }}">
+    <link rel="alternate" hreflang="ar" href="{{ $seoAlternateAr }}">
+    <link rel="alternate" hreflang="x-default" href="{{ $seoAlternateEn }}">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="{{ config('seo.site_name') }}">
+    <meta property="og:locale" content="{{ $currentLocale === 'ar' ? 'ar_SA' : 'en_US' }}">
+    <meta property="og:title" content="{{ $seoTitle }}">
+    <meta property="og:description" content="{{ $seoDescription }}">
+    <meta property="og:url" content="{{ $seoCanonical }}">
+    <meta property="og:image" content="{{ $seoImage }}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ $seoTitle }}">
+    <meta name="twitter:description" content="{{ $seoDescription }}">
+    <meta name="twitter:image" content="{{ $seoImage }}">
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 

@@ -1,14 +1,41 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="{{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}">
 <head>
     @php
         $displayName = method_exists($sponsor, 'getLocalizedName')
             ? $sponsor->getLocalizedName(app()->getLocale())
             : ($sponsor->name_en ?? $sponsor->name);
+        $seoLocale = app()->getLocale() === 'ar' ? 'ar' : 'en';
+        $seoTemplate = config("seo.pages.sponsor.$seoLocale", config('seo.pages.sponsor.en'));
+        $seoTitle = str_replace(':name', $displayName, $seoTemplate['title']);
+        $seoDescription = str_replace(':name', $displayName, $seoTemplate['description']);
+        $seoKeywords = implode(', ', config("seo.keywords.$seoLocale", []));
+        $seoCanonical = route('public.sponsors.show', ['locale' => $seoLocale, 'sponsor' => $sponsor]);
+        $seoAlternateEn = route('public.sponsors.show', ['locale' => 'en', 'sponsor' => $sponsor]);
+        $seoAlternateAr = route('public.sponsors.show', ['locale' => 'ar', 'sponsor' => $sponsor]);
+        $seoImage = $sponsor->logo_path ? asset('storage/' . $sponsor->logo_path) : asset(config('seo.image'));
     @endphp
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $displayName }} · {{ config('app.name') }}</title>
+    <title>{{ $seoTitle }}</title>
+    <meta name="description" content="{{ $seoDescription }}">
+    <meta name="keywords" content="{{ $seoKeywords }}">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <link rel="canonical" href="{{ $seoCanonical }}">
+    <link rel="alternate" hreflang="en" href="{{ $seoAlternateEn }}">
+    <link rel="alternate" hreflang="ar" href="{{ $seoAlternateAr }}">
+    <link rel="alternate" hreflang="x-default" href="{{ $seoAlternateEn }}">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="{{ config('seo.site_name') }}">
+    <meta property="og:locale" content="{{ $seoLocale === 'ar' ? 'ar_SA' : 'en_US' }}">
+    <meta property="og:title" content="{{ $seoTitle }}">
+    <meta property="og:description" content="{{ $seoDescription }}">
+    <meta property="og:url" content="{{ $seoCanonical }}">
+    <meta property="og:image" content="{{ $seoImage }}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ $seoTitle }}">
+    <meta name="twitter:description" content="{{ $seoDescription }}">
+    <meta name="twitter:image" content="{{ $seoImage }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@400;500;600&display=swap" rel="stylesheet">

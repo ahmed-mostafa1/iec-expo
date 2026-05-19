@@ -18,6 +18,14 @@ $copy = [
 ];
 
 $t = fn(string $key) => $copy[$key][$isAr ? 'ar' : 'en'];
+$seoLocale = $isAr ? 'ar' : 'en';
+$seoPage = config("seo.pages.hall_design.$seoLocale", config('seo.pages.hall_design.en'));
+$seoKeywords = implode(', ', config("seo.keywords.$seoLocale", []));
+$seoBaseUrl = url('/hall-design');
+$seoCanonical = $seoBaseUrl.'?locale='.$seoLocale;
+$seoAlternateEn = $seoBaseUrl.'?locale=en';
+$seoAlternateAr = $seoBaseUrl.'?locale=ar';
+$seoImage = asset(config('seo.image'));
 @endphp
 <!doctype html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="{{ $isAr ? 'rtl' : 'ltr' }}">
@@ -25,7 +33,25 @@ $t = fn(string $key) => $copy[$key][$isAr ? 'ar' : 'en'];
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>{{ $t('title') }}</title>
+  <title>{{ $seoPage['title'] }}</title>
+  <meta name="description" content="{{ $seoPage['description'] }}">
+  <meta name="keywords" content="{{ $seoKeywords }}">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <link rel="canonical" href="{{ $seoCanonical }}">
+  <link rel="alternate" hreflang="en" href="{{ $seoAlternateEn }}">
+  <link rel="alternate" hreflang="ar" href="{{ $seoAlternateAr }}">
+  <link rel="alternate" hreflang="x-default" href="{{ $seoAlternateEn }}">
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="{{ config('seo.site_name') }}">
+  <meta property="og:locale" content="{{ $seoLocale === 'ar' ? 'ar_SA' : 'en_US' }}">
+  <meta property="og:title" content="{{ $seoPage['title'] }}">
+  <meta property="og:description" content="{{ $seoPage['description'] }}">
+  <meta property="og:url" content="{{ $seoCanonical }}">
+  <meta property="og:image" content="{{ $seoImage }}">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="{{ $seoPage['title'] }}">
+  <meta name="twitter:description" content="{{ $seoPage['description'] }}">
+  <meta name="twitter:image" content="{{ $seoImage }}">
   <style>
     body {
       margin: 0;

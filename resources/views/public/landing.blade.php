@@ -1,35 +1,77 @@
+@php
+    $seoLocale = app()->getLocale() === 'ar' ? 'ar' : 'en';
+    $seoPage = config("seo.pages.landing.$seoLocale", config('seo.pages.landing.en'));
+    $seoKeywords = implode(', ', config("seo.keywords.$seoLocale", []));
+    $seoCanonical = route('public.landing', ['locale' => $seoLocale]);
+    $seoAlternateEn = route('public.landing', ['locale' => 'en']);
+    $seoAlternateAr = route('public.landing', ['locale' => 'ar']);
+    $seoImage = asset(config('seo.image'));
+    $seoFocus = config("seo.visible_focus.$seoLocale", config('seo.visible_focus.en'));
+    $seoFocusEn = config('seo.visible_focus.en');
+    $seoFocusAr = config('seo.visible_focus.ar');
+    $eventSchema = [
+        '@context' => 'https://schema.org',
+        '@type' => 'Event',
+        'name' => config('seo.site_name'),
+        'description' => $seoPage['description'],
+        'startDate' => '2026-09-24',
+        'eventAttendanceMode' => 'https://schema.org/OfflineEventAttendanceMode',
+        'eventStatus' => 'https://schema.org/EventScheduled',
+        'url' => $seoCanonical,
+        'image' => [$seoImage],
+        'location' => [
+            '@type' => 'Place',
+            'name' => 'The Arena Riyadh',
+            'address' => [
+                '@type' => 'PostalAddress',
+                'addressLocality' => 'Riyadh',
+                'addressCountry' => 'SA',
+            ],
+        ],
+        'organizer' => [
+            '@type' => 'Organization',
+            'name' => 'Umbrella',
+            'url' => 'https://umbrella.sa',
+        ],
+    ];
+    $websiteSchema = [
+        '@context' => 'https://schema.org',
+        '@type' => 'WebSite',
+        'name' => config('seo.site_name'),
+        'url' => $seoCanonical,
+        'inLanguage' => $seoLocale,
+    ];
+@endphp
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="{{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}">
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>IEC 360 EXPO</title>
-    <title>@yield('title', 'IEC 360 EXPO')</title>
-    <meta name="description" content="@yield('meta_description', 'With unmatched uniqueness and excellence, the IEC EXPO returns for its third edition
-        under the theme IEC 360°. It continues its journey as a comprehensive interactive
-        platform that merges innovation, development, and networking—offering an exceptional
-    experience that unites ambitious minds and industry leaders under one roof')">
+    <title>{{ $seoPage['title'] }}</title>
+    <meta name="description" content="{{ $seoPage['description'] }}">
+    <meta name="keywords" content="{{ $seoKeywords }}">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <link rel="canonical" href="{{ $seoCanonical }}">
+    <link rel="alternate" hreflang="en" href="{{ $seoAlternateEn }}">
+    <link rel="alternate" hreflang="ar" href="{{ $seoAlternateAr }}">
+    <link rel="alternate" hreflang="x-default" href="{{ $seoAlternateEn }}">
 
     <meta property="og:type" content="website">
-    <meta property="og:site_name" content="IEC 360 EXPO">
-    <meta property="og:title" content="@yield('og_title', 'IEC 360 EXPO')">
-    <meta property="og:description" content="@yield('og_description', 'With unmatched uniqueness and excellence, the IEC EXPO returns for its third edition
-        under the theme IEC 360°. It continues its journey as a comprehensive interactive
-        platform that merges innovation, development, and networking—offering an exceptional
-    experience that unites ambitious minds and industry leaders under one roof')">
-    <meta property="og:url" content="{{ url()->current() }}">
-    <meta property="og:image" content="@yield('og_image', asset('img/IEC-logo-nav.png'))">
+    <meta property="og:site_name" content="{{ config('seo.site_name') }}">
+    <meta property="og:locale" content="{{ $seoLocale === 'ar' ? 'ar_SA' : 'en_US' }}">
+    <meta property="og:title" content="{{ $seoPage['title'] }}">
+    <meta property="og:description" content="{{ $seoPage['description'] }}">
+    <meta property="og:url" content="{{ $seoCanonical }}">
+    <meta property="og:image" content="{{ $seoImage }}">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title"
-        content="@yield('twitter_title', trim($__env->yieldContent('title', config('app.name'))))">
-    <meta name="twitter:description" content="@yield('twitter_description', trim($__env->yieldContent('meta_description', 'With unmatched uniqueness and excellence, the IEC EXPO returns for its third edition
-        under the theme IEC 360°. It continues its journey as a comprehensive interactive
-        platform that merges innovation, development, and networking—offering an exceptional
-    experience that unites ambitious minds and industry leaders under one roof')))">
-    <meta name="twitter:image" content="@yield('twitter_image', asset('img/IEC-logo-nav.png'))">
+    <meta name="twitter:title" content="{{ $seoPage['title'] }}">
+    <meta name="twitter:description" content="{{ $seoPage['description'] }}">
+    <meta name="twitter:image" content="{{ $seoImage }}">
+    <script type="application/ld+json">{!! json_encode([$eventSchema, $websiteSchema], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) !!}</script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -1675,6 +1717,31 @@
         justify-content: center;
     }
 
+    .seo-focus-card {
+        max-width: 980px;
+        margin: 0 auto 4rem;
+        padding: 2rem;
+        border: 1px solid rgb(var(--border) / 0.7);
+        border-radius: 1.25rem;
+        background: linear-gradient(135deg, rgb(var(--card) / 0.92), rgb(var(--muted) / 0.88));
+        color: rgb(var(--card-foreground));
+        text-align: center;
+    }
+
+    .seo-focus-title {
+        margin-bottom: 1rem;
+        font-size: clamp(1.5rem, 3vw, 2.25rem);
+        font-weight: 700;
+    }
+
+    .seo-focus-body {
+        max-width: 760px;
+        margin: 0 auto;
+        color: rgb(var(--muted-foreground));
+        font-size: 1.125rem;
+        line-height: 2;
+    }
+
     /* Sponsors Section */
     .sponsors {
         padding: 0px;
@@ -2950,6 +3017,16 @@ experience that unites ambitious minds and industry leaders under one roof"
                             exceptional
                             experience that unites ambitious minds and industry leaders under one roof
                         </p>
+                    </div>
+                </div>
+            </section>
+            <section class="seo-focus" aria-labelledby="seo-focus-title">
+                <div class="container">
+                    <div class="seo-focus-card" data-animate>
+                        <h2 class="seo-focus-title" id="seo-focus-title" data-en="{{ e($seoFocusEn['title']) }}"
+                            data-ar="{{ e($seoFocusAr['title']) }}">{{ $seoFocus['title'] }}</h2>
+                        <p class="seo-focus-body" data-en="{{ e($seoFocusEn['body']) }}"
+                            data-ar="{{ e($seoFocusAr['body']) }}">{{ $seoFocus['body'] }}</p>
                     </div>
                 </div>
             </section>

@@ -22,6 +22,7 @@ use App\Http\Controllers\Public\SponsorRegistrationController;
 use App\Http\Controllers\Public\SponsorShowController as PublicSponsorShowController;
 use App\Http\Controllers\Public\VisitorRegistrationController;
 use App\Models\HallSpaceBooking;
+use App\Models\PublicSponsor as PublicSponsorModel;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -30,6 +31,74 @@ Route::get('/', function () {
 
 Route::get('/analytics', function () {
     return redirect()->route('public.analytics', ['locale' => 'ar'] + request()->query());
+});
+
+Route::get('/robots.txt', function () {
+    return response("User-agent: *\nDisallow:\nSitemap: ".url('/sitemap.xml')."\n", 200)
+        ->header('Content-Type', 'text/plain');
+});
+
+Route::get('/sitemap.xml', function () {
+    $urls = [];
+    $addUrl = function (string $url, ?array $alternates = null) use (&$urls): void {
+        $urls[] = [
+            'loc' => $url,
+            'lastmod' => now()->toDateString(),
+            'alternates' => $alternates ?? [],
+        ];
+    };
+
+    foreach (['en', 'ar'] as $locale) {
+        $addUrl(route('public.landing', ['locale' => $locale]), [
+            'en' => route('public.landing', ['locale' => 'en']),
+            'ar' => route('public.landing', ['locale' => 'ar']),
+        ]);
+        $addUrl(route('public.ed', ['locale' => $locale]), [
+            'en' => route('public.ed', ['locale' => 'en']),
+            'ar' => route('public.ed', ['locale' => 'ar']),
+        ]);
+        $addUrl(route('public.analytics', ['locale' => $locale]), [
+            'en' => route('public.analytics', ['locale' => 'en']),
+            'ar' => route('public.analytics', ['locale' => 'ar']),
+        ]);
+        $addUrl(url('/hall-design').'?locale='.$locale, [
+            'en' => url('/hall-design').'?locale=en',
+            'ar' => url('/hall-design').'?locale=ar',
+        ]);
+    }
+
+    PublicSponsorModel::query()
+        ->where('is_active', true)
+        ->orderBy('display_order')
+        ->get()
+        ->each(function (PublicSponsorModel $sponsor) use ($addUrl): void {
+            foreach (['en', 'ar'] as $locale) {
+                $addUrl(route('public.sponsors.show', ['locale' => $locale, 'sponsor' => $sponsor]), [
+                    'en' => route('public.sponsors.show', ['locale' => 'en', 'sponsor' => $sponsor]),
+                    'ar' => route('public.sponsors.show', ['locale' => 'ar', 'sponsor' => $sponsor]),
+                ]);
+            }
+        });
+
+    $escape = fn (string $value): string => htmlspecialchars($value, ENT_XML1 | ENT_COMPAT, 'UTF-8');
+    $xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
+    $xml .= "<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\" xmlns:xhtml=\"http://www.w3.org/1999/xhtml\">\n";
+
+    foreach ($urls as $entry) {
+        $xml .= "  <url>\n";
+        $xml .= '    <loc>'.$escape($entry['loc'])."</loc>\n";
+        $xml .= '    <lastmod>'.$escape($entry['lastmod'])."</lastmod>\n";
+
+        foreach ($entry['alternates'] as $locale => $alternateUrl) {
+            $xml .= '    <xhtml:link rel="alternate" hreflang="'.$escape($locale).'" href="'.$escape($alternateUrl).'" />'."\n";
+        }
+
+        $xml .= "  </url>\n";
+    }
+
+    $xml .= "</urlset>\n";
+
+    return response($xml, 200)->header('Content-Type', 'application/xml');
 });
 
 Route::view('/contract-form', 'contract-form');

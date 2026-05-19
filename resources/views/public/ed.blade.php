@@ -1,20 +1,39 @@
+@php
+    $seoLocale = app()->getLocale() === 'ar' ? 'ar' : 'en';
+    $seoPage = config("seo.pages.ed.$seoLocale", config('seo.pages.ed.en'));
+    $seoKeywords = implode(', ', config("seo.keywords.$seoLocale", []));
+    $seoCanonical = route('public.ed', ['locale' => $seoLocale]);
+    $seoAlternateEn = route('public.ed', ['locale' => 'en']);
+    $seoAlternateAr = route('public.ed', ['locale' => 'ar']);
+    $seoImage = asset(config('seo.image'));
+@endphp
+
 <!DOCTYPE html>
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="{{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}">
 
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>{{ app()->getLocale() === 'ar' ? 'النسخ السابقة من المعرض' : 'Previous Editions of IEC' }} - IEC 360 EXPO
-    </title>
-    <meta name="description"
-        content="{{ app()->getLocale() === 'ar' ? 'شاهد النسخ السابقة من معرض IEC' : 'Watch previous editions of IEC Expo' }}">
+    <title>{{ $seoPage['title'] }}</title>
+    <meta name="description" content="{{ $seoPage['description'] }}">
+    <meta name="keywords" content="{{ $seoKeywords }}">
+    <meta name="robots" content="index, follow, max-image-preview:large">
+    <link rel="canonical" href="{{ $seoCanonical }}">
+    <link rel="alternate" hreflang="en" href="{{ $seoAlternateEn }}">
+    <link rel="alternate" hreflang="ar" href="{{ $seoAlternateAr }}">
+    <link rel="alternate" hreflang="x-default" href="{{ $seoAlternateEn }}">
 
     <meta property="og:type" content="website">
-    <meta property="og:site_name" content="IEC 360 EXPO">
-    <meta property="og:title"
-        content="{{ app()->getLocale() === 'ar' ? 'النسخ السابقة من المعرض' : 'Previous Editions of IEC' }}">
-    <meta property="og:url" content="{{ url()->current() }}">
-    <meta property="og:image" content="{{ asset('img/IEC-logo-nav.png') }}">
+    <meta property="og:site_name" content="{{ config('seo.site_name') }}">
+    <meta property="og:locale" content="{{ $seoLocale === 'ar' ? 'ar_SA' : 'en_US' }}">
+    <meta property="og:title" content="{{ $seoPage['title'] }}">
+    <meta property="og:description" content="{{ $seoPage['description'] }}">
+    <meta property="og:url" content="{{ $seoCanonical }}">
+    <meta property="og:image" content="{{ $seoImage }}">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="{{ $seoPage['title'] }}">
+    <meta name="twitter:description" content="{{ $seoPage['description'] }}">
+    <meta name="twitter:image" content="{{ $seoImage }}">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
