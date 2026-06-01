@@ -272,7 +272,7 @@ $seoImage = asset(config('seo.image'));
     let SCALE_Y = MAP_HEIGHT / BASE_HEIGHT;
     const X_SCALE = 4.7034;
     const X_OFFSET = -937.5;
-    const Y_OFFSET = -42;
+    const Y_OFFSET = -9;
     let useCalibrationCoords = false;
     overlay.setAttribute("viewBox", `0 0 ${MAP_WIDTH} ${MAP_HEIGHT}`);
     const selectedSpaceEl = document.getElementById("selectedSpace");
@@ -480,12 +480,12 @@ $seoImage = asset(config('seo.image'));
         x0: 1140
       });
 
-      // CZ zones — coordinates in SVG viewBox space (5891 × 10574)
+      // CZ zones — pixel-measured from hall-design-v2.png (SVG viewBox 5891 × 10574)
       [
-        { name: "CZ1", x: 4579, y: 197, w: 704, h: 677 },
-        { name: "CZ2", x: 5243, y: 845, w: 631, h: 649 },
-        { name: "CZ3", x: 704,  y: 169, w: 648, h: 705 },
-        { name: "CZ4", x: 56,   y: 676, w: 648, h: 677 },
+        { name: "CZ1", x: 4790, y: 179, w: 390, h: 516 },
+        { name: "CZ2", x: 5260, y: 179, w: 495, h: 703 },
+        { name: "CZ3", x: 705,  y: 179, w: 385, h: 516 },
+        { name: "CZ4", x: 130,  y: 179, w: 495, h: 703 },
       ].forEach(zone => addDirectHitbox(zone));
     }
 
