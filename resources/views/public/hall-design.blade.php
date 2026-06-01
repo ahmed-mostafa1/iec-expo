@@ -244,7 +244,7 @@ $seoImage = asset(config('seo.image'));
 
       <div id="plan" class="plan">
         <img src="{{ asset('img/hall-design-v2.png') }}" alt="Hall Layout" width="5891" height="10574" decoding="async">
-        <svg id="overlay" class="overlay" viewBox="0 0 3490 6294" preserveAspectRatio="xMidYMid meet"></svg>
+        <svg id="overlay" class="overlay" viewBox="0 0 5891 10574" preserveAspectRatio="xMidYMid meet"></svg>
       </div>
     </div>
   </div>
@@ -266,13 +266,13 @@ $seoImage = asset(config('seo.image'));
     const mapImage = document.querySelector("#plan img");
     const CALIBRATION_URL = "{{ asset('hall-calibration.json') }}";
     const HAS_CALIBRATION_FILE = @json($hasCalibrationFile);
-    const BASE_HEIGHT = 2339;
+    const BASE_HEIGHT = 2314;
     let MAP_WIDTH = 5891;
     let MAP_HEIGHT = 10574;
     let SCALE_Y = MAP_HEIGHT / BASE_HEIGHT;
     const X_SCALE = 4.7034;
     const X_OFFSET = -937.5;
-    const Y_OFFSET = -9;
+    const Y_OFFSET = -27;
     let useCalibrationCoords = false;
     overlay.setAttribute("viewBox", `0 0 ${MAP_WIDTH} ${MAP_HEIGHT}`);
     const selectedSpaceEl = document.getElementById("selectedSpace");
