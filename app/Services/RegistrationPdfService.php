@@ -44,7 +44,10 @@ class RegistrationPdfService
     public function generateIconPdf(IconRegistration $registration): string
     {
         $path = "registrations/icons/{$registration->id}.pdf";
-        $templatePath = $this->resolveTemplatePath($this->sharedTemplatePaths());
+        $isZoneSpace = (bool) preg_match('/^CZ\d+$/i', (string) ($registration->location_selection ?? ''));
+        $templatePath = $this->resolveTemplatePath(
+            $isZoneSpace ? $this->zoneTemplatePaths() : $this->sharedTemplatePaths()
+        );
 
         return $this->generateContractPdf($templatePath, [
             'organization' => (string) ($registration->organization ?? ''),
@@ -358,6 +361,15 @@ class RegistrationPdfService
         return [
             ...$this->configuredTemplatePaths('shared'),
             ...$this->templatePathsFor('contract-v2.docx'),
+        ];
+    }
+
+    protected function zoneTemplatePaths(): array
+    {
+        return [
+            ...$this->configuredTemplatePaths('zone'),
+            ...$this->templatePathsFor('zone-contract.docx'),
+            ...$this->sharedTemplatePaths(),
         ];
     }
 
