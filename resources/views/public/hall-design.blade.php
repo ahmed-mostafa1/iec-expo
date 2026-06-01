@@ -243,7 +243,7 @@ $seoImage = asset(config('seo.image'));
       </div>
 
       <div id="plan" class="plan">
-        <img src="{{ asset('img/hall-design.png') }}" alt="Hall Layout" width="3490" height="6294" decoding="async">
+        <img src="{{ asset('img/hall-design-v2.png') }}" alt="Hall Layout" width="5891" height="10574" decoding="async">
         <svg id="overlay" class="overlay" viewBox="0 0 3490 6294" preserveAspectRatio="xMidYMid meet"></svg>
       </div>
     </div>
@@ -267,12 +267,12 @@ $seoImage = asset(config('seo.image'));
     const CALIBRATION_URL = "{{ asset('hall-calibration.json') }}";
     const HAS_CALIBRATION_FILE = @json($hasCalibrationFile);
     const BASE_HEIGHT = 2339;
-    let MAP_WIDTH = 3490;
-    let MAP_HEIGHT = 6294;
+    let MAP_WIDTH = 5891;
+    let MAP_HEIGHT = 10574;
     let SCALE_Y = MAP_HEIGHT / BASE_HEIGHT;
-    const X_SCALE = 2.7866;
-    const X_OFFSET = -555.3;
-    const Y_OFFSET = -25;
+    const X_SCALE = 4.7034;
+    const X_OFFSET = -937.5;
+    const Y_OFFSET = -42;
     let useCalibrationCoords = false;
     overlay.setAttribute("viewBox", `0 0 ${MAP_WIDTH} ${MAP_HEIGHT}`);
     const selectedSpaceEl = document.getElementById("selectedSpace");
@@ -374,6 +374,23 @@ $seoImage = asset(config('seo.image'));
       return r;
     }
 
+    function addDirectHitbox({ name, x, y, w, h }) {
+      const isOccupied = occupiedSpaces.has(name);
+      const classes = ["hitbox"];
+      if (isOccupied) classes.push("occupied");
+      const r = svgEl("rect", {
+        x, y, width: w, height: h,
+        class: classes.join(" "),
+        "data-name": name
+      });
+      if (!isOccupied) {
+        r.addEventListener("click", () => selectSpace(name, r));
+      } else {
+        r.style.pointerEvents = 'none';
+      }
+      return r;
+    }
+
     function generateAisle({
       prefix,
       lowStart,
@@ -462,6 +479,15 @@ $seoImage = asset(config('seo.image'));
         lowOnRight: false,
         x0: 1140
       });
+
+      // CZ zones — coordinates in SVG viewBox space (5891 × 10574)
+      // These are estimates; fine-tune via hall-calibration.json if needed
+      [
+        { name: "CZ1", x: 200,  y: 185, w: 660, h: 590  },
+        { name: "CZ2", x: 5031, y: 185, w: 660, h: 590  },
+        { name: "CZ3", x: 5335, y: 835, w: 480, h: 1675 },
+        { name: "CZ4", x: 76,   y: 835, w: 480, h: 1675 },
+      ].forEach(zone => addDirectHitbox(zone));
     }
 
     async function initOverlay() {

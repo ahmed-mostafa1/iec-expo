@@ -27,7 +27,7 @@ class HallSpaceBookingController extends Controller
     public function store(Request $request)
     {
         $validated = $request->validate([
-            'space' => ['required', 'string', 'max:50', 'regex:/^(L\\.W\\.\\d+|R\\.W\\.\\d+)$/i'],
+            'space' => ['required', 'string', 'max:50', 'regex:/^(L\\.W\\.\\d+|R\\.W\\.\\d+|CZ\\d+)$/i'],
             'note' => ['nullable', 'string', 'max:255'],
         ]);
 

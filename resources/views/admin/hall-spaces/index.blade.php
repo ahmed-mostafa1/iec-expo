@@ -46,10 +46,10 @@
                 @csrf
                 <div class="md:col-span-2">
                     <label class="text-s font-semibold text-gray-500 uppercase">{{ __('Space code') }}</label>
-                    <input type="text" name="space" value="{{ old('space') }}" placeholder="L.W.12"
+                    <input type="text" name="space" value="{{ old('space') }}" placeholder="L.W.12 or CZ1"
                         class="mt-1 w-full rounded-lg border-gray-200 text-sm uppercase"
-                        pattern="(L\.W\.\d+|R\.W\.\d+)" required>
-                    <p class="text-xs text-gray-400 mt-1">{{ __('Format: L.W.{number} or R.W.{number}') }}</p>
+                        pattern="(L\.W\.\d+|R\.W\.\d+|CZ\d+)" required>
+                    <p class="text-xs text-gray-400 mt-1">{{ __('Format: L.W.{number}, R.W.{number}, or CZ{number}') }}</p>
                 </div>
                 <div class="md:col-span-2">
                     <label class="text-s font-semibold text-gray-500 uppercase">{{ __('Note (optional)') }}</label>
