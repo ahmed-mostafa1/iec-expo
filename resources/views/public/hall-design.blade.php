@@ -483,9 +483,9 @@ $seoImage = asset(config('seo.image'));
       // CZ zones — pixel-measured from hall-design-v2.png (SVG viewBox 5891 × 10574)
       [
         { name: "CZ1", x: 4705, y: 179, w: 375, h: 516 },
-        { name: "CZ2", x: 5265, y: 179, w: 375, h: 703 },
+        { name: "CZ2", x: 5265, y: 366, w: 375, h: 516 },
         { name: "CZ3", x: 810,  y: 179, w: 375, h: 516 },
-        { name: "CZ4", x: 250,  y: 179, w: 375, h: 703 },
+        { name: "CZ4", x: 250,  y: 366, w: 375, h: 516 },
       ].forEach(zone => addDirectHitbox(zone));
     }
 
