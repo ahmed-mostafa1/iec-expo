@@ -481,12 +481,11 @@ $seoImage = asset(config('seo.image'));
       });
 
       // CZ zones — coordinates in SVG viewBox space (5891 × 10574)
-      // These are estimates; fine-tune via hall-calibration.json if needed
       [
-        { name: "CZ1", x: 200,  y: 185, w: 660, h: 590  },
-        { name: "CZ2", x: 5031, y: 185, w: 660, h: 590  },
-        { name: "CZ3", x: 5335, y: 835, w: 480, h: 1675 },
-        { name: "CZ4", x: 76,   y: 835, w: 480, h: 1675 },
+        { name: "CZ1", x: 4579, y: 197, w: 704, h: 677 },
+        { name: "CZ2", x: 5243, y: 845, w: 631, h: 649 },
+        { name: "CZ3", x: 704,  y: 169, w: 648, h: 705 },
+        { name: "CZ4", x: 56,   y: 676, w: 648, h: 677 },
       ].forEach(zone => addDirectHitbox(zone));
     }
 
