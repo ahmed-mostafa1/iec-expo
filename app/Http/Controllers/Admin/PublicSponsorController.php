@@ -18,6 +18,7 @@ class PublicSponsorController extends Controller
         'technology' => 'Technology Sponsor',
         'safety-security' => 'Safety and Security Sponsor',
         'gold' => 'Gold Sponsor',
+        'coffee-lounge' => 'Coffee Lounge',
         'other' => 'Other Sponsor',
     ];
 

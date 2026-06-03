@@ -4457,6 +4457,26 @@ experience that unites ambitious minds and industry leaders under one roof"
                         </div>
                         @endif
 
+                        <!-- COFFEE LOUNGE -->
+                        @if(!empty($sponsorGroups['coffee-lounge']) && $sponsorGroups['coffee-lounge']['sponsors']->isNotEmpty())
+                        <div class="sponsor-tier">
+                            <h2 class="sponsor-tier-title" data-en="{{ $sponsorGroups['coffee-lounge']['title']['en'] }}"
+                                data-ar="{{ $sponsorGroups['coffee-lounge']['title']['ar'] }}">
+                                {{ strtoupper($sponsorGroups['coffee-lounge']['title']['en']) }}
+                            </h2>
+                            <div class="participants-grid">
+                                @foreach($sponsorGroups['coffee-lounge']['sponsors'] as $sponsor)
+                                <article class="participant-card" data-animate>
+                                    <div class="participant-logo">
+                                        <img src="{{ $sponsor->logo_path ? asset('storage/' . $sponsor->logo_path) : asset('img/placeholder-img.png') }}"
+                                            alt="{{ $sponsor->getLocalizedName($locale) }}">
+                                    </div>
+                                </article>
+                                @endforeach
+                            </div>
+                        </div>
+                        @endif
+
                     </div>
                 </div>
             </section>
@@ -5121,18 +5141,11 @@ experience that unites ambitious minds and industry leaders under one roof"
 
     let hallSelectionTargetId = null;
 
-    // TODO: open hall design in a relative path after uploading to the server
     function openHallDesign(targetInputId) {
         hallSelectionTargetId = targetInputId;
         const localeSuffix = currentLocale ? `?locale=${encodeURIComponent(currentLocale)}` : '';
-        window.open((window.APP_BASE_PATH || '') + '/iec360/hall-design' + localeSuffix, '_blank');
+        window.open((window.APP_BASE_PATH || '') + '/hall-design' + localeSuffix, '_blank');
     }
-    // TODO: uncomment this after uploading
-    // function openHallDesign(targetInputId) {
-    //   hallSelectionTargetId = targetInputId;
-    //   const localeSuffix = currentLocale ? `?locale=${encodeURIComponent(currentLocale)}` : '';
-    //   window.open('/hall-design' + localeSuffix, '_blank');
-    // }
 
 
 

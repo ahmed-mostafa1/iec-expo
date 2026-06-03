@@ -99,6 +99,7 @@ class LandingPageController extends Controller
             'technology' => ['en' => 'Technology', 'ar' => 'التكنولوجي'],
             'safety-security' => ['en' => 'Security', 'ar' => 'الأمني'],
             'gold' => ['en' => 'Gold', 'ar' => 'الذهبي'],
+            'coffee-lounge' => ['en' => 'Coffee Lounge', 'ar' => 'كوفي لاونج'],
             'other' => ['en' => 'Sponsors', 'ar' => 'الرعاة'],
         ];
 
