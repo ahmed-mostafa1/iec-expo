@@ -4700,6 +4700,40 @@ experience that unites ambitious minds and industry leaders under one roof"
                                             </div>
                                         </div>
                                     </div>
+                                    <!-- snapchat and x -->
+                                    <div class="contact-info-header">
+                                        <div style="flex: 1;">
+                                            <div class="contact-info-links two-columns">
+                                                <div class="contact-info-column">
+                                                    <a href="https://www.snapchat.com/add/iec360_expo"
+                                                        class="contact-info-link"><img class="icon icon-lg"
+                                                            src="{{ asset('img/svg/snapchat.svg') }}">Iec360_expo </a>
+                                                </div>
+                                                <div class="contact-info-column">
+                                                    <a href="https://x.com/iec360expo_?s=21&t=iGZAEwWtbPUSNp4pkiKuGA"
+                                                        class="contact-info-link"><img class="icon icon-lg"
+                                                            src="{{ asset('img/svg/x.svg') }}">@iec360expo_ </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- youtube and linkedin -->
+                                    <div class="contact-info-header">
+                                        <div style="flex: 1;">
+                                            <div class="contact-info-links two-columns">
+                                                <div class="contact-info-column">
+                                                    <a href="https://youtube.com/@iec360expo?si=p2vvjSIvLwd78adw"
+                                                        class="contact-info-link"><img class="icon icon-lg"
+                                                            src="{{ asset('img/svg/youtube.svg') }}">@iec360expo </a>
+                                                </div>
+                                                <div class="contact-info-column">
+                                                    <a href="https://www.linkedin.com/company/iec360/"
+                                                        class="contact-info-link"><img class="icon icon-lg"
+                                                            src="{{ asset('img/svg/linkedin.svg') }}">IEC360°EXPO </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
