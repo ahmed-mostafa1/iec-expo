@@ -4662,6 +4662,11 @@ experience that unites ambitious minds and industry leaders under one roof"
                                                             class="ltr-text">&#x200E;+966546608557</span>
                                                     </a>
                                                 </div>
+                                                <div class="contact-info-column">
+                                                    <a href="https://www.linkedin.com/company/iec360/"
+                                                        class="contact-info-link"><img class="icon icon-lg"
+                                                            src="{{ asset('img/svg/linkedin.svg') }}">IEC360°EXPO </a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -4717,7 +4722,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                                             </div>
                                         </div>
                                     </div>
-                                    <!-- youtube and linkedin -->
+                                    <!-- youtube -->
                                     <div class="contact-info-header">
                                         <div style="flex: 1;">
                                             <div class="contact-info-links two-columns">
@@ -4725,11 +4730,6 @@ experience that unites ambitious minds and industry leaders under one roof"
                                                     <a href="https://youtube.com/@iec360expo?si=p2vvjSIvLwd78adw"
                                                         class="contact-info-link"><img class="icon icon-lg"
                                                             src="{{ asset('img/svg/youtube.svg') }}">@iec360expo </a>
-                                                </div>
-                                                <div class="contact-info-column">
-                                                    <a href="https://www.linkedin.com/company/iec360/"
-                                                        class="contact-info-link"><img class="icon icon-lg"
-                                                            src="{{ asset('img/svg/linkedin.svg') }}">IEC360°EXPO </a>
                                                 </div>
                                             </div>
                                         </div>
