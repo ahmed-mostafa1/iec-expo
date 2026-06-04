@@ -2807,6 +2807,7 @@
     @media (max-width: 600px) {
         .contact-info-card .contact-info-links.two-columns {
             grid-template-columns: 1fr;
+            row-gap: 2.5rem;
         }
     }
 
@@ -4650,88 +4651,21 @@ experience that unites ambitious minds and industry leaders under one roof"
 
                         <div class="contact-col" data-animate>
                             <div class="contact-info-list">
-                                <div class="contact-info-card">
-                                    <!-- arabic support -->
-                                    <div class="contact-info-header">
-                                        <div style="flex: 1;">
-                                            <div class="contact-info-links two-columns">
-                                                <div class="contact-info-column">
-                                                    <a href="tel:+966546608557" class="contact-info-link"><img
-                                                            class="icon icon-lg"
-                                                            src="{{ asset('img/svg/telephone.svg') }}"> <span
-                                                            class="ltr-text">&#x200E;+966546608557</span>
-                                                    </a>
-                                                </div>
-                                                <div class="contact-info-column">
-                                                    <a href="https://www.linkedin.com/company/iec360/"
-                                                        class="contact-info-link"><img class="icon icon-lg"
-                                                            src="{{ asset('img/svg/linkedin.svg') }}">IEC360°EXPO </a>
-                                                </div>
-                                            </div>
+                                <div class="contact-info-card" style="padding: 2.5rem 2rem;">
+                                    <div class="contact-info-links two-columns" style="align-items: start;">
+                                        <!-- Column 1 -->
+                                        <div class="contact-info-column" style="flex-direction: column; line-height: normal; gap: 2.5rem;">
+                                            <a href="tel:+966546608557" class="contact-info-link"><img class="icon icon-lg" src="{{ asset('img/svg/telephone.svg') }}"><span class="ltr-text">&#x200E;+966546608557</span></a>
+                                            <a href="mailto:iec360@umbrella.sa" class="contact-info-link"><img class="icon icon-lg" src="{{ asset('img/svg/email.svg') }}" alt="Email">iec360@umbrella.sa</a>
+                                            <a href="https://www.instagram.com/iec360expo" class="contact-info-link"><img class="icon icon-lg" src="{{ asset('img/svg/instagram.svg') }}">iec360expo</a>
+                                            <a href="https://www.snapchat.com/add/iec360_expo" class="contact-info-link"><img class="icon icon-lg" src="{{ asset('img/svg/snapchat.svg') }}">Iec360_expo</a>
                                         </div>
-                                    </div>
-                                    <!-- website and email -->
-                                    <div class="contact-info-header">
-                                        <div style="flex: 1;">
-                                            <div class="contact-info-links two-columns">
-                                                <div class="contact-info-column">
-                                                    <a href="https://umbrella.sa/iec360/" class="contact-info-link"><img
-                                                            class="icon icon-lg"
-                                                            src="{{ asset('img/svg/internet.svg') }}">umbrella.sa/iec360
-                                                    </a>
-                                                </div>
-                                                <div class="contact-info-column">
-                                                    <a href="mailto:iec360@umbrella.sa" class="contact-info-link"><img
-                                                            class="icon icon-lg" src="{{ asset('img/svg/email.svg') }}"
-                                                            alt="Email"> iec360@umbrella.sa </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- social -->
-                                    <div class="contact-info-header">
-                                        <div style="flex: 1;">
-                                            <div class="contact-info-links two-columns">
-                                                <div class="contact-info-column">
-                                                    <a href="https://www.instagram.com/iec360expo"
-                                                        class="contact-info-link"><img class="icon icon-lg"
-                                                            src="{{ asset('img/svg/instagram.svg') }}">iec360expo </a>
-                                                </div>
-                                                <div class="contact-info-column">
-                                                    <a href="https://www.tiktok.com/@iec360expo"
-                                                        class="contact-info-link"><img class="icon icon-lg"
-                                                            src="{{ asset('img/svg/tiktok.svg') }}">iec360expo </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- snapchat and x -->
-                                    <div class="contact-info-header">
-                                        <div style="flex: 1;">
-                                            <div class="contact-info-links two-columns">
-                                                <div class="contact-info-column">
-                                                    <a href="https://www.snapchat.com/add/iec360_expo"
-                                                        class="contact-info-link"><img class="icon icon-lg"
-                                                            src="{{ asset('img/svg/snapchat.svg') }}">Iec360_expo </a>
-                                                </div>
-                                                <div class="contact-info-column">
-                                                    <a href="https://x.com/iec360expo_?s=21&t=iGZAEwWtbPUSNp4pkiKuGA"
-                                                        class="contact-info-link"><img class="icon icon-lg"
-                                                            src="{{ asset('img/svg/x.svg') }}">@iec360expo_ </a>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- youtube -->
-                                    <div class="contact-info-header">
-                                        <div style="flex: 1;">
-                                            <div class="contact-info-links two-columns">
-                                                <div class="contact-info-column">
-                                                    <a href="https://youtube.com/@iec360expo?si=p2vvjSIvLwd78adw"
-                                                        class="contact-info-link"><img class="icon icon-lg"
-                                                            src="{{ asset('img/svg/youtube.svg') }}">@iec360expo </a>
-                                                </div>
-                                            </div>
+                                        <!-- Column 2 -->
+                                        <div class="contact-info-column" style="flex-direction: column; line-height: normal; gap: 2.5rem;">
+                                            <a href="https://www.linkedin.com/company/iec360/" class="contact-info-link"><img class="icon icon-lg" src="{{ asset('img/svg/linkedin.svg') }}">IEC360°EXPO</a>
+                                            <a href="https://www.tiktok.com/@iec360expo" class="contact-info-link"><img class="icon icon-lg" src="{{ asset('img/svg/tiktok.svg') }}">iec360expo</a>
+                                            <a href="https://x.com/iec360expo_?s=21&t=iGZAEwWtbPUSNp4pkiKuGA" class="contact-info-link"><img class="icon icon-lg" src="{{ asset('img/svg/x.svg') }}">@iec360expo_</a>
+                                            <a href="https://youtube.com/@iec360expo?si=p2vvjSIvLwd78adw" class="contact-info-link"><img class="icon icon-lg" src="{{ asset('img/svg/youtube.svg') }}">@iec360expo</a>
                                         </div>
                                     </div>
                                 </div>
