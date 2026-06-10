@@ -3021,7 +3021,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                     </div>
                 </div>
             </section>
-            <section class="seo-focus" aria-labelledby="seo-focus-title">
+            <section class="seo-focus" aria-labelledby="seo-focus-title" style="display: none;">
                 <div class="container">
                     <div class="seo-focus-card" data-animate>
                         <h2 class="seo-focus-title" id="seo-focus-title" data-en="{{ e($seoFocusEn['title']) }}"
