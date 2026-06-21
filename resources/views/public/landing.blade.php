@@ -3915,7 +3915,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                                 <h3 class="role-title" data-en="{{ e($iconPlusCardTitle['en']) }}"
                                     data-ar="{{ e($iconPlusCardTitle['ar']) }}">{{ $iconPlusCardTitle['text'] }}</h3>
                                 <div class="role-cta" id="icon-plus-cta">
-                                    <span data-en="Click" data-ar="Ø¥Ø¶ØºØ·">Click</span>
+                                    <span data-en="Click" data-ar="اضغط">Click</span>
                                     <svg class="icon icon-sm" viewBox="0 0 24 24">
                                         <path d="M5 12h14M12 5l7 7-7 7" />
                                     </svg>
