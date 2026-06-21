@@ -147,11 +147,53 @@ $seoImage = asset(config('seo.image'));
       stroke-width: 3;
     }
 
+    .hitbox.icon-plus-space {
+      fill: rgba(234, 179, 8, 0.16);
+      stroke: rgba(202, 138, 4, 0.95);
+      stroke-width: 3;
+    }
+
+    .hitbox.icon-plus-space:hover,
+    .hitbox.icon-plus-space.selected {
+      fill: rgba(234, 179, 8, 0.28);
+      stroke: rgba(180, 83, 9, 1);
+      stroke-width: 4;
+    }
+
     .hitbox.occupied {
       fill: rgba(239, 68, 68, 0.35);
       stroke: rgba(220, 38, 38, 0.95);
       stroke-width: 3;
       cursor: not-allowed;
+    }
+
+    .hitbox.icon-plus-reserved {
+      fill: rgba(234, 179, 8, 0.12);
+      stroke: rgba(202, 138, 4, 0.95);
+      stroke-width: 3;
+      cursor: not-allowed;
+    }
+
+    .hitbox.icon-plus-booked {
+      fill: rgba(234, 179, 8, 0.35);
+      stroke: rgba(202, 138, 4, 0.95);
+      stroke-width: 3;
+      cursor: not-allowed;
+    }
+
+    .hitbox.unavailable {
+      fill: rgba(107, 114, 128, 0.2);
+      stroke: rgba(107, 114, 128, 0.7);
+      stroke-width: 2;
+      cursor: not-allowed;
+    }
+
+    .crown-marker {
+      fill: #92400e;
+      font-size: 52px;
+      font-weight: 800;
+      pointer-events: none;
+      text-shadow: 0 1px 2px rgba(255, 255, 255, 0.75);
     }
 
     .debug .hitbox {
@@ -282,6 +324,8 @@ $seoImage = asset(config('seo.image'));
     const confirmSelectionBtn = document.getElementById("confirmSelection");
     const cancelConfirmBtn = document.getElementById("cancelConfirm");
     const occupiedSpaces = new Set(@json($occupiedSpaces ?? []));
+    const iconPlusSpaces = new Set(@json($iconPlusSpaces ?? []));
+    const bookingTarget = @json($target ?? 'icon');
 
     let selectedEl = null;
     let pendingSpace = null;
@@ -335,7 +379,7 @@ $seoImage = asset(config('seo.image'));
 
       const params = new URLSearchParams(window.location.search || '');
       const locale = params.get('locale') || 'en';
-      const landingUrl = `/${encodeURIComponent(locale)}?hall_space=${encodeURIComponent(pendingSpace)}&hall_target=icon`;
+      const landingUrl = `/${encodeURIComponent(locale)}?hall_space=${encodeURIComponent(pendingSpace)}&hall_target=${encodeURIComponent(bookingTarget)}`;
       window.location.assign(landingUrl);
     });
 
@@ -354,8 +398,19 @@ $seoImage = asset(config('seo.image'));
       const scaledW = useCalibrationCoords ? w : w * X_SCALE;
       const scaledH = useCalibrationCoords ? h : h * SCALE_Y;
       const isOccupied = occupiedSpaces.has(name);
+      const isIconPlusSpace = iconPlusSpaces.has(name);
+      const isSelectable = !isOccupied && (bookingTarget === 'icon-plus' ? isIconPlusSpace : !isIconPlusSpace);
       const classes = ["hitbox"];
-      if (isOccupied) {
+      if (isIconPlusSpace && bookingTarget === 'icon-plus' && !isOccupied) {
+        classes.push("icon-plus-space");
+      }
+      if (isIconPlusSpace && isOccupied) {
+        classes.push("icon-plus-booked");
+      } else if (isIconPlusSpace && bookingTarget !== 'icon-plus') {
+        classes.push("icon-plus-reserved");
+      } else if (!isIconPlusSpace && bookingTarget === 'icon-plus') {
+        classes.push("unavailable");
+      } else if (isOccupied) {
         classes.push("occupied");
       }
       const r = svgEl("rect", {
@@ -366,7 +421,10 @@ $seoImage = asset(config('seo.image'));
         class: classes.join(" "),
         "data-name": name
       });
-      if (!isOccupied) {
+      if (isIconPlusSpace) {
+        addCrownMarker(scaledX, scaledY, scaledW, scaledH);
+      }
+      if (isSelectable) {
         r.addEventListener("click", () => selectSpace(name, r));
       } else {
         r.style.pointerEvents = 'none';
@@ -376,19 +434,45 @@ $seoImage = asset(config('seo.image'));
 
     function addDirectHitbox({ name, x, y, w, h }) {
       const isOccupied = occupiedSpaces.has(name);
+      const isIconPlusSpace = iconPlusSpaces.has(name);
+      const isSelectable = !isOccupied && (bookingTarget === 'icon-plus' ? isIconPlusSpace : !isIconPlusSpace);
       const classes = ["hitbox"];
-      if (isOccupied) classes.push("occupied");
+      if (isIconPlusSpace && bookingTarget === 'icon-plus' && !isOccupied) {
+        classes.push("icon-plus-space");
+      }
+      if (isIconPlusSpace && isOccupied) {
+        classes.push("icon-plus-booked");
+      } else if (isIconPlusSpace && bookingTarget !== 'icon-plus') {
+        classes.push("icon-plus-reserved");
+      } else if (!isIconPlusSpace && bookingTarget === 'icon-plus') {
+        classes.push("unavailable");
+      } else if (isOccupied) {
+        classes.push("occupied");
+      }
       const r = svgEl("rect", {
         x, y, width: w, height: h,
         class: classes.join(" "),
         "data-name": name
       });
-      if (!isOccupied) {
+      if (isIconPlusSpace) {
+        addCrownMarker(x, y, w, h);
+      }
+      if (isSelectable) {
         r.addEventListener("click", () => selectSpace(name, r));
       } else {
         r.style.pointerEvents = 'none';
       }
       return r;
+    }
+
+    function addCrownMarker(x, y, w, h) {
+      const marker = svgEl("text", {
+        x: x + (w / 2),
+        y: y + (h / 2) + 17,
+        class: "crown-marker",
+        "text-anchor": "middle"
+      });
+      marker.textContent = "♛";
     }
 
     function generateAisle({
