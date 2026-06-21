@@ -51,8 +51,8 @@ class RegistrationFormLocalizationTest extends TestCase
         $response->assertOk();
         $response->assertSee('data-ar="أيكون بلس"', false);
         $response->assertSee('data-ar="تسجيل أيكون بلس"', false);
-        $response->assertSee('data-ar="تفاصيل الشركة"', false);
-        $response->assertDontSee('Ø£ÙŠÙƒÙˆÙ† Ø¨Ù„Ø³', false);
+        $response->assertSee('data-ar="الاسم الكامل *"', false);
+        $response->assertDontSee('data-ar="اضغط"', false);
     }
 
     public function test_arabic_landing_page_repairs_saved_icon_plus_mojibake_copy(): void

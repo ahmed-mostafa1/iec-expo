@@ -108,7 +108,9 @@ class LandingSection extends Model
                 continue;
             }
 
-            $content[$key] = is_string($defaults[$key] ?? null) ? $defaults[$key] : $value;
+            $content[$key] = is_string($defaults[$key] ?? null)
+                ? $defaults[$key]
+                : $this->decodeArabicMojibake($value);
         }
 
         return $content;
@@ -118,6 +120,13 @@ class LandingSection extends Model
     {
         return preg_match('/[ØÙÃÂ]/u', $value) === 1
             && preg_match('/\p{Arabic}/u', $value) !== 1;
+    }
+
+    private function decodeArabicMojibake(string $value): string
+    {
+        $decoded = mb_convert_encoding($value, 'Windows-1252', 'UTF-8');
+
+        return preg_match('/\p{Arabic}/u', $decoded) === 1 ? $decoded : $value;
     }
 
     public static function mediaUrl(?string $path): ?string
