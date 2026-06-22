@@ -1302,6 +1302,22 @@ $websiteSchema = [
         opacity: 0.6;
     }
 
+    #icon-plus-card {
+        order: 3;
+    }
+
+    #icon-plus-form {
+        order: 4;
+    }
+
+    #icon-card {
+        order: 6;
+    }
+
+    #icon-form {
+        order: 7;
+    }
+
     .role-icon {
         width: 80px;
         /* height: 80px; */
@@ -3574,7 +3590,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                                 </form>
                             </div>
 
-                            <div class="role-card" id="icon-card" onclick="selectRole('icon')">
+                            <div class="role-card guest-card" id="icon-card" onclick="selectRole('icon')">
                                 <div class="role-icon">
                                     <svg class="icon icon-lg" viewBox="0 0 24 24">
                                         <path
@@ -3591,7 +3607,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                                 </div>
                             </div>
 
-                            <div class="form-card" id="icon-form">
+                            <div class="form-card guest-form" id="icon-form">
 
                                 @if (session('icon_success'))
                                 <div
@@ -3905,7 +3921,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                                     </div>
                                 </form>
                             </div>
-                            <div class="role-card guest-card" id="icon-plus-card" onclick="selectRole('icon-plus')">
+                            <div class="role-card" id="icon-plus-card" onclick="selectRole('icon-plus')">
                                 <div class="role-icon">
                                     <svg class="icon icon-lg" viewBox="0 0 24 24">
                                         <path d="m2 4 3 12h14l3-12-6 7-4-8-4 8-6-7Z" />
@@ -3922,7 +3938,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                                 </div>
                             </div>
 
-                            <div class="form-card guest-form" id="icon-plus-form">
+                            <div class="form-card" id="icon-plus-form">
                                 @if (session('icon_plus_success'))
                                 <div
                                     class="mb-4 rounded-lg border border-emerald-100 bg-emerald-50 px-3 py-2 text-sm text-emerald-900">
@@ -5341,11 +5357,11 @@ experience that unites ambitious minds and industry leaders under one roof"
             if (sponsorLogo) sponsorLogo.style.order = '0';
             exhibitorCard.style.order = '1';
             exhibitorForm.style.order = '2';
-            iconCard.style.order = '3';
-            iconForm.style.order = '4';
+            iconPlusCard.style.order = '3';
+            iconPlusForm.style.order = '4';
             if (guestLogo) guestLogo.style.order = '5';
-            iconPlusCard.style.order = '6';
-            iconPlusForm.style.order = '7';
+            iconCard.style.order = '6';
+            iconForm.style.order = '7';
         };
 
         setBaseOrder();
@@ -5386,7 +5402,7 @@ experience that unites ambitious minds and industry leaders under one roof"
         const roleCards = document.getElementById('role-cards');
         roleCards.classList.add('has-selection');
         roleCards.classList.add('hide-cards');
-        roleCards.classList.toggle('guest-selected', role === 'icon-plus');
+        roleCards.classList.toggle('guest-selected', role === 'icon');
 
         const guestLogo = document.getElementById('guest-row-logo');
         if (guestLogo && role) {

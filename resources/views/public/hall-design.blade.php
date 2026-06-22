@@ -189,11 +189,13 @@ $seoImage = asset(config('seo.image'));
     }
 
     .crown-marker {
-      fill: #92400e;
-      font-size: 52px;
-      font-weight: 800;
+      fill: none;
+      stroke: #d4af37;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-width: 2;
       pointer-events: none;
-      text-shadow: 0 1px 2px rgba(255, 255, 255, 0.75);
+      filter: drop-shadow(0 1px 2px rgba(255, 255, 255, 0.85));
     }
 
     .debug .hitbox {
@@ -466,13 +468,17 @@ $seoImage = asset(config('seo.image'));
     }
 
     function addCrownMarker(x, y, w, h) {
-      const marker = svgEl("text", {
-        x: x + (w / 2),
-        y: y + (h / 2) + 17,
+      const markerSize = 72;
+      const marker = svgEl("g", {
         class: "crown-marker",
-        "text-anchor": "middle"
+        transform: `translate(${x + (w / 2) - (markerSize / 2)} ${y + (h / 2) - (markerSize / 2)}) scale(${markerSize / 24})`
       });
-      marker.textContent = "♛";
+      svgEl("path", {
+        d: "m2 4 3 12h14l3-12-6 7-4-8-4 8-6-7Z"
+      }, marker);
+      svgEl("path", {
+        d: "M5 20h14"
+      }, marker);
     }
 
     function generateAisle({
