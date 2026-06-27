@@ -122,11 +122,25 @@ $seoImage = asset(config('seo.image'));
       -webkit-user-drag: none;
     }
 
+    .plan img {
+      position: relative;
+      z-index: 1;
+    }
+
+    .underlay {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
     .overlay {
       position: absolute;
       inset: 0;
       width: 100%;
       height: 100%;
+      z-index: 2;
     }
 
     .hitbox {
@@ -189,13 +203,14 @@ $seoImage = asset(config('seo.image'));
     }
 
     .crown-marker {
-      fill: none;
-      stroke: #d4af37;
+      fill: rgba(212, 175, 55, 0.18);
+      stroke: #b8860b;
       stroke-linecap: round;
       stroke-linejoin: round;
-      stroke-width: 2;
+      stroke-width: 1.5;
       pointer-events: none;
-      filter: drop-shadow(0 1px 2px rgba(255, 255, 255, 0.85));
+      opacity: 0.3;
+      mix-blend-mode: multiply;
     }
 
     .debug .hitbox {
@@ -287,6 +302,7 @@ $seoImage = asset(config('seo.image'));
       </div>
 
       <div id="plan" class="plan">
+        <svg id="underlay" class="underlay" viewBox="0 0 5891 10574" preserveAspectRatio="xMidYMid meet"></svg>
         <img src="{{ asset('img/hall-design-v2.png') }}" alt="Hall Layout" width="5891" height="10574" decoding="async">
         <svg id="overlay" class="overlay" viewBox="0 0 5891 10574" preserveAspectRatio="xMidYMid meet"></svg>
       </div>
@@ -307,6 +323,7 @@ $seoImage = asset(config('seo.image'));
   <script>
     // Geometry is measured in PDF pixels (base 1653 x 2339).
     const overlay = document.getElementById("overlay");
+    const underlay = document.getElementById("underlay");
     const mapImage = document.querySelector("#plan img");
     const CALIBRATION_URL = "{{ asset('hall-calibration.json') }}";
     const HAS_CALIBRATION_FILE = @json($hasCalibrationFile);
@@ -333,6 +350,7 @@ $seoImage = asset(config('seo.image'));
     let pendingSpace = null;
     let isOverlayInitialized = false;
     let overlayBatch = null;
+    let underlayBatch = null;
     hideConfirmModal();
 
     function selectSpace(name, el) {
@@ -391,6 +409,13 @@ $seoImage = asset(config('seo.image'));
       const el = document.createElementNS("http://www.w3.org/2000/svg", tag);
       for (const [k, v] of Object.entries(attrs)) el.setAttribute(k, v);
       (parent || overlayBatch || overlay).appendChild(el);
+      return el;
+    }
+
+    function svgUnderEl(tag, attrs = {}, parent = null) {
+      const el = document.createElementNS("http://www.w3.org/2000/svg", tag);
+      for (const [k, v] of Object.entries(attrs)) el.setAttribute(k, v);
+      (parent || underlayBatch || underlay).appendChild(el);
       return el;
     }
 
@@ -468,7 +493,7 @@ $seoImage = asset(config('seo.image'));
     }
 
     function addCrownMarker(x, y, w, h) {
-      const markerSize = 72;
+      const markerSize = 110;
       const marker = svgEl("g", {
         class: "crown-marker",
         transform: `translate(${x + (w / 2) - (markerSize / 2)} ${y + (h / 2) - (markerSize / 2)}) scale(${markerSize / 24})`
@@ -592,8 +617,11 @@ $seoImage = asset(config('seo.image'));
 
       SCALE_Y = MAP_HEIGHT / BASE_HEIGHT;
       overlay.setAttribute("viewBox", `0 0 ${MAP_WIDTH} ${MAP_HEIGHT}`);
+      underlay.setAttribute("viewBox", `0 0 ${MAP_WIDTH} ${MAP_HEIGHT}`);
       overlay.replaceChildren();
+      underlay.replaceChildren();
       overlayBatch = document.createDocumentFragment();
+      underlayBatch = document.createDocumentFragment();
 
       const calibrationRects = await fetchCalibrationRects();
       if (calibrationRects.length) {
@@ -607,6 +635,8 @@ $seoImage = asset(config('seo.image'));
 
       overlay.appendChild(overlayBatch);
       overlayBatch = null;
+      underlay.appendChild(underlayBatch);
+      underlayBatch = null;
     }
 
     window.addEventListener("load", initOverlay, { once: true });
