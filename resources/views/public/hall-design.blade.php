@@ -162,15 +162,15 @@ $seoImage = asset(config('seo.image'));
     }
 
     .hitbox.icon-plus-space {
-      fill: rgba(234, 179, 8, 0.16);
-      stroke: rgba(202, 138, 4, 0.95);
+      fill: rgba(234, 179, 8, 0.07);
+      stroke: rgba(202, 138, 4, 0.5);
       stroke-width: 3;
     }
 
     .hitbox.icon-plus-space:hover,
     .hitbox.icon-plus-space.selected {
-      fill: rgba(234, 179, 8, 0.28);
-      stroke: rgba(180, 83, 9, 1);
+      fill: rgba(234, 179, 8, 0.16);
+      stroke: rgba(180, 83, 9, 0.7);
       stroke-width: 4;
     }
 
@@ -189,8 +189,8 @@ $seoImage = asset(config('seo.image'));
     }
 
     .hitbox.icon-plus-booked {
-      fill: rgba(234, 179, 8, 0.35);
-      stroke: rgba(202, 138, 4, 0.95);
+      fill: rgba(239, 68, 68, 0.35);
+      stroke: rgba(220, 38, 38, 0.95);
       stroke-width: 3;
       cursor: not-allowed;
     }
