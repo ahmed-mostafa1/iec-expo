@@ -60,6 +60,116 @@ return [
                         ],
                     ],
                 ],
+                'icon_plus_card' => [
+                    'title' => [
+                        'en' => 'Icon Plus',
+                        'ar' => 'أيكون بلس',
+                    ],
+                    'description' => [
+                        'en' => 'Apply for a premium Icon Plus space.',
+                        'ar' => 'قدم لحجز مساحة أيكون بلس مميزة.',
+                    ],
+                    'cta_label' => [
+                        'en' => 'Select',
+                        'ar' => 'اختر',
+                    ],
+                ],
+                'icon_plus_form' => [
+                    'title' => [
+                        'en' => 'Icon Plus Registration',
+                        'ar' => 'تسجيل أيكون بلس',
+                    ],
+                    'step_one' => [
+                        'en' => 'Company Details',
+                        'ar' => 'تفاصيل الشركة',
+                    ],
+                    'step_two' => [
+                        'en' => 'Attachments',
+                        'ar' => 'المرفقات',
+                    ],
+                    'cta_next' => [
+                        'en' => 'Next Step',
+                        'ar' => 'الخطوة التالية',
+                    ],
+                    'cta_back' => [
+                        'en' => 'Back',
+                        'ar' => 'رجوع',
+                    ],
+                    'cta_submit' => [
+                        'en' => 'Submit Application',
+                        'ar' => 'إرسال الطلب',
+                    ],
+                    'fields_step_one' => [
+                        [
+                            'name' => 'full_name',
+                            'type' => 'text',
+                            'label' => ['en' => 'Full Name *', 'ar' => 'الاسم الكامل *'],
+                            'placeholder' => ['en' => 'Saleh Ahmed', 'ar' => 'صالح أحمد'],
+                        ],
+                        [
+                            'name' => 'email',
+                            'type' => 'email',
+                            'label' => ['en' => 'Email *', 'ar' => 'البريد الإلكتروني *'],
+                            'placeholder' => ['en' => 'Saleh@company.com', 'ar' => 'Saleh@company.com'],
+                        ],
+                        [
+                            'name' => 'phone',
+                            'type' => 'tel',
+                            'label' => ['en' => 'Phone *', 'ar' => 'الهاتف *'],
+                            'placeholder' => ['en' => '+966 50 000 0000', 'ar' => '+966 50 000 0000'],
+                        ],
+                        [
+                            'name' => 'job_title',
+                            'type' => 'text',
+                            'label' => ['en' => 'Job Title *', 'ar' => 'المسمى الوظيفي *'],
+                            'placeholder' => ['en' => 'Marketing Manager', 'ar' => 'مدير التسويق'],
+                        ],
+                        [
+                            'name' => 'organization',
+                            'type' => 'text',
+                            'label' => ['en' => 'Company / Organization', 'ar' => 'الشركة / الجهة'],
+                            'placeholder' => ['en' => 'Umbrella Inc.', 'ar' => 'شركة أمبريلا'],
+                        ],
+                        [
+                            'name' => 'location_selection',
+                            'type' => 'text',
+                            'label' => ['en' => 'Book Location *', 'ar' => 'حجز الموقع *'],
+                            'placeholder' => ['en' => 'Select on the hall map', 'ar' => 'اختر من خريطة القاعة'],
+                        ],
+                    ],
+                    'fields_step_two' => [
+                        [
+                            'name' => 'vat_number',
+                            'type' => 'text',
+                            'label' => ['en' => 'VAT (Value Added Tax)', 'ar' => 'ضريبة القيمة المضافة'],
+                            'placeholder' => ['en' => '300000000000003', 'ar' => '300000000000003'],
+                        ],
+                        [
+                            'name' => 'cr_number',
+                            'type' => 'text',
+                            'label' => ['en' => 'CR Number', 'ar' => 'رقم السجل التجاري'],
+                            'placeholder' => ['en' => '1010101010', 'ar' => '1010101010'],
+                        ],
+                        [
+                            'name' => 'cr_copy',
+                            'type' => 'file',
+                            'label' => ['en' => 'CR Copy (Commercial Registration)', 'ar' => 'نسخة السجل التجاري'],
+                            'hint' => ['en' => 'PDF files only (max 8MB)', 'ar' => 'ملفات PDF فقط (بحد أقصى 8 ميغابايت)'],
+                        ],
+                        [
+                            'name' => 'company_logo',
+                            'type' => 'file',
+                            'label' => ['en' => 'Company Logo', 'ar' => 'شعار الشركة'],
+                            'hint' => ['en' => 'PDF files only (max 8MB)', 'ar' => 'ملفات PDF فقط (بحد أقصى 8 ميغابايت)'],
+                        ],
+                        [
+                            'name' => 'national_address_document',
+                            'type' => 'file',
+                            'label' => ['en' => 'National Address Document', 'ar' => 'مستند العنوان الوطني'],
+                            'hint' => ['en' => 'PDF files only (max 8MB)', 'ar' => 'ملفات PDF فقط (بحد أقصى 8 ميغابايت)'],
+                        ],
+                    ],
+                ],
             ],
         ],
         'registration' => [
@@ -77,7 +187,7 @@ return [
                 'visitor_card' => [
                     'title' => [
                         'en' => 'Visitor',
-                        'ar' =>'الزائر',
+                        'ar' => 'الزائر',
                     ],
                     'description' => [
                         'en' => 'Attend the conference and explore opportunities',

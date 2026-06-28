@@ -7,7 +7,7 @@ use App\Services\HallSpaceService;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 
-class IconRegistrationRequest extends FormRequest
+class IconPlusRegistrationRequest extends FormRequest
 {
     use HasSaudiPhoneValidation;
 
@@ -19,6 +19,7 @@ class IconRegistrationRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'form_identifier' => ['nullable', 'in:icon-plus'],
             'full_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255'],
             'phone' => ['required', 'string', 'max:50', $this->saudiPhoneRule()],
@@ -29,8 +30,8 @@ class IconRegistrationRequest extends FormRequest
                 'string',
                 'max:255',
                 function (string $attribute, mixed $value, \Closure $fail): void {
-                    if (HallSpaceService::isIconPlusSpace((string) $value)) {
-                        $fail(__('registration.icon.reserved_icon_plus_space'));
+                    if (! HallSpaceService::isIconPlusSpace((string) $value)) {
+                        $fail(__('registration.icon_plus.invalid_location'));
 
                         return;
                     }
@@ -52,8 +53,7 @@ class IconRegistrationRequest extends FormRequest
     {
         return [
             'location_selection' => __('Book Location'),
-            'vat_number' => __('registration.icon.vat_number'),
-
+            'vat_number' => __('registration.icon_plus.vat_number'),
             'privacy_policy' => __('Privacy Policy'),
         ];
     }

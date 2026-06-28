@@ -1,46 +1,46 @@
 @php
-    $seoLocale = app()->getLocale() === 'ar' ? 'ar' : 'en';
-    $seoPage = config("seo.pages.landing.$seoLocale", config('seo.pages.landing.en'));
-    $seoKeywords = implode(', ', config("seo.keywords.$seoLocale", []));
-    $seoCanonical = route('public.landing', ['locale' => $seoLocale]);
-    $seoAlternateEn = route('public.landing', ['locale' => 'en']);
-    $seoAlternateAr = route('public.landing', ['locale' => 'ar']);
-    $seoImage = asset(config('seo.image'));
-    $seoFocus = config("seo.visible_focus.$seoLocale", config('seo.visible_focus.en'));
-    $seoFocusEn = config('seo.visible_focus.en');
-    $seoFocusAr = config('seo.visible_focus.ar');
-    $eventSchema = [
-        '@context' => 'https://schema.org',
-        '@type' => 'Event',
-        'name' => config('seo.site_name'),
-        'description' => $seoPage['description'],
-        'startDate' => '2026-09-24',
-        'eventAttendanceMode' => 'https://schema.org/OfflineEventAttendanceMode',
-        'eventStatus' => 'https://schema.org/EventScheduled',
-        'url' => $seoCanonical,
-        'image' => [$seoImage],
-        'location' => [
-            '@type' => 'Place',
-            'name' => 'The Arena Riyadh',
-            'address' => [
-                '@type' => 'PostalAddress',
-                'addressLocality' => 'Riyadh',
-                'addressCountry' => 'SA',
-            ],
-        ],
-        'organizer' => [
-            '@type' => 'Organization',
-            'name' => 'Umbrella',
-            'url' => 'https://umbrella.sa',
-        ],
-    ];
-    $websiteSchema = [
-        '@context' => 'https://schema.org',
-        '@type' => 'WebSite',
-        'name' => config('seo.site_name'),
-        'url' => $seoCanonical,
-        'inLanguage' => $seoLocale,
-    ];
+$seoLocale = app()->getLocale() === 'ar' ? 'ar' : 'en';
+$seoPage = config("seo.pages.landing.$seoLocale", config('seo.pages.landing.en'));
+$seoKeywords = implode(', ', config("seo.keywords.$seoLocale", []));
+$seoCanonical = route('public.landing', ['locale' => $seoLocale]);
+$seoAlternateEn = route('public.landing', ['locale' => 'en']);
+$seoAlternateAr = route('public.landing', ['locale' => 'ar']);
+$seoImage = asset(config('seo.image'));
+$seoFocus = config("seo.visible_focus.$seoLocale", config('seo.visible_focus.en'));
+$seoFocusEn = config('seo.visible_focus.en');
+$seoFocusAr = config('seo.visible_focus.ar');
+$eventSchema = [
+'@context' => 'https://schema.org',
+'@type' => 'Event',
+'name' => config('seo.site_name'),
+'description' => $seoPage['description'],
+'startDate' => '2026-09-24',
+'eventAttendanceMode' => 'https://schema.org/OfflineEventAttendanceMode',
+'eventStatus' => 'https://schema.org/EventScheduled',
+'url' => $seoCanonical,
+'image' => [$seoImage],
+'location' => [
+'@type' => 'Place',
+'name' => 'The Arena Riyadh',
+'address' => [
+'@type' => 'PostalAddress',
+'addressLocality' => 'Riyadh',
+'addressCountry' => 'SA',
+],
+],
+'organizer' => [
+'@type' => 'Organization',
+'name' => 'Umbrella',
+'url' => 'https://umbrella.sa',
+],
+];
+$websiteSchema = [
+'@context' => 'https://schema.org',
+'@type' => 'WebSite',
+'name' => config('seo.site_name'),
+'url' => $seoCanonical,
+'inLanguage' => $seoLocale,
+];
 @endphp
 
 <!DOCTYPE html>
@@ -71,7 +71,11 @@
     <meta name="twitter:title" content="{{ $seoPage['title'] }}">
     <meta name="twitter:description" content="{{ $seoPage['description'] }}">
     <meta name="twitter:image" content="{{ $seoImage }}">
-    <script type="application/ld+json">{!! json_encode([$eventSchema, $websiteSchema], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) !!}</script>
+    <script type="application/ld+json">
+    {
+        !!json_encode([$eventSchema, $websiteSchema], JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES) !!
+    }
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -1296,6 +1300,22 @@
 
     .role-card.dimmed {
         opacity: 0.6;
+    }
+
+    #icon-plus-card {
+        order: 3;
+    }
+
+    #icon-plus-form {
+        order: 4;
+    }
+
+    #icon-card {
+        order: 6;
+    }
+
+    #icon-form {
+        order: 7;
     }
 
     .role-icon {
@@ -2830,31 +2850,17 @@
     }
     </style>
     <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-HED35JNVSW"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-HED35JNVSW"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
 
-  gtag('config', 'G-HED35JNVSW');
-</script>
-<!-- Meta Pixel Code -->
-<script>
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-fbq('init', '2930634037274791');
-fbq('track', 'PageView');
-</script>
-<noscript><img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=2930634037274791&ev=PageView&noscript=1"
-/></noscript>
-<!-- End Meta Pixel Code -->
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+    gtag('js', new Date());
+
+    gtag('config', 'G-HED35JNVSW');
+    </script>
 </head>
 
 <body class="{{ app()->getLocale() === 'ar' ? 'locale-ar' : 'locale-en' }} is-loading">
@@ -2884,8 +2890,8 @@ src="https://www.facebook.com/tr?id=2930634037274791&ev=PageView&noscript=1"
         aria-labelledby="success-popup-title" aria-describedby="success-popup-message">
         <div class="success-popup-card">
             <img src="{{ asset('img/IEC-logo-v2.png') }}" alt="IEC Logo" class="success-popup-logo">
-            <h3 class="success-popup-title" id="success-popup-title">{{ __('registration.visitor.toast_title') }}</h3>
-            <p class="success-popup-message" id="success-popup-message">{{ __('registration.visitor.success') }}</p>
+            <h3 class="success-popup-title" id="success-popup-title">{{ __('registration.icon_plus.toast_title') }}</h3>
+            <p class="success-popup-message" id="success-popup-message">{{ __('registration.icon_plus.success') }}</p>
             <p class="success-popup-note" id="success-popup-note" hidden></p>
             <div class="success-popup-actions">
                 <button type="button" id="success-popup-close" class="btn btn-primary btn-lg" style="min-width: 200px;">
@@ -3124,6 +3130,13 @@ experience that unites ambitious minds and industry leaders under one roof"
             $iconFieldsStepOneByName = collect($iconFieldsStepOne)->keyBy('name');
             $iconFieldsStepTwoByName = collect($iconFieldsStepTwo)->keyBy('name');
 
+            $iconPlusCard = data_get($registrationSection, 'icon_plus_card', []);
+            $iconPlusForm = data_get($registrationSection, 'icon_plus_form', []);
+            $iconPlusFieldsStepOne = data_get($iconPlusForm, 'fields_step_one', []);
+            $iconPlusFieldsStepTwo = data_get($iconPlusForm, 'fields_step_two', []);
+            $iconPlusFieldsStepOneByName = collect($iconPlusFieldsStepOne)->keyBy('name');
+            $iconPlusFieldsStepTwoByName = collect($iconPlusFieldsStepTwo)->keyBy('name');
+
             $iconCardTitle = $translate(
             data_get($iconCard, 'title') ?? [
             'en' => trans('registration.icon.title', [], 'en'),
@@ -3161,6 +3174,43 @@ experience that unites ambitious minds and industry leaders under one roof"
             ],
             );
 
+            $iconPlusCardTitle = $translate(
+            data_get($iconPlusCard, 'title') ?? [
+            'en' => trans('registration.icon_plus.title', [], 'en'),
+            'ar' => trans('registration.icon_plus.title', [], 'ar'),
+            ],
+            );
+            $iconPlusCardDescription = $translate(
+            data_get($iconPlusCard, 'description') ?? [
+            'en' => trans('registration.icon_plus.description', [], 'en'),
+            'ar' => trans('registration.icon_plus.description', [], 'ar'),
+            ],
+            );
+            $iconPlusCta = $translate(
+            data_get($iconPlusCard, 'cta_label') ?? [
+            'en' => trans('registration.icon_plus.cta_label', [], 'en'),
+            'ar' => trans('registration.icon_plus.cta_label', [], 'ar'),
+            ],
+            );
+            $iconPlusFormTitle = $translate(
+            data_get($iconPlusForm, 'title') ?? [
+            'en' => trans('registration.icon_plus.form_title', [], 'en'),
+            'ar' => trans('registration.icon_plus.form_title', [], 'ar'),
+            ],
+            );
+            $iconPlusBack = $translate(
+            data_get($iconPlusForm, 'cta_back') ?? [
+            'en' => trans('registration.icon_plus.cta_back', [], 'en'),
+            'ar' => trans('registration.icon_plus.cta_back', [], 'ar'),
+            ],
+            );
+            $iconPlusSubmit = $translate(
+            data_get($iconPlusForm, 'cta_submit') ?? [
+            'en' => trans('registration.icon_plus.cta_submit', [], 'en'),
+            'ar' => trans('registration.icon_plus.cta_submit', [], 'ar'),
+            ],
+            );
+
             $fieldCopy = function ($fieldsByName, string $name, string $key, array $fallback) use ($translate) {
             $field = $fieldsByName->get($name);
             $value = $field ? data_get($field, $key) : null;
@@ -3175,9 +3225,11 @@ experience that unites ambitious minds and industry leaders under one roof"
             $visitorFormActive = old('form_identifier') === 'visitor';
             $sponsorFormActive = old('form_identifier') === 'sponsor';
             $iconFormActive = old('form_identifier') === 'icon';
+            $iconPlusFormActive = old('form_identifier') === 'icon-plus';
             $visitorShouldOpen = $visitorFormActive || session()->has('visitor_success');
             $sponsorShouldOpen = $sponsorFormActive || session()->has('sponsor_success');
             $iconShouldOpen = $iconFormActive || session()->has('icon_success');
+            $iconPlusShouldOpen = $iconPlusFormActive || session()->has('icon_plus_success');
             @endphp
 
             <section class="registration" id="register">
@@ -3538,7 +3590,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                                 </form>
                             </div>
 
-                            <div class="role-card" id="icon-card" onclick="selectRole('icon')">
+                            <div class="role-card guest-card" id="icon-card" onclick="selectRole('icon')">
                                 <div class="role-icon">
                                     <svg class="icon icon-lg" viewBox="0 0 24 24">
                                         <path
@@ -3555,7 +3607,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                                 </div>
                             </div>
 
-                            <div class="form-card" id="icon-form">
+                            <div class="form-card guest-form" id="icon-form">
 
                                 @if (session('icon_success'))
                                 <div
@@ -3869,11 +3921,310 @@ experience that unites ambitious minds and industry leaders under one roof"
                                     </div>
                                 </form>
                             </div>
-
-                            <div class="row-logo" id="guest-row-logo">
-                                <img src="{{ asset('img/iec-logo-v2.png') }}" alt="IEC Logo" style="text-align:center">
+                            <div class="role-card" id="icon-plus-card" onclick="selectRole('icon-plus')">
+                                <div class="role-icon">
+                                    <svg class="icon icon-lg" viewBox="0 0 24 24">
+                                        <path d="m2 4 3 12h14l3-12-6 7-4-8-4 8-6-7Z" />
+                                        <path d="M5 20h14" />
+                                    </svg>
+                                </div>
+                                <h3 class="role-title" data-en="{{ e($iconPlusCardTitle['en']) }}"
+                                    data-ar="{{ e($iconPlusCardTitle['ar']) }}">{{ $iconPlusCardTitle['text'] }}</h3>
+                                <div class="role-cta" id="icon-plus-cta">
+                                    <span data-en="Click" data-ar="اضغط">Click</span>
+                                    <svg class="icon icon-sm" viewBox="0 0 24 24">
+                                        <path d="M5 12h14M12 5l7 7-7 7" />
+                                    </svg>
+                                </div>
                             </div>
 
+                            <div class="form-card" id="icon-plus-form">
+                                @if (session('icon_plus_success'))
+                                <div
+                                    class="mb-4 rounded-lg border border-emerald-100 bg-emerald-50 px-3 py-2 text-sm text-emerald-900">
+                                    {{ session('icon_plus_success') }}
+                                </div>
+                                @endif
+                                @php
+                                $iconPlusFullNameLabel = $fieldCopy($iconPlusFieldsStepOneByName, 'full_name', 'label',
+                                [
+                                'en' => trans('registration.icon_plus.full_name', [], 'en'),
+                                'ar' => trans('registration.icon_plus.full_name', [], 'ar'),
+                                ]);
+                                $iconPlusFullNamePlaceholder = $fieldCopy($iconPlusFieldsStepOneByName, 'full_name',
+                                'placeholder', [
+                                'en' => 'Saleh Ahmed',
+                                'ar' => 'صالح أحمد',
+                                ]);
+                                $iconPlusEmailLabel = $fieldCopy($iconPlusFieldsStepOneByName, 'email', 'label', [
+                                'en' => trans('registration.icon_plus.email', [], 'en'),
+                                'ar' => trans('registration.icon_plus.email', [], 'ar'),
+                                ]);
+                                $iconPlusEmailPlaceholder = $fieldCopy($iconPlusFieldsStepOneByName, 'email',
+                                'placeholder', [
+                                'en' => 'saleh@company.com',
+                                'ar' => 'saleh@company.com',
+                                ]);
+                                $iconPlusPhoneLabel = $fieldCopy($iconPlusFieldsStepOneByName, 'phone', 'label', [
+                                'en' => trans('registration.icon_plus.phone', [], 'en'),
+                                'ar' => trans('registration.icon_plus.phone', [], 'ar'),
+                                ]);
+                                $iconPlusPhonePlaceholder = $fieldCopy($iconPlusFieldsStepOneByName, 'phone',
+                                'placeholder', [
+                                'en' => '+966 50 000 0000',
+                                'ar' => '+966 50 000 0000',
+                                ]);
+                                $iconPlusJobLabel = $fieldCopy($iconPlusFieldsStepOneByName, 'job_title', 'label', [
+                                'en' => trans('registration.icon_plus.job_title', [], 'en'),
+                                'ar' => trans('registration.icon_plus.job_title', [], 'ar'),
+                                ]);
+                                $iconPlusJobPlaceholder = $fieldCopy($iconPlusFieldsStepOneByName, 'job_title',
+                                'placeholder', [
+                                'en' => 'Marketing Manager',
+                                'ar' => 'مدير التسويق',
+                                ]);
+                                $iconPlusOrgLabel = $fieldCopy($iconPlusFieldsStepOneByName, 'organization', 'label', [
+                                'en' => trans('registration.icon_plus.organization', [], 'en'),
+                                'ar' => trans('registration.icon_plus.organization', [], 'ar'),
+                                ]);
+                                $iconPlusOrgPlaceholder = $fieldCopy($iconPlusFieldsStepOneByName, 'organization',
+                                'placeholder', [
+                                'en' => 'Umbrella Inc.',
+                                'ar' => 'شركة أمبريلا',
+                                ]);
+                                $iconPlusLocationLabel = $fieldCopy($iconPlusFieldsStepOneByName, 'location_selection',
+                                'label', [
+                                'en' => trans('registration.icon_plus.book_location', [], 'en'),
+                                'ar' => trans('registration.icon_plus.book_location', [], 'ar'),
+                                ]);
+                                $iconPlusLocationPlaceholder = $fieldCopy($iconPlusFieldsStepOneByName,
+                                'location_selection', 'placeholder', [
+                                'en' => 'Select on the hall map',
+                                'ar' => 'اختر من خريطة القاعة',
+                                ]);
+                                $iconPlusVatLabel = $fieldCopy($iconPlusFieldsStepTwoByName, 'vat_number', 'label', [
+                                'en' => trans('registration.icon_plus.vat_number', [], 'en'),
+                                'ar' => trans('registration.icon_plus.vat_number', [], 'ar'),
+                                ]);
+                                $iconPlusVatHint = $fieldCopy($iconPlusFieldsStepTwoByName, 'vat_number', 'hint', [
+                                'en' => trans('registration.icon_plus.file_hint', [], 'en'),
+                                'ar' => trans('registration.icon_plus.file_hint', [], 'ar'),
+                                ]);
+                                $iconPlusCrCopyLabel = $fieldCopy($iconPlusFieldsStepTwoByName, 'cr_copy', 'label', [
+                                'en' => trans('registration.icon_plus.cr_copy', [], 'en'),
+                                'ar' => trans('registration.icon_plus.cr_copy', [], 'ar'),
+                                ]);
+                                $iconPlusCrCopyHint = $fieldCopy($iconPlusFieldsStepTwoByName, 'cr_copy', 'hint', [
+                                'en' => trans('registration.icon_plus.file_hint', [], 'en'),
+                                'ar' => trans('registration.icon_plus.file_hint', [], 'ar'),
+                                ]);
+                                $iconPlusLogoLabel = $fieldCopy($iconPlusFieldsStepTwoByName, 'company_logo', 'label', [
+                                'en' => trans('registration.icon_plus.company_logo', [], 'en'),
+                                'ar' => trans('registration.icon_plus.company_logo', [], 'ar'),
+                                ]);
+                                $iconPlusLogoHint = $fieldCopy($iconPlusFieldsStepTwoByName, 'company_logo', 'hint', [
+                                'en' => trans('registration.icon_plus.logo_hint', [], 'en'),
+                                'ar' => trans('registration.icon_plus.logo_hint', [], 'ar'),
+                                ]);
+                                $iconPlusAddressLabel = $fieldCopy($iconPlusFieldsStepTwoByName,
+                                'national_address_document', 'label', [
+                                'en' => trans('registration.icon_plus.national_address_document', [], 'en'),
+                                'ar' => trans('registration.icon_plus.national_address_document', [], 'ar'),
+                                ]);
+                                $iconPlusAddressHint = $fieldCopy($iconPlusFieldsStepTwoByName,
+                                'national_address_document', 'hint', [
+                                'en' => trans('registration.icon_plus.file_hint', [], 'en'),
+                                'ar' => trans('registration.icon_plus.file_hint', [], 'ar'),
+                                ]);
+                                @endphp
+                                <h3 class="form-title" data-en="{{ e($iconPlusFormTitle['en']) }}"
+                                    data-ar="{{ e($iconPlusFormTitle['ar']) }}">{{ $iconPlusFormTitle['text'] }}</h3>
+                                <form id="icon-plus-registration-form" method="POST"
+                                    action="{{ route('public.register.icon-plus', ['locale' => $locale]) }}"
+                                    enctype="multipart/form-data" novalidate
+                                    data-success-title="{{ e(__('registration.icon_plus.toast_title')) }}"
+                                    data-success-message="{{ e(__('registration.icon_plus.success')) }}"
+                                    data-loading-message="{{ e(__('registration.icon_plus.loading_message')) }}"
+                                    data-loading-button-label="{{ e(__('registration.icon_plus.loading_button')) }}"
+                                    data-popup-note="{{ e(__('registration.icon_plus.popup_note')) }}">
+                                    @csrf
+                                    <input type="hidden" name="form_identifier" value="icon-plus">
+                                    <div class="form-grid form-grid-2">
+                                        <div class="form-group">
+                                            <label class="form-label" data-en="{{ e($iconPlusFullNameLabel['en']) }}"
+                                                data-ar="{{ e($iconPlusFullNameLabel['ar']) }}">{{ $iconPlusFullNameLabel['text'] }}</label>
+                                            <input type="text" name="full_name" class="form-input" required
+                                                placeholder="{{ $iconPlusFullNamePlaceholder['text'] }}"
+                                                value="{{ $iconPlusFormActive ? old('full_name') : '' }}">
+                                            @if ($iconPlusFormActive && $errors->has('full_name'))
+                                            <p class="mt-1 text-xs text-red-600">{{ $errors->first('full_name') }}</p>
+                                            @endif
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label" data-en="{{ e($iconPlusEmailLabel['en']) }}"
+                                                data-ar="{{ e($iconPlusEmailLabel['ar']) }}">{{ $iconPlusEmailLabel['text'] }}</label>
+                                            <input type="email" name="email" class="form-input" required
+                                                placeholder="{{ $iconPlusEmailPlaceholder['text'] }}"
+                                                value="{{ $iconPlusFormActive ? old('email') : '' }}">
+                                            @if ($iconPlusFormActive && $errors->has('email'))
+                                            <p class="mt-1 text-xs text-red-600">{{ $errors->first('email') }}</p>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="form-grid form-grid-2" style="margin-top: 1rem;">
+                                        <div class="form-group">
+                                            <label class="form-label" data-en="{{ e($iconPlusPhoneLabel['en']) }}"
+                                                data-ar="{{ e($iconPlusPhoneLabel['ar']) }}">{{ $iconPlusPhoneLabel['text'] }}</label>
+                                            <input type="tel" name="phone" class="form-input" required inputmode="tel"
+                                                data-phone-sa="true"
+                                                placeholder="{{ $iconPlusPhonePlaceholder['text'] }}"
+                                                value="{{ $iconPlusFormActive ? old('phone') : '' }}">
+                                            @if ($iconPlusFormActive && $errors->has('phone'))
+                                            <p class="mt-1 text-xs text-red-600">{{ $errors->first('phone') }}</p>
+                                            @endif
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label" data-en="{{ e($iconPlusJobLabel['en']) }}"
+                                                data-ar="{{ e($iconPlusJobLabel['ar']) }}">{{ $iconPlusJobLabel['text'] }}</label>
+                                            <input type="text" name="job_title" class="form-input" required
+                                                placeholder="{{ $iconPlusJobPlaceholder['text'] }}"
+                                                value="{{ $iconPlusFormActive ? old('job_title') : '' }}">
+                                            @if ($iconPlusFormActive && $errors->has('job_title'))
+                                            <p class="mt-1 text-xs text-red-600">{{ $errors->first('job_title') }}</p>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="form-grid" style="margin-top:1rem;">
+                                        <div class="form-group">
+                                            <label class="form-label" data-en="{{ e($iconPlusOrgLabel['en']) }}"
+                                                data-ar="{{ e($iconPlusOrgLabel['ar']) }}">{{ $iconPlusOrgLabel['text'] }}</label>
+                                            <input type="text" name="organization" class="form-input" required
+                                                placeholder="{{ $iconPlusOrgPlaceholder['text'] }}"
+                                                value="{{ $iconPlusFormActive ? old('organization') : '' }}">
+                                            @if ($iconPlusFormActive && $errors->has('organization'))
+                                            <p class="mt-1 text-xs text-red-600">{{ $errors->first('organization') }}
+                                            </p>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="form-grid" style="margin-top:1rem;">
+                                        <div class="form-group">
+                                            <label class="form-label" data-en="{{ e($iconPlusLocationLabel['en']) }}"
+                                                data-ar="{{ e($iconPlusLocationLabel['ar']) }}">{{ $iconPlusLocationLabel['text'] }}</label>
+                                            <div class="flex gap-3 flex-col sm:flex-row">
+                                                <input type="text" id="icon-plus-location-selection"
+                                                    name="location_selection" class="form-input flex-1" required
+                                                    readonly placeholder="{{ $iconPlusLocationPlaceholder['text'] }}"
+                                                    value="{{ $iconPlusFormActive ? old('location_selection') : '' }}">
+                                                <button type="button" class="btn btn-outline flex-none"
+                                                    onclick="openHallDesign('icon-plus-location-selection', 'icon-plus')">
+                                                    <span data-en="Open hall map" data-ar="فتح خريطة القاعة">Open hall
+                                                        map</span>
+                                                </button>
+                                            </div>
+                                            @if ($iconPlusFormActive && $errors->has('location_selection'))
+                                            <p class="mt-1 text-xs text-red-600">
+                                                {{ $errors->first('location_selection') }}</p>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="form-grid form-grid-2">
+                                        <div class="form-group">
+                                            <label class="form-label" data-en="{{ e($iconPlusVatLabel['en']) }}"
+                                                data-ar="{{ e($iconPlusVatLabel['ar']) }}">{{ $iconPlusVatLabel['text'] }}</label>
+                                            <input type="file" name="vat_number" class="form-input" required
+                                                accept="application/pdf">
+                                            <span class="form-hint" data-en="{{ e($iconPlusVatHint['en']) }}"
+                                                data-ar="{{ e($iconPlusVatHint['ar']) }}">{{ $iconPlusVatHint['text'] }}</span>
+                                            @if ($iconPlusFormActive && $errors->has('vat_number'))
+                                            <p class="mt-1 text-xs text-red-600">{{ $errors->first('vat_number') }}</p>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="form-grid form-grid-2" style="margin-top: 1rem;">
+                                        <div class="form-group">
+                                            <label class="form-label" data-en="{{ e($iconPlusCrCopyLabel['en']) }}"
+                                                data-ar="{{ e($iconPlusCrCopyLabel['ar']) }}">{{ $iconPlusCrCopyLabel['text'] }}</label>
+                                            <input type="file" name="cr_copy" class="form-input" required
+                                                accept="application/pdf">
+                                            <span class="form-hint" data-en="{{ e($iconPlusCrCopyHint['en']) }}"
+                                                data-ar="{{ e($iconPlusCrCopyHint['ar']) }}">{{ $iconPlusCrCopyHint['text'] }}</span>
+                                            @if ($iconPlusFormActive && $errors->has('cr_copy'))
+                                            <p class="mt-1 text-xs text-red-600">{{ $errors->first('cr_copy') }}</p>
+                                            @endif
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label" data-en="{{ e($iconPlusLogoLabel['en']) }}"
+                                                data-ar="{{ e($iconPlusLogoLabel['ar']) }}">{{ $iconPlusLogoLabel['text'] }}</label>
+                                            <input type="file" name="company_logo" class="form-input" required
+                                                accept="application/pdf">
+                                            <span class="form-hint" data-en="{{ e($iconPlusLogoHint['en']) }}"
+                                                data-ar="{{ e($iconPlusLogoHint['ar']) }}">{{ $iconPlusLogoHint['text'] }}</span>
+                                            @if ($iconPlusFormActive && $errors->has('company_logo'))
+                                            <p class="mt-1 text-xs text-red-600">{{ $errors->first('company_logo') }}
+                                            </p>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="form-grid form-grid-2" style="margin-top: 1rem;">
+                                        <div class="form-group">
+                                            <label class="form-label" data-en="{{ e($iconPlusAddressLabel['en']) }}"
+                                                data-ar="{{ e($iconPlusAddressLabel['ar']) }}">{{ $iconPlusAddressLabel['text'] }}</label>
+                                            <input type="file" name="national_address_document" class="form-input"
+                                                required accept="application/pdf">
+                                            <span class="form-hint" data-en="{{ e($iconPlusAddressHint['en']) }}"
+                                                data-ar="{{ e($iconPlusAddressHint['ar']) }}">{{ $iconPlusAddressHint['text'] }}</span>
+                                            @if ($iconPlusFormActive && $errors->has('national_address_document'))
+                                            <p class="mt-1 text-xs text-red-600">
+                                                {{ $errors->first('national_address_document') }}</p>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group" style="margin-top: 1rem;">
+                                        <label class="form-label"
+                                            style="flex-direction: row; align-items: center; gap: 0.5rem;">
+                                            <input type="checkbox" name="privacy_policy" value="1" required
+                                                @checked($iconPlusFormActive && old('privacy_policy'))>
+                                            <span data-en="I accept the privacy policy"
+                                                data-ar="أوافق على شروط الخصوصية">I
+                                                accept the privacy policy</span>
+                                            <a class="blue-url-style"
+                                                href="{{ asset('pdf/IEC360-Profile-Icon-v2.pdf') }}" target="_blank"
+                                                rel="noopener" download data-en="Download from here"
+                                                data-ar="يمكنك تحميل الملف من هنا">Download from here</a>
+                                        </label>
+
+                                        @if ($iconPlusFormActive && $errors->has('privacy_policy'))
+                                        <p class="mt-1 text-xs text-red-600">{{ $errors->first('privacy_policy') }}</p>
+                                        @endif
+                                    </div>
+
+                                    <div class="form-buttons">
+                                        <button type="button" class="btn btn-outline" onclick="clearRole()">
+                                            <svg class="icon icon-sm" style="margin-right: 0.5rem;" viewBox="0 0 24 24">
+                                                <path d="M19 12H5M12 19l-7-7 7-7" />
+                                            </svg>
+                                            <span data-en="{{ e($iconPlusBack['en']) }}"
+                                                data-ar="{{ e($iconPlusBack['ar']) }}">{{ $iconPlusBack['text'] }}</span>
+                                        </button>
+                                        <button type="submit" class="btn btn-primary"
+                                            data-en="{{ e($iconPlusSubmit['en']) }}"
+                                            data-ar="{{ e($iconPlusSubmit['ar']) }}">{{ $iconPlusSubmit['text'] }}</button>
+                                        <button type="button" class="btn btn-outline" onclick="scrollToContact()"
+                                            data-en="{{ e($guestContact['en']) }}"
+                                            data-ar="{{ e($guestContact['ar']) }}">{{ $guestContact['text'] }}</button>
+                                    </div>
+                                </form>
+                            </div>
+
+                            @if(false)
                             <div class="role-card guest-card" id="visitor-card" onclick="selectRole('visitor')">
                                 <div class="role-icon">
                                     <svg class="icon icon-lg" viewBox="0 0 24 24">
@@ -3890,6 +4241,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                                     </svg>
                                 </div>
                             </div>
+
                             <div class="form-card guest-form" id="visitor-form">
                                 @if (session('visitor_success'))
                                 <div
@@ -4121,8 +4473,14 @@ experience that unites ambitious minds and industry leaders under one roof"
                                     </div>
                                 </form>
                             </div>
+                            @endif
                         </div>
                     </div>
+                </div>
+                <!-- IEC logo -->
+                <div class="row-logo" id="guest-row-logo">
+                    <img src="{{ asset('img/iec-logo-v2.png') }}" alt="IEC Logo"
+                        style="text-align:center; padding-top:40px;">
                 </div>
             </section>
 
@@ -4476,9 +4834,11 @@ experience that unites ambitious minds and industry leaders under one roof"
                         @endif
 
                         <!-- COFFEE LOUNGE -->
-                        @if(!empty($sponsorGroups['coffee-lounge']) && $sponsorGroups['coffee-lounge']['sponsors']->isNotEmpty())
+                        @if(!empty($sponsorGroups['coffee-lounge']) &&
+                        $sponsorGroups['coffee-lounge']['sponsors']->isNotEmpty())
                         <div class="sponsor-tier">
-                            <h2 class="sponsor-tier-title" data-en="{{ $sponsorGroups['coffee-lounge']['title']['en'] }}"
+                            <h2 class="sponsor-tier-title"
+                                data-en="{{ $sponsorGroups['coffee-lounge']['title']['en'] }}"
                                 data-ar="{{ $sponsorGroups['coffee-lounge']['title']['ar'] }}">
                                 {{ strtoupper($sponsorGroups['coffee-lounge']['title']['en']) }}
                             </h2>
@@ -4671,18 +5031,37 @@ experience that unites ambitious minds and industry leaders under one roof"
                                 <div class="contact-info-card" style="padding: 2.5rem 2rem;">
                                     <div class="contact-info-links two-columns" style="align-items: start;">
                                         <!-- Column 1 -->
-                                        <div class="contact-info-column" style="flex-direction: column; line-height: normal; gap: 2.5rem;">
-                                            <a href="tel:+966546608557" class="contact-info-link"><img class="icon icon-lg" src="{{ asset('img/svg/telephone.svg') }}"><span class="ltr-text">&#x200E;+966546608557</span></a>
-                                            <a href="mailto:iec360@umbrella.sa" class="contact-info-link"><img class="icon icon-lg" src="{{ asset('img/svg/email.svg') }}" alt="Email">iec360@umbrella.sa</a>
-                                            <a href="https://www.instagram.com/iec360expo" class="contact-info-link"><img class="icon icon-lg" src="{{ asset('img/svg/instagram.svg') }}">iec360expo</a>
-                                            <a href="https://www.snapchat.com/add/iec360_expo" class="contact-info-link"><img class="icon icon-lg" src="{{ asset('img/svg/snapchat.svg') }}">Iec360_expo</a>
+                                        <div class="contact-info-column"
+                                            style="flex-direction: column; line-height: normal; gap: 2.5rem;">
+                                            <a href="tel:+966546608557" class="contact-info-link"><img
+                                                    class="icon icon-lg"
+                                                    src="{{ asset('img/svg/telephone.svg') }}"><span
+                                                    class="ltr-text">&#x200E;+966546608557</span></a>
+                                            <a href="mailto:iec360@umbrella.sa" class="contact-info-link"><img
+                                                    class="icon icon-lg" src="{{ asset('img/svg/email.svg') }}"
+                                                    alt="Email">iec360@umbrella.sa</a>
+                                            <a href="https://www.instagram.com/iec360expo"
+                                                class="contact-info-link"><img class="icon icon-lg"
+                                                    src="{{ asset('img/svg/instagram.svg') }}">iec360expo</a>
+                                            <a href="https://www.snapchat.com/add/iec360_expo"
+                                                class="contact-info-link"><img class="icon icon-lg"
+                                                    src="{{ asset('img/svg/snapchat.svg') }}">Iec360_expo</a>
                                         </div>
                                         <!-- Column 2 -->
-                                        <div class="contact-info-column" style="flex-direction: column; line-height: normal; gap: 2.5rem;">
-                                            <a href="https://www.linkedin.com/company/iec360/" class="contact-info-link"><img class="icon icon-lg" src="{{ asset('img/svg/linkedin.svg') }}">IEC360°EXPO</a>
-                                            <a href="https://www.tiktok.com/@iec360expo" class="contact-info-link"><img class="icon icon-lg" src="{{ asset('img/svg/tiktok.svg') }}">iec360expo</a>
-                                            <a href="https://x.com/iec360expo_?s=21&t=iGZAEwWtbPUSNp4pkiKuGA" class="contact-info-link"><img class="icon icon-lg" src="{{ asset('img/svg/x.svg') }}">@iec360expo_</a>
-                                            <a href="https://youtube.com/@iec360expo?si=p2vvjSIvLwd78adw" class="contact-info-link"><img class="icon icon-lg" src="{{ asset('img/svg/youtube.svg') }}">@iec360expo</a>
+                                        <div class="contact-info-column"
+                                            style="flex-direction: column; line-height: normal; gap: 2.5rem;">
+                                            <a href="https://www.linkedin.com/company/iec360/"
+                                                class="contact-info-link"><img class="icon icon-lg"
+                                                    src="{{ asset('img/svg/linkedin.svg') }}">IEC360°EXPO</a>
+                                            <a href="https://www.tiktok.com/@iec360expo" class="contact-info-link"><img
+                                                    class="icon icon-lg"
+                                                    src="{{ asset('img/svg/tiktok.svg') }}">iec360expo</a>
+                                            <a href="https://x.com/iec360expo_?s=21&t=iGZAEwWtbPUSNp4pkiKuGA"
+                                                class="contact-info-link"><img class="icon icon-lg"
+                                                    src="{{ asset('img/svg/x.svg') }}">@iec360expo_</a>
+                                            <a href="https://youtube.com/@iec360expo?si=p2vvjSIvLwd78adw"
+                                                class="contact-info-link"><img class="icon icon-lg"
+                                                    src="{{ asset('img/svg/youtube.svg') }}">@iec360expo</a>
                                         </div>
                                     </div>
                                 </div>
@@ -4965,8 +5344,8 @@ experience that unites ambitious minds and industry leaders under one roof"
     let selectedRole = null;
 
     function applyRoleOrder(role) {
-        const visitorCard = document.getElementById('visitor-card');
-        const visitorForm = document.getElementById('visitor-form');
+        const iconPlusCard = document.getElementById('icon-plus-card');
+        const iconPlusForm = document.getElementById('icon-plus-form');
         const exhibitorCard = document.getElementById('exhibitor-card');
         const exhibitorForm = document.getElementById('exhibitor-form');
         const iconCard = document.getElementById('icon-card');
@@ -4978,36 +5357,36 @@ experience that unites ambitious minds and industry leaders under one roof"
             if (sponsorLogo) sponsorLogo.style.order = '0';
             exhibitorCard.style.order = '1';
             exhibitorForm.style.order = '2';
-            iconCard.style.order = '3';
-            iconForm.style.order = '4';
+            iconPlusCard.style.order = '3';
+            iconPlusForm.style.order = '4';
             if (guestLogo) guestLogo.style.order = '5';
-            visitorCard.style.order = '6';
-            visitorForm.style.order = '7';
+            iconCard.style.order = '6';
+            iconForm.style.order = '7';
         };
 
         setBaseOrder();
     }
 
     function toggleRoleVisibility(role) {
-        const visitorElements = [document.getElementById('visitor-card'), document.getElementById('visitor-form')];
+        const iconPlusElements = [document.getElementById('icon-plus-card'), document.getElementById('icon-plus-form')];
         const exhibitorElements = [document.getElementById('exhibitor-card'), document.getElementById(
             'exhibitor-form')];
         const iconElements = [document.getElementById('icon-card'), document.getElementById('icon-form')];
 
-        if (role === 'visitor') {
-            visitorElements.forEach(el => el.style.display = '');
+        if (role === 'icon-plus') {
+            iconPlusElements.forEach(el => el.style.display = '');
             exhibitorElements.forEach(el => el.style.display = 'none');
             iconElements.forEach(el => el.style.display = 'none');
         } else if (role === 'exhibitor') {
             exhibitorElements.forEach(el => el.style.display = '');
-            visitorElements.forEach(el => el.style.display = 'none');
+            iconPlusElements.forEach(el => el.style.display = 'none');
             iconElements.forEach(el => el.style.display = 'none');
         } else if (role === 'icon') {
             iconElements.forEach(el => el.style.display = '');
-            visitorElements.forEach(el => el.style.display = 'none');
+            iconPlusElements.forEach(el => el.style.display = 'none');
             exhibitorElements.forEach(el => el.style.display = 'none');
         } else {
-            [...visitorElements, ...exhibitorElements, ...iconElements].forEach(el => el.style.display = '');
+            [...iconPlusElements, ...exhibitorElements, ...iconElements].forEach(el => el.style.display = '');
         }
     }
 
@@ -5023,7 +5402,7 @@ experience that unites ambitious minds and industry leaders under one roof"
         const roleCards = document.getElementById('role-cards');
         roleCards.classList.add('has-selection');
         roleCards.classList.add('hide-cards');
-        roleCards.classList.toggle('guest-selected', role === 'visitor');
+        roleCards.classList.toggle('guest-selected', role === 'icon');
 
         const guestLogo = document.getElementById('guest-row-logo');
         if (guestLogo && role) {
@@ -5031,10 +5410,10 @@ experience that unites ambitious minds and industry leaders under one roof"
         }
 
         const roles = [{
-                key: 'visitor',
-                card: 'visitor-card',
-                form: 'visitor-form',
-                cta: 'visitor-cta'
+                key: 'icon-plus',
+                card: 'icon-plus-card',
+                form: 'icon-plus-form',
+                cta: 'icon-plus-cta'
             },
             {
                 key: 'exhibitor',
@@ -5076,9 +5455,9 @@ experience that unites ambitious minds and industry leaders under one roof"
         roleCards.classList.remove('hide-cards');
         roleCards.classList.remove('guest-selected');
 
-        document.getElementById('visitor-card').classList.remove('selected', 'dimmed');
-        document.getElementById('visitor-cta').style.display = 'flex';
-        document.getElementById('visitor-form').classList.remove('active');
+        document.getElementById('icon-plus-card').classList.remove('selected', 'dimmed');
+        document.getElementById('icon-plus-cta').style.display = 'flex';
+        document.getElementById('icon-plus-form').classList.remove('active');
 
         document.getElementById('exhibitor-card').classList.remove('selected', 'dimmed');
         document.getElementById('exhibitor-cta').style.display = 'flex';
@@ -5126,10 +5505,14 @@ experience that unites ambitious minds and industry leaders under one roof"
 
     let hallSelectionTargetId = null;
 
-    function openHallDesign(targetInputId) {
+    function openHallDesign(targetInputId, bookingTarget = 'icon') {
         hallSelectionTargetId = targetInputId;
-        const localeSuffix = currentLocale ? `?locale=${encodeURIComponent(currentLocale)}` : '';
-        window.open((window.APP_BASE_PATH || '') + '/iec360/hall-design' + localeSuffix, '_blank');
+        const params = new URLSearchParams();
+        if (currentLocale) {
+            params.set('locale', currentLocale);
+        }
+        params.set('target', bookingTarget);
+        window.open((window.APP_BASE_PATH || '') + '/iec360/hall-design?' + params.toString(), '_blank');
     }
 
 
@@ -5146,7 +5529,9 @@ experience that unites ambitious minds and industry leaders under one roof"
         let input = targetId ? document.getElementById(targetId) : null;
         if (!input) {
             input = document.getElementById('icon-location-selection') ||
+                document.getElementById('icon-plus-location-selection') ||
                 document.querySelector('#icon-form input[name="location_selection"]') ||
+                document.querySelector('#icon-plus-form input[name="location_selection"]') ||
                 document.querySelector('input[name="location_selection"]');
         }
         if (input) {
@@ -5157,6 +5542,8 @@ experience that unites ambitious minds and industry leaders under one roof"
             const form = input.closest('form');
             if (form && form.id === 'icon-registration-form') {
                 selectRole('icon');
+            } else if (form && form.id === 'icon-plus-registration-form') {
+                selectRole('icon-plus');
             }
             try {
                 input.scrollIntoView({
@@ -5184,9 +5571,13 @@ experience that unites ambitious minds and industry leaders under one roof"
             input = document.getElementById('icon-location-selection') ||
                 document.querySelector('#icon-form input[name="location_selection"]');
         }
+        if (!input && target === 'icon-plus') {
+            input = document.getElementById('icon-plus-location-selection') ||
+                document.querySelector('#icon-plus-form input[name="location_selection"]');
+        }
 
         if (input) {
-            selectRole('icon');
+            selectRole(target === 'icon-plus' ? 'icon-plus' : 'icon');
             input.value = space;
             input.dispatchEvent(new Event('input', {
                 bubbles: true
@@ -5209,14 +5600,13 @@ experience that unites ambitious minds and industry leaders under one roof"
     }
 
     function initAjaxRegistrationForms() {
-        const visitorForm = document.getElementById('visitor-registration-form');
-        if (visitorForm) {
-            bindAjaxRegistrationForm(visitorForm, {
+        const iconPlusForm = document.getElementById('icon-plus-registration-form');
+        if (iconPlusForm) {
+            bindAjaxRegistrationForm(iconPlusForm, {
                 onSuccess: (payload) => {
-                    visitorForm.reset();
-                    resetHeardAboutSelectsWithin(visitorForm);
+                    iconPlusForm.reset();
                     clearRole();
-                    showSuccessPopup(getSuccessPopupContent(visitorForm, payload));
+                    showSuccessPopup(getSuccessPopupContent(iconPlusForm, payload));
                 },
             });
         }
@@ -5604,7 +5994,8 @@ experience that unites ambitious minds and industry leaders under one roof"
         event.target.reset();
     }
 
-    const initialForm = @json($visitorShouldOpen ? 'visitor' : ($sponsorShouldOpen ? 'sponsor' : ($iconShouldOpen ? 'icon' : '')));
+    const initialForm = @json($iconPlusShouldOpen ? 'icon-plus' : ($sponsorShouldOpen ? 'sponsor' : ($iconShouldOpen ?
+        'icon' : '')));
     document.addEventListener('DOMContentLoaded', () => {
         initHeardAboutSelects();
         initAjaxRegistrationForms();
@@ -5617,8 +6008,8 @@ experience that unites ambitious minds and industry leaders under one roof"
             });
         });
 
-        if (initialForm === 'visitor') {
-            selectRole('visitor');
+        if (initialForm === 'icon-plus') {
+            selectRole('icon-plus');
         } else if (initialForm === 'sponsor') {
             selectRole('exhibitor');
         } else if (initialForm === 'icon') {

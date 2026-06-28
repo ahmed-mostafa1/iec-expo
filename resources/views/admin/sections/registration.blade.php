@@ -33,9 +33,12 @@
         @php
             $title = old('title', $content['title'] ?? []);
             $description = old('description', $content['description'] ?? []);
-            $visitorCard = old('visitor_card', $content['visitor_card'] ?? []);
-            $visitorForm = old('visitor_form', $content['visitor_form'] ?? []);
-            $visitorFields = $visitorForm['fields'] ?? [];
+            $visitorCard = old('icon_plus_card', $content['icon_plus_card'] ?? []);
+            $visitorForm = old('icon_plus_form', $content['icon_plus_form'] ?? []);
+            $visitorFields = array_merge(
+                $visitorForm['fields_step_one'] ?? [],
+                $visitorForm['fields_step_two'] ?? []
+            );
             $exhibitorCard = old('exhibitor_card', $content['exhibitor_card'] ?? []);
             $exhibitorForm = old('exhibitor_form', $content['exhibitor_form'] ?? []);
             $exhibitorFieldsStepOne = $exhibitorForm['fields_step_one'] ?? [];
@@ -81,46 +84,46 @@
             <section class="bg-white rounded-2xl border border-gray-200 shadow-sm p-6 space-y-6">
                 <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
                     <div class="space-y-4" data-node-group>
-                        <h2 class="text-lg font-semibold text-gray-900">{{ __('Guest pathway') }}</h2>
+                        <h2 class="text-lg font-semibold text-gray-900">{{ __('Icon Plus pathway') }}</h2>
                         <div class="rounded-xl border border-gray-200 p-4 bg-gradient-to-br from-gray-50 to-white space-y-3">
-                            <button type="button" class="w-full text-left" data-node-trigger="visitor-card">
+                            <button type="button" class="w-full text-left" data-node-trigger="icon-plus-card">
                                 <p class="text-s uppercase font-semibold text-emerald-700">{{ __('Card block') }}</p>
                                 <p class="text-lg font-bold text-gray-900">{{ data_get($visitorCard, 'title.en') }}</p>
                                 <p class="text-sm text-gray-600">{{ data_get($visitorCard, 'description.en') }}</p>
                             </button>
-                            <div class="space-y-4 hidden" data-node-panel="visitor-card">
+                            <div class="space-y-4 hidden" data-node-panel="icon-plus-card">
                                 <div>
                                     <label class="text-s font-semibold text-gray-500 uppercase">{{ __('Title (EN)') }}</label>
-                                    <input type="text" name="visitor_card[title][en]"
-                                        value="{{ old('visitor_card.title.en', data_get($visitorCard, 'title.en')) }}"
+                                    <input type="text" name="icon_plus_card[title][en]"
+                                        value="{{ old('icon_plus_card.title.en', data_get($visitorCard, 'title.en')) }}"
                                         class="w-full mt-1 rounded-lg border-gray-200 text-sm" />
                                 </div>
                                 <div>
                                     <label class="text-s font-semibold text-gray-500 uppercase">{{ __('Title (AR)') }}</label>
-                                    <input type="text" name="visitor_card[title][ar]"
-                                        value="{{ old('visitor_card.title.ar', data_get($visitorCard, 'title.ar')) }}"
+                                    <input type="text" name="icon_plus_card[title][ar]"
+                                        value="{{ old('icon_plus_card.title.ar', data_get($visitorCard, 'title.ar')) }}"
                                         class="w-full mt-1 rounded-lg border-gray-200 text-sm" />
                                 </div>
                                 <div>
                                     <label class="text-s font-semibold text-gray-500 uppercase">{{ __('Description (EN)') }}</label>
-                                    <textarea name="visitor_card[description][en]" rows="2"
-                                        class="w-full mt-1 rounded-lg border-gray-200 text-sm">{{ old('visitor_card.description.en', data_get($visitorCard, 'description.en')) }}</textarea>
+                                    <textarea name="icon_plus_card[description][en]" rows="2"
+                                        class="w-full mt-1 rounded-lg border-gray-200 text-sm">{{ old('icon_plus_card.description.en', data_get($visitorCard, 'description.en')) }}</textarea>
                                 </div>
                                 <div>
                                     <label class="text-s font-semibold text-gray-500 uppercase">{{ __('Description (AR)') }}</label>
-                                    <textarea name="visitor_card[description][ar]" rows="2"
-                                        class="w-full mt-1 rounded-lg border-gray-200 text-sm">{{ old('visitor_card.description.ar', data_get($visitorCard, 'description.ar')) }}</textarea>
+                                    <textarea name="icon_plus_card[description][ar]" rows="2"
+                                        class="w-full mt-1 rounded-lg border-gray-200 text-sm">{{ old('icon_plus_card.description.ar', data_get($visitorCard, 'description.ar')) }}</textarea>
                                 </div>
                                 <div>
                                     <label class="text-s font-semibold text-gray-500 uppercase">{{ __('CTA Label (EN)') }}</label>
-                                    <input type="text" name="visitor_card[cta_label][en]"
-                                        value="{{ old('visitor_card.cta_label.en', data_get($visitorCard, 'cta_label.en')) }}"
+                                    <input type="text" name="icon_plus_card[cta_label][en]"
+                                        value="{{ old('icon_plus_card.cta_label.en', data_get($visitorCard, 'cta_label.en')) }}"
                                         class="w-full mt-1 rounded-lg border-gray-200 text-sm" />
                                 </div>
                                 <div>
                                     <label class="text-s font-semibold text-gray-500 uppercase">{{ __('CTA Label (AR)') }}</label>
-                                    <input type="text" name="visitor_card[cta_label][ar]"
-                                        value="{{ old('visitor_card.cta_label.ar', data_get($visitorCard, 'cta_label.ar')) }}"
+                                    <input type="text" name="icon_plus_card[cta_label][ar]"
+                                        value="{{ old('icon_plus_card.cta_label.ar', data_get($visitorCard, 'cta_label.ar')) }}"
                                         class="w-full mt-1 rounded-lg border-gray-200 text-sm" />
                                 </div>
                             </div>
@@ -129,54 +132,54 @@
                         <div class="rounded-2xl border border-dashed border-emerald-200 bg-emerald-50/30 p-4 space-y-4" data-node-group>
                             <div class="flex items-center justify-between">
                                 <div>
-                                    <h3 class="font-semibold text-gray-900">{{ __('Visitor form skeleton') }}</h3>
+                                    <h3 class="font-semibold text-gray-900">{{ __('Icon Plus form skeleton') }}</h3>
                                     <p class="text-s text-gray-500">{{ __('Click any field stub to edit labels, placeholders, and hints.') }}</p>
                                 </div>
-                                <button type="button" class="text-s font-semibold text-emerald-700" data-node-trigger="visitor-form-meta">
+                                <button type="button" class="text-s font-semibold text-emerald-700" data-node-trigger="icon-plus-form-meta">
                                     {{ __('Edit header') }}
                                 </button>
                             </div>
 
-                            <div class="rounded-xl border border-gray-200 bg-white p-4 space-y-4 hidden" data-node-panel="visitor-form-meta">
+                            <div class="rounded-xl border border-gray-200 bg-white p-4 space-y-4 hidden" data-node-panel="icon-plus-form-meta">
                                 <div class="grid gap-4 md:grid-cols-2">
                                     <div>
                                         <label class="text-s font-semibold text-gray-500 uppercase">{{ __('Form title (EN)') }}</label>
-                                        <input type="text" name="visitor_form[title][en]"
-                                            value="{{ old('visitor_form.title.en', data_get($visitorForm, 'title.en')) }}"
+                                        <input type="text" name="icon_plus_form[title][en]"
+                                            value="{{ old('icon_plus_form.title.en', data_get($visitorForm, 'title.en')) }}"
                                             class="w-full mt-1 rounded-lg border-gray-200 text-sm" />
                                     </div>
                                     <div>
                                         <label class="text-s font-semibold text-gray-500 uppercase">{{ __('Form title (AR)') }}</label>
-                                        <input type="text" name="visitor_form[title][ar]"
-                                            value="{{ old('visitor_form.title.ar', data_get($visitorForm, 'title.ar')) }}"
+                                        <input type="text" name="icon_plus_form[title][ar]"
+                                            value="{{ old('icon_plus_form.title.ar', data_get($visitorForm, 'title.ar')) }}"
                                             class="w-full mt-1 rounded-lg border-gray-200 text-sm" />
                                     </div>
                                 </div>
                                 <div class="grid gap-4 md:grid-cols-2">
                                     <div>
                                         <label class="text-s font-semibold text-gray-500 uppercase">{{ __('Submit button (EN)') }}</label>
-                                        <input type="text" name="visitor_form[cta_submit][en]"
-                                            value="{{ old('visitor_form.cta_submit.en', data_get($visitorForm, 'cta_submit.en')) }}"
+                                        <input type="text" name="icon_plus_form[cta_submit][en]"
+                                            value="{{ old('icon_plus_form.cta_submit.en', data_get($visitorForm, 'cta_submit.en')) }}"
                                             class="w-full mt-1 rounded-lg border-gray-200 text-sm" />
                                     </div>
                                     <div>
                                         <label class="text-s font-semibold text-gray-500 uppercase">{{ __('Submit button (AR)') }}</label>
-                                        <input type="text" name="visitor_form[cta_submit][ar]"
-                                            value="{{ old('visitor_form.cta_submit.ar', data_get($visitorForm, 'cta_submit.ar')) }}"
+                                        <input type="text" name="icon_plus_form[cta_submit][ar]"
+                                            value="{{ old('icon_plus_form.cta_submit.ar', data_get($visitorForm, 'cta_submit.ar')) }}"
                                             class="w-full mt-1 rounded-lg border-gray-200 text-sm" />
                                     </div>
                                 </div>
                                 <div class="grid gap-4 md:grid-cols-2">
                                     <div>
                                         <label class="text-s font-semibold text-gray-500 uppercase">{{ __('Contact link (EN)') }}</label>
-                                        <input type="text" name="visitor_form[cta_contact][en]"
-                                            value="{{ old('visitor_form.cta_contact.en', data_get($visitorForm, 'cta_contact.en')) }}"
+                                        <input type="text" name="icon_plus_form[cta_contact][en]"
+                                            value="{{ old('icon_plus_form.cta_contact.en', data_get($visitorForm, 'cta_contact.en')) }}"
                                             class="w-full mt-1 rounded-lg border-gray-200 text-sm" />
                                     </div>
                                     <div>
                                         <label class="text-s font-semibold text-gray-500 uppercase">{{ __('Contact link (AR)') }}</label>
-                                        <input type="text" name="visitor_form[cta_contact][ar]"
-                                            value="{{ old('visitor_form.cta_contact.ar', data_get($visitorForm, 'cta_contact.ar')) }}"
+                                        <input type="text" name="icon_plus_form[cta_contact][ar]"
+                                            value="{{ old('icon_plus_form.cta_contact.ar', data_get($visitorForm, 'cta_contact.ar')) }}"
                                             class="w-full mt-1 rounded-lg border-gray-200 text-sm" />
                                     </div>
                                 </div>
@@ -185,7 +188,7 @@
                             <div class="space-y-4" data-node-group>
                                 @foreach ($visitorFields as $index => $field)
                                     <div class="rounded-xl border border-gray-200 bg-white p-3">
-                                        <button type="button" class="flex w-full items-center justify-between text-left text-sm" data-node-trigger="visitor-field-{{ $index }}">
+                                        <button type="button" class="flex w-full items-center justify-between text-left text-sm" data-node-trigger="icon-plus-field-{{ $index }}">
                                             <div>
                                                 <p class="text-s font-semibold text-gray-500 uppercase">{{ __('Field') }} #{{ $loop->iteration }}</p>
                                                 <p class="font-semibold text-gray-900">{{ data_get($field, 'label.en') }}</p>
@@ -196,44 +199,44 @@
                                             </svg>
                                         </button>
 
-                                        <div class="mt-3 space-y-3 hidden" data-node-panel="visitor-field-{{ $index }}">
-                                            <input type="hidden" name="visitor_form[fields][{{ $index }}][name]" value="{{ $field['name'] }}">
-                                            <input type="hidden" name="visitor_form[fields][{{ $index }}][type]" value="{{ $field['type'] }}">
+                                        <div class="mt-3 space-y-3 hidden" data-node-panel="icon-plus-field-{{ $index }}">
+                                            <input type="hidden" name="icon_plus_form[fields][{{ $index }}][name]" value="{{ $field['name'] }}">
+                                            <input type="hidden" name="icon_plus_form[fields][{{ $index }}][type]" value="{{ $field['type'] }}">
                                             <div>
                                                 <label class="text-s font-semibold text-gray-500 uppercase">{{ __('Label (EN)') }}</label>
-                                                <input type="text" name="visitor_form[fields][{{ $index }}][label][en]"
-                                                    value="{{ old("visitor_form.fields.$index.label.en", data_get($field, 'label.en')) }}"
+                                                <input type="text" name="icon_plus_form[fields][{{ $index }}][label][en]"
+                                                    value="{{ old("icon_plus_form.fields.$index.label.en", data_get($field, 'label.en')) }}"
                                                     class="w-full mt-1 rounded-lg border-gray-200 text-sm" />
                                             </div>
                                             <div>
                                                 <label class="text-s font-semibold text-gray-500 uppercase">{{ __('Label (AR)') }}</label>
-                                                <input type="text" name="visitor_form[fields][{{ $index }}][label][ar]"
-                                                    value="{{ old("visitor_form.fields.$index.label.ar", data_get($field, 'label.ar')) }}"
+                                                <input type="text" name="icon_plus_form[fields][{{ $index }}][label][ar]"
+                                                    value="{{ old("icon_plus_form.fields.$index.label.ar", data_get($field, 'label.ar')) }}"
                                                     class="w-full mt-1 rounded-lg border-gray-200 text-sm" />
                                             </div>
                                             <div>
                                                 <label class="text-s font-semibold text-gray-500 uppercase">{{ __('Placeholder (EN)') }}</label>
-                                                <input type="text" name="visitor_form[fields][{{ $index }}][placeholder][en]"
-                                                    value="{{ old("visitor_form.fields.$index.placeholder.en", data_get($field, 'placeholder.en')) }}"
+                                                <input type="text" name="icon_plus_form[fields][{{ $index }}][placeholder][en]"
+                                                    value="{{ old("icon_plus_form.fields.$index.placeholder.en", data_get($field, 'placeholder.en')) }}"
                                                     class="w-full mt-1 rounded-lg border-gray-200 text-sm" />
                                             </div>
                                             <div>
                                                 <label class="text-s font-semibold text-gray-500 uppercase">{{ __('Placeholder (AR)') }}</label>
-                                                <input type="text" name="visitor_form[fields][{{ $index }}][placeholder][ar]"
-                                                    value="{{ old("visitor_form.fields.$index.placeholder.ar", data_get($field, 'placeholder.ar')) }}"
+                                                <input type="text" name="icon_plus_form[fields][{{ $index }}][placeholder][ar]"
+                                                    value="{{ old("icon_plus_form.fields.$index.placeholder.ar", data_get($field, 'placeholder.ar')) }}"
                                                     class="w-full mt-1 rounded-lg border-gray-200 text-sm" />
                                             </div>
                                             @if (($field['hint']['en'] ?? null) !== null || ($field['hint']['ar'] ?? null) !== null || ($field['type'] ?? null) === 'file')
                                                 <div>
                                                     <label class="text-s font-semibold text-gray-500 uppercase">{{ __('Hint (EN)') }}</label>
-                                                    <input type="text" name="visitor_form[fields][{{ $index }}][hint][en]"
-                                                        value="{{ old("visitor_form.fields.$index.hint.en", data_get($field, 'hint.en')) }}"
+                                                    <input type="text" name="icon_plus_form[fields][{{ $index }}][hint][en]"
+                                                        value="{{ old("icon_plus_form.fields.$index.hint.en", data_get($field, 'hint.en')) }}"
                                                         class="w-full mt-1 rounded-lg border-gray-200 text-sm" />
                                                 </div>
                                                 <div>
                                                     <label class="text-s font-semibold text-gray-500 uppercase">{{ __('Hint (AR)') }}</label>
-                                                    <input type="text" name="visitor_form[fields][{{ $index }}][hint][ar]"
-                                                        value="{{ old("visitor_form.fields.$index.hint.ar", data_get($field, 'hint.ar')) }}"
+                                                    <input type="text" name="icon_plus_form[fields][{{ $index }}][hint][ar]"
+                                                        value="{{ old("icon_plus_form.fields.$index.hint.ar", data_get($field, 'hint.ar')) }}"
                                                         class="w-full mt-1 rounded-lg border-gray-200 text-sm" />
                                                 </div>
                                             @endif
@@ -244,16 +247,16 @@
                                                 @foreach ($field['options'] ?? [] as $optionIndex => $option)
                                                         <div class="grid gap-2 md:grid-cols-2">
                                                             <input type="hidden"
-                                                                name="visitor_form[fields][{{ $index }}][options][{{ $optionIndex }}][value]"
-                                                                value="{{ old("visitor_form.fields.$index.options.$optionIndex.value", $option['value'] ?? '') }}">
+                                                                name="icon_plus_form[fields][{{ $index }}][options][{{ $optionIndex }}][value]"
+                                                                value="{{ old("icon_plus_form.fields.$index.options.$optionIndex.value", $option['value'] ?? '') }}">
                                                             <input type="text"
-                                                                name="visitor_form[fields][{{ $index }}][options][{{ $optionIndex }}][en]"
-                                                                value="{{ old("visitor_form.fields.$index.options.$optionIndex.en", $option['en']) }}"
+                                                                name="icon_plus_form[fields][{{ $index }}][options][{{ $optionIndex }}][en]"
+                                                                value="{{ old("icon_plus_form.fields.$index.options.$optionIndex.en", $option['en']) }}"
                                                                 class="rounded-lg border-gray-200 text-sm"
                                                                 placeholder="{{ __('Option (EN)') }}" />
                                                             <input type="text"
-                                                                name="visitor_form[fields][{{ $index }}][options][{{ $optionIndex }}][ar]"
-                                                                value="{{ old("visitor_form.fields.$index.options.$optionIndex.ar", $option['ar']) }}"
+                                                                name="icon_plus_form[fields][{{ $index }}][options][{{ $optionIndex }}][ar]"
+                                                                value="{{ old("icon_plus_form.fields.$index.options.$optionIndex.ar", $option['ar']) }}"
                                                                 class="rounded-lg border-gray-200 text-sm"
                                                                 placeholder="{{ __('Option (AR)') }}" />
                                                         </div>
@@ -811,3 +814,4 @@
         });
     </script>
 @endsection
+

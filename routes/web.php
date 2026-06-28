@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\ContactInfoController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\HallSpaceBookingController;
 use App\Http\Controllers\Admin\HeroMediaController;
+use App\Http\Controllers\Admin\IconPlusRegistrationController as AdminIconPlusController;
 use App\Http\Controllers\Admin\IconRegistrationController as AdminIconController;
 use App\Http\Controllers\Admin\LandingSectionController;
 use App\Http\Controllers\Admin\OrganizerController;
@@ -15,14 +16,15 @@ use App\Http\Controllers\Admin\VisitorRegistrationController as AdminVisitorCont
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\Public\AnalyticsController;
 use App\Http\Controllers\Public\ContactController;
+use App\Http\Controllers\Public\IconPlusRegistrationController;
 use App\Http\Controllers\Public\IconRegistrationController;
 use App\Http\Controllers\Public\LandingPageController;
 use App\Http\Controllers\Public\ParticipantShowController as PublicParticipantShowController;
 use App\Http\Controllers\Public\SponsorRegistrationController;
 use App\Http\Controllers\Public\SponsorShowController as PublicSponsorShowController;
 use App\Http\Controllers\Public\VisitorRegistrationController;
-use App\Models\HallSpaceBooking;
 use App\Models\PublicSponsor as PublicSponsorModel;
+use App\Services\HallSpaceService;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -106,15 +108,15 @@ Route::post('/generate-pdf', [DocumentController::class, 'generate'])
     ->name('contract.generate-pdf');
 
 Route::get('/hall-design', function () {
-    // Only show spaces explicitly booked by admin (HallSpaceBooking) as occupied.
-    $occupiedSpaces = HallSpaceBooking::pluck('space')
-        ->filter()
-        ->map(fn ($space) => strtoupper($space))
-        ->unique()
-        ->values()
-        ->all();
+    $occupiedSpaces = HallSpaceService::occupiedSpaces();
+    $iconPlusSpaces = HallSpaceService::iconPlusSpaces();
+    $target = request()->query('target', 'icon');
 
-    return view('public.hall-design', compact('occupiedSpaces'));
+    if (! in_array($target, ['icon', 'icon-plus'], true)) {
+        $target = 'icon';
+    }
+
+    return view('public.hall-design', compact('occupiedSpaces', 'iconPlusSpaces', 'target'));
 });
 
 Route::redirect('/login', '/admin/login')->name('login');
@@ -158,6 +160,13 @@ Route::prefix('{locale}')
 
         Route::get('/register/icon/{registration}/pdf', [IconRegistrationController::class, 'download'])
             ->name('public.register.icon.pdf')
+            ->middleware('signed');
+
+        Route::post('/register/icon-plus', [IconPlusRegistrationController::class, 'store'])
+            ->name('public.register.icon-plus');
+
+        Route::get('/register/icon-plus/{registration}/pdf', [IconPlusRegistrationController::class, 'download'])
+            ->name('public.register.icon-plus.pdf')
             ->middleware('signed');
 
         Route::post('/contact', [ContactController::class, 'submit'])
@@ -215,6 +224,25 @@ Route::prefix('admin')
 
         Route::post('/icon-registrations/{registration}/pdf/regenerate', [AdminIconController::class, 'regeneratePdf'])
             ->name('icons.regenerate-pdf');
+
+        // Icon Plus registrations
+        Route::get('/icon-plus-registrations', [AdminIconPlusController::class, 'index'])
+            ->name('icon-plus.index');
+
+        Route::get('/icon-plus-registrations/export', [AdminIconPlusController::class, 'export'])
+            ->name('icon-plus.export');
+
+        Route::get('/icon-plus-registrations/{registration}', [AdminIconPlusController::class, 'show'])
+            ->name('icon-plus.show');
+
+        Route::post('/icon-plus-registrations/{registration}/status', [AdminIconPlusController::class, 'updateStatus'])
+            ->name('icon-plus.update-status');
+
+        Route::get('/icon-plus-registrations/{registration}/pdf', [AdminIconPlusController::class, 'downloadPdf'])
+            ->name('icon-plus.download-pdf');
+
+        Route::post('/icon-plus-registrations/{registration}/pdf/regenerate', [AdminIconPlusController::class, 'regeneratePdf'])
+            ->name('icon-plus.regenerate-pdf');
 
         // Visitor registrations
 

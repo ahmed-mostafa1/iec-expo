@@ -122,11 +122,25 @@ $seoImage = asset(config('seo.image'));
       -webkit-user-drag: none;
     }
 
+    .plan img {
+      position: relative;
+      z-index: 1;
+    }
+
+    .underlay {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 0;
+    }
+
     .overlay {
       position: absolute;
       inset: 0;
       width: 100%;
       height: 100%;
+      z-index: 2;
     }
 
     .hitbox {
@@ -147,11 +161,56 @@ $seoImage = asset(config('seo.image'));
       stroke-width: 3;
     }
 
+    .hitbox.icon-plus-space {
+      fill: rgba(234, 179, 8, 0.07);
+      stroke: rgba(202, 138, 4, 0.5);
+      stroke-width: 3;
+    }
+
+    .hitbox.icon-plus-space:hover,
+    .hitbox.icon-plus-space.selected {
+      fill: rgba(234, 179, 8, 0.16);
+      stroke: rgba(180, 83, 9, 0.7);
+      stroke-width: 4;
+    }
+
     .hitbox.occupied {
       fill: rgba(239, 68, 68, 0.35);
       stroke: rgba(220, 38, 38, 0.95);
       stroke-width: 3;
       cursor: not-allowed;
+    }
+
+    .hitbox.icon-plus-reserved {
+      fill: rgba(234, 179, 8, 0.12);
+      stroke: rgba(202, 138, 4, 0.95);
+      stroke-width: 3;
+      cursor: not-allowed;
+    }
+
+    .hitbox.icon-plus-booked {
+      fill: rgba(239, 68, 68, 0.35);
+      stroke: rgba(220, 38, 38, 0.95);
+      stroke-width: 3;
+      cursor: not-allowed;
+    }
+
+    .hitbox.unavailable {
+      fill: rgba(107, 114, 128, 0.2);
+      stroke: rgba(107, 114, 128, 0.7);
+      stroke-width: 2;
+      cursor: not-allowed;
+    }
+
+    .crown-marker {
+      fill: rgba(212, 175, 55, 0.18);
+      stroke: #b8860b;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+      stroke-width: 1.5;
+      pointer-events: none;
+      opacity: 0.3;
+      mix-blend-mode: multiply;
     }
 
     .debug .hitbox {
@@ -243,6 +302,7 @@ $seoImage = asset(config('seo.image'));
       </div>
 
       <div id="plan" class="plan">
+        <svg id="underlay" class="underlay" viewBox="0 0 5891 10574" preserveAspectRatio="xMidYMid meet"></svg>
         <img src="{{ asset('img/hall-design-v2.png') }}" alt="Hall Layout" width="5891" height="10574" decoding="async">
         <svg id="overlay" class="overlay" viewBox="0 0 5891 10574" preserveAspectRatio="xMidYMid meet"></svg>
       </div>
@@ -263,6 +323,7 @@ $seoImage = asset(config('seo.image'));
   <script>
     // Geometry is measured in PDF pixels (base 1653 x 2339).
     const overlay = document.getElementById("overlay");
+    const underlay = document.getElementById("underlay");
     const mapImage = document.querySelector("#plan img");
     const CALIBRATION_URL = "{{ asset('hall-calibration.json') }}";
     const HAS_CALIBRATION_FILE = @json($hasCalibrationFile);
@@ -282,11 +343,14 @@ $seoImage = asset(config('seo.image'));
     const confirmSelectionBtn = document.getElementById("confirmSelection");
     const cancelConfirmBtn = document.getElementById("cancelConfirm");
     const occupiedSpaces = new Set(@json($occupiedSpaces ?? []));
+    const iconPlusSpaces = new Set(@json($iconPlusSpaces ?? []));
+    const bookingTarget = @json($target ?? 'icon');
 
     let selectedEl = null;
     let pendingSpace = null;
     let isOverlayInitialized = false;
     let overlayBatch = null;
+    let underlayBatch = null;
     hideConfirmModal();
 
     function selectSpace(name, el) {
@@ -335,7 +399,7 @@ $seoImage = asset(config('seo.image'));
 
       const params = new URLSearchParams(window.location.search || '');
       const locale = params.get('locale') || 'en';
-      const landingUrl = `/${encodeURIComponent(locale)}?hall_space=${encodeURIComponent(pendingSpace)}&hall_target=icon`;
+      const landingUrl = `/${encodeURIComponent(locale)}?hall_space=${encodeURIComponent(pendingSpace)}&hall_target=${encodeURIComponent(bookingTarget)}`;
       window.location.assign(landingUrl);
     });
 
@@ -348,14 +412,32 @@ $seoImage = asset(config('seo.image'));
       return el;
     }
 
+    function svgUnderEl(tag, attrs = {}, parent = null) {
+      const el = document.createElementNS("http://www.w3.org/2000/svg", tag);
+      for (const [k, v] of Object.entries(attrs)) el.setAttribute(k, v);
+      (parent || underlayBatch || underlay).appendChild(el);
+      return el;
+    }
+
     function addHitbox({ name, x, y, w, h }) {
       const scaledX = useCalibrationCoords ? x : (x * X_SCALE) + X_OFFSET;
       const scaledY = useCalibrationCoords ? y : (y * SCALE_Y) + Y_OFFSET;
       const scaledW = useCalibrationCoords ? w : w * X_SCALE;
       const scaledH = useCalibrationCoords ? h : h * SCALE_Y;
       const isOccupied = occupiedSpaces.has(name);
+      const isIconPlusSpace = iconPlusSpaces.has(name);
+      const isSelectable = !isOccupied && (bookingTarget === 'icon-plus' ? isIconPlusSpace : !isIconPlusSpace);
       const classes = ["hitbox"];
-      if (isOccupied) {
+      if (isIconPlusSpace && bookingTarget === 'icon-plus' && !isOccupied) {
+        classes.push("icon-plus-space");
+      }
+      if (isIconPlusSpace && isOccupied) {
+        classes.push("icon-plus-booked");
+      } else if (isIconPlusSpace && bookingTarget !== 'icon-plus') {
+        classes.push("icon-plus-reserved");
+      } else if (!isIconPlusSpace && bookingTarget === 'icon-plus') {
+        classes.push("unavailable");
+      } else if (isOccupied) {
         classes.push("occupied");
       }
       const r = svgEl("rect", {
@@ -366,7 +448,10 @@ $seoImage = asset(config('seo.image'));
         class: classes.join(" "),
         "data-name": name
       });
-      if (!isOccupied) {
+      if (isIconPlusSpace) {
+        addCrownMarker(scaledX, scaledY, scaledW, scaledH);
+      }
+      if (isSelectable) {
         r.addEventListener("click", () => selectSpace(name, r));
       } else {
         r.style.pointerEvents = 'none';
@@ -376,19 +461,49 @@ $seoImage = asset(config('seo.image'));
 
     function addDirectHitbox({ name, x, y, w, h }) {
       const isOccupied = occupiedSpaces.has(name);
+      const isIconPlusSpace = iconPlusSpaces.has(name);
+      const isSelectable = !isOccupied && (bookingTarget === 'icon-plus' ? isIconPlusSpace : !isIconPlusSpace);
       const classes = ["hitbox"];
-      if (isOccupied) classes.push("occupied");
+      if (isIconPlusSpace && bookingTarget === 'icon-plus' && !isOccupied) {
+        classes.push("icon-plus-space");
+      }
+      if (isIconPlusSpace && isOccupied) {
+        classes.push("icon-plus-booked");
+      } else if (isIconPlusSpace && bookingTarget !== 'icon-plus') {
+        classes.push("icon-plus-reserved");
+      } else if (!isIconPlusSpace && bookingTarget === 'icon-plus') {
+        classes.push("unavailable");
+      } else if (isOccupied) {
+        classes.push("occupied");
+      }
       const r = svgEl("rect", {
         x, y, width: w, height: h,
         class: classes.join(" "),
         "data-name": name
       });
-      if (!isOccupied) {
+      if (isIconPlusSpace) {
+        addCrownMarker(x, y, w, h);
+      }
+      if (isSelectable) {
         r.addEventListener("click", () => selectSpace(name, r));
       } else {
         r.style.pointerEvents = 'none';
       }
       return r;
+    }
+
+    function addCrownMarker(x, y, w, h) {
+      const markerSize = 110;
+      const marker = svgEl("g", {
+        class: "crown-marker",
+        transform: `translate(${x + (w / 2) - (markerSize / 2)} ${y + (h / 2) - (markerSize / 2)}) scale(${markerSize / 24})`
+      });
+      svgEl("path", {
+        d: "m2 4 3 12h14l3-12-6 7-4-8-4 8-6-7Z"
+      }, marker);
+      svgEl("path", {
+        d: "M5 20h14"
+      }, marker);
     }
 
     function generateAisle({
@@ -502,8 +617,11 @@ $seoImage = asset(config('seo.image'));
 
       SCALE_Y = MAP_HEIGHT / BASE_HEIGHT;
       overlay.setAttribute("viewBox", `0 0 ${MAP_WIDTH} ${MAP_HEIGHT}`);
+      underlay.setAttribute("viewBox", `0 0 ${MAP_WIDTH} ${MAP_HEIGHT}`);
       overlay.replaceChildren();
+      underlay.replaceChildren();
       overlayBatch = document.createDocumentFragment();
+      underlayBatch = document.createDocumentFragment();
 
       const calibrationRects = await fetchCalibrationRects();
       if (calibrationRects.length) {
@@ -517,6 +635,8 @@ $seoImage = asset(config('seo.image'));
 
       overlay.appendChild(overlayBatch);
       overlayBatch = null;
+      underlay.appendChild(underlayBatch);
+      underlayBatch = null;
     }
 
     window.addEventListener("load", initOverlay, { once: true });

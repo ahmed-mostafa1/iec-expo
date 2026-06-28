@@ -51,13 +51,82 @@ class LandingSection extends Model
 
     public function mergeContent(array $defaults): array
     {
-        return array_replace_recursive($defaults, $this->content ?? []);
+        $content = array_replace_recursive($defaults, $this->content ?? []);
+
+        if ($this->section === 'registration') {
+            return $this->repairRegistrationIconPlusArabicCopy($content, $defaults);
+        }
+
+        return $content;
     }
 
     public function saveContent(array $content): void
     {
         $this->content = $content;
         $this->save();
+    }
+
+    /**
+     * @param  array<string, mixed>  $content
+     * @param  array<string, mixed>  $defaults
+     * @return array<string, mixed>
+     */
+    private function repairRegistrationIconPlusArabicCopy(array $content, array $defaults): array
+    {
+        foreach (['icon_plus_card', 'icon_plus_form'] as $key) {
+            if (! isset($content[$key]) || ! is_array($content[$key])) {
+                continue;
+            }
+
+            $content[$key] = $this->repairArabicMojibake(
+                $content[$key],
+                is_array($defaults[$key] ?? null) ? $defaults[$key] : []
+            );
+        }
+
+        return $content;
+    }
+
+    /**
+     * @param  array<string, mixed>  $content
+     * @param  array<string, mixed>  $defaults
+     * @return array<string, mixed>
+     */
+    private function repairArabicMojibake(array $content, array $defaults): array
+    {
+        foreach ($content as $key => $value) {
+            if (is_array($value)) {
+                $content[$key] = $this->repairArabicMojibake(
+                    $value,
+                    is_array($defaults[$key] ?? null) ? $defaults[$key] : []
+                );
+
+                continue;
+            }
+
+            if ($key !== 'ar' || ! is_string($value) || ! $this->looksLikeArabicMojibake($value)) {
+                continue;
+            }
+
+            $content[$key] = is_string($defaults[$key] ?? null)
+                ? $defaults[$key]
+                : $this->decodeArabicMojibake($value);
+        }
+
+        return $content;
+    }
+
+    private function looksLikeArabicMojibake(string $value): bool
+    {
+        return preg_match('/[ØÙÃÂ]/u', $value) === 1
+            && preg_match('/\p{Arabic}/u', $value) !== 1;
+    }
+
+    private function decodeArabicMojibake(string $value): string
+    {
+        $decoded = mb_convert_encoding($value, 'Windows-1252', 'UTF-8');
+
+        return preg_match('/\p{Arabic}/u', $decoded) === 1 ? $decoded : $value;
     }
 
     public static function mediaUrl(?string $path): ?string

@@ -61,10 +61,10 @@ class LandingSectionController extends Controller
             $payload = $content;
             $payload['title'] = $request->input('title');
             $payload['description'] = $request->input('description');
-            $payload['visitor_card'] = $request->input('visitor_card');
-            $payload['visitor_form'] = $this->syncFormConfig(
-                $request->input('visitor_form'),
-                $content['visitor_form'] ?? []
+            $payload['icon_plus_card'] = $request->input('icon_plus_card');
+            $payload['icon_plus_form'] = $this->syncExhibitorForm(
+                $request->input('icon_plus_form', []),
+                $content['icon_plus_form'] ?? []
             );
             $payload['exhibitor_card'] = $request->input('exhibitor_card');
             $payload['exhibitor_form'] = $this->syncExhibitorForm(
@@ -212,7 +212,7 @@ class LandingSectionController extends Controller
         $anchor = Arr::get($definition, 'preview_anchor', '#');
         $locale = app()->getLocale() ?: 'en';
 
-        return route('public.landing', ['locale' => $locale]) . $anchor;
+        return route('public.landing', ['locale' => $locale]).$anchor;
     }
 
     private function syncStats(array $stats, array $existing): array
@@ -222,6 +222,7 @@ class LandingSectionController extends Controller
         return collect($stats)
             ->map(function ($stat, $key) use ($existingById) {
                 $original = $existingById->get($stat['id'] ?? $key, []);
+
                 return [
                     'id' => $stat['id'] ?? $original['id'] ?? $key,
                     'icon' => $original['icon'] ?? $stat['icon'] ?? 'fas fa-circle',
@@ -250,14 +251,32 @@ class LandingSectionController extends Controller
 
     private function syncExhibitorForm(array $submitted, array $existing): array
     {
-        $payload = $submitted;
+        if (Arr::has($submitted, 'fields')) {
+            $submittedFieldsByName = collect(Arr::get($submitted, 'fields', []))->keyBy('name');
+            $submitted['fields_step_one'] = collect(Arr::get($existing, 'fields_step_one', []))
+                ->map(fn (array $field): array => array_replace_recursive(
+                    $field,
+                    $submittedFieldsByName->get($field['name'] ?? '', [])
+                ))
+                ->values()
+                ->all();
+            $submitted['fields_step_two'] = collect(Arr::get($existing, 'fields_step_two', []))
+                ->map(fn (array $field): array => array_replace_recursive(
+                    $field,
+                    $submittedFieldsByName->get($field['name'] ?? '', [])
+                ))
+                ->values()
+                ->all();
+        }
+
+        $payload = array_replace_recursive($existing, $submitted);
         $payload['fields_step_one'] = $this->syncFields(
-            Arr::get($submitted, 'fields_step_one', []),
+            Arr::get($submitted, 'fields_step_one', Arr::get($existing, 'fields_step_one', [])),
             Arr::get($existing, 'fields_step_one', [])
         );
 
         $payload['fields_step_two'] = $this->syncFields(
-            Arr::get($submitted, 'fields_step_two', []),
+            Arr::get($submitted, 'fields_step_two', Arr::get($existing, 'fields_step_two', [])),
             Arr::get($existing, 'fields_step_two', [])
         );
 
@@ -283,7 +302,7 @@ class LandingSectionController extends Controller
                     ->all();
 
                 return [
-                    'name' => $field['name'] ?? $original['name'] ?? 'field_' . $index,
+                    'name' => $field['name'] ?? $original['name'] ?? 'field_'.$index,
                     'type' => $original['type'] ?? $field['type'] ?? 'text',
                     'label' => [
                         'en' => Arr::get($field, 'label.en', ''),
@@ -336,7 +355,7 @@ class LandingSectionController extends Controller
                     ->all();
 
                 return [
-                    'id' => $card['id'] ?? $original['id'] ?? 'support_' . $index,
+                    'id' => $card['id'] ?? $original['id'] ?? 'support_'.$index,
                     'title' => [
                         'en' => Arr::get($card, 'title.en', ''),
                         'ar' => Arr::get($card, 'title.ar', ''),
