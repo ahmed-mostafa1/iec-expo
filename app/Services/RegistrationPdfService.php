@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use App\Models\IconPlusRegistration;
 use App\Models\IconRegistration;
 use App\Models\SponsorRegistration;
 use App\Models\VisitorRegistration;
@@ -49,19 +48,6 @@ class RegistrationPdfService
         $templatePath = $this->resolveTemplatePath(
             $isZoneSpace ? $this->zoneTemplatePaths() : $this->sharedTemplatePaths()
         );
-
-        return $this->generateContractPdf($templatePath, [
-            'organization' => (string) ($registration->organization ?? ''),
-            'name' => (string) ($registration->full_name ?? ''),
-            'cr_copy' => 'See attached file',
-            'hall' => (string) ($registration->location_selection ?? ''),
-        ], $path);
-    }
-
-    public function generateIconPlusPdf(IconPlusRegistration $registration): string
-    {
-        $path = "registrations/icon-plus/{$registration->id}.pdf";
-        $templatePath = $this->resolveTemplatePath($this->iconPlusTemplatePaths());
 
         return $this->generateContractPdf($templatePath, [
             'organization' => (string) ($registration->organization ?? ''),
@@ -387,14 +373,6 @@ class RegistrationPdfService
         ];
     }
 
-    protected function iconPlusTemplatePaths(): array
-    {
-        return [
-            ...$this->configuredTemplatePaths('icon_plus'),
-            ...$this->templatePathsFor('contract-icon-plus.docx'),
-        ];
-    }
-
     protected function sponsorContractValues(SponsorRegistration $registration, string $templatePath): array
     {
         if (basename($templatePath) === 'sponsor-contract.docx') {
@@ -444,7 +422,7 @@ class RegistrationPdfService
 
         $documentRoot = $_SERVER['DOCUMENT_ROOT'] ?? null;
         if (is_string($documentRoot) && $documentRoot !== '') {
-            $paths[] = rtrim($documentRoot, '\\/').DIRECTORY_SEPARATOR.$filename;
+            $paths[] = rtrim($documentRoot, "\\/").DIRECTORY_SEPARATOR.$filename;
         }
 
         $paths[] = base_path("../public_html/{$filename}");

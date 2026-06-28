@@ -51,13 +51,7 @@ class LandingSection extends Model
 
     public function mergeContent(array $defaults): array
     {
-        $content = array_replace_recursive($defaults, $this->content ?? []);
-
-        if ($this->section === 'registration') {
-            return $this->repairRegistrationIconPlusArabicCopy($content, $defaults);
-        }
-
-        return $content;
+        return array_replace_recursive($defaults, $this->content ?? []);
     }
 
     public function saveContent(array $content): void
@@ -66,6 +60,7 @@ class LandingSection extends Model
         $this->save();
     }
 
+<<<<<<< HEAD
     /**
      * @param  array<string, mixed>  $content
      * @param  array<string, mixed>  $defaults
@@ -129,6 +124,8 @@ class LandingSection extends Model
         return preg_match('/\p{Arabic}/u', $decoded) === 1 ? $decoded : $value;
     }
 
+=======
+>>>>>>> parent of 690a80d (added icon plus instead of visitor)
     public static function mediaUrl(?string $path): ?string
     {
         if (! $path) {

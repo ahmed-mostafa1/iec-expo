@@ -39,9 +39,6 @@
                 <a href="{{ route('admin.icons.index') }}" class="block rounded-lg px-2 py-1.5 hover:bg-emerald-50 text-gray-700">
                     {{ __('Icon registrations') }}
                 </a>
-                <a href="{{ route('admin.icon-plus.index') }}" class="block rounded-lg px-2 py-1.5 hover:bg-emerald-50 text-gray-700">
-                    {{ __('Icon Plus registrations') }}
-                </a>
                 <a href="{{ route('admin.visitors.index') }}" class="block rounded-lg px-2 py-1.5 hover:bg-emerald-50 text-gray-700">
                     {{ __('Visitor registrations') }}
                 </a>

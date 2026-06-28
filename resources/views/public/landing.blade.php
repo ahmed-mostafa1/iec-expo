@@ -2874,8 +2874,8 @@ $websiteSchema = [
         aria-labelledby="success-popup-title" aria-describedby="success-popup-message">
         <div class="success-popup-card">
             <img src="{{ asset('img/IEC-logo-v2.png') }}" alt="IEC Logo" class="success-popup-logo">
-            <h3 class="success-popup-title" id="success-popup-title">{{ __('registration.icon_plus.toast_title') }}</h3>
-            <p class="success-popup-message" id="success-popup-message">{{ __('registration.icon_plus.success') }}</p>
+            <h3 class="success-popup-title" id="success-popup-title">{{ __('registration.visitor.toast_title') }}</h3>
+            <p class="success-popup-message" id="success-popup-message">{{ __('registration.visitor.success') }}</p>
             <p class="success-popup-note" id="success-popup-note" hidden></p>
             <div class="success-popup-actions">
                 <button type="button" id="success-popup-close" class="btn btn-primary btn-lg" style="min-width: 200px;">
@@ -3114,13 +3114,6 @@ experience that unites ambitious minds and industry leaders under one roof"
             $iconFieldsStepOneByName = collect($iconFieldsStepOne)->keyBy('name');
             $iconFieldsStepTwoByName = collect($iconFieldsStepTwo)->keyBy('name');
 
-            $iconPlusCard = data_get($registrationSection, 'icon_plus_card', []);
-            $iconPlusForm = data_get($registrationSection, 'icon_plus_form', []);
-            $iconPlusFieldsStepOne = data_get($iconPlusForm, 'fields_step_one', []);
-            $iconPlusFieldsStepTwo = data_get($iconPlusForm, 'fields_step_two', []);
-            $iconPlusFieldsStepOneByName = collect($iconPlusFieldsStepOne)->keyBy('name');
-            $iconPlusFieldsStepTwoByName = collect($iconPlusFieldsStepTwo)->keyBy('name');
-
             $iconCardTitle = $translate(
             data_get($iconCard, 'title') ?? [
             'en' => trans('registration.icon.title', [], 'en'),
@@ -3158,43 +3151,6 @@ experience that unites ambitious minds and industry leaders under one roof"
             ],
             );
 
-            $iconPlusCardTitle = $translate(
-            data_get($iconPlusCard, 'title') ?? [
-            'en' => trans('registration.icon_plus.title', [], 'en'),
-            'ar' => trans('registration.icon_plus.title', [], 'ar'),
-            ],
-            );
-            $iconPlusCardDescription = $translate(
-            data_get($iconPlusCard, 'description') ?? [
-            'en' => trans('registration.icon_plus.description', [], 'en'),
-            'ar' => trans('registration.icon_plus.description', [], 'ar'),
-            ],
-            );
-            $iconPlusCta = $translate(
-            data_get($iconPlusCard, 'cta_label') ?? [
-            'en' => trans('registration.icon_plus.cta_label', [], 'en'),
-            'ar' => trans('registration.icon_plus.cta_label', [], 'ar'),
-            ],
-            );
-            $iconPlusFormTitle = $translate(
-            data_get($iconPlusForm, 'title') ?? [
-            'en' => trans('registration.icon_plus.form_title', [], 'en'),
-            'ar' => trans('registration.icon_plus.form_title', [], 'ar'),
-            ],
-            );
-            $iconPlusBack = $translate(
-            data_get($iconPlusForm, 'cta_back') ?? [
-            'en' => trans('registration.icon_plus.cta_back', [], 'en'),
-            'ar' => trans('registration.icon_plus.cta_back', [], 'ar'),
-            ],
-            );
-            $iconPlusSubmit = $translate(
-            data_get($iconPlusForm, 'cta_submit') ?? [
-            'en' => trans('registration.icon_plus.cta_submit', [], 'en'),
-            'ar' => trans('registration.icon_plus.cta_submit', [], 'ar'),
-            ],
-            );
-
             $fieldCopy = function ($fieldsByName, string $name, string $key, array $fallback) use ($translate) {
             $field = $fieldsByName->get($name);
             $value = $field ? data_get($field, $key) : null;
@@ -3209,11 +3165,9 @@ experience that unites ambitious minds and industry leaders under one roof"
             $visitorFormActive = old('form_identifier') === 'visitor';
             $sponsorFormActive = old('form_identifier') === 'sponsor';
             $iconFormActive = old('form_identifier') === 'icon';
-            $iconPlusFormActive = old('form_identifier') === 'icon-plus';
             $visitorShouldOpen = $visitorFormActive || session()->has('visitor_success');
             $sponsorShouldOpen = $sponsorFormActive || session()->has('sponsor_success');
             $iconShouldOpen = $iconFormActive || session()->has('icon_success');
-            $iconPlusShouldOpen = $iconPlusFormActive || session()->has('icon_plus_success');
             @endphp
 
             <section class="registration" id="register">
@@ -3905,6 +3859,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                                     </div>
                                 </form>
                             </div>
+<<<<<<< HEAD
                             <div class="role-card guest-card" id="icon-plus-card" onclick="selectRole('icon-plus')">
                                 <div class="role-icon">
                                     <svg class="icon icon-lg" viewBox="0 0 24 24">
@@ -4209,6 +4164,13 @@ experience that unites ambitious minds and industry leaders under one roof"
                             </div>
 
                             @if(false)
+=======
+
+                            <div class="row-logo" id="guest-row-logo">
+                                <img src="{{ asset('img/iec-logo-v2.png') }}" alt="IEC Logo" style="text-align:center">
+                            </div>
+
+>>>>>>> parent of 690a80d (added icon plus instead of visitor)
                             <div class="role-card guest-card" id="visitor-card" onclick="selectRole('visitor')">
                                 <div class="role-icon">
                                     <svg class="icon icon-lg" viewBox="0 0 24 24">
@@ -4225,7 +4187,6 @@ experience that unites ambitious minds and industry leaders under one roof"
                                     </svg>
                                 </div>
                             </div>
-
                             <div class="form-card guest-form" id="visitor-form">
                                 @if (session('visitor_success'))
                                 <div
@@ -4457,6 +4418,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                                     </div>
                                 </form>
                             </div>
+<<<<<<< HEAD
                             @endif
                         </div>
                     </div>
@@ -4466,6 +4428,11 @@ experience that unites ambitious minds and industry leaders under one roof"
                     <img src="{{ asset('img/iec-logo-v2.png') }}" alt="IEC Logo"
                         style="text-align:center; padding-top:40px;">
                 </div>
+=======
+                        </div>
+                    </div>
+                </div>
+>>>>>>> parent of 690a80d (added icon plus instead of visitor)
             </section>
 
             <!-- Statistics Section -->
@@ -5328,8 +5295,8 @@ experience that unites ambitious minds and industry leaders under one roof"
     let selectedRole = null;
 
     function applyRoleOrder(role) {
-        const iconPlusCard = document.getElementById('icon-plus-card');
-        const iconPlusForm = document.getElementById('icon-plus-form');
+        const visitorCard = document.getElementById('visitor-card');
+        const visitorForm = document.getElementById('visitor-form');
         const exhibitorCard = document.getElementById('exhibitor-card');
         const exhibitorForm = document.getElementById('exhibitor-form');
         const iconCard = document.getElementById('icon-card');
@@ -5344,33 +5311,33 @@ experience that unites ambitious minds and industry leaders under one roof"
             iconCard.style.order = '3';
             iconForm.style.order = '4';
             if (guestLogo) guestLogo.style.order = '5';
-            iconPlusCard.style.order = '6';
-            iconPlusForm.style.order = '7';
+            visitorCard.style.order = '6';
+            visitorForm.style.order = '7';
         };
 
         setBaseOrder();
     }
 
     function toggleRoleVisibility(role) {
-        const iconPlusElements = [document.getElementById('icon-plus-card'), document.getElementById('icon-plus-form')];
+        const visitorElements = [document.getElementById('visitor-card'), document.getElementById('visitor-form')];
         const exhibitorElements = [document.getElementById('exhibitor-card'), document.getElementById(
             'exhibitor-form')];
         const iconElements = [document.getElementById('icon-card'), document.getElementById('icon-form')];
 
-        if (role === 'icon-plus') {
-            iconPlusElements.forEach(el => el.style.display = '');
+        if (role === 'visitor') {
+            visitorElements.forEach(el => el.style.display = '');
             exhibitorElements.forEach(el => el.style.display = 'none');
             iconElements.forEach(el => el.style.display = 'none');
         } else if (role === 'exhibitor') {
             exhibitorElements.forEach(el => el.style.display = '');
-            iconPlusElements.forEach(el => el.style.display = 'none');
+            visitorElements.forEach(el => el.style.display = 'none');
             iconElements.forEach(el => el.style.display = 'none');
         } else if (role === 'icon') {
             iconElements.forEach(el => el.style.display = '');
-            iconPlusElements.forEach(el => el.style.display = 'none');
+            visitorElements.forEach(el => el.style.display = 'none');
             exhibitorElements.forEach(el => el.style.display = 'none');
         } else {
-            [...iconPlusElements, ...exhibitorElements, ...iconElements].forEach(el => el.style.display = '');
+            [...visitorElements, ...exhibitorElements, ...iconElements].forEach(el => el.style.display = '');
         }
     }
 
@@ -5386,7 +5353,7 @@ experience that unites ambitious minds and industry leaders under one roof"
         const roleCards = document.getElementById('role-cards');
         roleCards.classList.add('has-selection');
         roleCards.classList.add('hide-cards');
-        roleCards.classList.toggle('guest-selected', role === 'icon-plus');
+        roleCards.classList.toggle('guest-selected', role === 'visitor');
 
         const guestLogo = document.getElementById('guest-row-logo');
         if (guestLogo && role) {
@@ -5394,10 +5361,10 @@ experience that unites ambitious minds and industry leaders under one roof"
         }
 
         const roles = [{
-                key: 'icon-plus',
-                card: 'icon-plus-card',
-                form: 'icon-plus-form',
-                cta: 'icon-plus-cta'
+                key: 'visitor',
+                card: 'visitor-card',
+                form: 'visitor-form',
+                cta: 'visitor-cta'
             },
             {
                 key: 'exhibitor',
@@ -5439,9 +5406,9 @@ experience that unites ambitious minds and industry leaders under one roof"
         roleCards.classList.remove('hide-cards');
         roleCards.classList.remove('guest-selected');
 
-        document.getElementById('icon-plus-card').classList.remove('selected', 'dimmed');
-        document.getElementById('icon-plus-cta').style.display = 'flex';
-        document.getElementById('icon-plus-form').classList.remove('active');
+        document.getElementById('visitor-card').classList.remove('selected', 'dimmed');
+        document.getElementById('visitor-cta').style.display = 'flex';
+        document.getElementById('visitor-form').classList.remove('active');
 
         document.getElementById('exhibitor-card').classList.remove('selected', 'dimmed');
         document.getElementById('exhibitor-cta').style.display = 'flex';
@@ -5489,14 +5456,10 @@ experience that unites ambitious minds and industry leaders under one roof"
 
     let hallSelectionTargetId = null;
 
-    function openHallDesign(targetInputId, bookingTarget = 'icon') {
+    function openHallDesign(targetInputId) {
         hallSelectionTargetId = targetInputId;
-        const params = new URLSearchParams();
-        if (currentLocale) {
-            params.set('locale', currentLocale);
-        }
-        params.set('target', bookingTarget);
-        window.open((window.APP_BASE_PATH || '') + '/iec360/hall-design?' + params.toString(), '_blank');
+        const localeSuffix = currentLocale ? `?locale=${encodeURIComponent(currentLocale)}` : '';
+        window.open((window.APP_BASE_PATH || '') + '/iec360/hall-design' + localeSuffix, '_blank');
     }
 
 
@@ -5513,9 +5476,7 @@ experience that unites ambitious minds and industry leaders under one roof"
         let input = targetId ? document.getElementById(targetId) : null;
         if (!input) {
             input = document.getElementById('icon-location-selection') ||
-                document.getElementById('icon-plus-location-selection') ||
                 document.querySelector('#icon-form input[name="location_selection"]') ||
-                document.querySelector('#icon-plus-form input[name="location_selection"]') ||
                 document.querySelector('input[name="location_selection"]');
         }
         if (input) {
@@ -5526,8 +5487,6 @@ experience that unites ambitious minds and industry leaders under one roof"
             const form = input.closest('form');
             if (form && form.id === 'icon-registration-form') {
                 selectRole('icon');
-            } else if (form && form.id === 'icon-plus-registration-form') {
-                selectRole('icon-plus');
             }
             try {
                 input.scrollIntoView({
@@ -5555,13 +5514,9 @@ experience that unites ambitious minds and industry leaders under one roof"
             input = document.getElementById('icon-location-selection') ||
                 document.querySelector('#icon-form input[name="location_selection"]');
         }
-        if (!input && target === 'icon-plus') {
-            input = document.getElementById('icon-plus-location-selection') ||
-                document.querySelector('#icon-plus-form input[name="location_selection"]');
-        }
 
         if (input) {
-            selectRole(target === 'icon-plus' ? 'icon-plus' : 'icon');
+            selectRole('icon');
             input.value = space;
             input.dispatchEvent(new Event('input', {
                 bubbles: true
@@ -5584,13 +5539,14 @@ experience that unites ambitious minds and industry leaders under one roof"
     }
 
     function initAjaxRegistrationForms() {
-        const iconPlusForm = document.getElementById('icon-plus-registration-form');
-        if (iconPlusForm) {
-            bindAjaxRegistrationForm(iconPlusForm, {
+        const visitorForm = document.getElementById('visitor-registration-form');
+        if (visitorForm) {
+            bindAjaxRegistrationForm(visitorForm, {
                 onSuccess: (payload) => {
-                    iconPlusForm.reset();
+                    visitorForm.reset();
+                    resetHeardAboutSelectsWithin(visitorForm);
                     clearRole();
-                    showSuccessPopup(getSuccessPopupContent(iconPlusForm, payload));
+                    showSuccessPopup(getSuccessPopupContent(visitorForm, payload));
                 },
             });
         }
@@ -5978,8 +5934,12 @@ experience that unites ambitious minds and industry leaders under one roof"
         event.target.reset();
     }
 
+<<<<<<< HEAD
     const initialForm = @json($iconPlusShouldOpen ? 'icon-plus' : ($sponsorShouldOpen ? 'sponsor' : ($iconShouldOpen ?
         'icon' : '')));
+=======
+    const initialForm = @json($visitorShouldOpen ? 'visitor' : ($sponsorShouldOpen ? 'sponsor' : ($iconShouldOpen ? 'icon' : '')));
+>>>>>>> parent of 690a80d (added icon plus instead of visitor)
     document.addEventListener('DOMContentLoaded', () => {
         initHeardAboutSelects();
         initAjaxRegistrationForms();
@@ -5992,8 +5952,8 @@ experience that unites ambitious minds and industry leaders under one roof"
             });
         });
 
-        if (initialForm === 'icon-plus') {
-            selectRole('icon-plus');
+        if (initialForm === 'visitor') {
+            selectRole('visitor');
         } else if (initialForm === 'sponsor') {
             selectRole('exhibitor');
         } else if (initialForm === 'icon') {

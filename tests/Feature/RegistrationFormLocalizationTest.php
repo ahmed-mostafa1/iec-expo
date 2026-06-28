@@ -2,7 +2,6 @@
 
 namespace Tests\Feature;
 
-use App\Models\LandingSection;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
@@ -15,10 +14,10 @@ class RegistrationFormLocalizationTest extends TestCase
         $response = $this->get('/en');
 
         $response->assertOk();
-        $response->assertSee('data-success-title="Application submitted"', false);
-        $response->assertSee('data-success-message="Thank you for your Icon Plus application. Our team will follow up soon."', false);
-        $response->assertSee('data-loading-message="Submitting your Icon Plus application..."', false);
-        $response->assertSee('data-loading-button-label="Submitting Icon Plus application..."', false);
+        $response->assertSee('data-success-title="Registration received"', false);
+        $response->assertSee('data-success-message="Thank you for registering as a visitor. We will contact you shortly."', false);
+        $response->assertSee('data-loading-message="Submitting your visitor registration..."', false);
+        $response->assertSee('data-loading-button-label="Submitting visitor registration..."', false);
         $response->assertSee('data-loading-message="Submitting your sponsorship application..."', false);
         $response->assertSee('data-loading-button-label="Submitting sponsorship application..."', false);
         $response->assertSee('data-loading-message="Submitting your Icon application..."', false);
@@ -34,6 +33,7 @@ class RegistrationFormLocalizationTest extends TestCase
         $response = $this->get('/ar');
 
         $response->assertOk();
+<<<<<<< HEAD
         $response->assertSee('data-success-title="'.e(__('registration.icon_plus.toast_title')).'"', false);
         $response->assertSee('data-success-message="'.e(__('registration.icon_plus.success')).'"', false);
         $response->assertSee('data-loading-message="'.e(__('registration.icon_plus.loading_message')).'"', false);
@@ -81,5 +81,15 @@ class RegistrationFormLocalizationTest extends TestCase
         $response->assertSee('data-ar="أيكون بلس"', false);
         $response->assertSee('data-ar="تسجيل أيكون بلس"', false);
         $response->assertDontSee('data-ar="Ø£ÙŠÙƒÙˆÙ† Ø¨Ù„Ø³"', false);
+=======
+        $response->assertSee('data-success-title="تم استلام التسجيل"', false);
+        $response->assertSee('data-success-message="شكرا لتسجيلك كزائر. سنتواصل معك قريبا."', false);
+        $response->assertSee('data-loading-message="جاري إرسال تسجيل الزائر..."', false);
+        $response->assertSee('data-loading-button-label="جاري إرسال تسجيل الزائر..."', false);
+        $response->assertSee('data-loading-message="جاري إرسال طلب الرعاية..."', false);
+        $response->assertSee('data-loading-button-label="جاري إرسال طلب الرعاية..."', false);
+        $response->assertSee('data-loading-message="جاري إرسال طلب الأيكونز..."', false);
+        $response->assertSee('data-loading-button-label="جاري إرسال طلب الأيكونز..."', false);
+>>>>>>> parent of 690a80d (added icon plus instead of visitor)
     }
 }
