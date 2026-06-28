@@ -3860,6 +3860,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                                 </form>
                             </div>
 <<<<<<< HEAD
+<<<<<<< HEAD
                             <div class="role-card guest-card" id="icon-plus-card" onclick="selectRole('icon-plus')">
                                 <div class="role-icon">
                                     <svg class="icon icon-lg" viewBox="0 0 24 24">
@@ -4171,6 +4172,13 @@ experience that unites ambitious minds and industry leaders under one roof"
                             </div>
 
 >>>>>>> parent of 690a80d (added icon plus instead of visitor)
+=======
+
+                            <div class="row-logo" id="guest-row-logo">
+                                <img src="{{ asset('img/iec-logo-v2.png') }}" alt="IEC Logo" style="text-align:center">
+                            </div>
+
+>>>>>>> parent of 690a80d (added icon plus instead of visitor)
                             <div class="role-card guest-card" id="visitor-card" onclick="selectRole('visitor')">
                                 <div class="role-icon">
                                     <svg class="icon icon-lg" viewBox="0 0 24 24">
@@ -4419,6 +4427,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                                 </form>
                             </div>
 <<<<<<< HEAD
+<<<<<<< HEAD
                             @endif
                         </div>
                     </div>
@@ -4428,6 +4437,11 @@ experience that unites ambitious minds and industry leaders under one roof"
                     <img src="{{ asset('img/iec-logo-v2.png') }}" alt="IEC Logo"
                         style="text-align:center; padding-top:40px;">
                 </div>
+=======
+                        </div>
+                    </div>
+                </div>
+>>>>>>> parent of 690a80d (added icon plus instead of visitor)
 =======
                         </div>
                     </div>
@@ -5935,8 +5949,12 @@ experience that unites ambitious minds and industry leaders under one roof"
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     const initialForm = @json($iconPlusShouldOpen ? 'icon-plus' : ($sponsorShouldOpen ? 'sponsor' : ($iconShouldOpen ?
         'icon' : '')));
+=======
+    const initialForm = @json($visitorShouldOpen ? 'visitor' : ($sponsorShouldOpen ? 'sponsor' : ($iconShouldOpen ? 'icon' : '')));
+>>>>>>> parent of 690a80d (added icon plus instead of visitor)
 =======
     const initialForm = @json($visitorShouldOpen ? 'visitor' : ($sponsorShouldOpen ? 'sponsor' : ($iconShouldOpen ? 'icon' : '')));
 >>>>>>> parent of 690a80d (added icon plus instead of visitor)

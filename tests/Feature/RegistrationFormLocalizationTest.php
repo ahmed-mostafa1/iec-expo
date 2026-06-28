@@ -34,6 +34,7 @@ class RegistrationFormLocalizationTest extends TestCase
 
         $response->assertOk();
 <<<<<<< HEAD
+<<<<<<< HEAD
         $response->assertSee('data-success-title="'.e(__('registration.icon_plus.toast_title')).'"', false);
         $response->assertSee('data-success-message="'.e(__('registration.icon_plus.success')).'"', false);
         $response->assertSee('data-loading-message="'.e(__('registration.icon_plus.loading_message')).'"', false);
@@ -82,6 +83,8 @@ class RegistrationFormLocalizationTest extends TestCase
         $response->assertSee('data-ar="تسجيل أيكون بلس"', false);
         $response->assertDontSee('data-ar="Ø£ÙŠÙƒÙˆÙ† Ø¨Ù„Ø³"', false);
 =======
+=======
+>>>>>>> parent of 690a80d (added icon plus instead of visitor)
         $response->assertSee('data-success-title="تم استلام التسجيل"', false);
         $response->assertSee('data-success-message="شكرا لتسجيلك كزائر. سنتواصل معك قريبا."', false);
         $response->assertSee('data-loading-message="جاري إرسال تسجيل الزائر..."', false);
@@ -90,6 +93,9 @@ class RegistrationFormLocalizationTest extends TestCase
         $response->assertSee('data-loading-button-label="جاري إرسال طلب الرعاية..."', false);
         $response->assertSee('data-loading-message="جاري إرسال طلب الأيكونز..."', false);
         $response->assertSee('data-loading-button-label="جاري إرسال طلب الأيكونز..."', false);
+<<<<<<< HEAD
+>>>>>>> parent of 690a80d (added icon plus instead of visitor)
+=======
 >>>>>>> parent of 690a80d (added icon plus instead of visitor)
     }
 }

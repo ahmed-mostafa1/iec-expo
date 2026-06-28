@@ -61,6 +61,7 @@ class LandingSection extends Model
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     /**
      * @param  array<string, mixed>  $content
      * @param  array<string, mixed>  $defaults
@@ -124,6 +125,8 @@ class LandingSection extends Model
         return preg_match('/\p{Arabic}/u', $decoded) === 1 ? $decoded : $value;
     }
 
+=======
+>>>>>>> parent of 690a80d (added icon plus instead of visitor)
 =======
 >>>>>>> parent of 690a80d (added icon plus instead of visitor)
     public static function mediaUrl(?string $path): ?string

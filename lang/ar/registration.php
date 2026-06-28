@@ -3,10 +3,16 @@
 return [
     'common' => [
 <<<<<<< HEAD
+<<<<<<< HEAD
         'submitting' => 'جاري إرسال طلبك...',
         'submitting_button' => 'جاري الإرسال...',
         'popup_button' => 'موافق',
         'location_occupied' => 'هذا الموقع محجوز أو غير متاح.',
+=======
+        'submitting' => 'جاري إرسال الطلب...',
+        'submitting_button' => 'جاري الإرسال...',
+        'popup_button' => 'موافق',
+>>>>>>> parent of 690a80d (added icon plus instead of visitor)
 =======
         'submitting' => 'جاري إرسال الطلب...',
         'submitting_button' => 'جاري الإرسال...',
@@ -22,7 +28,11 @@ return [
     'guest' => [
         'title' => 'الضيوف',
 <<<<<<< HEAD
+<<<<<<< HEAD
         'description' => 'انضم إلينا كضيف وابق على اطلاع بآخر مستجدات الحدث.',
+=======
+        'description' => 'سجل كضيف لتبقى على اطلاع.',
+>>>>>>> parent of 690a80d (added icon plus instead of visitor)
 =======
         'description' => 'سجل كضيف لتبقى على اطلاع.',
 >>>>>>> parent of 690a80d (added icon plus instead of visitor)
@@ -34,6 +44,7 @@ return [
         'success' => 'شكرا لتسجيلك كضيف. سنتواصل معك قريبا.',
     ],
     'sponsor' => [
+<<<<<<< HEAD
 <<<<<<< HEAD
         'success' => 'شكرا لتقديم طلب الرعاية. سيتواصل معك فريقنا قريبا.',
         'success_pdf_pending' => 'شكرا لتقديم طلب الرعاية. سيتم إرسال ملف العقد لاحقا من قبل فريقنا.',
@@ -114,17 +125,46 @@ return [
         'description' => 'قدم لتكون من الأيكونز.',
         'cta_label' => 'اختيار',
         'form_title' => 'تسجيل الأيكونز',
+=======
+        'title' => 'تسجيل الراعي',
+        'description' => 'قدم لتكون من الرعاة.',
+        'cta_label' => 'اختيار',
+        'form_title' => 'تسجيل الراعي',
+>>>>>>> parent of 690a80d (added icon plus instead of visitor)
         'step_one' => 'بيانات الشركة',
         'step_two' => 'المرفقات',
         'cta_next' => 'الخطوة التالية',
         'cta_back' => 'رجوع',
         'cta_submit' => 'إرسال الطلب',
         'toast_title' => 'تم استلام الطلب',
+<<<<<<< HEAD
+=======
+        'success' => 'شكرا لتقديم طلب الرعاية. سيتواصل فريقنا معك قريبا.',
+        'success_pdf_pending' => 'شكرا لتقديم طلب الرعاية. سيتم إرسال ملف العقد لاحقا من قبل فريقنا.',
+        'loading_message' => 'جاري إرسال طلب الرعاية...',
+        'loading_button' => 'جاري إرسال طلب الرعاية...',
+        'popup_note' => 'تم استلام طلبكم وسيتم إرسال نسخة من العقد إلى البريد الإلكتروني الذي قمت بتسجيله. لتأكيد الحجز يرجى سداد كامل المبلغ الإجمالي شاملاً ضريبة القيمة المضافة خلال ساعة واحدة فقط، وإرسال صورة الحوالة على الإيميل: iec360@umbrella.sa',
+    ],
+    'icon' => [
+        'title' => 'تسجيل الأيكونز',
+        'description' => 'قدم لتكون من الأيكونز.',
+        'cta_label' => 'اختيار',
+        'form_title' => 'تسجيل الأيكونز',
+        'step_one' => 'بيانات الشركة',
+        'step_two' => 'المرفقات',
+        'cta_next' => 'الخطوة التالية',
+        'cta_back' => 'رجوع',
+        'cta_submit' => 'إرسال الطلب',
+        'toast_title' => 'تم استلام الطلب',
+>>>>>>> parent of 690a80d (added icon plus instead of visitor)
         'success' => 'شكرا لتقديم طلب الأيكونز. سنتواصل معك قريبا.',
         'success_pdf_pending' => 'شكرا لتقديم طلب الأيكونز. سيتم إرسال ملف العقد لاحقا من قبل فريقنا.',
         'loading_message' => 'جاري إرسال طلب الأيكونز...',
         'loading_button' => 'جاري إرسال طلب الأيكونز...',
         'popup_note' => 'تم استلام طلبكم وسيتم إرسال نسخة من العقد إلى البريد الإلكتروني الذي قمت بتسجيله. لتأكيد الحجز يرجى سداد كامل المبلغ الإجمالي شاملاً ضريبة القيمة المضافة خلال ساعة واحدة فقط، وإرسال صورة الحوالة على الإيميل: iec360@umbrella.sa',
+<<<<<<< HEAD
+>>>>>>> parent of 690a80d (added icon plus instead of visitor)
+=======
 >>>>>>> parent of 690a80d (added icon plus instead of visitor)
         'full_name' => 'الاسم الكامل *',
         'email' => 'البريد الإلكتروني *',
@@ -141,6 +181,9 @@ return [
         'file_hint' => 'ملفات PDF فقط (بحد أقصى 8 ميغابايت)',
         'vat_number' => 'ضريبة القيمة المضافة',
         'cr_number' => 'رقم السجل التجاري',
+<<<<<<< HEAD
+>>>>>>> parent of 690a80d (added icon plus instead of visitor)
+=======
 >>>>>>> parent of 690a80d (added icon plus instead of visitor)
         'cr_copy' => 'نسخة السجل التجاري',
         'company_logo' => 'شعار الشركة',
@@ -148,7 +191,11 @@ return [
         'national_address' => 'العنوان الوطني',
         'national_address_document' => 'مستند العنوان الوطني',
 <<<<<<< HEAD
+<<<<<<< HEAD
         'invalid_location' => 'يقبل أيكون بلس المواقع من L.W.1 إلى L.W.28 ومن R.W.1 إلى R.W.28 فقط.',
+=======
+        'duplicate' => 'القيمة المضافة أو السجل التجاري مسجل مسبقاً في أيقونات المعرض.',
+>>>>>>> parent of 690a80d (added icon plus instead of visitor)
 =======
         'duplicate' => 'القيمة المضافة أو السجل التجاري مسجل مسبقاً في أيقونات المعرض.',
 >>>>>>> parent of 690a80d (added icon plus instead of visitor)
