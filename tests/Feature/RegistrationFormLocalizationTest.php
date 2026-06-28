@@ -33,58 +33,6 @@ class RegistrationFormLocalizationTest extends TestCase
         $response = $this->get('/ar');
 
         $response->assertOk();
-<<<<<<< HEAD
-<<<<<<< HEAD
-        $response->assertSee('data-success-title="'.e(__('registration.icon_plus.toast_title')).'"', false);
-        $response->assertSee('data-success-message="'.e(__('registration.icon_plus.success')).'"', false);
-        $response->assertSee('data-loading-message="'.e(__('registration.icon_plus.loading_message')).'"', false);
-        $response->assertSee('data-loading-button-label="'.e(__('registration.icon_plus.loading_button')).'"', false);
-        $response->assertSee('data-loading-message="'.e(__('registration.sponsor.loading_message')).'"', false);
-        $response->assertSee('data-loading-button-label="'.e(__('registration.sponsor.loading_button')).'"', false);
-        $response->assertSee('data-loading-message="'.e(__('registration.icon.loading_message')).'"', false);
-        $response->assertSee('data-loading-button-label="'.e(__('registration.icon.loading_button')).'"', false);
-    }
-
-    public function test_arabic_landing_page_renders_clean_icon_plus_card_and_form_copy(): void
-    {
-        $response = $this->get('/ar');
-
-        $response->assertOk();
-        $response->assertSee('data-ar="أيكون بلس"', false);
-        $response->assertSee('data-ar="تسجيل أيكون بلس"', false);
-        $response->assertSee('data-ar="الاسم الكامل *"', false);
-        $response->assertDontSee('data-ar="اضغط"', false);
-    }
-
-    public function test_arabic_landing_page_repairs_saved_icon_plus_mojibake_copy(): void
-    {
-        LandingSection::query()->create([
-            'section' => 'registration',
-            'content' => [
-                'icon_plus_card' => [
-                    'title' => [
-                        'en' => 'Icon Plus',
-                        'ar' => 'Ø£ÙŠÙƒÙˆÙ† Ø¨Ù„Ø³',
-                    ],
-                ],
-                'icon_plus_form' => [
-                    'title' => [
-                        'en' => 'Icon Plus Registration',
-                        'ar' => 'ØªØ³Ø¬ÙŠÙ„ Ø£ÙŠÙƒÙˆÙ† Ø¨Ù„Ø³',
-                    ],
-                ],
-            ],
-        ]);
-
-        $response = $this->get('/ar');
-
-        $response->assertOk();
-        $response->assertSee('data-ar="أيكون بلس"', false);
-        $response->assertSee('data-ar="تسجيل أيكون بلس"', false);
-        $response->assertDontSee('data-ar="Ø£ÙŠÙƒÙˆÙ† Ø¨Ù„Ø³"', false);
-=======
-=======
->>>>>>> parent of 690a80d (added icon plus instead of visitor)
         $response->assertSee('data-success-title="تم استلام التسجيل"', false);
         $response->assertSee('data-success-message="شكرا لتسجيلك كزائر. سنتواصل معك قريبا."', false);
         $response->assertSee('data-loading-message="جاري إرسال تسجيل الزائر..."', false);
@@ -93,9 +41,5 @@ class RegistrationFormLocalizationTest extends TestCase
         $response->assertSee('data-loading-button-label="جاري إرسال طلب الرعاية..."', false);
         $response->assertSee('data-loading-message="جاري إرسال طلب الأيكونز..."', false);
         $response->assertSee('data-loading-button-label="جاري إرسال طلب الأيكونز..."', false);
-<<<<<<< HEAD
->>>>>>> parent of 690a80d (added icon plus instead of visitor)
-=======
->>>>>>> parent of 690a80d (added icon plus instead of visitor)
     }
 }
