@@ -48,10 +48,12 @@ class HallSpaceService
      */
     public static function occupiedSpaces(): array
     {
+        // ponytail: a registration no longer auto-occupies its space; only admin
+        // bookings (/admin/hall-spaces) and icon registrations do. Re-add
+        // iconPlusRegistrationSpaces() here if pending picks should hold the space.
         return self::spaceCollection([
             ...self::manualHeldSpaces(),
             ...self::iconRegistrationSpaces(),
-            ...self::iconPlusRegistrationSpaces(),
         ])->values()->all();
     }
 
