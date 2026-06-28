@@ -391,7 +391,7 @@ class RegistrationPdfService
     {
         return [
             ...$this->configuredTemplatePaths('icon_plus'),
-            ...$this->templatePathsFor('contract-icon-plus.docx'),
+            ...$this->templatePathsFor('icon-plust-contract.docx'),
         ];
     }
 
