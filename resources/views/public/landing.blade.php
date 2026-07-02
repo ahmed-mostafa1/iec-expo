@@ -3357,8 +3357,8 @@ experience that unites ambitious minds and industry leaders under one roof"
                                 ];
 
                                 $pdfHint = [
-                                'en' => 'PDF files only (max 8MB)',
-                                'ar' => 'ملفات PDF فقط (بحد أقصى 8 ميغابايت)',
+                                'en' => 'PDF files only (max 10MB)',
+                                'ar' => 'ملفات PDF فقط (بحد أقصى 10 ميغابايت)',
                                 ];
 
                                 $exVatLabel = $fieldCopy($exhibitorFieldsStepTwoByName, 'vat_number', 'label', [

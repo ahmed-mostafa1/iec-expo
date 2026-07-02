@@ -40,10 +40,10 @@ class IconRegistrationRequest extends FormRequest
                     }
                 },
             ],
-            'vat_number' => ['required', 'file', 'mimes:pdf', 'max:8192'],
-            'cr_copy' => ['required', 'file', 'mimes:pdf', 'max:8192'],
-            'national_address_document' => ['required', 'file', 'mimes:pdf', 'max:8192'],
-            'company_logo' => ['required', 'file', 'mimes:pdf', 'max:8192'],
+            'vat_number' => ['required', 'file', 'mimes:pdf', 'max:10240'],
+            'cr_copy' => ['required', 'file', 'mimes:pdf', 'max:10240'],
+            'national_address_document' => ['required', 'file', 'mimes:pdf', 'max:10240'],
+            'company_logo' => ['required', 'file', 'mimes:pdf', 'max:10240'],
             'privacy_policy' => ['accepted'],
         ];
     }
