@@ -31,7 +31,7 @@ class OrganizerController extends Controller
             'url'            => ['nullable', 'url', 'max:255'],
             'display_order'  => ['nullable', 'integer'],
             'is_active'      => ['nullable', 'boolean'],
-            'logo'           => ['nullable', 'image', 'max:2048'],
+            'logo'           => ['nullable', 'image', 'max:10240'],
         ]);
 
         $path = $request->hasFile('logo')
@@ -73,7 +73,7 @@ class OrganizerController extends Controller
             'url'            => ['nullable', 'url', 'max:255'],
             'display_order'  => ['nullable', 'integer'],
             'is_active'      => ['nullable', 'boolean'],
-            'logo'           => ['nullable', 'image', 'max:2048'],
+            'logo'           => ['nullable', 'image', 'max:10240'],
         ]);
 
         $update = [

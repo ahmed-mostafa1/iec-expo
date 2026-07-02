@@ -45,7 +45,7 @@ class PublicSponsorController extends Controller
             'tier'          => ['nullable', 'string', 'max:50', 'in:'.implode(',', array_keys($this->availableTiers))],
             'display_order' => ['nullable', 'integer'],
             'is_active'     => ['nullable', 'boolean'],
-            'logo'          => ['required', 'image', 'max:2048'],
+            'logo'          => ['required', 'image', 'max:10240'],
         ]);
 
         $path = $request->file('logo')->store('logos/sponsors', 'public');
@@ -86,7 +86,7 @@ class PublicSponsorController extends Controller
             'tier'          => ['nullable', 'string', 'max:50', 'in:'.implode(',', array_keys($this->availableTiers))],
             'display_order' => ['nullable', 'integer'],
             'is_active'     => ['nullable', 'boolean'],
-            'logo'          => ['nullable', 'image', 'max:2048'],
+            'logo'          => ['nullable', 'image', 'max:10240'],
         ]);
 
         $update = [
