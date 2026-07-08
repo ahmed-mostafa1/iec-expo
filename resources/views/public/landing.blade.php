@@ -636,7 +636,7 @@ $websiteSchema = [
     .header-right {
         display: flex;
         align-items: center;
-        /* gap: 1rem; */
+        gap: 1rem;
         justify-content: flex-end;
     }
 
@@ -1084,6 +1084,9 @@ $websiteSchema = [
 
         .countdown-grid {
             grid-template-columns: repeat(2, minmax(120px, 1fr));
+        }
+        .header-right{
+            gap: 1px !important;
         }
     }
 
@@ -2533,6 +2536,9 @@ $websiteSchema = [
         .stats-section {
             grid-template-columns: 1fr;
         }
+         .header-right{
+            gap: 1px !important;
+        }
     }
 
     .stat-item {
@@ -2671,6 +2677,9 @@ $websiteSchema = [
         .nav-logo-bu {
             height: 40px;
         }
+         .header-right{
+            gap: 1px !important;
+        }
     }
 
     @media (min-width: 768px) {
@@ -2720,6 +2729,9 @@ $websiteSchema = [
 
         .sponsor-tier-grid.single-sponsor-grid {
             max-width: 100%;
+        }
+         .header-right{
+            gap: 1px !important;
         }
     }
 
@@ -2797,6 +2809,9 @@ $websiteSchema = [
             max-width: 300px;
             aspect-ratio: 1 / 1;
         }
+         .header-right{
+            gap: 1px !important;
+        }
     }
 
     @media (max-width: 767px) {
@@ -2822,12 +2837,18 @@ $websiteSchema = [
             margin-left: 0;
             margin-right: 0;
         }
+         .header-right{
+            gap: 1px !important;
+        }
     }
 
     @media (max-width: 600px) {
         .contact-info-card .contact-info-links.two-columns {
             grid-template-columns: 1fr;
             row-gap: 2.5rem;
+        }
+         .header-right{
+            gap: 1px !important;
         }
     }
 

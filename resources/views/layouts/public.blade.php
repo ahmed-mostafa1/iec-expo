@@ -166,7 +166,7 @@
         .header-actions {
             display: flex;
             align-items: center;
-            /* gap: 1rem; */
+            gap: 1rem;
         }
 
         .header-right {
@@ -277,6 +277,9 @@
             .analytics-main {
                 padding-top: 6rem;
             }
+             .header-right{
+            gap: 1px !important;
+         }
         }
     </style>
     <!-- Google tag (gtag.js) -->

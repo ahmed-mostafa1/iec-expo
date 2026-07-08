@@ -230,7 +230,7 @@
     .header-right {
         display: flex;
         align-items: center;
-        /* gap: 1rem; */
+        gap: 1rem;
         justify-content: flex-end;
     }
 
@@ -604,6 +604,9 @@
         #icons-carousel {
             --carousel-speed-mobile: 64s;
         }
+         .header-right{
+            gap: 1px !important;
+        }
     }
 
     @media (min-width: 768px) {
@@ -614,6 +617,9 @@
         .videos-grid {
             grid-template-columns: repeat(2, 1fr);
         }
+         .header-right{
+            gap: 1px !important;
+        }
     }
 
     @media (min-width: 1024px) {
@@ -623,6 +629,9 @@
 
         .nav-logo-bu {
             height: 48px;
+        }
+         .header-right{
+            gap: 1px !important;
         }
     }
 
@@ -685,6 +694,9 @@
             left: 1.5rem;
             width: 45px;
             height: 45px;
+        }
+         .header-right{
+            gap: 1px !important;
         }
     }
     </style>
