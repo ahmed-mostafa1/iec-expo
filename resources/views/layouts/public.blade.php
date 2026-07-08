@@ -166,7 +166,7 @@
         .header-actions {
             display: flex;
             align-items: center;
-            gap: 1rem;
+            /* gap: 1rem; */
         }
 
         .header-right {
