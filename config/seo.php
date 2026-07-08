@@ -2,7 +2,7 @@
 
 return [
     'site_name' => 'IEC 360 EXPO',
-    'image' => 'img/IEC-logo-nav.png',
+    'image' => 'img/IEC-logo-nav-v2.png',
     'keywords' => [
         'en' => [
             'trade',

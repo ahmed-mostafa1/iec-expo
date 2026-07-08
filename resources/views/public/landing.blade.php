@@ -2883,7 +2883,7 @@ src="https://www.facebook.com/tr?id=2930634037274791&ev=PageView&noscript=1"
 <body class="{{ app()->getLocale() === 'ar' ? 'locale-ar' : 'locale-en' }} is-loading">
     <div class="page-loader" aria-hidden="true">
         <div class="loader-ring">
-            <img src="{{ asset('img/IEC-logo-v2.png') }}" alt="IEC Logo">
+            <img src="{{ asset('img/IEC-logo-v2-1.png') }}" alt="IEC Logo">
         </div>
         <div class="loader-dots">
             <span></span>
@@ -2894,7 +2894,7 @@ src="https://www.facebook.com/tr?id=2930634037274791&ev=PageView&noscript=1"
     </div>
     <div class="form-loader" id="form-processing-overlay" aria-hidden="true" role="status" aria-live="polite">
         <div class="loader-ring">
-            <img src="{{ asset('img/IEC-logo-v2.png') }}" alt="IEC Logo">
+            <img src="{{ asset('img/IEC-logo-v2-1.png') }}" alt="IEC Logo">
         </div>
         <div class="loader-dots">
             <span></span>
@@ -2906,7 +2906,7 @@ src="https://www.facebook.com/tr?id=2930634037274791&ev=PageView&noscript=1"
     <div class="success-popup" id="success-popup" aria-hidden="true" role="dialog" aria-modal="true"
         aria-labelledby="success-popup-title" aria-describedby="success-popup-message">
         <div class="success-popup-card">
-            <img src="{{ asset('img/IEC-logo-v2.png') }}" alt="IEC Logo" class="success-popup-logo">
+            <img src="{{ asset('img/IEC-logo-v2-1.png') }}" alt="IEC Logo" class="success-popup-logo">
             <h3 class="success-popup-title" id="success-popup-title">{{ __('registration.icon_plus.toast_title') }}</h3>
             <p class="success-popup-message" id="success-popup-message">{{ __('registration.icon_plus.success') }}</p>
             <p class="success-popup-note" id="success-popup-note" hidden></p>
@@ -2935,7 +2935,7 @@ src="https://www.facebook.com/tr?id=2930634037274791&ev=PageView&noscript=1"
         <div class="container">
             <div class="header-inner">
                 <a href="{{ route('public.landing', ['locale' => app()->getLocale()]) }}#hero">
-                    <img src="{{ asset('./img/IEC-logo-nav.png') }}" alt="IEC Logo" class="nav-logo" />
+                    <img src="{{ asset('./img/IEC-logo-nav-v2.png') }}" alt="IEC Logo" class="nav-logo" />
                 </a>
                 <nav class="nav">
                     <a href="#" class="btn-primary nav-link" data-en="Home" data-ar="الرئيسية">Home</a>
@@ -4496,7 +4496,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                 </div>
                 <!-- IEC logo -->
                 <div class="row-logo" id="guest-row-logo">
-                    <img src="{{ asset('img/iec-logo-v2.png') }}" alt="IEC Logo"
+                    <img src="{{ asset('img/IEC-logo-v2-1.png') }}" alt="IEC Logo"
                         style="text-align:center; padding-top:40px;">
                 </div>
             </section>
@@ -4930,7 +4930,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                         @php
                         $logoPath = $organizer->logo_path
                         ? asset('storage/' . $organizer->logo_path)
-                        : asset('img/IEC-logo-v2.png');
+                        : asset('img/IEC-logo-v2-1.png');
                         $englishName = $organizer->name ?? '';
                         $arabicName = $organizer->name_ar ?? $englishName;
                         $displayName = $currentLocale === 'ar' ? $arabicName : $englishName;

@@ -709,7 +709,7 @@
         <div class="container">
             <div class="header-inner">
                 <a href="{{ route('public.landing', ['locale' => $locale]) }}#hero">
-                    <img src="{{ asset('./img/IEC-logo-nav.png') }}" alt="IEC Logo" class="nav-logo" />
+                    <img src="{{ asset('./img/IEC-logo-nav-v2.png') }}" alt="IEC Logo" class="nav-logo" />
                 </a>
                 <nav class="nav">
                     <a href="{{ route('public.landing', ['locale' => $locale]) }}#hero" class="nav-link" data-en="Home"

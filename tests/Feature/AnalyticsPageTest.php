@@ -44,7 +44,7 @@ class AnalyticsPageTest extends TestCase
             ->assertSee('Rank')
             ->assertSee('#1')
             ->assertSee('Top result')
-            ->assertSee('IEC-logo-nav.png')
+            ->assertSee('IEC-logo-nav-v2.png')
             ->assertSee('role="tablist"', false)
             ->assertSee('id="tab-acquisition"', false)
             ->assertSee('aria-selected="true"', false)
