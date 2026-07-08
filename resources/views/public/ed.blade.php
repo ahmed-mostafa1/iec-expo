@@ -604,9 +604,9 @@
         #icons-carousel {
             --carousel-speed-mobile: 64s;
         }
-         .header-right{
+         /* .header-right{
             gap: 1px !important;
-        }
+        } */
     }
 
     @media (min-width: 768px) {
@@ -617,9 +617,9 @@
         .videos-grid {
             grid-template-columns: repeat(2, 1fr);
         }
-         .header-right{
+         /* .header-right{
             gap: 1px !important;
-        }
+        } */
     }
 
     @media (min-width: 1024px) {
@@ -630,9 +630,9 @@
         .nav-logo-bu {
             height: 48px;
         }
-         .header-right{
+         /* .header-right{
             gap: 1px !important;
-        }
+        } */
     }
 
     /* To Top Button */
@@ -695,9 +695,9 @@
             width: 45px;
             height: 45px;
         }
-         .header-right{
+         /* .header-right{
             gap: 1px !important;
-        }
+        } */
     }
     </style>
    <!-- Google tag (gtag.js) -->

@@ -277,9 +277,9 @@
             .analytics-main {
                 padding-top: 6rem;
             }
-             .header-right{
+             /* .header-right{
             gap: 1px !important;
-         }
+         } */
         }
     </style>
     <!-- Google tag (gtag.js) -->
