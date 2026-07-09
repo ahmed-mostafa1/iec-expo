@@ -43,7 +43,7 @@ class IconPlusRegistrationRequest extends FormRequest
             ],
             'vat_number' => ['required', 'file', 'mimes:pdf', 'max:10240'],
             'cr_copy_file' => ['required', 'file', 'mimes:pdf', 'max:10240'],
-            'cr_number' => ['required', 'digits:10'],
+            'cr_copy' => ['required', 'digits:10'],
             'national_address_document' => ['required', 'file', 'mimes:pdf', 'max:10240'],
             'company_logo' => ['required', 'file', 'mimes:pdf', 'max:10240'],
             'privacy_policy' => ['accepted'],

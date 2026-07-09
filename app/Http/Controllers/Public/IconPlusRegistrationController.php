@@ -55,7 +55,7 @@ class IconPlusRegistrationController extends Controller
                 'location_selection' => $data['location_selection'],
                 'vat_certificate_path' => $vatCertificatePath,
                 'cr_copy_path' => $crCopyPath,
-                'cr_number' => $data['cr_number'],
+                'cr_copy' => $data['cr_copy'],
                 'national_address_doc_path' => $nationalAddressDocPath,
                 'company_logo_path' => $companyLogoPath,
                 'pdf_status' => 'pending',

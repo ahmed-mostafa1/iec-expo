@@ -16,7 +16,7 @@ class IconPlusRegistration extends Model
         'location_selection',
         'vat_certificate_path',
         'cr_copy_path',
-        'cr_number',
+        'cr_copy',
         'national_address_doc_path',
         'company_logo_path',
         'pdf_path',

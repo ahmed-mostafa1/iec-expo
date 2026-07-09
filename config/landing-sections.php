@@ -145,7 +145,7 @@ return [
                             'placeholder' => ['en' => '300000000000003', 'ar' => '300000000000003'],
                         ],
                         [
-                            'name' => 'cr_number',
+                            'name' => 'cr_copy',
                             'type' => 'text',
                             'label' => ['en' => 'CR Number', 'ar' => 'رقم السجل التجاري'],
                             'placeholder' => ['en' => '1010101010', 'ar' => '1010101010'],
@@ -342,7 +342,7 @@ return [
                             'placeholder' => ['en' => '300000000000003', 'ar' => '300000000000003'],
                         ],
                         [
-                            'name' => 'cr_number',
+                            'name' => 'cr_copy',
                             'type' => 'text',
                             'label' => ['en' => 'CR Number', 'ar' => 'رقم السجل التجاري'],
                             'placeholder' => ['en' => '1010101010', 'ar' => '1010101010'],
@@ -452,7 +452,7 @@ return [
                             'placeholder' => ['en' => '300000000000003', 'ar' => '300000000000003'],
                         ],
                         [
-                            'name' => 'cr_number',
+                            'name' => 'cr_copy',
                             'type' => 'text',
                             'label' => ['en' => 'CR Number', 'ar' => 'رقم السجل التجاري'],
                             'placeholder' => ['en' => '1010101010', 'ar' => '1010101010'],

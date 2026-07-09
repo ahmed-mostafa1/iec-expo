@@ -11,7 +11,7 @@ class UniqueIconVatCr implements ValidationRule
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
         $vat = request()->input('vat_number');
-        $cr  = request()->input('cr_number');
+        $cr  = request()->input('cr_copy');
 
         if (! $vat && ! $cr) {
             return;
@@ -26,9 +26,9 @@ class UniqueIconVatCr implements ValidationRule
 
             if ($cr) {
                 if ($vat) {
-                    $innerQuery->orWhere('cr_number', $cr);
+                    $innerQuery->orWhere('cr_copy', $cr);
                 } else {
-                    $innerQuery->where('cr_number', $cr);
+                    $innerQuery->where('cr_copy', $cr);
                 }
             }
         });

@@ -53,7 +53,7 @@ class RegistrationPdfService
         return $this->generateContractPdf($templatePath, [
             'organization' => (string) ($registration->organization ?? ''),
             'name' => (string) ($registration->full_name ?? ''),
-            'cr_copy' => (string) ($registration->cr_number ?? ''),
+            'cr_copy' => (string) ($registration->cr_copy ?? ''),
             'hall' => (string) ($registration->location_selection ?? ''),
         ], $path);
     }
@@ -66,7 +66,7 @@ class RegistrationPdfService
         return $this->generateContractPdf($templatePath, [
             'organization' => (string) ($registration->organization ?? ''),
             'name' => (string) ($registration->full_name ?? ''),
-            'cr_copy' => (string) ($registration->cr_number ?? ''),
+            'cr_copy' => (string) ($registration->cr_copy ?? ''),
             'hall' => (string) ($registration->location_selection ?? ''),
         ], $path);
     }
@@ -414,7 +414,7 @@ class RegistrationPdfService
         return [
             'organization' => (string) ($registration->organization ?? ''),
             'name' => (string) ($registration->full_name ?? ''),
-            'cr_copy' => (string) ($registration->cr_number ?? ''),
+            'cr_copy' => (string) ($registration->cr_copy ?? ''),
             'hall' => (string) ($registration->location_selection ?? ''),
         ];
     }

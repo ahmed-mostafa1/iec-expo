@@ -62,7 +62,7 @@ class SponsorPdfLifecycleTest extends TestCase
             'location_selection' => '',
             'vat_number' => UploadedFile::fake()->create('vat.pdf', 100, 'application/pdf'),
             'cr_copy_file' => UploadedFile::fake()->create('cr.pdf', 100, 'application/pdf'),
-            'cr_number' => '1234567890',
+            'cr_copy' => '1234567890',
             'national_address_document' => UploadedFile::fake()->create('address.pdf', 100, 'application/pdf'),
             'company_logo' => UploadedFile::fake()->create('logo.pdf', 100, 'application/pdf'),
             'privacy_policy' => '1',
@@ -164,7 +164,7 @@ class SponsorPdfLifecycleTest extends TestCase
             'location_selection' => 'A01',
             'vat_number' => UploadedFile::fake()->create('vat.pdf', 100, 'application/pdf'),
             'cr_copy_file' => UploadedFile::fake()->create('cr.pdf', 100, 'application/pdf'),
-            'cr_number' => '1234567890',
+            'cr_copy' => '1234567890',
             'national_address_document' => UploadedFile::fake()->create('address.pdf', 100, 'application/pdf'),
             'company_logo' => UploadedFile::fake()->create('logo.pdf', 100, 'application/pdf'),
             'privacy_policy' => '1',
@@ -292,7 +292,7 @@ class SponsorPdfLifecycleTest extends TestCase
             'organization' => 'Sponsor Co',
             'sponsor_tier' => 'gold',
             'location_selection' => 'B12',
-            'cr_number' => '1234567890',
+            'cr_copy' => '1234567890',
         ]);
         $registration->id = 7;
         $service = new class extends RegistrationPdfService
@@ -374,7 +374,7 @@ class SponsorPdfLifecycleTest extends TestCase
             'full_name' => 'Icon User',
             'organization' => 'Icon Co',
             'location_selection' => 'A10',
-            'cr_number' => '1234567890',
+            'cr_copy' => '1234567890',
         ]);
         $registration->id = 11;
 
