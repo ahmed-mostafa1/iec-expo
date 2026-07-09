@@ -3392,11 +3392,19 @@ experience that unites ambitious minds and industry leaders under one roof"
                                 'hint',
                                 $pdfHint,
                                 );
-                                $exCrCopyLabel = $fieldCopy($exhibitorFieldsStepTwoByName, 'cr_copy', 'label', [
+                                $exCrCopyLabel = $fieldCopy($exhibitorFieldsStepTwoByName, 'cr_copy_file', 'label', [
                                 'en' => 'CR Copy (Commercial Registration)',
                                 'ar' => 'نسخة السجل التجاري',
                                 ]);
-                                $exCrCopyHint = $fieldCopy($exhibitorFieldsStepTwoByName, 'cr_copy', 'hint', $pdfHint);
+                                $exCrCopyHint = $fieldCopy($exhibitorFieldsStepTwoByName, 'cr_copy_file', 'hint', $pdfHint);
+                                $exCrNumberLabel = $fieldCopy($exhibitorFieldsStepTwoByName, 'cr_number', 'label', [
+                                'en' => 'CR Number (Commercial Registration)',
+                                'ar' => 'رقم السجل التجاري',
+                                ]);
+                                $exCrNumberHint = $fieldCopy($exhibitorFieldsStepTwoByName, 'cr_number', 'hint', [
+                                'en' => '10 digits only',
+                                'ar' => '10 أرقام فقط',
+                                ]);
                                 $exLogoLabel = $fieldCopy($exhibitorFieldsStepTwoByName, 'company_logo', 'label', [
                                 'en' => 'Company Logo',
                                 'ar' => 'شعار الشركة',
@@ -3548,14 +3556,28 @@ experience that unites ambitious minds and industry leaders under one roof"
                                         </div>
                                         <div class="form-grid form-grid-2" style="margin-top: 1rem;">
                                             <div class="form-group">
+                                                <label class="form-label" data-en="{{ e($exCrNumberLabel['en']) }}"
+                                                    data-ar="{{ e($exCrNumberLabel['ar']) }}">{{ $exCrNumberLabel['text'] }}</label>
+                                                <input type="text" name="cr_number" class="form-input" required
+                                                    inputmode="numeric" pattern="\d{10}" maxlength="10">
+                                                <span class="form-hint" data-en="{{ e($exCrNumberHint['en']) }}"
+                                                    data-ar="{{ e($exCrNumberHint['ar']) }}">{{ $exCrNumberHint['text'] }}</span>
+                                                @if ($sponsorFormActive && $errors->has('cr_number'))
+                                                <p class="mt-1 text-xs text-red-600">{{ $errors->first('cr_number') }}
+                                                </p>
+                                                @endif
+                                            </div>
+                                        </div>
+                                        <div class="form-grid form-grid-2" style="margin-top: 1rem;">
+                                            <div class="form-group">
                                                 <label class="form-label" data-en="{{ e($exCrCopyLabel['en']) }}"
                                                     data-ar="{{ e($exCrCopyLabel['ar']) }}">{{ $exCrCopyLabel['text'] }}</label>
-                                                <input type="file" name="cr_copy" class="form-input" required
+                                                <input type="file" name="cr_copy_file" class="form-input" required
                                                     accept="application/pdf">
                                                 <span class="form-hint" data-en="{{ e($exCrCopyHint['en']) }}"
                                                     data-ar="{{ e($exCrCopyHint['ar']) }}">{{ $exCrCopyHint['text'] }}</span>
-                                                @if ($sponsorFormActive && $errors->has('cr_copy'))
-                                                <p class="mt-1 text-xs text-red-600">{{ $errors->first('cr_copy') }}
+                                                @if ($sponsorFormActive && $errors->has('cr_copy_file'))
+                                                <p class="mt-1 text-xs text-red-600">{{ $errors->first('cr_copy_file') }}
                                                 </p>
                                                 @endif
                                             </div>
@@ -3725,11 +3747,19 @@ experience that unites ambitious minds and industry leaders under one roof"
                                 $pdfHint,
                                 );
 
-                                $iconCrCopyLabel = $fieldCopy($iconFieldsStepTwoByName, 'cr_copy', 'label', [
+                                $iconCrCopyLabel = $fieldCopy($iconFieldsStepTwoByName, 'cr_copy_file', 'label', [
                                 'en' => trans('registration.icon.cr_copy', [], 'en'),
                                 'ar' => trans('registration.icon.cr_copy', [], 'ar'),
                                 ]);
-                                $iconCrCopyHint = $fieldCopy($iconFieldsStepTwoByName, 'cr_copy', 'hint', $pdfHint);
+                                $iconCrCopyHint = $fieldCopy($iconFieldsStepTwoByName, 'cr_copy_file', 'hint', $pdfHint);
+                                $iconCrNumberLabel = $fieldCopy($iconFieldsStepTwoByName, 'cr_number', 'label', [
+                                'en' => trans('registration.icon.cr_number', [], 'en'),
+                                'ar' => trans('registration.icon.cr_number', [], 'ar'),
+                                ]);
+                                $iconCrNumberHint = $fieldCopy($iconFieldsStepTwoByName, 'cr_number', 'hint', [
+                                'en' => trans('registration.icon.cr_number_hint', [], 'en'),
+                                'ar' => trans('registration.icon.cr_number_hint', [], 'ar'),
+                                ]);
                                 $iconLogoLabel = $fieldCopy($iconFieldsStepTwoByName, 'company_logo', 'label', [
                                 'en' => trans('registration.icon.company_logo', [], 'en'),
                                 'ar' => trans('registration.icon.company_logo', [], 'ar'),
@@ -3879,14 +3909,28 @@ experience that unites ambitious minds and industry leaders under one roof"
                                         </div>
                                         <div class="form-grid form-grid-2" style="margin-top: 1rem;">
                                             <div class="form-group">
+                                                <label class="form-label" data-en="{{ e($iconCrNumberLabel['en']) }}"
+                                                    data-ar="{{ e($iconCrNumberLabel['ar']) }}">{{ $iconCrNumberLabel['text'] }}</label>
+                                                <input type="text" name="cr_number" class="form-input" required
+                                                    inputmode="numeric" pattern="\d{10}" maxlength="10">
+                                                <span class="form-hint" data-en="{{ e($iconCrNumberHint['en']) }}"
+                                                    data-ar="{{ e($iconCrNumberHint['ar']) }}">{{ $iconCrNumberHint['text'] }}</span>
+                                                @if ($iconFormActive && $errors->has('cr_number'))
+                                                <p class="mt-1 text-xs text-red-600">{{ $errors->first('cr_number') }}
+                                                </p>
+                                                @endif
+                                            </div>
+                                        </div>
+                                        <div class="form-grid form-grid-2" style="margin-top: 1rem;">
+                                            <div class="form-group">
                                                 <label class="form-label" data-en="{{ e($iconCrCopyLabel['en']) }}"
                                                     data-ar="{{ e($iconCrCopyLabel['ar']) }}">{{ $iconCrCopyLabel['text'] }}</label>
-                                                <input type="file" name="cr_copy" class="form-input" required
+                                                <input type="file" name="cr_copy_file" class="form-input" required
                                                     accept="application/pdf">
                                                 <span class="form-hint" data-en="{{ e($iconCrCopyHint['en']) }}"
                                                     data-ar="{{ e($iconCrCopyHint['ar']) }}">{{ $iconCrCopyHint['text'] }}</span>
-                                                @if ($iconFormActive && $errors->has('cr_copy'))
-                                                <p class="mt-1 text-xs text-red-600">{{ $errors->first('cr_copy') }}
+                                                @if ($iconFormActive && $errors->has('cr_copy_file'))
+                                                <p class="mt-1 text-xs text-red-600">{{ $errors->first('cr_copy_file') }}
                                                 </p>
                                                 @endif
                                             </div>
@@ -4048,13 +4092,21 @@ experience that unites ambitious minds and industry leaders under one roof"
                                 'en' => trans('registration.icon_plus.file_hint', [], 'en'),
                                 'ar' => trans('registration.icon_plus.file_hint', [], 'ar'),
                                 ]);
-                                $iconPlusCrCopyLabel = $fieldCopy($iconPlusFieldsStepTwoByName, 'cr_copy', 'label', [
+                                $iconPlusCrCopyLabel = $fieldCopy($iconPlusFieldsStepTwoByName, 'cr_copy_file', 'label', [
                                 'en' => trans('registration.icon_plus.cr_copy', [], 'en'),
                                 'ar' => trans('registration.icon_plus.cr_copy', [], 'ar'),
                                 ]);
-                                $iconPlusCrCopyHint = $fieldCopy($iconPlusFieldsStepTwoByName, 'cr_copy', 'hint', [
+                                $iconPlusCrCopyHint = $fieldCopy($iconPlusFieldsStepTwoByName, 'cr_copy_file', 'hint', [
                                 'en' => trans('registration.icon_plus.file_hint', [], 'en'),
                                 'ar' => trans('registration.icon_plus.file_hint', [], 'ar'),
+                                ]);
+                                $iconPlusCrNumberLabel = $fieldCopy($iconPlusFieldsStepTwoByName, 'cr_number', 'label', [
+                                'en' => trans('registration.icon_plus.cr_number', [], 'en'),
+                                'ar' => trans('registration.icon_plus.cr_number', [], 'ar'),
+                                ]);
+                                $iconPlusCrNumberHint = $fieldCopy($iconPlusFieldsStepTwoByName, 'cr_number', 'hint', [
+                                'en' => trans('registration.icon_plus.cr_number_hint', [], 'en'),
+                                'ar' => trans('registration.icon_plus.cr_number_hint', [], 'ar'),
                                 ]);
                                 $iconPlusLogoLabel = $fieldCopy($iconPlusFieldsStepTwoByName, 'company_logo', 'label', [
                                 'en' => trans('registration.icon_plus.company_logo', [], 'en'),
@@ -4186,14 +4238,27 @@ experience that unites ambitious minds and industry leaders under one roof"
 
                                     <div class="form-grid form-grid-2" style="margin-top: 1rem;">
                                         <div class="form-group">
+                                            <label class="form-label" data-en="{{ e($iconPlusCrNumberLabel['en']) }}"
+                                                data-ar="{{ e($iconPlusCrNumberLabel['ar']) }}">{{ $iconPlusCrNumberLabel['text'] }}</label>
+                                            <input type="text" name="cr_number" class="form-input" required
+                                                inputmode="numeric" pattern="\d{10}" maxlength="10">
+                                            <span class="form-hint" data-en="{{ e($iconPlusCrNumberHint['en']) }}"
+                                                data-ar="{{ e($iconPlusCrNumberHint['ar']) }}">{{ $iconPlusCrNumberHint['text'] }}</span>
+                                            @if ($iconPlusFormActive && $errors->has('cr_number'))
+                                            <p class="mt-1 text-xs text-red-600">{{ $errors->first('cr_number') }}</p>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="form-grid form-grid-2" style="margin-top: 1rem;">
+                                        <div class="form-group">
                                             <label class="form-label" data-en="{{ e($iconPlusCrCopyLabel['en']) }}"
                                                 data-ar="{{ e($iconPlusCrCopyLabel['ar']) }}">{{ $iconPlusCrCopyLabel['text'] }}</label>
-                                            <input type="file" name="cr_copy" class="form-input" required
+                                            <input type="file" name="cr_copy_file" class="form-input" required
                                                 accept="application/pdf">
                                             <span class="form-hint" data-en="{{ e($iconPlusCrCopyHint['en']) }}"
                                                 data-ar="{{ e($iconPlusCrCopyHint['ar']) }}">{{ $iconPlusCrCopyHint['text'] }}</span>
-                                            @if ($iconPlusFormActive && $errors->has('cr_copy'))
-                                            <p class="mt-1 text-xs text-red-600">{{ $errors->first('cr_copy') }}</p>
+                                            @if ($iconPlusFormActive && $errors->has('cr_copy_file'))
+                                            <p class="mt-1 text-xs text-red-600">{{ $errors->first('cr_copy_file') }}</p>
                                             @endif
                                         </div>
                                         <div class="form-group">

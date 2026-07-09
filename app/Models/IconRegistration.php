@@ -19,6 +19,7 @@ class IconRegistration extends Model
         'national_address',
         'document_path',
         'cr_copy_path',
+        'cr_number',
         'national_address_doc_path',
         'company_logo_path',
         'pdf_path',

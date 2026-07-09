@@ -151,7 +151,7 @@ return [
                             'placeholder' => ['en' => '1010101010', 'ar' => '1010101010'],
                         ],
                         [
-                            'name' => 'cr_copy',
+                            'name' => 'cr_copy_file',
                             'type' => 'file',
                             'label' => ['en' => 'CR Copy (Commercial Registration)', 'ar' => 'نسخة السجل التجاري'],
                             'hint' => ['en' => 'PDF files only (max 10MB)', 'ar' => 'ملفات PDF فقط (بحد أقصى 10 ميغابايت)'],
@@ -348,7 +348,7 @@ return [
                             'placeholder' => ['en' => '1010101010', 'ar' => '1010101010'],
                         ],
                         [
-                            'name' => 'cr_copy',
+                            'name' => 'cr_copy_file',
                             'type' => 'file',
                             'label' => ['en' => 'CR Copy (Commercial Registration)', 'ar' => 'نسخة السجل التجاري'],
                             'hint' => ['en' => 'PDF files only (max 10MB)', 'ar' => 'ملفات PDF فقط (بحد أقصى 10 ميغابايت)'],
@@ -458,7 +458,7 @@ return [
                             'placeholder' => ['en' => '1010101010', 'ar' => '1010101010'],
                         ],
                         [
-                            'name' => 'cr_copy',
+                            'name' => 'cr_copy_file',
                             'type' => 'file',
                             'label' => ['en' => 'CR Copy (Commercial Registration)', 'ar' => 'نسخة السجل التجاري'],
                             'hint' => ['en' => 'PDF files only (max 10MB)', 'ar' => 'ملفات PDF فقط (بحد أقصى 10 ميغابايت)'],

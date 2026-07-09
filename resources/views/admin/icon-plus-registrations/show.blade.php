@@ -127,6 +127,13 @@
                 <h2 class="text-sm font-semibold mb-3">{{ __('Files') }}</h2>
 
                 <div class="space-y-3">
+                    @if($registration->cr_number)
+                        <div>
+                            <div class="text-[10px] text-gray-500 mb-1">{{ __('CR number') }}</div>
+                            <div class="text-[11px]">{{ $registration->cr_number }}</div>
+                        </div>
+                    @endif
+
                     @foreach ([
                         __('VAT certificate') => $registration->vat_certificate_path,
                         __('CR copy') => $registration->cr_copy_path,

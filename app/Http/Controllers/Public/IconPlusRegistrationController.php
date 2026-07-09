@@ -17,8 +17,8 @@ class IconPlusRegistrationController extends Controller
     {
         $data = $request->validated();
 
-        $crCopyPath = $request->hasFile('cr_copy')
-            ? $request->file('cr_copy')->store(
+        $crCopyPath = $request->hasFile('cr_copy_file')
+            ? $request->file('cr_copy_file')->store(
                 'registrations/icon-plus/cr-copy/'.now()->year,
                 'public'
             )
@@ -55,6 +55,7 @@ class IconPlusRegistrationController extends Controller
                 'location_selection' => $data['location_selection'],
                 'vat_certificate_path' => $vatCertificatePath,
                 'cr_copy_path' => $crCopyPath,
+                'cr_number' => $data['cr_number'],
                 'national_address_doc_path' => $nationalAddressDocPath,
                 'company_logo_path' => $companyLogoPath,
                 'pdf_status' => 'pending',

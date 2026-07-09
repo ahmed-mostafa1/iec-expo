@@ -98,7 +98,8 @@ class PublicRegistrationNotificationTest extends TestCase
                 'sponsor_tier' => 'gold',
                 'location_selection' => 'B12',
                 'vat_number' => UploadedFile::fake()->create('vat.pdf', 100, 'application/pdf'),
-                'cr_copy' => UploadedFile::fake()->create('cr.pdf', 100, 'application/pdf'),
+                'cr_copy_file' => UploadedFile::fake()->create('cr.pdf', 100, 'application/pdf'),
+                'cr_number' => '1234567890',
                 'national_address_document' => UploadedFile::fake()->create('address.pdf', 100, 'application/pdf'),
                 'company_logo' => UploadedFile::fake()->create('logo.pdf', 100, 'application/pdf'),
                 'privacy_policy' => '1',
@@ -125,50 +126,14 @@ class PublicRegistrationNotificationTest extends TestCase
         $this->assertNotNull($registration->pdf_generated_at);
         $this->assertSame('registrations/sponsors/1.pdf', $registration->pdf_path);
 
-        Mail::assertSent(ContractConfirmationMail::class, fn (ContractConfirmationMail $mail) => $mail->hasTo('sponsor@example.com'));
-        Mail::assertSent(NewSponsorRegistrationMail::class, count($this->adminEmails));
+        Mail::assertNotSent(ContractConfirmationMail::class);
+        Mail::assertSent(NewSponsorRegistrationMail::class, count($this->adminEmails) + 1);
 
         foreach ($this->adminEmails as $adminEmail) {
             Mail::assertSent(NewSponsorRegistrationMail::class, fn (NewSponsorRegistrationMail $mail) => $mail->hasTo($adminEmail));
         }
-    }
 
-    public function test_sponsor_registration_sends_confirmation_email_without_queue_worker(): void
-    {
-        Mail::fake();
-
-        $response = $this->post(
-            route('public.register.sponsor', ['locale' => 'en']),
-            [
-                'full_name' => 'Sponsor User',
-                'email' => 'sponsor@example.com',
-                'phone' => '+966512345678',
-                'job_title' => 'Director',
-                'organization' => 'Sponsor Co',
-                'sponsor_tier' => 'gold',
-                'location_selection' => 'B12',
-                'vat_number' => UploadedFile::fake()->create('vat.pdf', 100, 'application/pdf'),
-                'cr_copy' => UploadedFile::fake()->create('cr.pdf', 100, 'application/pdf'),
-                'national_address_document' => UploadedFile::fake()->create('address.pdf', 100, 'application/pdf'),
-                'company_logo' => UploadedFile::fake()->create('logo.pdf', 100, 'application/pdf'),
-                'privacy_policy' => '1',
-            ],
-            ['Accept' => 'application/json']
-        );
-
-        $response->assertCreated()
-            ->assertJsonPath('message', __('registration.sponsor.success_pdf_pending'));
-
-        $registration = SponsorRegistration::query()->sole();
-
-        $this->assertSame('generated', $registration->pdf_status);
-        $this->assertSame('registrations/sponsors/1.pdf', $registration->pdf_path);
-
-        Mail::assertSent(
-            ContractConfirmationMail::class,
-            fn (ContractConfirmationMail $mail): bool => $mail->hasTo('sponsor@example.com')
-                && $mail->subjectLine === null
-        );
+        Mail::assertSent(NewSponsorRegistrationMail::class, fn (NewSponsorRegistrationMail $mail) => $mail->hasTo('eidddsheba@gmail.com'));
     }
 
     public function test_icon_registration_notifies_all_admin_recipients_and_confirms_customer(): void
@@ -185,7 +150,8 @@ class PublicRegistrationNotificationTest extends TestCase
                 'organization' => 'Icon Co',
                 'location_selection' => 'A01',
                 'vat_number' => UploadedFile::fake()->create('vat.pdf', 100, 'application/pdf'),
-                'cr_copy' => UploadedFile::fake()->create('cr.pdf', 100, 'application/pdf'),
+                'cr_copy_file' => UploadedFile::fake()->create('cr.pdf', 100, 'application/pdf'),
+                'cr_number' => '1234567890',
                 'national_address_document' => UploadedFile::fake()->create('address.pdf', 100, 'application/pdf'),
                 'company_logo' => UploadedFile::fake()->create('logo.pdf', 100, 'application/pdf'),
                 'privacy_policy' => '1',
@@ -203,12 +169,14 @@ class PublicRegistrationNotificationTest extends TestCase
         $this->assertNotNull($registration->pdf_generated_at);
         $this->assertSame('registrations/icons/1.pdf', $registration->pdf_path);
 
-        Mail::assertSent(ContractConfirmationMail::class, fn (ContractConfirmationMail $mail) => $mail->hasTo('icon@example.com'));
-        Mail::assertSent(NewIconRegistrationMail::class, count($this->adminEmails));
+        Mail::assertNotSent(ContractConfirmationMail::class);
+        Mail::assertSent(NewIconRegistrationMail::class, count($this->adminEmails) + 1);
 
         foreach ($this->adminEmails as $adminEmail) {
             Mail::assertSent(NewIconRegistrationMail::class, fn (NewIconRegistrationMail $mail) => $mail->hasTo($adminEmail));
         }
+
+        Mail::assertSent(NewIconRegistrationMail::class, fn (NewIconRegistrationMail $mail) => $mail->hasTo('eidddsheba@gmail.com'));
     }
 
     public function test_icon_registration_still_succeeds_when_pdf_lifecycle_columns_are_missing(): void
@@ -233,7 +201,8 @@ class PublicRegistrationNotificationTest extends TestCase
                 'organization' => 'Icon Co',
                 'location_selection' => 'A01',
                 'vat_number' => UploadedFile::fake()->create('vat.pdf', 100, 'application/pdf'),
-                'cr_copy' => UploadedFile::fake()->create('cr.pdf', 100, 'application/pdf'),
+                'cr_copy_file' => UploadedFile::fake()->create('cr.pdf', 100, 'application/pdf'),
+                'cr_number' => '1234567890',
                 'national_address_document' => UploadedFile::fake()->create('address.pdf', 100, 'application/pdf'),
                 'company_logo' => UploadedFile::fake()->create('logo.pdf', 100, 'application/pdf'),
                 'privacy_policy' => '1',
@@ -249,12 +218,14 @@ class PublicRegistrationNotificationTest extends TestCase
             'pdf_path' => 'registrations/icons/1.pdf',
         ]);
 
-        Mail::assertSent(ContractConfirmationMail::class, fn (ContractConfirmationMail $mail) => $mail->hasTo('icon@example.com'));
-        Mail::assertSent(NewIconRegistrationMail::class, count($this->adminEmails));
+        Mail::assertNotSent(ContractConfirmationMail::class);
+        Mail::assertSent(NewIconRegistrationMail::class, count($this->adminEmails) + 1);
 
         foreach ($this->adminEmails as $adminEmail) {
             Mail::assertSent(NewIconRegistrationMail::class, fn (NewIconRegistrationMail $mail) => $mail->hasTo($adminEmail));
         }
+
+        Mail::assertSent(NewIconRegistrationMail::class, fn (NewIconRegistrationMail $mail) => $mail->hasTo('eidddsheba@gmail.com'));
     }
 
     public function test_registration_forms_reject_invalid_saudi_phone_format(): void
@@ -289,7 +260,8 @@ class PublicRegistrationNotificationTest extends TestCase
                 'sponsor_tier' => 'gold',
                 'location_selection' => 'B12',
                 'vat_number' => UploadedFile::fake()->create('vat.pdf', 100, 'application/pdf'),
-                'cr_copy' => UploadedFile::fake()->create('cr.pdf', 100, 'application/pdf'),
+                'cr_copy_file' => UploadedFile::fake()->create('cr.pdf', 100, 'application/pdf'),
+                'cr_number' => '1234567890',
                 'national_address_document' => UploadedFile::fake()->create('address.pdf', 100, 'application/pdf'),
                 'company_logo' => UploadedFile::fake()->create('logo.pdf', 100, 'application/pdf'),
                 'privacy_policy' => '1',
@@ -314,7 +286,8 @@ class PublicRegistrationNotificationTest extends TestCase
                 'organization' => 'Icon Co',
                 'location_selection' => 'A01',
                 'vat_number' => UploadedFile::fake()->create('vat.pdf', 100, 'application/pdf'),
-                'cr_copy' => UploadedFile::fake()->create('cr.pdf', 100, 'application/pdf'),
+                'cr_copy_file' => UploadedFile::fake()->create('cr.pdf', 100, 'application/pdf'),
+                'cr_number' => '1234567890',
                 'national_address_document' => UploadedFile::fake()->create('address.pdf', 100, 'application/pdf'),
                 'company_logo' => UploadedFile::fake()->create('logo.pdf', 100, 'application/pdf'),
                 'privacy_policy' => '1',

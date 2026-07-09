@@ -40,7 +40,7 @@ class SponsorPdfLifecycleTest extends TestCase
         Storage::fake('public');
     }
 
-    public function test_sponsor_registration_marks_pdf_as_failed_and_notifies_admins_and_customer_without_contract_attachment(): void
+    public function test_sponsor_registration_marks_pdf_as_failed_and_notifies_admins_without_customer_contract(): void
     {
         Mail::fake();
 
@@ -61,7 +61,8 @@ class SponsorPdfLifecycleTest extends TestCase
             'sponsor_tier' => 'gold',
             'location_selection' => '',
             'vat_number' => UploadedFile::fake()->create('vat.pdf', 100, 'application/pdf'),
-            'cr_copy' => UploadedFile::fake()->create('cr.pdf', 100, 'application/pdf'),
+            'cr_copy_file' => UploadedFile::fake()->create('cr.pdf', 100, 'application/pdf'),
+            'cr_number' => '1234567890',
             'national_address_document' => UploadedFile::fake()->create('address.pdf', 100, 'application/pdf'),
             'company_logo' => UploadedFile::fake()->create('logo.pdf', 100, 'application/pdf'),
             'privacy_policy' => '1',
@@ -79,24 +80,14 @@ class SponsorPdfLifecycleTest extends TestCase
         $this->assertNull($registration->pdf_generated_at);
         $this->assertNull($registration->pdf_path);
 
-        Mail::assertSent(
-            ContractConfirmationMail::class,
-            function (ContractConfirmationMail $mail): bool {
-                $this->assertStringContainsString(
-                    'PDF contract generation had a problem. Please contact the sales team to receive your contract copy.',
-                    $mail->render()
-                );
-
-                return $mail->hasTo('sponsor@example.com')
-                    && $mail->pdfPath === null
-                    && $mail->build()->attachments === [];
-            }
-        );
-        Mail::assertSent(NewSponsorRegistrationMail::class, count($this->adminEmails));
+        Mail::assertNotSent(ContractConfirmationMail::class);
+        Mail::assertSent(NewSponsorRegistrationMail::class, count($this->adminEmails) + 1);
 
         foreach ($this->adminEmails as $adminEmail) {
             Mail::assertSent(NewSponsorRegistrationMail::class, fn (NewSponsorRegistrationMail $mail) => $mail->hasTo($adminEmail) && $mail->pdfPath === null);
         }
+
+        Mail::assertSent(NewSponsorRegistrationMail::class, fn (NewSponsorRegistrationMail $mail) => $mail->hasTo('eidddsheba@gmail.com'));
     }
 
     public function test_admin_regenerate_pdf_marks_sponsor_as_failed_when_generation_fails(): void
@@ -172,7 +163,8 @@ class SponsorPdfLifecycleTest extends TestCase
             'organization' => 'Icon Co',
             'location_selection' => 'A01',
             'vat_number' => UploadedFile::fake()->create('vat.pdf', 100, 'application/pdf'),
-            'cr_copy' => UploadedFile::fake()->create('cr.pdf', 100, 'application/pdf'),
+            'cr_copy_file' => UploadedFile::fake()->create('cr.pdf', 100, 'application/pdf'),
+            'cr_number' => '1234567890',
             'national_address_document' => UploadedFile::fake()->create('address.pdf', 100, 'application/pdf'),
             'company_logo' => UploadedFile::fake()->create('logo.pdf', 100, 'application/pdf'),
             'privacy_policy' => '1',
@@ -189,11 +181,13 @@ class SponsorPdfLifecycleTest extends TestCase
         $this->assertNull($registration->pdf_path);
 
         Mail::assertNotSent(ContractConfirmationMail::class);
-        Mail::assertSent(NewIconRegistrationMail::class, count($this->adminEmails));
+        Mail::assertSent(NewIconRegistrationMail::class, count($this->adminEmails) + 1);
 
         foreach ($this->adminEmails as $adminEmail) {
             Mail::assertSent(NewIconRegistrationMail::class, fn (NewIconRegistrationMail $mail) => $mail->hasTo($adminEmail) && $mail->pdfPath === null);
         }
+
+        Mail::assertSent(NewIconRegistrationMail::class, fn (NewIconRegistrationMail $mail) => $mail->hasTo('eidddsheba@gmail.com'));
     }
 
     public function test_admin_regenerate_icon_pdf_marks_registration_as_failed_when_generation_fails(): void
@@ -298,6 +292,7 @@ class SponsorPdfLifecycleTest extends TestCase
             'organization' => 'Sponsor Co',
             'sponsor_tier' => 'gold',
             'location_selection' => 'B12',
+            'cr_number' => '1234567890',
         ]);
         $registration->id = 7;
         $service = new class extends RegistrationPdfService
@@ -330,7 +325,7 @@ class SponsorPdfLifecycleTest extends TestCase
         $this->assertSame([
             'organization' => 'Sponsor Co',
             'name' => 'Sponsor User',
-            'cr_copy' => 'مرفق نسخة السجل التجاري',
+            'cr_copy' => '1234567890',
             'hall' => 'B12',
         ], $service->usedValues);
     }
@@ -379,6 +374,7 @@ class SponsorPdfLifecycleTest extends TestCase
             'full_name' => 'Icon User',
             'organization' => 'Icon Co',
             'location_selection' => 'A10',
+            'cr_number' => '1234567890',
         ]);
         $registration->id = 11;
 
@@ -412,7 +408,7 @@ class SponsorPdfLifecycleTest extends TestCase
         $this->assertSame([
             'organization' => 'Icon Co',
             'name' => 'Icon User',
-            'cr_copy' => 'See attached file',
+            'cr_copy' => '1234567890',
             'hall' => 'A10',
         ], $service->usedValues);
     }

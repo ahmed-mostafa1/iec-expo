@@ -153,6 +153,13 @@
                         </div>
                     @endif
 
+                    @if($registration->cr_number)
+                        <div>
+                            <div class="text-[10px] text-gray-500 mb-1">{{ __('CR number') }}</div>
+                            <div class="text-[11px]">{{ $registration->cr_number }}</div>
+                        </div>
+                    @endif
+
                     @if($registration->cr_copy_path)
                         <div>
                             <div class="text-[10px] text-gray-500 mb-1">{{ __('CR copy') }}</div>

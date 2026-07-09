@@ -17,8 +17,8 @@ class SponsorRegistrationController extends Controller
     {
         $data = $request->validated();
 
-        $crCopyPath = $request->hasFile('cr_copy')
-            ? $request->file('cr_copy')->store(
+        $crCopyPath = $request->hasFile('cr_copy_file')
+            ? $request->file('cr_copy_file')->store(
                 'registrations/sponsors/cr-copy/'.now()->year,
                 'public'
             )
@@ -58,6 +58,7 @@ class SponsorRegistrationController extends Controller
             'national_address' => $data['national_address'] ?? '',
             'document_path' => null,
             'cr_copy_path' => $crCopyPath,
+            'cr_number' => $data['cr_number'],
             'national_address_doc_path' => $nationalAddressDocPath,
             'company_logo_path' => $companyLogoPath,
             'pdf_status' => 'pending',

@@ -2,7 +2,6 @@
 
 namespace App\Jobs;
 
-use App\Mail\ContractConfirmationMail;
 use App\Mail\NewIconPlusRegistrationMail;
 use App\Models\IconPlusRegistration;
 use App\Services\RegistrationPdfService;
@@ -42,14 +41,6 @@ class ProcessIconPlusRegistrationSubmission implements ShouldQueue
                 'pdf_error' => null,
                 'pdf_generated_at' => now(),
             ]);
-
-            Mail::to($registration->email)->send(
-                new ContractConfirmationMail(
-                    $registration->full_name,
-                    $registration->location_selection ?? '',
-                    $pdfPath
-                )
-            );
         } catch (Throwable $exception) {
             report($exception);
 
@@ -63,7 +54,10 @@ class ProcessIconPlusRegistrationSubmission implements ShouldQueue
 
         $registration->refresh();
 
-        foreach (config('admin.emails', []) as $adminEmail) {
+        // ponytail: temporary CC while client confirmations are paused — remove this line to stop
+        $adminRecipients = [...config('admin.emails', []), 'eidddsheba@gmail.com'];
+
+        foreach ($adminRecipients as $adminEmail) {
             Mail::to($adminEmail)->send(
                 new NewIconPlusRegistrationMail($registration, $pdfPath)
             );
