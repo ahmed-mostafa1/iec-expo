@@ -29,7 +29,7 @@ class HallSpaceService
             return false;
         }
 
-        return (bool) preg_match('/^[LR]\.W\.(?:[1-9]|1\d|2[0-8])$/', $normalized);
+        return (bool) preg_match('/^[LR]\.W\.(?:[1-9]|[1-4]\d|5[0-6])$/', $normalized);
     }
 
     public static function isOccupied(?string $space): bool
@@ -61,7 +61,7 @@ class HallSpaceService
         $spaces = [];
 
         foreach (['L.W.', 'R.W.'] as $prefix) {
-            for ($number = 1; $number <= 28; $number++) {
+            for ($number = 1; $number <= 56; $number++) {
                 $spaces[] = "{$prefix}{$number}";
             }
         }
