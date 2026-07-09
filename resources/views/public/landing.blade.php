@@ -3553,8 +3553,6 @@ experience that unites ambitious minds and industry leaders under one roof"
                                                 </p>
                                                 @endif
                                             </div>
-                                        </div>
-                                        <div class="form-grid form-grid-2" style="margin-top: 1rem;">
                                             <div class="form-group">
                                                 <label class="form-label" data-en="{{ e($exCrNumberLabel['en']) }}"
                                                     data-ar="{{ e($exCrNumberLabel['ar']) }}">{{ $exCrNumberLabel['text'] }}</label>
