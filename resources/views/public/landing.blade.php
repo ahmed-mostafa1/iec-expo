@@ -3557,7 +3557,8 @@ experience that unites ambitious minds and industry leaders under one roof"
                                                 <label class="form-label" data-en="{{ e($exCrNumberLabel['en']) }}"
                                                     data-ar="{{ e($exCrNumberLabel['ar']) }}">{{ $exCrNumberLabel['text'] }}</label>
                                                 <input type="text" name="cr_number" class="form-input" required
-                                                    inputmode="numeric" pattern="\d{10}" maxlength="10">
+                                                    inputmode="numeric" pattern="\d{10}" maxlength="10"
+                                                    oninput="this.value=this.value.replace(/\D/g,'')">
                                                 <span class="form-hint" data-en="{{ e($exCrNumberHint['en']) }}"
                                                     data-ar="{{ e($exCrNumberHint['ar']) }}">{{ $exCrNumberHint['text'] }}</span>
                                                 @if ($sponsorFormActive && $errors->has('cr_number'))
@@ -3904,13 +3905,12 @@ experience that unites ambitious minds and industry leaders under one roof"
                                                 </p>
                                                 @endif
                                             </div>
-                                        </div>
-                                        <div class="form-grid form-grid-2" style="margin-top: 1rem;">
                                             <div class="form-group">
                                                 <label class="form-label" data-en="{{ e($iconCrNumberLabel['en']) }}"
                                                     data-ar="{{ e($iconCrNumberLabel['ar']) }}">{{ $iconCrNumberLabel['text'] }}</label>
                                                 <input type="text" name="cr_number" class="form-input" required
-                                                    inputmode="numeric" pattern="\d{10}" maxlength="10">
+                                                    inputmode="numeric" pattern="\d{10}" maxlength="10"
+                                                    oninput="this.value=this.value.replace(/\D/g,'')">
                                                 <span class="form-hint" data-en="{{ e($iconCrNumberHint['en']) }}"
                                                     data-ar="{{ e($iconCrNumberHint['ar']) }}">{{ $iconCrNumberHint['text'] }}</span>
                                                 @if ($iconFormActive && $errors->has('cr_number'))
@@ -4232,14 +4232,12 @@ experience that unites ambitious minds and industry leaders under one roof"
                                             <p class="mt-1 text-xs text-red-600">{{ $errors->first('vat_number') }}</p>
                                             @endif
                                         </div>
-                                    </div>
-
-                                    <div class="form-grid form-grid-2" style="margin-top: 1rem;">
                                         <div class="form-group">
                                             <label class="form-label" data-en="{{ e($iconPlusCrNumberLabel['en']) }}"
                                                 data-ar="{{ e($iconPlusCrNumberLabel['ar']) }}">{{ $iconPlusCrNumberLabel['text'] }}</label>
                                             <input type="text" name="cr_number" class="form-input" required
-                                                inputmode="numeric" pattern="\d{10}" maxlength="10">
+                                                inputmode="numeric" pattern="\d{10}" maxlength="10"
+                                                oninput="this.value=this.value.replace(/\D/g,'')">
                                             <span class="form-hint" data-en="{{ e($iconPlusCrNumberHint['en']) }}"
                                                 data-ar="{{ e($iconPlusCrNumberHint['ar']) }}">{{ $iconPlusCrNumberHint['text'] }}</span>
                                             @if ($iconPlusFormActive && $errors->has('cr_number'))
