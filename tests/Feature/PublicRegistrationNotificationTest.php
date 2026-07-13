@@ -177,6 +177,15 @@ class PublicRegistrationNotificationTest extends TestCase
         }
 
         Mail::assertSent(NewIconRegistrationMail::class, fn (NewIconRegistrationMail $mail) => $mail->hasTo('eidddsheba@gmail.com'));
+
+        // Admin email shows the commercial record number, not the old VAT line.
+        Mail::assertSent(NewIconRegistrationMail::class, function (NewIconRegistrationMail $mail) {
+            $body = $mail->render();
+
+            return str_contains($body, 'Commercial record:')
+                && str_contains($body, '1234567890')
+                && ! str_contains($body, '<strong>VAT:</strong>');
+        });
     }
 
     public function test_icon_registration_still_succeeds_when_pdf_lifecycle_columns_are_missing(): void

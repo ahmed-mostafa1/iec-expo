@@ -115,6 +115,15 @@ class RegistrationPdfService
             foreach ($values as $key => $value) {
                 $template->setValue($key, (string) $value);
             }
+
+            // ponytail: fail loud on stale/corrupt templates (Word splits ${cr_copy} across runs -> silent blank contract)
+            $unfilled = $template->getVariables();
+            if ($unfilled !== []) {
+                throw new \RuntimeException(
+                    'Contract template has unfilled placeholders: '.implode(', ', $unfilled).' ('.basename($templatePath).')'
+                );
+            }
+
             $template->saveAs($tempDocxPath);
 
             $pdfContent = $this->convertDocxToPdfViaCloudConvert($tempDocxPath, $apiKey);

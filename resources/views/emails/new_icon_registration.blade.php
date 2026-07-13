@@ -6,7 +6,7 @@
     <li><strong>Phone:</strong> {{ $registration->phone }}</li>
     <li><strong>Job title:</strong> {{ $registration->job_title }}</li>
     <li><strong>Organization:</strong> {{ $registration->organization }}</li>
-    <li><strong>VAT:</strong> {{ $registration->vat_certificate_path ? 'File uploaded' : 'Not provided' }}</li>
+    <li><strong>Commercial record:</strong> {{ $registration->cr_copy ?: 'Not provided' }}</li>
     <li><strong>National address:</strong> {{ $registration->national_address }}</li>
 </ul>
 
