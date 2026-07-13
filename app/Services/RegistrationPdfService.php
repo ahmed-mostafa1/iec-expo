@@ -2,7 +2,9 @@
 
 namespace App\Services;
 
+use App\Models\IconPlusQuartetRegistration;
 use App\Models\IconPlusRegistration;
+use App\Models\IconQuartetRegistration;
 use App\Models\IconRegistration;
 use App\Models\SponsorRegistration;
 use App\Models\VisitorRegistration;
@@ -62,6 +64,32 @@ class RegistrationPdfService
     {
         $path = "registrations/icon-plus/{$registration->id}.pdf";
         $templatePath = $this->resolveTemplatePath($this->iconPlusTemplatePaths());
+
+        return $this->generateContractPdf($templatePath, [
+            'organization' => (string) ($registration->organization ?? ''),
+            'name' => (string) ($registration->full_name ?? ''),
+            'cr_copy' => (string) ($registration->cr_copy ?? ''),
+            'hall' => (string) ($registration->location_selection ?? ''),
+        ], $path);
+    }
+
+    public function generateIconQuartetPdf(IconQuartetRegistration $registration): string
+    {
+        $path = "registrations/icon-quartet/{$registration->id}.pdf";
+        $templatePath = $this->resolveTemplatePath($this->iconQuartetTemplatePaths());
+
+        return $this->generateContractPdf($templatePath, [
+            'organization' => (string) ($registration->organization ?? ''),
+            'name' => (string) ($registration->full_name ?? ''),
+            'cr_copy' => (string) ($registration->cr_copy ?? ''),
+            'hall' => (string) ($registration->location_selection ?? ''),
+        ], $path);
+    }
+
+    public function generateIconPlusQuartetPdf(IconPlusQuartetRegistration $registration): string
+    {
+        $path = "registrations/icon-plus-quartet/{$registration->id}.pdf";
+        $templatePath = $this->resolveTemplatePath($this->iconPlusQuartetTemplatePaths());
 
         return $this->generateContractPdf($templatePath, [
             'organization' => (string) ($registration->organization ?? ''),
@@ -392,6 +420,23 @@ class RegistrationPdfService
         return [
             ...$this->configuredTemplatePaths('icon_plus'),
             ...$this->templatePathsFor('icon-plust-contract.docx'),
+        ];
+    }
+
+    // ponytail: placeholder contract-v2.docx via sharedTemplatePaths() until real icon-quartet/icon-plus-quartet contracts arrive
+    protected function iconQuartetTemplatePaths(): array
+    {
+        return [
+            ...$this->configuredTemplatePaths('icon_quartet'),
+            ...$this->sharedTemplatePaths(),
+        ];
+    }
+
+    protected function iconPlusQuartetTemplatePaths(): array
+    {
+        return [
+            ...$this->configuredTemplatePaths('icon_plus_quartet'),
+            ...$this->sharedTemplatePaths(),
         ];
     }
 

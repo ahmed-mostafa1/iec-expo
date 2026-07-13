@@ -42,6 +42,12 @@
                 <a href="{{ route('admin.icon-plus.index') }}" class="block rounded-lg px-2 py-1.5 hover:bg-emerald-50 text-gray-700">
                     {{ __('Icon Plus registrations') }}
                 </a>
+                <a href="{{ route('admin.icon-quartet.index') }}" class="block rounded-lg px-2 py-1.5 hover:bg-emerald-50 text-gray-700">
+                    {{ __('Icon Quartet registrations') }}
+                </a>
+                <a href="{{ route('admin.icon-plus-quartet.index') }}" class="block rounded-lg px-2 py-1.5 hover:bg-emerald-50 text-gray-700">
+                    {{ __('Icon Plus Quartet registrations') }}
+                </a>
                 <a href="{{ route('admin.visitors.index') }}" class="block rounded-lg px-2 py-1.5 hover:bg-emerald-50 text-gray-700">
                     {{ __('Visitor registrations') }}
                 </a>

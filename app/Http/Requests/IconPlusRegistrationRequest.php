@@ -30,7 +30,7 @@ class IconPlusRegistrationRequest extends FormRequest
                 'string',
                 'max:255',
                 function (string $attribute, mixed $value, \Closure $fail): void {
-                    if (! HallSpaceService::isIconPlusSpace((string) $value)) {
+                    if (! in_array((string) $value, HallSpaceService::allowedSpaces('icon-plus'), true)) {
                         $fail(__('registration.icon_plus.invalid_location'));
 
                         return;

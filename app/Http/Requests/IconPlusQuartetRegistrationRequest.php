@@ -7,7 +7,7 @@ use App\Services\HallSpaceService;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 
-class IconRegistrationRequest extends FormRequest
+class IconPlusQuartetRegistrationRequest extends FormRequest
 {
     use HasSaudiPhoneValidation;
 
@@ -19,6 +19,7 @@ class IconRegistrationRequest extends FormRequest
     public function rules(): array
     {
         return [
+            'form_identifier' => ['nullable', 'in:icon-plus-quartet'],
             'full_name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255'],
             'phone' => ['required', 'string', 'max:50', $this->saudiPhoneRule()],
@@ -29,14 +30,20 @@ class IconRegistrationRequest extends FormRequest
                 'string',
                 'max:255',
                 function (string $attribute, mixed $value, \Closure $fail): void {
-                    if (! in_array((string) $value, HallSpaceService::allowedSpaces('icon'), true)) {
-                        $fail(__('registration.icon.reserved_icon_plus_space'));
+                    $quartet = $this->validateQuartet((string) $value, 'icon-plus-quartet');
+
+                    if ($quartet === null) {
+                        $fail(__('registration.icon_plus_quartet.invalid_location'));
 
                         return;
                     }
 
-                    if (HallSpaceService::isOccupied((string) $value)) {
-                        $fail(__('registration.common.location_occupied'));
+                    foreach ($quartet as $space) {
+                        if (HallSpaceService::isOccupied($space)) {
+                            $fail(__('registration.common.location_occupied'));
+
+                            return;
+                        }
                     }
                 },
             ],
@@ -49,12 +56,42 @@ class IconRegistrationRequest extends FormRequest
         ];
     }
 
+    /**
+     * Splits the joined "L.W.1, L.W.2, L.W.29, L.W.30" value and checks it is
+     * exactly one valid in-range quartet for $target. Returns the normalized
+     * 4-name quartet, or null if invalid.
+     *
+     * @return array<int, string>|null
+     */
+    protected function validateQuartet(string $value, string $target): ?array
+    {
+        $parts = array_values(array_filter(array_map(
+            fn (string $part): ?string => HallSpaceService::normalize($part),
+            explode(',', $value)
+        )));
+
+        if (count($parts) !== 4) {
+            return null;
+        }
+
+        $quartet = HallSpaceService::quartetFor($parts[0]);
+
+        if ($quartet === [] || array_diff($quartet, $parts) !== [] || array_diff($parts, $quartet) !== []) {
+            return null;
+        }
+
+        if (array_diff($quartet, HallSpaceService::allowedSpaces($target)) !== []) {
+            return null;
+        }
+
+        return $quartet;
+    }
+
     public function attributes(): array
     {
         return [
             'location_selection' => __('Book Location'),
-            'vat_number' => __('registration.icon.vat_number'),
-
+            'vat_number' => __('registration.icon_plus_quartet.vat_number'),
             'privacy_policy' => __('Privacy Policy'),
         ];
     }

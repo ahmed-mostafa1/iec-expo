@@ -1,0 +1,138 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use App\Models\IconQuartetRegistration;
+use App\Services\RegistrationPdfService;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
+use Illuminate\View\View;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
+use Symfony\Component\HttpFoundation\StreamedResponse;
+use Throwable;
+
+class IconQuartetRegistrationController extends Controller
+{
+    public function __construct(
+        protected RegistrationPdfService $pdfService
+    ) {}
+
+    public function index(): View
+    {
+        return view('admin.icon-quartet-registrations.index');
+    }
+
+    public function show(IconQuartetRegistration $registration): View
+    {
+        return view('admin.icon-quartet-registrations.show', compact('registration'));
+    }
+
+    public function updateStatus(Request $request, IconQuartetRegistration $registration): RedirectResponse
+    {
+        $validated = $request->validate([
+            'status' => ['required', 'string', 'in:pending,approved,rejected'],
+        ]);
+
+        $registration->update([
+            'status' => $validated['status'],
+        ]);
+
+        return back()->with('success', __('Status updated.'));
+    }
+
+    public function downloadPdf(IconQuartetRegistration $registration): BinaryFileResponse
+    {
+        if (! $registration->pdf_path) {
+            abort(404);
+        }
+
+        $fullPath = storage_path('app/public/'.$registration->pdf_path);
+
+        if (! file_exists($fullPath)) {
+            abort(404);
+        }
+
+        return response()->download($fullPath, "icon-quartet-registration-{$registration->id}.pdf");
+    }
+
+    public function regeneratePdf(IconQuartetRegistration $registration): RedirectResponse
+    {
+        try {
+            $pdfPath = $this->pdfService->generateIconQuartetPdf($registration);
+            $registration->updatePersistableAttributes([
+                'pdf_path' => $pdfPath,
+                'pdf_status' => 'generated',
+                'pdf_error' => null,
+                'pdf_generated_at' => now(),
+            ]);
+
+            return back()->with('success', __('PDF regenerated.'));
+        } catch (Throwable $exception) {
+            report($exception);
+
+            $registration->updatePersistableAttributes([
+                'pdf_path' => null,
+                'pdf_status' => 'failed',
+                'pdf_error' => $exception->getMessage(),
+                'pdf_generated_at' => null,
+            ]);
+
+            return back()->with('error', __('PDF regeneration failed. The team can review the error details below.'));
+        }
+    }
+
+    public function export(Request $request): StreamedResponse
+    {
+        $query = IconQuartetRegistration::query();
+
+        if ($request->filled('status')) {
+            $query->where('status', $request->string('status'));
+        }
+
+        if ($request->filled('search')) {
+            $search = $request->string('search');
+            $query->where(function ($q) use ($search): void {
+                $q->where('full_name', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%")
+                    ->orWhere('organization', 'like', "%{$search}%")
+                    ->orWhere('location_selection', 'like', "%{$search}%");
+            });
+        }
+
+        $fileName = 'icon_quartet_registrations_'.now()->format('Ymd_His').'.csv';
+
+        $headers = [
+            'Content-Type' => 'text/csv',
+            'Content-Disposition' => "attachment; filename=\"{$fileName}\"",
+        ];
+
+        $callback = function () use ($query): void {
+            $handle = fopen('php://output', 'w');
+
+            fputcsv($handle, [
+                'ID', 'Full Name', 'Email', 'Phone', 'Organization', 'Booked Location',
+                'Status', 'Created At',
+            ]);
+
+            $query->orderBy('created_at', 'desc')->chunk(200, function ($rows) use ($handle): void {
+                foreach ($rows as $row) {
+                    fputcsv($handle, [
+                        $row->id,
+                        $row->full_name,
+                        $row->email,
+                        $row->phone,
+                        $row->organization,
+                        $row->location_selection,
+                        $row->status,
+                        $row->created_at,
+                    ]);
+                }
+            });
+
+            fclose($handle);
+        };
+
+        return response()->stream($callback, 200, $headers);
+    }
+}

@@ -5,7 +5,9 @@ use App\Http\Controllers\Admin\ContactInfoController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\HallSpaceBookingController;
 use App\Http\Controllers\Admin\HeroMediaController;
+use App\Http\Controllers\Admin\IconPlusQuartetRegistrationController as AdminIconPlusQuartetController;
 use App\Http\Controllers\Admin\IconPlusRegistrationController as AdminIconPlusController;
+use App\Http\Controllers\Admin\IconQuartetRegistrationController as AdminIconQuartetController;
 use App\Http\Controllers\Admin\IconRegistrationController as AdminIconController;
 use App\Http\Controllers\Admin\LandingSectionController;
 use App\Http\Controllers\Admin\OrganizerController;
@@ -16,7 +18,9 @@ use App\Http\Controllers\Admin\VisitorRegistrationController as AdminVisitorCont
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\Public\AnalyticsController;
 use App\Http\Controllers\Public\ContactController;
+use App\Http\Controllers\Public\IconPlusQuartetRegistrationController;
 use App\Http\Controllers\Public\IconPlusRegistrationController;
+use App\Http\Controllers\Public\IconQuartetRegistrationController;
 use App\Http\Controllers\Public\IconRegistrationController;
 use App\Http\Controllers\Public\LandingPageController;
 use App\Http\Controllers\Public\ParticipantShowController as PublicParticipantShowController;
@@ -108,15 +112,18 @@ Route::post('/generate-pdf', [DocumentController::class, 'generate'])
     ->name('contract.generate-pdf');
 
 Route::get('/hall-design', function () {
-    $occupiedSpaces = HallSpaceService::occupiedSpaces();
-    $iconPlusSpaces = HallSpaceService::iconPlusSpaces();
     $target = request()->query('target', 'icon');
 
-    if (! in_array($target, ['icon', 'icon-plus'], true)) {
+    if (! in_array($target, ['icon', 'icon-plus', 'icon-quartet', 'icon-plus-quartet'], true)) {
         $target = 'icon';
     }
 
-    return view('public.hall-design', compact('occupiedSpaces', 'iconPlusSpaces', 'target'));
+    $occupiedSpaces = HallSpaceService::occupiedSpaces();
+    $allowedSpaces = HallSpaceService::allowedSpaces($target);
+    $iconPlusSpaces = HallSpaceService::allowedSpaces('icon-plus');
+    $isQuartet = str_contains($target, 'quartet');
+
+    return view('public.hall-design', compact('occupiedSpaces', 'allowedSpaces', 'iconPlusSpaces', 'isQuartet', 'target'));
 });
 
 Route::redirect('/login', '/admin/login')->name('login');
@@ -167,6 +174,20 @@ Route::prefix('{locale}')
 
         Route::get('/register/icon-plus/{registration}/pdf', [IconPlusRegistrationController::class, 'download'])
             ->name('public.register.icon-plus.pdf')
+            ->middleware('signed');
+
+        Route::post('/register/icon-quartet', [IconQuartetRegistrationController::class, 'store'])
+            ->name('public.register.icon-quartet');
+
+        Route::get('/register/icon-quartet/{registration}/pdf', [IconQuartetRegistrationController::class, 'download'])
+            ->name('public.register.icon-quartet.pdf')
+            ->middleware('signed');
+
+        Route::post('/register/icon-plus-quartet', [IconPlusQuartetRegistrationController::class, 'store'])
+            ->name('public.register.icon-plus-quartet');
+
+        Route::get('/register/icon-plus-quartet/{registration}/pdf', [IconPlusQuartetRegistrationController::class, 'download'])
+            ->name('public.register.icon-plus-quartet.pdf')
             ->middleware('signed');
 
         Route::post('/contact', [ContactController::class, 'submit'])
@@ -243,6 +264,44 @@ Route::prefix('admin')
 
         Route::post('/icon-plus-registrations/{registration}/pdf/regenerate', [AdminIconPlusController::class, 'regeneratePdf'])
             ->name('icon-plus.regenerate-pdf');
+
+        // Icon Quartet registrations
+        Route::get('/icon-quartet-registrations', [AdminIconQuartetController::class, 'index'])
+            ->name('icon-quartet.index');
+
+        Route::get('/icon-quartet-registrations/export', [AdminIconQuartetController::class, 'export'])
+            ->name('icon-quartet.export');
+
+        Route::get('/icon-quartet-registrations/{registration}', [AdminIconQuartetController::class, 'show'])
+            ->name('icon-quartet.show');
+
+        Route::post('/icon-quartet-registrations/{registration}/status', [AdminIconQuartetController::class, 'updateStatus'])
+            ->name('icon-quartet.update-status');
+
+        Route::get('/icon-quartet-registrations/{registration}/pdf', [AdminIconQuartetController::class, 'downloadPdf'])
+            ->name('icon-quartet.download-pdf');
+
+        Route::post('/icon-quartet-registrations/{registration}/pdf/regenerate', [AdminIconQuartetController::class, 'regeneratePdf'])
+            ->name('icon-quartet.regenerate-pdf');
+
+        // Icon Plus Quartet registrations
+        Route::get('/icon-plus-quartet-registrations', [AdminIconPlusQuartetController::class, 'index'])
+            ->name('icon-plus-quartet.index');
+
+        Route::get('/icon-plus-quartet-registrations/export', [AdminIconPlusQuartetController::class, 'export'])
+            ->name('icon-plus-quartet.export');
+
+        Route::get('/icon-plus-quartet-registrations/{registration}', [AdminIconPlusQuartetController::class, 'show'])
+            ->name('icon-plus-quartet.show');
+
+        Route::post('/icon-plus-quartet-registrations/{registration}/status', [AdminIconPlusQuartetController::class, 'updateStatus'])
+            ->name('icon-plus-quartet.update-status');
+
+        Route::get('/icon-plus-quartet-registrations/{registration}/pdf', [AdminIconPlusQuartetController::class, 'downloadPdf'])
+            ->name('icon-plus-quartet.download-pdf');
+
+        Route::post('/icon-plus-quartet-registrations/{registration}/pdf/regenerate', [AdminIconPlusQuartetController::class, 'regeneratePdf'])
+            ->name('icon-plus-quartet.regenerate-pdf');
 
         // Visitor registrations
 

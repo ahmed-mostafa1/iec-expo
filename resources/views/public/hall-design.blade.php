@@ -343,26 +343,35 @@ $seoImage = asset(config('seo.image'));
     const confirmSelectionBtn = document.getElementById("confirmSelection");
     const cancelConfirmBtn = document.getElementById("cancelConfirm");
     const occupiedSpaces = new Set(@json($occupiedSpaces ?? []));
+    const allowedSpaces = new Set(@json($allowedSpaces ?? []));
     const iconPlusSpaces = new Set(@json($iconPlusSpaces ?? []));
+    const isQuartet = @json($isQuartet ?? false);
     const bookingTarget = @json($target ?? 'icon');
+    const nameToEl = new Map();
 
-    let selectedEl = null;
+    let selectedEls = [];
     let pendingSpace = null;
     let isOverlayInitialized = false;
     let overlayBatch = null;
     let underlayBatch = null;
     hideConfirmModal();
 
-    function selectSpace(name, el) {
-      selectedSpaceEl.textContent = name;
-      pendingSpace = name;
+    function selectSpace(names) {
+      const sortedNames = [...names].sort((a, b) => {
+        const numA = parseInt(a.replace(/\D/g, ""), 10);
+        const numB = parseInt(b.replace(/\D/g, ""), 10);
+        return numA - numB;
+      });
+      const label = sortedNames.join(", ");
+      selectedSpaceEl.textContent = label;
+      pendingSpace = label;
 
-      if (selectedEl) selectedEl.classList.remove("selected");
-      selectedEl = el;
-      if (selectedEl) selectedEl.classList.add("selected");
+      selectedEls.forEach(el => el.classList.remove("selected"));
+      selectedEls = sortedNames.map(n => nameToEl.get(n)).filter(Boolean);
+      selectedEls.forEach(el => el.classList.add("selected"));
 
-      if (typeof window.onSpaceClick === "function") window.onSpaceClick(name);
-      showConfirmModal(name);
+      if (typeof window.onSpaceClick === "function") window.onSpaceClick(label);
+      showConfirmModal(label);
     }
 
     function showConfirmModal(name) {
@@ -419,76 +428,63 @@ $seoImage = asset(config('seo.image'));
       return el;
     }
 
-    function addHitbox({ name, x, y, w, h }) {
+    function cellClasses(name) {
+      const classes = ["hitbox"];
+      const isIconPlusSpace = iconPlusSpaces.has(name);
+      if (occupiedSpaces.has(name)) {
+        classes.push(isIconPlusSpace ? "icon-plus-booked" : "occupied");
+      } else if (allowedSpaces.has(name)) {
+        if (isIconPlusSpace) classes.push("icon-plus-space");
+      } else {
+        classes.push(isIconPlusSpace ? "icon-plus-reserved" : "unavailable");
+      }
+      return classes;
+    }
+
+    function isClusterSelectable(names) {
+      return names.every(n => allowedSpaces.has(n) && !occupiedSpaces.has(n));
+    }
+
+    function wireHitbox(r, name, quartet) {
+      nameToEl.set(name, r);
+      const clusterNames = isQuartet && quartet ? quartet : [name];
+      if (isClusterSelectable(clusterNames)) {
+        r.addEventListener("click", () => selectSpace(clusterNames));
+      } else {
+        r.style.pointerEvents = 'none';
+      }
+    }
+
+    function addHitbox({ name, x, y, w, h, quartet }) {
       const scaledX = useCalibrationCoords ? x : (x * X_SCALE) + X_OFFSET;
       const scaledY = useCalibrationCoords ? y : (y * SCALE_Y) + Y_OFFSET;
       const scaledW = useCalibrationCoords ? w : w * X_SCALE;
       const scaledH = useCalibrationCoords ? h : h * SCALE_Y;
-      const isOccupied = occupiedSpaces.has(name);
-      const isIconPlusSpace = iconPlusSpaces.has(name);
-      const isSelectable = !isOccupied && (bookingTarget === 'icon-plus' ? isIconPlusSpace : !isIconPlusSpace);
-      const classes = ["hitbox"];
-      if (isIconPlusSpace && bookingTarget === 'icon-plus' && !isOccupied) {
-        classes.push("icon-plus-space");
-      }
-      if (isIconPlusSpace && isOccupied) {
-        classes.push("icon-plus-booked");
-      } else if (isIconPlusSpace && bookingTarget !== 'icon-plus') {
-        classes.push("icon-plus-reserved");
-      } else if (!isIconPlusSpace && bookingTarget === 'icon-plus') {
-        classes.push("unavailable");
-      } else if (isOccupied) {
-        classes.push("occupied");
-      }
       const r = svgEl("rect", {
         x: scaledX,
         y: scaledY,
         width: scaledW,
         height: scaledH,
-        class: classes.join(" "),
+        class: cellClasses(name).join(" "),
         "data-name": name
       });
-      if (isIconPlusSpace) {
+      if (iconPlusSpaces.has(name)) {
         addCrownMarker(scaledX, scaledY, scaledW, scaledH);
       }
-      if (isSelectable) {
-        r.addEventListener("click", () => selectSpace(name, r));
-      } else {
-        r.style.pointerEvents = 'none';
-      }
+      wireHitbox(r, name, quartet);
       return r;
     }
 
     function addDirectHitbox({ name, x, y, w, h }) {
-      const isOccupied = occupiedSpaces.has(name);
-      const isIconPlusSpace = iconPlusSpaces.has(name);
-      const isSelectable = !isOccupied && (bookingTarget === 'icon-plus' ? isIconPlusSpace : !isIconPlusSpace);
-      const classes = ["hitbox"];
-      if (isIconPlusSpace && bookingTarget === 'icon-plus' && !isOccupied) {
-        classes.push("icon-plus-space");
-      }
-      if (isIconPlusSpace && isOccupied) {
-        classes.push("icon-plus-booked");
-      } else if (isIconPlusSpace && bookingTarget !== 'icon-plus') {
-        classes.push("icon-plus-reserved");
-      } else if (!isIconPlusSpace && bookingTarget === 'icon-plus') {
-        classes.push("unavailable");
-      } else if (isOccupied) {
-        classes.push("occupied");
-      }
       const r = svgEl("rect", {
         x, y, width: w, height: h,
-        class: classes.join(" "),
+        class: cellClasses(name).join(" "),
         "data-name": name
       });
-      if (isIconPlusSpace) {
+      if (iconPlusSpaces.has(name)) {
         addCrownMarker(x, y, w, h);
       }
-      if (isSelectable) {
-        r.addEventListener("click", () => selectSpace(name, r));
-      } else {
-        r.style.pointerEvents = 'none';
-      }
+      wireHitbox(r, name, null);
       return r;
     }
 
@@ -534,11 +530,12 @@ $seoImage = asset(config('seo.image'));
         const TR = lowOnRight ? `${prefix}${lowTop}` : `${prefix}${highTop}`;
         const BL = lowOnRight ? `${prefix}${highBottom}` : `${prefix}${lowBottom}`;
         const BR = lowOnRight ? `${prefix}${lowBottom}` : `${prefix}${highBottom}`;
+        const quartet = [TL, TR, BL, BR];
 
-        addHitbox({ name: TL, x: x0, y: y0, w: cellW, h: topH });
-        addHitbox({ name: TR, x: x0 + cellW, y: y0, w: cellW, h: topH });
-        addHitbox({ name: BL, x: x0, y: y0 + topH, w: cellW, h: bottomH });
-        addHitbox({ name: BR, x: x0 + cellW, y: y0 + topH, w: cellW, h: bottomH });
+        addHitbox({ name: TL, x: x0, y: y0, w: cellW, h: topH, quartet });
+        addHitbox({ name: TR, x: x0 + cellW, y: y0, w: cellW, h: topH, quartet });
+        addHitbox({ name: BL, x: x0, y: y0 + topH, w: cellW, h: bottomH, quartet });
+        addHitbox({ name: BR, x: x0 + cellW, y: y0 + topH, w: cellW, h: bottomH, quartet });
       }
     }
 

@@ -56,6 +56,13 @@
                     <input type="text" name="note" value="{{ old('note') }}"
                         class="mt-1 w-full rounded-lg border-gray-200 text-sm" placeholder="{{ __('Reserved for...') }}">
                 </div>
+                <div class="md:col-span-2 flex items-center gap-2">
+                    <input type="checkbox" id="is_quartet" name="is_quartet" value="1" {{ old('is_quartet') ? 'checked' : '' }}
+                        class="rounded border-gray-300">
+                    <label for="is_quartet" class="text-sm text-gray-700">
+                        {{ __('Book full quartet (4 linked spaces)') }}
+                    </label>
+                </div>
                 <div>
                     <button type="submit"
                         class="inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-5 py-3 text-sm font-semibold text-white shadow-sm hover:bg-emerald-500 transition">
@@ -66,6 +73,7 @@
                     </button>
                 </div>
             </form>
+            <p class="text-xs text-gray-400">{{ __('Quartet spaces are booked in linked groups of 4 (e.g. L.W.83, L.W.84, L.W.111, L.W.112). Enter any one of the 4 codes and check the box above to book all of them at once.') }}</p>
         </section>
 
         <section class="bg-white rounded-2xl border border-gray-200 p-6 shadow-sm space-y-3">

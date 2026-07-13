@@ -161,7 +161,7 @@ class SponsorPdfLifecycleTest extends TestCase
             'phone' => '+966512345678',
             'job_title' => 'Lead',
             'organization' => 'Icon Co',
-            'location_selection' => 'A01',
+            'location_selection' => 'L.W.50',
             'vat_number' => UploadedFile::fake()->create('vat.pdf', 100, 'application/pdf'),
             'cr_copy_file' => UploadedFile::fake()->create('cr.pdf', 100, 'application/pdf'),
             'cr_copy' => '1234567890',

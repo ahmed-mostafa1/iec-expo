@@ -1305,20 +1305,44 @@ $websiteSchema = [
         opacity: 0.6;
     }
 
-    #icon-plus-card {
-        order: 3;
+    #exhibitor-card {
+        order: 1;
     }
 
-    #icon-plus-form {
-        order: 4;
+    #exhibitor-form {
+        order: 2;
     }
 
     #icon-card {
-        order: 6;
+        order: 3;
     }
 
     #icon-form {
-        order: 7;
+        order: 4;
+    }
+
+    #icon-plus-card {
+        order: 5;
+    }
+
+    #icon-plus-form {
+        order: 6;
+    }
+
+    #icon-quartet-card {
+        order: 8;
+    }
+
+    #icon-quartet-form {
+        order: 9;
+    }
+
+    #icon-plus-quartet-card {
+        order: 10;
+    }
+
+    #icon-plus-quartet-form {
+        order: 11;
     }
 
     .role-icon {
@@ -3249,6 +3273,82 @@ experience that unites ambitious minds and industry leaders under one roof"
             ],
             );
 
+            $iconQuartetCard = data_get($registrationSection, 'icon_quartet_card', []);
+            $iconQuartetForm = data_get($registrationSection, 'icon_quartet_form', []);
+            $iconQuartetFieldsStepOne = data_get($iconQuartetForm, 'fields_step_one', []);
+            $iconQuartetFieldsStepTwo = data_get($iconQuartetForm, 'fields_step_two', []);
+            $iconQuartetFieldsStepOneByName = collect($iconQuartetFieldsStepOne)->keyBy('name');
+            $iconQuartetFieldsStepTwoByName = collect($iconQuartetFieldsStepTwo)->keyBy('name');
+
+            $iconQuartetCardTitle = $translate(
+            data_get($iconQuartetCard, 'title') ?? [
+            'en' => trans('registration.icon_quartet.title', [], 'en'),
+            'ar' => trans('registration.icon_quartet.title', [], 'ar'),
+            ],
+            );
+            $iconQuartetCta = $translate(
+            data_get($iconQuartetCard, 'cta_label') ?? [
+            'en' => trans('registration.icon_quartet.cta_label', [], 'en'),
+            'ar' => trans('registration.icon_quartet.cta_label', [], 'ar'),
+            ],
+            );
+            $iconQuartetFormTitle = $translate(
+            data_get($iconQuartetForm, 'title') ?? [
+            'en' => trans('registration.icon_quartet.form_title', [], 'en'),
+            'ar' => trans('registration.icon_quartet.form_title', [], 'ar'),
+            ],
+            );
+            $iconQuartetBack = $translate(
+            data_get($iconQuartetForm, 'cta_back') ?? [
+            'en' => trans('registration.icon_quartet.cta_back', [], 'en'),
+            'ar' => trans('registration.icon_quartet.cta_back', [], 'ar'),
+            ],
+            );
+            $iconQuartetSubmit = $translate(
+            data_get($iconQuartetForm, 'cta_submit') ?? [
+            'en' => trans('registration.icon_quartet.cta_submit', [], 'en'),
+            'ar' => trans('registration.icon_quartet.cta_submit', [], 'ar'),
+            ],
+            );
+
+            $iconPlusQuartetCard = data_get($registrationSection, 'icon_plus_quartet_card', []);
+            $iconPlusQuartetForm = data_get($registrationSection, 'icon_plus_quartet_form', []);
+            $iconPlusQuartetFieldsStepOne = data_get($iconPlusQuartetForm, 'fields_step_one', []);
+            $iconPlusQuartetFieldsStepTwo = data_get($iconPlusQuartetForm, 'fields_step_two', []);
+            $iconPlusQuartetFieldsStepOneByName = collect($iconPlusQuartetFieldsStepOne)->keyBy('name');
+            $iconPlusQuartetFieldsStepTwoByName = collect($iconPlusQuartetFieldsStepTwo)->keyBy('name');
+
+            $iconPlusQuartetCardTitle = $translate(
+            data_get($iconPlusQuartetCard, 'title') ?? [
+            'en' => trans('registration.icon_plus_quartet.title', [], 'en'),
+            'ar' => trans('registration.icon_plus_quartet.title', [], 'ar'),
+            ],
+            );
+            $iconPlusQuartetCta = $translate(
+            data_get($iconPlusQuartetCard, 'cta_label') ?? [
+            'en' => trans('registration.icon_plus_quartet.cta_label', [], 'en'),
+            'ar' => trans('registration.icon_plus_quartet.cta_label', [], 'ar'),
+            ],
+            );
+            $iconPlusQuartetFormTitle = $translate(
+            data_get($iconPlusQuartetForm, 'title') ?? [
+            'en' => trans('registration.icon_plus_quartet.form_title', [], 'en'),
+            'ar' => trans('registration.icon_plus_quartet.form_title', [], 'ar'),
+            ],
+            );
+            $iconPlusQuartetBack = $translate(
+            data_get($iconPlusQuartetForm, 'cta_back') ?? [
+            'en' => trans('registration.icon_plus_quartet.cta_back', [], 'en'),
+            'ar' => trans('registration.icon_plus_quartet.cta_back', [], 'ar'),
+            ],
+            );
+            $iconPlusQuartetSubmit = $translate(
+            data_get($iconPlusQuartetForm, 'cta_submit') ?? [
+            'en' => trans('registration.icon_plus_quartet.cta_submit', [], 'en'),
+            'ar' => trans('registration.icon_plus_quartet.cta_submit', [], 'ar'),
+            ],
+            );
+
             $fieldCopy = function ($fieldsByName, string $name, string $key, array $fallback) use ($translate) {
             $field = $fieldsByName->get($name);
             $value = $field ? data_get($field, $key) : null;
@@ -3264,10 +3364,14 @@ experience that unites ambitious minds and industry leaders under one roof"
             $sponsorFormActive = old('form_identifier') === 'sponsor';
             $iconFormActive = old('form_identifier') === 'icon';
             $iconPlusFormActive = old('form_identifier') === 'icon-plus';
+            $iconQuartetFormActive = old('form_identifier') === 'icon-quartet';
+            $iconPlusQuartetFormActive = old('form_identifier') === 'icon-plus-quartet';
             $visitorShouldOpen = $visitorFormActive || session()->has('visitor_success');
             $sponsorShouldOpen = $sponsorFormActive || session()->has('sponsor_success');
             $iconShouldOpen = $iconFormActive || session()->has('icon_success');
             $iconPlusShouldOpen = $iconPlusFormActive || session()->has('icon_plus_success');
+            $iconQuartetShouldOpen = $iconQuartetFormActive || session()->has('icon_quartet_success');
+            $iconPlusQuartetShouldOpen = $iconPlusQuartetFormActive || session()->has('icon_plus_quartet_success');
             @endphp
 
             <section class="registration" id="register">
@@ -3280,7 +3384,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                     <div class="registration-content">
                         <div class="role-cards" id="role-cards">
 
-                            <div class="role-card" id="exhibitor-card" onclick="selectRole('exhibitor')">
+                            <div class="role-card guest-card" id="exhibitor-card" onclick="selectRole('exhibitor')">
                                 <div class="role-icon">
                                     <svg class="icon icon-lg" viewBox="0 0 24 24">
                                         <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z" />
@@ -3298,7 +3402,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                                 </div>
                             </div>
 
-                            <div class="form-card" id="exhibitor-form">
+                            <div class="form-card guest-form" id="exhibitor-form">
                                 @if (session('sponsor_success'))
                                 <div
                                     class="mb-4 rounded-lg border border-emerald-100 bg-emerald-50 px-3 py-2 text-sm text-emerald-900">
@@ -3649,7 +3753,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                                 </form>
                             </div>
 
-                            <div class="role-card guest-card" id="icon-card" onclick="selectRole('icon')">
+                            <div class="role-card" id="icon-card" onclick="selectRole('icon')">
                                 <div class="role-icon">
                                     <svg class="icon icon-lg" viewBox="0 0 24 24">
                                         <path
@@ -3666,7 +3770,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                                 </div>
                             </div>
 
-                            <div class="form-card guest-form" id="icon-form">
+                            <div class="form-card" id="icon-form">
 
                                 @if (session('icon_success'))
                                 <div
@@ -4316,6 +4420,652 @@ experience that unites ambitious minds and industry leaders under one roof"
                                         <button type="submit" class="btn btn-primary"
                                             data-en="{{ e($iconPlusSubmit['en']) }}"
                                             data-ar="{{ e($iconPlusSubmit['ar']) }}">{{ $iconPlusSubmit['text'] }}</button>
+                                        <button type="button" class="btn btn-outline" onclick="scrollToContact()"
+                                            data-en="{{ e($guestContact['en']) }}"
+                                            data-ar="{{ e($guestContact['ar']) }}">{{ $guestContact['text'] }}</button>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div class="role-card" id="icon-quartet-card" onclick="selectRole('icon-quartet')">
+                                <div class="role-icon">
+                                    <svg class="icon icon-lg" viewBox="0 0 24 24">
+                                        <path
+                                            d="M12 2l2.4 4.9 5.4.8-3.9 3.8.9 5.4L12 14.9 7.3 16.9l.9-5.4L4.3 7.7l5.4-.8L12 2Z" />
+                                    </svg>
+                                </div>
+                                <h3 class="role-title" data-en="{{ e($iconQuartetCardTitle['en']) }}"
+                                    data-ar="{{ e($iconQuartetCardTitle['ar']) }}">{{ $iconQuartetCardTitle['text'] }}</h3>
+                                <div class="role-cta" id="icon-quartet-cta">
+                                    <span data-en="Click" data-ar="اضغط">Click</span>
+                                    <svg class="icon icon-sm" viewBox="0 0 24 24">
+                                        <path d="M5 12h14M12 5l7 7-7 7" />
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <div class="form-card" id="icon-quartet-form">
+                                @if (session('icon_quartet_success'))
+                                <div
+                                    class="mb-4 rounded-lg border border-emerald-100 bg-emerald-50 px-3 py-2 text-sm text-emerald-900">
+                                    {{ session('icon_quartet_success') }}
+                                </div>
+                                @endif
+                                @php
+                                $iconQuartetFullNameLabel = $fieldCopy($iconQuartetFieldsStepOneByName, 'full_name', 'label',
+                                [
+                                'en' => trans('registration.icon_quartet.full_name', [], 'en'),
+                                'ar' => trans('registration.icon_quartet.full_name', [], 'ar'),
+                                ]);
+                                $iconQuartetFullNamePlaceholder = $fieldCopy($iconQuartetFieldsStepOneByName, 'full_name',
+                                'placeholder', [
+                                'en' => 'Saleh Ahmed',
+                                'ar' => 'صالح أحمد',
+                                ]);
+                                $iconQuartetEmailLabel = $fieldCopy($iconQuartetFieldsStepOneByName, 'email', 'label', [
+                                'en' => trans('registration.icon_quartet.email', [], 'en'),
+                                'ar' => trans('registration.icon_quartet.email', [], 'ar'),
+                                ]);
+                                $iconQuartetEmailPlaceholder = $fieldCopy($iconQuartetFieldsStepOneByName, 'email',
+                                'placeholder', [
+                                'en' => 'saleh@company.com',
+                                'ar' => 'saleh@company.com',
+                                ]);
+                                $iconQuartetPhoneLabel = $fieldCopy($iconQuartetFieldsStepOneByName, 'phone', 'label', [
+                                'en' => trans('registration.icon_quartet.phone', [], 'en'),
+                                'ar' => trans('registration.icon_quartet.phone', [], 'ar'),
+                                ]);
+                                $iconQuartetPhonePlaceholder = $fieldCopy($iconQuartetFieldsStepOneByName, 'phone',
+                                'placeholder', [
+                                'en' => '+966 50 000 0000',
+                                'ar' => '+966 50 000 0000',
+                                ]);
+                                $iconQuartetJobLabel = $fieldCopy($iconQuartetFieldsStepOneByName, 'job_title', 'label', [
+                                'en' => trans('registration.icon_quartet.job_title', [], 'en'),
+                                'ar' => trans('registration.icon_quartet.job_title', [], 'ar'),
+                                ]);
+                                $iconQuartetJobPlaceholder = $fieldCopy($iconQuartetFieldsStepOneByName, 'job_title',
+                                'placeholder', [
+                                'en' => 'Marketing Manager',
+                                'ar' => 'مدير التسويق',
+                                ]);
+                                $iconQuartetOrgLabel = $fieldCopy($iconQuartetFieldsStepOneByName, 'organization', 'label', [
+                                'en' => trans('registration.icon_quartet.organization', [], 'en'),
+                                'ar' => trans('registration.icon_quartet.organization', [], 'ar'),
+                                ]);
+                                $iconQuartetOrgPlaceholder = $fieldCopy($iconQuartetFieldsStepOneByName, 'organization',
+                                'placeholder', [
+                                'en' => 'Umbrella Inc.',
+                                'ar' => 'شركة أمبريلا',
+                                ]);
+                                $iconQuartetLocationLabel = $fieldCopy($iconQuartetFieldsStepOneByName, 'location_selection',
+                                'label', [
+                                'en' => trans('registration.icon_quartet.book_location', [], 'en'),
+                                'ar' => trans('registration.icon_quartet.book_location', [], 'ar'),
+                                ]);
+                                $iconQuartetLocationPlaceholder = $fieldCopy($iconQuartetFieldsStepOneByName,
+                                'location_selection', 'placeholder', [
+                                'en' => 'Select on the hall map',
+                                'ar' => 'اختر من خريطة القاعة',
+                                ]);
+                                $iconQuartetVatLabel = $fieldCopy($iconQuartetFieldsStepTwoByName, 'vat_number', 'label', [
+                                'en' => trans('registration.icon_quartet.vat_number', [], 'en'),
+                                'ar' => trans('registration.icon_quartet.vat_number', [], 'ar'),
+                                ]);
+                                $iconQuartetVatHint = $fieldCopy($iconQuartetFieldsStepTwoByName, 'vat_number', 'hint', [
+                                'en' => trans('registration.icon_quartet.file_hint', [], 'en'),
+                                'ar' => trans('registration.icon_quartet.file_hint', [], 'ar'),
+                                ]);
+                                $iconQuartetCrCopyLabel = $fieldCopy($iconQuartetFieldsStepTwoByName, 'cr_copy_file', 'label', [
+                                'en' => trans('registration.icon_quartet.cr_copy', [], 'en'),
+                                'ar' => trans('registration.icon_quartet.cr_copy', [], 'ar'),
+                                ]);
+                                $iconQuartetCrCopyHint = $fieldCopy($iconQuartetFieldsStepTwoByName, 'cr_copy_file', 'hint', [
+                                'en' => trans('registration.icon_quartet.file_hint', [], 'en'),
+                                'ar' => trans('registration.icon_quartet.file_hint', [], 'ar'),
+                                ]);
+                                $iconQuartetCrNumberLabel = $fieldCopy($iconQuartetFieldsStepTwoByName, 'cr_copy', 'label', [
+                                'en' => trans('registration.icon_quartet.cr_number', [], 'en'),
+                                'ar' => trans('registration.icon_quartet.cr_number', [], 'ar'),
+                                ]);
+                                $iconQuartetCrNumberHint = $fieldCopy($iconQuartetFieldsStepTwoByName, 'cr_copy', 'hint', [
+                                'en' => trans('registration.icon_quartet.cr_number_hint', [], 'en'),
+                                'ar' => trans('registration.icon_quartet.cr_number_hint', [], 'ar'),
+                                ]);
+                                $iconQuartetLogoLabel = $fieldCopy($iconQuartetFieldsStepTwoByName, 'company_logo', 'label', [
+                                'en' => trans('registration.icon_quartet.company_logo', [], 'en'),
+                                'ar' => trans('registration.icon_quartet.company_logo', [], 'ar'),
+                                ]);
+                                $iconQuartetLogoHint = $fieldCopy($iconQuartetFieldsStepTwoByName, 'company_logo', 'hint', [
+                                'en' => trans('registration.icon_quartet.logo_hint', [], 'en'),
+                                'ar' => trans('registration.icon_quartet.logo_hint', [], 'ar'),
+                                ]);
+                                $iconQuartetAddressLabel = $fieldCopy($iconQuartetFieldsStepTwoByName,
+                                'national_address_document', 'label', [
+                                'en' => trans('registration.icon_quartet.national_address_document', [], 'en'),
+                                'ar' => trans('registration.icon_quartet.national_address_document', [], 'ar'),
+                                ]);
+                                $iconQuartetAddressHint = $fieldCopy($iconQuartetFieldsStepTwoByName,
+                                'national_address_document', 'hint', [
+                                'en' => trans('registration.icon_quartet.file_hint', [], 'en'),
+                                'ar' => trans('registration.icon_quartet.file_hint', [], 'ar'),
+                                ]);
+                                @endphp
+                                <h3 class="form-title" data-en="{{ e($iconQuartetFormTitle['en']) }}"
+                                    data-ar="{{ e($iconQuartetFormTitle['ar']) }}">{{ $iconQuartetFormTitle['text'] }}</h3>
+                                <form id="icon-quartet-registration-form" method="POST"
+                                    action="{{ \Illuminate\Support\Facades\Route::has('public.register.icon-quartet') ? route('public.register.icon-quartet', ['locale' => $locale]) : '#' }}"
+                                    enctype="multipart/form-data" novalidate
+                                    data-success-title="{{ e(__('registration.icon_quartet.toast_title')) }}"
+                                    data-success-message="{{ e(__('registration.icon_quartet.success')) }}"
+                                    data-loading-message="{{ e(__('registration.icon_quartet.loading_message')) }}"
+                                    data-loading-button-label="{{ e(__('registration.icon_quartet.loading_button')) }}"
+                                    data-popup-note="{{ e(__('registration.icon_quartet.popup_note')) }}">
+                                    @csrf
+                                    <input type="hidden" name="form_identifier" value="icon-quartet">
+                                    <div class="form-grid form-grid-2">
+                                        <div class="form-group">
+                                            <label class="form-label" data-en="{{ e($iconQuartetFullNameLabel['en']) }}"
+                                                data-ar="{{ e($iconQuartetFullNameLabel['ar']) }}">{{ $iconQuartetFullNameLabel['text'] }}</label>
+                                            <input type="text" name="full_name" class="form-input" required
+                                                placeholder="{{ $iconQuartetFullNamePlaceholder['text'] }}"
+                                                value="{{ $iconQuartetFormActive ? old('full_name') : '' }}">
+                                            @if ($iconQuartetFormActive && $errors->has('full_name'))
+                                            <p class="mt-1 text-xs text-red-600">{{ $errors->first('full_name') }}</p>
+                                            @endif
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label" data-en="{{ e($iconQuartetEmailLabel['en']) }}"
+                                                data-ar="{{ e($iconQuartetEmailLabel['ar']) }}">{{ $iconQuartetEmailLabel['text'] }}</label>
+                                            <input type="email" name="email" class="form-input" required
+                                                placeholder="{{ $iconQuartetEmailPlaceholder['text'] }}"
+                                                value="{{ $iconQuartetFormActive ? old('email') : '' }}">
+                                            @if ($iconQuartetFormActive && $errors->has('email'))
+                                            <p class="mt-1 text-xs text-red-600">{{ $errors->first('email') }}</p>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="form-grid form-grid-2" style="margin-top: 1rem;">
+                                        <div class="form-group">
+                                            <label class="form-label" data-en="{{ e($iconQuartetPhoneLabel['en']) }}"
+                                                data-ar="{{ e($iconQuartetPhoneLabel['ar']) }}">{{ $iconQuartetPhoneLabel['text'] }}</label>
+                                            <input type="tel" name="phone" class="form-input" required inputmode="tel"
+                                                data-phone-sa="true"
+                                                placeholder="{{ $iconQuartetPhonePlaceholder['text'] }}"
+                                                value="{{ $iconQuartetFormActive ? old('phone') : '' }}">
+                                            @if ($iconQuartetFormActive && $errors->has('phone'))
+                                            <p class="mt-1 text-xs text-red-600">{{ $errors->first('phone') }}</p>
+                                            @endif
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label" data-en="{{ e($iconQuartetJobLabel['en']) }}"
+                                                data-ar="{{ e($iconQuartetJobLabel['ar']) }}">{{ $iconQuartetJobLabel['text'] }}</label>
+                                            <input type="text" name="job_title" class="form-input" required
+                                                placeholder="{{ $iconQuartetJobPlaceholder['text'] }}"
+                                                value="{{ $iconQuartetFormActive ? old('job_title') : '' }}">
+                                            @if ($iconQuartetFormActive && $errors->has('job_title'))
+                                            <p class="mt-1 text-xs text-red-600">{{ $errors->first('job_title') }}</p>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="form-grid" style="margin-top:1rem;">
+                                        <div class="form-group">
+                                            <label class="form-label" data-en="{{ e($iconQuartetOrgLabel['en']) }}"
+                                                data-ar="{{ e($iconQuartetOrgLabel['ar']) }}">{{ $iconQuartetOrgLabel['text'] }}</label>
+                                            <input type="text" name="organization" class="form-input" required
+                                                placeholder="{{ $iconQuartetOrgPlaceholder['text'] }}"
+                                                value="{{ $iconQuartetFormActive ? old('organization') : '' }}">
+                                            @if ($iconQuartetFormActive && $errors->has('organization'))
+                                            <p class="mt-1 text-xs text-red-600">{{ $errors->first('organization') }}
+                                            </p>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="form-grid" style="margin-top:1rem;">
+                                        <div class="form-group">
+                                            <label class="form-label" data-en="{{ e($iconQuartetLocationLabel['en']) }}"
+                                                data-ar="{{ e($iconQuartetLocationLabel['ar']) }}">{{ $iconQuartetLocationLabel['text'] }}</label>
+                                            <div class="flex gap-3 flex-col sm:flex-row">
+                                                <input type="text" id="icon-quartet-location-selection"
+                                                    name="location_selection" class="form-input flex-1" required
+                                                    readonly placeholder="{{ $iconQuartetLocationPlaceholder['text'] }}"
+                                                    value="{{ $iconQuartetFormActive ? old('location_selection') : '' }}">
+                                                <button type="button" class="btn btn-outline flex-none"
+                                                    onclick="openHallDesign('icon-quartet-location-selection', 'icon-quartet')">
+                                                    <span data-en="Open hall map" data-ar="فتح خريطة القاعة">Open hall
+                                                        map</span>
+                                                </button>
+                                            </div>
+                                            @if ($iconQuartetFormActive && $errors->has('location_selection'))
+                                            <p class="mt-1 text-xs text-red-600">
+                                                {{ $errors->first('location_selection') }}</p>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="form-grid form-grid-2">
+                                        <div class="form-group">
+                                            <label class="form-label" data-en="{{ e($iconQuartetVatLabel['en']) }}"
+                                                data-ar="{{ e($iconQuartetVatLabel['ar']) }}">{{ $iconQuartetVatLabel['text'] }}</label>
+                                            <input type="file" name="vat_number" class="form-input" required
+                                                accept="application/pdf">
+                                            <span class="form-hint" data-en="{{ e($iconQuartetVatHint['en']) }}"
+                                                data-ar="{{ e($iconQuartetVatHint['ar']) }}">{{ $iconQuartetVatHint['text'] }}</span>
+                                            @if ($iconQuartetFormActive && $errors->has('vat_number'))
+                                            <p class="mt-1 text-xs text-red-600">{{ $errors->first('vat_number') }}</p>
+                                            @endif
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label" data-en="{{ e($iconQuartetCrNumberLabel['en']) }}"
+                                                data-ar="{{ e($iconQuartetCrNumberLabel['ar']) }}">{{ $iconQuartetCrNumberLabel['text'] }}</label>
+                                            <input type="text" name="cr_copy" class="form-input" required
+                                                inputmode="numeric" pattern="\d{10}" maxlength="10"
+                                                oninput="this.value=this.value.replace(/\D/g,'')">
+                                            <span class="form-hint" data-en="{{ e($iconQuartetCrNumberHint['en']) }}"
+                                                data-ar="{{ e($iconQuartetCrNumberHint['ar']) }}">{{ $iconQuartetCrNumberHint['text'] }}</span>
+                                            @if ($iconQuartetFormActive && $errors->has('cr_copy'))
+                                            <p class="mt-1 text-xs text-red-600">{{ $errors->first('cr_copy') }}</p>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="form-grid form-grid-2" style="margin-top: 1rem;">
+                                        <div class="form-group">
+                                            <label class="form-label" data-en="{{ e($iconQuartetCrCopyLabel['en']) }}"
+                                                data-ar="{{ e($iconQuartetCrCopyLabel['ar']) }}">{{ $iconQuartetCrCopyLabel['text'] }}</label>
+                                            <input type="file" name="cr_copy_file" class="form-input" required
+                                                accept="application/pdf">
+                                            <span class="form-hint" data-en="{{ e($iconQuartetCrCopyHint['en']) }}"
+                                                data-ar="{{ e($iconQuartetCrCopyHint['ar']) }}">{{ $iconQuartetCrCopyHint['text'] }}</span>
+                                            @if ($iconQuartetFormActive && $errors->has('cr_copy_file'))
+                                            <p class="mt-1 text-xs text-red-600">{{ $errors->first('cr_copy_file') }}</p>
+                                            @endif
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label" data-en="{{ e($iconQuartetLogoLabel['en']) }}"
+                                                data-ar="{{ e($iconQuartetLogoLabel['ar']) }}">{{ $iconQuartetLogoLabel['text'] }}</label>
+                                            <input type="file" name="company_logo" class="form-input" required
+                                                accept="application/pdf">
+                                            <span class="form-hint" data-en="{{ e($iconQuartetLogoHint['en']) }}"
+                                                data-ar="{{ e($iconQuartetLogoHint['ar']) }}">{{ $iconQuartetLogoHint['text'] }}</span>
+                                            @if ($iconQuartetFormActive && $errors->has('company_logo'))
+                                            <p class="mt-1 text-xs text-red-600">
+                                                {{ $errors->first('company_logo') }}
+                                            </p>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="form-grid form-grid-2" style="margin-top: 1rem;">
+                                        <div class="form-group">
+                                            <label class="form-label" data-en="{{ e($iconQuartetAddressLabel['en']) }}"
+                                                data-ar="{{ e($iconQuartetAddressLabel['ar']) }}">{{ $iconQuartetAddressLabel['text'] }}</label>
+                                            <input type="file" name="national_address_document" class="form-input"
+                                                required accept="application/pdf">
+                                            <span class="form-hint" data-en="{{ e($iconQuartetAddressHint['en']) }}"
+                                                data-ar="{{ e($iconQuartetAddressHint['ar']) }}">{{ $iconQuartetAddressHint['text'] }}</span>
+                                            @if ($iconQuartetFormActive && $errors->has('national_address_document'))
+                                            <p class="mt-1 text-xs text-red-600">
+                                                {{ $errors->first('national_address_document') }}</p>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group" style="margin-top: 1rem;">
+                                        <label class="form-label"
+                                            style="flex-direction: row; align-items: center; gap: 0.5rem;">
+                                            <input type="checkbox" name="privacy_policy" value="1" required
+                                                @checked($iconQuartetFormActive && old('privacy_policy'))>
+                                            <span data-en="I accept the privacy policy"
+                                                data-ar="أوافق على شروط الخصوصية">I
+                                                accept the privacy policy</span>
+                                            <a class="blue-url-style"
+                                                href="{{ asset('pdf/IEC360-Profile-Icon-v2.pdf') }}" target="_blank"
+                                                rel="noopener" download data-en="Download from here"
+                                                data-ar="يمكنك تحميل الملف من هنا">Download from here</a>
+                                        </label>
+
+                                        @if ($iconQuartetFormActive && $errors->has('privacy_policy'))
+                                        <p class="mt-1 text-xs text-red-600">{{ $errors->first('privacy_policy') }}</p>
+                                        @endif
+                                    </div>
+
+                                    <div class="form-buttons">
+                                        <button type="button" class="btn btn-outline" onclick="clearRole()">
+                                            <svg class="icon icon-sm" style="margin-right: 0.5rem;" viewBox="0 0 24 24">
+                                                <path d="M19 12H5M12 19l-7-7 7-7" />
+                                            </svg>
+                                            <span data-en="{{ e($iconQuartetBack['en']) }}"
+                                                data-ar="{{ e($iconQuartetBack['ar']) }}">{{ $iconQuartetBack['text'] }}</span>
+                                        </button>
+                                        <button type="submit" class="btn btn-primary"
+                                            data-en="{{ e($iconQuartetSubmit['en']) }}"
+                                            data-ar="{{ e($iconQuartetSubmit['ar']) }}">{{ $iconQuartetSubmit['text'] }}</button>
+                                        <button type="button" class="btn btn-outline" onclick="scrollToContact()"
+                                            data-en="{{ e($guestContact['en']) }}"
+                                            data-ar="{{ e($guestContact['ar']) }}">{{ $guestContact['text'] }}</button>
+                                    </div>
+                                </form>
+                            </div>
+
+                            <div class="role-card" id="icon-plus-quartet-card" onclick="selectRole('icon-plus-quartet')">
+                                <div class="role-icon">
+                                    <svg class="icon icon-lg" viewBox="0 0 24 24">
+                                        <path d="m2 4 3 12h14l3-12-6 7-4-8-4 8-6-7Z" />
+                                        <path d="M5 20h14" />
+                                    </svg>
+                                </div>
+                                <h3 class="role-title" data-en="{{ e($iconPlusQuartetCardTitle['en']) }}"
+                                    data-ar="{{ e($iconPlusQuartetCardTitle['ar']) }}">{{ $iconPlusQuartetCardTitle['text'] }}</h3>
+                                <div class="role-cta" id="icon-plus-quartet-cta">
+                                    <span data-en="Click" data-ar="اضغط">Click</span>
+                                    <svg class="icon icon-sm" viewBox="0 0 24 24">
+                                        <path d="M5 12h14M12 5l7 7-7 7" />
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <div class="form-card" id="icon-plus-quartet-form">
+                                @if (session('icon_plus_quartet_success'))
+                                <div
+                                    class="mb-4 rounded-lg border border-emerald-100 bg-emerald-50 px-3 py-2 text-sm text-emerald-900">
+                                    {{ session('icon_plus_quartet_success') }}
+                                </div>
+                                @endif
+                                @php
+                                $iconPlusQuartetFullNameLabel = $fieldCopy($iconPlusQuartetFieldsStepOneByName, 'full_name', 'label',
+                                [
+                                'en' => trans('registration.icon_plus_quartet.full_name', [], 'en'),
+                                'ar' => trans('registration.icon_plus_quartet.full_name', [], 'ar'),
+                                ]);
+                                $iconPlusQuartetFullNamePlaceholder = $fieldCopy($iconPlusQuartetFieldsStepOneByName, 'full_name',
+                                'placeholder', [
+                                'en' => 'Saleh Ahmed',
+                                'ar' => 'صالح أحمد',
+                                ]);
+                                $iconPlusQuartetEmailLabel = $fieldCopy($iconPlusQuartetFieldsStepOneByName, 'email', 'label', [
+                                'en' => trans('registration.icon_plus_quartet.email', [], 'en'),
+                                'ar' => trans('registration.icon_plus_quartet.email', [], 'ar'),
+                                ]);
+                                $iconPlusQuartetEmailPlaceholder = $fieldCopy($iconPlusQuartetFieldsStepOneByName, 'email',
+                                'placeholder', [
+                                'en' => 'saleh@company.com',
+                                'ar' => 'saleh@company.com',
+                                ]);
+                                $iconPlusQuartetPhoneLabel = $fieldCopy($iconPlusQuartetFieldsStepOneByName, 'phone', 'label', [
+                                'en' => trans('registration.icon_plus_quartet.phone', [], 'en'),
+                                'ar' => trans('registration.icon_plus_quartet.phone', [], 'ar'),
+                                ]);
+                                $iconPlusQuartetPhonePlaceholder = $fieldCopy($iconPlusQuartetFieldsStepOneByName, 'phone',
+                                'placeholder', [
+                                'en' => '+966 50 000 0000',
+                                'ar' => '+966 50 000 0000',
+                                ]);
+                                $iconPlusQuartetJobLabel = $fieldCopy($iconPlusQuartetFieldsStepOneByName, 'job_title', 'label', [
+                                'en' => trans('registration.icon_plus_quartet.job_title', [], 'en'),
+                                'ar' => trans('registration.icon_plus_quartet.job_title', [], 'ar'),
+                                ]);
+                                $iconPlusQuartetJobPlaceholder = $fieldCopy($iconPlusQuartetFieldsStepOneByName, 'job_title',
+                                'placeholder', [
+                                'en' => 'Marketing Manager',
+                                'ar' => 'مدير التسويق',
+                                ]);
+                                $iconPlusQuartetOrgLabel = $fieldCopy($iconPlusQuartetFieldsStepOneByName, 'organization', 'label', [
+                                'en' => trans('registration.icon_plus_quartet.organization', [], 'en'),
+                                'ar' => trans('registration.icon_plus_quartet.organization', [], 'ar'),
+                                ]);
+                                $iconPlusQuartetOrgPlaceholder = $fieldCopy($iconPlusQuartetFieldsStepOneByName, 'organization',
+                                'placeholder', [
+                                'en' => 'Umbrella Inc.',
+                                'ar' => 'شركة أمبريلا',
+                                ]);
+                                $iconPlusQuartetLocationLabel = $fieldCopy($iconPlusQuartetFieldsStepOneByName, 'location_selection',
+                                'label', [
+                                'en' => trans('registration.icon_plus_quartet.book_location', [], 'en'),
+                                'ar' => trans('registration.icon_plus_quartet.book_location', [], 'ar'),
+                                ]);
+                                $iconPlusQuartetLocationPlaceholder = $fieldCopy($iconPlusQuartetFieldsStepOneByName,
+                                'location_selection', 'placeholder', [
+                                'en' => 'Select on the hall map',
+                                'ar' => 'اختر من خريطة القاعة',
+                                ]);
+                                $iconPlusQuartetVatLabel = $fieldCopy($iconPlusQuartetFieldsStepTwoByName, 'vat_number', 'label', [
+                                'en' => trans('registration.icon_plus_quartet.vat_number', [], 'en'),
+                                'ar' => trans('registration.icon_plus_quartet.vat_number', [], 'ar'),
+                                ]);
+                                $iconPlusQuartetVatHint = $fieldCopy($iconPlusQuartetFieldsStepTwoByName, 'vat_number', 'hint', [
+                                'en' => trans('registration.icon_plus_quartet.file_hint', [], 'en'),
+                                'ar' => trans('registration.icon_plus_quartet.file_hint', [], 'ar'),
+                                ]);
+                                $iconPlusQuartetCrCopyLabel = $fieldCopy($iconPlusQuartetFieldsStepTwoByName, 'cr_copy_file', 'label', [
+                                'en' => trans('registration.icon_plus_quartet.cr_copy', [], 'en'),
+                                'ar' => trans('registration.icon_plus_quartet.cr_copy', [], 'ar'),
+                                ]);
+                                $iconPlusQuartetCrCopyHint = $fieldCopy($iconPlusQuartetFieldsStepTwoByName, 'cr_copy_file', 'hint', [
+                                'en' => trans('registration.icon_plus_quartet.file_hint', [], 'en'),
+                                'ar' => trans('registration.icon_plus_quartet.file_hint', [], 'ar'),
+                                ]);
+                                $iconPlusQuartetCrNumberLabel = $fieldCopy($iconPlusQuartetFieldsStepTwoByName, 'cr_copy', 'label', [
+                                'en' => trans('registration.icon_plus_quartet.cr_number', [], 'en'),
+                                'ar' => trans('registration.icon_plus_quartet.cr_number', [], 'ar'),
+                                ]);
+                                $iconPlusQuartetCrNumberHint = $fieldCopy($iconPlusQuartetFieldsStepTwoByName, 'cr_copy', 'hint', [
+                                'en' => trans('registration.icon_plus_quartet.cr_number_hint', [], 'en'),
+                                'ar' => trans('registration.icon_plus_quartet.cr_number_hint', [], 'ar'),
+                                ]);
+                                $iconPlusQuartetLogoLabel = $fieldCopy($iconPlusQuartetFieldsStepTwoByName, 'company_logo', 'label', [
+                                'en' => trans('registration.icon_plus_quartet.company_logo', [], 'en'),
+                                'ar' => trans('registration.icon_plus_quartet.company_logo', [], 'ar'),
+                                ]);
+                                $iconPlusQuartetLogoHint = $fieldCopy($iconPlusQuartetFieldsStepTwoByName, 'company_logo', 'hint', [
+                                'en' => trans('registration.icon_plus_quartet.logo_hint', [], 'en'),
+                                'ar' => trans('registration.icon_plus_quartet.logo_hint', [], 'ar'),
+                                ]);
+                                $iconPlusQuartetAddressLabel = $fieldCopy($iconPlusQuartetFieldsStepTwoByName,
+                                'national_address_document', 'label', [
+                                'en' => trans('registration.icon_plus_quartet.national_address_document', [], 'en'),
+                                'ar' => trans('registration.icon_plus_quartet.national_address_document', [], 'ar'),
+                                ]);
+                                $iconPlusQuartetAddressHint = $fieldCopy($iconPlusQuartetFieldsStepTwoByName,
+                                'national_address_document', 'hint', [
+                                'en' => trans('registration.icon_plus_quartet.file_hint', [], 'en'),
+                                'ar' => trans('registration.icon_plus_quartet.file_hint', [], 'ar'),
+                                ]);
+                                @endphp
+                                <h3 class="form-title" data-en="{{ e($iconPlusQuartetFormTitle['en']) }}"
+                                    data-ar="{{ e($iconPlusQuartetFormTitle['ar']) }}">{{ $iconPlusQuartetFormTitle['text'] }}</h3>
+                                <form id="icon-plus-quartet-registration-form" method="POST"
+                                    action="{{ \Illuminate\Support\Facades\Route::has('public.register.icon-plus-quartet') ? route('public.register.icon-plus-quartet', ['locale' => $locale]) : '#' }}"
+                                    enctype="multipart/form-data" novalidate
+                                    data-success-title="{{ e(__('registration.icon_plus_quartet.toast_title')) }}"
+                                    data-success-message="{{ e(__('registration.icon_plus_quartet.success')) }}"
+                                    data-loading-message="{{ e(__('registration.icon_plus_quartet.loading_message')) }}"
+                                    data-loading-button-label="{{ e(__('registration.icon_plus_quartet.loading_button')) }}"
+                                    data-popup-note="{{ e(__('registration.icon_plus_quartet.popup_note')) }}">
+                                    @csrf
+                                    <input type="hidden" name="form_identifier" value="icon-plus-quartet">
+                                    <div class="form-grid form-grid-2">
+                                        <div class="form-group">
+                                            <label class="form-label" data-en="{{ e($iconPlusQuartetFullNameLabel['en']) }}"
+                                                data-ar="{{ e($iconPlusQuartetFullNameLabel['ar']) }}">{{ $iconPlusQuartetFullNameLabel['text'] }}</label>
+                                            <input type="text" name="full_name" class="form-input" required
+                                                placeholder="{{ $iconPlusQuartetFullNamePlaceholder['text'] }}"
+                                                value="{{ $iconPlusQuartetFormActive ? old('full_name') : '' }}">
+                                            @if ($iconPlusQuartetFormActive && $errors->has('full_name'))
+                                            <p class="mt-1 text-xs text-red-600">{{ $errors->first('full_name') }}</p>
+                                            @endif
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label" data-en="{{ e($iconPlusQuartetEmailLabel['en']) }}"
+                                                data-ar="{{ e($iconPlusQuartetEmailLabel['ar']) }}">{{ $iconPlusQuartetEmailLabel['text'] }}</label>
+                                            <input type="email" name="email" class="form-input" required
+                                                placeholder="{{ $iconPlusQuartetEmailPlaceholder['text'] }}"
+                                                value="{{ $iconPlusQuartetFormActive ? old('email') : '' }}">
+                                            @if ($iconPlusQuartetFormActive && $errors->has('email'))
+                                            <p class="mt-1 text-xs text-red-600">{{ $errors->first('email') }}</p>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="form-grid form-grid-2" style="margin-top: 1rem;">
+                                        <div class="form-group">
+                                            <label class="form-label" data-en="{{ e($iconPlusQuartetPhoneLabel['en']) }}"
+                                                data-ar="{{ e($iconPlusQuartetPhoneLabel['ar']) }}">{{ $iconPlusQuartetPhoneLabel['text'] }}</label>
+                                            <input type="tel" name="phone" class="form-input" required inputmode="tel"
+                                                data-phone-sa="true"
+                                                placeholder="{{ $iconPlusQuartetPhonePlaceholder['text'] }}"
+                                                value="{{ $iconPlusQuartetFormActive ? old('phone') : '' }}">
+                                            @if ($iconPlusQuartetFormActive && $errors->has('phone'))
+                                            <p class="mt-1 text-xs text-red-600">{{ $errors->first('phone') }}</p>
+                                            @endif
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label" data-en="{{ e($iconPlusQuartetJobLabel['en']) }}"
+                                                data-ar="{{ e($iconPlusQuartetJobLabel['ar']) }}">{{ $iconPlusQuartetJobLabel['text'] }}</label>
+                                            <input type="text" name="job_title" class="form-input" required
+                                                placeholder="{{ $iconPlusQuartetJobPlaceholder['text'] }}"
+                                                value="{{ $iconPlusQuartetFormActive ? old('job_title') : '' }}">
+                                            @if ($iconPlusQuartetFormActive && $errors->has('job_title'))
+                                            <p class="mt-1 text-xs text-red-600">{{ $errors->first('job_title') }}</p>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="form-grid" style="margin-top:1rem;">
+                                        <div class="form-group">
+                                            <label class="form-label" data-en="{{ e($iconPlusQuartetOrgLabel['en']) }}"
+                                                data-ar="{{ e($iconPlusQuartetOrgLabel['ar']) }}">{{ $iconPlusQuartetOrgLabel['text'] }}</label>
+                                            <input type="text" name="organization" class="form-input" required
+                                                placeholder="{{ $iconPlusQuartetOrgPlaceholder['text'] }}"
+                                                value="{{ $iconPlusQuartetFormActive ? old('organization') : '' }}">
+                                            @if ($iconPlusQuartetFormActive && $errors->has('organization'))
+                                            <p class="mt-1 text-xs text-red-600">{{ $errors->first('organization') }}
+                                            </p>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="form-grid" style="margin-top:1rem;">
+                                        <div class="form-group">
+                                            <label class="form-label" data-en="{{ e($iconPlusQuartetLocationLabel['en']) }}"
+                                                data-ar="{{ e($iconPlusQuartetLocationLabel['ar']) }}">{{ $iconPlusQuartetLocationLabel['text'] }}</label>
+                                            <div class="flex gap-3 flex-col sm:flex-row">
+                                                <input type="text" id="icon-plus-quartet-location-selection"
+                                                    name="location_selection" class="form-input flex-1" required
+                                                    readonly placeholder="{{ $iconPlusQuartetLocationPlaceholder['text'] }}"
+                                                    value="{{ $iconPlusQuartetFormActive ? old('location_selection') : '' }}">
+                                                <button type="button" class="btn btn-outline flex-none"
+                                                    onclick="openHallDesign('icon-plus-quartet-location-selection', 'icon-plus-quartet')">
+                                                    <span data-en="Open hall map" data-ar="فتح خريطة القاعة">Open hall
+                                                        map</span>
+                                                </button>
+                                            </div>
+                                            @if ($iconPlusQuartetFormActive && $errors->has('location_selection'))
+                                            <p class="mt-1 text-xs text-red-600">
+                                                {{ $errors->first('location_selection') }}</p>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="form-grid form-grid-2">
+                                        <div class="form-group">
+                                            <label class="form-label" data-en="{{ e($iconPlusQuartetVatLabel['en']) }}"
+                                                data-ar="{{ e($iconPlusQuartetVatLabel['ar']) }}">{{ $iconPlusQuartetVatLabel['text'] }}</label>
+                                            <input type="file" name="vat_number" class="form-input" required
+                                                accept="application/pdf">
+                                            <span class="form-hint" data-en="{{ e($iconPlusQuartetVatHint['en']) }}"
+                                                data-ar="{{ e($iconPlusQuartetVatHint['ar']) }}">{{ $iconPlusQuartetVatHint['text'] }}</span>
+                                            @if ($iconPlusQuartetFormActive && $errors->has('vat_number'))
+                                            <p class="mt-1 text-xs text-red-600">{{ $errors->first('vat_number') }}</p>
+                                            @endif
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label" data-en="{{ e($iconPlusQuartetCrNumberLabel['en']) }}"
+                                                data-ar="{{ e($iconPlusQuartetCrNumberLabel['ar']) }}">{{ $iconPlusQuartetCrNumberLabel['text'] }}</label>
+                                            <input type="text" name="cr_copy" class="form-input" required
+                                                inputmode="numeric" pattern="\d{10}" maxlength="10"
+                                                oninput="this.value=this.value.replace(/\D/g,'')">
+                                            <span class="form-hint" data-en="{{ e($iconPlusQuartetCrNumberHint['en']) }}"
+                                                data-ar="{{ e($iconPlusQuartetCrNumberHint['ar']) }}">{{ $iconPlusQuartetCrNumberHint['text'] }}</span>
+                                            @if ($iconPlusQuartetFormActive && $errors->has('cr_copy'))
+                                            <p class="mt-1 text-xs text-red-600">{{ $errors->first('cr_copy') }}</p>
+                                            @endif
+                                        </div>
+                                    </div>
+                                    <div class="form-grid form-grid-2" style="margin-top: 1rem;">
+                                        <div class="form-group">
+                                            <label class="form-label" data-en="{{ e($iconPlusQuartetCrCopyLabel['en']) }}"
+                                                data-ar="{{ e($iconPlusQuartetCrCopyLabel['ar']) }}">{{ $iconPlusQuartetCrCopyLabel['text'] }}</label>
+                                            <input type="file" name="cr_copy_file" class="form-input" required
+                                                accept="application/pdf">
+                                            <span class="form-hint" data-en="{{ e($iconPlusQuartetCrCopyHint['en']) }}"
+                                                data-ar="{{ e($iconPlusQuartetCrCopyHint['ar']) }}">{{ $iconPlusQuartetCrCopyHint['text'] }}</span>
+                                            @if ($iconPlusQuartetFormActive && $errors->has('cr_copy_file'))
+                                            <p class="mt-1 text-xs text-red-600">{{ $errors->first('cr_copy_file') }}</p>
+                                            @endif
+                                        </div>
+                                        <div class="form-group">
+                                            <label class="form-label" data-en="{{ e($iconPlusQuartetLogoLabel['en']) }}"
+                                                data-ar="{{ e($iconPlusQuartetLogoLabel['ar']) }}">{{ $iconPlusQuartetLogoLabel['text'] }}</label>
+                                            <input type="file" name="company_logo" class="form-input" required
+                                                accept="application/pdf">
+                                            <span class="form-hint" data-en="{{ e($iconPlusQuartetLogoHint['en']) }}"
+                                                data-ar="{{ e($iconPlusQuartetLogoHint['ar']) }}">{{ $iconPlusQuartetLogoHint['text'] }}</span>
+                                            @if ($iconPlusQuartetFormActive && $errors->has('company_logo'))
+                                            <p class="mt-1 text-xs text-red-600">
+                                                {{ $errors->first('company_logo') }}
+                                            </p>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="form-grid form-grid-2" style="margin-top: 1rem;">
+                                        <div class="form-group">
+                                            <label class="form-label" data-en="{{ e($iconPlusQuartetAddressLabel['en']) }}"
+                                                data-ar="{{ e($iconPlusQuartetAddressLabel['ar']) }}">{{ $iconPlusQuartetAddressLabel['text'] }}</label>
+                                            <input type="file" name="national_address_document" class="form-input"
+                                                required accept="application/pdf">
+                                            <span class="form-hint" data-en="{{ e($iconPlusQuartetAddressHint['en']) }}"
+                                                data-ar="{{ e($iconPlusQuartetAddressHint['ar']) }}">{{ $iconPlusQuartetAddressHint['text'] }}</span>
+                                            @if ($iconPlusQuartetFormActive && $errors->has('national_address_document'))
+                                            <p class="mt-1 text-xs text-red-600">
+                                                {{ $errors->first('national_address_document') }}</p>
+                                            @endif
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group" style="margin-top: 1rem;">
+                                        <label class="form-label"
+                                            style="flex-direction: row; align-items: center; gap: 0.5rem;">
+                                            <input type="checkbox" name="privacy_policy" value="1" required
+                                                @checked($iconPlusQuartetFormActive && old('privacy_policy'))>
+                                            <span data-en="I accept the privacy policy"
+                                                data-ar="أوافق على شروط الخصوصية">I
+                                                accept the privacy policy</span>
+                                            <a class="blue-url-style"
+                                                href="{{ asset('pdf/IEC360-Profile-Icon-v2.pdf') }}" target="_blank"
+                                                rel="noopener" download data-en="Download from here"
+                                                data-ar="يمكنك تحميل الملف من هنا">Download from here</a>
+                                        </label>
+
+                                        @if ($iconPlusQuartetFormActive && $errors->has('privacy_policy'))
+                                        <p class="mt-1 text-xs text-red-600">{{ $errors->first('privacy_policy') }}</p>
+                                        @endif
+                                    </div>
+
+                                    <div class="form-buttons">
+                                        <button type="button" class="btn btn-outline" onclick="clearRole()">
+                                            <svg class="icon icon-sm" style="margin-right: 0.5rem;" viewBox="0 0 24 24">
+                                                <path d="M19 12H5M12 19l-7-7 7-7" />
+                                            </svg>
+                                            <span data-en="{{ e($iconPlusQuartetBack['en']) }}"
+                                                data-ar="{{ e($iconPlusQuartetBack['ar']) }}">{{ $iconPlusQuartetBack['text'] }}</span>
+                                        </button>
+                                        <button type="submit" class="btn btn-primary"
+                                            data-en="{{ e($iconPlusQuartetSubmit['en']) }}"
+                                            data-ar="{{ e($iconPlusQuartetSubmit['ar']) }}">{{ $iconPlusQuartetSubmit['text'] }}</button>
                                         <button type="button" class="btn btn-outline" onclick="scrollToContact()"
                                             data-en="{{ e($guestContact['en']) }}"
                                             data-ar="{{ e($guestContact['ar']) }}">{{ $guestContact['text'] }}</button>
@@ -5449,6 +6199,10 @@ experience that unites ambitious minds and industry leaders under one roof"
         const exhibitorForm = document.getElementById('exhibitor-form');
         const iconCard = document.getElementById('icon-card');
         const iconForm = document.getElementById('icon-form');
+        const iconQuartetCard = document.getElementById('icon-quartet-card');
+        const iconQuartetForm = document.getElementById('icon-quartet-form');
+        const iconPlusQuartetCard = document.getElementById('icon-plus-quartet-card');
+        const iconPlusQuartetForm = document.getElementById('icon-plus-quartet-form');
         const guestLogo = document.getElementById('guest-row-logo');
         const sponsorLogo = document.getElementById('sponsor-row-logo');
 
@@ -5456,11 +6210,15 @@ experience that unites ambitious minds and industry leaders under one roof"
             if (sponsorLogo) sponsorLogo.style.order = '0';
             exhibitorCard.style.order = '1';
             exhibitorForm.style.order = '2';
-            iconPlusCard.style.order = '3';
-            iconPlusForm.style.order = '4';
-            if (guestLogo) guestLogo.style.order = '5';
-            iconCard.style.order = '6';
-            iconForm.style.order = '7';
+            iconCard.style.order = '3';
+            iconForm.style.order = '4';
+            iconPlusCard.style.order = '5';
+            iconPlusForm.style.order = '6';
+            if (guestLogo) guestLogo.style.order = '7';
+            iconQuartetCard.style.order = '8';
+            iconQuartetForm.style.order = '9';
+            iconPlusQuartetCard.style.order = '10';
+            iconPlusQuartetForm.style.order = '11';
         };
 
         setBaseOrder();
@@ -5471,21 +6229,31 @@ experience that unites ambitious minds and industry leaders under one roof"
         const exhibitorElements = [document.getElementById('exhibitor-card'), document.getElementById(
             'exhibitor-form')];
         const iconElements = [document.getElementById('icon-card'), document.getElementById('icon-form')];
+        const iconQuartetElements = [document.getElementById('icon-quartet-card'), document.getElementById(
+            'icon-quartet-form')];
+        const iconPlusQuartetElements = [document.getElementById('icon-plus-quartet-card'), document.getElementById(
+            'icon-plus-quartet-form')];
+        const allElements = [...iconPlusElements, ...exhibitorElements, ...iconElements, ...iconQuartetElements, ...
+            iconPlusQuartetElements
+        ];
 
         if (role === 'icon-plus') {
             iconPlusElements.forEach(el => el.style.display = '');
-            exhibitorElements.forEach(el => el.style.display = 'none');
-            iconElements.forEach(el => el.style.display = 'none');
+            allElements.filter(el => !iconPlusElements.includes(el)).forEach(el => el.style.display = 'none');
         } else if (role === 'exhibitor') {
             exhibitorElements.forEach(el => el.style.display = '');
-            iconPlusElements.forEach(el => el.style.display = 'none');
-            iconElements.forEach(el => el.style.display = 'none');
+            allElements.filter(el => !exhibitorElements.includes(el)).forEach(el => el.style.display = 'none');
         } else if (role === 'icon') {
             iconElements.forEach(el => el.style.display = '');
-            iconPlusElements.forEach(el => el.style.display = 'none');
-            exhibitorElements.forEach(el => el.style.display = 'none');
+            allElements.filter(el => !iconElements.includes(el)).forEach(el => el.style.display = 'none');
+        } else if (role === 'icon-quartet') {
+            iconQuartetElements.forEach(el => el.style.display = '');
+            allElements.filter(el => !iconQuartetElements.includes(el)).forEach(el => el.style.display = 'none');
+        } else if (role === 'icon-plus-quartet') {
+            iconPlusQuartetElements.forEach(el => el.style.display = '');
+            allElements.filter(el => !iconPlusQuartetElements.includes(el)).forEach(el => el.style.display = 'none');
         } else {
-            [...iconPlusElements, ...exhibitorElements, ...iconElements].forEach(el => el.style.display = '');
+            allElements.forEach(el => el.style.display = '');
         }
     }
 
@@ -5501,7 +6269,6 @@ experience that unites ambitious minds and industry leaders under one roof"
         const roleCards = document.getElementById('role-cards');
         roleCards.classList.add('has-selection');
         roleCards.classList.add('hide-cards');
-        roleCards.classList.toggle('guest-selected', role === 'icon');
 
         const guestLogo = document.getElementById('guest-row-logo');
         if (guestLogo && role) {
@@ -5525,6 +6292,18 @@ experience that unites ambitious minds and industry leaders under one roof"
                 card: 'icon-card',
                 form: 'icon-form',
                 cta: 'icon-cta'
+            },
+            {
+                key: 'icon-quartet',
+                card: 'icon-quartet-card',
+                form: 'icon-quartet-form',
+                cta: 'icon-quartet-cta'
+            },
+            {
+                key: 'icon-plus-quartet',
+                card: 'icon-plus-quartet-card',
+                form: 'icon-plus-quartet-form',
+                cta: 'icon-plus-quartet-cta'
             },
         ];
 
@@ -5552,7 +6331,6 @@ experience that unites ambitious minds and industry leaders under one roof"
         const roleCards = document.getElementById('role-cards');
         roleCards.classList.remove('has-selection');
         roleCards.classList.remove('hide-cards');
-        roleCards.classList.remove('guest-selected');
 
         document.getElementById('icon-plus-card').classList.remove('selected', 'dimmed');
         document.getElementById('icon-plus-cta').style.display = 'flex';
@@ -5565,6 +6343,14 @@ experience that unites ambitious minds and industry leaders under one roof"
         document.getElementById('icon-card').classList.remove('selected', 'dimmed');
         document.getElementById('icon-cta').style.display = 'flex';
         document.getElementById('icon-form').classList.remove('active');
+
+        document.getElementById('icon-quartet-card').classList.remove('selected', 'dimmed');
+        document.getElementById('icon-quartet-cta').style.display = 'flex';
+        document.getElementById('icon-quartet-form').classList.remove('active');
+
+        document.getElementById('icon-plus-quartet-card').classList.remove('selected', 'dimmed');
+        document.getElementById('icon-plus-quartet-cta').style.display = 'flex';
+        document.getElementById('icon-plus-quartet-form').classList.remove('active');
         toggleRoleVisibility(null);
         applyRoleOrder(null);
     }
@@ -5629,8 +6415,12 @@ experience that unites ambitious minds and industry leaders under one roof"
         if (!input) {
             input = document.getElementById('icon-location-selection') ||
                 document.getElementById('icon-plus-location-selection') ||
+                document.getElementById('icon-quartet-location-selection') ||
+                document.getElementById('icon-plus-quartet-location-selection') ||
                 document.querySelector('#icon-form input[name="location_selection"]') ||
                 document.querySelector('#icon-plus-form input[name="location_selection"]') ||
+                document.querySelector('#icon-quartet-form input[name="location_selection"]') ||
+                document.querySelector('#icon-plus-quartet-form input[name="location_selection"]') ||
                 document.querySelector('input[name="location_selection"]');
         }
         if (input) {
@@ -5643,6 +6433,10 @@ experience that unites ambitious minds and industry leaders under one roof"
                 selectRole('icon');
             } else if (form && form.id === 'icon-plus-registration-form') {
                 selectRole('icon-plus');
+            } else if (form && form.id === 'icon-quartet-registration-form') {
+                selectRole('icon-quartet');
+            } else if (form && form.id === 'icon-plus-quartet-registration-form') {
+                selectRole('icon-plus-quartet');
             }
             try {
                 input.scrollIntoView({
@@ -5674,9 +6468,17 @@ experience that unites ambitious minds and industry leaders under one roof"
             input = document.getElementById('icon-plus-location-selection') ||
                 document.querySelector('#icon-plus-form input[name="location_selection"]');
         }
+        if (!input && target === 'icon-quartet') {
+            input = document.getElementById('icon-quartet-location-selection') ||
+                document.querySelector('#icon-quartet-form input[name="location_selection"]');
+        }
+        if (!input && target === 'icon-plus-quartet') {
+            input = document.getElementById('icon-plus-quartet-location-selection') ||
+                document.querySelector('#icon-plus-quartet-form input[name="location_selection"]');
+        }
 
         if (input) {
-            selectRole(target === 'icon-plus' ? 'icon-plus' : 'icon');
+            selectRole(['icon-plus', 'icon-quartet', 'icon-plus-quartet'].includes(target) ? target : 'icon');
             input.value = space;
             input.dispatchEvent(new Event('input', {
                 bubbles: true
@@ -5734,6 +6536,28 @@ experience that unites ambitious minds and industry leaders under one roof"
                     },
                 });
             }
+        }
+
+        const iconQuartetForm = document.getElementById('icon-quartet-registration-form');
+        if (iconQuartetForm) {
+            bindAjaxRegistrationForm(iconQuartetForm, {
+                onSuccess: (payload) => {
+                    iconQuartetForm.reset();
+                    clearRole();
+                    showSuccessPopup(getSuccessPopupContent(iconQuartetForm, payload));
+                },
+            });
+        }
+
+        const iconPlusQuartetForm = document.getElementById('icon-plus-quartet-registration-form');
+        if (iconPlusQuartetForm) {
+            bindAjaxRegistrationForm(iconPlusQuartetForm, {
+                onSuccess: (payload) => {
+                    iconPlusQuartetForm.reset();
+                    clearRole();
+                    showSuccessPopup(getSuccessPopupContent(iconPlusQuartetForm, payload));
+                },
+            });
         }
     }
 
@@ -6094,7 +6918,7 @@ experience that unites ambitious minds and industry leaders under one roof"
     }
 
     const initialForm = @json($iconPlusShouldOpen ? 'icon-plus' : ($sponsorShouldOpen ? 'sponsor' : ($iconShouldOpen ?
-        'icon' : '')));
+        'icon' : ($iconQuartetShouldOpen ? 'icon-quartet' : ($iconPlusQuartetShouldOpen ? 'icon-plus-quartet' : '')))));
     document.addEventListener('DOMContentLoaded', () => {
         initHeardAboutSelects();
         initAjaxRegistrationForms();
@@ -6113,6 +6937,10 @@ experience that unites ambitious minds and industry leaders under one roof"
             selectRole('exhibitor');
         } else if (initialForm === 'icon') {
             selectRole('icon');
+        } else if (initialForm === 'icon-quartet') {
+            selectRole('icon-quartet');
+        } else if (initialForm === 'icon-plus-quartet') {
+            selectRole('icon-plus-quartet');
         }
 
         applyHallSelectionFromQuery();
