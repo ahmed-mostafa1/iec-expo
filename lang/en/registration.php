@@ -14,7 +14,7 @@ return [
         'loading_button' => 'Submitting visitor registration...',
     ],
     'guest' => [
-        'title' => 'Guests',
+        'title' => 'Visitor',
         'description' => 'Join us as a guest and stay updated on the event.',
         'cta_label' => 'Select',
         'form_title' => 'Guest Registration',

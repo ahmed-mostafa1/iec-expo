@@ -1287,7 +1287,11 @@ $websiteSchema = [
         cursor: pointer;
         transition: all 0.5s;
         overflow: hidden;
-        width: calc((100% - 1.5rem) / 1.5);
+        width: 238px;
+        height: 180px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
     }
 
     .role-card:hover {
@@ -1305,44 +1309,12 @@ $websiteSchema = [
         opacity: 0.6;
     }
 
-    #exhibitor-card {
-        order: 1;
-    }
+    /* Card ordering follows DOM order; two-level grouping toggles display in JS. */
 
-    #exhibitor-form {
-        order: 2;
-    }
-
-    #icon-card {
-        order: 3;
-    }
-
-    #icon-form {
-        order: 4;
-    }
-
-    #icon-plus-card {
-        order: 5;
-    }
-
-    #icon-plus-form {
-        order: 6;
-    }
-
-    #icon-quartet-card {
-        order: 8;
-    }
-
-    #icon-quartet-form {
-        order: 9;
-    }
-
-    #icon-plus-quartet-card {
-        order: 10;
-    }
-
-    #icon-plus-quartet-form {
-        order: 11;
+    #icon-group-back {
+        grid-column: 1 / -1;
+        text-align: center;
+        margin-bottom: 0.5rem;
     }
 
     .role-icon {
@@ -1365,9 +1337,10 @@ $websiteSchema = [
     } */
 
     .role-title {
-        font-size: 1.5rem;
+        font-size: 1.25rem;
         font-weight: 700;
-        margin: 1rem;
+        margin: 0.75rem 0.5rem;
+        line-height: 1.2;
     }
 
     .role-desc {
@@ -2716,10 +2689,11 @@ $websiteSchema = [
         }
 
         .role-card.guest-card {
-            grid-column: 1 / -1;
             justify-self: center;
-            max-width: calc((100% - 1.5rem) / 3);
-            width: 100%;
+        }
+
+        .role-card.guest-card#visitor-card {
+            grid-column: 1 / -1;
         }
 
         .form-card.guest-form {
@@ -3751,6 +3725,33 @@ experience that unites ambitious minds and industry leaders under one roof"
                                             data-ar="{{ e($guestContact['ar']) }}">{{ $guestContact['text'] }}</button>
                                     </div>
                                 </form>
+                            </div>
+
+                            <div class="role-card guest-card" id="icons-card" onclick="openIconGroup()">
+                                <div class="role-icon">
+                                    <svg class="icon icon-lg" viewBox="0 0 24 24">
+                                        <rect x="3" y="3" width="7" height="7" rx="1" />
+                                        <rect x="14" y="3" width="7" height="7" rx="1" />
+                                        <rect x="3" y="14" width="7" height="7" rx="1" />
+                                        <rect x="14" y="14" width="7" height="7" rx="1" />
+                                    </svg>
+                                </div>
+                                <h3 class="role-title" data-en="Icons" data-ar="الأيكونز">Icons</h3>
+                                <div class="role-cta" id="icons-cta">
+                                    <span data-en="Click" data-ar="إضغط">Click</span>
+                                    <svg class="icon icon-sm" viewBox="0 0 24 24">
+                                        <path d="M5 12h14M12 5l7 7-7 7" />
+                                    </svg>
+                                </div>
+                            </div>
+
+                            <div id="icon-group-back" style="display:none;">
+                                <button type="button" class="btn btn-outline" onclick="closeIconGroup()">
+                                    <svg class="icon icon-sm" style="margin-right:0.5rem;" viewBox="0 0 24 24">
+                                        <path d="M19 12H5M12 19l-7-7 7-7" />
+                                    </svg>
+                                    <span data-en="Back to categories" data-ar="العودة للفئات">Back to categories</span>
+                                </button>
                             </div>
 
                             <div class="role-card" id="icon-card" onclick="selectRole('icon')">
@@ -5073,7 +5074,6 @@ experience that unites ambitious minds and industry leaders under one roof"
                                 </form>
                             </div>
 
-                            @if(false)
                             <div class="role-card guest-card" id="visitor-card" onclick="selectRole('visitor')">
                                 <div class="role-icon">
                                     <svg class="icon icon-lg" viewBox="0 0 24 24">
@@ -5322,7 +5322,6 @@ experience that unites ambitious minds and industry leaders under one roof"
                                     </div>
                                 </form>
                             </div>
-                            @endif
                         </div>
                     </div>
                 </div>
@@ -6192,167 +6191,100 @@ experience that unites ambitious minds and industry leaders under one roof"
     // Registration Role Selection
     let selectedRole = null;
 
-    function applyRoleOrder(role) {
-        const iconPlusCard = document.getElementById('icon-plus-card');
-        const iconPlusForm = document.getElementById('icon-plus-form');
-        const exhibitorCard = document.getElementById('exhibitor-card');
-        const exhibitorForm = document.getElementById('exhibitor-form');
-        const iconCard = document.getElementById('icon-card');
-        const iconForm = document.getElementById('icon-form');
-        const iconQuartetCard = document.getElementById('icon-quartet-card');
-        const iconQuartetForm = document.getElementById('icon-quartet-form');
-        const iconPlusQuartetCard = document.getElementById('icon-plus-quartet-card');
-        const iconPlusQuartetForm = document.getElementById('icon-plus-quartet-form');
-        const guestLogo = document.getElementById('guest-row-logo');
-        const sponsorLogo = document.getElementById('sponsor-row-logo');
+    // Two-level registration: top row (sponsor, icons, visitor); "icons" opens the 4 icon variants.
+    let iconGroupOpen = false;
 
-        const setBaseOrder = () => {
-            if (sponsorLogo) sponsorLogo.style.order = '0';
-            exhibitorCard.style.order = '1';
-            exhibitorForm.style.order = '2';
-            iconCard.style.order = '3';
-            iconForm.style.order = '4';
-            iconPlusCard.style.order = '5';
-            iconPlusForm.style.order = '6';
-            if (guestLogo) guestLogo.style.order = '7';
-            iconQuartetCard.style.order = '8';
-            iconQuartetForm.style.order = '9';
-            iconPlusQuartetCard.style.order = '10';
-            iconPlusQuartetForm.style.order = '11';
-        };
+    const ROLE_MAP = {
+        'exhibitor':         { card: 'exhibitor-card',         form: 'exhibitor-form',         cta: 'exhibitor-cta' },
+        'visitor':           { card: 'visitor-card',           form: 'visitor-form',           cta: 'visitor-cta' },
+        'icon':              { card: 'icon-card',              form: 'icon-form',              cta: 'icon-cta' },
+        'icon-plus':         { card: 'icon-plus-card',         form: 'icon-plus-form',         cta: 'icon-plus-cta' },
+        'icon-quartet':      { card: 'icon-quartet-card',      form: 'icon-quartet-form',      cta: 'icon-quartet-cta' },
+        'icon-plus-quartet': { card: 'icon-plus-quartet-card', form: 'icon-plus-quartet-form', cta: 'icon-plus-quartet-cta' },
+    };
+    const TOP_ROLES = ['exhibitor', 'visitor'];
+    const ICON_ROLES = ['icon', 'icon-plus', 'icon-quartet', 'icon-plus-quartet'];
 
-        setBaseOrder();
+    function roleEl(id) {
+        return document.getElementById(id);
     }
 
-    function toggleRoleVisibility(role) {
-        const iconPlusElements = [document.getElementById('icon-plus-card'), document.getElementById('icon-plus-form')];
-        const exhibitorElements = [document.getElementById('exhibitor-card'), document.getElementById(
-            'exhibitor-form')];
-        const iconElements = [document.getElementById('icon-card'), document.getElementById('icon-form')];
-        const iconQuartetElements = [document.getElementById('icon-quartet-card'), document.getElementById(
-            'icon-quartet-form')];
-        const iconPlusQuartetElements = [document.getElementById('icon-plus-quartet-card'), document.getElementById(
-            'icon-plus-quartet-form')];
-        const allElements = [...iconPlusElements, ...exhibitorElements, ...iconElements, ...iconQuartetElements, ...
-            iconPlusQuartetElements
-        ];
+    // Render the card grid for the current level (no form selected).
+    function renderCardGrid() {
+        const roleCards = document.getElementById('role-cards');
+        roleCards.classList.remove('has-selection', 'hide-cards');
 
-        if (role === 'icon-plus') {
-            iconPlusElements.forEach(el => el.style.display = '');
-            allElements.filter(el => !iconPlusElements.includes(el)).forEach(el => el.style.display = 'none');
-        } else if (role === 'exhibitor') {
-            exhibitorElements.forEach(el => el.style.display = '');
-            allElements.filter(el => !exhibitorElements.includes(el)).forEach(el => el.style.display = 'none');
-        } else if (role === 'icon') {
-            iconElements.forEach(el => el.style.display = '');
-            allElements.filter(el => !iconElements.includes(el)).forEach(el => el.style.display = 'none');
-        } else if (role === 'icon-quartet') {
-            iconQuartetElements.forEach(el => el.style.display = '');
-            allElements.filter(el => !iconQuartetElements.includes(el)).forEach(el => el.style.display = 'none');
-        } else if (role === 'icon-plus-quartet') {
-            iconPlusQuartetElements.forEach(el => el.style.display = '');
-            allElements.filter(el => !iconPlusQuartetElements.includes(el)).forEach(el => el.style.display = 'none');
+        Object.values(ROLE_MAP).forEach(({ card, form, cta }) => {
+            roleEl(form).classList.remove('active');
+            roleEl(card).classList.remove('selected', 'dimmed');
+            const ctaEl = roleEl(cta);
+            if (ctaEl) ctaEl.style.display = 'flex';
+        });
+
+        const iconsCard = document.getElementById('icons-card');
+        const back = document.getElementById('icon-group-back');
+        const guestLogo = document.getElementById('guest-row-logo');
+        if (guestLogo) guestLogo.style.display = '';
+
+        if (iconGroupOpen) {
+            TOP_ROLES.forEach(r => roleEl(ROLE_MAP[r].card).style.display = 'none');
+            iconsCard.style.display = 'none';
+            back.style.display = '';
+            ICON_ROLES.forEach(r => roleEl(ROLE_MAP[r].card).style.display = '');
         } else {
-            allElements.forEach(el => el.style.display = '');
+            TOP_ROLES.forEach(r => roleEl(ROLE_MAP[r].card).style.display = '');
+            iconsCard.style.display = '';
+            back.style.display = 'none';
+            ICON_ROLES.forEach(r => roleEl(ROLE_MAP[r].card).style.display = 'none');
         }
     }
 
-    toggleRoleVisibility(null);
-    applyRoleOrder(null);
+    function openIconGroup() {
+        iconGroupOpen = true;
+        selectedRole = null;
+        renderCardGrid();
+    }
+
+    function closeIconGroup() {
+        iconGroupOpen = false;
+        selectedRole = null;
+        renderCardGrid();
+    }
+
+    renderCardGrid();
 
     function selectRole(role) {
-        if (selectedRole === role) return;
+        const entry = ROLE_MAP[role];
+        if (!entry) return;
 
+        iconGroupOpen = ICON_ROLES.includes(role);
         selectedRole = role;
-        applyRoleOrder(role);
-        toggleRoleVisibility(role);
+
         const roleCards = document.getElementById('role-cards');
-        roleCards.classList.add('has-selection');
-        roleCards.classList.add('hide-cards');
+        roleCards.classList.add('has-selection', 'hide-cards');
 
-        const guestLogo = document.getElementById('guest-row-logo');
-        if (guestLogo && role) {
-            guestLogo.style.display = 'none';
-        }
-
-        const roles = [{
-                key: 'icon-plus',
-                card: 'icon-plus-card',
-                form: 'icon-plus-form',
-                cta: 'icon-plus-cta'
-            },
-            {
-                key: 'exhibitor',
-                card: 'exhibitor-card',
-                form: 'exhibitor-form',
-                cta: 'exhibitor-cta'
-            },
-            {
-                key: 'icon',
-                card: 'icon-card',
-                form: 'icon-form',
-                cta: 'icon-cta'
-            },
-            {
-                key: 'icon-quartet',
-                card: 'icon-quartet-card',
-                form: 'icon-quartet-form',
-                cta: 'icon-quartet-cta'
-            },
-            {
-                key: 'icon-plus-quartet',
-                card: 'icon-plus-quartet-card',
-                form: 'icon-plus-quartet-form',
-                cta: 'icon-plus-quartet-cta'
-            },
-        ];
-
-        roles.forEach(({
-            key,
-            card,
-            form,
-            cta
-        }) => {
-            const isActive = role === key;
-            document.getElementById(card).classList.toggle('selected', isActive);
-            document.getElementById(card).classList.toggle('dimmed', !isActive);
-            document.getElementById(cta).style.display = isActive ? 'none' : 'flex';
-            document.getElementById(form).classList.toggle('active', isActive);
+        Object.entries(ROLE_MAP).forEach(([key, { card, form, cta }]) => {
+            const active = key === role;
+            roleEl(card).classList.toggle('selected', active);
+            roleEl(card).classList.toggle('dimmed', !active);
+            roleEl(form).classList.toggle('active', active);
+            const ctaEl = roleEl(cta);
+            if (ctaEl) ctaEl.style.display = active ? 'none' : 'flex';
         });
+
+        document.getElementById('icons-card').style.display = 'none';
+        document.getElementById('icon-group-back').style.display = 'none';
+        const guestLogo = document.getElementById('guest-row-logo');
+        if (guestLogo) guestLogo.style.display = 'none';
+
+        try {
+            roleEl(entry.form).scrollIntoView({ behavior: 'smooth', block: 'center' });
+        } catch (e) {}
     }
 
     function clearRole() {
         selectedRole = null;
-        const guestLogo = document.getElementById('guest-row-logo');
-        if (guestLogo) {
-            guestLogo.style.display = '';
-        }
-
-        const roleCards = document.getElementById('role-cards');
-        roleCards.classList.remove('has-selection');
-        roleCards.classList.remove('hide-cards');
-
-        document.getElementById('icon-plus-card').classList.remove('selected', 'dimmed');
-        document.getElementById('icon-plus-cta').style.display = 'flex';
-        document.getElementById('icon-plus-form').classList.remove('active');
-
-        document.getElementById('exhibitor-card').classList.remove('selected', 'dimmed');
-        document.getElementById('exhibitor-cta').style.display = 'flex';
-        document.getElementById('exhibitor-form').classList.remove('active');
-
-        document.getElementById('icon-card').classList.remove('selected', 'dimmed');
-        document.getElementById('icon-cta').style.display = 'flex';
-        document.getElementById('icon-form').classList.remove('active');
-
-        document.getElementById('icon-quartet-card').classList.remove('selected', 'dimmed');
-        document.getElementById('icon-quartet-cta').style.display = 'flex';
-        document.getElementById('icon-quartet-form').classList.remove('active');
-
-        document.getElementById('icon-plus-quartet-card').classList.remove('selected', 'dimmed');
-        document.getElementById('icon-plus-quartet-cta').style.display = 'flex';
-        document.getElementById('icon-plus-quartet-form').classList.remove('active');
-        toggleRoleVisibility(null);
-        applyRoleOrder(null);
+        renderCardGrid();
     }
 
     function initHeardAboutSelects() {
