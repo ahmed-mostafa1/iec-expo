@@ -22,11 +22,10 @@ class RegistrationPdfService
     public function generateSponsorPdf(SponsorRegistration $registration): string
     {
         $path = "registrations/sponsors/{$registration->id}.pdf";
-        $templatePath = $this->resolveTemplatePath($this->sponsorTemplatePaths());
 
         return $this->generateContractPdf(
-            $templatePath,
-            $this->sponsorContractValues($registration, $templatePath),
+            $this->resolveTemplatePath($this->sponsorTemplatePaths()),
+            $this->sponsorContractValues($registration),
             $path,
         );
     }
@@ -116,7 +115,6 @@ class RegistrationPdfService
                 $template->setValue($key, (string) $value);
             }
 
-            // ponytail: fail loud on stale/corrupt templates (Word splits ${cr_copy} across runs -> silent blank contract)
             $unfilled = $template->getVariables();
             if ($unfilled !== []) {
                 throw new \RuntimeException(
@@ -432,7 +430,6 @@ class RegistrationPdfService
         ];
     }
 
-    // ponytail: placeholder contract-v2.docx via sharedTemplatePaths() until real icon-quartet/icon-plus-quartet contracts arrive
     protected function iconQuartetTemplatePaths(): array
     {
         return [
@@ -449,27 +446,21 @@ class RegistrationPdfService
         ];
     }
 
-    protected function sponsorContractValues(SponsorRegistration $registration, string $templatePath): array
+    protected function sponsorContractValues(SponsorRegistration $registration): array
     {
-        if (basename($templatePath) === 'sponsor-contract.docx') {
-            $pricing = $this->sponsorContractPricing((string) ($registration->sponsor_tier ?? ''));
-
-            return [
-                'organization' => (string) ($registration->organization ?? ''),
-                'full_name' => (string) ($registration->full_name ?? ''),
-                'sponsor_tier' => $this->sponsorTierContractValue((string) ($registration->sponsor_tier ?? '')),
-                'space' => $pricing['space'],
-                'price' => $this->formatSaudiRiyalAmount($pricing['price']),
-                'final_price_vat' => $this->formatSaudiRiyalAmount($pricing['final_price']),
-                'final_price' => $this->arabicSaudiRiyalWords($pricing['final_price']),
-            ];
-        }
+        $pricing = $this->sponsorContractPricing((string) ($registration->sponsor_tier ?? ''));
 
         return [
             'organization' => (string) ($registration->organization ?? ''),
+            'full_name' => (string) ($registration->full_name ?? ''),
             'name' => (string) ($registration->full_name ?? ''),
             'cr_copy' => (string) ($registration->cr_copy ?? ''),
             'hall' => (string) ($registration->location_selection ?? ''),
+            'sponsor_tier' => $this->sponsorTierContractValue((string) ($registration->sponsor_tier ?? '')),
+            'space' => $pricing['space'],
+            'price' => $this->formatSaudiRiyalAmount($pricing['price']),
+            'final_price_vat' => $this->formatSaudiRiyalAmount($pricing['final_price']),
+            'final_price' => $this->arabicSaudiRiyalWords($pricing['final_price']),
         ];
     }
 

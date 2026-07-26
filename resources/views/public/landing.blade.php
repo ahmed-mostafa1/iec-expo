@@ -2222,6 +2222,7 @@ $websiteSchema = [
     .contact {
         padding: 1rem 0;
         background: transparent;
+        overflow-x: clip;
     }
 
 

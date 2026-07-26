@@ -285,6 +285,40 @@ class SponsorPdfLifecycleTest extends TestCase
         }
     }
 
+    public function test_sponsor_contract_values_fill_every_shipped_contract_template(): void
+    {
+        $registration = new SponsorRegistration([
+            'full_name' => 'Sponsor User',
+            'organization' => 'Sponsor Co',
+            'sponsor_tier' => 'gold',
+            'location_selection' => 'B12',
+            'cr_copy' => '1234567890',
+        ]);
+        $service = new class extends RegistrationPdfService
+        {
+            public function inspectSponsorContractValues(SponsorRegistration $registration): array
+            {
+                return $this->sponsorContractValues($registration);
+            }
+        };
+
+        $values = $service->inspectSponsorContractValues($registration);
+
+        foreach (glob(public_path('*.docx')) as $templatePath) {
+            $template = new TemplateProcessor($templatePath);
+
+            foreach ($values as $key => $value) {
+                $template->setValue($key, $value);
+            }
+
+            $this->assertSame(
+                [],
+                $template->getVariables(),
+                basename($templatePath).' has placeholders the sponsor value set does not cover.'
+            );
+        }
+    }
+
     public function test_sponsor_pdf_generation_falls_back_to_shared_contract_template_when_sponsor_template_is_missing(): void
     {
         $registration = new SponsorRegistration([
@@ -322,12 +356,15 @@ class SponsorPdfLifecycleTest extends TestCase
 
         $this->assertSame('registrations/sponsors/7.pdf', $generatedPath);
         $this->assertSame(public_path('contract-v2.docx'), $service->usedTemplatePath);
-        $this->assertSame([
+
+        $sharedTemplateValues = [
             'organization' => 'Sponsor Co',
             'name' => 'Sponsor User',
             'cr_copy' => '1234567890',
             'hall' => 'B12',
-        ], $service->usedValues);
+        ];
+
+        $this->assertSame($sharedTemplateValues, array_intersect_key($service->usedValues, $sharedTemplateValues));
     }
 
     public function test_contract_template_resolution_checks_document_root_for_shared_hosting_public_files(): void
@@ -530,11 +567,13 @@ class SponsorPdfLifecycleTest extends TestCase
         {
             public function inspectSponsorContractValues(SponsorRegistration $registration): array
             {
-                return $this->sponsorContractValues($registration, public_path('sponsor-contract.docx'));
+                return $this->sponsorContractValues($registration);
             }
         };
 
-        $this->assertSame($expectedValues, $service->inspectSponsorContractValues($registration));
+        $actualValues = $service->inspectSponsorContractValues($registration);
+
+        $this->assertSame($expectedValues, array_intersect_key($actualValues, $expectedValues));
     }
 
     public static function sponsorTierContractValuesProvider(): array
