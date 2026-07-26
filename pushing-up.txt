@@ -6,7 +6,7 @@ git status
 
 git fetch origin
 
-git reset --hard origin/main
+git reset --hard origin/backup/pre-80d15dd-reset
 
 php artisan route:clear
 
