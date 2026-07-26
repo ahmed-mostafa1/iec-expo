@@ -86,114 +86,6 @@
                 #050208;
         }
 
-        .header {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            z-index: 9999;
-            background: #000;
-            backdrop-filter: blur(12px);
-        }
-
-        .public-nav-container {
-            max-width: 1280px;
-            margin: 0 auto;
-            padding: 0 1rem;
-        }
-
-        .header-inner {
-            display: grid;
-            grid-template-columns: auto 1fr auto;
-            align-items: center;
-            gap: 1rem;
-            min-height: 64px;
-        }
-
-        .nav {
-            display: none;
-            align-items: center;
-            justify-self: center;
-            gap: 1rem;
-        }
-
-        .nav-link {
-            position: relative;
-            display: inline-flex;
-            align-items: center;
-            color: #fff;
-            font-size: 0.875rem;
-            font-weight: 600;
-            text-decoration: none;
-            text-transform: uppercase;
-            transition: color 0.4s ease;
-        }
-
-        .nav-link:hover,
-        .nav-link:focus-visible {
-            color: #9803bde1;
-        }
-
-        .nav-link::before {
-            content: "";
-            position: absolute;
-            left: 50%;
-            bottom: -0.35rem;
-            width: 0;
-            height: 4px;
-            background-color: #9803bde1;
-            transition: all 0.4s;
-        }
-
-        .nav-link:hover::before,
-        .nav-link:focus-visible::before {
-            left: 0;
-            width: 100%;
-        }
-
-        .nav-logo {
-            display: block;
-            width: auto;
-            height: 80px;
-        }
-
-        .nav-logo-bu {
-            display: block;
-            width: auto;
-            height: 60px;
-        }
-
-        .header-right,
-        .header-actions {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .header-right {
-            justify-content: flex-end;
-        }
-
-        .lang-switch {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            color: #fff;
-            font: inherit;
-            font-size: 0.875rem;
-            font-weight: 500;
-            text-decoration: none;
-            background: none;
-            border: 0;
-            cursor: pointer;
-            transition: color 0.2s ease;
-        }
-
-        .lang-switch:hover,
-        .lang-switch:focus-visible {
-            color: var(--analytics-nav-accent);
-        }
-
         .icon {
             width: 1.5rem;
             height: 1.5rem;
@@ -209,78 +101,17 @@
             height: 1rem;
         }
 
-        .mobile-menu-btn {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0.5rem;
-            color: #fff;
-            background: none;
-            border: 0;
-            cursor: pointer;
-        }
-
-        .mobile-menu-btn:hover,
-        .mobile-menu-btn:focus-visible {
-            color: var(--analytics-nav-accent);
-        }
-
-        .mobile-nav {
-            display: none;
-            padding: 1rem 0;
-            border-top: 1px solid rgb(var(--analytics-nav-border));
-        }
-
-        .mobile-nav.active {
-            display: block;
-        }
-
-        .mobile-nav-link {
-            display: block;
-            padding: 0.75rem 0;
-            color: rgb(255 255 255 / 0.84);
-            font-weight: 500;
-            text-decoration: none;
-        }
-
-        .mobile-nav-link:hover,
-        .mobile-nav-link:focus-visible {
-            color: var(--analytics-nav-accent);
-        }
-
         .analytics-main {
             padding-top: 7rem;
         }
 
         @media (min-width: 1024px) {
-            .nav {
-                display: flex;
-            }
-
-            .mobile-menu-btn {
-                display: none;
-            }
         }
 
         @media (max-width: 640px) {
-            .nav-logo {
-                height: 56px;
-            }
-
-            .nav-logo-bu {
-                height: 44px;
-            }
-
-            .header-actions {
-                gap: 0.5rem;
-            }
-
             .analytics-main {
                 padding-top: 6rem;
             }
-             /* .header-right{
-            gap: 1px !important;
-         } */
         }
     </style>
     <!-- Google tag (gtag.js) -->
@@ -298,60 +129,7 @@
     @if(session('scroll_to_contact') ?? false) data-scroll-contact="1" @endif
 >
     {{-- Navbar --}}
-    <header class="header">
-        <div class="public-nav-container">
-            <div class="header-inner">
-                <a href="{{ route('public.landing', ['locale' => $currentLocale]) }}#hero">
-                    <img src="{{ asset('./img/IEC-logo-nav-v2.png') }}" alt="IEC Logo" class="nav-logo">
-                </a>
-
-                <nav class="nav" aria-label="{{ __('Primary navigation') }}">
-                    <a href="{{ route('public.landing', ['locale' => $currentLocale]) }}#hero" class="nav-link">{{ $currentLocale === 'ar' ? 'الرئيسية' : 'Home' }}</a>
-                    <a href="{{ route('public.ed', ['locale' => $currentLocale]) }}" class="nav-link">{{ $currentLocale === 'ar' ? 'النسخ السابقة من المعرض' : 'Previous Editions of IEC' }}</a>
-                    <a href="{{ route('public.landing', ['locale' => $currentLocale]) }}#register" class="nav-link">{{ $currentLocale === 'ar' ? 'التسجيل' : 'Register' }}</a>
-                    <a href="{{ route('public.landing', ['locale' => $currentLocale]) }}#about" class="nav-link">{{ $currentLocale === 'ar' ? 'عن المعرض' : 'About' }}</a>
-                    <a href="{{ route('public.landing', ['locale' => $currentLocale]) }}#sponsors" class="nav-link">{{ $currentLocale === 'ar' ? 'الراعي' : 'Sponsor' }}</a>
-                    <a href="{{ route('public.landing', ['locale' => $currentLocale]) }}#participants" class="nav-link">{{ $currentLocale === 'ar' ? 'الأيكون' : 'Icon' }}</a>
-                    <a href="{{ route('public.landing', ['locale' => $currentLocale]) }}#organizers" class="nav-link">{{ $currentLocale === 'ar' ? 'الشركة المالكة' : 'Owned by' }}</a>
-                    <a href="{{ route('public.landing', ['locale' => $currentLocale]) }}#contact" class="nav-link">{{ $currentLocale === 'ar' ? 'تواصل معنا' : 'Contact' }}</a>
-                </nav>
-
-                <div class="header-right">
-                    <div class="header-actions">
-                        <a class="lang-switch" href="{{ $languageSwitchUrl }}">
-                            <svg class="icon icon-sm" viewBox="0 0 24 24" aria-hidden="true">
-                                <circle cx="12" cy="12" r="10"></circle>
-                                <path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path>
-                            </svg>
-                            <span id="lang-text">{{ $currentLocale === 'ar' ? 'English' : 'العربية' }}</span>
-                        </a>
-
-                        <button type="button" class="mobile-menu-btn" aria-controls="mobile-nav" aria-expanded="false">
-                            <svg class="icon" viewBox="0 0 24 24" aria-hidden="true">
-                                <path d="M3 12h18M3 6h18M3 18h18"></path>
-                            </svg>
-                            <span class="sr-only">{{ __('Toggle navigation') }}</span>
-                        </button>
-                    </div>
-
-                    <a href="https://umbrella.sa">
-                        <img class="nav-logo-bu" src="{{ asset('./img/bu_logo.png') }}" alt="BU Logo">
-                    </a>
-                </div>
-            </div>
-
-            <nav class="mobile-nav" id="mobile-nav" aria-label="{{ __('Mobile navigation') }}">
-                <a href="{{ route('public.landing', ['locale' => $currentLocale]) }}#hero" class="mobile-nav-link">{{ $currentLocale === 'ar' ? 'الرئيسية' : 'Home' }}</a>
-                <a href="{{ route('public.ed', ['locale' => $currentLocale]) }}" class="mobile-nav-link">{{ $currentLocale === 'ar' ? 'النسخ السابقة من المعرض' : 'Previous Editions of IEC' }}</a>
-                <a href="{{ route('public.landing', ['locale' => $currentLocale]) }}#register" class="mobile-nav-link">{{ $currentLocale === 'ar' ? 'التسجيل' : 'Register' }}</a>
-                <a href="{{ route('public.landing', ['locale' => $currentLocale]) }}#about" class="mobile-nav-link">{{ $currentLocale === 'ar' ? 'عن المعرض' : 'About' }}</a>
-                <a href="{{ route('public.landing', ['locale' => $currentLocale]) }}#sponsors" class="mobile-nav-link">{{ $currentLocale === 'ar' ? 'الراعي' : 'Sponsor' }}</a>
-                <a href="{{ route('public.landing', ['locale' => $currentLocale]) }}#participants" class="mobile-nav-link">{{ $currentLocale === 'ar' ? 'الأيكون' : 'Icon' }}</a>
-                <a href="{{ route('public.landing', ['locale' => $currentLocale]) }}#organizers" class="mobile-nav-link">{{ $currentLocale === 'ar' ? 'الشركة المالكة' : 'Owned by' }}</a>
-                <a href="{{ route('public.landing', ['locale' => $currentLocale]) }}#contact" class="mobile-nav-link">{{ $currentLocale === 'ar' ? 'تواصل معنا' : 'Contact' }}</a>
-            </nav>
-        </div>
-    </header>
+    @include('partials.navbar', ['locale' => $currentLocale, 'langUrl' => $languageSwitchUrl, 'containerClass' => 'public-nav-container'])
 
     {{-- Flash messages --}}
     @if (session('success'))

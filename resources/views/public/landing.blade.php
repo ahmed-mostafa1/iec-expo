@@ -497,6 +497,10 @@ $websiteSchema = [
         /* padding: 1rem; */
     }
 
+    .header .container {
+        padding-inline: 1rem;
+    }
+
     .hero .container {
         width: 100%;
         max-width: none;
@@ -504,24 +508,6 @@ $websiteSchema = [
     }
 
     /* Header */
-    .header {
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        z-index: 9999;
-        background: #000;
-        backdrop-filter: blur(12px);
-    }
-
-    .header-inner {
-        display: grid;
-        grid-template-columns: auto 1fr auto;
-        align-items: center;
-        height: 64px;
-        gap: 1rem;
-    }
-
     .logo {
         font-size: 1.25rem;
         font-weight: 700;
@@ -529,48 +515,7 @@ $websiteSchema = [
         text-decoration: none;
     }
 
-    .nav {
-        display: none;
-        align-items: center;
-        gap: 1rem;
-        justify-self: center;
-    }
 
-
-
-    .nav-link {
-        text-decoration: none;
-        position: relative;
-        transition: color 0.4s ease;
-        color: #fff;
-        font-weight: 600;
-        text-transform: uppercase;
-        display: inline-flex;
-        align-items: center;
-        opacity: 0;
-        transform: translateY(-12px);
-        animation: navLinkFade 0.6s ease forwards;
-    }
-
-    .nav-link:hover {
-        color: #9803bde1;
-    }
-
-    .nav-link::before {
-        content: "";
-        position: absolute;
-        width: 0;
-        height: 4px;
-        bottom: 0;
-        left: 50%;
-        background-color: #9803bde1;
-        transition: all 0.4s;
-    }
-
-    .nav-link:hover::before {
-        width: 100%;
-        left: 0;
-    }
 
     .nav .nav-link:nth-child(1) {
         animation-delay: 0.1s;
@@ -626,50 +571,10 @@ $websiteSchema = [
 
 
 
-    .nav-logo {
-        height: 80px;
-    }
-
-    .nav-logo-bu {
-        height: 60px;
-    }
-
-    .header-right {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-        justify-content: flex-end;
-    }
-
     .logo-secondary {
         font-size: 1rem;
         letter-spacing: 0.08em;
         text-transform: uppercase;
-    }
-
-    .header-actions {
-        display: flex;
-        align-items: center;
-        gap: 1rem;
-    }
-
-    .lang-switch {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        font-size: 0.875rem;
-        font-weight: 500;
-        color: rgb(var(--foreground) / 0.8);
-        background: none;
-        border: none;
-        cursor: pointer;
-        transition: color 0.2s;
-        color: #fff;
-        font-family: var(--font-base);
-    }
-
-    .lang-switch:hover {
-        color: #9873AC;
     }
 
     #lang-text {
@@ -721,32 +626,6 @@ $websiteSchema = [
     .btn-lg {
         padding: 0.875rem 1.75rem;
         font-size: 1rem;
-    }
-
-    .mobile-menu-btn {
-        display: none;
-        padding: 0.5rem;
-        background: none;
-        border: none;
-        cursor: pointer;
-    }
-
-    .mobile-nav {
-        display: none;
-        padding: 1rem 0;
-        border-top: 1px solid rgb(var(--border));
-    }
-
-    .mobile-nav.active {
-        display: block;
-    }
-
-    .mobile-nav-link {
-        display: block;
-        padding: 0.75rem 0;
-        color: rgb(var(--foreground) / 0.8);
-        text-decoration: none;
-        font-weight: 500;
     }
 
     /* Hero Section */
@@ -2669,23 +2548,12 @@ $websiteSchema = [
             grid-template-columns: repeat(2, 1fr);
         }
 
-        .nav-logo {
-            height: 60px;
-        }
-
-        .nav-logo-bu {
-            height: 40px;
-        }
          /* .header-right{
             gap: 1px !important;
         } */
     }
 
     @media (min-width: 768px) {
-        .nav {
-            display: flex;
-        }
-
         .role-cards {
             grid-template-columns: repeat(2, 1fr);
         }
@@ -2717,14 +2585,6 @@ $websiteSchema = [
 
         .form-grid-2 {
             grid-template-columns: repeat(2, 1fr);
-        }
-
-        .nav-logo {
-            height: 60px;
-        }
-
-        .nav-logo-bu {
-            height: 40px;
         }
 
         .sponsor-tier-grid.single-sponsor-grid {
@@ -2772,10 +2632,6 @@ $websiteSchema = [
     }
 
     @media (max-width: 768px) {
-        .mobile-menu-btn {
-            display: block;
-        }
-
         .sponsor-featured-content {
             flex-direction: column;
             padding: 1.5rem;
@@ -2796,14 +2652,6 @@ $websiteSchema = [
             display: none;
         }
 
-        .nav-logo {
-            height: 60px;
-        }
-
-        .nav-logo-bu {
-            height: 40px;
-        }
-
         .participant-logo {
             width: 100%;
             max-width: 300px;
@@ -2821,14 +2669,6 @@ $websiteSchema = [
 
         .role-cards.has-selection .role-card.selected {
             display: none;
-        }
-
-        .nav-logo {
-            height: 60px;
-        }
-
-        .nav-logo-bu {
-            height: 40px;
         }
 
         .goal-icon,
@@ -2854,12 +2694,6 @@ $websiteSchema = [
 
     /* Preference Queries */
     @media (prefers-reduced-motion: reduce) {
-        .nav-link {
-            animation: none;
-            opacity: 1;
-            transform: none;
-        }
-
         .about-video-container {
             transform: scaleX(1);
             transition: none;
@@ -2952,60 +2786,7 @@ src="https://www.facebook.com/tr?id=2930634037274791&ev=PageView&noscript=1"
     @endphp
 
     <!-- Header -->
-    <header class="header">
-        <div class="container">
-            <div class="header-inner">
-                <a href="{{ route('public.landing', ['locale' => app()->getLocale()]) }}#hero">
-                    <img src="{{ asset('./img/IEC-logo-nav-v2.png') }}" alt="IEC Logo" class="nav-logo" />
-                </a>
-                <nav class="nav">
-                    <a href="#" class="btn-primary nav-link" data-en="Home" data-ar="الرئيسية">Home</a>
-                    <a href="{{ route('public.ed', ['locale' => app()->getLocale()]) }}" class="nav-link"
-                        data-en="Previous Editions of IEC" data-ar="النسخ السابقة من المعرض">Previous Editions of
-                        IEC</a>
-                    <a href="#register" class="btn-primary nav-link" data-en="Register" data-ar="التسجيل">Register</a>
-                    <a href="#about" class="nav-link" data-en="About" data-ar="عن المعرض">About</a>
-                    <a href="#sponsors" class="nav-link" data-en="Sponsor" data-ar="الراعي">Sponsor</a>
-                    <a href="#participants" class="nav-link" data-en="Icons" data-ar="الأيكون">Icon</a>
-                    <a href="#organizers" class="nav-link" data-en="Owned by" data-ar="الشركة المالكة">Owned by</a>
-                    <a href="#contact" class="nav-link" data-en="Contact" data-ar="تواصل معنا">Contact</a>
-                </nav>
-                <div class="header-right">
-                    <div class="header-actions">
-                        <button class="lang-switch" onclick="toggleLocale()">
-                            <svg class="icon icon-sm" viewBox="0 0 24 24">
-                                <circle cx="12" cy="12" r="10" />
-                                <path
-                                    d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z" />
-                            </svg>
-                            <span id="lang-text">العربية</span>
-                        </button>
-                        <button class="mobile-menu-btn" onclick="toggleMobileMenu()">
-                            <svg class="icon" viewBox="0 0 24 24" id="menu-icon">
-                                <path d="M3 12h18M3 6h18M3 18h18" />
-                            </svg>
-                        </button>
-                    </div>
-                    <a href="https://umbrella.sa" />
-                    <img class="nav-logo-bu" src="{{ asset('./img/bu_logo.png') }}" alt="BU Logo" />
-                    </a>
-                </div>
-            </div>
-            <nav class="mobile-nav" id="mobile-nav">
-                <a href="#" class="mobile-nav-link" data-en="Home" data-ar="الرئيسية">Home</a>
-                <a href="{{ route('public.ed', ['locale' => app()->getLocale()]) }}" class="mobile-nav-link"
-                    data-en="Previous Editions of IEC" data-ar="النسخ السابقة من المعرض">Previous Editions of
-                    IEC</a>
-                <a href="#register" class="mobile-nav-link" data-en="Register" data-ar="التسجيل">Register</a>
-                <a href="#about" class="mobile-nav-link" data-en="About" data-ar="عن المعرض">About</a>
-                <a href="#sponsors" class="mobile-nav-link" data-en="Sponsor" data-ar="الراعي">Sponsor</a>
-                <a href="#participants" class="mobile-nav-link" data-en="Icon" data-ar="الأيكون">Icon</a>
-                <a href="#organizers" class="mobile-nav-link" data-en="Owned by" data-ar="الشركة المالكة">Owned
-                    by</a>
-                <a href="#contact" class="mobile-nav-link" data-en="Contact" data-ar="تواصل معنا">Contact</a>
-            </nav>
-        </div>
-    </header>
+    @include('partials.navbar', ['active' => 'home'])
 
     <div class="page-content">
         <main>
