@@ -593,7 +593,7 @@ class SponsorPdfLifecycleTest extends TestCase
                 'expectedValues' => [
                     'organization' => 'Sponsor Co',
                     'full_name' => 'Sponsor User',
-                    'sponsor_tier' => 'الإعلامي',
+                    'sponsor_tier' => 'وكيل التسويق',
                     'space' => '-',
                     'price' => '0 ريال',
                     'final_price_vat' => '0 ريال',

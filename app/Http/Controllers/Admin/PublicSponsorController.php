@@ -14,7 +14,7 @@ class PublicSponsorController extends Controller
         'diamond' => 'Diamond Sponsor',
         'government' => 'Government Sponsor',
         'marketing' => 'Marketing Sponsor',
-        'media' => 'Media Sponsor',
+        'media' => 'Marketing Rep',
         'technology' => 'Technology Sponsor',
         'safety-security' => 'Safety and Security Sponsor',
         'gold' => 'Gold Sponsor',

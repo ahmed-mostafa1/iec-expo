@@ -389,7 +389,7 @@ class RegistrationPdfService
             'diamond' => 'الماسي',
             'government' => 'الحكومي',
             'marketing' => 'التسويقي',
-            'media' => 'الإعلامي',
+            'media' => 'وكيل التسويق',
             'technology' => 'التقني',
             'safety-security' => 'السلامة والأمن',
             'gold' => 'الذهبي',

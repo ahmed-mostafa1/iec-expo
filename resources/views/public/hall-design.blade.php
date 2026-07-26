@@ -31,6 +31,7 @@ $seoImage = asset(config('seo.image'));
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="{{ $isAr ? 'rtl' : 'ltr' }}">
 
 <head>
+    @include("partials.favicons")
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>{{ $seoPage['title'] }}</title>

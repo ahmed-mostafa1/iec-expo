@@ -95,7 +95,7 @@ class LandingPageController extends Controller
             'diamond' => ['en' => 'Diamond', 'ar' => 'الماسي'],
             'government' => ['en' => 'Government', 'ar' => 'الحكومي'],
             'marketing' => ['en' => 'Marketing', 'ar' => 'التسويقي'],
-            'media' => ['en' => 'Media', 'ar' => 'الإعلامي'],
+            'media' => ['en' => 'Marketing Rep', 'ar' => 'وكيل التسويق'],
             'technology' => ['en' => 'Technology', 'ar' => 'التكنولوجي'],
             'safety-security' => ['en' => 'Security', 'ar' => 'الأمني'],
             'gold' => ['en' => 'Gold', 'ar' => 'الذهبي'],

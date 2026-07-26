@@ -47,6 +47,7 @@ $websiteSchema = [
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}" dir="{{ app()->getLocale() === 'ar' ? 'rtl' : 'ltr' }}">
 
 <head>
+    @include("partials.favicons")
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{{ $seoPage['title'] }}</title>
@@ -3448,7 +3449,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                                 'diamond' => ['en' => 'Diamond', 'ar' => 'الماسي'],
                                 'government' => ['en' => 'Government', 'ar' => 'الحكومي'],
                                 'marketing' => ['en' => 'Marketing', 'ar' => 'التسويقي'],
-                                'media' => ['en' => 'Media', 'ar' => 'الإعلامي'],
+                                'media' => ['en' => 'Marketing Rep', 'ar' => 'وكيل التسويق'],
                                 'technology' => ['en' => 'Technology', 'ar' => 'التقني'],
                                 'safety-security' => ['en' => 'Safety & Security', 'ar' => 'السلامة والأمن'],
                                 'gold' => ['en' => 'Gold', 'ar' => 'الذهبي'],
@@ -5625,7 +5626,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                         </div>
                         @endif
 
-                        <!-- Marketing & Media -->
+                        <!-- Marketing, Marketing Rep, Technology & Security -->
                         @php
                         $marketingTierKeys = ['marketing', 'media', 'technology', 'safety-security'];
                         $marketingTiers = collect($marketingTierKeys)
