@@ -11,6 +11,6 @@ trait HasSaudiPhoneValidation
 
     protected function saudiPhoneMessage(): string
     {
-        return 'يرجى إدخال رقم سعودي صحيح';
+        return __('validation.saudi_phone');
     }
 }

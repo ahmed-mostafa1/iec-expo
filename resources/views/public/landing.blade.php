@@ -3112,6 +3112,14 @@ experience that unites ambitious minds and industry leaders under one roof"
             return $translate($value ?? $fallback);
             };
 
+            // labels come from the DB and admins may or may not have typed the "*", so stamp it here
+            $markRequired = function (array $label) {
+            foreach (['en', 'ar', 'text'] as $key) {
+            $label[$key] = rtrim($label[$key], " *") . ' *';
+            }
+            return $label;
+            };
+
             $fieldOptions = function ($fieldsByName, string $name, array $fallback) {
             $field = $fieldsByName->get($name);
             $options = data_get($field, 'options');
@@ -4882,57 +4890,54 @@ experience that unites ambitious minds and industry leaders under one roof"
                                 </div>
                                 @endif
                                 @php
-                                $guestFullNameLabel = $fieldCopy($visitorFieldsByName, 'full_name', 'label', [
-                                'en' => 'Full
-                                Name *',
+                                $guestFullNameLabel = $markRequired($fieldCopy($visitorFieldsByName, 'full_name', 'label', [
+                                'en' => 'Full Name *',
                                 'ar' => 'الاسم الكامل *',
-                                ]);
+                                ]));
                                 $guestFullNamePlaceholder = $fieldCopy(
                                 $visitorFieldsByName,
                                 'full_name',
                                 'placeholder',
                                 ['en' => 'John Doe', 'ar' => 'جون دو'],
                                 );
-                                $guestEmailLabel = $fieldCopy($visitorFieldsByName, 'email', 'label', [
+                                $guestEmailLabel = $markRequired($fieldCopy($visitorFieldsByName, 'email', 'label', [
                                 'en' => 'Email *',
                                 'ar' => 'البريد الإلكتروني *',
-                                ]);
+                                ]));
                                 $guestEmailPlaceholder = $fieldCopy($visitorFieldsByName, 'email', 'placeholder', [
                                 'en' => 'john@example.com',
                                 'ar' => 'john@example.com',
                                 ]);
-                                $guestPhoneLabel = $fieldCopy($visitorFieldsByName, 'phone', 'label', [
-                                'en' => 'Phone',
-                                'ar' => 'الهاتف',
-                                ]);
+                                $guestPhoneLabel = $markRequired($fieldCopy($visitorFieldsByName, 'phone', 'label', [
+                                'en' => 'Phone *',
+                                'ar' => 'الهاتف *',
+                                ]));
                                 $guestPhonePlaceholder = $fieldCopy($visitorFieldsByName, 'phone', 'placeholder', [
                                 'en' => '+966 50 000 0000',
                                 'ar' => '+966 50 000 0000',
                                 ]);
-                                $guestJobLabel = $fieldCopy($visitorFieldsByName, 'job_title', 'label', [
-                                'en' => 'Job
-                                Title',
-                                'ar' => 'المسمى الوظيفي',
-                                ]);
+                                $guestJobLabel = $markRequired($fieldCopy($visitorFieldsByName, 'job_title', 'label', [
+                                'en' => 'Job Title *',
+                                'ar' => 'المسمى الوظيفي *',
+                                ]));
                                 $guestJobPlaceholder = $fieldCopy($visitorFieldsByName, 'job_title', 'placeholder', [
                                 'en' => 'Marketing Manager',
                                 'ar' => 'مدير التسويق',
                                 ]);
-                                $guestCompanyLabel = $fieldCopy($visitorFieldsByName, 'company_name', 'label', [
-                                'en' => 'Company / Organization',
-                                'ar' => 'الشركة / الجهة',
-                                ]);
+                                $guestCompanyLabel = $markRequired($fieldCopy($visitorFieldsByName, 'company_name', 'label', [
+                                'en' => 'Company / Organization *',
+                                'ar' => 'الشركة / الجهة *',
+                                ]));
                                 $guestCompanyPlaceholder = $fieldCopy(
                                 $visitorFieldsByName,
                                 'company_name',
                                 'placeholder',
                                 ['en' => 'Umbrella Inc.', 'ar' => 'شركة أمبريلا'],
                                 );
-                                $guestHeardLabel = $fieldCopy($visitorFieldsByName, 'heard_about', 'label', [
-                                'en' => 'How
-                                did you hear about us?',
-                                'ar' => 'كيف سمعت عنا؟',
-                                ]);
+                                $guestHeardLabel = $markRequired($fieldCopy($visitorFieldsByName, 'heard_about', 'label', [
+                                'en' => 'How did you hear about us? *',
+                                'ar' => 'كيف سمعت عنا؟ *',
+                                ]));
                                 $guestHeardOptions = $fieldOptions($visitorFieldsByName, 'heard_about', [
                                 [
                                 'value' => 'social_media',
@@ -4968,7 +4973,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                                     data-success-message="{{ e(__('registration.visitor.success')) }}"
                                     data-loading-message="{{ e(__('registration.visitor.loading_message')) }}"
                                     data-loading-button-label="{{ e(__('registration.visitor.loading_button')) }}"
-                                    data-popup-note="">
+                                    data-popup-note="{{ e(__('registration.visitor.popup_note')) }}">
                                     @csrf
                                     <input type="hidden" name="form_identifier" value="visitor">
                                     <div class="form-grid form-grid-2">
@@ -4999,7 +5004,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                                         <div class="form-group">
                                             <label class="form-label" data-en="{{ e($guestPhoneLabel['en']) }}"
                                                 data-ar="{{ e($guestPhoneLabel['ar']) }}">{{ $guestPhoneLabel['text'] }}</label>
-                                            <input type="tel" name="phone" class="form-input" inputmode="tel"
+                                            <input type="tel" name="phone" class="form-input" required inputmode="tel"
                                                 data-phone-sa="true" placeholder="{{ $guestPhonePlaceholder['text'] }}"
                                                 value="{{ $visitorFormActive ? old('phone') : '' }}">
                                             @if ($visitorFormActive && $errors->has('phone'))
@@ -5009,7 +5014,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                                         <div class="form-group">
                                             <label class="form-label" data-en="{{ e($guestJobLabel['en']) }}"
                                                 data-ar="{{ e($guestJobLabel['ar']) }}">{{ $guestJobLabel['text'] }}</label>
-                                            <input type="text" name="job_title" class="form-input"
+                                            <input type="text" name="job_title" class="form-input" required
                                                 placeholder="{{ $guestJobPlaceholder['text'] }}"
                                                 value="{{ $visitorFormActive ? old('job_title') : '' }}">
                                             @if ($visitorFormActive && $errors->has('job_title'))
@@ -5023,7 +5028,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                                         <div class="form-group">
                                             <label class="form-label" data-en="{{ e($guestCompanyLabel['en']) }}"
                                                 data-ar="{{ e($guestCompanyLabel['ar']) }}">{{ $guestCompanyLabel['text'] }}</label>
-                                            <input type="text" name="company_name" class="form-input"
+                                            <input type="text" name="company_name" class="form-input" required
                                                 placeholder="{{ $guestCompanyPlaceholder['text'] }}"
                                                 value="{{ $visitorFormActive ? old('company_name') : '' }}">
                                             @if ($visitorFormActive && $errors->has('company_name'))
@@ -5034,7 +5039,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                                         <div class="form-group">
                                             <label class="form-label" data-en="{{ e($guestHeardLabel['en']) }}"
                                                 data-ar="{{ e($guestHeardLabel['ar']) }}">{{ $guestHeardLabel['text'] }}</label>
-                                            <select class="form-select" name="heard_about" data-heard-select
+                                            <select class="form-select" name="heard_about" required data-heard-select
                                                 data-other-target="#visitor-heard-other">
                                                 <option value="">{{ __('Select option') }}</option>
                                                 @foreach ($guestHeardOptions as $option)
@@ -5077,8 +5082,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                                             <input type="checkbox" name="privacy_policy" value="1" required
                                                 @checked($visitorFormActive && old('privacy_policy'))>
                                             <span data-en="I accept the privacy policy"
-                                                data-ar="أوافق على شروط الخصوصية">I
-                                                accept the privacy policy</span>
+                                                data-ar="أوافق على شروط الخصوصية">I accept the privacy policy</span>
                                             <a class="blue-url-style" href="{{ asset('pdf/privacy-policy.pdf') }}"
                                                 target="_blank" rel="noopener" download data-en="Download from here"
                                                 data-ar="يمكنك تحميل الملف من هنا">Download from here</a>
@@ -5783,7 +5787,12 @@ experience that unites ambitious minds and industry leaders under one roof"
         document.body.classList.remove('locale-en', 'locale-ar');
         document.body.classList.add(`locale-${currentLocale}`);
 
-        // Update all translatable elements
+        applyLocaleText();
+    }
+
+    // Some bilingual nodes ship with hardcoded English text, so run this at load too,
+    // not just on toggle. Every [data-en][data-ar] element is a leaf, so textContent is safe.
+    function applyLocaleText() {
         document.querySelectorAll('[data-en][data-ar]').forEach(el => {
             el.textContent = el.getAttribute(`data-${currentLocale}`);
         });
@@ -6088,13 +6097,20 @@ experience that unites ambitious minds and industry leaders under one roof"
         if (!target) {
             return;
         }
+        const input = target.querySelector('input, textarea');
         if (select.value === 'other') {
             target.style.display = '';
+            // the validator scans [required] and does not skip hidden fields, so mirror visibility
+            if (input) {
+                input.required = true;
+            }
         } else {
             target.style.display = 'none';
-            const input = target.querySelector('input, textarea');
-            if (input && input.value) {
-                input.value = '';
+            if (input) {
+                input.required = false;
+                if (input.value) {
+                    input.value = '';
+                }
             }
         }
     }
@@ -6234,6 +6250,18 @@ experience that unites ambitious minds and industry leaders under one roof"
                     sponsorForm.reset();
                     clearRole();
                     showSuccessPopup(getSuccessPopupContent(sponsorForm, payload));
+                },
+            });
+        }
+
+        const visitorForm = document.getElementById('visitor-registration-form');
+        if (visitorForm) {
+            bindAjaxRegistrationForm(visitorForm, {
+                onSuccess: (payload) => {
+                    visitorForm.reset();
+                    resetHeardAboutSelectsWithin(visitorForm);
+                    clearRole();
+                    showSuccessPopup(getSuccessPopupContent(visitorForm, payload));
                 },
             });
         }
@@ -6432,14 +6460,16 @@ experience that unites ambitious minds and industry leaders under one roof"
             accepted: @json(__('validation.accepted', [], 'en')),
             numeric: @json(__('validation.numeric', [], 'en')),
             minDigits: @json(__('validation.min_digits', [], 'en')),
-            saudiPhone: 'يرجى إدخال رقم سعودي صحيح',
+            email: @json(__('validation.email', [], 'en')),
+            saudiPhone: @json(__('validation.saudi_phone', [], 'en')),
         },
         ar: {
             required: @json(__('validation.required', [], 'ar')),
             accepted: @json(__('validation.accepted', [], 'ar')),
             numeric: @json(__('validation.numeric', [], 'ar')),
             minDigits: @json(__('validation.min_digits', [], 'ar')),
-            saudiPhone: 'يرجى إدخال رقم سعودي صحيح',
+            email: @json(__('validation.email', [], 'ar')),
+            saudiPhone: @json(__('validation.saudi_phone', [], 'ar')),
         }
     };
 
@@ -6501,6 +6531,22 @@ experience that unites ambitious minds and industry leaders under one roof"
                 firstInvalid = field;
             }
             isValid = false;
+        });
+
+        // novalidate turns off the browser's own type="email" check, so do it here
+        form.querySelectorAll('input[type="email"]').forEach(field => {
+            if (field.disabled || field.classList.contains('form-control-error') || isFieldEmpty(field)) {
+                return;
+            }
+            if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(String(field.value).trim())) {
+                markFieldError(field, formatValidationMessage(templates.email, {
+                    attribute: getFieldLabel(field)
+                }));
+                if (!firstInvalid) {
+                    firstInvalid = field;
+                }
+                isValid = false;
+            }
         });
 
         form.querySelectorAll('[data-phone-sa]').forEach(field => {
@@ -6635,6 +6681,7 @@ experience that unites ambitious minds and industry leaders under one roof"
     const initialForm = @json($iconPlusShouldOpen ? 'icon-plus' : ($sponsorShouldOpen ? 'sponsor' : ($iconShouldOpen ?
         'icon' : ($iconQuartetShouldOpen ? 'icon-quartet' : ($iconPlusQuartetShouldOpen ? 'icon-plus-quartet' : '')))));
     document.addEventListener('DOMContentLoaded', () => {
+        applyLocaleText();
         initHeardAboutSelects();
         initAjaxRegistrationForms();
         initEventCountdown();

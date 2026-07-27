@@ -11,6 +11,9 @@
         td { padding: 4px; vertical-align: top; }
         .label { width: 30%; font-weight: bold; }
         .header { border-bottom: 1px solid #e5e7eb; padding-bottom: 8px; margin-bottom: 8px; }
+        .qr { margin-top: 18px; }
+        .qr img { width: 160px; height: 160px; }
+        .qr-note { font-size: 11px; color: #374151; margin-top: 4px; }
     </style>
 </head>
 <body>
@@ -57,5 +60,11 @@
             </tr>
         @endif
     </table>
+
+    <div class="qr">
+        <h2>Entry QR code</h2>
+        <img src="{{ $registration->qrPngDataUri() }}" alt="Visitor entry QR code">
+        <div class="qr-note">Present this code at the entrance to be admitted to the expo.</div>
+    </div>
 </body>
 </html>

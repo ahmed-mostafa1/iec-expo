@@ -254,7 +254,7 @@ class PublicRegistrationNotificationTest extends TestCase
             ->assertStatus(422)
             ->assertJsonValidationErrors(['phone']);
         $this->assertSame(
-            'يرجى إدخال رقم سعودي صحيح',
+            'Please enter a valid Saudi phone number',
             $visitorResponse->json('errors.phone.0')
         );
 
@@ -281,7 +281,7 @@ class PublicRegistrationNotificationTest extends TestCase
             ->assertStatus(422)
             ->assertJsonValidationErrors(['phone']);
         $this->assertSame(
-            'يرجى إدخال رقم سعودي صحيح',
+            'Please enter a valid Saudi phone number',
             $sponsorResponse->json('errors.phone.0')
         );
 
@@ -307,8 +307,25 @@ class PublicRegistrationNotificationTest extends TestCase
             ->assertStatus(422)
             ->assertJsonValidationErrors(['phone']);
         $this->assertSame(
-            'يرجى إدخال رقم سعودي صحيح',
+            'Please enter a valid Saudi phone number',
             $iconResponse->json('errors.phone.0')
         );
+    }
+
+    public function test_validation_messages_follow_the_route_locale(): void
+    {
+        $response = $this->postJson(
+            route('public.register.visitor', ['locale' => 'ar']),
+            [
+                'form_identifier' => 'visitor',
+                'email' => 'not-an-email',
+                'phone' => '0123456789',
+            ]
+        );
+
+        $response->assertStatus(422);
+        $this->assertSame('يرجى إدخال رقم سعودي صحيح', $response->json('errors.phone.0'));
+        $this->assertSame('يجب أن يكون email بريدًا إلكترونيًا صحيحًا.', $response->json('errors.email.0'));
+        $this->assertSame('full name مطلوب.', $response->json('errors.full_name.0'));
     }
 }

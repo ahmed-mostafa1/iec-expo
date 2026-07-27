@@ -12,6 +12,7 @@ return [
         'toast_title' => 'Registration received',
         'loading_message' => 'Submitting your visitor registration...',
         'loading_button' => 'Submitting visitor registration...',
+        'popup_note' => 'Your ticket has been sent to your email.',
     ],
     'guest' => [
         'title' => 'Visitor',

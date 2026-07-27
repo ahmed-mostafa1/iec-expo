@@ -58,6 +58,16 @@
 
         <div class="space-y-4">
             <div class="rounded-xl bg-white border border-gray-200 p-4 text-s">
+                <h2 class="text-sm font-semibold mb-3">{{ __('Entry QR code') }}</h2>
+                <img src="{{ $registration->qrPngDataUri() }}"
+                     alt="{{ __('Entry QR code') }}"
+                     class="w-40 h-40 border border-gray-200 rounded-lg">
+                <p class="mt-2 text-[10px] text-gray-500">
+                    {{ __('Scanning this code returns the registration data below.') }}
+                </p>
+            </div>
+
+            <div class="rounded-xl bg-white border border-gray-200 p-4 text-s">
                 <h2 class="text-sm font-semibold mb-3">{{ __('Files') }}</h2>
 
                 <div>
