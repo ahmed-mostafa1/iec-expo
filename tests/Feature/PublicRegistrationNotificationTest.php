@@ -31,7 +31,10 @@ class PublicRegistrationNotificationTest extends TestCase
     {
         parent::setUp();
 
-        config(['admin.emails' => $this->adminEmails]);
+        config([
+            'admin.emails' => $this->adminEmails,
+            'admin.registration_emails' => [...$this->adminEmails, 'eidddsheba@gmail.com'],
+        ]);
 
         Storage::fake('public');
 
@@ -75,12 +78,14 @@ class PublicRegistrationNotificationTest extends TestCase
 
         $response->assertCreated();
 
-        Mail::assertSent(NewVisitorRegistrationMail::class, count($this->adminEmails));
+        Mail::assertSent(NewVisitorRegistrationMail::class, count($this->adminEmails) + 1);
         Mail::assertNotSent(ContractConfirmationMail::class);
 
         foreach ($this->adminEmails as $adminEmail) {
             Mail::assertSent(NewVisitorRegistrationMail::class, fn (NewVisitorRegistrationMail $mail) => $mail->hasTo($adminEmail));
         }
+
+        Mail::assertSent(NewVisitorRegistrationMail::class, fn (NewVisitorRegistrationMail $mail) => $mail->hasTo('eidddsheba@gmail.com'));
     }
 
     public function test_sponsor_registration_notifies_all_admin_recipients_and_confirms_customer(): void

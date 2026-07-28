@@ -55,10 +55,7 @@ class ProcessIconPlusRegistrationSubmission implements ShouldQueue
 
         $registration->refresh();
 
-        // ponytail: temporary CC while client confirmations are paused — remove this line to stop
-        $adminRecipients = [...config('admin.emails', []), 'eidddsheba@gmail.com'];
-
-        foreach ($adminRecipients as $adminEmail) {
+        foreach (config('admin.registration_emails', []) as $adminEmail) {
             Mail::to($adminEmail)->send(
                 new NewIconPlusRegistrationMail($registration, $pdfPath)
             );

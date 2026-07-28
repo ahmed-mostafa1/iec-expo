@@ -36,7 +36,7 @@ class VisitorRegistrationController extends Controller
         $pdfPath = $this->pdfService->generateVisitorPdf($registration);
         $registration->update(['pdf_path' => $pdfPath]);
 
-        foreach (config('admin.emails', []) as $adminEmail) {
+        foreach (config('admin.registration_emails', []) as $adminEmail) {
             Mail::to($adminEmail)->send(
                 new NewVisitorRegistrationMail($registration, $pdfPath)
             );
