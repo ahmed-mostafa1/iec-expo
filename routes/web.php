@@ -17,6 +17,7 @@ use App\Http\Controllers\Admin\SponsorRegistrationController as AdminSponsorCont
 use App\Http\Controllers\Admin\VisitorRegistrationController as AdminVisitorController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\Public\AnalyticsController;
+use App\Http\Controllers\Public\BadgeController;
 use App\Http\Controllers\Public\ContactController;
 use App\Http\Controllers\Public\IconPlusQuartetRegistrationController;
 use App\Http\Controllers\Public\IconPlusRegistrationController;
@@ -127,6 +128,10 @@ Route::get('/hall-design', function () {
 });
 
 Route::redirect('/login', '/admin/login')->name('login');
+
+Route::get('/badge/{type}/{registration}', [BadgeController::class, 'show'])
+    ->name('public.badge.show')
+    ->middleware('signed');
 
 // Route::get('/', function () {
 //     return view('welcome');

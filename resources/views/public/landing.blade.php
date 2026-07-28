@@ -3375,6 +3375,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                                                 <p class="mt-1 text-xs text-red-600">
                                                     {{ $errors->first('organization') }}
                                                 </p>
+
                                                 @endif
                                             </div>
                                             <div class="form-group">

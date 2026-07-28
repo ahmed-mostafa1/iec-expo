@@ -3,6 +3,7 @@
 namespace App\Jobs;
 
 use App\Mail\NewSponsorRegistrationMail;
+use App\Mail\SponsorTicketMail;
 use App\Models\SponsorRegistration;
 use App\Services\RegistrationPdfService;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -61,6 +62,15 @@ class ProcessSponsorRegistrationSubmission implements ShouldQueue
             Mail::to($adminEmail)->send(
                 new NewSponsorRegistrationMail($registration, $pdfPath)
             );
+        }
+
+        if (! $registration->ticket_sent_at) {
+            try {
+                Mail::to($registration->email)->send(new SponsorTicketMail($registration));
+                $registration->update(['ticket_sent_at' => now()]);
+            } catch (Throwable $exception) {
+                report($exception);
+            }
         }
     }
 }

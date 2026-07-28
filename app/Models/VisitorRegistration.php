@@ -2,14 +2,13 @@
 
 namespace App\Models;
 
-use Endroid\QrCode\ErrorCorrectionLevel;
-use Endroid\QrCode\QrCode;
-use Endroid\QrCode\Writer\PngWriter;
-use Endroid\QrCode\Writer\Result\ResultInterface;
+use App\Models\Concerns\HasQrTicket;
 use Illuminate\Database\Eloquent\Model;
 
 class VisitorRegistration extends Model
 {
+    use HasQrTicket;
+
     protected $fillable = [
         'full_name',
         'email',
@@ -29,7 +28,7 @@ class VisitorRegistration extends Model
     ];
 
     /**
-     * Everything the visitor submitted — this is what the QR code carries verbatim.
+     * Everything the visitor submitted — feeds the badge page's name/company fields.
      */
     public function qrPayload(): array
     {
@@ -46,29 +45,8 @@ class VisitorRegistration extends Model
         ], fn ($value) => $value !== null && $value !== '');
     }
 
-    public function qrPng(): string
+    public function badgeRouteType(): string
     {
-        return $this->qrResult()->getString();
-    }
-
-    public function qrPngDataUri(): string
-    {
-        return $this->qrResult()->getDataUri();
-    }
-
-    private function qrResult(): ResultInterface
-    {
-        // ponytail: unescaped unicode keeps Arabic values at 2 bytes instead of 6, which
-        // keeps the QR a few versions smaller and easier to scan.
-        $json = json_encode(
-            $this->qrPayload(),
-            JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES
-        );
-
-        return (new PngWriter())->write(new QrCode(
-            data: $json,
-            errorCorrectionLevel: ErrorCorrectionLevel::Medium,
-            size: 320,
-        ));
+        return 'visitor';
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Mail\IconQuartetTicketMail;
 use App\Mail\NewIconQuartetRegistrationMail;
 use App\Models\IconQuartetRegistration;
 use App\Services\RegistrationPdfService;
@@ -61,6 +62,15 @@ class ProcessIconQuartetRegistrationSubmission implements ShouldQueue
             Mail::to($adminEmail)->send(
                 new NewIconQuartetRegistrationMail($registration, $pdfPath)
             );
+        }
+
+        if (! $registration->ticket_sent_at) {
+            try {
+                Mail::to($registration->email)->send(new IconQuartetTicketMail($registration));
+                $registration->updatePersistableAttributes(['ticket_sent_at' => now()]);
+            } catch (Throwable $exception) {
+                report($exception);
+            }
         }
     }
 }

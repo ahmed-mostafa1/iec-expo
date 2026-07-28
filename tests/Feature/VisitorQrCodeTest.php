@@ -70,7 +70,7 @@ class VisitorQrCodeTest extends TestCase
         );
     }
 
-    public function test_generated_qr_code_scans_back_to_the_submitted_data(): void
+    public function test_generated_qr_code_opens_a_badge_page_with_the_submitted_data(): void
     {
         $registration = VisitorRegistration::create([
             'full_name' => 'زائر تجريبي',
@@ -82,10 +82,13 @@ class VisitorQrCodeTest extends TestCase
             'heard_about_other_text' => 'Conference website',
         ]);
 
-        $decoded = json_decode((new QrReader($registration->qrPng(), QrReader::SOURCE_TYPE_BLOB))->text(), true);
+        $decodedUrl = (new QrReader($registration->qrPng(), QrReader::SOURCE_TYPE_BLOB))->text();
 
-        $this->assertSame($registration->qrPayload(), $decoded);
-        $this->assertSame('زائر تجريبي', $decoded['full_name']);
-        $this->assertSame('Conference website', $decoded['heard_about_other_text']);
+        $response = $this->get($decodedUrl);
+
+        $response->assertOk();
+        $response->assertSee('زائر تجريبي', false);
+        $response->assertSee('Visitor Co', false);
+        $response->assertSee('VISITOR', false);
     }
 }

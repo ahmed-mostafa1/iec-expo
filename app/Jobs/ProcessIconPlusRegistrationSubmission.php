@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Mail\IconPlusTicketMail;
 use App\Mail\NewIconPlusRegistrationMail;
 use App\Models\IconPlusRegistration;
 use App\Services\RegistrationPdfService;
@@ -61,6 +62,15 @@ class ProcessIconPlusRegistrationSubmission implements ShouldQueue
             Mail::to($adminEmail)->send(
                 new NewIconPlusRegistrationMail($registration, $pdfPath)
             );
+        }
+
+        if (! $registration->ticket_sent_at) {
+            try {
+                Mail::to($registration->email)->send(new IconPlusTicketMail($registration));
+                $registration->updatePersistableAttributes(['ticket_sent_at' => now()]);
+            } catch (Throwable $exception) {
+                report($exception);
+            }
         }
     }
 }

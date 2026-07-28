@@ -2,11 +2,14 @@
 
 namespace App\Models;
 
+use App\Models\Concerns\HasQrTicket;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Schema;
 
 class IconRegistration extends Model
 {
+    use HasQrTicket;
+
     protected $fillable = [
         'full_name',
         'email',
@@ -27,13 +30,35 @@ class IconRegistration extends Model
         'pdf_error',
         'pdf_generated_at',
         'status',
+        'ticket_sent_at',
     ];
 
     protected function casts(): array
     {
         return [
             'pdf_generated_at' => 'datetime',
+            'ticket_sent_at' => 'datetime',
         ];
+    }
+
+    public function qrPayload(): array
+    {
+        return array_filter([
+            'id'                 => $this->id,
+            'type'               => 'icon',
+            'full_name'          => $this->full_name,
+            'email'              => $this->email,
+            'phone'              => $this->phone,
+            'job_title'          => $this->job_title,
+            'organization'       => $this->organization,
+            'location_selection' => $this->location_selection,
+            'registered_at'      => $this->created_at?->toDateTimeString(),
+        ], fn ($value) => $value !== null && $value !== '');
+    }
+
+    public function badgeRouteType(): string
+    {
+        return 'icon';
     }
 
     public static function filterPersistableAttributes(array $attributes): array
