@@ -660,6 +660,12 @@
                             <div class="sponsor-item">
                                 <img src="{{ asset('img/exsponsor/14-v2.jpg') }}" style="background-color: #fff;" alt="Authority">
                             </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/15.jpg') }}" style="background-color: #fff;" alt="Authority">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/16.jpg') }}" style="background-color: #fff;" alt="Authority">
+                            </div>
                             <!-- Duplicate Slider Items for Infinite Loop -->
                            <div class="sponsor-item">
                                 <img src="{{ asset('img/exsponsor/1.jpg') }}" alt="IEC Logo">
@@ -702,6 +708,12 @@
                             </div>
                             <div class="sponsor-item">
                                 <img src="{{ asset('img/exsponsor/14-v2.jpg') }}" style="background-color: #fff;" alt="Authority">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/15.jpg') }}" style="background-color: #fff;" alt="Authority">
+                            </div>
+                            <div class="sponsor-item">
+                                <img src="{{ asset('img/exsponsor/16.jpg') }}" style="background-color: #fff;" alt="Authority">
                             </div>
                             <!-- end of duplicate -->
                         </div>
