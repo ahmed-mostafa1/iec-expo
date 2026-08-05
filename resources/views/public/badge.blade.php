@@ -32,6 +32,8 @@
             width: 70mm;
             height: 100mm;
             overflow: hidden;
+            -webkit-print-color-adjust: exact;
+            print-color-adjust: exact;
             border-radius: 4mm;
             background: linear-gradient(180deg, #000000 0%, #0f0520 55%, #1a0a2e 100%);
             box-shadow: 0 14px 40px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(152, 3, 189, 0.4);
@@ -131,7 +133,7 @@
             }
 
             html, body {
-                background: #000;
+                background: #fff;
                 padding: 0;
             }
 

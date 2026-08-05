@@ -3223,7 +3223,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                                 $exhibitorFieldsStepOneByName,
                                 'organization',
                                 'placeholder',
-                                ['en' => 'Umbrella Inc.', 'ar' => 'شركة أمبريلا'],
+                                ['en' => 'Business Umbrella', 'ar' => 'مظلة الأعمال'],
                                 );
 
                                 $sponsorTierLabel = $translate([
@@ -3614,7 +3614,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                                 $iconFieldsStepOneByName,
                                 'organization',
                                 'placeholder',
-                                ['en' => 'Umbrella Inc.', 'ar' => 'شركة أمبريلا'],
+                                ['en' => 'Business Umbrella', 'ar' => 'مظلة الأعمال'],
                                 );
                                 $iconLocationLabel = $fieldCopy(
                                 $iconFieldsStepOneByName,
@@ -3966,8 +3966,8 @@ experience that unites ambitious minds and industry leaders under one roof"
                                 ]);
                                 $iconPlusOrgPlaceholder = $fieldCopy($iconPlusFieldsStepOneByName, 'organization',
                                 'placeholder', [
-                                'en' => 'Umbrella Inc.',
-                                'ar' => 'شركة أمبريلا',
+                                'en' => 'Business Umbrella',
+                                'ar' => 'مظلة الأعمال',
                                 ]);
                                 $iconPlusLocationLabel = $fieldCopy($iconPlusFieldsStepOneByName, 'location_selection',
                                 'label', [
@@ -4288,8 +4288,8 @@ experience that unites ambitious minds and industry leaders under one roof"
                                 ]);
                                 $iconQuartetOrgPlaceholder = $fieldCopy($iconQuartetFieldsStepOneByName, 'organization',
                                 'placeholder', [
-                                'en' => 'Umbrella Inc.',
-                                'ar' => 'شركة أمبريلا',
+                                'en' => 'Business Umbrella',
+                                'ar' => 'مظلة الأعمال',
                                 ]);
                                 $iconQuartetLocationLabel = $fieldCopy($iconQuartetFieldsStepOneByName, 'location_selection',
                                 'label', [
@@ -4611,8 +4611,8 @@ experience that unites ambitious minds and industry leaders under one roof"
                                 ]);
                                 $iconPlusQuartetOrgPlaceholder = $fieldCopy($iconPlusQuartetFieldsStepOneByName, 'organization',
                                 'placeholder', [
-                                'en' => 'Umbrella Inc.',
-                                'ar' => 'شركة أمبريلا',
+                                'en' => 'Business Umbrella',
+                                'ar' => 'مظلة الأعمال',
                                 ]);
                                 $iconPlusQuartetLocationLabel = $fieldCopy($iconPlusQuartetFieldsStepOneByName, 'location_selection',
                                 'label', [
@@ -4933,7 +4933,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                                 $visitorFieldsByName,
                                 'company_name',
                                 'placeholder',
-                                ['en' => 'Umbrella Inc.', 'ar' => 'شركة أمبريلا'],
+                                ['en' => 'Business Umbrella', 'ar' => 'مظلة الأعمال'],
                                 );
                                 $guestHeardLabel = $markRequired($fieldCopy($visitorFieldsByName, 'heard_about', 'label', [
                                 'en' => 'How did you hear about us? *',

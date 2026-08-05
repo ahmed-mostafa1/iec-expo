@@ -128,7 +128,7 @@ return [
                             'name' => 'organization',
                             'type' => 'text',
                             'label' => ['en' => 'Company / Organization', 'ar' => 'الشركة / الجهة'],
-                            'placeholder' => ['en' => 'Umbrella Inc.', 'ar' => 'شركة أمبريلا'],
+                            'placeholder' => ['en' => 'Business Umbrella', 'ar' => 'مظلة الأعمال'],
                         ],
                         [
                             'name' => 'location_selection',
@@ -240,7 +240,7 @@ return [
                             'name' => 'company_name',
                             'type' => 'text',
                             'label' => ['en' => 'Company / Organization', 'ar' => 'الشركة / الجهة'],
-                            'placeholder' => ['en' => 'Umbrella Inc.', 'ar' => 'شركة أمبريلا'],
+                            'placeholder' => ['en' => 'Business Umbrella', 'ar' => 'مظلة الأعمال'],
                         ],
                         [
                             'name' => 'heard_about',
@@ -325,7 +325,7 @@ return [
                             'name' => 'organization',
                             'type' => 'text',
                             'label' => ['en' => 'Company / Organization', 'ar' => 'الشركة / الجهة'],
-                            'placeholder' => ['en' => 'Umbrella Inc.', 'ar' => 'شركة أمبريلا'],
+                            'placeholder' => ['en' => 'Business Umbrella', 'ar' => 'مظلة الأعمال'],
                         ],
                         [
                             'name' => 'location_selection',
@@ -435,7 +435,7 @@ return [
                             'name' => 'organization',
                             'type' => 'text',
                             'label' => ['en' => 'Company / Organization', 'ar' => 'الشركة / الجهة'],
-                            'placeholder' => ['en' => 'Umbrella Inc.', 'ar' => 'شركة أمبريلا'],
+                            'placeholder' => ['en' => 'Business Umbrella', 'ar' => 'مظلة الأعمال'],
                         ],
                         [
                             'name' => 'location_selection',
