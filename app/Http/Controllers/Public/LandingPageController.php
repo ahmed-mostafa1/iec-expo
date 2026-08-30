@@ -97,7 +97,7 @@ class LandingPageController extends Controller
             'government' => ['en' => 'Government', 'ar' => 'الحكومي'],
             'marketing' => ['en' => 'Marketing', 'ar' => 'التسويقي'],
             'media' => ['en' => 'Marketing Rep', 'ar' => 'وكيل التسويق'],
-            'technology' => ['en' => 'Innovation & Entrepreneurship Partner', 'ar' => 'شريك الابتكار وريادة الاعمال'],
+            'technology' => ['en' => 'Technology', 'ar' => 'التكنولوجي'],
             'safety-security' => ['en' => 'Security', 'ar' => 'الأمني'],
             'gold' => ['en' => 'Gold', 'ar' => 'الذهبي'],
             'coffee-lounge' => ['en' => 'Coffee Lounge', 'ar' => 'كوفي لاونج'],

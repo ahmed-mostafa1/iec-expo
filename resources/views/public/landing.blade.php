@@ -3241,7 +3241,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                                 'government' => ['en' => 'Government', 'ar' => 'الحكومي'],
                                 'marketing' => ['en' => 'Marketing', 'ar' => 'التسويقي'],
                                 'media' => ['en' => 'Marketing Rep', 'ar' => 'وكيل التسويق'],
-                                'technology' => ['en' => 'Innovation & Entrepreneurship Partner', 'ar' => 'شريك الابتكار وريادة الاعمال'],
+                                'technology' => ['en' => 'Technology', 'ar' => 'التكنولوجي'],
                                 'safety-security' => ['en' => 'Safety & Security', 'ar' => 'السلامة والأمن'],
                                 'gold' => ['en' => 'Gold', 'ar' => 'الذهبي'],
                                 'other' => ['en' => 'Other', 'ar' => 'أخرى'],
