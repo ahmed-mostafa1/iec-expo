@@ -3237,6 +3237,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                                 $sponsorTierOptions = [
                                 'strategic' => ['en' => 'Strategic', 'ar' => 'الاستراتيجي'],
                                 'diamond' => ['en' => 'Diamond', 'ar' => 'الماسي'],
+                                'innovation-entrepreneurship' => ['en' => 'Innovation & Entrepreneurship Partner', 'ar' => 'شريك الابتكار وريادة الاعمال'],
                                 'government' => ['en' => 'Government', 'ar' => 'الحكومي'],
                                 'marketing' => ['en' => 'Marketing', 'ar' => 'التسويقي'],
                                 'media' => ['en' => 'Marketing Rep', 'ar' => 'وكيل التسويق'],
@@ -5383,6 +5384,26 @@ experience that unites ambitious minds and industry leaders under one roof"
                             <div class="sponsor-tier-grid tier-business">
                                 @foreach($sponsorGroups['diamond']['sponsors'] as $sponsor)
                                 <article class="sponsor-card sponsor-business" data-animate>
+                                    <div class="sponsor-logo">
+                                        <img src="{{ $sponsor->logo_path ? asset('storage/' . $sponsor->logo_path) : asset('img/placeholder-img.png') }}"
+                                            alt="{{ $sponsor->getLocalizedName($locale) }}">
+                                    </div>
+                                </article>
+                                @endforeach
+                            </div>
+                        </div>
+                        @endif
+                        <!-- INNOVATION & ENTREPRENEURSHIP PARTNER -->
+                        @if(!empty($sponsorGroups['innovation-entrepreneurship']) &&
+                        $sponsorGroups['innovation-entrepreneurship']['sponsors']->isNotEmpty())
+                        <div class="sponsor-tier">
+                            <h2 class="sponsor-tier-title" data-en="{{ $sponsorGroups['innovation-entrepreneurship']['title']['en'] }}"
+                                data-ar="{{ $sponsorGroups['innovation-entrepreneurship']['title']['ar'] }}">
+                                {{ strtoupper($sponsorGroups['innovation-entrepreneurship']['title']['en']) }}
+                            </h2>
+                            <div class="sponsor-tier-grid tier-strategic">
+                                @foreach($sponsorGroups['innovation-entrepreneurship']['sponsors'] as $sponsor)
+                                <article class="sponsor-card sponsor-strategic" data-animate>
                                     <div class="sponsor-logo">
                                         <img src="{{ $sponsor->logo_path ? asset('storage/' . $sponsor->logo_path) : asset('img/placeholder-img.png') }}"
                                             alt="{{ $sponsor->getLocalizedName($locale) }}">
