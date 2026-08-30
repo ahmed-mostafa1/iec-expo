@@ -385,6 +385,7 @@ class RegistrationPdfService
         return match ($tier) {
             'strategic' => 'الاستراتيجي',
             'diamond' => 'الماسي',
+            'innovation-entrepreneurship' => 'شريك الابتكار وريادة الاعمال',
             'government' => 'الحكومي',
             'marketing' => 'التسويقي',
             'media' => 'وكيل التسويق',
@@ -531,8 +532,9 @@ class RegistrationPdfService
     {
         return match ($tier) {
             'strategic' => ['space' => '8×12 متر مربع', 'price' => 900000, 'final_price' => 1035000],
-            'government' => ['space' => '8×5 متر مربع', 'price' => 0, 'final_price' => 0],
             'diamond' => ['space' => '8×8 متر مربع', 'price' => 450000, 'final_price' => 517500],
+            'innovation-entrepreneurship' => ['space' => '8×12 متر مربع', 'price' => 900000, 'final_price' => 1035000],
+            'government' => ['space' => '8×5 متر مربع', 'price' => 0, 'final_price' => 0],
             'gold' => ['space' => '8×5 متر مربع', 'price' => 200000, 'final_price' => 230000],
             'media' => ['space' => '-', 'price' => 0, 'final_price' => 0],
             'safety-security', 'marketing', 'technology', 'other' => ['space' => '0 متر مربع', 'price' => 200000, 'final_price' => 230000],

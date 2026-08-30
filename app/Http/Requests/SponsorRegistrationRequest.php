@@ -71,6 +71,7 @@ class SponsorRegistrationRequest extends FormRequest
         return [
             'strategic',
             'diamond',
+            'innovation-entrepreneurship',
             'government',
             'marketing',
             'media',
