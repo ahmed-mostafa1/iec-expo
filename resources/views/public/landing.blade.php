@@ -1877,6 +1877,12 @@ $websiteSchema = [
         font-size: 1.05rem;
     }
 
+    .sponsor-card.sponsor-influencer {
+        height: auto;
+        padding-bottom: 0.75rem;
+        border-color: rgba(253, 230, 138, 0.6);
+    }
+
     .sponsor-card.main:hover {
         border-color: rgb(242 147 13 / 0.6);
     }
@@ -5343,6 +5349,31 @@ experience that unites ambitious minds and industry leaders under one roof"
             <div class="row-logo about-img">
                 <img src="{{ asset('img/under-about.png') }}" alt="About Us">
             </div>
+            <!-- Influencers Section -->
+            @if(!empty($sponsorGroups['influencers']) && $sponsorGroups['influencers']['sponsors']->isNotEmpty())
+            <section class="sponsors" id="influencers">
+                <div class="container">
+                    <div class="section-header" data-animate>
+                        <h2 class="section-title" data-en="{{ $sponsorGroups['influencers']['title']['en'] }}"
+                            data-ar="{{ $sponsorGroups['influencers']['title']['ar'] }}">
+                            {{ strtoupper($sponsorGroups['influencers']['title']['en']) }}
+                        </h2>
+                    </div>
+                    <div class="sponsor-tier-grid tier-strategic">
+                        @foreach($sponsorGroups['influencers']['sponsors'] as $influencer)
+                        <article class="sponsor-card sponsor-influencer" data-animate>
+                            <div class="sponsor-logo">
+                                <img src="{{ $influencer->logo_path ? asset('storage/' . $influencer->logo_path) : asset('img/placeholder-img.png') }}"
+                                    alt="{{ $influencer->getLocalizedName($locale) }}">
+                            </div>
+                            <div class="sponsor-card-footer">{{ $influencer->getLocalizedName($locale) }}</div>
+                        </article>
+                        @endforeach
+                    </div>
+                </div>
+            </section>
+            @endif
+
             <!-- Sponsors Section -->
             <section class="sponsors" id="sponsors">
                 @php

@@ -20,6 +20,7 @@ class PublicSponsorController extends Controller
         'safety-security' => 'Safety and Security Sponsor',
         'gold' => 'Gold Sponsor',
         'coffee-lounge' => 'Coffee Lounge',
+        'influencers' => 'Influencer',
         'other' => 'Other Sponsor',
     ];
 

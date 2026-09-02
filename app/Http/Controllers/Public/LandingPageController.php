@@ -101,6 +101,7 @@ class LandingPageController extends Controller
             'safety-security' => ['en' => 'Security', 'ar' => 'الأمني'],
             'gold' => ['en' => 'Gold', 'ar' => 'الذهبي'],
             'coffee-lounge' => ['en' => 'Coffee Lounge', 'ar' => 'كوفي لاونج'],
+            'influencers' => ['en' => 'Influencers', 'ar' => 'المؤثرين'],
             'other' => ['en' => 'Sponsors', 'ar' => 'الرعاة'],
         ];
 
