@@ -5366,7 +5366,8 @@ experience that unites ambitious minds and industry leaders under one roof"
                                 <img src="{{ $influencer->logo_path ? asset('storage/' . $influencer->logo_path) : asset('img/placeholder-img.png') }}"
                                     alt="{{ $influencer->getLocalizedName($locale) }}">
                             </div>
-                            <div class="sponsor-card-footer">{{ $influencer->getLocalizedName($locale) }}</div>
+                            <div class="sponsor-card-footer" data-en="{{ $influencer->getLocalizedName('en') }}"
+                                data-ar="{{ $influencer->getLocalizedName('ar') }}">{{ $influencer->getLocalizedName($locale) }}</div>
                         </article>
                         @endforeach
                     </div>
