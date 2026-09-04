@@ -19,6 +19,11 @@ class RegistrationPdfService
 {
     private const CLOUDCONVERT_ERROR_DETAIL_LIMIT = 1000;
 
+
+    private const BADGE_CAPTURE_WIDTH = 310;
+
+    private const BADGE_CAPTURE_HEIGHT = 490;
+
     public function generateSponsorPdf(SponsorRegistration $registration): string
     {
         $path = "registrations/sponsors/{$registration->id}.pdf";
@@ -220,6 +225,8 @@ class RegistrationPdfService
                         'output_format' => 'png',
                         'engine' => 'chrome',
                         'zoom' => 2,
+                        'screen_width' => self::BADGE_CAPTURE_WIDTH,
+                        'screen_height' => self::BADGE_CAPTURE_HEIGHT,
                     ],
                     'export-png' => [
                         'operation' => 'export/url',
