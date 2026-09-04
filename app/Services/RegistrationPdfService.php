@@ -50,7 +50,10 @@ class RegistrationPdfService
             throw new \RuntimeException('CloudConvert API key is not configured.');
         }
 
-        $html = view('public.badge', $registration->badgeViewData('VISITOR'))->render();
+        $html = view('public.badge', [
+            ...$registration->badgeViewData('VISITOR'),
+            'standalone' => true,
+        ])->render();
 
         return $this->convertHtmlToPngViaCloudConvert($html, $apiKey);
     }

@@ -185,6 +185,17 @@
                 height: 118mm;
             }
         }
+
+        @if($standalone ?? false)
+        html, body {
+            width: fit-content;
+            height: fit-content;
+            min-height: 0;
+            display: block;
+            background: transparent;
+            padding: 20px;
+        }
+        @endif
     </style>
 </head>
 <body>
