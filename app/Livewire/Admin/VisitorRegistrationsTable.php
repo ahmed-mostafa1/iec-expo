@@ -33,13 +33,7 @@ class VisitorRegistrationsTable extends Component
         $query = VisitorRegistration::query();
 
         if ($this->search !== '') {
-            $search = $this->search;
-            $query->where(function ($q) use ($search) {
-                $q->where('full_name', 'like', "%{$search}%")
-                    ->orWhere('email', 'like', "%{$search}%")
-                    ->orWhere('company_name', 'like', "%{$search}%")
-                    ->orWhere('phone', 'like', "%{$search}%");
-            });
+            $query->where('full_name', 'like', "%{$this->search}%");
         }
 
         if ($this->dateFrom) {

@@ -1,31 +1,15 @@
 <div class="space-y-4">
     <div class="flex flex-wrap items-end gap-3 justify-between">
-        <!-- <div class="flex flex-wrap gap-3">
+        <div class="flex flex-wrap gap-3">
             <div>
                 <label class="block text-[10px] font-medium text-gray-500 mb-1">
                     {{ __('Search') }}
                 </label>
-                <input type="text" wire:model.debounce.300ms="search"
+                <input type="text" wire:model.live.debounce.300ms="search"
                        class="w-48 rounded-lg border-gray-300 text-s"
-                       placeholder="{{ __('Name, email, phone, company') }}">
+                       placeholder="{{ __('Name') }}">
             </div>
-
-            <div>
-                <label class="block text-[10px] font-medium text-gray-500 mb-1">
-                    {{ __('From date') }}
-                </label>
-                <input type="date" wire:model="dateFrom"
-                       class="w-36 rounded-lg border-gray-300 text-s">
-            </div>
-
-            <div>
-                <label class="block text-[10px] font-medium text-gray-500 mb-1">
-                    {{ __('To date') }}
-                </label>
-                <input type="date" wire:model="dateTo"
-                       class="w-36 rounded-lg border-gray-300 text-s">
-            </div>
-        </div> -->
+        </div>
 
         <div class="flex items-center gap-2">
             <button

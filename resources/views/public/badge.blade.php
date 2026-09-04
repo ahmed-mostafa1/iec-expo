@@ -30,7 +30,7 @@
         .badge {
             position: relative;
             width: 70mm;
-            height: 100mm;
+            height: 118mm;
             overflow: hidden;
             -webkit-print-color-adjust: exact;
             print-color-adjust: exact;
@@ -59,7 +59,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: flex-start;
-            padding: 6mm 5mm;
+            padding: 6mm 5mm 9mm;
             text-align: center;
         }
 
@@ -83,7 +83,7 @@
         .badge-divider {
             width: 20mm;
             height: 2px;
-            margin: 3mm 0;
+            margin: 1.5mm 0;
             background: linear-gradient(90deg, transparent, #9803bd, #6024c1, transparent);
             border-radius: 2px;
         }
@@ -96,6 +96,7 @@
             color: rgba(248, 249, 250, 0.75);
             max-width: 100%;
             overflow-wrap: break-word;
+            margin-bottom: 6mm;
         }
 
         .badge-qr-wrap {
@@ -126,9 +127,49 @@
             box-shadow: 0 4px 14px rgba(152, 3, 189, 0.4);
         }
 
+        .badge-footer {
+            width: 100%;
+            margin-top: 4mm;
+            padding-top: 4mm;
+            border-top: 1px solid rgba(248, 249, 250, 0.18);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .badge-footer-label {
+            font-size: 6pt;
+            font-weight: 600;
+            letter-spacing: 0.18em;
+            color: rgba(248, 249, 250, 0.45);
+            margin-bottom: 2mm;
+        }
+
+        .badge-footer-brand {
+            display: inline-flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.8mm;
+            text-decoration: none;
+        }
+
+        .badge-footer-brand img {
+            display: block;
+            width: 30mm;
+            height: auto;
+            object-fit: contain;
+        }
+
+        .badge-footer-brand span {
+            font-size: 8pt;
+            font-weight: 600;
+            letter-spacing: 0.03em;
+            color: #f8f9fa;
+        }
+
         @media print {
             @page {
-                size: 70mm 100mm;
+                size: 70mm 118mm;
                 margin: 0;
             }
 
@@ -141,7 +182,7 @@
                 box-shadow: none;
                 border-radius: 0;
                 width: 70mm;
-                height: 100mm;
+                height: 118mm;
             }
         }
     </style>
@@ -151,7 +192,9 @@
         <div class="badge-glow"></div>
 
         <div class="badge-inner">
-            <img class="badge-logo" src="{{ asset('img/IEC-logo-v2-1.png') }}" alt="IEC 360 Expo">
+            <a href="{{ route('public.landing', app()->getLocale()) }}" target="_blank" rel="noopener">
+                <img class="badge-logo" src="{{ asset('img/IEC-logo-v2-1.png') }}" alt="IEC 360 Expo">
+            </a>
 
             <div class="badge-name">{{ $name }}</div>
 
@@ -165,6 +208,14 @@
             </div>
 
             <div class="badge-type-pill">{{ $typeLabel }}</div>
+
+            <div class="badge-footer">
+                <div class="badge-footer-label">OWNED BY</div>
+                <a class="badge-footer-brand" href="https://umbrella.sa/" target="_blank" rel="noopener">
+                    <img src="{{ asset('img/bu_logo.png') }}" alt="Business Umbrella">
+                    <span>umbrella.sa</span>
+                </a>
+            </div>
         </div>
     </div>
 </body>
