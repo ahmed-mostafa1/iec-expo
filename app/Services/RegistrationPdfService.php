@@ -43,6 +43,18 @@ class RegistrationPdfService
         return $path;
     }
 
+    public function generateVisitorBadgeCardPng(VisitorRegistration $registration): string
+    {
+        $apiKey = config('services.cloudconvert.key');
+        if (! $apiKey) {
+            throw new \RuntimeException('CloudConvert API key is not configured.');
+        }
+
+        $html = view('public.badge', $registration->badgeViewData('VISITOR'))->render();
+
+        return $this->convertHtmlToPngViaCloudConvert($html, $apiKey);
+    }
+
     public function generateIconPdf(IconRegistration $registration): string
     {
         $path = "registrations/icons/{$registration->id}.pdf";
@@ -172,6 +184,93 @@ class RegistrationPdfService
             ));
         }
 
+        $exportTask = $this->waitForCloudConvertExportTask($jobId, $apiKey, 'export-pdf');
+        $pdfUrl = $exportTask['result']['files'][0]['url'] ?? null;
+        if (! $pdfUrl) {
+            throw new \RuntimeException('CloudConvert export URL missing.');
+        }
+
+        $pdfResponse = Http::get($pdfUrl);
+        if (! $pdfResponse->successful()) {
+            throw new \RuntimeException($this->cloudConvertResponseError(
+                'Failed to download generated PDF',
+                $pdfResponse
+            ));
+        }
+
+        return $pdfResponse->body();
+    }
+
+    private function convertHtmlToPngViaCloudConvert(string $html, string $apiKey): string
+    {
+        $jobResponse = Http::withToken($apiKey)
+            ->acceptJson()
+            ->post('https://api.cloudconvert.com/v2/jobs', [
+                'tasks' => [
+                    'import-html' => [
+                        'operation' => 'import/upload',
+                    ],
+                    'convert-html-to-png' => [
+                        'operation' => 'convert',
+                        'input' => 'import-html',
+                        'input_format' => 'html',
+                        'output_format' => 'png',
+                        'engine' => 'chrome',
+                        'zoom' => 2,
+                    ],
+                    'export-png' => [
+                        'operation' => 'export/url',
+                        'input' => 'convert-html-to-png',
+                    ],
+                ],
+            ]);
+
+        if (! $jobResponse->successful()) {
+            throw new \RuntimeException($this->cloudConvertResponseError(
+                'CloudConvert job creation failed',
+                $jobResponse
+            ));
+        }
+
+        $jobData = $jobResponse->json('data');
+        $jobId = $jobData['id'] ?? null;
+        $tasks = $this->normalizeTasks($jobData['tasks'] ?? []);
+        $importTask = $this->findTaskByName($tasks, 'import-html');
+        $uploadForm = $importTask['result']['form'] ?? null;
+
+        if (! $jobId || ! $uploadForm || empty($uploadForm['url']) || empty($uploadForm['parameters'])) {
+            throw new \RuntimeException('CloudConvert upload form missing from job response.');
+        }
+
+        $uploadResponse = Http::attach('file', $html, 'badge.html')
+            ->post($uploadForm['url'], $uploadForm['parameters']);
+
+        if (! $uploadResponse->successful()) {
+            throw new \RuntimeException($this->cloudConvertResponseError(
+                'CloudConvert upload failed',
+                $uploadResponse
+            ));
+        }
+
+        $exportTask = $this->waitForCloudConvertExportTask($jobId, $apiKey, 'export-png');
+        $pngUrl = $exportTask['result']['files'][0]['url'] ?? null;
+        if (! $pngUrl) {
+            throw new \RuntimeException('CloudConvert export URL missing.');
+        }
+
+        $pngResponse = Http::get($pngUrl);
+        if (! $pngResponse->successful()) {
+            throw new \RuntimeException($this->cloudConvertResponseError(
+                'Failed to download generated PNG',
+                $pngResponse
+            ));
+        }
+
+        return $pngResponse->body();
+    }
+
+    private function waitForCloudConvertExportTask(string $jobId, string $apiKey, string $exportTaskName): array
+    {
         $exportTask = null;
         $maxAttempts = 20;
         $delaySeconds = 2;
@@ -195,32 +294,15 @@ class RegistrationPdfService
                 throw new \RuntimeException("CloudConvert task failed: {$errorMessage}");
             }
 
-            $exportTask = $this->findTaskByName($statusTasks, 'export-pdf');
+            $exportTask = $this->findTaskByName($statusTasks, $exportTaskName);
             if ($exportTask && ($exportTask['status'] ?? null) === 'finished') {
-                break;
+                return $exportTask;
             }
 
             sleep($delaySeconds);
         }
 
-        if (! $exportTask || ($exportTask['status'] ?? null) !== 'finished') {
-            throw new \RuntimeException('CloudConvert conversion timed out before export was ready.');
-        }
-
-        $pdfUrl = $exportTask['result']['files'][0]['url'] ?? null;
-        if (! $pdfUrl) {
-            throw new \RuntimeException('CloudConvert export URL missing.');
-        }
-
-        $pdfResponse = Http::get($pdfUrl);
-        if (! $pdfResponse->successful()) {
-            throw new \RuntimeException($this->cloudConvertResponseError(
-                'Failed to download generated PDF',
-                $pdfResponse
-            ));
-        }
-
-        return $pdfResponse->body();
+        throw new \RuntimeException('CloudConvert conversion timed out before export was ready.');
     }
 
     private function cloudConvertDocxToPdfJobPayload(string $docxPath): array

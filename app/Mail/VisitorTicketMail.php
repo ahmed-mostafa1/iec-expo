@@ -13,6 +13,7 @@ class VisitorTicketMail extends Mailable
 
     public function __construct(
         public VisitorRegistration $registration,
+        public ?string $badgeCardPng = null,
     ) {}
 
     public function build(): self

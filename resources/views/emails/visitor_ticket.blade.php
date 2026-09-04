@@ -9,6 +9,14 @@
          alt="Visitor entry QR code" width="320" height="320">
 </p>
 
+@if($badgeCardPng)
+    <p>Your badge:</p>
+    <p>
+        <img src="{{ $message->embedData($badgeCardPng, 'visitor-badge.png', 'image/png') }}"
+             alt="Visitor badge" width="280">
+    </p>
+@endif
+
 <p>Your registration details:</p>
 
 <ul>
@@ -48,3 +56,10 @@
         @endif
     </ul>
 </div>
+
+<hr>
+
+<p>
+    Business Umbrella: <a href="https://umbrella.sa">https://umbrella.sa</a><br>
+    Tujjar IEC360 Expo: <a href="https://umbrella.sa/iec360/">https://umbrella.sa/iec360/</a>
+</p>

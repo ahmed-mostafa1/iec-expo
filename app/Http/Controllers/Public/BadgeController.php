@@ -34,13 +34,6 @@ class BadgeController extends Controller
             default => 'ICON',
         };
 
-        $payload = $model->qrPayload();
-
-        return view('public.badge', [
-            'name' => $payload['full_name'] ?? '',
-            'company' => $payload['company_name'] ?? $payload['organization'] ?? '',
-            'typeLabel' => $typeLabel,
-            'qrDataUri' => $model->qrPngDataUri(),
-        ]);
+        return view('public.badge', $model->badgeViewData($typeLabel));
     }
 }

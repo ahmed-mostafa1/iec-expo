@@ -41,6 +41,22 @@ trait HasQrTicket
         return $this->qrResult()->getDataUri();
     }
 
+    /**
+     * Data for the public.badge view — shared by the badge page itself and
+     * anything rendering that same card elsewhere (e.g. the ticket email).
+     */
+    public function badgeViewData(string $typeLabel): array
+    {
+        $payload = $this->qrPayload();
+
+        return [
+            'name' => $payload['full_name'] ?? '',
+            'company' => $payload['company_name'] ?? $payload['organization'] ?? '',
+            'typeLabel' => $typeLabel,
+            'qrDataUri' => $this->qrPngDataUri(),
+        ];
+    }
+
     private function qrResult(): ResultInterface
     {
         $url = URL::signedRoute('public.badge.show', [
@@ -52,7 +68,7 @@ trait HasQrTicket
 
         foreach (self::QR_ERROR_CORRECTION_LEVELS as $level) {
             foreach (self::QR_SIZES as $size) {
-                $result = (new PngWriter())->write(new QrCode(
+                $result = (new PngWriter)->write(new QrCode(
                     data: $url,
                     errorCorrectionLevel: $level,
                     size: $size,
