@@ -52,13 +52,43 @@ class RegistrationPdfService
 
     public function generateVisitorBadgeCardPng(VisitorRegistration $registration): string
     {
+        return $this->renderBadgeCardPng($registration, 'VISITOR');
+    }
+
+    public function generateIconBadgeCardPng(IconRegistration $registration): string
+    {
+        return $this->renderBadgeCardPng($registration, 'ICON');
+    }
+
+    public function generateIconPlusBadgeCardPng(IconPlusRegistration $registration): string
+    {
+        return $this->renderBadgeCardPng($registration, 'ICON');
+    }
+
+    public function generateIconQuartetBadgeCardPng(IconQuartetRegistration $registration): string
+    {
+        return $this->renderBadgeCardPng($registration, 'ICON');
+    }
+
+    public function generateIconPlusQuartetBadgeCardPng(IconPlusQuartetRegistration $registration): string
+    {
+        return $this->renderBadgeCardPng($registration, 'ICON');
+    }
+
+    public function generateSponsorBadgeCardPng(SponsorRegistration $registration): string
+    {
+        return $this->renderBadgeCardPng($registration, 'SPONSOR');
+    }
+
+    private function renderBadgeCardPng(object $registration, string $typeLabel): string
+    {
         $apiKey = config('services.cloudconvert.key');
         if (! $apiKey) {
             throw new \RuntimeException('CloudConvert API key is not configured.');
         }
 
         $html = view('public.badge', [
-            ...$registration->badgeViewData('VISITOR'),
+            ...$registration->badgeViewData($typeLabel),
             'standalone' => true,
         ])->render();
 

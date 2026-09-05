@@ -13,6 +13,7 @@ class SponsorTicketMail extends Mailable
 
     public function __construct(
         public SponsorRegistration $registration,
+        public ?string $badgeCardPng = null,
     ) {}
 
     public function build(): self

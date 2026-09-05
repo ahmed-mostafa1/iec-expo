@@ -13,6 +13,7 @@ class IconQuartetTicketMail extends Mailable
 
     public function __construct(
         public IconQuartetRegistration $registration,
+        public ?string $badgeCardPng = null,
     ) {}
 
     public function build(): self

@@ -62,8 +62,16 @@ class ProcessSponsorRegistrationSubmission implements ShouldQueue
         }
 
         if (! $registration->ticket_sent_at) {
+            $badgeCardPng = null;
+
             try {
-                Mail::to($registration->email)->send(new SponsorTicketMail($registration));
+                $badgeCardPng = $pdfService->generateSponsorBadgeCardPng($registration);
+            } catch (Throwable $exception) {
+                report($exception);
+            }
+
+            try {
+                Mail::to($registration->email)->send(new SponsorTicketMail($registration, $badgeCardPng));
                 $registration->update(['ticket_sent_at' => now()]);
             } catch (Throwable $exception) {
                 report($exception);
