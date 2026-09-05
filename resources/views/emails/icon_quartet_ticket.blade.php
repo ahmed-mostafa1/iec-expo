@@ -41,3 +41,10 @@
         <li><strong>الموقع المحجوز:</strong> {{ $registration->location_selection }}</li>
     </ul>
 </div>
+
+<hr>
+
+<p>
+    Business Umbrella: <a href="https://umbrella.sa">https://umbrella.sa</a><br>
+    Tujjar IEC360 Expo: <a href="https://umbrella.sa/iec360/">https://umbrella.sa/iec360/</a>
+</p>
