@@ -195,6 +195,10 @@
             background: transparent;
             padding: 0;
         }
+
+        .badge {
+            box-shadow: none;
+        }
         @endif
     </style>
 </head>

@@ -19,9 +19,12 @@ class RegistrationPdfService
 {
     private const CLOUDCONVERT_ERROR_DETAIL_LIMIT = 1000;
 
-    private const BADGE_CAPTURE_WIDTH = 270;
+    private const BADGE_CAPTURE_WIDTH = 265;
 
-    private const BADGE_CAPTURE_HEIGHT = 450;
+    private const BADGE_CAPTURE_HEIGHT = 447;
+
+    // border-radius: 4mm on a 70mm-wide card (see resources/views/public/badge.blade.php .badge)
+    private const BADGE_CORNER_RADIUS_RATIO = 4 / 70;
 
     public function generateSponsorPdf(SponsorRegistration $registration): string
     {
@@ -275,7 +278,60 @@ class RegistrationPdfService
             ));
         }
 
-        return $pngResponse->body();
+        return $this->applyBadgeCornerTransparency($pngResponse->body());
+    }
+
+    /**
+     * CloudConvert's Chrome renderer flattens the page onto an opaque background
+     * regardless of the CSS `background: transparent` on the badge markup, which
+     * leaves a solid-color square behind the badge's rounded corners. Punch the
+     * corners back out to real alpha transparency so only the card is visible.
+     */
+    private function applyBadgeCornerTransparency(string $pngBinary): string
+    {
+        if (! function_exists('imagecreatefromstring')) {
+            return $pngBinary;
+        }
+
+        $image = @imagecreatefromstring($pngBinary);
+        if ($image === false) {
+            return $pngBinary;
+        }
+
+        imagealphablending($image, false);
+        imagesavealpha($image, true);
+
+        $width = imagesx($image);
+        $height = imagesy($image);
+        $radius = max(1, (int) round($width * self::BADGE_CORNER_RADIUS_RATIO));
+        $transparent = imagecolorallocatealpha($image, 0, 0, 0, 127);
+
+        $corners = [
+            [0, 0, 1, 1],
+            [$width - $radius, 0, -1, 1],
+            [0, $height - $radius, 1, -1],
+            [$width - $radius, $height - $radius, -1, -1],
+        ];
+
+        foreach ($corners as [$originX, $originY, $dirX, $dirY]) {
+            $centerX = $dirX > 0 ? $originX + $radius : $originX;
+            $centerY = $dirY > 0 ? $originY + $radius : $originY;
+
+            for ($y = $originY; $y < $originY + $radius; $y++) {
+                for ($x = $originX; $x < $originX + $radius; $x++) {
+                    if ((($x - $centerX) ** 2 + ($y - $centerY) ** 2) > $radius ** 2) {
+                        imagesetpixel($image, $x, $y, $transparent);
+                    }
+                }
+            }
+        }
+
+        ob_start();
+        imagepng($image);
+        $output = ob_get_clean();
+        imagedestroy($image);
+
+        return $output === false ? $pngBinary : $output;
     }
 
     private function waitForCloudConvertExportTask(string $jobId, string $apiKey, string $exportTaskName): array
