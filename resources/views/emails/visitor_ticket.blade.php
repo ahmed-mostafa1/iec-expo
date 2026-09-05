@@ -1,6 +1,6 @@
 <p>Hello {{ $registration->full_name }},</p>
 
-<p>Thank you for registering as a visitor for IEC 360°. Your registration is confirmed.</p>
+<p>Thank you for registering as a visitor for Tujjar Expo 3rd edition. Your registration is confirmed.</p>
 
 <p><strong>Please keep this badge — you will need to present it at the entrance to be admitted to the expo.</strong></p>
 
@@ -10,7 +10,6 @@
              alt="Visitor badge" width="280">
     </p>
 @endif
-
 <p>Your registration details:</p>
 
 <ul>
