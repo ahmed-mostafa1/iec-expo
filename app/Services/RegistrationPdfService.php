@@ -19,10 +19,9 @@ class RegistrationPdfService
 {
     private const CLOUDCONVERT_ERROR_DETAIL_LIMIT = 1000;
 
+    private const BADGE_CAPTURE_WIDTH = 270;
 
-    private const BADGE_CAPTURE_WIDTH = 310;
-
-    private const BADGE_CAPTURE_HEIGHT = 490;
+    private const BADGE_CAPTURE_HEIGHT = 450;
 
     public function generateSponsorPdf(SponsorRegistration $registration): string
     {

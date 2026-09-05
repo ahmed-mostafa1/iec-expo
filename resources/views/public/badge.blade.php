@@ -193,7 +193,7 @@
             min-height: 0;
             display: block;
             background: transparent;
-            padding: 20px;
+            padding: 0;
         }
         @endif
     </style>
