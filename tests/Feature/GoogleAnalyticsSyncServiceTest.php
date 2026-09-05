@@ -182,7 +182,7 @@ class FakeAnalyticsDataClient implements AnalyticsDataClient
         if (in_array('pagePath', $dimensions, true)) {
             return [$this->dimensionRow([
                 'pagePath' => '/en',
-                'pageTitle' => 'IEC Expo',
+                'pageTitle' => 'Tujjar Expo',
             ], ['screenPageViews' => 90])];
         }
 

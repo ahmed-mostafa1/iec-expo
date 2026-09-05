@@ -2806,6 +2806,7 @@ src="https://www.facebook.com/tr?id=2930634037274791&ev=PageView&noscript=1"
             @endphp
             <section class="hero" id="hero">
                 <div class="container">
+                    <h1 class="section-title" style="text-align: center;">{{ $seoPage['h1'] ?? config('seo.site_name') }}</h1>
                     <div class="hero-grid">
                         <div class="hero-media">
                             <div class="hero-video-frame">
@@ -2853,12 +2854,12 @@ src="https://www.facebook.com/tr?id=2930634037274791&ev=PageView&noscript=1"
                             </div>
 
                         </div>
-                        <p class="goal-desc" style="padding: 2rem;" data-en="With unmatched uniqueness and excellence, the IEC EXPO returns for its third edition
+                        <p class="goal-desc" style="padding: 2rem;" data-en="With unmatched uniqueness and excellence, the Tujjar Expo returns for its third edition
 under the theme IEC 360°. It continues its journey as a comprehensive interactive
 platform that merges innovation, development, and networking—offering an exceptional
 experience that unites ambitious minds and industry leaders under one roof"
-                            data-ar="بتميز وتفرّد، يعود معرض IEC التجاري في نسخته الثالثة تحت شعار IEC 360° ليواصل مسيرته كمنصة تفاعلية شاملة تجمع بين الابتكار والتطوير والتواصل في تجربة استثنائية توحّد العقول الطموحة والقطاعات المختلفة تحت سقف واحد">
-                            With unmatched uniqueness and excellence, the IEC EXPO returns for its third
+                            data-ar="بتميز وتفرّد، يعود معرض تجار IEC360 التجاري في نسخته الثالثة تحت شعار IEC 360° ليواصل مسيرته كمنصة تفاعلية شاملة تجمع بين الابتكار والتطوير والتواصل في تجربة استثنائية توحّد العقول الطموحة والقطاعات المختلفة تحت سقف واحد">
+                            With unmatched uniqueness and excellence, the Tujjar Expo returns for its third
                             edition
                             under the theme IEC 360°. It continues its journey as a comprehensive
                             interactive
@@ -5284,7 +5285,7 @@ experience that unites ambitious minds and industry leaders under one roof"
 
             <section class="about" id="about">
                 <div class="container">
-                    <!-- <h2 class="section-title" data-en="About IEC 360&deg;" data-ar="عن معرض IEC 360&deg;"
+                    <!-- <h2 class="section-title" data-en="About IEC 360&deg;" data-ar="عن معرض تجار IEC360 360&deg;"
                     style="margin-bottom:20px; color:#fff; text-align: center;">About IEC 360&deg;</h2> -->
                     <div class="row-logo about-img">
                         <img src="{{ asset('img/about.png') }}" alt="About Us" style="text-align:center">
@@ -5586,8 +5587,8 @@ experience that unites ambitious minds and industry leaders under one roof"
                     </div>
                     @php
                     $organizerFallbackDesc = [
-                    'en' => __('Driving the strategic vision for IEC Expo.'),
-                    'ar' => __('يقود الرؤية الاستراتيجية لمعرض IEC.'),
+                    'en' => __('Driving the strategic vision for Tujjar Expo.'),
+                    'ar' => __('يقود الرؤية الاستراتيجية لمعرض تجار IEC360.'),
                     ];
                     $organizerVisitCopy = [
                     'en' => __('Visit Website'),
