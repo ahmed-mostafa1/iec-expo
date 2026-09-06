@@ -59,16 +59,16 @@
             flex-direction: column;
             align-items: center;
             justify-content: flex-start;
-            padding: 5mm 5mm 3mm;
+            padding: 6mm 5mm 3mm;
             text-align: center;
         }
 
         .badge-logo {
             display: block;
-            width: 39.86mm;
-            height: 21mm;
+            width: 35mm;
+            height: 18.44mm;
             object-fit: contain;
-            margin-bottom: 3mm;
+            margin-bottom: 4mm;
         }
 
         .badge-name {
@@ -96,12 +96,12 @@
             color: rgba(248, 249, 250, 0.75);
             max-width: 100%;
             overflow-wrap: break-word;
-            margin-bottom: 4mm;
+            margin-bottom: 5mm;
         }
 
         .badge-qr-wrap {
             margin-top: auto;
-            margin-bottom: 3mm;
+            margin-bottom: 3.5mm;
             padding: 1.5mm;
             background: #fff;
             border-radius: 2.5mm;
@@ -129,7 +129,7 @@
 
         .badge-footer {
             width: 100%;
-            margin-top: 2mm;
+            margin-top: 3mm;
             padding-top: 1mm;
             border-top: 1px solid rgba(248, 249, 250, 0.18);
             display: flex;
@@ -142,7 +142,7 @@
             font-weight: 600;
             letter-spacing: 0.18em;
             color: rgba(248, 249, 250, 0.45);
-            margin-bottom: 1.5mm;
+            margin-bottom: 2mm;
         }
 
         .badge-footer-brand {
@@ -155,8 +155,8 @@
 
         .badge-footer-brand img {
             display: block;
-            width: 56mm;
-            height: 21mm;
+            width: 35mm;
+            height: 18.44mm;
             object-fit: contain;
         }
 
@@ -165,7 +165,7 @@
             font-weight: 600;
             letter-spacing: 0.03em;
             color: #f8f9fa;
-            margin-bottom: 1.5mm;
+            margin-bottom: 2mm;
         }
 
         @media print {
