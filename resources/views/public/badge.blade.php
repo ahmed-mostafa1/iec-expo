@@ -101,7 +101,7 @@
 
         .badge-qr-wrap {
             margin-top: auto;
-            margin-bottom: 5mm;
+            margin-bottom: 4mm;
             padding: 1.5mm;
             background: #fff;
             border-radius: 2.5mm;
@@ -129,8 +129,8 @@
 
         .badge-footer {
             width: 100%;
-            margin-top: 4mm;
-            padding-top: 4mm;
+            margin-top: 1mm;
+            padding-top: 1mm;
             border-top: 1px solid rgba(248, 249, 250, 0.18);
             display: flex;
             flex-direction: column;
@@ -155,8 +155,8 @@
 
         .badge-footer-brand img {
             display: block;
-            width: 30mm;
-            height: auto;
+            width: 35mm;
+            height: 18.44mm;
             object-fit: contain;
         }
 

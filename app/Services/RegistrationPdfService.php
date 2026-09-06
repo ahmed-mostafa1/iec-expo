@@ -312,10 +312,13 @@ class RegistrationPdfService
     }
 
     /**
-     * CloudConvert's Chrome renderer flattens the page onto an opaque background
-     * regardless of the CSS `background: transparent` on the badge markup, which
-     * leaves a solid-color square behind the badge's rounded corners. Punch the
-     * corners back out to real alpha transparency so only the card is visible.
+     * CloudConvert's Chrome renderer flattens the page onto an opaque
+     * near-white background regardless of the CSS `background: transparent`
+     * on the badge markup, and its viewport doesn't always shrink to fit the
+     * card exactly — both leave a solid margin around and behind the card's
+     * rounded corners. Auto-crop that margin away (whatever its size, on
+     * whichever side it lands) and punch the rounded corners back out to
+     * real alpha transparency so only the card itself remains.
      */
     private function applyBadgeCornerTransparency(string $pngBinary): string
     {
@@ -330,6 +333,24 @@ class RegistrationPdfService
 
         imagealphablending($image, false);
         imagesavealpha($image, true);
+
+        $bounds = $this->detectBadgeBounds($image);
+        if ($bounds !== null) {
+            [$left, $top, $right, $bottom] = $bounds;
+            $cropped = imagecrop($image, [
+                'x' => $left,
+                'y' => $top,
+                'width' => $right - $left + 1,
+                'height' => $bottom - $top + 1,
+            ]);
+
+            if ($cropped !== false) {
+                imagedestroy($image);
+                $image = $cropped;
+                imagealphablending($image, false);
+                imagesavealpha($image, true);
+            }
+        }
 
         $width = imagesx($image);
         $height = imagesy($image);
@@ -362,6 +383,77 @@ class RegistrationPdfService
         imagedestroy($image);
 
         return $output === false ? $pngBinary : $output;
+    }
+
+    /**
+     * Tight bounding box of the actual card pixels, discarding any
+     * near-white or already-transparent letterbox margin around it.
+     *
+     * @return array{0:int,1:int,2:int,3:int}|null [left, top, right, bottom]
+     */
+    private function detectBadgeBounds(\GdImage $image): ?array
+    {
+        $width = imagesx($image);
+        $height = imagesy($image);
+
+        $isBackground = function (int $x, int $y) use ($image): bool {
+            $color = imagecolorat($image, $x, $y);
+            if ((($color >> 24) & 0x7F) >= 100) {
+                return true;
+            }
+
+            $r = ($color >> 16) & 0xFF;
+            $g = ($color >> 8) & 0xFF;
+            $b = $color & 0xFF;
+
+            return $r >= 245 && $g >= 245 && $b >= 245;
+        };
+
+        $rowIsBackground = function (int $y) use ($width, $isBackground): bool {
+            for ($x = 0; $x < $width; $x++) {
+                if (! $isBackground($x, $y)) {
+                    return false;
+                }
+            }
+
+            return true;
+        };
+
+        $colIsBackground = function (int $x) use ($height, $isBackground): bool {
+            for ($y = 0; $y < $height; $y++) {
+                if (! $isBackground($x, $y)) {
+                    return false;
+                }
+            }
+
+            return true;
+        };
+
+        $top = 0;
+        while ($top < $height && $rowIsBackground($top)) {
+            $top++;
+        }
+
+        $bottom = $height - 1;
+        while ($bottom > $top && $rowIsBackground($bottom)) {
+            $bottom--;
+        }
+
+        $left = 0;
+        while ($left < $width && $colIsBackground($left)) {
+            $left++;
+        }
+
+        $right = $width - 1;
+        while ($right > $left && $colIsBackground($right)) {
+            $right--;
+        }
+
+        if ($top >= $bottom || $left >= $right) {
+            return null;
+        }
+
+        return [$left, $top, $right, $bottom];
     }
 
     private function waitForCloudConvertExportTask(string $jobId, string $apiKey, string $exportTaskName): array
