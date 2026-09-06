@@ -4,7 +4,9 @@ namespace App\Providers;
 
 use App\Services\Analytics\AnalyticsDataClient;
 use App\Services\Analytics\GoogleAnalyticsDataClient;
+use App\Support\RegistrationTypes;
 use Illuminate\Cache\RateLimiting\Limit;
+use Illuminate\Database\Eloquent\Relations\Relation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\ServiceProvider;
@@ -24,6 +26,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        Relation::enforceMorphMap(RegistrationTypes::TYPE_MODELS);
+
         RateLimiter::for('analytics', function (Request $request): Limit {
             return Limit::perMinute(60)->by($request->ip());
         });

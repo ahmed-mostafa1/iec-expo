@@ -88,6 +88,16 @@
                 <a href="{{ route('admin.organizers.index') }}" class="block rounded-lg px-2 py-1.5 hover:bg-emerald-50 text-gray-700">
                     {{ __('Organizers') }}
                 </a>
+
+                <div class="mt-4 text-[10px] uppercase tracking-wide text-gray-400 ps-2">
+                    {{ __('Portal') }}
+                </div>
+                <a href="{{ route('admin.employees.index') }}" class="block rounded-lg px-2 py-1.5 hover:bg-emerald-50 text-gray-700">
+                    {{ __('Employees') }}
+                </a>
+                <a href="{{ route('admin.check-ins.index') }}" class="block rounded-lg px-2 py-1.5 hover:bg-emerald-50 text-gray-700">
+                    {{ __('Check-ins') }}
+                </a>
             </nav>
 
             <form method="POST" action="{{ route('admin.logout') }}" class="mt-4">

@@ -14,6 +14,10 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'setlocale' => \App\Http\Middleware\SetLocale::class,
         ]);
+
+        $middleware->redirectGuestsTo(fn ($request) => $request->is('portal/*')
+            ? route('portal.login')
+            : route('login'));
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         //

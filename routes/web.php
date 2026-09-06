@@ -1,8 +1,10 @@
 <?php
 
 use App\Http\Controllers\Admin\AboutContentController;
+use App\Http\Controllers\Admin\CheckInController;
 use App\Http\Controllers\Admin\ContactInfoController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\EmployeeController;
 use App\Http\Controllers\Admin\HallSpaceBookingController;
 use App\Http\Controllers\Admin\HeroMediaController;
 use App\Http\Controllers\Admin\IconPlusQuartetRegistrationController as AdminIconPlusQuartetController;
@@ -16,6 +18,8 @@ use App\Http\Controllers\Admin\PublicSponsorController;
 use App\Http\Controllers\Admin\SponsorRegistrationController as AdminSponsorController;
 use App\Http\Controllers\Admin\VisitorRegistrationController as AdminVisitorController;
 use App\Http\Controllers\DocumentController;
+use App\Http\Controllers\Portal\AuthController as PortalAuthController;
+use App\Http\Controllers\Portal\ScanController;
 use App\Http\Controllers\Public\AnalyticsController;
 use App\Http\Controllers\Public\BadgeController;
 use App\Http\Controllers\Public\ContactController;
@@ -336,6 +340,10 @@ Route::prefix('admin')
         Route::resource('public-sponsors', PublicSponsorController::class);
         Route::resource('participants', ParticipantController::class);
         Route::resource('organizers', OrganizerController::class);
+        Route::resource('employees', EmployeeController::class)->except(['show']);
+
+        Route::get('/check-ins', [CheckInController::class, 'index'])->name('check-ins.index');
+        Route::get('/check-ins/export', [CheckInController::class, 'export'])->name('check-ins.export');
 
         Route::match(['get', 'post'], 'sections/hero', [LandingSectionController::class, 'hero'])
             ->name('sections.hero');
@@ -355,6 +363,23 @@ Route::prefix('admin')
 
         // Hero media
         Route::resource('hero-media', HeroMediaController::class)->except(['show']);
+    });
+
+// Portal (Employee) Routes
+Route::prefix('portal')
+    ->name('portal.')
+    ->group(function () {
+        Route::middleware('guest:employee')->group(function () {
+            Route::get('/login', [PortalAuthController::class, 'showLogin'])->name('login');
+            Route::post('/login', [PortalAuthController::class, 'login'])->name('login.submit');
+        });
+
+        Route::middleware('auth:employee')->group(function () {
+            Route::post('/logout', [PortalAuthController::class, 'logout'])->name('logout');
+
+            Route::get('/scan', [ScanController::class, 'index'])->name('scan');
+            Route::post('/scan', [ScanController::class, 'store'])->name('scan.store');
+        });
     });
 
 // ...
