@@ -26,6 +26,12 @@ class RegistrationPdfService
     // border-radius: 4mm on a 70mm-wide card (see resources/views/public/badge.blade.php .badge)
     private const BADGE_CORNER_RADIUS_RATIO = 4 / 70;
 
+    // Chrome anti-aliases the rendered corner against the (opaque, near-white)
+    // page background before we ever see the PNG, so a mask cut at the exact
+    // CSS radius still leaves a faint light fringe just inside the arc. Cut a
+    // deliberately larger circle so that fringe is removed along with it.
+    private const BADGE_CORNER_MASK_MULTIPLIER = 1.4;
+
     public function generateSponsorPdf(SponsorRegistration $registration): string
     {
         $path = "registrations/sponsors/{$registration->id}.pdf";
@@ -354,7 +360,7 @@ class RegistrationPdfService
 
         $width = imagesx($image);
         $height = imagesy($image);
-        $radius = max(1, (int) round($width * self::BADGE_CORNER_RADIUS_RATIO));
+        $radius = max(1, (int) round($width * self::BADGE_CORNER_RADIUS_RATIO * self::BADGE_CORNER_MASK_MULTIPLIER));
         $transparent = imagecolorallocatealpha($image, 0, 0, 0, 127);
 
         $corners = [
@@ -406,7 +412,7 @@ class RegistrationPdfService
             $g = ($color >> 8) & 0xFF;
             $b = $color & 0xFF;
 
-            return $r >= 245 && $g >= 245 && $b >= 245;
+            return $r >= 235 && $g >= 235 && $b >= 235;
         };
 
         $rowIsBackground = function (int $y) use ($width, $isBackground): bool {
