@@ -65,8 +65,8 @@
 
         .badge-logo {
             display: block;
-            height: 17mm;
-            max-width: 58mm;
+            width: 30mm;
+            height: auto;
             object-fit: contain;
             margin-bottom: 4mm;
         }

@@ -7,7 +7,7 @@
 @if($badgeCardPng)
     <p>
         <img src="{{ $message->embedData($badgeCardPng, 'icon-quartet-badge.png', 'image/png') }}"
-             alt="ICON Quartet badge" width="280">
+             alt="ICON Quartet badge" width="560">
     </p>
 @endif
 <p>Your registration details:</p>
