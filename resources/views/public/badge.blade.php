@@ -59,16 +59,16 @@
             flex-direction: column;
             align-items: center;
             justify-content: flex-start;
-            padding: 6mm 5mm 3mm;
+            padding: 4mm 5mm 1mm;
             text-align: center;
         }
 
         .badge-logo {
             display: block;
-            width: 35mm;
-            height: 16.72mm;
+            width: 61mm;
+            height: 31.72mm;
             object-fit: contain;
-            margin-bottom: 4mm;
+            margin-bottom: 3mm;
         }
 
         .badge-name {
@@ -83,7 +83,7 @@
         .badge-divider {
             width: 20mm;
             height: 2px;
-            margin: 1.5mm 0;
+            margin: 1mm 0;
             background: linear-gradient(90deg, transparent, #9803bd, #6024c1, transparent);
             border-radius: 2px;
         }
@@ -96,13 +96,13 @@
             color: rgba(248, 249, 250, 0.75);
             max-width: 100%;
             overflow-wrap: break-word;
-            margin-bottom: 5mm;
+            margin-bottom: 3mm;
         }
 
         .badge-qr-wrap {
             margin-top: auto;
-            margin-bottom: 3.5mm;
-            padding: 1.5mm;
+            margin-bottom: 3mm;
+            padding: 1mm;
             background: #fff;
             border-radius: 2.5mm;
             box-shadow: 0 0 0 1.5px #9803bd, 0 0 18px rgba(152, 3, 189, 0.45);
@@ -117,7 +117,7 @@
 
         .badge-type-pill {
             display: inline-block;
-            padding: 1.8mm 8mm;
+            padding: 1.2mm 8mm;
             border-radius: 999px;
             background: linear-gradient(90deg, #9803bd, #6024c1);
             font-size: 8pt;
@@ -129,7 +129,7 @@
 
         .badge-footer {
             width: 100%;
-            margin-top: 3mm;
+            margin-top: 0.5mm;
             padding-top: 1mm;
             border-top: 1px solid rgba(248, 249, 250, 0.18);
             display: flex;
@@ -142,14 +142,14 @@
             font-weight: 600;
             letter-spacing: 0.18em;
             color: rgba(248, 249, 250, 0.45);
-            margin-bottom: 2mm;
+            margin-bottom: 1mm;
         }
 
         .badge-footer-brand {
             display: inline-flex;
             flex-direction: column;
             align-items: center;
-            gap: 1.8mm;
+            gap: 1mm;
             text-decoration: none;
         }
 
@@ -165,7 +165,7 @@
             font-weight: 600;
             letter-spacing: 0.03em;
             color: #f8f9fa;
-            margin-bottom: 2mm;
+            margin-bottom: 1mm;
         }
 
         @media print {
