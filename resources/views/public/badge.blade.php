@@ -65,8 +65,9 @@
 
         .badge-logo {
             display: block;
-            width: 35mm;
-            height: auto;
+            width: auto;
+            height: 18.44mm;
+            max-width: 55mm;
             object-fit: contain;
             margin-bottom: 4mm;
         }
@@ -96,12 +97,12 @@
             color: rgba(248, 249, 250, 0.75);
             max-width: 100%;
             overflow-wrap: break-word;
-            margin-bottom: 6mm;
+            margin-bottom: 5mm;
         }
 
         .badge-qr-wrap {
             margin-top: auto;
-            margin-bottom: 4mm;
+            margin-bottom: 3.5mm;
             padding: 1.5mm;
             background: #fff;
             border-radius: 2.5mm;
@@ -129,7 +130,7 @@
 
         .badge-footer {
             width: 100%;
-            margin-top: 1mm;
+            margin-top: 3mm;
             padding-top: 1mm;
             border-top: 1px solid rgba(248, 249, 250, 0.18);
             display: flex;
@@ -165,6 +166,7 @@
             font-weight: 600;
             letter-spacing: 0.03em;
             color: #f8f9fa;
+            margin-bottom: 2mm;
         }
 
         @media print {
