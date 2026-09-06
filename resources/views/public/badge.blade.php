@@ -59,13 +59,13 @@
             flex-direction: column;
             align-items: center;
             justify-content: flex-start;
-            padding: 6mm 5mm 9mm;
+            padding: 6mm 5mm 3mm;
             text-align: center;
         }
 
         .badge-logo {
             display: block;
-            width: 30mm;
+            width: 35mm;
             height: auto;
             object-fit: contain;
             margin-bottom: 4mm;
