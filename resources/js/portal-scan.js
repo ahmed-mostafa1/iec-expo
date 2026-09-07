@@ -5,7 +5,7 @@ const canvas = document.getElementById('scan-canvas');
 const ctx = canvas.getContext('2d', { willReadFrequently: true });
 const statusEl = document.getElementById('scan-status');
 const cameraErrorEl = document.getElementById('camera-error');
-const scanUrl = document.body.dataset.scanUrl;
+const scanUrl = '/iec360/portal/scan';
 
 let scanning = true;
 

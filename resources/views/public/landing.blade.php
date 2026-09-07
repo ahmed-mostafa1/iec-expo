@@ -6183,7 +6183,7 @@ experience that unites ambitious minds and industry leaders under one roof"
             params.set('locale', currentLocale);
         }
         params.set('target', bookingTarget);
-        window.open((window.APP_BASE_PATH || '') + '/iec360/hall-design?' + params.toString(), '_blank');
+        window.open((w2indow.APP_BASE_PATH || '') + '/iec360/hall-design?' + params.toString(), '_blank');
     }
 
 
