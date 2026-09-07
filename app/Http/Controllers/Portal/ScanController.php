@@ -6,8 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\CheckIn;
 use App\Support\RegistrationTypes;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
-use Symfony\Component\Routing\Exception\ResourceNotFoundException;
+use Illuminate\Support\Facades\URL;
 
 class ScanController extends Controller
 {
@@ -22,22 +21,38 @@ class ScanController extends Controller
             'url' => ['required', 'string'],
         ]);
 
-        $signedRequest = Request::create($data['url']);
-
-        try {
-            $matched = Route::getRoutes()->match($signedRequest);
-        } catch (ResourceNotFoundException) {
+        // Scanned URLs are validated by recomputing the expected signed URL
+        // ourselves (via the same `route()`/APP_URL config the app already
+        // trusts) rather than replaying the raw string through the router as
+        // a synthetic Request — that approach breaks whenever the app is
+        // served from a subdirectory (e.g. /iec360), because a manually
+        // built Request has no way to know that prefix should be stripped
+        // before route matching, and every scan fails as "invalid QR code".
+        if (! preg_match('#/badge/([a-z0-9-]+)/(\d+)(?:[/?].*)?$#i', (string) $data['url'], $matches)) {
             return response()->json(['error' => __('Invalid QR code.')], 422);
         }
 
-        if ($matched->getName() !== 'public.badge.show' || ! $signedRequest->hasValidSignature()) {
-            return response()->json(['error' => __('Invalid or expired QR code.')], 422);
-        }
-
-        $type = $matched->parameter('type');
-        $registrationId = $matched->parameter('registration');
+        $type = $matches[1];
+        $registrationId = $matches[2];
 
         abort_unless(array_key_exists($type, RegistrationTypes::TYPE_MODELS), 422);
+
+        $expectedSignature = [];
+        parse_str((string) parse_url(
+            URL::signedRoute('public.badge.show', ['type' => $type, 'registration' => $registrationId]),
+            PHP_URL_QUERY
+        ), $expectedSignature);
+
+        $submittedSignature = [];
+        parse_str((string) parse_url($data['url'], PHP_URL_QUERY), $submittedSignature);
+
+        if (
+            empty($submittedSignature['signature'])
+            || empty($expectedSignature['signature'])
+            || ! hash_equals($expectedSignature['signature'], $submittedSignature['signature'])
+        ) {
+            return response()->json(['error' => __('Invalid or expired QR code.')], 422);
+        }
 
         $registrant = RegistrationTypes::TYPE_MODELS[$type]::find($registrationId);
 

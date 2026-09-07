@@ -68,7 +68,7 @@
             width: 61mm;
             height: 31.72mm;
             object-fit: contain;
-            margin-bottom: 3mm;
+            margin-bottom: 0;
         }
 
         .badge-name {
@@ -125,6 +125,7 @@
             letter-spacing: 0.14em;
             color: #fff;
             box-shadow: 0 4px 14px rgba(152, 3, 189, 0.4);
+                margin-bottom: 1mm;
         }
 
         .badge-footer {
