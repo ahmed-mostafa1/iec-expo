@@ -5,6 +5,7 @@ const canvas = document.getElementById('scan-canvas');
 const ctx = canvas.getContext('2d', { willReadFrequently: true });
 const statusEl = document.getElementById('scan-status');
 const cameraErrorEl = document.getElementById('camera-error');
+const scanUrl = document.body.dataset.scanUrl;
 
 let scanning = true;
 
@@ -46,7 +47,7 @@ async function submitScan(url, confirm) {
     let data;
 
     try {
-        res = await fetch('/portal/scan', {
+        res = await fetch(scanUrl, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

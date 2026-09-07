@@ -16,7 +16,7 @@
     </style>
 </head>
 
-<body class="bg-black">
+<body class="bg-black" data-scan-url="{{ route('portal.scan.store') }}">
     <div class="relative min-h-screen flex flex-col">
         <header class="flex items-center justify-between px-4 py-2 bg-gray-900 text-white text-sm">
             <span>{{ __('Scan badge') }}</span>
