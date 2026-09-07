@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\CheckIn;
 use App\Support\RegistrationTypes;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\URL;
 
 class ScanController extends Controller
@@ -29,19 +30,29 @@ class ScanController extends Controller
         // built Request has no way to know that prefix should be stripped
         // before route matching, and every scan fails as "invalid QR code".
         if (! preg_match('#/badge/([a-z0-9-]+)/(\d+)(?:[/?].*)?$#i', (string) $data['url'], $matches)) {
+            Log::warning('portal.scan: URL did not match the expected /badge/{type}/{id} pattern.', [
+                'url' => $data['url'],
+            ]);
+
             return response()->json(['error' => __('Invalid QR code.')], 422);
         }
 
         $type = $matches[1];
         $registrationId = $matches[2];
 
-        abort_unless(array_key_exists($type, RegistrationTypes::TYPE_MODELS), 422);
+        if (! array_key_exists($type, RegistrationTypes::TYPE_MODELS)) {
+            Log::warning('portal.scan: unknown registration type in scanned URL.', [
+                'url' => $data['url'],
+                'type' => $type,
+            ]);
+
+            return response()->json(['error' => __('Invalid QR code.')], 422);
+        }
+
+        $expectedUrl = URL::signedRoute('public.badge.show', ['type' => $type, 'registration' => $registrationId]);
 
         $expectedSignature = [];
-        parse_str((string) parse_url(
-            URL::signedRoute('public.badge.show', ['type' => $type, 'registration' => $registrationId]),
-            PHP_URL_QUERY
-        ), $expectedSignature);
+        parse_str((string) parse_url($expectedUrl, PHP_URL_QUERY), $expectedSignature);
 
         $submittedSignature = [];
         parse_str((string) parse_url($data['url'], PHP_URL_QUERY), $submittedSignature);
@@ -51,12 +62,23 @@ class ScanController extends Controller
             || empty($expectedSignature['signature'])
             || ! hash_equals($expectedSignature['signature'], $submittedSignature['signature'])
         ) {
+            Log::warning('portal.scan: signature mismatch.', [
+                'submitted_url' => $data['url'],
+                'expected_url' => $expectedUrl,
+                'app_url' => config('app.url'),
+            ]);
+
             return response()->json(['error' => __('Invalid or expired QR code.')], 422);
         }
 
         $registrant = RegistrationTypes::TYPE_MODELS[$type]::find($registrationId);
 
         if (! $registrant) {
+            Log::warning('portal.scan: registrant not found.', [
+                'type' => $type,
+                'registration_id' => $registrationId,
+            ]);
+
             return response()->json(['error' => __('Registration not found.')], 404);
         }
 

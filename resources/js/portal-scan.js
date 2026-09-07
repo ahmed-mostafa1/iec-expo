@@ -42,19 +42,40 @@ function tick() {
 }
 
 async function submitScan(url, confirm) {
-    const res = await fetch('/portal/scan', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': csrfToken(),
-            Accept: 'application/json',
-        },
-        body: JSON.stringify({ url, confirm }),
-    });
-    const data = await res.json();
+    let res;
+    let data;
+
+    try {
+        res = await fetch('/portal/scan', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': csrfToken(),
+                Accept: 'application/json',
+            },
+            body: JSON.stringify({ url, confirm }),
+        });
+    } catch (err) {
+        showCard('error', `Network error: ${err.message}`);
+        resumeAfterDelay();
+        return;
+    }
+
+    const rawBody = await res.text();
+    try {
+        data = JSON.parse(rawBody);
+    } catch {
+        // The server returned something that isn't JSON (an HTML error page,
+        // a redirect to the login screen, etc.) — surface the HTTP status and
+        // a snippet of the body instead of a silent/generic failure so the
+        // real cause is visible on the device during a live scan.
+        showCard('error', `Scan failed (HTTP ${res.status}). ${rawBody.slice(0, 120)}`);
+        resumeAfterDelay();
+        return;
+    }
 
     if (!res.ok) {
-        showCard('error', data.error || 'Scan failed.');
+        showCard('error', data.error || data.message || `Scan failed (HTTP ${res.status}).`);
         resumeAfterDelay();
         return;
     }
