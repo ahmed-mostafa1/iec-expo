@@ -13,7 +13,7 @@ class PublicSponsorController extends Controller
         'strategic' => 'Strategic Sponsor',
         'diamond' => 'Diamond Sponsor',
         'innovation-entrepreneurship' => 'Innovation & Entrepreneurship Partner',
-        'government' => 'Government Sponsor',
+        'government' => 'The government strategic partner',
         'marketing' => 'Marketing Sponsor',
         'media' => 'Marketing Rep',
         'technology' => 'Technology Sponsor',

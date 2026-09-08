@@ -661,7 +661,7 @@ class RegistrationPdfService
             'strategic' => 'الاستراتيجي',
             'diamond' => 'الماسي',
             'innovation-entrepreneurship' => 'شريك الابتكار وريادة الاعمال',
-            'government' => 'الحكومي',
+            'government' => 'الشريك الاستراتيجي الحكومي',
             'marketing' => 'التسويقي',
             'media' => 'وكيل التسويق',
             'technology' => 'التقني',

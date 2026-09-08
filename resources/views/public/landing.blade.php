@@ -3245,7 +3245,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                                 'strategic' => ['en' => 'Strategic', 'ar' => 'الاستراتيجي'],
                                 'diamond' => ['en' => 'Diamond', 'ar' => 'الماسي'],
                                 'innovation-entrepreneurship' => ['en' => 'Innovation & Entrepreneurship Partner', 'ar' => 'شريك الابتكار وريادة الاعمال'],
-                                'government' => ['en' => 'Government', 'ar' => 'الحكومي'],
+                                'government' => ['en' => 'The government strategic partner', 'ar' => 'الشريك الاستراتيجي الحكومي'],
                                 'marketing' => ['en' => 'Marketing', 'ar' => 'التسويقي'],
                                 'media' => ['en' => 'Marketing Rep', 'ar' => 'وكيل التسويق'],
                                 'technology' => ['en' => 'Technology', 'ar' => 'التكنولوجي'],
