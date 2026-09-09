@@ -72,6 +72,7 @@
                             @if($checkIn->registrant)
                                 <div class="font-medium text-gray-900">{{ $checkIn->registrant->full_name }}</div>
                                 <div class="text-[11px] text-gray-500">{{ $checkIn->registrant->email }}</div>
+                                <div class="text-[11px] text-gray-500">{{ $checkIn->registrant->phone }}</div>
                                 <div class="text-[11px] text-gray-500">
                                     {{ $checkIn->registrant->company_name ?? $checkIn->registrant->organization ?? '' }}
                                 </div>
