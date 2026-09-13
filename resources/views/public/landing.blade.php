@@ -1699,6 +1699,29 @@ $websiteSchema = [
         grid-template-columns: repeat(auto-fit, minmax(300px, 250px));
     }
 
+    #influencers .sponsor-tier-grid.tier-strategic {
+        max-width: none;
+        grid-template-columns: 1fr;
+    }
+
+    @media (min-width: 640px) {
+        #influencers .sponsor-tier-grid.tier-strategic {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (min-width: 1024px) {
+        #influencers .sponsor-tier-grid.tier-strategic {
+            grid-template-columns: repeat(3, 1fr);
+        }
+    }
+
+    @media (min-width: 1280px) {
+        #influencers .sponsor-tier-grid.tier-strategic {
+            grid-template-columns: repeat(4, 1fr);
+        }
+    }
+
     .sponsor-tier-grid.tier-gold,
     .sponsor-tier-grid.tier-business {
         grid-template-columns: repeat(auto-fit, minmax(300px, 250px));
@@ -1881,6 +1904,10 @@ $websiteSchema = [
         height: auto;
         padding-bottom: 0.75rem;
         border-color: rgba(253, 230, 138, 0.6);
+    }
+
+    #government-entities .sponsor-card.sponsor-influencer {
+        padding-bottom: 0;
     }
 
     .sponsor-card.main:hover {
@@ -3251,6 +3278,7 @@ experience that unites ambitious minds and industry leaders under one roof"
                                 'technology' => ['en' => 'Technology', 'ar' => 'التكنولوجي'],
                                 'safety-security' => ['en' => 'Safety & Security', 'ar' => 'السلامة والأمن'],
                                 'gold' => ['en' => 'Gold', 'ar' => 'الذهبي'],
+                                'government-entities' => ['en' => 'Government Entities', 'ar' => 'الجهات الحكومية'],
                                 'other' => ['en' => 'Other', 'ar' => 'أخرى'],
                                 ];
 
@@ -5369,6 +5397,30 @@ experience that unites ambitious minds and industry leaders under one roof"
                             </div>
                             <div class="sponsor-card-footer" data-en="{{ $influencer->getLocalizedName('en') }}"
                                 data-ar="{{ $influencer->getLocalizedName('ar') }}">{{ $influencer->getLocalizedName($locale) }}</div>
+                        </article>
+                        @endforeach
+                    </div>
+                </div>
+            </section>
+            @endif
+
+            <!-- Government Entities Section -->
+            @if(!empty($sponsorGroups['government-entities']) && $sponsorGroups['government-entities']['sponsors']->isNotEmpty())
+            <section class="sponsors" id="government-entities">
+                <div class="container">
+                    <div class="section-header" data-animate>
+                        <h2 class="section-title" data-en="{{ $sponsorGroups['government-entities']['title']['en'] }}"
+                            data-ar="{{ $sponsorGroups['government-entities']['title']['ar'] }}">
+                            {{ strtoupper($sponsorGroups['government-entities']['title']['en']) }}
+                        </h2>
+                    </div>
+                    <div class="sponsor-tier-grid tier-strategic">
+                        @foreach($sponsorGroups['government-entities']['sponsors'] as $entity)
+                        <article class="sponsor-card sponsor-influencer" data-animate>
+                            <div class="sponsor-logo">
+                                <img src="{{ $entity->logo_path ? asset('storage/' . $entity->logo_path) : asset('img/placeholder-img.png') }}"
+                                    alt="{{ $entity->getLocalizedName($locale) }}">
+                            </div>
                         </article>
                         @endforeach
                     </div>

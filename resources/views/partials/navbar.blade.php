@@ -13,7 +13,7 @@
         'ed' => [route('public.ed', ['locale' => $locale]), 'النسخ السابقة من المعرض', 'Previous Editions of IEC'],
         'register' => [$landing . '#register', 'التسجيل', 'Register'],
         'about' => [$landing . '#about', 'عن المعرض', 'About'],
-        'sponsors' => [$landing . '#sponsors', 'الراعي', 'Sponsor'],
+        'sponsors' => [$landing . '#influencers', 'الراعي', 'Sponsor'],
         'participants' => [$landing . '#participants', 'الأيكون', 'Icon'],
         'organizers' => [$landing . '#organizers', 'الشركة المالكة', 'Owned by'],
         'contact' => [$landing . '#contact', 'تواصل معنا', 'Contact'],

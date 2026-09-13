@@ -21,6 +21,7 @@ class PublicSponsorController extends Controller
         'gold' => 'Gold Sponsor',
         'coffee-lounge' => 'Coffee Lounge',
         'influencers' => 'Media Sponsors & Influencers',
+        'government-entities' => 'Government Entities',
         'other' => 'Other Sponsor',
     ];
 

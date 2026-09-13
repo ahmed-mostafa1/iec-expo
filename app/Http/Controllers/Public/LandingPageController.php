@@ -102,6 +102,7 @@ class LandingPageController extends Controller
             'gold' => ['en' => 'Gold', 'ar' => 'الذهبي'],
             'coffee-lounge' => ['en' => 'Coffee Lounge', 'ar' => 'كوفي لاونج'],
             'influencers' => ['en' => 'Media Sponsors & Influencers', 'ar' => 'الرعاة الإعلاميين والمؤثرين'],
+            'government-entities' => ['en' => 'Government Entities', 'ar' => 'الجهات الحكومية'],
             'other' => ['en' => 'Sponsors', 'ar' => 'الرعاة'],
         ];
 
