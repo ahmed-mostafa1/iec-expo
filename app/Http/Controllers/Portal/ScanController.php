@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Portal;
 use App\Http\Controllers\Controller;
 use App\Models\CheckIn;
 use App\Support\RegistrationTypes;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\URL;
@@ -82,13 +84,23 @@ class ScanController extends Controller
             return response()->json(['error' => __('Registration not found.')], 404);
         }
 
+        return static::checkIn($type, $registrant, $request->user('employee')->id, $request->boolean('confirm'));
+    }
+
+    /**
+     * Shared by the QR-scan flow and the manual check-in flow: records the
+     * CheckIn (or returns a duplicate warning) and shapes the same JSON both
+     * callers' front-end code already knows how to render.
+     */
+    public static function checkIn(string $type, Model $registrant, int $employeeId, bool $confirm): JsonResponse
+    {
         $existing = CheckIn::where('registrant_type', $type)
-            ->where('registrant_id', $registrationId)
+            ->where('registrant_id', $registrant->id)
             ->with('employee')
             ->latest('scanned_at')
             ->first();
 
-        if ($existing && ! $request->boolean('confirm')) {
+        if ($existing && ! $confirm) {
             return response()->json([
                 'duplicate' => true,
                 'employee' => $existing->employee->name,
@@ -98,8 +110,8 @@ class ScanController extends Controller
 
         CheckIn::create([
             'registrant_type' => $type,
-            'registrant_id' => $registrationId,
-            'employee_id' => $request->user('employee')->id,
+            'registrant_id' => $registrant->id,
+            'employee_id' => $employeeId,
             'scanned_at' => now(),
         ]);
 

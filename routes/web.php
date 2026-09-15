@@ -19,6 +19,7 @@ use App\Http\Controllers\Admin\SponsorRegistrationController as AdminSponsorCont
 use App\Http\Controllers\Admin\VisitorRegistrationController as AdminVisitorController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\Portal\AuthController as PortalAuthController;
+use App\Http\Controllers\Portal\ManualCheckInController;
 use App\Http\Controllers\Portal\ScanController;
 use App\Http\Controllers\Public\AnalyticsController;
 use App\Http\Controllers\Public\BadgeController;
@@ -379,6 +380,10 @@ Route::prefix('portal')
 
             Route::get('/scan', [ScanController::class, 'index'])->name('scan');
             Route::post('/scan', [ScanController::class, 'store'])->name('scan.store');
+
+            Route::get('/checkin/search', [ManualCheckInController::class, 'search'])->name('checkin.search');
+            Route::post('/checkin/register', [ManualCheckInController::class, 'register'])->name('checkin.register');
+            Route::post('/checkin/{type}/{id}', [ManualCheckInController::class, 'checkIn'])->whereNumber('id')->name('checkin.store');
         });
     });
 
