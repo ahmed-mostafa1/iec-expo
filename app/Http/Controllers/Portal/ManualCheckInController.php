@@ -13,6 +13,11 @@ class ManualCheckInController extends \App\Http\Controllers\Controller
 {
     use HasSaudiPhoneValidation;
 
+    public function index()
+    {
+        return view('portal.checkin');
+    }
+
     public function search(Request $request)
     {
         $q = trim((string) $request->query('q', ''));
@@ -29,7 +34,8 @@ class ManualCheckInController extends \App\Http\Controllers\Controller
             $matches = $model::query()
                 ->where(function ($query) use ($like) {
                     $query->where('full_name', 'like', $like)
-                        ->orWhere('phone', 'like', $like);
+                        ->orWhere('phone', 'like', $like)
+                        ->orWhere('email', 'like', $like);
                 })
                 ->limit(10)
                 ->get(['id', 'full_name', 'phone', 'email']);

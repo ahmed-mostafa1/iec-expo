@@ -48,6 +48,31 @@ class PortalCheckInTest extends TestCase
         $this->get(route('portal.scan'))->assertRedirect(route('portal.login'));
     }
 
+    public function test_guest_cannot_access_manual_check_in_page(): void
+    {
+        $this->get(route('portal.checkin'))->assertRedirect(route('portal.login'));
+    }
+
+    public function test_employee_sees_manual_check_in_page_and_scan_links_to_it(): void
+    {
+        $employee = $this->makeEmployee();
+
+        $this->actingAs($employee, 'employee')->get(route('portal.checkin'))
+            ->assertOk()->assertSee('register-form', false);
+        $this->actingAs($employee, 'employee')->get(route('portal.scan'))
+            ->assertOk()->assertSee(route('portal.checkin'), false)->assertDontSee('manual-modal', false);
+    }
+
+    public function test_search_matches_email(): void
+    {
+        $employee = $this->makeEmployee();
+        $this->makeRegistration();
+
+        $this->actingAs($employee, 'employee')
+            ->getJson(route('portal.checkin.search', ['q' => 'visitor@example']))
+            ->assertOk()->assertJsonPath('results.0.name', 'Test Visitor');
+    }
+
     public function test_valid_signed_qr_creates_a_check_in(): void
     {
         $employee = $this->makeEmployee();
