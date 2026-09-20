@@ -8,7 +8,7 @@
     <title>Scan · {{ config('app.name') }}</title>
     @vite(['resources/css/app.css', 'resources/js/portal-scan.js'])
     <style>
-        .status-card { position: fixed; left: 1rem; right: 1rem; bottom: 1rem; padding: 1rem; border-radius: 0.75rem; color: #fff; text-align: center; }
+        .status-card { margin: 0.75rem 1rem; padding: 1rem; border-radius: 0.75rem; color: #fff; text-align: center; }
         .status-card.success { background: #059669; }
         .status-card.warning { background: #d97706; }
         .status-card.error { background: #dc2626; }
@@ -48,10 +48,10 @@
             {{ __('Camera access denied or unavailable. Please allow camera permission and reload the page.') }}
         </div>
 
+        <div id="scan-status" hidden class="status-card"></div>
+
         <video id="scan-video" playsinline autoplay muted class="w-full flex-1 object-cover"></video>
         <canvas id="scan-canvas" hidden></canvas>
-
-        <div id="scan-status" hidden class="status-card"></div>
 
         <div id="manual-modal" hidden class="manual-modal">
             <div class="manual-panel">
