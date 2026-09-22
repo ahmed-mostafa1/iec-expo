@@ -94,6 +94,38 @@ class PortalScanTest extends TestCase
         $this->assertStringContainsString('"duplicate":false', $response->getContent());
     }
 
+    public function test_scanning_a_legacy_qr_code_signed_before_the_iec360_prefix_was_added_still_works(): void
+    {
+        // Older icon/sponsor tickets were emailed while APP_URL was just the
+        // bare domain, before the /iec360 subdirectory prefix was added.
+        // Those QR codes are permanently signed against that old root and
+        // can't be edited after the fact, so the scan endpoint must still
+        // accept them once APP_URL has since moved to include the prefix.
+        URL::forceRootUrl('https://umbrella.sa');
+        $employee = $this->employee();
+        $visitor = $this->visitor();
+        $legacyDecodedUrl = (new \Zxing\QrReader($visitor->qrPng(), \Zxing\QrReader::SOURCE_TYPE_BLOB))->text();
+        $this->assertStringNotContainsString('/iec360/', $legacyDecodedUrl);
+
+        URL::forceRootUrl('https://umbrella.sa/iec360');
+
+        $request = \Illuminate\Http\Request::create(
+            'http://localhost/portal/scan',
+            'POST',
+            [],
+            [],
+            [],
+            ['CONTENT_TYPE' => 'application/json', 'HTTP_ACCEPT' => 'application/json'],
+            json_encode(['url' => $legacyDecodedUrl])
+        );
+
+        $this->actingAs($employee, 'employee');
+        $response = $this->app->handle($request);
+
+        $this->assertSame(200, $response->getStatusCode(), $response->getContent());
+        $this->assertStringContainsString('"duplicate":false', $response->getContent());
+    }
+
     public function test_scanning_the_same_code_twice_reports_a_duplicate(): void
     {
         $employee = $this->employee();

@@ -51,22 +51,15 @@ class ScanController extends Controller
             return response()->json(['error' => __('Invalid QR code.')], 422);
         }
 
-        $expectedUrl = URL::signedRoute('public.badge.show', ['type' => $type, 'registration' => $registrationId]);
-
-        $expectedSignature = [];
-        parse_str((string) parse_url($expectedUrl, PHP_URL_QUERY), $expectedSignature);
-
         $submittedSignature = [];
         parse_str((string) parse_url($data['url'], PHP_URL_QUERY), $submittedSignature);
 
         if (
             empty($submittedSignature['signature'])
-            || empty($expectedSignature['signature'])
-            || ! hash_equals($expectedSignature['signature'], $submittedSignature['signature'])
+            || ! static::signatureIsValid($type, $registrationId, $submittedSignature['signature'])
         ) {
             Log::warning('portal.scan: signature mismatch.', [
                 'submitted_url' => $data['url'],
-                'expected_url' => $expectedUrl,
                 'app_url' => config('app.url'),
             ]);
 
@@ -85,6 +78,52 @@ class ScanController extends Controller
         }
 
         return static::checkIn($type, $registrant, $request->user('employee')->id, $request->boolean('confirm'));
+    }
+
+    /**
+     * APP_URL used to be the bare domain (no `/iec360` subdirectory) when
+     * older icon/sponsor tickets were emailed; those QR codes are signed
+     * against that root forever and can't be edited after the fact. Rather
+     * than re-emailing every affected registrant, also accept a signature
+     * computed against that legacy root alongside the current one.
+     *
+     * ponytail: only covers the one known root change (missing `/iec360`);
+     * extend the root list here if APP_URL ever moves again.
+     */
+    private static function signatureIsValid(string $type, string $registrationId, string $submittedSignature): bool
+    {
+        $currentRoot = URL::to('/');
+
+        foreach (array_unique(array_filter([$currentRoot, static::domainOnlyRoot($currentRoot)])) as $root) {
+            URL::forceRootUrl($root);
+            $expectedUrl = URL::signedRoute('public.badge.show', ['type' => $type, 'registration' => $registrationId]);
+
+            $expectedSignature = [];
+            parse_str((string) parse_url($expectedUrl, PHP_URL_QUERY), $expectedSignature);
+
+            if (! empty($expectedSignature['signature']) && hash_equals($expectedSignature['signature'], $submittedSignature)) {
+                URL::forceRootUrl($currentRoot);
+
+                return true;
+            }
+        }
+
+        URL::forceRootUrl($currentRoot);
+
+        return false;
+    }
+
+    private static function domainOnlyRoot(string $root): ?string
+    {
+        $parts = parse_url($root);
+
+        if (! isset($parts['scheme'], $parts['host'])) {
+            return null;
+        }
+
+        $domainRoot = $parts['scheme'].'://'.$parts['host'].(isset($parts['port']) ? ':'.$parts['port'] : '');
+
+        return $domainRoot === rtrim($root, '/') ? null : $domainRoot;
     }
 
     /**
